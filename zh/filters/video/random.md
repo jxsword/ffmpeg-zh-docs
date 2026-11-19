@@ -1,0 +1,7 @@
+# random
+
+Flush video frames from internal cache of frames into a random order. No frame is discarded. Inspired by [frei0r](frei0r.md#frei0r) nervous filter.
+
+- **`frames`** Set size in number of frames of internal cache, in range from `2` to `512`. Default is `30`.
+
+- **`seed`** Set seed for random number generator, must be an integer included between `0` and `UINT32_MAX`. If not specified, or if explicitly set to less than `0`, the filter will try to use a good random seed on a best effort basis.

@@ -1,6 +1,5 @@
 """texi2md/sync_docs 管线单测（固样测试，无外部工具依赖）。"""
 
-import json
 import sys
 from pathlib import Path
 
@@ -273,10 +272,12 @@ def test_build_anchor_map(tmp_path):
     import yaml
     data = yaml.safe_load(out.read_text(encoding='utf-8'))
     entry = data['pages']['a.md']['Date']
-    assert entry['slug'] == 'Date'
+    assert entry['slug'] == 'date'   # mkdocs 小写口径
 
 
 # ---------- slugify_title ----------
 
 def test_slugify_title():
-    assert sync_docs.slugify_title('Video size') == 'Video-size'
+    assert sync_docs.mkdocs_slug('Video size') == 'video-size'
+    assert sync_docs.mkdocs_slug('ffmpeg-devel?') == 'ffmpeg-devel'
+    assert sync_docs.mkdocs_slug('top-posting') == 'top-posting'

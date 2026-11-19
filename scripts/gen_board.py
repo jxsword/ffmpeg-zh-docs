@@ -5,8 +5,6 @@
 的段落分布 + filters 卷按章节分组（DR-008 翻译单元=滤镜小节）。"""
 
 import json
-import re
-import sys
 from collections import OrderedDict
 from pathlib import Path
 

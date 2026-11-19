@@ -51,7 +51,9 @@ plugins:
       version_selector: true
       alias_type: symlink
   - git-revision-date-localized:
-      enabled: !ENV [CI, false]
+      # zh/ 为构建期生成（build_site.py 占位页），git log 不可用——CI 内禁用
+      # （strict 模式下 "has no git logs" 告警会中止构建，2026-11-20 实测）
+      enabled: false
       type: date
       locale: zh
 
