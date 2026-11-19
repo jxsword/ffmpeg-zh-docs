@@ -74,9 +74,12 @@ markdown_extensions:
   - toc:
       permalink: true
       toc_depth: 3
-      # 小写 slug（python-markdown slugify）；官方大小写锚点的兼容由
-      # fix_links.py + anchor_map 映射 + M4 404 跳转页兜底（PLAN §4.1/§4.3）
-      slugify: !!python/name:markdown.extensions.toc.slugify
+      # CJK 兼容 slug（根级 cjk_slugify.py，对齐 fix_links.page_slug）。
+      # B1 实测：默认 markdown.extensions.toc.slugify 为 ASCII-only，
+      # 中文标题 slug 变空串，译文页内锚点/跨页锚点全部失效（DR-010）；
+      # mkdocs 必须经 python3 -m mkdocs 运行使根级模块可导入；
+      # 官方大小写锚点的兼容仍由 fix_links.py + anchor_map 兜底（PLAN §4.1/§4.3）
+      slugify: !!python/name:cjk_slugify.slugify
 
 extra:
   version:

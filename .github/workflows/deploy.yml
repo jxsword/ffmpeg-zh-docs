@@ -54,7 +54,10 @@ jobs:
           # mike 推 gh-pages 分支；latest alias 指向当前基线
           MIKE_DEPLOY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          mkdocs build --strict
+          # mkdocs.yml 经 !!python/name 挂载根级 cjk_slugify（DR-010），
+          # 控制台脚本/mike 内部构建均无 cwd 于 sys.path，需显式注入
+          export PYTHONPATH="$GITHUB_WORKSPACE"
+          python3 -m mkdocs build --strict
           mike deploy --push --update-aliases "$(cat source/UPSTREAM.json | python3 -c "import json,sys;print(json.load(sys.stdin)['tag'][1:])")" latest
           mike set-default --push latest
 

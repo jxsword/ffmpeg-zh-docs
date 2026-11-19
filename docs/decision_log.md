@@ -104,6 +104,25 @@
 
 ---
 
+## DR-010 2026-11-20 mkdocs toc slugify 改用根级 CJK 兼容实现 [状态: 生效]
+- 背景: B1 实测 mkdocs 1.6.1 默认 `markdown.extensions.toc.slugify` 为 ASCII-only
+  （NFKD+ascii ignore），中文标题 slug 变空串/残缺：译文页内锚点失效、
+  纯中文标题永久无法锚定，M2 全量翻译后站点锚点体系不可用。M1 坑位 #5
+  "mkdocs slugify 与 fix_links.page_slug 对齐"结论仅对英文成立。
+- 选项与权衡: A) 根级 cjk_slugify.py + mkdocs.yml `!!python/name` 挂载
+  （与 fix_links.page_slug 同口径；需 python3 -m mkdocs / PYTHONPATH 运行）← 采纳;
+  B) 保持默认 slugify、标题加 {#英文锚} attr（破坏段落 1:1 纪律）弃用;
+  C) 不修（中文标题永远无锚点，违反 M2 验收"站点内容完整可预览"）弃用。
+- 结论: mkdocs.yml toc.slugify 挂载根级 `cjk_slugify.slugify`；
+  本地/CI 统一 python3 -m mkdocs（mike 场景 export PYTHONPATH），deploy.yml 已同步。
+- 理由: 唯一不破坏段落结构纪律且可锚定中文标题的方案；slug 口径与
+  fix_links.page_slug 完全一致，消除两套实现分裂。
+- 影响: mkdocs.yml、cjk_slugify.py（根级新文件）、deploy.yml、
+  后续所有译文页锚点/目录；验证=mkdocs 锚点 INFO 残留回落至 M1 基线 3 条。
+- 记录时间 / 会话: 2026-11-20 / M2 翻译会话 B1
+
+---
+
 > **前瞻**: ffmpeg-devel 关于文档许可的书面确认结论到达后，回填 DR-006 或新开 DR。
 >
-> *下一编号：DR-010*
+> *下一编号：DR-011*
