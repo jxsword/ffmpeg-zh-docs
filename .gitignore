@@ -1,0 +1,68 @@
+# ffmpeg-zh-docs gitignore（对齐 fmt-zh-docs 惯例）
+
+# Build outputs
+site/
+api/build/
+*.pdf
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.env
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# ZCode 工具状态（不入库）
+.mimosa/
+
+# Translation state backups（.translation-state.json 本体入库，fmt 惯例）
+.translation-state.json.bak
+.tm.sqlite
+.tm.sqlite-wal
+.tm.sqlite-shm
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# mkdocs
+.mkdocs.yml.cache
+
+# Test coverage
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# Type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Ruff
+.ruff_cache/
+
+# sync_docs.py 工作副本（上游克隆不入库，只存转换产物）
+.upstream/
+
+# LLM API keys (never commit) — fmt DR-013 惯例
+*.key
+*.secret
