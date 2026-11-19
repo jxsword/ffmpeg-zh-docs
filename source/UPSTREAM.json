@@ -4,7 +4,7 @@
   "commit": "946fcce07b6dcd0331c8cc609192aeff5e1924f8",
   "repo": "https://github.com/FFmpeg/FFmpeg.git",
   "channel": "direct",
-  "converted_at": "2026-11-20 02:29:25",
+  "converted_at": "2026-11-20 02:50:50",
   "tools": {
     "makeinfo": "7.2",
     "pandoc": "3.7.0.2",
@@ -165,7 +165,7 @@
       "texi": "fate.texi",
       "out": "general/fate.md",
       "mode": "keep",
-      "bytes": 1
+      "bytes": 9115
     },
     {
       "texi": "authors.texi",

@@ -170,39 +170,28 @@ def build_nav(manifest: dict) -> list:
 
 
 def patch_mkdocs_nav(nav: list) -> None:
+    """重写 mkdocs.yml 的 NAV 标记块（块内为完整 nav: 映射，整体替换）。
+
+    首次运行：文件尾追加标记块；此后仅替换标记行之间的内容。"""
     import yaml
     text = MKDOCS_YML.read_text(encoding='utf-8')
-    if NAV_MARK_BEGIN not in text:
-        text = text.replace('nav:', NAV_MARK_BEGIN + '\nnav:') \
-                   .replace('\nsite_name:', '\n' + NAV_MARK_END + '\nsite_name:', 1)
-        # 简化：直接重写 nav 块
-        lines = text.split('\n')
-        out = []
-        in_nav = False
-        for ln in lines:
-            if ln.strip() == 'nav:':
-                in_nav = True
-                out.append(NAV_MARK_BEGIN)
-                out.append('nav:')
-                out.extend(yaml.safe_dump({'x': nav}, allow_unicode=True,
-                                          sort_keys=False).split('\n')[1:])
-                out.append(NAV_MARK_END)
-                continue
-            if in_nav:
-                # 跳过旧 nav 条目（缩进行）
-                if ln.startswith('  ') or ln.startswith('- '):
-                    continue
-                in_nav = False
-                out.append(NAV_MARK_END)
-            out.append(ln)
-        text = '\n'.join(out)
+    nav_yaml = yaml.safe_dump({'nav': nav}, allow_unicode=True, sort_keys=False,
+                              default_flow_style=False)
+    lines = text.rstrip('\n').split('\n')
+    begin = end = None
+    for i, ln in enumerate(lines):
+        s = ln.strip()
+        if s.startswith(NAV_MARK_BEGIN):
+            begin = i
+        elif s.startswith(NAV_MARK_END):
+            end = i
+            break
+    if begin is None or end is None:
+        block = [NAV_MARK_BEGIN] + nav_yaml.rstrip('\n').split('\n') + [NAV_MARK_END]
+        text = text.rstrip('\n') + '\n\n' + '\n'.join(block) + '\n'
     else:
-        lines = text.split('\n')
-        begin = lines.index(NAV_MARK_BEGIN)
-        end = lines.index(NAV_MARK_END)
-        nav_lines = yaml.safe_dump({'x': nav}, allow_unicode=True,
-                                   sort_keys=False).split('\n')[1:]
-        lines = lines[:begin + 1] + nav_lines + lines[end:]
+        block = [NAV_MARK_BEGIN] + nav_yaml.rstrip('\n').split('\n') + [NAV_MARK_END]
+        lines = lines[:begin] + block + lines[end + 1:]
         text = '\n'.join(lines)
     MKDOCS_YML.write_text(text, encoding='utf-8')
 
@@ -256,6 +245,10 @@ def main(argv=None) -> int:
             if write_zh_page(rel):
                 placeholders += 1
         write_index()
+    # 跨页锚点链接修复（PLAN §4.1 fix_links 兜底）
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import fix_links
+    fix_links.main(['--report', str(REPO_ROOT / 'docs' / 'link-report.json')])
     patch_mkdocs_nav(build_nav(manifest))
     print(json.dumps({'status': 'ok',
                       'filters': {k: len(v) for k, v in manifest['groups'].items()},

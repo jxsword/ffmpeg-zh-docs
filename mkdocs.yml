@@ -72,8 +72,9 @@ markdown_extensions:
   - toc:
       permalink: true
       toc_depth: 3
-      # 官方 HTML 锚点兼容：保留大小写（"Video size" → #Video-size）
-      slugify: !!python/name:markdown.extensions.toc.slugify_unicode
+      # 小写 slug（python-markdown slugify）；官方大小写锚点的兼容由
+      # fix_links.py + anchor_map 映射 + M4 404 跳转页兜底（PLAN §4.1/§4.3）
+      slugify: !!python/name:markdown.extensions.toc.slugify
 
 extra:
   version:
@@ -84,8 +85,8 @@ extra:
       link: https://ffmpeg.org/documentation.html
       lang: en
 
-# nav 由 scripts/build_site.py 生成（filters 分组动态 nav），见 NAV 标记块
 # === NAV-BEGIN（build_site.py 生成，勿手改） ===
+nav:
 - 首页: index.md
 - 手册:
   - ffmpeg 手册: manual/ffmpeg.md
@@ -127,6 +128,4 @@ extra:
   - 社区（Community）: general/community.md
   - drawvg 参考: general/drawvg-reference.md
   - API 变更日志（英文原文）: general/APIchanges.md
-
-# === NAV-END ===
 # === NAV-END ===

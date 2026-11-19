@@ -1,0 +1,780 @@
+# FFmpeg 中文文档翻译术语表（glossary）
+# 格式对齐 fmt-zh-docs 惯例：en/zh/status/context/aliases
+# status: approved=定稿 / provisional=暂定（评审后转 approved）
+# 冻结点：M2 批次 B1 完成后冻结 v1（PLAN §9）；基线 12 条见 R3 修订
+# 原则：muxer=复用器 / demuxer=解复用器（社区主流技术译法，R3 明确）
+
+terms:
+  # ===== 基线术语（PLAN §9 十二条，R3 定稿） =====
+  - en: "filter"
+    zh: "滤镜"
+    status: "approved"
+    context: "全局"
+    aliases: []
+
+  - en: "filtergraph"
+    zh: "滤镜链图"
+    status: "approved"
+    context: "全局（对齐 xdsnet 语料）"
+    aliases: ["filter graph"]
+
+  - en: "filter chain"
+    zh: "滤镜链"
+    status: "approved"
+    context: "全局"
+    aliases: []
+
+  - en: "muxer"
+    zh: "复用器"
+    status: "approved"
+    context: "components/formats.md"
+    aliases: []
+
+  - en: "demuxer"
+    zh: "解复用器"
+    status: "approved"
+    context: "components/formats.md"
+    aliases: []
+
+  - en: "bitstream filter"
+    zh: "比特流滤镜"
+    status: "approved"
+    context: "components/bitstream-filters.md"
+    aliases: []
+
+  - en: "codec"
+    zh: "编解码器"
+    status: "approved"
+    context: "components/codecs.md"
+    aliases: []
+
+  - en: "coder"
+    zh: "编码器"
+    status: "approved"
+    context: "components/codecs.md"
+    aliases: []
+
+  - en: "encoder"
+    zh: "编码器"
+    status: "approved"
+    context: "components/codecs.md"
+    aliases: []
+
+  - en: "decoder"
+    zh: "解码器"
+    status: "approved"
+    context: "components/codecs.md"
+    aliases: []
+
+  - en: "protocol"
+    zh: "协议"
+    status: "approved"
+    context: "components/protocols.md"
+    aliases: []
+
+  - en: "sample"
+    zh: "采样"
+    status: "approved"
+    context: "全局（音频数据点；区别于样本）"
+    aliases: []
+
+  - en: "frame"
+    zh: "帧"
+    status: "approved"
+    context: "全局"
+    aliases: []
+
+  - en: "packet"
+    zh: "包"
+    status: "approved"
+    context: "全局"
+    aliases: []
+
+  - en: "scale"
+    zh: "缩放"
+    status: "approved"
+    context: "components/scaler.md（滤镜名 scale 不译）"
+    aliases: ["scaling"]
+
+  - en: "resample"
+    zh: "重采样"
+    status: "approved"
+    context: "components/resampler.md"
+    aliases: ["resampling"]
+
+  - en: "device"
+    zh: "设备"
+    status: "approved"
+    context: "components/devices.md"
+    aliases: []
+
+  - en: "stream"
+    zh: "流"
+    status: "approved"
+    context: "全局"
+    aliases: []
+
+  - en: "format"
+    zh: "格式"
+    status: "approved"
+    context: "全局"
+    aliases: []
+
+  - en: "hardware acceleration"
+    zh: "硬件加速"
+    status: "approved"
+    context: "全局"
+    aliases: []
+
+  # ===== 媒体与流基础 =====
+  - en: "audio"
+    zh: "音频"
+    status: "approved"
+    context: "全局"
+    aliases: []
+
+  - en: "video"
+    zh: "视频"
+    status: "approved"
+    context: "全局"
+    aliases: []
+
+  - en: "subtitle"
+    zh: "字幕"
+    status: "approved"
+    context: "全局"
+    aliases: []
+
+  - en: "metadata"
+    zh: "元数据"
+    status: "approved"
+    context: "components/formats.md"
+    aliases: []
+
+  - en: "container"
+    zh: "容器"
+    status: "approved"
+    context: "components/formats.md"
+    aliases: []
+
+  - en: "timestamp"
+    zh: "时间戳"
+    status: "approved"
+    context: "全局"
+    aliases: []
+
+  - en: "time base"
+    zh: "时间基"
+    status: "approved"
+    context: "API 注释"
+    aliases: ["timebase"]
+
+  - en: "duration"
+    zh: "时长"
+    status: "approved"
+    context: "全局"
+    aliases: []
+
+  - en: "bitrate"
+    zh: "码率"
+    status: "approved"
+    context: "全局"
+    aliases: []
+
+  - en: "frame rate"
+    zh: "帧率"
+    status: "approved"
+    context: "全局"
+    aliases: ["framerate"]
+
+  - en: "sample rate"
+    zh: "采样率"
+    status: "approved"
+    context: "音频"
+    aliases: ["samplerate"]
+
+  - en: "channel layout"
+    zh: "声道布局"
+    status: "approved"
+    context: "音频"
+    aliases: []
+
+  - en: "channel"
+    zh: "声道"
+    status: "approved"
+    context: "音频"
+    aliases: []
+
+  - en: "mono"
+    zh: "单声道"
+    status: "approved"
+    context: "音频"
+    aliases: []
+
+  - en: "stereo"
+    zh: "立体声"
+    status: "approved"
+    context: "音频"
+    aliases: []
+
+  - en: "sample format"
+    zh: "采样格式"
+    status: "approved"
+    context: "音频"
+    aliases: []
+
+  - en: "pixel format"
+    zh: "像素格式"
+    status: "approved"
+    context: "视频"
+    aliases: ["pix_fmt"]
+
+  - en: "aspect ratio"
+    zh: "宽高比"
+    status: "approved"
+    context: "视频"
+    aliases: []
+
+  - en: "display aspect ratio"
+    zh: "显示宽高比"
+    status: "approved"
+    context: "视频"
+    aliases: ["DAR"]
+
+  - en: "sample aspect ratio"
+    zh: "采样宽高比"
+    status: "approved"
+    context: "视频"
+    aliases: ["SAR"]
+
+  - en: "resolution"
+    zh: "分辨率"
+    status: "approved"
+    context: "视频"
+    aliases: []
+
+  - en: "keyframe"
+    zh: "关键帧"
+    status: "approved"
+    context: "视频/编码"
+    aliases: ["key frame"]
+
+  - en: "interlaced"
+    zh: "隔行"
+    status: "approved"
+    context: "视频"
+    aliases: ["interlace"]
+
+  - en: "progressive"
+    zh: "逐行"
+    status: "approved"
+    context: "视频"
+    aliases: []
+
+  - en: "deinterlace"
+    zh: "去隔行"
+    status: "approved"
+    context: "视频"
+    aliases: []
+
+  - en: "colorspace"
+    zh: "色彩空间"
+    status: "approved"
+    context: "视频"
+    aliases: ["color space"]
+
+  - en: "alpha channel"
+    zh: "透明通道"
+    status: "approved"
+    context: "视频"
+    aliases: ["alpha"]
+
+  - en: "input"
+    zh: "输入"
+    status: "approved"
+    context: "全局"
+    aliases: []
+
+  - en: "output"
+    zh: "输出"
+    status: "approved"
+    context: "全局"
+    aliases: []
+
+  - en: "input file"
+    zh: "输入文件"
+    status: "approved"
+    context: "manuals"
+    aliases: []
+
+  - en: "output file"
+    zh: "输出文件"
+    status: "approved"
+    context: "manuals"
+    aliases: []
+
+  - en: "buffer"
+    zh: "缓冲区"
+    status: "approved"
+    context: "全局/API"
+    aliases: []
+
+  - en: "option"
+    zh: "选项"
+    status: "approved"
+    context: "全局（选项名本身不译）"
+    aliases: []
+
+  - en: "argument"
+    zh: "参数"
+    status: "approved"
+    context: "全局"
+    aliases: []
+
+  - en: "flag"
+    zh: "标志"
+    status: "approved"
+    context: "全局（flag 名不译）"
+    aliases: []
+
+  - en: "default value"
+    zh: "默认值"
+    status: "approved"
+    context: "全局"
+    aliases: ["default"]
+
+  - en: "boolean option"
+    zh: "布尔选项"
+    status: "approved"
+    context: "manuals"
+    aliases: []
+
+  # ===== 操作与流程 =====
+  - en: "decode"
+    zh: "解码"
+    status: "approved"
+    context: "全局"
+    aliases: ["decoding"]
+
+  - en: "encode"
+    zh: "编码"
+    status: "approved"
+    context: "全局"
+    aliases: ["encoding"]
+
+  - en: "transcode"
+    zh: "转码"
+    status: "approved"
+    context: "manuals"
+    aliases: ["transcoding"]
+
+  - en: "remux"
+    zh: "重新封装"
+    status: "approved"
+    context: "manuals"
+    aliases: []
+
+  - en: "stream copy"
+    zh: "流复制"
+    status: "approved"
+    context: "manuals（-c copy 场景）"
+    aliases: ["streamcopy"]
+
+  - en: "playback"
+    zh: "播放"
+    status: "approved"
+    context: "manuals/ffplay"
+    aliases: []
+
+  - en: "capture"
+    zh: "采集"
+    status: "approved"
+    context: "devices"
+    aliases: []
+
+  - en: "seek"
+    zh: "定位"
+    status: "approved"
+    context: "manuals/wiki（时间定位）"
+    aliases: ["seeking"]
+
+  - en: "loop"
+    zh: "循环"
+    status: "approved"
+    context: "全局"
+    aliases: []
+
+  - en: "streaming"
+    zh: "流媒体"
+    status: "approved"
+    context: "protocols/wiki"
+    aliases: []
+
+  - en: "playlist"
+    zh: "播放列表"
+    status: "approved"
+    context: "formats/hls"
+    aliases: []
+
+  - en: "segment"
+    zh: "分段"
+    status: "approved"
+    context: "formats/hls（滤镜/分段器名不译）"
+    aliases: []
+
+  - en: "muxing"
+    zh: "复用"
+    status: "approved"
+    context: "formats"
+    aliases: []
+
+  - en: "demuxing"
+    zh: "解复用"
+    status: "approved"
+    context: "formats"
+    aliases: []
+
+  - en: "filtering"
+    zh: "滤镜处理"
+    status: "approved"
+    context: "filters"
+    aliases: []
+
+  - en: "downmix"
+    zh: "下混"
+    status: "approved"
+    context: "音频"
+    aliases: []
+
+  - en: "crop"
+    zh: "裁剪"
+    status: "approved"
+    context: "视频（滤镜名 crop 不译）"
+    aliases: []
+
+  - en: "pad"
+    zh: "填充"
+    status: "approved"
+    context: "视频画面填充（滤镜链连接点译作端口）"
+    aliases: []
+
+  - en: "overlay"
+    zh: "叠加"
+    status: "approved"
+    context: "视频（滤镜名 overlay 不译）"
+    aliases: []
+
+  - en: "blend"
+    zh: "混合"
+    status: "approved"
+    context: "视频（滤镜名 blend 不译）"
+    aliases: []
+
+  - en: "timeline editing"
+    zh: "时间线编辑"
+    status: "approved"
+    context: "filters"
+    aliases: []
+
+  - en: "framesync"
+    zh: "帧同步"
+    status: "approved"
+    context: "filters"
+    aliases: []
+
+  - en: "command"
+    zh: "命令"
+    status: "approved"
+    context: "全局（运行时命令与命令行示例均不译内容本身）"
+    aliases: []
+
+  - en: "sink"
+    zh: "汇"
+    status: "approved"
+    context: "filters（buffersink/abuffersink 等滤镜名不译）"
+    aliases: []
+
+  - en: "source"
+    zh: "源"
+    status: "approved"
+    context: "filters（源滤镜名不译）"
+    aliases: []
+
+  - en: "input pad"
+    zh: "输入端口"
+    status: "approved"
+    context: "filters（filtergraph 连接点）"
+    aliases: ["pad"]
+
+  - en: "output pad"
+    zh: "输出端口"
+    status: "approved"
+    context: "filters"
+    aliases: []
+
+  # ===== 语法与文档 =====
+  - en: "syntax"
+    zh: "语法"
+    status: "approved"
+    context: "utils（日期/时长/尺寸语法）"
+    aliases: []
+
+  - en: "escaping"
+    zh: "转义"
+    status: "approved"
+    context: "utils/filters（引号转义）"
+    aliases: []
+
+  - en: "quoting"
+    zh: "引号引用"
+    status: "approved"
+    context: "utils"
+    aliases: []
+
+  - en: "expression"
+    zh: "表达式"
+    status: "approved"
+    context: "utils/filters"
+    aliases: []
+
+  - en: "evaluated"
+    zh: "求值"
+    status: "approved"
+    context: "filters（表达式求值）"
+    aliases: ["evaluate"]
+
+  - en: "constant"
+    zh: "常量"
+    status: "approved"
+    context: "filters（表达式常量，常量名不译）"
+    aliases: []
+
+  - en: "stream specifier"
+    zh: "流说明符"
+    status: "approved"
+    context: "manuals"
+    aliases: []
+
+  - en: "stream selection"
+    zh: "流选择"
+    status: "approved"
+    context: "manuals"
+    aliases: []
+
+  - en: "automatic stream selection"
+    zh: "自动流选择"
+    status: "approved"
+    context: "manuals"
+    aliases: []
+
+  - en: "chapter"
+    zh: "章节"
+    status: "approved"
+    context: "文档结构"
+    aliases: []
+
+  - en: "section"
+    zh: "小节"
+    status: "approved"
+    context: "文档结构"
+    aliases: []
+
+  - en: "manual"
+    zh: "手册"
+    status: "approved"
+    context: "文档结构（man 手册页语境不译）"
+    aliases: []
+
+  # ===== API 与编程（API 注释翻译用） =====
+  - en: "context"
+    zh: "上下文"
+    status: "approved"
+    context: "API（AVCodecContext 等类型名不译）"
+    aliases: []
+
+  - en: "reference counting"
+    zh: "引用计数"
+    status: "approved"
+    context: "API"
+    aliases: []
+
+  - en: "dictionary"
+    zh: "字典"
+    status: "approved"
+    context: "API（AVDictionary 类型名不译）"
+    aliases: []
+
+  - en: "string"
+    zh: "字符串"
+    status: "approved"
+    context: "API"
+    aliases: []
+
+  - en: "integer"
+    zh: "整数"
+    status: "approved"
+    context: "API"
+    aliases: []
+
+  - en: "pointer"
+    zh: "指针"
+    status: "approved"
+    context: "API"
+    aliases: []
+
+  - en: "array"
+    zh: "数组"
+    status: "approved"
+    context: "API"
+    aliases: []
+
+  - en: "structure"
+    zh: "结构体"
+    status: "approved"
+    context: "API"
+    aliases: []
+
+  - en: "function"
+    zh: "函数"
+    status: "approved"
+    context: "API（函数名不译）"
+    aliases: []
+
+  - en: "return value"
+    zh: "返回值"
+    status: "approved"
+    context: "API"
+    aliases: []
+
+  - en: "error code"
+    zh: "错误码"
+    status: "approved"
+    context: "API"
+    aliases: []
+
+  - en: "callback"
+    zh: "回调"
+    status: "approved"
+    context: "API"
+    aliases: []
+
+  - en: "allocator"
+    zh: "分配器"
+    status: "approved"
+    context: "API"
+    aliases: []
+
+  - en: "alignment"
+    zh: "对齐"
+    status: "approved"
+    context: "API/内存"
+    aliases: []
+
+  - en: "deprecated"
+    zh: "已弃用"
+    status: "approved"
+    context: "API/选项"
+    aliases: []
+
+  - en: "public API"
+    zh: "公共 API"
+    status: "approved"
+    context: "libraries/API"
+    aliases: []
+
+  - en: "library"
+    zh: "库"
+    status: "approved"
+    context: "全局（库名 libavutil 等不译）"
+    aliases: []
+
+  - en: "header"
+    zh: "头"
+    status: "approved"
+    context: "API（头文件名不译）"
+    aliases: []
+
+  - en: "caller"
+    zh: "调用方"
+    status: "approved"
+    context: "API"
+    aliases: []
+
+  # ===== 工程与社区 =====
+  - en: "configuration"
+    zh: "配置"
+    status: "approved"
+    context: "general/developer"
+    aliases: []
+
+  - en: "build"
+    zh: "构建"
+    status: "approved"
+    context: "general/platform"
+    aliases: []
+
+  - en: "compile"
+    zh: "编译"
+    status: "approved"
+    context: "general/platform"
+    aliases: []
+
+  - en: "patch"
+    zh: "补丁"
+    status: "approved"
+    context: "general/developer"
+    aliases: []
+
+  - en: "commit"
+    zh: "提交"
+    status: "approved"
+    context: "general/git-howto（commit message 惯例保留英文）"
+    aliases: []
+
+  - en: "repository"
+    zh: "仓库"
+    status: "approved"
+    context: "general"
+    aliases: []
+
+  - en: "branch"
+    zh: "分支"
+    status: "approved"
+    context: "general/git-howto"
+    aliases: []
+
+  - en: "upstream"
+    zh: "上游"
+    status: "approved"
+    context: "general"
+    aliases: []
+
+  - en: "mailing list"
+    zh: "邮件列表"
+    status: "approved"
+    context: "general/mailing-list-faq"
+    aliases: []
+
+  - en: "bug report"
+    zh: "缺陷报告"
+    status: "approved"
+    context: "general"
+    aliases: []
+
+  - en: "benchmark"
+    zh: "基准测试"
+    status: "approved"
+    context: "general/fate"
+    aliases: []
+
+  - en: "regression test"
+    zh: "回归测试"
+    status: "approved"
+    context: "general/fate"
+    aliases: []
+
+  - en: "thumbnail"
+    zh: "缩略图"
+    status: "approved"
+    context: "filters（滤镜名 thumbnail 不译）"
+    aliases: []

@@ -3,7 +3,7 @@
   "upstream_commit": "946fcce07b6dcd0331c8cc609192aeff5e1924f8",
   "upstream_tag": "n9.0.2",
   "tag_date": "2026-09-18 00:40:57 +0000",
-  "converted_at": "2026-11-20 02:29:25",
+  "converted_at": "2026-11-20 02:50:50",
   "files": {
     "manual/ffmpeg.md": {
       "upstream_hash": "4c0c689f1aa8e2ac",
@@ -218463,10 +218463,963 @@
       ]
     },
     "general/fate.md": {
-      "upstream_hash": "01ba4719c80b6fe9",
+      "upstream_hash": "1455db632b2d21c9",
       "upstream_commit": "946fcce07b6dcd0331c8cc609192aeff5e1924f8",
       "excluded": false,
-      "segments": []
+      "segments": [
+        {
+          "id": "fate.md-p0",
+          "type": "heading",
+          "content": "# Introduction",
+          "hash": "1cfabb9fbf642722",
+          "line_start": 1,
+          "line_end": 1,
+          "metadata": {
+            "section": "",
+            "level": 1,
+            "title": "Introduction"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p0",
+          "type": "paragraph",
+          "content": "FATE is an extended regression suite on the client-side and a means for results aggregation and presentation on the server-side.",
+          "hash": "9befc976711531d8",
+          "line_start": 3,
+          "line_end": 3,
+          "metadata": {
+            "section": "Introduction"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p1",
+          "type": "paragraph",
+          "content": "The first part of this document explains how you can use FATE from your FFmpeg source directory to test your ffmpeg binary. The second part describes how you can run FATE to submit the results to FFmpeg's FATE server.",
+          "hash": "39216a843390e94e",
+          "line_start": 5,
+          "line_end": 5,
+          "metadata": {
+            "section": "Introduction"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p2",
+          "type": "paragraph",
+          "content": "In any way you can have a look at the publicly viewable FATE results by visiting this website:",
+          "hash": "3b22b71c42cab2b0",
+          "line_start": 7,
+          "line_end": 7,
+          "metadata": {
+            "section": "Introduction"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p3",
+          "type": "paragraph",
+          "content": "<http://fate.ffmpeg.org/>",
+          "hash": "08e00b57ca61d8d5",
+          "line_start": 9,
+          "line_end": 9,
+          "metadata": {
+            "section": "Introduction"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p4",
+          "type": "paragraph",
+          "content": "This is especially recommended for all people contributing source code to FFmpeg, as it can be seen if some test on some platform broke with their recent contribution. This usually happens on the platforms the developers could not test on.",
+          "hash": "f164fab92f6d76e3",
+          "line_start": 11,
+          "line_end": 11,
+          "metadata": {
+            "section": "Introduction"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p5",
+          "type": "paragraph",
+          "content": "The second part of this document describes how you can run FATE to submit your results to FFmpeg's FATE server. If you want to submit your results be sure to check that your combination of CPU, OS and compiler is not already listed on the above mentioned website.",
+          "hash": "2b297b5411ba30e0",
+          "line_start": 13,
+          "line_end": 13,
+          "metadata": {
+            "section": "Introduction"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p6",
+          "type": "paragraph",
+          "content": "In the third part you can find a comprehensive listing of FATE makefile targets and variables.",
+          "hash": "ce65f34343024a21",
+          "line_start": 15,
+          "line_end": 15,
+          "metadata": {
+            "section": "Introduction"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p7",
+          "type": "heading",
+          "content": "# Using FATE from your FFmpeg source directory",
+          "hash": "2030b694e3654096",
+          "line_start": 17,
+          "line_end": 17,
+          "metadata": {
+            "section": "Introduction",
+            "level": 1,
+            "title": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p0",
+          "type": "paragraph",
+          "content": "If you want to run FATE on your machine, FFmpeg needs to be configured first. You may specify the location of samples during configuration by adding the argument `--samples=/path/to/fate-suite`.",
+          "hash": "2ca891918dc3eb2d",
+          "line_start": 19,
+          "line_end": 19,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p1",
+          "type": "code_block",
+          "content": "``` text\n./configure --enable-somelib --samples=/path/to/fate-suite\n```",
+          "hash": "9ee7b448b248a204",
+          "line_start": 21,
+          "line_end": 23,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p2",
+          "type": "paragraph",
+          "content": "After successful configuration, you need to add and/or update the samples in place:",
+          "hash": "aa621ee316c79ce4",
+          "line_start": 25,
+          "line_end": 25,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p3",
+          "type": "code_block",
+          "content": "``` text\nmake fate-rsync\n```",
+          "hash": "9a5ff01659aa0efe",
+          "line_start": 27,
+          "line_end": 29,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p4",
+          "type": "paragraph",
+          "content": "Now you are ready to run FATE:",
+          "hash": "bb0500600320005b",
+          "line_start": 31,
+          "line_end": 31,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p5",
+          "type": "code_block",
+          "content": "``` text\nmake fate\n```",
+          "hash": "b7a04639e294a2b4",
+          "line_start": 33,
+          "line_end": 35,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p6",
+          "type": "paragraph",
+          "content": "See [makefile variables](#makefile-variables) for a list of arguments that can be added.",
+          "hash": "5b7753cc414f3015",
+          "line_start": 37,
+          "line_end": 37,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p7",
+          "type": "paragraph",
+          "content": "If you did not set the samples path during configuration, or if you wish to override it just before starting FATE, you can do so in one of three ways.",
+          "hash": "b78f9c632387c5f9",
+          "line_start": 39,
+          "line_end": 39,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p8",
+          "type": "paragraph",
+          "content": "Either by setting a make variable:",
+          "hash": "b9d6cdc4222bbbe1",
+          "line_start": 41,
+          "line_end": 41,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p9",
+          "type": "code_block",
+          "content": "``` text\nmake fate-rsync SAMPLES=/path/to/fate-suite\nmake fate       SAMPLES=/path/to/fate-suite\n```",
+          "hash": "34e65bd243207cdf",
+          "line_start": 43,
+          "line_end": 46,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p10",
+          "type": "paragraph",
+          "content": "or by setting an environment variable for the current session:",
+          "hash": "1ce609e141be5733",
+          "line_start": 48,
+          "line_end": 48,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p11",
+          "type": "code_block",
+          "content": "``` text\nexport FATE_SAMPLES=/path/to/fate-suite\nmake fate-rsync\nmake fate\n```",
+          "hash": "ce54ca03b9ae6a0a",
+          "line_start": 50,
+          "line_end": 54,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p12",
+          "type": "paragraph",
+          "content": "or in isolation for a single command by prepending it:",
+          "hash": "13de77d607d518e8",
+          "line_start": 56,
+          "line_end": 56,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p13",
+          "type": "code_block",
+          "content": "``` text\nFATE_SAMPLES=/path/to/fate-suite make fate-rsync\nFATE_SAMPLES=/path/to/fate-suite make fate\n```",
+          "hash": "aeeddcca04ed6763",
+          "line_start": 58,
+          "line_end": 61,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p14",
+          "type": "paragraph",
+          "content": "This variable can also be set in your shell profile to make it permanent.",
+          "hash": "e10369f2011edda9",
+          "line_start": 63,
+          "line_end": 63,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p15",
+          "type": "paragraph",
+          "content": "Do not put a '~' character in the samples path to indicate a home directory. Because of shell nuances, this will cause FATE to fail. Also, on Windows the path has to be relative to the build path which in this case is the FFmpeg source directory.",
+          "hash": "de59a8c60a38863a",
+          "line_start": 65,
+          "line_end": 65,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p16",
+          "type": "paragraph",
+          "content": "Beware that some assertions are disabled by default, so mind setting `--assert-level=<level>` at configuration time, e.g. when seeking the highest possible test coverage:",
+          "hash": "8fad389fb159cbdc",
+          "line_start": 67,
+          "line_end": 67,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p17",
+          "type": "code_block",
+          "content": "``` text\n./configure --assert-level=2\n```",
+          "hash": "c17d94dac1c21f9a",
+          "line_start": 69,
+          "line_end": 71,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p18",
+          "type": "paragraph",
+          "content": "Note that raising the assert level could have a performance impact.",
+          "hash": "2cf848775ec7678c",
+          "line_start": 73,
+          "line_end": 73,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p19",
+          "type": "paragraph",
+          "content": "To get the complete list of tests, run the command:",
+          "hash": "384c6addefe610a8",
+          "line_start": 75,
+          "line_end": 75,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p20",
+          "type": "code_block",
+          "content": "``` text\nmake fate-list\n```",
+          "hash": "202516913d0c1c4b",
+          "line_start": 77,
+          "line_end": 79,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p21",
+          "type": "paragraph",
+          "content": "You can specify a subset of tests to run by specifying the corresponding elements from the list with the `fate-` prefix, e.g. as in:",
+          "hash": "33177c8c4129f332",
+          "line_start": 81,
+          "line_end": 81,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p22",
+          "type": "code_block",
+          "content": "``` text\nmake fate-ffprobe_compact fate-ffprobe_xml\n```",
+          "hash": "a97f92aaa27c9fe6",
+          "line_start": 83,
+          "line_end": 85,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p23",
+          "type": "paragraph",
+          "content": "This makes it easier to run a few tests in case of failure without running the complete test suite.",
+          "hash": "ea22c4ce4865ec84",
+          "line_start": 87,
+          "line_end": 87,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p24",
+          "type": "paragraph",
+          "content": "To use a custom wrapper to run the test, pass `--target-exec` to `configure` or set the \\<TARGET_EXEC\\> Make variable.",
+          "hash": "ab55c770b00b0795",
+          "line_start": 89,
+          "line_end": 89,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p25",
+          "type": "heading",
+          "content": "# Submitting the results to the FFmpeg result aggregation server",
+          "hash": "5aa1f0f3da0fae7a",
+          "line_start": 91,
+          "line_end": 91,
+          "metadata": {
+            "section": "Using FATE from your FFmpeg source directory",
+            "level": 1,
+            "title": "Submitting the results to the FFmpeg result aggregation server"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p0",
+          "type": "paragraph",
+          "content": "To submit your results to the server you should run fate through the shell script `tests/fate.sh` from the FFmpeg sources. This script needs to be invoked with a configuration file as its first argument.",
+          "hash": "488f2857fae8c56d",
+          "line_start": 93,
+          "line_end": 93,
+          "metadata": {
+            "section": "Submitting the results to the FFmpeg result aggregation server"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p1",
+          "type": "code_block",
+          "content": "``` text\ntests/fate.sh /path/to/fate_config\n```",
+          "hash": "655e0e7a2db05135",
+          "line_start": 95,
+          "line_end": 97,
+          "metadata": {
+            "section": "Submitting the results to the FFmpeg result aggregation server"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p2",
+          "type": "paragraph",
+          "content": "A configuration file template with comments describing the individual configuration variables can be found at `doc/fate_config.sh.template`.",
+          "hash": "f06383dff0b49996",
+          "line_start": 99,
+          "line_end": 99,
+          "metadata": {
+            "section": "Submitting the results to the FFmpeg result aggregation server"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p3",
+          "type": "paragraph",
+          "content": "Create a configuration that suits your needs, based on the configuration template. The `slot` configuration variable can be any string that is not yet used, but it is suggested that you name it adhering to the following pattern `arch-os-compiler-compiler version`. The configuration file itself will be sourced in a shell script, therefore all shell features may be used. This enables you to setup the environment as you need it for your build.",
+          "hash": "46d80ddeece2f766",
+          "line_start": 101,
+          "line_end": 101,
+          "metadata": {
+            "section": "Submitting the results to the FFmpeg result aggregation server"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p4",
+          "type": "paragraph",
+          "content": "For your first test runs the `fate_recv` variable should be empty or commented out. This will run everything as normal except that it will omit the submission of the results to the server. The following files should be present in \\$workdir as specified in the configuration file:",
+          "hash": "75390bbb4cc8ba87",
+          "line_start": 103,
+          "line_end": 103,
+          "metadata": {
+            "section": "Submitting the results to the FFmpeg result aggregation server"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p5",
+          "type": "paragraph",
+          "content": "- configure.log",
+          "hash": "086114b578b71c65",
+          "line_start": 105,
+          "line_end": 105,
+          "metadata": {
+            "section": "Submitting the results to the FFmpeg result aggregation server"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p6",
+          "type": "paragraph",
+          "content": "- compile.log",
+          "hash": "05fceb733c44c275",
+          "line_start": 107,
+          "line_end": 107,
+          "metadata": {
+            "section": "Submitting the results to the FFmpeg result aggregation server"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p7",
+          "type": "paragraph",
+          "content": "- test.log",
+          "hash": "6c58e9db76110a1c",
+          "line_start": 109,
+          "line_end": 109,
+          "metadata": {
+            "section": "Submitting the results to the FFmpeg result aggregation server"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p8",
+          "type": "paragraph",
+          "content": "- report",
+          "hash": "c01cd1713e8b5845",
+          "line_start": 111,
+          "line_end": 111,
+          "metadata": {
+            "section": "Submitting the results to the FFmpeg result aggregation server"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p9",
+          "type": "paragraph",
+          "content": "- version",
+          "hash": "c0f0e2b4d3e4db7b",
+          "line_start": 113,
+          "line_end": 113,
+          "metadata": {
+            "section": "Submitting the results to the FFmpeg result aggregation server"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p10",
+          "type": "paragraph",
+          "content": "When you have everything working properly you can create an SSH key pair and send the public key to the FATE server administrator who can be contacted at the email address <fate-admin@ffmpeg.org>.",
+          "hash": "ab04b58a24911b84",
+          "line_start": 115,
+          "line_end": 115,
+          "metadata": {
+            "section": "Submitting the results to the FFmpeg result aggregation server"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p11",
+          "type": "paragraph",
+          "content": "Configure your SSH client to use public key authentication with that key when connecting to the FATE server. Also do not forget to check the identity of the server and to accept its host key. This can usually be achieved by running your SSH client manually and killing it after you accepted the key. The FATE server's fingerprint is:",
+          "hash": "bd6da24bd54db006",
+          "line_start": 117,
+          "line_end": 117,
+          "metadata": {
+            "section": "Submitting the results to the FFmpeg result aggregation server"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p12",
+          "type": "table",
+          "content": "| Term      | Description                                     |\n|-----------|-------------------------------------------------|\n| `RSA`   | d3:f1:83:97:a4:75:2b:a6:fb:d6:e8:aa:81:93:97:51 |\n| `ECDSA` | 76:9f:68:32:04:1e:d5:d4:ec:47:3f:dc:fc:18:17:86 |",
+          "hash": "152bdddab7d83fc4",
+          "line_start": 119,
+          "line_end": 122,
+          "metadata": {
+            "section": "Submitting the results to the FFmpeg result aggregation server"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p13",
+          "type": "paragraph",
+          "content": "If you have problems connecting to the FATE server, it may help to try out the `ssh` command with one or more `-v` options. You should get detailed output concerning your SSH configuration and the authentication process.",
+          "hash": "d761910a5b50051d",
+          "line_start": 124,
+          "line_end": 124,
+          "metadata": {
+            "section": "Submitting the results to the FFmpeg result aggregation server"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p14",
+          "type": "paragraph",
+          "content": "The only thing left is to automate the execution of the fate.sh script and the synchronisation of the samples directory.",
+          "hash": "12f20a74fc4a6640",
+          "line_start": 126,
+          "line_end": 126,
+          "metadata": {
+            "section": "Submitting the results to the FFmpeg result aggregation server"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p15",
+          "type": "heading",
+          "content": "# Uploading new samples to the fate suite",
+          "hash": "3bbc28f6fb0dace1",
+          "line_start": 128,
+          "line_end": 128,
+          "metadata": {
+            "section": "Submitting the results to the FFmpeg result aggregation server",
+            "level": 1,
+            "title": "Uploading new samples to the fate suite"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p0",
+          "type": "paragraph",
+          "content": "If you need a sample uploaded send a mail to samples-request.",
+          "hash": "9f2f5e8a89678c64",
+          "line_start": 130,
+          "line_end": 130,
+          "metadata": {
+            "section": "Uploading new samples to the fate suite"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p1",
+          "type": "paragraph",
+          "content": "This is for developers who have an account on the fate suite server. If you upload new samples, please make sure they are as small as possible, space on each client, network bandwidth and so on benefit from smaller test cases. Also keep in mind older checkouts use existing sample files, that means in practice generally do not replace, remove or overwrite files as it likely would break older checkouts or releases. Also all needed samples for a commit should be uploaded, ideally 24 hours, before the push. If you need an account for frequently uploading samples or you wish to help others by doing that send a mail to ffmpeg-devel.",
+          "hash": "0b46545613657a3a",
+          "line_start": 132,
+          "line_end": 132,
+          "metadata": {
+            "section": "Uploading new samples to the fate suite"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p2",
+          "type": "code_block",
+          "content": "``` text\n#First update your local samples copy:\nrsync -vauL --chmod=Dg+s,Duo+x,ug+rw,o+r,o-w,+X fate-suite.ffmpeg.org:/home/samples/fate-suite/ ~/fate-suite\n\n#Then do a dry run checking what would be uploaded:\nrsync -vanL --no-g --chmod=Dg+s,Duo+x,ug+rw,o+r,o-w,+X ~/fate-suite/ fate-suite.ffmpeg.org:/home/samples/fate-suite\n\n#Upload the files:\nrsync -vaL  --no-g --chmod=Dg+s,Duo+x,ug+rw,o+r,o-w,+X ~/fate-suite/ fate-suite.ffmpeg.org:/home/samples/fate-suite\n```",
+          "hash": "ab19dbb052d3d32f",
+          "line_start": 134,
+          "line_end": 143,
+          "metadata": {
+            "section": "Uploading new samples to the fate suite"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p3",
+          "type": "heading",
+          "content": "# FATE makefile targets and variables",
+          "hash": "3dd0962283ca44dc",
+          "line_start": 145,
+          "line_end": 145,
+          "metadata": {
+            "section": "Uploading new samples to the fate suite",
+            "level": 1,
+            "title": "FATE makefile targets and variables"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p0",
+          "type": "heading",
+          "content": "## Makefile targets",
+          "hash": "83ff6b730e30907e",
+          "line_start": 147,
+          "line_end": 147,
+          "metadata": {
+            "section": "FATE makefile targets and variables",
+            "level": 2,
+            "title": "Makefile targets"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p0",
+          "type": "paragraph",
+          "content": "- **`fate-rsync`** Download/synchronize sample files to the configured samples directory.",
+          "hash": "736334ad428a649e",
+          "line_start": 149,
+          "line_end": 149,
+          "metadata": {
+            "section": "Makefile targets"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p1",
+          "type": "paragraph",
+          "content": "- **`fate-list`** Will list all fate/regression test targets.",
+          "hash": "751ec17674b5a431",
+          "line_start": 151,
+          "line_end": 151,
+          "metadata": {
+            "section": "Makefile targets"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p2",
+          "type": "paragraph",
+          "content": "- **`fate-list-failing`** List the fate tests that failed the last time they were executed.",
+          "hash": "1611fd534cff16f2",
+          "line_start": 153,
+          "line_end": 153,
+          "metadata": {
+            "section": "Makefile targets"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p3",
+          "type": "paragraph",
+          "content": "- **`fate-clear-reports`** Remove the test reports from previous test executions (getting rid of potentially stale results from fate-list-failing).",
+          "hash": "d375a09eb584c4be",
+          "line_start": 155,
+          "line_end": 155,
+          "metadata": {
+            "section": "Makefile targets"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p4",
+          "type": "paragraph",
+          "content": "- **`fate`** Run the FATE test suite (requires the fate-suite dataset).",
+          "hash": "dbe8948e13ebe3f0",
+          "line_start": 157,
+          "line_end": 157,
+          "metadata": {
+            "section": "Makefile targets"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p5",
+          "type": "heading",
+          "content": "## Makefile variables",
+          "hash": "2c785a72f5338823",
+          "line_start": 159,
+          "line_end": 159,
+          "metadata": {
+            "section": "Makefile targets",
+            "level": 2,
+            "title": "Makefile variables"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p0",
+          "type": "paragraph",
+          "content": "- **`V`** Verbosity level, can be set to 0, 1 or 2.",
+          "hash": "26857b75b91ae395",
+          "line_start": 161,
+          "line_end": 161,
+          "metadata": {
+            "section": "Makefile variables"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p1",
+          "type": "paragraph",
+          "content": "  - 0: show just the test arguments",
+          "hash": "86cede1a79ea2597",
+          "line_start": 163,
+          "line_end": 163,
+          "metadata": {
+            "section": "Makefile variables"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p2",
+          "type": "paragraph",
+          "content": "  - 1: show just the command used in the test",
+          "hash": "53a88d3bf7a94314",
+          "line_start": 165,
+          "line_end": 165,
+          "metadata": {
+            "section": "Makefile variables"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p3",
+          "type": "paragraph",
+          "content": "  - 2: show everything",
+          "hash": "b67f1e6ee355d736",
+          "line_start": 167,
+          "line_end": 167,
+          "metadata": {
+            "section": "Makefile variables"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p4",
+          "type": "paragraph",
+          "content": "- **`SAMPLES`** Specify or override the path to the FATE samples at make time, it has a meaning only while running the regression tests.",
+          "hash": "355d1d07556e9a7a",
+          "line_start": 169,
+          "line_end": 169,
+          "metadata": {
+            "section": "Makefile variables"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p5",
+          "type": "paragraph",
+          "content": "- **`THREADS`** Specify how many threads to use while running regression tests, it is quite useful to detect thread-related regressions.",
+          "hash": "f6452f9bc63956d9",
+          "line_start": 171,
+          "line_end": 171,
+          "metadata": {
+            "section": "Makefile variables"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p6",
+          "type": "paragraph",
+          "content": "  This variable may be set to the string \"random\", optionally followed by a number, like \"random99\", This will cause each test to use a random number of threads. If a number is specified, it is used as a maximum number of threads, otherwise 16 is the maximum.",
+          "hash": "33e086ff4e33338a",
+          "line_start": 173,
+          "line_end": 173,
+          "metadata": {
+            "section": "Makefile variables"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p7",
+          "type": "paragraph",
+          "content": "  In case a test fails, the thread count used for it will be written into the errfile.",
+          "hash": "859cbd12289c7e3b",
+          "line_start": 175,
+          "line_end": 175,
+          "metadata": {
+            "section": "Makefile variables"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p8",
+          "type": "paragraph",
+          "content": "- **`THREAD_TYPE`** Specify which threading strategy test, either `slice` or `frame`, by default `slice+frame`",
+          "hash": "f1363630d3edd4eb",
+          "line_start": 177,
+          "line_end": 177,
+          "metadata": {
+            "section": "Makefile variables"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p9",
+          "type": "paragraph",
+          "content": "- **`CPUFLAGS`** Specify CPU flags.",
+          "hash": "56f780033b1db92d",
+          "line_start": 179,
+          "line_end": 179,
+          "metadata": {
+            "section": "Makefile variables"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p10",
+          "type": "paragraph",
+          "content": "- **`TARGET_EXEC`** Specify or override the wrapper used to run the tests. The `TARGET_EXEC` option provides a way to run FATE wrapped in `valgrind`, `qemu-user` or `wine` or on remote targets through `ssh`.",
+          "hash": "c5b7fe72b842c57c",
+          "line_start": 181,
+          "line_end": 181,
+          "metadata": {
+            "section": "Makefile variables"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p11",
+          "type": "paragraph",
+          "content": "- **`GEN`** Set to `1` to generate the missing or mismatched references.",
+          "hash": "a6d16643b077a029",
+          "line_start": 183,
+          "line_end": 183,
+          "metadata": {
+            "section": "Makefile variables"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p12",
+          "type": "paragraph",
+          "content": "- **`HWACCEL`** Specify which hardware acceleration to use while running regression tests, by default `none` is used.",
+          "hash": "a1c133b59b974ead",
+          "line_start": 185,
+          "line_end": 185,
+          "metadata": {
+            "section": "Makefile variables"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p13",
+          "type": "paragraph",
+          "content": "- **`KEEP`** Set to `1` to keep temp files generated by fate test(s) when test is successful. Default is `0`, which removes these files. Files are always kept when a test fails.",
+          "hash": "f5231139d17f7f3c",
+          "line_start": 187,
+          "line_end": 187,
+          "metadata": {
+            "section": "Makefile variables"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p14",
+          "type": "heading",
+          "content": "## Examples",
+          "hash": "0d19ab4631978576",
+          "line_start": 189,
+          "line_end": 189,
+          "metadata": {
+            "section": "Makefile variables",
+            "level": 2,
+            "title": "Examples"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "fate.md-p0",
+          "type": "code_block",
+          "content": "``` text\nmake V=1 SAMPLES=/var/fate/samples THREADS=2 CPUFLAGS=mmx fate\n```",
+          "hash": "4105da08e1d9dd43",
+          "line_start": 191,
+          "line_end": 193,
+          "metadata": {
+            "section": "Examples"
+          },
+          "status": "pending"
+        }
+      ]
     },
     "general/authors.md": {
       "upstream_hash": "5100cc82adcd8a09",

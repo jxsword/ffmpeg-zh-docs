@@ -6,70 +6,70 @@ pages:
       title: mjpegadump
     text2movsub:
       level: 2
-      slug: smpte436m_005fto_005feia608
+      slug: smpte436m_to_eia608
       title: smpte436m_to_eia608
   components/codecs.md:
     aacenc:
       level: 1
-      slug: Audio-Encoders
+      slug: audio-encoders
       title: Audio Encoders
     codec_002doptions:
       level: 1
-      slug: Description
+      slug: description
       title: Description
     ffv1:
       level: 3
-      slug: Options
+      slug: options
       title: Options
     flac:
       level: 3
-      slug: Floating-Point-Only-AC-3-Encoding-Options
+      slug: floating-point-only-ac-3-encoding-options
       title: Floating-Point-Only AC-3 Encoding Options
     libfdk_002daac_002denc:
       level: 3
-      slug: Options
+      slug: options
       title: Options
     liblc3_002denc:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     libmp3lame:
       level: 3
-      slug: Options
+      slug: options
       title: Options
     libshine:
       level: 3
-      slug: Option-Mapping
+      slug: option-mapping
       title: Option Mapping
     mjpegenc:
       level: 3
-      slug: Options
+      slug: options
       title: Options
     opusenc:
       level: 3
-      slug: Options
+      slug: options
       title: Options
     wavpackenc:
       level: 3
-      slug: Options
+      slug: options
       title: Options
   components/devices.md: {}
   components/filters.md:
     Filtergraph-syntax:
       level: 1
-      slug: Filtergraph-description
+      slug: filtergraph-description
       title: Filtergraph description
     afade:
       level: 3
-      slug: Commands
+      slug: commands
       title: Commands
     afir:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     aformat:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     all:
       level: 2
@@ -77,11 +77,11 @@ pages:
       title: colorspace
     allrgb:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     allyuv:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     amerge:
       level: 2
@@ -101,43 +101,43 @@ pages:
       title: blackframe
     blockdetect:
       level: 3
-      slug: Commands
+      slug: commands
       title: Commands
     blurdetect:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     bwdif:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     chromakey:
       level: 3
-      slug: Commands
+      slug: commands
       title: Commands
     color:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     color_005fprofile:
       level: 2
-      slug: vpp_005famf
+      slug: vpp_amf
       title: vpp_amf
     colorchart:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     colorspectrum:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     commands:
       level: 1
-      slug: Timeline-editing
+      slug: timeline-editing
       title: Timeline editing
     concat-filter:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     coreimage:
       level: 2
@@ -145,11 +145,11 @@ pages:
       title: copy
     coreimagesrc:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     cue:
       level: 3
-      slug: Commands
+      slug: commands
       title: Commands
     curves:
       level: 2
@@ -157,11 +157,11 @@ pages:
       title: cue
     decimate:
       level: 3
-      slug: Commands
+      slug: commands
       title: Commands
     derain:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     dilate:
       level: 2
@@ -173,35 +173,35 @@ pages:
       title: detelecine
     dnn_005fprocessing:
       level: 2
-      slug: dnn_005fdetect
+      slug: dnn_detect
       title: dnn_detect
     drawgraph:
       level: 3
-      slug: Commands
+      slug: commands
       title: Commands
     drawtext:
       level: 3
-      slug: Commands
+      slug: commands
       title: Commands
     drawtext_005fexpansion:
       level: 3
-      slug: Syntax
+      slug: syntax
       title: Syntax
     drawvg:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     ebur128:
       level: 3
-      slug: Commands
+      slug: commands
       title: Commands
     erosion:
       level: 3
-      slug: Commands
+      slug: commands
       title: Commands
     filtergraph-escaping:
       level: 2
-      slug: Filtergraph-syntax
+      slug: filtergraph-syntax
       title: Filtergraph syntax
     format:
       level: 2
@@ -209,11 +209,11 @@ pages:
       title: floodfill
     fps:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     framesync:
       level: 1
-      slug: Changing-options-at-runtime-with-a-command
+      slug: changing-options-at-runtime-with-a-command
       title: Changing options at runtime with a command
     frei0r:
       level: 2
@@ -225,15 +225,15 @@ pages:
       title: fspp
     graphmonitor:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     haldclut:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     haldclutsrc:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     histogram:
       level: 2
@@ -241,7 +241,7 @@ pages:
       title: histeq
     hqdn3d:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     hstack:
       level: 2
@@ -249,7 +249,7 @@ pages:
       title: hqx
     hwdownload:
       level: 3
-      slug: Commands
+      slug: commands
       title: Commands
     hwupload:
       level: 2
@@ -261,47 +261,47 @@ pages:
       title: hwupload
     libvmaf:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     lut:
       level: 3
-      slug: Commands
+      slug: commands
       title: Commands
     lut3d:
       level: 3
-      slug: Commands
+      slug: commands
       title: Commands
     lutrgb:
       level: 3
-      slug: Commands
+      slug: commands
       title: Commands
     lutyuv:
       level: 3
-      slug: Commands
+      slug: commands
       title: Commands
     movie:
       level: 3
-      slug: Commands
+      slug: commands
       title: Commands
     nlmeans:
       level: 3
-      slug: Commands
+      slug: commands
       title: Commands
     nlmeans_005fopencl:
       level: 3
-      slug: Example
+      slug: example
       title: Example
     nullsrc:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     overlay:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     overlay_005fcuda:
       level: 2
-      slug: colorspace_005fcuda
+      slug: colorspace_cuda
       title: colorspace_cuda
     p_002fc_002fn_002fu_002fb-meaning:
       level: 2
@@ -313,19 +313,19 @@ pages:
       title: owdenoise
     pad_005fcuda:
       level: 2
-      slug: overlay_005fcuda
+      slug: overlay_cuda
       title: overlay_cuda
     pal100bars:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     pal75bars:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     palettegen:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     pan:
       level: 2
@@ -337,15 +337,15 @@ pages:
       title: colorspace
     program_005fopencl:
       level: 3
-      slug: Example
+      slug: example
       title: Example
     psnr:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     pullup:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     qrencode_005fexpressions:
       level: 2
@@ -353,7 +353,7 @@ pages:
       title: qrencode
     qrencode_005ftext_005fexpansion:
       level: 3
-      slug: qrencode-Expressions
+      slug: qrencode-expressions
       title: qrencode Expressions
     range:
       level: 2
@@ -361,7 +361,7 @@ pages:
       title: colorspace
     rgbtestsrc:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     scale:
       level: 2
@@ -369,15 +369,15 @@ pages:
       title: sab
     scale_005fcuda:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     scdet:
       level: 3
-      slug: Commands
+      slug: commands
       title: Commands
     select:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     selectivecolor:
       level: 2
@@ -385,11 +385,11 @@ pages:
       title: scdet
     separatefields:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     setfield:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     setparams:
       level: 2
@@ -397,7 +397,7 @@ pages:
       title: setfield
     setpts:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     showspectrum:
       level: 2
@@ -405,27 +405,27 @@ pages:
       title: showspatial
     signalstats:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     signature:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     siti:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     smartblur:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     smptebars:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     smptehdbars:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     space:
       level: 2
@@ -433,11 +433,11 @@ pages:
       title: colorspace
     spp:
       level: 3
-      slug: Commands
+      slug: commands
       title: Commands
     sr:
       level: 3
-      slug: Commands
+      slug: commands
       title: Commands
     sr_005famf:
       level: 2
@@ -445,23 +445,23 @@ pages:
       title: sr
     subtitles:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     testsrc:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     testsrc2:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     tile:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     tonemap:
       level: 3
-      slug: Commands
+      slug: commands
       title: Commands
     transpose:
       level: 2
@@ -477,7 +477,7 @@ pages:
       title: unpremultiply
     untile:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     vidstabdetect:
       level: 2
@@ -485,7 +485,7 @@ pages:
       title: vectorscope
     vidstabtransform:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     vignette:
       level: 2
@@ -497,48 +497,48 @@ pages:
       title: vmafmotion
     vstack:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     whisper:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     xpsnr:
       level: 3
-      slug: Commands
+      slug: commands
       title: Commands
     xstack:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     yadif:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     yuvtestsrc:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     zscale:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
   components/formats.md:
     Format-stream-specifiers:
       level: 1
-      slug: Format-Options
+      slug: format-options
       title: Format Options
     a64:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     adts:
       level: 3
-      slug: Options
+      slug: options
       title: Options
     aea:
       level: 3
-      slug: Options
+      slug: options
       title: Options
     aiff:
       level: 2
@@ -546,11 +546,11 @@ pages:
       title: aea
     alp:
       level: 3
-      slug: Options
+      slug: options
       title: Options
     asf:
       level: 3
-      slug: Options
+      slug: options
       title: Options
     avi:
       level: 2
@@ -566,31 +566,31 @@ pages:
       title: asf
     crc:
       level: 3
-      slug: Options
+      slug: options
       title: Options
     dash:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     fifo:
       level: 3
-      slug: Example
+      slug: example
       title: Example
     framecrc:
       level: 3
-      slug: Options
+      slug: options
       title: Options
     framehash:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     framemd5:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     gif:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     hash:
       level: 2
@@ -598,11 +598,11 @@ pages:
       title: gxf
     hds:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     hls:
       level: 3
-      slug: Example
+      slug: example
       title: Example
     ico:
       level: 2
@@ -618,19 +618,19 @@ pages:
       title: libopenmpt
     mccenc:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     md5:
       level: 3
-      slug: Options
+      slug: options
       title: Options
     metadata:
       level: 3
-      slug: Options
+      slug: options
       title: Options
     raw-muxers:
       level: 1
-      slug: Muxers
+      slug: muxers
       title: Muxers
     rcwtdec:
       level: 2
@@ -642,7 +642,7 @@ pages:
       title: pdv
     segment:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     streamhash:
       level: 2
@@ -650,7 +650,7 @@ pages:
       title: smoothstreaming
     tee:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     wav:
       level: 2
@@ -658,7 +658,7 @@ pages:
       title: w64
     whip:
       level: 3
-      slug: Example
+      slug: example
       title: Example
   components/protocols.md:
     cache:
@@ -669,528 +669,532 @@ pages:
   components/scaler.md:
     scaler:
       level: 1
-      slug: Scaler-Options
+      slug: scaler-options
       title: Scaler Options
     scaler_005foptions:
       level: 1
-      slug: Description
+      slug: description
       title: Description
     sws_005fflags:
       level: 1
-      slug: Scaler-Options
+      slug: scaler-options
       title: Scaler Options
     sws_005fparams:
       level: 1
-      slug: Scaler-Options
+      slug: scaler-options
       title: Scaler Options
   components/utils.md:
     channel-layout-syntax:
       level: 2
-      slug: Color
+      slug: color
       title: Color
     color-syntax:
       level: 2
-      slug: Ratio
+      slug: ratio
       title: Ratio
     date-syntax:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
     quoting_005fand_005fescaping:
       level: 1
-      slug: Syntax
+      slug: syntax
       title: Syntax
     ratio-syntax:
       level: 2
-      slug: Video-rate
+      slug: video-rate
       title: Video rate
     time-duration-syntax:
       level: 2
-      slug: Date
+      slug: date
       title: Date
     video-rate-syntax:
       level: 2
-      slug: Video-size
+      slug: video-size
       title: Video size
     video-size-syntax:
       level: 3
-      slug: Examples
+      slug: examples
       title: Examples
   general/APIchanges.md: {}
   general/authors.md: {}
   general/community.md:
     Code-of-Conduct:
       level: 1
-      slug: Community-Committee
+      slug: community-committee
       title: Community Committee
     Community-Committee:
       level: 3
-      slug: Decisions
+      slug: decisions
       title: Decisions
     General-Assembly:
       level: 1
-      slug: Organisation
+      slug: organisation
       title: Organisation
     Resolution-Process:
       level: 1
-      slug: Technical-Committee
+      slug: technical-committee
       title: Technical Committee
     Technical-Committee:
       level: 1
-      slug: Voting
+      slug: voting
       title: Voting
     Voting:
       level: 1
-      slug: General-Assembly
+      slug: general-assembly
       title: General Assembly
   general/developer.md:
     Becoming-a-maintainer:
       level: 2
-      slug: MAINTAINERS
+      slug: maintainers
       title: MAINTAINERS
     Coding-Rules:
       level: 1
-      slug: Introduction
+      slug: introduction
       title: Introduction
     Criteria-for-Point-Releases:
       level: 1
-      slug: Release-process
+      slug: release-process
       title: Release process
     Development-Policy:
       level: 2
-      slug: Miscellaneous-conventions
+      slug: miscellaneous-conventions
       title: Miscellaneous conventions
     MAINTAINERS:
       level: 1
-      slug: Maintenance-process
+      slug: maintenance-process
       title: Maintenance process
     Maintenance:
       level: 2
-      slug: Using-Valgrind
+      slug: using-valgrind
       title: Using Valgrind
     Major-version-bumps:
       level: 3
-      slug: Removing-interfaces
+      slug: removing-interfaces
       title: Removing interfaces
     Naming-conventions:
       level: 2
-      slug: Comments
+      slug: comments
       title: Comments
     Regression-tests:
       level: 1
-      slug: Patch-review-process
+      slug: patch-review-process
       title: Patch review process
     Release-process:
       level: 2
-      slug: Becoming-a-maintainer
+      slug: becoming-a-maintainer
       title: Becoming a maintainer
     Removing-interfaces:
       level: 3
-      slug: Adding-new-interfaces
+      slug: adding-new-interfaces
       title: Adding new interfaces
     SIMD_002fDSP:
       level: 3
-      slug: SIMD_002fDSP
+      slug: simddsp
       title: SIMD/DSP
     Submitting-patches:
       level: 2
-      slug: Documentation_002fOther
+      slug: documentationother
       title: Documentation/Other
   general/drawvg-reference.md:
     Colors:
       level: 3
-      slug: Variable-Names
+      slug: variable-names
       title: Variable Names
     Command-print:
       level: 3
-      slug: Function-print
+      slug: function-print
       title: Function print
     Frame-Metadata:
       level: 2
-      slug: State-Stack
+      slug: state-stack
       title: State Stack
     Procedures:
       level: 3
-      slug: Early-Exit
+      slug: early-exit
       title: Early Exit
     State-Stack:
       level: 2
-      slug: Transformations
+      slug: transformations
       title: Transformations
     User-Variables:
       level: 2
-      slug: Variables
+      slug: variables
       title: Variables
     cmd_005fC:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fH:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fL:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fM:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fQ:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fS:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fT:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fV:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fZ:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005farc:
       level: 1
-      slug: Commands
+      slug: commands
       title: Commands
     cmd_005farcn:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fbreak:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fc:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fcall:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fcircle:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fclip:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fclosepath:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fcolorstop:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fcurveto:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fdefhsla:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fdefrgba:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fellipse:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005feoclip:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005feofill:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005ffill:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fgetmetadata:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fh:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fif:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fl:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005flineargrad:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005flineto:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fm:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fmoveto:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fnewpath:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fpreserve:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fprint:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fproc:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fq:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fradialgrad:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005frcurveto:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005frect:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005frepeat:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fresetclip:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fresetdash:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fresetmatrix:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005frestore:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005frlineto:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005frmoveto:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005frotate:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005froundedrect:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fs:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fsave:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fscale:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fscalexy:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fsetcolor:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fsetdash:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fsetdashoffset:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fsethsla:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fsetlinecap:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fsetlinejoin:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fsetlinewidth:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fsetrgba:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fsetvar:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fstroke:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005ft:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005ftranslate:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fv:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     cmd_005fz:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     comp_002doperators:
       level: 2
-      slug: ''
+      slug: section
       title: ''
     current-pattern:
       level: 3
-      slug: User-Variables
+      slug: user-variables
       title: User Variables
     current-point:
       level: 2
-      slug: Paths
+      slug: paths
       title: Paths
     fill-rules:
       level: 3
-      slug: Defining-a-Shape
+      slug: defining-a-shape
       title: Defining a Shape
     func_002drandomg:
       level: 3
-      slug: Function
+      slug: function
       title: Function
     implicit-commands:
       level: 3
-      slug: Single-Letter-Aliases
+      slug: single-letter-aliases
       title: Single-Letter Aliases
     transformation-matrix:
       level: 3
-      slug: Variables
+      slug: variables
       title: Variables
   general/faq.md:
     How-can-I-concatenate-video-files:
       level: 2
-      slug: How-can-I-join-video-files_003f
+      slug: how-can-i-join-video-files
       title: How can I join video files?
     background-task:
       level: 2
-      slug: I-have-a-stretched-video_002c-why-does-scaling-not-fix-it_003f
+      slug: i-have-a-stretched-video-why-does-scaling-not-fix-it
       title: I have a stretched video, why does scaling not fix it?
-  general/fate.md: {}
+  general/fate.md:
+    makefile-variables:
+      level: 2
+      slug: makefile-variables
+      title: Makefile variables
   general/general.md: {}
   general/git-howto.md:
     Updating-the-source-tree-to-the-latest-revision:
       level: 2
-      slug: Cloning-the-source-tree
+      slug: cloning-the-source-tree
       title: Cloning the source tree
   general/mailing-list-faq.md:
     How-do-I-ask-a-question-or-send-a-message-to-a-mailing-list_003f:
       level: 2
-      slug: What-type-of-questions-can-I-ask_003f
+      slug: what-type-of-questions-can-i-ask
       title: What type of questions can I ask?
     How-do-I-delete-my-message-in-the-moderation-queue_003f:
       level: 2
-      slug: How-long-does-it-take-for-my-message-in-the-moderation-queue-to-be-approved_003f
+      slug: how-long-does-it-take-for-my-message-in-the-moderation-queue-to-be-approved
       title: How long does it take for my message in the moderation queue to be approved?
     How-do-I-disable-mail-delivery-without-unsubscribing_003f:
       level: 2
-      slug: How-do-I-filter-mailing-list-messages_003f
+      slug: how-do-i-filter-mailing-list-messages
       title: How do I filter mailing list messages?
     How-do-I-subscribe_003f:
       level: 1
-      slug: Subscribing-_002f-Unsubscribing
+      slug: subscribing-unsubscribing
       title: Subscribing / Unsubscribing
     What-is-the-message-size-limit_003f:
       level: 2
-      slug: What-is-top-posting_003f
+      slug: what-is-top-posting
       title: What is top-posting?
     What-is-top_002dposting_003f:
       level: 2
-      slug: Is-there-an-alternative-to-the-mailing-list_003f
+      slug: is-there-an-alternative-to-the-mailing-list
       title: Is there an alternative to the mailing list?
     Where-are-the-archives_003f:
       level: 1
-      slug: Archives
+      slug: archives
       title: Archives
     Who-do-I-contact-if-I-have-a-problem-with-the-mailing-list_003f:
       level: 2
-      slug: Why-do-I-keep-getting-unsubscribed-from-ffmpeg-devel_003f
+      slug: why-do-i-keep-getting-unsubscribed-from-ffmpeg-devel
       title: Why do I keep getting unsubscribed from ffmpeg-devel?
     Why-do-I-keep-getting-unsubscribed-from-ffmpeg_002ddevel_003f:
       level: 2
-      slug: Why-are-my-sent-messages-not-showing-up_003f
+      slug: why-are-my-sent-messages-not-showing-up
       title: Why are my sent messages not showing up?
     Why-is-my-message-awaiting-moderator-approval_003f:
       level: 1
-      slug: Moderation-Queue
+      slug: moderation-queue
       title: Moderation Queue
     Why-is-the-mailing-list-munging-my-address_003f:
       level: 2
-      slug: How-do-I-disable-mail-delivery-without-unsubscribing_003f
+      slug: how-do-i-disable-mail-delivery-without-unsubscribing
       title: How do I disable mail delivery without unsubscribing?
   general/nut.md: {}
   general/platform.md:
     Cross-compilation-for-Windows-with-Linux:
       level: 3
-      slug: Linking-to-FFmpeg-with-Microsoft-Visual-C_002b_002b
+      slug: linking-to-ffmpeg-with-microsoft-visual-c
       title: Linking to FFmpeg with Microsoft Visual C++
     Darwin:
       level: 2
-      slug: _0028Open_0029Solaris
+      slug: opensolaris
       title: (Open)Solaris
   libraries/libavcodec.md: {}
   libraries/libavdevice.md: {}
@@ -1203,43 +1207,31 @@ pages:
   manual/ffmpeg.md:
     Loopback-decoders:
       level: 3
-      slug: Complex-filtergraphs
+      slug: complex-filtergraphs
       title: Complex filtergraphs
     Stream-selection:
       level: 2
-      slug: Loopback-decoders
+      slug: loopback-decoders
       title: Loopback decoders
-    Stream-specifiers:
-      level: 1
-      slug: Options
-      title: Options
     filter_005fcomplex_005foption:
       level: 2
-      slug: Advanced-options
+      slug: advanced-options
       title: Advanced options
     filter_005foption:
       level: 2
-      slug: Main-options
+      slug: main-options
       title: Main options
     stats_005fenc_005foptions:
       level: 2
-      slug: Advanced-options
+      slug: advanced-options
       title: Advanced options
     stdin-option:
       level: 2
-      slug: Main-options
+      slug: main-options
       title: Main options
     vstats_005ffile_005fformat:
       level: 3
       slug: avpreset-files
       title: avpreset files
-  manual/ffplay.md:
-    Stream-specifiers:
-      level: 1
-      slug: Options
-      title: Options
-  manual/ffprobe.md:
-    Stream-specifiers:
-      level: 1
-      slug: Options
-      title: Options
+  manual/ffplay.md: {}
+  manual/ffprobe.md: {}

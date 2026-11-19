@@ -1,0 +1,159 @@
+# FFmpeg 中文文档翻译质量度量指标（quality-metrics.yml）
+# 对齐 fmt-zh-docs 惯例 + PLAN §11 目标；CI 每次运行收集，发布前人工抽检
+
+# 自动化指标（CI 每次运行收集）
+automated_metrics:
+  first_pass_coverage:
+    name: "首轮全量覆盖率（可译段）"
+    description: "M2 首轮翻译覆盖的可译段比例（分母=去重可译段数，skipped 豁免）"
+    target: "100%"
+    measure: "translated 段 / 可译段总数"
+    threshold_warning: 98
+    threshold_error: 95
+
+  terminology_consistency_rate:
+    name: "术语一致性通过率"
+    description: "术语表术语在译文中统一翻译的比例"
+    target: ">= 99%"
+    measure: "validate_translation.py 术语检查通过 / 总术语出现次数"
+    threshold_warning: 95
+    threshold_error: 90
+
+  code_block_integrity_rate:
+    name: "代码块完整性"
+    description: "译文代码块与原文完全一致的比例"
+    target: "100%"
+    measure: "代码块 hash 对比一致 / 总代码块数"
+    threshold_warning: 99.9
+    threshold_error: 99
+
+  inline_code_integrity_rate:
+    name: "内联代码完整性"
+    description: "译文内联代码与原文完全一致的比例"
+    target: "100%"
+    measure: "内联代码对比一致 / 总内联代码数"
+    threshold_warning: 99.9
+    threshold_error: 99
+
+  structure_integrity_rate:
+    name: "结构完整性"
+    description: "标题层级、列表、表格结构对比一致"
+    target: "100%"
+    measure: "结构元素对比一致 / 总结构元素数"
+    threshold_warning: 99.9
+    threshold_error: 99
+
+  conversion_validation_errors:
+    name: "转换校验器错误数"
+    description: "validate_structure.py 六项校验错误数"
+    target: "0"
+    measure: "校验器 errors 计数"
+    threshold_warning: 0
+    threshold_error: 1
+
+  backfill_validation_errors:
+    name: "回填校验器错误数"
+    description: "validate_backfill.py（API 层）错误数"
+    target: "0"
+    measure: "校验器 errors 计数"
+    threshold_warning: 0
+    threshold_error: 1
+
+# 人工抽检指标（每版本发布前）
+human_metrics:
+  human_sampling_pass_rate:
+    name: "人工抽检通过率"
+    description: "随机抽取 50 段，专业评审通过的比例"
+    target: ">= 95%"
+    measure: "评审通过段落数 / 50"
+    sample_size: 50
+    threshold_warning: 90
+    threshold_error: 85
+
+  translation_fluency_score:
+    name: "翻译流畅度评分"
+    description: "专业评审对翻译流畅度的打分"
+    target: ">= 4.5/5"
+    measure: "平均评分"
+    threshold_warning: 4.0
+    threshold_error: 3.5
+
+  terminology_accuracy_score:
+    name: "术语准确性评分"
+    description: "专业评审对术语翻译准确性的打分"
+    target: ">= 4.8/5"
+    measure: "平均评分"
+    threshold_warning: 4.5
+    threshold_error: 4.0
+
+# 增量指标（M3 起生效）
+efficiency_metrics:
+  incremental_translation_coverage:
+    name: "增量翻译覆盖率"
+    description: "增量同步后自动翻译通过校验段落 / 总需翻译段落"
+    target: ">= 90%"
+    measure: "自动通过段落 / 待翻译段落"
+    threshold_warning: 80
+    threshold_error: 70
+
+  tm_hit_rate:
+    name: "翻译记忆命中率"
+    description: "TM 复用翻译 / 总翻译请求"
+    target: ">= 30%"
+    measure: "TM 复用数 / 总请求数"
+    threshold_warning: 20
+    threshold_error: 10
+
+  llm_cost_per_k_chars:
+    name: "单千字翻译成本"
+    description: "LLM API 调用成本 / 翻译字符数（M3 起有 API 调用后生效）"
+    target: "<= $0.01"
+    measure: "总成本 / 翻译字符数(千)"
+    threshold_warning: 0.02
+    threshold_error: 0.05
+
+# 监控告警规则
+alerting_rules:
+  - name: "terminology_consistency_drop"
+    metric: "terminology_consistency_rate"
+    condition: "< 95%"
+    severity: "warning"
+    channels: ["github_issue"]
+
+  - name: "code_block_integrity_fail"
+    metric: "code_block_integrity_rate"
+    condition: "< 100%"
+    severity: "critical"
+    channels: ["github_issue"]
+
+  - name: "pipeline_failure"
+    metric: "pipeline_status"
+    condition: "failed"
+    severity: "critical"
+    channels: ["github_issue"]
+
+  - name: "stale_translation"
+    metric: "days_since_upstream_update"
+    condition: "> 45"
+    severity: "warning"
+    channels: ["github_issue"]
+
+  - name: "llm_cost_spike"
+    metric: "daily_llm_cost_usd"
+    condition: "> 1.0"
+    severity: "warning"
+    channels: ["email"]
+
+# 仪表盘配置（简化：fmt 全量仪表盘 M4 视需要再启用）
+dashboard:
+  refresh_interval: "weekly"
+  panels:
+    - title: "翻译覆盖率"
+      metric: "first_pass_coverage"
+      type: "gauge"
+    - title: "术语一致性趋势"
+      metric: "terminology_consistency_rate"
+      type: "timeseries"
+    - title: "校验器状态"
+      metric: "conversion_validation_errors"
+      type: "stat"

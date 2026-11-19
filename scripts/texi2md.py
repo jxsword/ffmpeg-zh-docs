@@ -72,10 +72,17 @@ def flatten_includes(text: str, srcdir: Path, stack: tuple = (),
 
 
 def strip_texi_boilerplate(text: str) -> str:
-    """去除对 md 无意义的 texinfo 外壳指令（titlepage/contents/top）。"""
+    """去除对 md 无意义的 texinfo 外壳指令。
+
+    titlepage/contents/top/settitle 为外壳元数据（settitle 已在剥离前提取）；
+    @node 剥离：fate.texi 的 @node Top 与全文组合触发 texi2any DocBook
+    转换器崩溃（"Not a HASH reference"，2026-11-20 实测二分定位），
+    且本管线不依赖 node（锚点来自 @anchor 与标题）。"""
     text = re.sub(r'@titlepage.*?@end titlepage', '', text, flags=re.S)
     text = re.sub(r'^@contents\s*$', '', text, flags=re.M)
     text = re.sub(r'^@top\s*$', '', text, flags=re.M)
+    text = re.sub(r'^@settitle\s+.*$', '', text, flags=re.M)
+    text = re.sub(r'^@node\s+.*$', '', text, flags=re.M)
     return text
 
 

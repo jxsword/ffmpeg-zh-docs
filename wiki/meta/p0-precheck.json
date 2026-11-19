@@ -1,0 +1,322 @@
+{
+  "EncodingGuide": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 0,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 7781
+  },
+  "Encode/H.264": {
+    "macros": 0,
+    "images": 5,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 10,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 31883
+  },
+  "Encode/H.265": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 3,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 17914
+  },
+  "Encode/AV1": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 14,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 33426
+  },
+  "Encode/VP9": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 9,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 21442
+  },
+  "Encode/AAC": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 1,
+    "code_blocks": 13,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 24628
+  },
+  "Encode/MP3": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 1,
+    "code_blocks": 1,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 12940
+  },
+  "CompilationGuide": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 0,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 12678
+  },
+  "CompilationGuide/Ubuntu": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 29,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 51660
+  },
+  "CompilationGuide/Generic": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 1,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 18253
+  },
+  "CompilationGuide/macOS": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 14,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 20478
+  },
+  "CompilationGuide/MinGW": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 7,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 26670
+  },
+  "CompilationGuide/MSVC": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 14,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 19142
+  },
+  "CrossCompilingForWindows": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 0,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 8005
+  },
+  "FilteringGuide": {
+    "macros": 0,
+    "images": 5,
+    "includes": 0,
+    "tables": 1,
+    "code_blocks": 20,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 35370
+  },
+  "Scaling": {
+    "macros": 0,
+    "images": 10,
+    "includes": 0,
+    "tables": 1,
+    "code_blocks": 19,
+    "level": "macro-heavy",
+    "ok": true,
+    "bytes": 26013
+  },
+  "CroppingVideo": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 2,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 8367
+  },
+  "Concatenate": {
+    "macros": 0,
+    "images": 5,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 20,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 24447
+  },
+  "AudioVolume": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 7,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 10396
+  },
+  "FancyFilteringExamples": {
+    "macros": 0,
+    "images": 31,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 27,
+    "level": "degrade",
+    "ok": true,
+    "bytes": 39017
+  },
+  "Slideshow": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 12,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 17046
+  },
+  "AfadeCurves": {
+    "macros": 0,
+    "images": 22,
+    "includes": 0,
+    "tables": 1,
+    "code_blocks": 0,
+    "level": "macro-heavy",
+    "ok": true,
+    "bytes": 23892
+  },
+  "FFprobeTips": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 14,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 15260
+  },
+  "How%20to%20use%20-map%20option": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 0,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 7489
+  },
+  "Seeking": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 5,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 20305
+  },
+  "Creating%20multiple%20outputs": {
+    "macros": 0,
+    "images": 6,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 10,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 19481
+  },
+  "HWAccelIntro": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 3,
+    "code_blocks": 23,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 41120
+  },
+  "Hardware/VAAPI": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 1,
+    "code_blocks": 38,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 27921
+  },
+  "Hardware/QuickSync": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 2,
+    "code_blocks": 24,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 25308
+  },
+  "Hardware/AMF": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 2,
+    "code_blocks": 20,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 30419
+  },
+  "StreamingGuide": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 23,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 38406
+  },
+  "How%20to%20burn%20subtitles%20into%20the%20video": {
+    "macros": 0,
+    "images": 4,
+    "includes": 0,
+    "tables": 0,
+    "code_blocks": 0,
+    "level": "macro-light",
+    "ok": true,
+    "bytes": 8118
+  }
+}

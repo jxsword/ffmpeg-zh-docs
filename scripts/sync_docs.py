@@ -323,15 +323,19 @@ def convert_apichanges(srcdir: Path, out_root: Path) -> dict:
     return {'out': APICHANGES_OUT, 'bytes': len(md.encode('utf-8'))}
 
 
-def slugify_title(title: str) -> str:
-    """近似 python-markdown-nonorm：空格→'-'，保留大小写，剔除其余标点。"""
+def mkdocs_slug(title: str) -> str:
+    """对齐 mkdocs toc.slugify（python-markdown）：小写、空格→'-'、
+    剔除其余标点但保留 '-' 与 '_'（\\w 与 '-' 均在 mkdocs 保留字符集内）。
+
+    与 normalize_anchor_id（官方 HTML 命名，_005f 编码）分工：
+    本函数产出"我方站点锚点"，官方锚点兼容经 anchor_map id → mkdocs_slug 映射。"""
     out = []
     for ch in title:
         if ch.isalnum():
-            out.append(ch)
-        elif ch == ' ':
-            out.append('-')
-    return ''.join(out).strip('-') or 'section'
+            out.append(ch.lower())
+        elif ch in (' ', '-', '_'):
+            out.append(ch if ch != ' ' else '-')
+    return re.sub(r'-+', '-', ''.join(out)).strip('-') or 'section'
 
 
 def build_anchor_map(pairs: dict, out_path: Path) -> int:
@@ -352,12 +356,12 @@ def build_anchor_map(pairs: dict, out_path: Path) -> int:
                 continue
             entries[aid] = {'title': a.get('raw_title') or '',
                             'level': a.get('level', 0),
-                            'slug': texi2md.normalize_anchor_id(a.get('raw_title') or '')}
+                            # slug=我方站点锚点（mkdocs 小写口径）；官方大小写/
+                            # _005f 编码锚点作为 map 键由 fix_links 兜底映射
+                            'slug': mkdocs_slug(a.get('raw_title') or '')}
         pages_map.setdefault(page, {}).update(entries)
-    if out_path.exists():
-        old = yaml.safe_load(out_path.read_text(encoding='utf-8')) or {}
-        for p, es in (old.get('pages') or {}).items():
-            pages_map.setdefault(p, {}).update(es)
+    # anchor_map 为纯派生产物（构建期生成，PLAN §7.1），整体重写不做旧文件合并——
+    # 合并会让过时 slug 回写覆盖（实测踩坑）
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(yaml.safe_dump(amap, allow_unicode=True,
                                        sort_keys=True), encoding='utf-8')

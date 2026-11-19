@@ -1,20 +1,26 @@
 {
   "title": "FFmpeg Automated Testing Environment",
-  "anchors": [],
+  "anchors": [
+    {
+      "id": "makefile-variables",
+      "raw_title": "Makefile variables",
+      "level": 2
+    }
+  ],
   "restructure": {
-    "tables": 0,
-    "bullets": 0
+    "tables": 1,
+    "bullets": 2
   },
   "code_languages": {
     "shell": 0,
     "c": 0,
-    "text": 0
+    "text": 12
   },
   "docbook_counts": {
-    "headings": 0,
-    "tables": 0,
-    "screens": 0,
-    "lists": 0,
-    "list_items": 0
+    "headings": 8,
+    "tables": 1,
+    "screens": 12,
+    "lists": 4,
+    "list_items": 22
   }
 }
