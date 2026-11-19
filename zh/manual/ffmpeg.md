@@ -1,70 +1,66 @@
-!!! warning "翻译占位页"
-    本页为英文原文占位（翻译进行中，进度见[翻译看板](https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md)）。
-    术语与示例以英文原文为准。
-
-# Synopsis
+# 概要
 
 ffmpeg \[\<global_options\>\] {\[\<input_file_options\>\] -i `input_url`} ... {\[\<output_file_options\>\] `output_url`} ...
 
-# Description
+# 描述
 
-`ffmpeg` is a universal media converter. It can read a wide variety of inputs - including live grabbing/recording devices - filter, and transcode them into a plethora of output formats.
+`ffmpeg` 是一个通用的多媒体转换器。它可以读取多种多样的输入——包括实时采集/录制设备——进行滤镜处理，并将它们转码为大量的输出格式。
 
-`ffmpeg` reads from an arbitrary number of inputs (which can be regular files, pipes, network streams, grabbing devices, etc.), specified by the `-i` option, and writes to an arbitrary number of outputs, which are specified by a plain output url. Anything found on the command line which cannot be interpreted as an option is considered to be an output url.
+`ffmpeg` 从任意数量的输入读取数据（输入可以是常规文件、管道、网络流、采集设备等），输入由 `-i` 选项指定；并向任意数量的输出写入数据，输出由一个普通的输出 url 指定。命令行上任何无法被解释为选项的内容都会被视为输出 url。
 
-Each input or output can, in principle, contain any number of elementary streams of different types (video/audio/subtitle/attachment/data), though the allowed stream counts and/or types may be limited by the container format. Selecting which streams from which inputs will go into which output is either done automatically or with the `-map` option (see the [Stream selection](#stream-selection) chapter).
+原则上，每个输入或输出可以包含任意数量的不同类型的基本流（视频/音频/字幕/附件/数据），尽管容器格式可能限制允许的流数量和/或类型。选择哪些输入中的哪些流进入哪个输出，要么自动完成，要么用 `-map` 选项完成（参见[流选择](#流选择)章节）。
 
-To refer to inputs/outputs in options, you must use their indices (0-based). E.g. the first input is `0`, the second is `1`, etc. Similarly, streams within an input/output are referred to by their indices. E.g. `2:3` refers to the fourth stream in the third input or output. Also see the [Stream specifiers](common-options.md#stream-specifiers) chapter.
+要在选项中引用输入/输出，必须使用它们的索引（从 0 开始）。例如，第一个输入是 `0`，第二个是 `1`，依此类推。类似地，输入/输出内部的流也通过索引引用。例如 `2:3` 指第三个输入或输出中的第四条流。另请参见[流说明符](#Stream-specifiers)章节。
 
-As a general rule, options are applied to the next specified file. Therefore, order is important, and you can have the same option on the command line multiple times. Each occurrence is then applied to the next input or output file. Exceptions from this rule are the global options (e.g. verbosity level), which should be specified first.
+一般而言，选项作用于其后指定的文件。因此顺序很重要，同一个选项也可以在命令行上多次出现。每次出现的选项都会作用于其后的那个输入或输出文件。此规则的例外是全局选项（例如详细程度），它们应放在最前面。
 
-Do not mix input and output files – first specify all input files, then all output files. Also do not mix options which belong to different files. All options apply ONLY to the next input or output file and are reset between files.
+不要混用输入文件和输出文件——先指定所有输入文件，再指定所有输出文件。同样不要混用属于不同文件的选项。所有选项只对其后的那个输入或输出文件生效，并且在文件之间会重置。
 
-Some simple examples follow.
+下面给出一些简单示例。
 
-- Convert an input media file to a different format, by re-encoding media streams:
+- 通过对媒体流重新编码，将一个输入媒体文件转换为不同的格式：
 
   ``` text
   ffmpeg -i input.avi output.mp4
   ```
 
-- Set the video bitrate of the output file to 64 kbit/s:
+- 将输出文件的视频码率设置为 64 kbit/s：
 
   ``` text
   ffmpeg -i input.avi -b:v 64k -bufsize 64k output.mp4
   ```
 
-- Force the frame rate of the output file to 24 fps:
+- 将输出文件的帧率强制为 24 fps：
 
   ``` text
   ffmpeg -i input.avi -r 24 output.mp4
   ```
 
-- Force the frame rate of the input file (valid for raw formats only) to 1 fps and the frame rate of the output file to 24 fps:
+- 将输入文件（仅对原始格式有效）的帧率强制为 1 fps，同时将输出文件的帧率强制为 24 fps：
 
   ``` text
   ffmpeg -r 1 -i input.m2v -r 24 output.mp4
   ```
 
-The format option may be needed for raw input files.
+对于原始格式的输入文件，可能需要 format 选项。
 
-# Detailed description
+# 详细描述
 
-`ffmpeg` builds a transcoding pipeline out of the components listed below. The program's operation then consists of input data chunks flowing from the sources down the pipes towards the sinks, while being transformed by the components they encounter along the way.
+`ffmpeg` 用下面列出的组件构建出一条转码管线。程序的运行过程，就是输入数据块从源 (source) 沿着管道流向汇 (sink)，并在途中被沿途遇到的组件不断变换的过程。
 
-The following kinds of components are available:
+可用的组件有以下几类：
 
-- *Demuxers* (short for "demultiplexers") read an input source in order to extract
+- *解复用器*（"demultiplexer" 的简称）读取输入源以提取
 
-  - global properties such as metadata or chapters;
+  - 元数据、章节等全局属性；
 
-  - list of input elementary streams and their properties
+  - 输入基本流列表及其属性
 
-  One demuxer instance is created for each `-i` option, and sends encoded *packets* to *decoders* or *muxers*.
+  每个 `-i` 选项会创建一个解复用器实例，它把已编码的*包* (packet) 发送给*解码器*或*复用器*。
 
-  In other literature, demuxers are sometimes called *splitters*, because their main function is splitting a file into elementary streams (though some files only contain one elementary stream).
+  在其他文献中，解复用器有时也被称为 *分离器* (splitter)，因为它的主要功能是把文件拆分为基本流（尽管有些文件只包含一条基本流）。
 
-  A schematic representation of a demuxer looks like this:
+  解复用器的示意图如下：
 
   ``` text
   ┌──────────┬───────────────────────┐
@@ -91,9 +87,9 @@ The following kinds of components are available:
        │
   ```
 
-- *Decoders* receive encoded (compressed) *packets* for an audio, video, or subtitle elementary stream, and decode them into raw *frames* (arrays of pixels for video, PCM for audio). A decoder is typically associated with (and receives its input from) an elementary stream in a *demuxer*, but sometimes may also exist on its own (see [Loopback decoders](#loopback-decoders)).
+- *解码器*接收音频、视频或字幕基本流的已编码（压缩）*包*，并将其解码为原始*帧* (frame)（视频为像素数组，音频为 PCM）。解码器通常与*解复用器*中的一条基本流相关联（并从它接收输入），但有时也可以独立存在（参见[回环解码器](#回环解码器)）。
 
-  A schematic representation of a decoder looks like this:
+  解码器的示意图如下：
 
   ``` text
             ┌─────────┐
@@ -103,11 +99,11 @@ The following kinds of components are available:
             └─────────┘
   ```
 
-- *Filtergraphs* process and transform raw audio or video *frames*. A filtergraph consists of one or more individual *filters* linked into a graph. Filtergraphs come in two flavors - *simple* and *complex*, configured with the `-filter` and `-filter_complex` options, respectively.
+- *滤镜链图* (filtergraph) 处理并变换原始音频或视频*帧*。滤镜链图由一个或多个单独的*滤镜* (filter) 连接成图构成。滤镜链图有两种形式——*简单*和*复杂*，分别用 `-filter` 和 `-filter_complex` 选项配置。
 
-  A simple filtergraph is associated with an *output elementary stream*; it receives the input to be filtered from a *decoder* and sends filtered output to that output stream's *encoder*.
+  简单滤镜链图与一个*输出基本流*相关联；它从*解码器*接收待滤镜处理的输入，并把滤镜处理后的输出发送给该输出流的*编码器*。
 
-  A simple video filtergraph that performs deinterlacing (using the `yadif` deinterlacer) followed by resizing (using the `scale` filter) can look like this:
+  一个先做去隔行（用 `yadif` 去隔行器）、再做缩放（用 `scale` 滤镜）的简单视频滤镜链图如下所示：
 
   ``` text
                ┌────────────────────────┐
@@ -119,9 +115,9 @@ The following kinds of components are available:
                └────────────────────────┘
   ```
 
-  A complex filtergraph is standalone and not associated with any specific stream. It may have multiple (or zero) inputs, potentially of different types (audio or video), each of which receiving data either from a decoder or another complex filtergraph's output. It also has one or more outputs that feed either an encoder or another complex filtergraph's input.
+  复杂滤镜链图是独立的，不与任何特定流相关联。它可以有多个（或零个）输入，且类型可以不同（音频或视频），每个输入的数据既可以来自解码器，也可以来自另一个复杂滤镜链图的输出。它还有一个或多个输出，向编码器或另一个复杂滤镜链图的输入馈送数据。
 
-  The following example diagram represents a complex filtergraph with 3 inputs and 2 outputs (all video):
+  下面的示例图展示了一个有 3 个输入和 2 个输出的复杂滤镜链图（均为视频）：
 
   ``` text
             ┌─────────────────────────────────────────────────┐
@@ -139,11 +135,11 @@ The following kinds of components are available:
             └─────────────────────────────────────────────────┘
   ```
 
-  Frames from second input are overlaid over those from the first. Frames from the third input are rescaled, then the duplicated into two identical streams. One of them is overlaid over the combined first two inputs, with the result exposed as the filtergraph's first output. The other duplicate ends up being the filtergraph's second output.
+  第二个输入的帧被叠加到第一个输入的帧之上。第三个输入的帧先被重新缩放，然后复制为两条相同的流。其中一条叠加在前两个输入合并后的画面上，结果作为滤镜链图的第一个输出；另一条复制流则成为滤镜链图的第二个输出。
 
-- *Encoders* receive raw audio, video, or subtitle *frames* and encode them into encoded *packets*. The encoding (compression) process is typically *lossy* - it degrades stream quality to make the output smaller; some encoders are *lossless*, but at the cost of much higher output size. A video or audio encoder receives its input from some filtergraph's output, subtitle encoders receive input from a decoder (since subtitle filtering is not supported yet). Every encoder is associated with some muxer's *output elementary stream* and sends its output to that muxer.
+- *编码器*接收原始音频、视频或字幕*帧*，并把它们编码为已编码的*包*。编码（压缩）过程通常是有损的——它会降低流质量以缩小输出体积；有些编码器是无损的，但代价是输出体积大得多。视频或音频编码器从某个滤镜链图的输出接收输入，字幕编码器从解码器接收输入（因为字幕滤镜处理尚未支持）。每个编码器都与某个复用器的*输出基本流*相关联，并把输出发送给该复用器。
 
-  A schematic representation of an encoder looks like this:
+  编码器的示意图如下：
 
   ``` text
                ┌─────────┐
@@ -153,9 +149,9 @@ The following kinds of components are available:
                └─────────┘
   ```
 
-- *Muxers* (short for "multiplexers") receive encoded *packets* for their elementary streams from encoders (the *transcoding* path) or directly from demuxers (the *streamcopy* path), interleave them (when there is more than one elementary stream), and write the resulting bytes into the output file (or pipe, network stream, etc.).
+- *复用器*（multiplexer 的简称）从编码器（*转码*路径）或直接从解复用器（*流复制*路径）接收其基本流的已编码*包*，把它们交错排列（当基本流多于一条时），并把结果字节写入输出文件（或管道、网络流等）。
 
-  A schematic representation of a muxer looks like this:
+  复用器的示意图如下：
 
   ``` text
                          ┌──────────────────────┬───────────┐
@@ -182,9 +178,9 @@ The following kinds of components are available:
                                                       ▼
   ```
 
-## Streamcopy
+## 流复制
 
-The simplest pipeline in `ffmpeg` is single-stream *streamcopy*, that is copying one *input elementary stream*'s packets without decoding, filtering, or encoding them. As an example, consider an input file called `INPUT.mkv` with 3 elementary streams, from which we take the second and write it to file `OUTPUT.mp4`. A schematic representation of such a pipeline looks like this:
+`ffmpeg` 中最简单的管线是单流*流复制* (streamcopy)，即不解码、不滤镜处理、不编码地复制一条*输入基本流*的包。举例来说，设有一个名为 `INPUT.mkv` 的输入文件，含 3 条基本流，我们取第二条写入文件 `OUTPUT.mp4`。这样的管线示意如下：
 
 ``` text
 ┌──────────┬─────────────────────┐
@@ -202,29 +198,29 @@ The simplest pipeline in `ffmpeg` is single-stream *streamcopy*, that is copying
 └──────────┴─────────────────────┘
 ```
 
-The above pipeline can be constructed with the following commandline:
+上面的管线可以用下面的命令行构建：
 
 ``` text
 ffmpeg -i INPUT.mkv -map 0:1 -c copy OUTPUT.mp4
 ```
 
-In this commandline
+在这条命令行中：
 
-- there is a single input `INPUT.mkv`;
+- 有一个输入 `INPUT.mkv`；
 
-- there are no input options for this input;
+- 该输入没有任何输入选项；
 
-- there is a single output `OUTPUT.mp4`;
+- 有一个输出 `OUTPUT.mp4`；
 
-- there are two output options for this output:
+- 该输出有两个输出选项：
 
-  - `-map 0:1` selects the input stream to be used - from input with index 0 (i.e. the first one) the stream with index 1 (i.e. the second one);
+  - `-map 0:1` 选择要使用的输入流——从索引 0 的输入（即第一个输入）中取索引 1 的流（即第二条流）；
 
-  - `-c copy` selects the `copy` encoder, i.e. streamcopy with no decoding or encoding.
+  - `-c copy` 选择 `copy` 编码器，即不解码、不编码的流复制。
 
-Streamcopy is useful for changing the elementary stream count, container format, or modifying container-level metadata. Since there is no decoding or encoding, it is very fast and there is no quality loss. However, it might not work in some cases because of a variety of factors (e.g. certain information required by the target container is not available in the source). Applying filters is obviously also impossible, since filters work on decoded frames.
+流复制适合用来改变基本流数量、更换容器格式或修改容器级元数据。由于不涉及解码和编码，它非常快且没有质量损失。但在某些情况下可能行不通，原因多种多样（例如目标容器所需的某些信息在源中不存在）。滤镜处理显然也无法进行，因为滤镜作用于解码后的帧。
 
-More complex streamcopy scenarios can be constructed - e.g. combining streams from two input files into a single output:
+还可以构建更复杂的流复制场景——例如把两个输入文件中的流合并到一个输出：
 
 ``` text
 ┌──────────┬────────────────────┐         ┌────────────────────┬───────────┐
@@ -239,15 +235,15 @@ More complex streamcopy scenarios can be constructed - e.g. combining streams fr
 └──────────┴────────────────────┘
 ```
 
-that can be built by the commandline
+它可以用下面的命令行构建：
 
 ``` text
 ffmpeg -i INPUT0.mkv -i INPUT1.aac -map 0:0 -map 1:0 -c copy OUTPUT.mp4
 ```
 
-The output `-map` option is used twice here, creating two streams in the output file - one fed by the first input and one by the second. The single instance of the `-c` option selects streamcopy for both of those streams. You could also use multiple instances of this option together with [Stream specifiers](common-options.md#stream-specifiers) to apply different values to each stream, as will be demonstrated in following sections.
+这里输出选项 `-map` 用了两次，从而在输出文件中创建两条流——一条由第一个输入馈送，一条由第二个输入馈送。单次出现的 `-c` 选项为这两条流同时选择流复制。也可以把该选项的多个实例与[流说明符](#Stream-specifiers)结合使用，为每条流应用不同的值，后续小节会演示这一点。
 
-A converse scenario is splitting multiple streams from a single input into multiple outputs:
+与之相反的场景是把单个输入中的多条流拆分到多个输出：
 
 ``` text
 ┌──────────┬─────────────────────┐          ┌───────────────────┬───────────┐
@@ -262,27 +258,27 @@ A converse scenario is splitting multiple streams from a single input into multi
                                             └───────────────────┴───────────┘
 ```
 
-built with
+构建方式如下：
 
 ``` text
 ffmpeg -i INPUT.mkv -map 0:0 -c copy OUTPUT0.mp4 -map 0:1 -c copy OUTPUT1.mp4
 ```
 
-Note how a separate instance of the `-c` option is needed for every output file even though their values are the same. This is because non-global options (which is most of them) only apply in the context of the file before which they are placed.
+注意，尽管值相同，每个输出文件仍需要单独的 `-c` 选项实例。这是因为非全局选项（绝大多数选项都属此类）只在其前面所放置文件的上下文中生效。
 
-These examples can of course be further generalized into arbitrary remappings of any number of inputs into any number of outputs.
+当然，这些示例还可以进一步推广为把任意数量的输入任意重新映射到任意数量的输出。
 
-## Transcoding
+## 转码
 
-*Transcoding* is the process of decoding a stream and then encoding it again. Since encoding tends to be computationally expensive and in most cases degrades the stream quality (i.e. it is *lossy*), you should only transcode when you need to and perform streamcopy otherwise. Typical reasons to transcode are:
+*转码* (transcoding) 是先对流解码、然后再次编码的过程。由于编码通常计算开销大，且多数情况下会降低流质量（即有损），因此应当只在必要时转码，其余情况用流复制。需要转码的典型原因有：
 
-- applying filters - e.g. resizing, deinterlacing, or overlaying video; resampling or mixing audio;
+- 应用滤镜——例如对视频缩放、去隔行或叠加；对音频重采样或混音；
 
-- you want to feed the stream to something that cannot decode the original codec.
+- 想把流馈送给无法解码原始编解码器的组件。
 
-Note that `ffmpeg` will transcode all audio, video, and subtitle streams unless you specify `-c copy` for them.
+注意，除非为音频、视频和字幕流指定 `-c copy`，否则 `ffmpeg` 会把它们全部转码。
 
-Consider an example pipeline that reads an input file with one audio and one video stream, transcodes the video and copies the audio into a single output file. This can be schematically represented as follows
+考虑一个示例管线：读取一个含一条音频流和一条视频流的输入文件，对视频转码、对音频流复制，写入单个输出文件。其示意如下：
 
 ``` text
 ┌──────────┬─────────────────────┐
@@ -307,23 +303,23 @@ Consider an example pipeline that reads an input file with one audio and one vid
 └──────────┴─────────────────────┘
 ```
 
-and implemented with the following commandline:
+并用下面的命令行实现：
 
 ``` text
 ffmpeg -i INPUT.mkv -map 0:v -map 0:a -c:v libx264 -c:a copy OUTPUT.mp4
 ```
 
-Note how it uses stream specifiers `:v` and `:a` to select input streams and apply different values of the `-c` option to them; see the [Stream specifiers](common-options.md#stream-specifiers) section for more details.
+注意它如何用流说明符 `:v` 和 `:a` 选择输入流，并为它们应用不同的 `-c` 选项值；更多细节参见[流说明符](#Stream-specifiers)小节。
 
-## Filtering
+## 滤镜处理
 
-When transcoding, audio and video streams can be filtered before encoding, with either a *simple* or *complex* filtergraph.
+转码时，音频和视频流可以在编码前做滤镜处理，既可以用*简单*滤镜链图，也可以用*复杂*滤镜链图。
 
-### Simple filtergraphs
+### 简单滤镜链图
 
-Simple filtergraphs are those that have exactly one input and output, both of the same type (audio or video). They are configured with the per-stream `-filter` option (with `-vf` and `-af` aliases for `-filter:v` (video) and `-filter:a` (audio) respectively). Note that simple filtergraphs are tied to their output stream, so e.g. if you have multiple audio streams, `-af` will create a separate filtergraph for each one.
+简单滤镜链图指恰好有一个输入和一个输出、且两者类型相同（音频或视频）的滤镜链图。它们用每流的 `-filter` 选项配置（`-vf` 和 `-af` 分别是 `-filter:v`（视频）和 `-filter:a`（音频）的别名）。注意，简单滤镜链图与其输出流绑定，因此例如有多条音频流时，`-af` 会为每条流创建单独的滤镜链图。
 
-Taking the transcoding example from above, adding filtering (and omitting audio, for clarity) makes it look like this:
+沿用上文的转码示例，加入滤镜处理（为清晰起见省略音频）后如下所示：
 
 ``` text
 ┌──────────┬───────────────┐
@@ -350,19 +346,19 @@ Taking the transcoding example from above, adding filtering (and omitting audio,
 └──────────┴───────────────┘
 ```
 
-### Complex filtergraphs
+### 复杂滤镜链图
 
-Complex filtergraphs are those which cannot be described as simply a linear processing chain applied to one stream. This is the case, for example, when the graph has more than one input and/or output, or when output stream type is different from input. Complex filtergraphs are configured with the `-filter_complex` option. Note that this option is global, since a complex filtergraph, by its nature, cannot be unambiguously associated with a single stream or file. Each instance of `-filter_complex` creates a new complex filtergraph, and there can be any number of them.
+复杂滤镜链图指无法简单描述为作用于单条流的线性处理链的滤镜链图。例如，图有多个输入和/或输出，或输出流类型与输入不同时就是这种情况。复杂滤镜链图用 `-filter_complex` 选项配置。注意该选项是全局的，因为复杂滤镜链图本质上无法与单条流或单个文件明确关联。每个 `-filter_complex` 实例都会创建一个新的复杂滤镜链图，数量不限。
 
-A trivial example of a complex filtergraph is the `overlay` filter, which has two video inputs and one video output, containing one video overlaid on top of the other. Its audio counterpart is the `amix` filter.
+复杂滤镜链图的一个简单例子是 `overlay` 滤镜：它有两个视频输入和一个视频输出，把一个视频叠加在另一个之上。对应的音频滤镜是 `amix`。
 
-## Loopback decoders
+## 回环解码器
 
-While decoders are normally associated with demuxer streams, it is also possible to create "loopback" decoders that decode the output from some encoder and allow it to be fed back to complex filtergraphs. This is done with the `-dec` directive, which takes as a parameter the index of the output stream that should be decoded. Every such directive creates a new loopback decoder, indexed with successive integers starting at zero. These indices should then be used to refer to loopback decoders in complex filtergraph link labels, as described in the documentation for `-filter_complex`.
+解码器通常与解复用器的流相关联，但也可以创建"回环"解码器，把某个编码器的输出解码后回馈给复杂滤镜链图。这用 `-dec` 指令完成，该指令以要解码的输出流索引为参数。每个这样的指令都会创建一个新的回环解码器，索引从 0 开始依次编号。这些索引用于在复杂滤镜链图的连接标签中引用回环解码器，详见 `-filter_complex` 的文档。
 
-Decoding AVOptions can be passed to loopback decoders by placing them before `-dec`, analogously to input/output options.
+解码用 AVOptions 可以像输入/输出选项一样，放在 `-dec` 之前传给回环解码器。
 
-E.g. the following example:
+例如下面的示例：
 
 ``` text
 ffmpeg -i INPUT                                        \
@@ -372,17 +368,17 @@ ffmpeg -i INPUT                                        \
   -map '[stack]' -c:v ffv1 OUTPUT
 ```
 
-reads an input video and
+该命令读取一个输入视频，然后
 
-- (line 2) encodes it with `libx264` at low quality;
+- （第 2 行）以低质量用 `libx264` 编码；
 
-- (line 3) decodes this encoded stream using 3 threads;
+- （第 3 行）用 3 个线程解码这条已编码流；
 
-- (line 4) places decoded video side by side with the original input video;
+- （第 4 行）把解码后的视频与原始输入视频并排拼接；
 
-- (line 5) combined video is then losslessly encoded and written into `OUTPUT`.
+- （第 5 行）拼接后的视频再经无损编码写入 `OUTPUT`。
 
-Such a transcoding pipeline can be represented with the following diagram:
+这样的转码管线可以用下图表示：
 
 ``` text
 ┌──────────┬───────────────┐
@@ -414,53 +410,53 @@ Such a transcoding pipeline can be represented with the following diagram:
 └──────────┴───────────────┘
 ```
 
-# Stream selection
+# 流选择
 
-`ffmpeg` provides the `-map` option for manual control of stream selection in each output file. Users can skip `-map` and let ffmpeg perform automatic stream selection as described below. The `-vn / -an / -sn / -dn` options can be used to skip inclusion of video, audio, subtitle and data streams respectively, whether manually mapped or automatically selected, except for those streams which are outputs of complex filtergraphs.
+`ffmpeg` 提供 `-map` 选项，用于在每个输出文件中手动控制流选择。用户也可以不用 `-map`，让 ffmpeg 按下文所述执行自动流选择。`-vn / -an / -sn / -dn` 选项可分别用于不收录视频、音频、字幕和数据流——无论它们是手动映射的还是自动选择的，但复杂滤镜链图的输出流除外。
 
-## Description
+## 描述
 
-The sub-sections that follow describe the various rules that are involved in stream selection. The examples that follow next show how these rules are applied in practice.
+以下小节描述流选择涉及的各种规则。随后的示例展示这些规则在实践中如何应用。
 
-While every effort is made to accurately reflect the behavior of the program, FFmpeg is under continuous development and the code may have changed since the time of this writing.
+尽管本文尽力准确反映程序的行为，但 FFmpeg 仍在持续开发中，代码可能在本文撰写之后已经变化。
 
-### Automatic stream selection
+### 自动流选择
 
-In the absence of any map options for a particular output file, ffmpeg inspects the output format to check which type of streams can be included in it, viz. video, audio and/or subtitles. For each acceptable stream type, ffmpeg will pick one stream, when available, from among all the inputs.
+当某个输出文件没有指定任何 map 选项时，ffmpeg 会检查输出格式，判断它可以收录哪些类型的流，即视频、音频和/或字幕。对每种可接受的流类型，ffmpeg 会从所有输入中挑选一条流（如果有）。
 
-It will select that stream based upon the following criteria:
+它按以下标准选择该流：
 
-- for video, it is the stream with the highest resolution,
+- 视频：选择分辨率最高的流，
 
-- for audio, it is the stream with the most channels,
+- 音频：选择声道数最多的流，
 
-- for subtitles, it is the first subtitle stream found but there's a caveat. The output format's default subtitle encoder can be either text-based or image-based, and only a subtitle stream of the same type will be chosen.
+- 字幕：选择找到的第一条字幕流，但有一个限制：输出格式的默认字幕编码器要么基于文本、要么基于图像，只会选择与其类型相同的字幕流。
 
-In the case where several streams of the same type rate equally, the stream with the lowest index is chosen.
+当同类型的多条流不相上下时，选择索引最小的流。
 
-Data or attachment streams are not automatically selected and can only be included using `-map`.
+数据流和附件流不会被自动选择，只能用 `-map` 收录。
 
-### Manual stream selection
+### 手动流选择
 
-When `-map` is used, only user-mapped streams are included in that output file, with one possible exception for filtergraph outputs described below.
+使用 `-map` 时，输出文件只收录用户映射的流，唯一的例外是下文描述的滤镜链图输出。
 
-### Complex filtergraphs
+### 复杂滤镜链图
 
-If there are any complex filtergraph output streams with unlabeled pads, they will be added to the first output file. This will lead to a fatal error if the stream type is not supported by the output format. In the absence of the map option, the inclusion of these streams leads to the automatic stream selection of their types being skipped. If map options are present, these filtergraph streams are included in addition to the mapped streams.
+如果存在带未标注端口的复杂滤镜链图输出流，它们会被加入第一个输出文件。如果输出格式不支持该流类型，将导致致命错误。在没有 map 选项的情况下，收录这些流会使相应类型的自动流选择被跳过。如果有 map 选项，这些滤镜链图流会与映射的流一起收录。
 
-Complex filtergraph output streams with labeled pads must be mapped once and exactly once.
+带标注端口的复杂滤镜链图输出流必须被映射一次且仅一次。
 
-### Stream handling
+### 流处理
 
-Stream handling is independent of stream selection, with an exception for subtitles described below. Stream handling is set via the `-codec` option addressed to streams within a specific *output* file. In particular, codec options are applied by ffmpeg after the stream selection process and thus do not influence the latter. If no `-codec` option is specified for a stream type, ffmpeg will select the default encoder registered by the output file muxer.
+流处理独立于流选择，字幕是一个例外（见下文）。流处理用针对特定*输出*文件中各流的 `-codec` 选项设置。特别地，编解码器选项由 ffmpeg 在流选择过程之后应用，因此不影响流选择。如果某类流没有指定 `-codec` 选项，ffmpeg 会选择输出文件复用器注册的默认编码器。
 
-An exception exists for subtitles. If a subtitle encoder is specified for an output file, the first subtitle stream found of any type, text or image, will be included. ffmpeg does not validate if the specified encoder can convert the selected stream or if the converted stream is acceptable within the output format. This applies generally as well: when the user sets an encoder manually, the stream selection process cannot check if the encoded stream can be muxed into the output file. If it cannot, ffmpeg will abort and *all* output files will fail to be processed.
+字幕是个例外。如果为输出文件指定了字幕编码器，则无论文本还是图像类型，找到的第一条字幕流都会被收录。ffmpeg 不校验指定的编码器能否转换所选流，也不校验转换后的流能否被输出格式接受。一般来说也是如此：用户手动设置编码器时，流选择过程无法检查编码后的流能否复用进输出文件。如果不能，ffmpeg 会中止，且*所有*输出文件都无法处理。
 
-## Examples
+## 示例
 
-The following examples illustrate the behavior, quirks and limitations of ffmpeg's stream selection methods.
+下面的示例展示 ffmpeg 流选择方法的行为、特性和局限。
 
-They assume the following three input files.
+这些示例假设存在以下三个输入文件。
 
 ``` text
 input file 'A.avi'
@@ -480,43 +476,43 @@ input file 'C.mkv'
       stream 2: subtitles (image)
 ```
 
-**Example: automatic stream selection**
+**示例：自动流选择**
 
 ``` text
 ffmpeg -i A.avi -i B.mp4 out1.mkv out2.wav -map 1:a -c:a copy out3.mov
 ```
 
-There are three output files specified, and for the first two, no `-map` options are set, so ffmpeg will select streams for these two files automatically.
+这里指定了三个输出文件，前两个没有设置 `-map` 选项，因此 ffmpeg 会为这两个文件自动选择流。
 
-`out1.mkv` is a Matroska container file and accepts video, audio and subtitle streams, so ffmpeg will try to select one of each type. For video, it will select `stream 0` from `B.mp4`, which has the highest resolution among all the input video streams. For audio, it will select `stream 3` from `B.mp4`, since it has the greatest number of channels. For subtitles, it will select `stream 2` from `B.mp4`, which is the first subtitle stream from among `A.avi` and `B.mp4`.
+`out1.mkv` 是 Matroska 容器文件，可接受视频、音频和字幕流，因此 ffmpeg 会尝试为每种类型各选一条。视频选择 `B.mp4` 的 `stream 0`，它在所有输入视频流中分辨率最高；音频选择 `B.mp4` 的 `stream 3`，因为它的声道数最多；字幕选择 `B.mp4` 的 `stream 2`，它是 `A.avi` 和 `B.mp4` 中的第一条字幕流。
 
-`out2.wav` accepts only audio streams, so only `stream 3` from `B.mp4` is selected.
+`out2.wav` 只接受音频流，因此只选择 `B.mp4` 的 `stream 3`。
 
-For `out3.mov`, since a `-map` option is set, no automatic stream selection will occur. The `-map 1:a` option will select all audio streams from the second input `B.mp4`. No other streams will be included in this output file.
+对于 `out3.mov`，由于设置了 `-map` 选项，不会进行自动流选择。`-map 1:a` 选项会选择第二个输入 `B.mp4` 的所有音频流。该输出文件不会收录其他任何流。
 
-For the first two outputs, all included streams will be transcoded. The encoders chosen will be the default ones registered by each output format, which may not match the codec of the selected input streams.
+对前两个输出，所有收录的流都会被转码。所选编码器是各输出格式注册的默认编码器，可能与所选输入流的编解码器不匹配。
 
-For the third output, codec option for audio streams has been set to `copy`, so no decoding-filtering-encoding operations will occur, or *can* occur. Packets of selected streams shall be conveyed from the input file and muxed within the output file.
+对第三个输出，音频流的编解码器选项已设为 `copy`，因此不会发生解码-滤镜处理-编码操作，也*不可能*发生。所选流的包从输入文件传递过来，直接复用进输出文件。
 
-**Example: automatic subtitles selection**
+**示例：自动字幕选择**
 
 ``` text
 ffmpeg -i C.mkv out1.mkv -c:s dvdsub -an out2.mkv
 ```
 
-Although `out1.mkv` is a Matroska container file which accepts subtitle streams, only a video and audio stream shall be selected. The subtitle stream of `C.mkv` is image-based and the default subtitle encoder of the Matroska muxer is text-based, so a transcode operation for the subtitles is expected to fail and hence the stream isn't selected. However, in `out2.mkv`, a subtitle encoder is specified in the command and so, the subtitle stream is selected, in addition to the video stream. The presence of `-an` disables audio stream selection for `out2.mkv`.
+虽然 `out1.mkv` 是可接受字幕流的 Matroska 容器文件，但只会选择视频流和音频流。`C.mkv` 的字幕流是基于图像的，而 Matroska 复用器的默认字幕编码器是基于文本的，字幕转码预期会失败，因此该流不会被选择。而在 `out2.mkv` 中，命令指定了字幕编码器，因此除视频流外字幕流也会被选择。`-an` 的存在禁用了 `out2.mkv` 的音频流选择。
 
-**Example: unlabeled filtergraph outputs**
+**示例：未标注端口的滤镜链图输出**
 
 ``` text
 ffmpeg -i A.avi -i C.mkv -i B.mp4 -filter_complex "overlay" out1.mp4 out2.srt
 ```
 
-A filtergraph is setup here using the `-filter_complex` option and consists of a single video filter. The `overlay` filter requires exactly two video inputs, but none are specified, so the first two available video streams are used, those of `A.avi` and `C.mkv`. The output pad of the filter has no label and so is sent to the first output file `out1.mp4`. Due to this, automatic selection of the video stream is skipped, which would have selected the stream in `B.mp4`. The audio stream with most channels viz. `stream 3` in `B.mp4`, is chosen automatically. No subtitle stream is chosen however, since the MP4 format has no default subtitle encoder registered, and the user hasn't specified a subtitle encoder.
+这里用 `-filter_complex` 选项建立了一个滤镜链图，由单个视频滤镜组成。`overlay` 滤镜需要恰好两个视频输入，但没有指定任何输入，于是使用前两条可用的视频流，即 `A.avi` 和 `C.mkv` 的视频流。该滤镜的输出端口没有标签，因此被送往第一个输出文件 `out1.mp4`。正因如此，视频流的自动选择被跳过——否则本来会选择 `B.mp4` 中的流。声道数最多的音频流（即 `B.mp4` 的 `stream 3`）被自动选中。但没有选择字幕流，因为 MP4 格式没有注册默认字幕编码器，用户也没有指定字幕编码器。
 
-The 2nd output file, `out2.srt`, only accepts text-based subtitle streams. So, even though the first subtitle stream available belongs to `C.mkv`, it is image-based and hence skipped. The selected stream, `stream 2` in `B.mp4`, is the first text-based subtitle stream.
+第二个输出文件 `out2.srt` 只接受基于文本的字幕流。因此，虽然第一条可用字幕流属于 `C.mkv`，但它是基于图像的，故被跳过。被选中的流是 `B.mp4` 的 `stream 2`，它是第一条基于文本的字幕流。
 
-**Example: labeled filtergraph outputs**
+**示例：带标注端口的滤镜链图输出**
 
 ``` text
 ffmpeg -i A.avi -i B.mp4 -i C.mkv -filter_complex "[1:v]hue=s=0[outv];overlay;aresample" \
@@ -525,7 +521,7 @@ ffmpeg -i A.avi -i B.mp4 -i C.mkv -filter_complex "[1:v]hue=s=0[outv];overlay;ar
        -map '[outv]' -map 1:a:0 out3.mkv
 ```
 
-The above command will fail, as the output pad labelled `[outv]` has been mapped twice. None of the output files shall be processed.
+上面的命令会失败，因为标注为 `[outv]` 的输出端口被映射了两次。所有输出文件都不会被处理。
 
 ``` text
 ffmpeg -i A.avi -i B.mp4 -i C.mkv -filter_complex "[1:v]hue=s=0[outv];overlay;aresample" \
@@ -534,9 +530,9 @@ ffmpeg -i A.avi -i B.mp4 -i C.mkv -filter_complex "[1:v]hue=s=0[outv];overlay;ar
        -map 1:a:0 out3.mkv
 ```
 
-This command above will also fail as the hue filter output has a label, `[outv]`, and hasn't been mapped anywhere.
+上面的命令同样会失败，因为 hue 滤镜的输出带有标签 `[outv]`，却没有被映射到任何地方。
 
-The command should be modified as follows,
+应把命令修改如下：
 
 ``` text
 ffmpeg -i A.avi -i B.mp4 -i C.mkv -filter_complex "[1:v]hue=s=0,split=2[outv1][outv2];overlay;aresample" \
@@ -545,207 +541,207 @@ ffmpeg -i A.avi -i B.mp4 -i C.mkv -filter_complex "[1:v]hue=s=0,split=2[outv1][o
         -map '[outv2]' -map 1:a:0 out3.mkv
 ```
 
-The video stream from `B.mp4` is sent to the hue filter, whose output is cloned once using the split filter, and both outputs labelled. Then a copy each is mapped to the first and third output files.
+`B.mp4` 的视频流被送往 hue 滤镜，其输出用 split 滤镜克隆一次，两个输出都带标签。然后各取一份，分别映射到第一个和第三个输出文件。
 
-The overlay filter, requiring two video inputs, uses the first two unused video streams. Those are the streams from `A.avi` and `C.mkv`. The overlay output isn't labelled, so it is sent to the first output file `out1.mp4`, regardless of the presence of the `-map` option.
+overlay 滤镜需要两个视频输入，它使用前两条未被占用的视频流，即 `A.avi` 和 `C.mkv` 的流。overlay 的输出没有标签，因此无论 `-map` 选项是否存在，都会被送往第一个输出文件 `out1.mp4`。
 
-The aresample filter is sent the first unused audio stream, that of `A.avi`. Since this filter output is also unlabelled, it too is mapped to the first output file. The presence of `-an` only suppresses automatic or manual stream selection of audio streams, not outputs sent from filtergraphs. Both these mapped streams shall be ordered before the mapped stream in `out1.mp4`.
+aresample 滤镜接收到第一条未被占用的音频流，即 `A.avi` 的音频流。由于该滤镜的输出同样没有标签，它也被映射到第一个输出文件。`-an` 的存在只会抑制音频流的自动或手动流选择，不会抑制滤镜链图送来的输出。这两条映射进来的流在 `out1.mp4` 中将排在被映射流之前。
 
-The video, audio and subtitle streams mapped to `out2.mkv` are entirely determined by automatic stream selection.
+映射到 `out2.mkv` 的视频、音频和字幕流完全由自动流选择决定。
 
-`out3.mkv` consists of the cloned video output from the hue filter and the first audio stream from `B.mp4`.
+`out3.mkv` 由 hue 滤镜克隆出的视频输出和 `B.mp4` 的第一条音频流组成。
 
-# Options
+# 选项
 
-## Main options
+## 主选项
 
-- **`-f fmt (input/output)`** Force input or output file format. The format is normally auto detected for input files and guessed from the file extension for output files, so this option is not needed in most cases.
+- **`-f fmt (input/output)`** 强制指定输入或输出文件格式。输入文件的格式通常会自动检测，输出文件的格式从文件扩展名推断，因此多数情况下不需要该选项。
 
-- **`-i url (input)`** input file url
+- **`-i url (input)`** 输入文件 url
 
-- **`-y (global)`** Overwrite output files without asking.
+- **`-y (global)`** 不询问，直接覆盖输出文件。
 
-- **`-n (global)`** Do not overwrite output files, and exit immediately if a specified output file already exists.
+- **`-n (global)`** 不覆盖输出文件；若指定的输出文件已存在则立即退出。
 
-- **`-stream_loop number (input)`** Set number of times input stream shall be looped. Loop 0 means no loop, loop -1 means infinite loop.
+- **`-stream_loop number (input)`** 设置输入流的循环次数。循环 0 表示不循环，循环 -1 表示无限循环。
 
-- **`-recast_media (global)`** Allow forcing a decoder of a different media type than the one detected or designated by the demuxer. Useful for decoding media data muxed as data streams.
+- **`-recast_media (global)`** 允许强制使用与解复用器检测或指定类型不同的媒体类型解码器。用于解码被当作数据流复用的媒体数据。
 
-- **`-c[:stream_specifier] codec (input/output,per-stream)`** Select an encoder (when used before an output file) or a decoder (when used before an input file) for one or more streams. \<codec\> is the name of a decoder/encoder or a special value `copy` (output only) to indicate that the stream is not to be re-encoded.
+- **`-c[:stream_specifier] codec (input/output,per-stream)`** 为一条或多条流选择编码器（用在输出文件之前时）或解码器（用在输入文件之前时）。\<codec\> 是解码器/编码器的名称，或特殊值 `copy`（仅限输出），表示该流不再重新编码。
 
-  For example
+  例如
 
   ``` text
   ffmpeg -i INPUT -map 0 -c:v libx264 -c:a copy OUTPUT
   ```
 
-  encodes all video streams with libx264 and copies all audio streams.
+  把所有视频流用 libx264 编码，并复制所有音频流。
 
-  For each stream, the last matching `c` option is applied, so
+  对每条流，最后一个匹配的 `c` 选项生效，因此
 
   ``` text
   ffmpeg -i INPUT -map 0 -c copy -c:v:1 libx264 -c:a:137 libvorbis OUTPUT
   ```
 
-  will copy all the streams except the second video, which will be encoded with libx264, and the 138th audio, which will be encoded with libvorbis.
+  将复制所有流，但第二条视频流用 libx264 编码，第 138 条音频流用 libvorbis 编码。
 
-- **`-t duration (input/output)`** When used as an input option (before `-i`), limit the \<duration\> of data read from the input file.
+- **`-t duration (input/output)`** 作为输入选项使用时（位于 `-i` 之前），限制从输入文件读取数据的 \<duration\>。
 
-  When used as an output option (before an output url), stop writing the output after its duration reaches \<duration\>.
+  作为输出选项使用时（位于输出 url 之前），当输出时长达到 \<duration\> 后停止写入。
 
-  \<duration\> must be a time duration specification, see section "the Time duration section in the ffmpeg-utils(1) manual" in `ffmpeg-utils`.
+  \<duration\> 必须是时长描述，参见 `ffmpeg-utils`（ffmpeg-utils(1) 手册）中的 Time duration（时长）一节。
 
-  -to and -t are mutually exclusive and -t has priority.
+  -to 与 -t 互斥，且 -t 优先。
 
-- **`-to position (input/output)`** Stop writing the output or reading the input at \<position\>. \<position\> must be a time duration specification, see section "the Time duration section in the ffmpeg-utils(1) manual" in `ffmpeg-utils`.
+- **`-to position (input/output)`** 在 \<position\> 处停止写入输出或读取输入。\<position\> 必须是时长描述，参见 `ffmpeg-utils`（ffmpeg-utils(1) 手册）中的 Time duration（时长）一节。
 
-  -to and -t are mutually exclusive and -t has priority.
+  -to 与 -t 互斥，且 -t 优先。
 
-- **`-fs limit_size (output)`** Set the file size limit, expressed in bytes. No further chunk of bytes is written after the limit is exceeded. The size of the output file is slightly more than the requested file size.
+- **`-fs limit_size (output)`** 设置文件大小上限，以字节表示。超过上限后不再写入后续字节块。输出文件的实际大小会略大于请求的文件大小。
 
-- **`-ss position (input/output)`** When used as an input option (before `-i`), seeks in this input file to \<position\>. Note that in most formats it is not possible to seek exactly, so `ffmpeg` will seek to the closest seek point before \<position\>. When transcoding and `-accurate_seek` is enabled (the default), this extra segment between the seek point and \<position\> will be decoded and discarded. When doing stream copy or when `-noaccurate_seek` is used, it will be preserved.
+- **`-ss position (input/output)`** 作为输入选项使用时（位于 `-i` 之前），在该输入文件内定位到 \<position\>。注意多数格式无法做到精确定位，因此 `ffmpeg` 会定位到 \<position\> 之前最近的定位点。转码且 `-accurate_seek` 启用（默认）时，定位点与 \<position\> 之间的这段额外内容会被解码并丢弃。流复制或使用 `-noaccurate_seek` 时，这段内容会被保留。
 
-  When used as an output option (before an output url), decodes but discards input until the timestamps reach \<position\>.
+  作为输出选项使用时（位于输出 url 之前），解码但丢弃输入，直到时间戳到达 \<position\>。
 
-  \<position\> must be a time duration specification, see section "the Time duration section in the ffmpeg-utils(1) manual" in `ffmpeg-utils`.
+  \<position\> 必须是时长描述，参见 `ffmpeg-utils`（ffmpeg-utils(1) 手册）中的 Time duration（时长）一节。
 
-- **`-sseof position (input)`** Like the `-ss` option but relative to the "end of file". That is negative values are earlier in the file, 0 is at EOF.
+- **`-sseof position (input)`** 类似 `-ss` 选项，但相对于"文件末尾"。即负值表示文件中较早的位置，0 表示位于文件末尾。
 
-- **`-isync input_index (input)`** Assign an input as a sync source.
+- **`-isync input_index (input)`** 把某个输入指定为同步源。
 
-  This will take the difference between the start times of the target and reference inputs and offset the timestamps of the target file by that difference. The source timestamps of the two inputs should derive from the same clock source for expected results. If `copyts` is set then `start_at_zero` must also be set. If either of the inputs has no starting timestamp then no sync adjustment is made.
+  它取目标输入与参考输入起始时间之差，并按该差值偏移目标文件的时间戳。要得到预期结果，两个输入的源时间戳应来自同一时钟源。如果设置了 `copyts`，则还必须设置 `start_at_zero`。如果任一输入没有起始时间戳，则不做同步调整。
 
-  Acceptable values are those that refer to a valid ffmpeg input index. If the sync reference is the target index itself or \<-1\>, then no adjustment is made to target timestamps. A sync reference may not itself be synced to any other input.
+  可接受的值是引用有效 ffmpeg 输入索引的值。如果同步参考就是目标索引本身或 \<-1\>，则不调整目标时间戳。同步参考本身不能再同步到其他任何输入。
 
-  Default value is \<-1\>.
+  默认值为 \<-1\>。
 
-- **`-itsoffset offset (input)`** Set the input time offset.
+- **`-itsoffset offset (input)`** 设置输入时间偏移。
 
-  \<offset\> must be a time duration specification, see section "the Time duration section in the ffmpeg-utils(1) manual" in `ffmpeg-utils`.
+  \<offset\> 必须是时长描述，参见 `ffmpeg-utils`（ffmpeg-utils(1) 手册）中的 Time duration（时长）一节。
 
-  The offset is added to the timestamps of the input files. Specifying a positive offset means that the corresponding streams are delayed by the time duration specified in \<offset\>.
+  该偏移会加到输入文件的时间戳上。指定正偏移意味着相应的流延迟 \<offset\> 所指定的时长。
 
-- **`-itsscale scale (input,per-stream)`** Rescale input timestamps. \<scale\> should be a floating point number.
+- **`-itsscale scale (input,per-stream)`** 重新缩放输入时间戳。\<scale\> 应为浮点数。
 
-- **`-timestamp date (output)`** Set the recording timestamp in the container.
+- **`-timestamp date (output)`** 设置容器中的录制时间戳。
 
-  \<date\> must be a date specification, see section "the Date section in the ffmpeg-utils(1) manual" in `ffmpeg-utils`.
+  \<date\> 必须是日期描述，参见 `ffmpeg-utils`（ffmpeg-utils(1) 手册）中的 Date（日期）一节。
 
-- **`-metadata[:metadata_specifier] key=value (output,per-metadata)`** Set a metadata key/value pair.
+- **`-metadata[:metadata_specifier] key=value (output,per-metadata)`** 设置元数据键/值对。
 
-  An optional \<metadata_specifier\> may be given to set metadata on streams, chapters or programs. See `-map_metadata` documentation for details.
+  可给出可选的 \<metadata_specifier\>，为流、章节或节目设置元数据。详见 `-map_metadata` 的文档。
 
-  This option overrides metadata set with `-map_metadata`. It is also possible to delete metadata by using an empty value.
+  该选项会覆盖用 `-map_metadata` 设置的元数据。也可以用空值删除元数据。
 
-  For example, for setting the title in the output file:
+  例如，设置输出文件中的标题：
 
   ``` text
   ffmpeg -i in.avi -metadata title="my title" out.flv
   ```
 
-  To set the language of the first audio stream:
+  设置第一条音频流的语言：
 
   ``` text
   ffmpeg -i INPUT -metadata:s:a:0 language=eng OUTPUT
   ```
 
-- **`-disposition[:stream_specifier] value (output,per-stream)`** Sets the disposition flags for a stream.
+- **`-disposition[:stream_specifier] value (output,per-stream)`** 设置流的 disposition 标志。
 
-  Default value: by default, all disposition flags are copied from the input stream, unless the output stream this option applies to is fed by a complex filtergraph - in that case no disposition flags are set by default.
+  默认值：默认情况下，所有 disposition 标志从输入流复制；若该选项作用的输出流由复杂滤镜链图馈送，则默认不设置任何 disposition 标志。
 
-  \<value\> is a sequence of disposition flags separated by '+' or '-'. A '+' prefix adds the given disposition, '-' removes it. If the first flag is also prefixed with '+' or '-', the resulting disposition is the default value updated by \<value\>. If the first flag is not prefixed, the resulting disposition is \<value\>. It is also possible to clear the disposition by setting it to 0.
+  \<value\> 是以 '+' 或 '-' 分隔的 disposition 标志序列。前缀 '+' 表示添加给定的 disposition，'-' 表示移除。如果第一个标志也带 '+' 或 '-' 前缀，最终的 disposition 是默认值经 \<value\> 更新后的结果；如果第一个标志不带前缀，最终的 disposition 就是 \<value\>。也可以把 disposition 设为 0 来清除它。
 
-  If no `-disposition` options were specified for an output file, ffmpeg will automatically set the 'default' disposition flag on the first stream of each type, when there are multiple streams of this type in the output file and no stream of that type is already marked as default.
+  如果输出文件未指定 `-disposition` 选项，当输出文件中某种类型有多条流且尚无该类型的流被标记为默认时，ffmpeg 会自动在每种类型的第一条流上设置 'default' disposition 标志。
 
-  The `-dispositions` option lists the known disposition flags.
+  `-dispositions` 选项可列出已知的 disposition 标志。
 
-  For example, to make the second audio stream the default stream:
+  例如，把第二条音频流设为默认流：
 
   ``` text
   ffmpeg -i in.mkv -c copy -disposition:a:1 default out.mkv
   ```
 
-  To make the second subtitle stream the default stream and remove the default disposition from the first subtitle stream:
+  把第二条字幕流设为默认流，并移除第一条字幕流的 'default' disposition：
 
   ``` text
   ffmpeg -i in.mkv -c copy -disposition:s:0 0 -disposition:s:1 default out.mkv
   ```
 
-  To add an embedded cover/thumbnail:
+  添加内嵌封面/缩略图：
 
   ``` text
   ffmpeg -i in.mp4 -i IMAGE -map 0 -map 1 -c copy -c:v:1 png -disposition:v:1 attached_pic out.mp4
   ```
 
-  To add the 'original' and remove the 'comment' disposition flag from the first audio stream without removing its other disposition flags:
+  为第一条音频流添加 'original' 并移除 'comment' disposition 标志，不影响其其他 disposition 标志：
 
   ``` text
   ffmpeg -i in.mkv -c copy -disposition:a:0 +original-comment out.mkv
   ```
 
-  To remove the 'original' and add the 'comment' disposition flag to the first audio stream without removing its other disposition flags:
+  为第一条音频流移除 'original' 并添加 'comment' disposition 标志，不影响其其他 disposition 标志：
 
   ``` text
   ffmpeg -i in.mkv -c copy -disposition:a:0 -original+comment out.mkv
   ```
 
-  To set only the 'original' and 'comment' disposition flags on the first audio stream (and remove its other disposition flags):
+  把第一条音频流只设为 'original' 和 'comment' disposition 标志（移除其其他 disposition 标志）：
 
   ``` text
   ffmpeg -i in.mkv -c copy -disposition:a:0 original+comment out.mkv
   ```
 
-  To remove all disposition flags from the first audio stream:
+  移除第一条音频流的所有 disposition 标志：
 
   ``` text
   ffmpeg -i in.mkv -c copy -disposition:a:0 0 out.mkv
   ```
 
-  Not all muxers support embedded thumbnails, and those who do, only support a few formats, like JPEG or PNG.
+  并非所有复用器都支持内嵌缩略图，支持的也只支持少数格式，例如 JPEG 或 PNG。
 
-- **`-program [title=title:][program_num=program_num:]st=stream[:st=stream...] (output)`** Creates a program with the specified \<title\>, \<program_num\> and adds the specified \<stream\>(s) to it.
+- **`-program [title=title:][program_num=program_num:]st=stream[:st=stream...] (output)`** 创建具有指定 \<title\>、\<program_num\> 的节目，并把指定的 \<stream\> 加入其中。
 
-- **`-stream_group [map=input_file_id=stream_group][type=type:]st=stream[:st=stream][:stg=stream_group][:id=stream_group_id...] (output)`** Creates a stream group of the specified \<type\> and \<stream_group_id\>, or by \<map\>ping an input group, adding the specified \<stream\>(s) and/or previously defined \<stream_group\>(s) to it.
+- **`-stream_group [map=input_file_id=stream_group][type=type:]st=stream[:st=stream][:stg=stream_group][:id=stream_group_id...] (output)`** 创建指定 \<type\> 和 \<stream_group_id\> 的流组，或通过 \<map\> 映射一个输入组，并把指定的 \<stream\> 和/或先前定义的 \<stream_group\> 加入其中。
 
-  \<type\> can be one of the following:
+  \<type\> 可以是以下之一：
 
-  - **`iamf_audio_element`** Groups \<stream\>s that belong to the same IAMF Audio Element
+  - **`iamf_audio_element`** 把属于同一 IAMF Audio Element 的 \<stream\> 分为一组
 
-    For this group \<type\>, the following options are available
+    对于该组 \<type\>，可用以下选项
 
-    - **`audio_element_type`** The Audio Element type. The following values are supported:
+    - **`audio_element_type`** Audio Element 类型。支持以下取值：
 
       | Term      | Description                           |
       |-----------|---------------------------------------|
-      | `channel` | Scalable channel audio representation |
-      | `scene`   | Ambisonics representation             |
+      | `channel` | 可扩展的声道音频表示 |
+      | `scene`   | Ambisonics 表示 |
 
-    - **`demixing`** Demixing information used to reconstruct a scalable channel audio representation. This option must be separated from the rest with a ',', and takes the following key=value options
-
-      | Term           | Description                                            |
-      |----------------|--------------------------------------------------------|
-      | `parameter_id` | An identifier parameters blocks in frames may refer to |
-      | `dmixp_mode`   | A pre-defined combination of demixing parameters       |
-
-    - **`recon_gain`** Recon gain information used to reconstruct a scalable channel audio representation. This option must be separated from the rest with a ',', and takes the following key=value options
+    - **`demixing`** 用于重建可扩展声道音频表示的解混信息。该选项必须用 ',' 与其余部分分隔，并接受以下 key=value 选项
 
       | Term           | Description                                            |
       |----------------|--------------------------------------------------------|
-      | `parameter_id` | An identifier parameters blocks in frames may refer to |
+      | `parameter_id` | 帧中参数块可引用的标识符 |
+      | `dmixp_mode`   | 预定义的解混参数组合 |
 
-    - **`layer`** A layer defining a Channel Layout in the Audio Element. This option must be separated from the rest with a ','. Several ',' separated entries can be defined, and at least one must be set.
+    - **`recon_gain`** 用于重建可扩展声道音频表示的重建增益 (recon gain) 信息。该选项必须用 ',' 与其余部分分隔，并接受以下 key=value 选项
 
-      It takes the following ":"-separated key=value options
+      | Term           | Description                                            |
+      |----------------|--------------------------------------------------------|
+      | `parameter_id` | 帧中参数块可引用的标识符 |
 
-      - **`ch_layout`** The layer's channel layout
+    - **`layer`** 在 Audio Element 中定义声道布局的层。该选项必须用 ',' 与其余部分分隔。可定义多个以 ',' 分隔的条目，且必须至少设置一个。
 
-      - **`flags`** The following flags are available:
+      它接受以下以 ":" 分隔的 key=value 选项
 
-        - **`recon_gain`** Whether to signal if recon_gain is present as metadata in parameter blocks within frames
+      - **`ch_layout`** 该层的声道布局
+
+      - **`flags`** 可用标志如下：
+
+        - **`recon_gain`** 当 recon_gain 以元数据形式出现在帧内参数块中时是否发出信号
 
       - **`output_gain`**
 
-      - **`output_gain_flags`** Which channels output_gain applies to. The following flags are available:
+      - **`output_gain_flags`** output_gain 作用于哪些声道。可用标志如下：
 
         - **`FL`**
 
@@ -759,78 +755,78 @@ The video, audio and subtitle streams mapped to `out2.mkv` are entirely determin
 
         - **`TFR`**
 
-      - **`ambisonics_mode`** The ambisonics mode. This has no effect if audio_element_type is set to channel.
+      - **`ambisonics_mode`** Ambisonics 模式。当 audio_element_type 设为 channel 时无效。
 
-        The following values are supported:
+        支持以下取值：
 
         | Term | Description |
         |----|----|
-        | `mono` | Each ambisonics channel is coded as an individual mono stream in the group |
+        | `mono` | 组内每个 ambisonics 声道编码为单独的单声道流 |
 
-    - **`default_w`** Default weight value
+    - **`default_w`** 默认权重值
 
-  - **`iamf_mix_presentation`** Groups \<stream\>s that belong to all IAMF Audio Element the same IAMF Mix Presentation references
+  - **`iamf_mix_presentation`** 把属于同一 IAMF Mix Presentation 所引用的全部 IAMF Audio Element 的 \<stream\> 分为一组
 
-    For this group \<type\>, the following options are available
+    对于该组 \<type\>，可用以下选项
 
-    - **`submix`** A sub-mix within the Mix Presentation. This option must be separated from the rest with a ','. Several ',' separated entries can be defined, and at least one must be set.
+    - **`submix`** Mix Presentation 中的子混音。该选项必须用 ',' 与其余部分分隔。可定义多个以 ',' 分隔的条目，且必须至少设置一个。
 
-      It takes the following ":"-separated key=value options
+      它接受以下以 ":" 分隔的 key=value 选项
 
-      - **`parameter_id`** An identifier parameters blocks in frames may refer to, for post-processing the mixed audio signal to generate the audio signal for playback
+      - **`parameter_id`** 帧中参数块可引用的标识符，用于对混音后的音频信号做后处理，生成用于播放的音频信号
 
-      - **`parameter_rate`** The sample rate duration fields in parameters blocks in frames that refer to this \<parameter_id\> are expressed as
+      - **`parameter_rate`** 帧中引用该 \<parameter_id\> 的参数块内采样率、时长字段所采用的表示单位
 
-      - **`default_mix_gain`** Default mix gain value to apply when there are no parameter blocks sharing the same \<parameter_id\> for a given frame
+      - **`default_mix_gain`** 当某帧没有共享同一 \<parameter_id\> 的参数块时应用的默认混音增益值
 
-      - **`element`** References an Audio Element used in this Mix Presentation to generate the final output audio signal for playback. This option must be separated from the rest with a '\|'. Several '\|' separated entries can be defined, and at least one must be set.
+      - **`element`** 引用本 Mix Presentation 所用的 Audio Element，以生成用于播放的最终输出音频信号。该选项必须用 '\|' 与其余部分分隔。可定义多个以 '\|' 分隔的条目，且必须至少设置一个。
 
-        It takes the following ":"-separated key=value options:
+        它接受以下以 ":" 分隔的 key=value 选项：
 
-        - **`stg`** The \<stream_group_id\> for an Audio Element which this sub-mix refers to
+        - **`stg`** 本子混音引用的 Audio Element 的 \<stream_group_id\>
 
-        - **`parameter_id`** An identifier parameters blocks in frames may refer to, for applying any processing to the referenced and rendered Audio Element before being summed with other processed Audio Elements
+        - **`parameter_id`** 帧中参数块可引用的标识符，用于在与其他已处理 Audio Element 求和之前，对被引用并渲染的 Audio Element 应用处理
 
-        - **`parameter_rate`** The sample rate duration fields in parameters blocks in frames that refer to this \<parameter_id\> are expressed as
+        - **`parameter_rate`** 帧中引用该 \<parameter_id\> 的参数块内采样率、时长字段所采用的表示单位
 
-        - **`default_mix_gain`** Default mix gain value to apply when there are no parameter blocks sharing the same \<parameter_id\> for a given frame
+        - **`default_mix_gain`** 当某帧没有共享同一 \<parameter_id\> 的参数块时应用的默认混音增益值
 
-        - **`annotations`** A key=value string describing the sub-mix element where "key" is a string conforming to BCP-47 that specifies the language for the "value" string. "key" must be the same as the one in the mix's \<annotations\>
+        - **`annotations`** 描述子混音元素的 key=value 字符串，其中 "key" 是符合 BCP-47 的字符串，用于指定 "value" 字符串的语言。"key" 必须与混音的 \<annotations\> 中的相同
 
-        - **`headphones_rendering_mode`** Indicates whether the input channel-based Audio Element is rendered to stereo loudspeakers or spatialized with a binaural renderer when played back on headphones. This has no effect if the referenced Audio Element's \<audio_element_type\> is set to channel.
+        - **`headphones_rendering_mode`** 指示基于声道的输入 Audio Element 在耳机上播放时，渲染为立体声扬声器，还是用双耳渲染器做空间化。如果被引用 Audio Element 的 \<audio_element_type\> 设为 channel，则无效。
 
-          The following values are supported:
+          支持以下取值：
 
           - **`stereo`**
 
           - **`binaural`**
 
-      - **`layout`** Specifies the layouts for this sub-mix on which the loudness information was measured. This option must be separated from the rest with a '\|'. Several '\|' separated entries can be defined, and at least one must be set.
+      - **`layout`** 指定本子混音测量响度信息所用的布局。该选项必须用 '\|' 与其余部分分隔。可定义多个以 '\|' 分隔的条目，且必须至少设置一个。
 
-        It takes the following ":"-separated key=value options:
+        它接受以下以 ":" 分隔的 key=value 选项：
 
         - **`layout_type`**
 
           | Term | Description |
           |----|----|
-          | `loudspeakers` | The layout follows the loudspeaker sound system convention of ITU-2051-3. |
-          | `binaural` | The layout is binaural. |
+          | `loudspeakers` | 布局遵循 ITU-2051-3 的扬声器声系统惯例。 |
+          | `binaural` | 布局为双耳。 |
 
-        - **`sound_system`** Channel layout matching one of Sound Systems A to J of ITU-2051-3, plus 7.1.2 and 3.1.2 This has no effect if \<layout_type\> is set to binaural.
+        - **`sound_system`** 声道布局，匹配 ITU-2051-3 声系统 A 到 J 之一，外加 7.1.2 和 3.1.2。当 \<layout_type\> 设为 binaural 时无效。
 
-        - **`integrated_loudness`** The program integrated loudness information, as defined in ITU-1770-4.
+        - **`integrated_loudness`** 节目综合响度信息，定义见 ITU-1770-4。
 
-        - **`digital_peak`** The digital (sampled) peak value of the audio signal, as defined in ITU-1770-4.
+        - **`digital_peak`** 音频信号的数字（采样）峰值，定义见 ITU-1770-4。
 
-        - **`true_peak`** The true peak of the audio signal, as defined in ITU-1770-4.
+        - **`true_peak`** 音频信号的真峰值，定义见 ITU-1770-4。
 
-        - **`dialog_anchored_loudness`** The Dialogue loudness information, as defined in ITU-1770-4.
+        - **`dialog_anchored_loudness`** 对白响度信息，定义见 ITU-1770-4。
 
-        - **`album_anchored_loudness`** The Album loudness information, as defined in ITU-1770-4.
+        - **`album_anchored_loudness`** 专辑响度信息，定义见 ITU-1770-4。
 
-    - **`annotations`** A key=value string string describing the mix where "key" is a string conforming to BCP-47 that specifies the language for the "value" string. "key" must be the same as the ones in all sub-mix element's \<annotations\>s
+    - **`annotations`** 描述混音的 key=value 字符串，其中 "key" 是符合 BCP-47 的字符串，用于指定 "value" 字符串的语言。"key" 必须与所有子混音元素的 \<annotations\> 中的相同
 
-  E.g. to create an scalable 5.1 IAMF file from several WAV input files
+  例如，从多个 WAV 输入文件创建可扩展的 5.1 IAMF 文件：
 
   ``` text
   ffmpeg -i front.wav -i back.wav -i center.wav -i lfe.wav
@@ -845,26 +841,26 @@ The video, audio and subtitle streams mapped to `out2.mkv` are entirely determin
   -streamid 0:0 -streamid 1:1 -streamid 2:2 -streamid 3:3 output.iamf
   ```
 
-  To copy the two stream groups (Audio Element and Mix Presentation) from an input IAMF file with four streams into an mp4 output
+  把有四条流的输入 IAMF 文件中的两个流组（Audio Element 与 Mix Presentation）复制到 mp4 输出：
 
   ``` text
   ffmpeg -i input.iamf -c:a copy -stream_group map=0=0:st=0:st=1:st=2:st=3 -stream_group map=0=1:stg=0
   -streamid 0:0 -streamid 1:1 -streamid 2:2 -streamid 3:3 output.mp4
   ```
 
-- **`-target type (output)`** Specify target file type (`vcd`, `svcd`, `dvd`, `dv`, `dv50`). \<type\> may be prefixed with `pal-`, `ntsc-` or `film-` to use the corresponding standard. All the format options (bitrate, codecs, buffer sizes) are then set automatically. You can just type:
+- **`-target type (output)`** 指定目标文件类型（`vcd`、`svcd`、`dvd`、`dv`、`dv50`）。\<type\> 可加 `pal-`、`ntsc-` 或 `film-` 前缀以使用相应标准。所有格式选项（码率、编解码器、缓冲区大小）会随之自动设置。只需输入：
 
   ``` text
   ffmpeg -i myfile.avi -target vcd /tmp/vcd.mpg
   ```
 
-  Nevertheless you can specify additional options as long as you know they do not conflict with the standard, as in:
+  当然，只要确认与标准不冲突，也可以指定额外选项，例如：
 
   ``` text
   ffmpeg -i myfile.avi -target vcd -bf 2 /tmp/vcd.mpg
   ```
 
-  The parameters set for each target are as follows.
+  各目标所设置的参数如下。
 
   **VCD**
 
@@ -960,192 +956,192 @@ The video, audio and subtitle streams mapped to `out2.mkv` are entirely determin
   -ar 48000 -ac 2
   ```
 
-  The `dv50` target is identical to the `dv` target except that the pixel format set is `yuv422p` for all three standards.
+  `dv50` 目标与 `dv` 目标相同，只是三种标准下设置的像素格式均为 `yuv422p`。
 
-  Any user-set value for a parameter above will override the target preset value. In that case, the output may not comply with the target standard.
+  用户为上述参数设置的任何值都会覆盖目标预设值。此时输出可能不符合目标标准。
 
-- **`-dn (input/output)`** As an input option, blocks all data streams of a file from being filtered or being automatically selected or mapped for any output. See `-discard` option to disable streams individually.
+- **`-dn (input/output)`** 作为输入选项使用时，阻止文件的所有数据流被滤镜处理、被自动选择或被映射到任何输出。逐流禁用请参见 `-discard` 选项。
 
-  As an output option, disables data recording i.e. automatic selection or mapping of any data stream. For full manual control see the `-map` option.
+  作为输出选项使用时，禁用数据收录，即自动选择或映射任何数据流。完全手动控制请参见 `-map` 选项。
 
-- **`-dframes number (output)`** Set the number of data frames to output. This is an obsolete alias for `-frames:d`, which you should use instead.
+- **`-dframes number (output)`** 设置要输出的数据帧数量。这是 `-frames:d` 的过时别名，应改用后者。
 
-- **`-frames[:stream_specifier] framecount (output,per-stream)`** Stop writing to the stream after \<framecount\> frames.
+- **`-frames[:stream_specifier] framecount (output,per-stream)`** 写入 \<framecount\> 帧后停止向该流写入。
 
-- **`-q[:stream_specifier] q (output,per-stream)`** Use fixed quality scale (VBR). The meaning of \<q\>/\<qscale\> is codec-dependent. If \<qscale\> is used without a \<stream_specifier\> then it applies only to the video stream, this is to maintain compatibility with previous behavior and as specifying the same codec specific value to 2 different codecs that is audio and video generally is not what is intended when no stream_specifier is used.
+- **`-q[:stream_specifier] q (output,per-stream)`** 使用固定质量标度 (VBR)。\<q\>/\<qscale\> 的含义取决于编解码器。如果 \<qscale\> 不带 \<stream_specifier\> 使用，则只作用于视频流——这是为了与既往行为保持兼容，因为在不使用 stream_specifier 时，给音频和视频两种不同的编解码器指定相同的编解码器特定取值通常并非本意。
 
-- **`-filter[:stream_specifier] filtergraph (output,per-stream)`** Create the filtergraph specified by \<filtergraph\> and use it to filter the stream.
+- **`-filter[:stream_specifier] filtergraph (output,per-stream)`** 创建 \<filtergraph\> 指定的滤镜链图，并用它对该流做滤镜处理。
 
-  \<filtergraph\> is a description of the filtergraph to apply to the stream, and must have a single input and a single output of the same type of the stream. In the filtergraph, the input is associated to the label `in`, and the output to the label `out`. See the ffmpeg-filters manual for more information about the filtergraph syntax.
+  \<filtergraph\> 是要应用到该流的滤镜链图的描述，必须恰好有一个输入和一个输出，且类型与该流相同。在滤镜链图中，输入与标签 `in` 关联，输出与标签 `out` 关联。滤镜链图语法的更多信息参见 ffmpeg-filters 手册。
 
-  See the [-filter_complex option](ffmpeg.md#advanced-options) if you want to create filtergraphs with multiple inputs and/or outputs.
+  若要创建有多个输入和/或输出的滤镜链图，请参见 [-filter_complex 选项](#filter_005fcomplex_005foption)。
 
-- **`-reinit_filter[:stream_specifier] integer (input,per-stream)`** This boolean option determines if the filtergraph(s) to which this stream is fed gets reinitialized when input frame parameters change mid-stream. This option is enabled by default as most video and all audio filters cannot handle deviation in input frame properties. Upon reinitialization, existing filter state is lost, like e.g. the frame count `n` reference available in some filters. Any frames buffered at time of reinitialization are lost. The properties where a change triggers reinitialization are, for video, frame resolution or pixel format; for audio, sample format, sample rate, channel count or channel layout.
+- **`-reinit_filter[:stream_specifier] integer (input,per-stream)`** 该布尔选项决定，当输入帧参数在流中途变化时，馈送该流的滤镜链图是否重新初始化。该选项默认启用，因为大多数视频滤镜和全部音频滤镜都无法处理输入帧属性的偏差。重新初始化时，已有滤镜状态会丢失，例如某些滤镜中可用的帧计数 `n` 参考值；重新初始化时被缓冲的帧也会丢失。触发重新初始化的变化属性：视频为帧分辨率或像素格式；音频为采样格式、采样率、声道数或声道布局。
 
-- **`-drop_changed[:stream_specifier] integer (input,per-stream)`** This boolean option determines whether a frame with differing frame parameters mid-stream gets dropped instead of leading to filtergraph reinitialization, as that would lead to loss of filter state. Generally useful to avoid corrupted yet decodable packets in live streaming inputs. Default is false.
+- **`-drop_changed[:stream_specifier] integer (input,per-stream)`** 该布尔选项决定，流中途帧参数不一致的帧是被丢弃，还是触发滤镜链图重新初始化（那会造成滤镜状态丢失）。通常用于避免直播输入中出现可解码但已损坏的包。默认值为 false。
 
-- **`-filter_threads nb_threads (global)`** Defines how many threads are used to process a filter pipeline. Each pipeline will produce a thread pool with this many threads available for parallel processing. The default is the number of available CPUs.
+- **`-filter_threads nb_threads (global)`** 定义处理滤镜管线使用的线程数。每条管线会产生一个包含这么多线程的线程池，供并行处理使用。默认值为可用 CPU 数量。
 
-- **`-filter_buffered_frames nb_frames (global)`** Defines the maximum number of buffered frames allowed in a filtergraph. Under normal circumstances, a filtergraph should not buffer more than a few frames, especially if frames are being fed to it and read from it in a balanced way (which is the intended behavior in ffmpeg). That said, this option allows you to limit the total number of frames buffered across all links in a filtergraph. If more frames are generated, filtering is aborted and an error is returned. The default value is 0, which means no limit.
+- **`-filter_buffered_frames nb_frames (global)`** 定义滤镜链图允许缓冲的最大帧数。正常情况下，滤镜链图缓冲的帧不应超过几帧，尤其是当帧以均衡方式馈入和读出时（这也是 ffmpeg 的预期行为）。该选项允许限制滤镜链图中所有链路上缓冲的帧总数。如果生成的帧更多，滤镜处理会中止并返回错误。默认值为 0，表示不限制。
 
-- **`-pre[:stream_specifier] preset_name (output,per-stream)`** Specify the preset for matching stream(s).
+- **`-pre[:stream_specifier] preset_name (output,per-stream)`** 为匹配的流指定预设。
 
-- **`-stats (global)`** Log encoding progress/statistics as "info"-level log (see `-loglevel`). It is on by default, to explicitly disable it you need to specify `-nostats`.
+- **`-stats (global)`** 以"info"级日志记录编码进度/统计信息（参见 `-loglevel`）。默认开启；要显式禁用，需指定 `-nostats`。
 
-- **`-stats_period time (global)`** Set period at which encoding progress/statistics are updated. Default is 0.5 seconds.
+- **`-stats_period time (global)`** 设置编码进度/统计信息的更新周期。默认为 0.5 秒。
 
-- **`-print_graphs (global)`** Prints execution graph details to stderr in the format set via -print_graphs_format.
+- **`-print_graphs (global)`** 按 -print_graphs_format 设置的格式，把执行图细节打印到 stderr。
 
-- **`-print_graphs_file filename (global)`** Writes execution graph details to the specified file in the format set via -print_graphs_format.
+- **`-print_graphs_file filename (global)`** 按 -print_graphs_format 设置的格式，把执行图细节写入指定文件。
 
-- **`-print_graphs_format format (global)`** Sets the output format (available formats are: default, compact, csv, flat, ini, json, xml, mermaid, mermaidhtml) The default format is json.
+- **`-print_graphs_format format (global)`** 设置输出格式（可用格式：default、compact、csv、flat、ini、json、xml、mermaid、mermaidhtml）。默认格式为 json。
 
-- **`-progress url (global)`** Send program-friendly progress information to \<url\>.
+- **`-progress url (global)`** 向 \<url\> 发送对程序友好的进度信息。
 
-  Progress information is written periodically and at the end of the encoding process. It is made of "\<key\>=\<value\>" lines. \<key\> consists of only alphanumeric characters. The last key of a sequence of progress information is always "progress" with the value "continue" or "end".
+  进度信息会周期性写入，并在编码过程结束时写入。它由 "\<key\>=\<value\>" 行组成。\<key\> 只包含字母和数字。进度信息序列的最后一个键总是 "progress"，其值为 "continue" 或 "end"。
 
-  The update period is set using `-stats_period`.
+  更新周期用 `-stats_period` 设置。
 
-  For example, log progress information to stdout:
+  例如，把进度信息记录到 stdout：
 
   ``` text
   ffmpeg -progress pipe:1 -i in.mkv out.mkv
   ```
 
-- **`-stdin`** Enable interaction on standard input. On by default unless standard input is used as an input. To explicitly disable interaction you need to specify `-nostdin`.
+- **`-stdin`** 启用标准输入交互。默认开启，除非标准输入已被用作输入。要显式禁用交互，需指定 `-nostdin`。
 
-  Disabling interaction on standard input is useful, for example, if ffmpeg is in the background process group. Roughly the same result can be achieved with `ffmpeg ... < /dev/null` but it requires a shell.
+  禁用标准输入交互很有用，例如 ffmpeg 处于后台进程组时。用 `ffmpeg ... < /dev/null` 可以达到大致相同的效果，但需要 shell。
 
-- **`-debug_ts (global)`** Print timestamp/latency information. It is off by default. This option is mostly useful for testing and debugging purposes, and the output format may change from one version to another, so it should not be employed by portable scripts.
+- **`-debug_ts (global)`** 打印时间戳/延迟信息。默认关闭。该选项主要用于测试和调试，其输出格式可能随版本变化，因此可移植脚本不应使用它。
 
-  See also the option `-fdebug ts`.
+  另请参见选项 `-fdebug ts`。
 
-- **`-attach filename (output)`** Add an attachment to the output file. This is supported by a few formats like Matroska for e.g. fonts used in rendering subtitles. Attachments are implemented as a specific type of stream, so this option will add a new stream to the file. It is then possible to use per-stream options on this stream in the usual way. Attachment streams created with this option will be created after all the other streams (i.e. those created with `-map` or automatic mappings).
+- **`-attach filename (output)`** 向输出文件添加附件。少数格式（如 Matroska）支持此功能，例如用于渲染字幕的字体。附件实现为一种特定类型的流，因此该选项会向文件添加一条新流。之后可以按常规方式对该流使用每流选项。用该选项创建的附件流会在所有其他流（即用 `-map` 或自动映射创建的流）之后创建。
 
-  Note that for Matroska you also have to set the mimetype metadata tag:
+  注意，对 Matroska 还必须设置 mimetype 元数据标签：
 
   ``` text
   ffmpeg -i INPUT -attach DejaVuSans.ttf -metadata:s:2 mimetype=application/x-truetype-font out.mkv
   ```
 
-  (assuming that the attachment stream will be third in the output file).
+  （假设附件流是输出文件中的第三条流）。
 
-- **`-dump_attachment[:stream_specifier] filename (input,per-stream)`** Extract the matching attachment stream into a file named \<filename\>. If \<filename\> is empty, then the value of the `filename` metadata tag will be used.
+- **`-dump_attachment[:stream_specifier] filename (input,per-stream)`** 把匹配的附件流提取到名为 \<filename\> 的文件。若 \<filename\> 为空，则使用 `filename` 元数据标签的值。
 
-  E.g. to extract the first attachment to a file named 'out.ttf':
+  例如，把第一个附件提取到名为 'out.ttf' 的文件：
 
   ``` text
   ffmpeg -dump_attachment:t:0 out.ttf -i INPUT
   ```
 
-  To extract all attachments to files determined by the `filename` tag:
+  把所有附件提取到由 `filename` 标签确定的文件：
 
   ``` text
   ffmpeg -dump_attachment:t "" -i INPUT
   ```
 
-  Technical note – attachments are implemented as codec extradata, so this option can actually be used to extract extradata from any stream, not just attachments.
+  技术说明——附件实现为编解码器 extradata，因此该选项实际上可用于从任何流提取 extradata，而不限于附件。
 
-## Video Options
+## 视频选项
 
-- **`-vframes number (output)`** Set the number of video frames to output. This is an obsolete alias for `-frames:v`, which you should use instead.
+- **`-vframes number (output)`** 设置要输出的视频帧数量。这是 `-frames:v` 的过时别名，应改用后者。
 
-- **`-r[:stream_specifier] fps (input/output,per-stream)`** Set frame rate (Hz value, fraction or abbreviation).
+- **`-r[:stream_specifier] fps (input/output,per-stream)`** 设置帧率（Hz 值、分数或缩写）。
 
-  As an input option, ignore any timestamps stored in the file and instead generate timestamps assuming constant frame rate \<fps\>. This is not the same as the `-framerate` option used for some input formats like image2 or v4l2 (it used to be the same in older versions of FFmpeg). If in doubt use `-framerate` instead of the input option `-r`.
+  作为输入选项使用时，忽略文件中存储的任何时间戳，改为按恒定帧率 \<fps\> 生成时间戳。这与某些输入格式（如 image2 或 v4l2）使用的 `-framerate` 选项不同（在旧版 FFmpeg 中二者曾相同）。如有疑问，请用 `-framerate` 而不是输入选项 `-r`。
 
-  As an output option:
+  作为输出选项使用时：
 
-  - **`video encoding`** Duplicate or drop frames right before encoding them to achieve constant output frame rate \<fps\>.
+  - **`video encoding`** 在编码前一刻复制或丢弃帧，以达到恒定输出帧率 \<fps\>。
 
-  - **`video streamcopy`** Indicate to the muxer that \<fps\> is the stream frame rate. No data is dropped or duplicated in this case. This may produce invalid files if \<fps\> does not match the actual stream frame rate as determined by packet timestamps. See also the `setts` bitstream filter.
+  - **`video streamcopy`** 告诉复用器 \<fps\> 就是该流的帧率。这种情况下不丢弃也不复制任何数据。如果 \<fps\> 与由包时间戳确定的实际流帧率不符，可能产生无效文件。另请参见 `setts` 比特流滤镜。
 
-- **`-fpsmax[:stream_specifier] fps (output,per-stream)`** Set maximum frame rate (Hz value, fraction or abbreviation).
+- **`-fpsmax[:stream_specifier] fps (output,per-stream)`** 设置最大帧率（Hz 值、分数或缩写）。
 
-  Clamps output frame rate when output framerate is auto-set and is higher than this value. Useful in batch processing or when input framerate is wrongly detected as very high. It cannot be set together with `-r`. It is ignored during streamcopy.
+  当输出帧率被自动设置且高于该值时，将其钳制到该值。适用于批处理，或输入帧率被误检为很高的情况。不能与 `-r` 同时设置。流复制时被忽略。
 
-- **`-s[:stream_specifier] size (input/output,per-stream)`** Set frame size.
+- **`-s[:stream_specifier] size (input/output,per-stream)`** 设置帧尺寸。
 
-  As an input option, this is a shortcut for the `video_size` private option, recognized by some demuxers for which the frame size is either not stored in the file or is configurable – e.g. raw video or video grabbers.
+  作为输入选项使用时，它是 `video_size` 私有选项的快捷方式，由某些解复用器识别——这些解复用器的帧尺寸要么未存储在文件中，要么可配置，例如原始视频或视频采集设备。
 
-  As an output option, this inserts the `scale` video filter to the *end* of the corresponding filtergraph. Please use the `scale` filter directly to insert it at the beginning or some other place.
+  作为输出选项使用时，它会把 `scale` 视频滤镜插入到相应滤镜链图的*末尾*。若要插入到开头或其他位置，请直接使用 `scale` 滤镜。
 
-  The format is `wxh` (default - same as source).
+  格式为 `wxh`（默认——与源相同）。
 
-- **`-aspect[:stream_specifier] aspect (output,per-stream)`** Set the video display aspect ratio specified by \<aspect\>.
+- **`-aspect[:stream_specifier] aspect (output,per-stream)`** 设置 \<aspect\> 指定的视频显示宽高比。
 
-  \<aspect\> can be a floating point number string, or a string of the form \<num\>:\<den\>, where \<num\> and \<den\> are the numerator and denominator of the aspect ratio. For example "4:3", "16:9", "1.3333", and "1.7777" are valid argument values.
+  \<aspect\> 可以是浮点数字符串，也可以是 \<num\>:\<den\> 形式的字符串，其中 \<num\> 和 \<den\> 是宽高比的分子和分母。例如 "4:3"、"16:9"、"1.3333" 和 "1.7777" 都是有效的参数值。
 
-  If used together with `-vcodec copy`, it will affect the aspect ratio stored at container level, but not the aspect ratio stored in encoded frames, if it exists.
+  若与 `-vcodec copy` 一起使用，它只影响存储在容器级的宽高比，不影响编码帧中存储的宽高比（如果存在）。
 
-- **`-display_rotation[:stream_specifier] rotation (input,per-stream)`** Set video rotation metadata.
+- **`-display_rotation[:stream_specifier] rotation (input,per-stream)`** 设置视频旋转元数据。
 
-  \<rotation\> is a decimal number specifying the amount in degree by which the video should be rotated counter-clockwise before being displayed.
+  \<rotation\> 是一个十进制数，指定视频显示前应逆时针旋转的角度（单位：度）。
 
-  This option overrides the rotation/display transform metadata stored in the file, if any. When the video is being transcoded (rather than copied) and `-autorotate` is enabled, the video will be rotated at the filtering stage. Otherwise, the metadata will be written into the output file if the muxer supports it.
+  该选项会覆盖文件中存储的旋转/显示变换元数据（如有）。当视频被转码（而非复制）且 `-autorotate` 启用时，视频会在滤镜处理阶段被旋转。否则，若复用器支持，该元数据会写入输出文件。
 
-  If the `-display_hflip` and/or `-display_vflip` options are given, they are applied after the rotation specified by this option.
+  如果同时给出 `-display_hflip` 和/或 `-display_vflip` 选项，它们会在该选项指定的旋转之后应用。
 
-- **`-display_hflip[:stream_specifier] (input,per-stream)`** Set whether on display the image should be horizontally flipped.
+- **`-display_hflip[:stream_specifier] (input,per-stream)`** 设置显示时图像是否应水平翻转。
 
-  See the `-display_rotation` option for more details.
+  更多细节参见 `-display_rotation` 选项。
 
-- **`-display_vflip[:stream_specifier] (input,per-stream)`** Set whether on display the image should be vertically flipped.
+- **`-display_vflip[:stream_specifier] (input,per-stream)`** 设置显示时图像是否应垂直翻转。
 
-  See the `-display_rotation` option for more details.
+  更多细节参见 `-display_rotation` 选项。
 
-- **`-mastering_display[:stream_specifier] G(%u,%u)B(%u,%u)R(%u,%u)WP(%u,%u)L(%u,%u) (input,per-stream)`** Set video mastering display metadata.
+- **`-mastering_display[:stream_specifier] G(%u,%u)B(%u,%u)R(%u,%u)WP(%u,%u)L(%u,%u) (input,per-stream)`** 设置视频 mastering display（母版显示）元数据。
 
-  \<G(%u,%u)B(%u,%u)R(%u,%u)WP(%u,%u)L(%u,%u)\> is a string specifying X,Y display primaries for GBR channels and white point (WP) in units of 0.00002, and max-min luminance (L) values in units of 0.0001 candela per meter square. The values are unsigned integers representing the numerator of a rational with an implicit denominator of 50000 for GBR and (WP), and implicit denominator 10000 for (L).
+  \<G(%u,%u)B(%u,%u)R(%u,%u)WP(%u,%u)L(%u,%u)\> 是一个字符串，以 0.00002 为单位指定 GBR 通道和白色点 (WP) 的 X,Y 显示基色，以 0.0001 坎德拉/平方米为单位指定最大-最小亮度 (L) 值。这些值是无符号整数，表示有理数的分子：GBR 和 (WP) 的隐含分母为 50000，(L) 的隐含分母为 10000。
 
-  This option overrides the mastering display metadata stored in the file, if any.
+  该选项会覆盖文件中存储的 mastering display 元数据（如有）。
 
-- **`-content_light[:stream_specifier] %u,%u (input,per-stream)`** Set video content light metadata.
+- **`-content_light[:stream_specifier] %u,%u (input,per-stream)`** 设置视频内容亮度 (content light) 元数据。
 
-  \<%u,%u\> is a string specifying max content light level and maximum picture average light level.
+  \<%u,%u\> 是一个字符串，指定最大内容亮度电平和最大画面平均亮度电平。
 
-  This option overrides the content light metadata stored in the file, if any.
+  该选项会覆盖文件中存储的内容亮度元数据（如有）。
 
-- **`-vn (input/output)`** As an input option, blocks all video streams of a file from being filtered or being automatically selected or mapped for any output. See `-discard` option to disable streams individually.
+- **`-vn (input/output)`** 作为输入选项使用时，阻止文件的所有视频流被滤镜处理、被自动选择或被映射到任何输出。逐流禁用请参见 `-discard` 选项。
 
-  As an output option, disables video recording i.e. automatic selection or mapping of any video stream. For full manual control see the `-map` option.
+  作为输出选项使用时，禁用视频收录，即自动选择或映射任何视频流。完全手动控制请参见 `-map` 选项。
 
-- **`-vcodec codec (output)`** Set the video codec. This is an alias for `-codec:v`.
+- **`-vcodec codec (output)`** 设置视频编解码器。这是 `-codec:v` 的别名。
 
-- **`-pass[:stream_specifier] n (output,per-stream)`** Select the pass number (1 or 2). It is used to do two-pass video encoding. The statistics of the video are recorded in the first pass into a log file (see also the option -passlogfile), and in the second pass that log file is used to generate the video at the exact requested bitrate. On pass 1, you may just deactivate audio and set output to null, examples for Windows and Unix:
+- **`-pass[:stream_specifier] n (output,per-stream)`** 选择编码遍数（1 或 2）。用于两遍视频编码。第一遍把视频统计信息记录到日志文件（另请参见选项 -passlogfile），第二遍用该日志文件以精确请求的码率生成视频。第一遍时可以直接停用音频并把输出设为 null，Windows 和 Unix 示例：
 
   ``` text
   ffmpeg -i foo.mov -c:v libxvid -pass 1 -an -f rawvideo -y NUL
   ffmpeg -i foo.mov -c:v libxvid -pass 1 -an -f rawvideo -y /dev/null
   ```
 
-- **`-passlogfile[:stream_specifier] prefix (output,per-stream)`** Set two-pass log file name prefix to \<prefix\>, the default file name prefix is "ffmpeg2pass". The complete file name will be `PREFIX-N.log`, where N is a number specific to the output stream
+- **`-passlogfile[:stream_specifier] prefix (output,per-stream)`** 把两遍编码日志文件名前缀设为 \<prefix\>，默认文件名前缀为 "ffmpeg2pass"。完整文件名将为 `PREFIX-N.log`，其中 N 是输出流特定的数字
 
-- **`-vf filtergraph (output)`** Create the filtergraph specified by \<filtergraph\> and use it to filter the stream.
+- **`-vf filtergraph (output)`** 创建 \<filtergraph\> 指定的滤镜链图，并用它对该流做滤镜处理。
 
-  This is an alias for `-filter:v`, see the [-filter option](ffmpeg.md#main-options).
+  这是 `-filter:v` 的别名，参见 [-filter 选项](#filter_005foption)。
 
-- **`-autorotate`** Automatically rotate the video according to file metadata. Enabled by default, use `-noautorotate` to disable it.
+- **`-autorotate`** 根据文件元数据自动旋转视频。默认启用，用 `-noautorotate` 禁用。
 
-- **`-autoscale`** Automatically scale the video according to the resolution of first frame. Enabled by default, use `-noautoscale` to disable it. When autoscale is disabled, all output frames of filter graph might not be in the same resolution and may be inadequate for some encoder/muxer. Therefore, it is not recommended to disable it unless you really know what you are doing. Disable autoscale at your own risk.
+- **`-autoscale`** 根据第一帧的分辨率自动缩放视频。默认启用，用 `-noautoscale` 禁用。禁用 autoscale 后，滤镜图的全部输出帧可能分辨率不一致，可能不适合某些编码器/复用器。因此，除非确实清楚自己在做什么，否则不建议禁用。禁用 autoscale 的风险自负。
 
-## Advanced Video options
+## 高级视频选项
 
-- **`-pix_fmt[:stream_specifier] format (input/output,per-stream)`** Set pixel format. Use `-pix_fmts` to show all the supported pixel formats. If the selected pixel format can not be selected, ffmpeg will print a warning and select the best pixel format supported by the encoder. If \<pix_fmt\> is prefixed by a `+`, ffmpeg will exit with an error if the requested pixel format can not be selected, and automatic conversions inside filtergraphs are disabled. If \<pix_fmt\> is a single `+`, ffmpeg selects the same pixel format as the input (or graph output) and automatic conversions are disabled.
+- **`-pix_fmt[:stream_specifier] format (input/output,per-stream)`** 设置像素格式。用 `-pix_fmts` 可显示所有支持的像素格式。如果所选像素格式无法被选中，ffmpeg 会打印警告并选择编码器支持的最佳像素格式。如果 \<pix_fmt\> 带 `+` 前缀，当请求的像素格式无法被选中时 ffmpeg 将报错退出，且滤镜链图内的自动转换被禁用。如果 \<pix_fmt\> 只是一个 `+`，ffmpeg 会选择与输入（或图输出）相同的像素格式，并禁用自动转换。
 
-- **`-sws_flags flags (input/output)`** Set default flags for the libswscale library. These flags are used by automatically inserted `scale` filters and those within simple filtergraphs, if not overridden within the filtergraph definition.
+- **`-sws_flags flags (input/output)`** 设置 libswscale 库的默认标志。如果滤镜链图定义中没有覆盖，这些标志会被自动插入的 `scale` 滤镜以及简单滤镜链图中的滤镜使用。
 
-  See the section "ffmpeg-scaler manual" in `ffmpeg-scaler` for a list of scaler options.
+  缩放器 (scaler) 选项列表参见 `ffmpeg-scaler` 手册相应章节。
 
-- **`-rc_override[:stream_specifier] override (output,per-stream)`** Rate control override for specific intervals, formatted as "int,int,int" list separated with slashes. Two first values are the beginning and end frame numbers, last one is quantizer to use if positive, or quality factor if negative.
+- **`-rc_override[:stream_specifier] override (output,per-stream)`** 针对特定区间的码率控制覆盖，格式为以斜杠分隔的 "int,int,int" 列表。前两个值是起始和结束帧号；最后一个值在为正时是使用的量化器，为负时是质量因子。
 
-- **`-vstats`** Dump video coding statistics to `vstats_HHMMSS.log`. See the [vstats file format](ffmpeg.md#avpreset-files) section for the format description.
+- **`-vstats`** 把视频编码统计信息转储到 `vstats_HHMMSS.log`。格式描述参见 [vstats 文件格式](#vstats-文件格式)一节。
 
-- **`-vstats_file file`** Dump video coding statistics to \<file\>. See the [vstats file format](ffmpeg.md#avpreset-files) section for the format description.
+- **`-vstats_file file`** 把视频编码统计信息转储到 \<file\>。格式描述参见 [vstats 文件格式](#vstats-文件格式)一节。
 
-- **`-vstats_version file`** Specify which version of the vstats format to use. Default is `2`. See the [vstats file format](ffmpeg.md#avpreset-files) section for the format description.
+- **`-vstats_version file`** 指定使用哪个版本的 vstats 格式。默认为 `2`。格式描述参见 [vstats 文件格式](#vstats-文件格式)一节。
 
-- **`-vtag fourcc/tag (output)`** Force video tag/fourcc. This is an alias for `-tag:v`.
+- **`-vtag fourcc/tag (output)`** 强制视频 tag/fourcc。这是 `-tag:v` 的别名。
 
 - **`-force_key_frames[:stream_specifier] time[,time...] (output,per-stream)`**
 
@@ -1153,115 +1149,115 @@ The video, audio and subtitle streams mapped to `out2.mkv` are entirely determin
 
 - **`-force_key_frames[:stream_specifier] source (output,per-stream)`**
 
-- **`-force_key_frames[:stream_specifier] scd_metadata (output,per-stream)`** \<force_key_frames\> can take arguments of the following form:
+- **`-force_key_frames[:stream_specifier] scd_metadata (output,per-stream)`** \<force_key_frames\> 可以接受以下形式的参数：
 
-  - **`time[,time...]`** If the argument consists of timestamps, ffmpeg will round the specified times to the nearest output timestamp as per the encoder time base and force a keyframe at the first frame having timestamp equal or greater than the computed timestamp. Note that if the encoder time base is too coarse, then the keyframes may be forced on frames with timestamps lower than the specified time. The default encoder time base is the inverse of the output framerate but may be set otherwise via `-enc_time_base`.
+  - **`time[,time...]`** 如果参数由时间戳组成，ffmpeg 会按编码器时间基把指定时间舍入到最近的输出时间戳，并在时间戳大于等于计算值的第一帧上强制关键帧。注意，如果编码器时间基太粗，关键帧可能被强制在时间戳低于指定时间的帧上。默认编码器时间基是输出帧率的倒数，但可以用 `-enc_time_base` 设置为其他值。
 
-    If one of the times is "`chapters`\[\<delta\>\]", it is expanded into the time of the beginning of all chapters in the file, shifted by \<delta\>, expressed as a time in seconds. This option can be useful to ensure that a seek point is present at a chapter mark or any other designated place in the output file.
+    如果某个时间是 "`chapters`\[\<delta\>\]"，它会展开为文件中所有章节的开始时间（按 \<delta\> 偏移），以秒为单位。该选项可用于确保输出文件的章节标记或任何其他指定位置存在定位点。
 
-    For example, to insert a key frame at 5 minutes, plus key frames 0.1 second before the beginning of every chapter:
+    例如，在 5 分钟处插入一个关键帧，并在每个章节开始前 0.1 秒处插入关键帧：
 
     ``` text
     -force_key_frames 0:05:00,chapters-0.1
     ```
 
-  - **`expr:expr`** If the argument is prefixed with `expr:`, the string \<expr\> is interpreted like an expression and is evaluated for each frame. A key frame is forced in case the evaluation is non-zero.
+  - **`expr:expr`** 如果参数带 `expr:` 前缀，字符串 \<expr\> 会被解释为表达式并对每帧求值。求值结果非零时强制关键帧。
 
-    The expression in \<expr\> can contain the following constants:
+    \<expr\> 中的表达式可以包含以下常量：
 
-    - **`n`** the number of current processed frame, starting from 0
+    - **`n`** 当前处理帧的编号，从 0 开始
 
-    - **`n_forced`** the number of forced frames
+    - **`n_forced`** 已强制帧的数量
 
-    - **`prev_forced_n`** the number of the previous forced frame, it is `NAN` when no keyframe was forced yet
+    - **`prev_forced_n`** 上一个被强制帧的编号；尚未强制过关键帧时为 `NAN`
 
-    - **`prev_forced_t`** the time of the previous forced frame, it is `NAN` when no keyframe was forced yet
+    - **`prev_forced_t`** 上一个被强制帧的时间；尚未强制过关键帧时为 `NAN`
 
-    - **`t`** the time of the current processed frame
+    - **`t`** 当前处理帧的时间
 
-    For example to force a key frame every 5 seconds, you can specify:
+    例如，要每 5 秒强制一个关键帧，可以指定：
 
     ``` text
     -force_key_frames expr:gte(t,n_forced*5)
     ```
 
-    To force a key frame 5 seconds after the time of the last forced one, starting from second 13:
+    要从第 13 秒开始、在上次强制时间 5 秒之后强制关键帧：
 
     ``` text
     -force_key_frames expr:if(isnan(prev_forced_t),gte(t,13),gte(t,prev_forced_t+5))
     ```
 
-  - **`source`** If the argument is `source`, ffmpeg will force a key frame if the current frame being encoded is marked as a key frame in its source. In cases where this particular source frame has to be dropped, enforce the next available frame to become a key frame instead.
+  - **`source`** 如果参数为 `source`，当正在编码的当前帧在其源中被标记为关键帧时，ffmpeg 会强制关键帧。如果该特定源帧不得不被丢弃，则改为强制下一个可用帧成为关键帧。
 
-  - **`scd_metadata`** If the argument is `scd_metadata`, ffmpeg will force a key frame if the current frame contains a metadata entry with the key `lavfi.scd.time`. The metadata can be added by filters like `scdet` and `scdet_vulkan`. Avoid inserting filters that duplicate frames after `scdet`, as this can cause duplicate metadata for multiple frames and repeated insertion of key frames.
+  - **`scd_metadata`** 如果参数为 `scd_metadata`，当当前帧包含键为 `lavfi.scd.time` 的元数据条目时，ffmpeg 会强制关键帧。该元数据可由 `scdet` 和 `scdet_vulkan` 等滤镜添加。避免在 `scdet` 之后插入会复制帧的滤镜，否则会导致多帧出现重复元数据并重复插入关键帧。
 
-  Note that forcing too many keyframes is very harmful for the lookahead algorithms of certain encoders: using fixed-GOP options or similar would be more efficient.
+  注意，强制过多关键帧对某些编码器的前瞻算法非常有害：使用固定 GOP 选项或类似手段会更高效。
 
-- **`-apply_cropping[:stream_specifier] source (input,per-stream)`** Automatically crop the video after decoding according to file metadata. Default is *all*.
+- **`-apply_cropping[:stream_specifier] source (input,per-stream)`** 解码后根据文件元数据自动裁剪视频。默认为 *all*。
 
   | Term | Description |
   |----|----|
-  | `none (0)` | Don't apply any cropping metadata. |
-  | `all (1)` | Apply both codec and container level croppping. This is the default mode. |
-  | `codec (2)` | Apply codec level croppping. |
-  | `container (3)` | Apply container level croppping. |
+  | `none (0)` | 不应用任何裁剪元数据。 |
+  | `all (1)` | 应用编解码器级和容器级裁剪。这是默认模式。 |
+  | `codec (2)` | 应用编解码器级裁剪。 |
+  | `container (3)` | 应用容器级裁剪。 |
 
-- **`-copyinkf[:stream_specifier] (output,per-stream)`** When doing stream copy, copy also non-key frames found at the beginning.
+- **`-copyinkf[:stream_specifier] (output,per-stream)`** 流复制时，同时复制开头出现的非关键帧。
 
-- **`-init_hw_device type[=name][:device[,key=value...]]`** Initialise a new hardware device of type \<type\> called \<name\>, using the given device parameters. If no name is specified it will receive a default name of the form "\<type\>%d".
+- **`-init_hw_device type[=name][:device[,key=value...]]`** 用给定设备参数初始化一个名为 \<name\>、类型为 \<type\> 的新硬件设备。若未指定名称，将得到形如 "\<type\>%d" 的默认名称。
 
-  The meaning of \<device\> and the following arguments depends on the device type:
+  \<device\> 及后续参数的含义取决于设备类型：
 
-  - **`cuda`** \<device\> is the number of the CUDA device.
+  - **`cuda`** \<device\> 是 CUDA 设备的编号。
 
-    The following options are recognized:
-
-    | Term | Description |
-    |----|----|
-    | `primary_ctx` | If set to 1, uses the primary device context instead of creating a new one. |
-
-    Examples:
+    可识别以下选项：
 
     | Term | Description |
     |----|----|
-    | *-init_hw_device cuda:1* | Choose the second device on the system. |
-    | *-init_hw_device cuda:0,primary_ctx=1* | Choose the first device and use the primary device context. |
+    | `primary_ctx` | 设为 1 时，使用主设备上下文而不是新建一个。 |
 
-  - **`dxva2`** \<device\> is the number of the Direct3D 9 display adapter.
+    示例：
 
-  - **`d3d11va`** \<device\> is the number of the Direct3D 11 display adapter. If not specified, it will attempt to use the default Direct3D 11 display adapter or the first Direct3D 11 display adapter whose hardware VendorId is specified by `vendor_id`.
+    | Term | Description |
+    |----|----|
+    | *-init_hw_device cuda:1* | 选择系统中的第二个设备。 |
+    | *-init_hw_device cuda:0,primary_ctx=1* | 选择第一个设备并使用主设备上下文。 |
 
-    Examples:
+  - **`dxva2`** \<device\> 是 Direct3D 9 显示适配器的编号。
 
-    - ***-init_hw_device d3d11va*** Create a d3d11va device on the default Direct3D 11 display adapter.
+  - **`d3d11va`** \<device\> 是 Direct3D 11 显示适配器的编号。若未指定，将尝试使用默认的 Direct3D 11 显示适配器，或硬件 VendorId 与 `vendor_id` 相符的第一块 Direct3D 11 显示适配器。
 
-    - ***-init_hw_device d3d11va:1*** Create a d3d11va device on the Direct3D 11 display adapter specified by index 1.
+    示例：
 
-    - ***-init_hw_device d3d11va:,vendor_id=0x8086*** Create a d3d11va device on the first Direct3D 11 display adapter whose hardware VendorId is 0x8086.
+    - ***-init_hw_device d3d11va*** 在默认 Direct3D 11 显示适配器上创建 d3d11va 设备。
 
-  - **`vaapi`** \<device\> is either an X11 display name, a DRM render node or a DirectX adapter index. If not specified, it will attempt to open the default X11 display (*\$DISPLAY*) and then the first DRM render node (*/dev/dri/renderD128*), or the default DirectX adapter on Windows.
+    - ***-init_hw_device d3d11va:1*** 在索引为 1 的 Direct3D 11 显示适配器上创建 d3d11va 设备。
 
-    The following options are recognized:
+    - ***-init_hw_device d3d11va:,vendor_id=0x8086*** 在硬件 VendorId 为 0x8086 的第一块 Direct3D 11 显示适配器上创建 d3d11va 设备。
 
-    - **`kernel_driver`** When \<device\> is not specified, use this option to specify the name of the kernel driver associated with the desired device. This option is available only when the hardware acceleration method *drm* and *vaapi* are enabled.
+  - **`vaapi`** \<device\> 可以是 X11 显示名、DRM 渲染节点或 DirectX 适配器索引。若未指定，将尝试打开默认 X11 显示（*\$DISPLAY*），然后尝试第一个 DRM 渲染节点（*/dev/dri/renderD128*）；在 Windows 上则为默认 DirectX 适配器。
 
-    - **`vendor_id`** When \<device\> and \<kernel_driver\> are not specified, use this option to specify the vendor id associated with the desired device. This option is available only when the hardware acceleration method *drm* and *vaapi* are enabled and *kernel_driver* is not specified.
+    可识别以下选项：
 
-    Examples:
+    - **`kernel_driver`** 未指定 \<device\> 时，用该选项指定所需设备关联的内核驱动名称。该选项仅在硬件加速方法 *drm* 和 *vaapi* 启用时可用。
 
-    - ***-init_hw_device vaapi*** Create a vaapi device on the default device.
+    - **`vendor_id`** 未指定 \<device\> 和 \<kernel_driver\> 时，用该选项指定所需设备关联的供应商 ID。该选项仅在硬件加速方法 *drm* 和 *vaapi* 启用且未指定 *kernel_driver* 时可用。
 
-    - ***-init_hw_device vaapi:/dev/dri/renderD129*** Create a vaapi device on DRM render node `/dev/dri/renderD129`.
+    示例：
 
-    - ***-init_hw_device vaapi:1*** Create a vaapi device on DirectX adapter 1.
+    - ***-init_hw_device vaapi*** 在默认设备上创建 vaapi 设备。
 
-    - ***-init_hw_device vaapi:,kernel_driver=i915*** Create a vaapi device on a device associated with kernel driver `i915`.
+    - ***-init_hw_device vaapi:/dev/dri/renderD129*** 在 DRM 渲染节点 `/dev/dri/renderD129` 上创建 vaapi 设备。
 
-    - ***-init_hw_device vaapi:,vendor_id=0x8086*** Create a vaapi device on a device associated with vendor id `0x8086`.
+    - ***-init_hw_device vaapi:1*** 在 DirectX 适配器 1 上创建 vaapi 设备。
 
-  - **`vdpau`** \<device\> is an X11 display name. If not specified, it will attempt to open the default X11 display (*\$DISPLAY*).
+    - ***-init_hw_device vaapi:,kernel_driver=i915*** 在与内核驱动 `i915` 关联的设备上创建 vaapi 设备。
 
-  - **`qsv`** \<device\> selects a value in `MFX_IMPL_*`. Allowed values are:
+    - ***-init_hw_device vaapi:,vendor_id=0x8086*** 在与供应商 ID `0x8086` 关联的设备上创建 vaapi 设备。
+
+  - **`vdpau`** \<device\> 是 X11 显示名。若未指定，将尝试打开默认 X11 显示（*\$DISPLAY*）。
+
+  - **`qsv`** \<device\> 在 `MFX_IMPL_*` 中选择一个值。允许的值有：
 
     - **`auto`**
 
@@ -1279,33 +1275,33 @@ The video, audio and subtitle streams mapped to `out2.mkv` are entirely determin
 
     - **`hw4`**
 
-    If not specified, `auto_any` is used. (Note that it may be easier to achieve the desired result for QSV by creating the platform-appropriate subdevice (`dxva2` or `d3d11va` or `vaapi`) and then deriving a QSV device from that.)
+    若未指定，使用 `auto_any`。（注意，对 QSV 而言，先创建平台合适的子设备（`dxva2`、`d3d11va` 或 `vaapi`），再从它派生 QSV 设备，可能更容易达到预期效果。）
 
-    The following options are recognized:
+    可识别以下选项：
 
-    - **`child_device`** Specify a DRM render node on Linux or DirectX adapter on Windows.
+    - **`child_device`** 在 Linux 上指定 DRM 渲染节点，在 Windows 上指定 DirectX 适配器。
 
-    - **`child_device_type`** Choose platform-appropriate subdevice type. On Windows `d3d11va` is used as default subdevice type when `--enable-libvpl` is specified at configuration time, `dxva2` is used as default subdevice type when `--enable-libmfx` is specified at configuration time. On Linux user can use `vaapi` only as subdevice type.
+    - **`child_device_type`** 选择平台合适的子设备类型。在 Windows 上，配置时指定 `--enable-libvpl` 则默认子设备类型为 `d3d11va`，指定 `--enable-libmfx` 则默认子设备类型为 `dxva2`。在 Linux 上，用户只能用 `vaapi` 作为子设备类型。
 
-    Examples:
+    示例：
 
-    - ***-init_hw_device qsv:hw,child_device=/dev/dri/renderD129*** Create a QSV device with `MFX_IMPL_HARDWARE` on DRM render node `/dev/dri/renderD129`.
+    - ***-init_hw_device qsv:hw,child_device=/dev/dri/renderD129*** 在 DRM 渲染节点 `/dev/dri/renderD129` 上创建使用 `MFX_IMPL_HARDWARE` 的 QSV 设备。
 
-    - ***-init_hw_device qsv:hw,child_device=1*** Create a QSV device with `MFX_IMPL_HARDWARE` on DirectX adapter 1.
+    - ***-init_hw_device qsv:hw,child_device=1*** 在 DirectX 适配器 1 上创建使用 `MFX_IMPL_HARDWARE` 的 QSV 设备。
 
-    - ***-init_hw_device qsv:hw,child_device_type=d3d11va*** Choose the GPU subdevice with type `d3d11va` and create QSV device with `MFX_IMPL_HARDWARE`.
+    - ***-init_hw_device qsv:hw,child_device_type=d3d11va*** 选择类型为 `d3d11va` 的 GPU 子设备，并创建使用 `MFX_IMPL_HARDWARE` 的 QSV 设备。
 
-    - ***-init_hw_device qsv:hw,child_device_type=dxva2*** Choose the GPU subdevice with type `dxva2` and create QSV device with `MFX_IMPL_HARDWARE`.
+    - ***-init_hw_device qsv:hw,child_device_type=dxva2*** 选择类型为 `dxva2` 的 GPU 子设备，并创建使用 `MFX_IMPL_HARDWARE` 的 QSV 设备。
 
-    - ***-init_hw_device qsv:hw,child_device=1,child_device_type=d3d11va*** Create a QSV device with `MFX_IMPL_HARDWARE` on DirectX adapter 1 with subdevice type `d3d11va`.
+    - ***-init_hw_device qsv:hw,child_device=1,child_device_type=d3d11va*** 在 DirectX 适配器 1 上以子设备类型 `d3d11va` 创建使用 `MFX_IMPL_HARDWARE` 的 QSV 设备。
 
-    - ***-init_hw_device vaapi=va:/dev/dri/renderD129 -init_hw_device qsv=hw1@\<va\>*** Create a VAAPI device called `va` on `/dev/dri/renderD129`, then derive a QSV device called `hw1` from device `va`.
+    - ***-init_hw_device vaapi=va:/dev/dri/renderD129 -init_hw_device qsv=hw1@\<va\>*** 在 `/dev/dri/renderD129` 上创建名为 `va` 的 VAAPI 设备，然后从设备 `va` 派生名为 `hw1` 的 QSV 设备。
 
-  - **`opencl`** \<device\> selects the platform and device as *platform_index.device_index*.
+  - **`opencl`** \<device\> 以 *platform_index.device_index* 形式选择平台和设备。
 
-    The set of devices can also be filtered using the key-value pairs to find only devices matching particular platform or device strings.
+    还可以用键值对过滤设备集合，只查找匹配特定平台或设备字符串的设备。
 
-    The strings usable as filters are:
+    可用作过滤器的字符串有：
 
     - **`platform_profile`**
 
@@ -1331,401 +1327,401 @@ The video, audio and subtitle streams mapped to `out2.mkv` are entirely determin
 
     - **`device_type`**
 
-    The indices and filters must together uniquely select a device.
+    索引与过滤器组合起来必须能唯一选定一个设备。
 
-    Examples:
+    示例：
 
-    - ***-init_hw_device opencl:0.1*** Choose the second device on the first platform.
+    - ***-init_hw_device opencl:0.1*** 选择第一个平台上的第二个设备。
 
-    - ***-init_hw_device opencl:,device_name=Foo9000*** Choose the device with a name containing the string *Foo9000*.
+    - ***-init_hw_device opencl:,device_name=Foo9000*** 选择名称包含字符串 *Foo9000* 的设备。
 
-    - ***-init_hw_device opencl:1,device_type=gpu,device_extensions=cl_khr_fp16*** Choose the GPU device on the second platform supporting the *cl_khr_fp16* extension.
+    - ***-init_hw_device opencl:1,device_type=gpu,device_extensions=cl_khr_fp16*** 选择第二个平台上支持 *cl_khr_fp16* 扩展的 GPU 设备。
 
-  - **`vulkan`** If \<device\> is an integer, it selects the device by its index in a system-dependent list of devices. If \<device\> is any other string, it selects the first device with a name containing that string as a substring.
+  - **`vulkan`** 如果 \<device\> 是整数，则按设备在系统相关设备列表中的索引选择设备。如果 \<device\> 是其他字符串，则选择名称包含该字符串子串的第一个设备。
 
-    The following options are recognized:
+    可识别以下选项：
 
-    - **`debug`** If set to 1, enables the validation layer, if installed.
+    - **`debug`** 设为 1 时，若已安装验证层则启用它。
 
-    - **`linear_images`** If set to 1, images allocated by the hwcontext will be linear and locally mappable.
+    - **`linear_images`** 设为 1 时，hwcontext 分配的图像将是线性且可本地映射的。
 
-    - **`instance_extensions`** A plus separated list of additional instance extensions to enable.
+    - **`instance_extensions`** 以加号分隔的额外实例扩展列表，将被启用。
 
-    - **`device_extensions`** A plus separated list of additional device extensions to enable.
+    - **`device_extensions`** 以加号分隔的额外设备扩展列表，将被启用。
 
-    Examples:
+    示例：
 
-    - ***-init_hw_device vulkan:1*** Choose the second device on the system.
+    - ***-init_hw_device vulkan:1*** 选择系统中的第二个设备。
 
-    - ***-init_hw_device vulkan:RADV*** Choose the first device with a name containing the string *RADV*.
+    - ***-init_hw_device vulkan:RADV*** 选择名称包含字符串 *RADV* 的第一个设备。
 
-    - ***-init_hw_device vulkan:0,instance_extensions=VK_KHR_wayland_surface+VK_KHR_xcb_surface*** Choose the first device and enable the Wayland and XCB instance extensions.
+    - ***-init_hw_device vulkan:0,instance_extensions=VK_KHR_wayland_surface+VK_KHR_xcb_surface*** 选择第一个设备并启用 Wayland 和 XCB 实例扩展。
 
-- **`-init_hw_device type[=name]@source`** Initialise a new hardware device of type \<type\> called \<name\>, deriving it from the existing device with the name \<source\>.
+- **`-init_hw_device type[=name]@source`** 初始化一个名为 \<name\>、类型为 \<type\> 的新硬件设备，从名为 \<source\> 的既有设备派生。
 
-- **`-init_hw_device list`** List all hardware device types supported in this build of ffmpeg.
+- **`-init_hw_device list`** 列出本 ffmpeg 构建支持的所有硬件设备类型。
 
-- **`-filter_hw_device name`** Pass the hardware device called \<name\> to all filters in any filter graph. This can be used to set the device to upload to with the `hwupload` filter, or the device to map to with the `hwmap` filter. Other filters may also make use of this parameter when they require a hardware device. Note that this is typically only required when the input is not already in hardware frames - when it is, filters will derive the device they require from the context of the frames they receive as input.
+- **`-filter_hw_device name`** 把名为 \<name\> 的硬件设备传给所有滤镜图中的所有滤镜。可用于设置 `hwupload` 滤镜要上传到的设备，或 `hwmap` 滤镜要映射到的设备。其他滤镜在需要硬件设备时也可能使用该参数。注意，通常仅在输入还不是硬件帧时才需要它——如果已经是硬件帧，滤镜会从收到的输入帧上下文中派生所需设备。
 
-  This is a global setting, so all filters will receive the same device.
+  这是全局设置，因此所有滤镜会收到同一个设备。
 
-- **`-hwaccel[:stream_specifier] hwaccel (input,per-stream)`** Use hardware acceleration to decode the matching stream(s). The allowed values of \<hwaccel\> are:
+- **`-hwaccel[:stream_specifier] hwaccel (input,per-stream)`** 用硬件加速解码匹配的流。\<hwaccel\> 允许的取值有：
 
-  - **`none`** Do not use any hardware acceleration (the default).
+  - **`none`** 不使用任何硬件加速（默认）。
 
-  - **`auto`** Automatically select the hardware acceleration method.
+  - **`auto`** 自动选择硬件加速方法。
 
-  - **`vdpau`** Use VDPAU (Video Decode and Presentation API for Unix) hardware acceleration.
+  - **`vdpau`** 使用 VDPAU（Video Decode and Presentation API for Unix）硬件加速。
 
-  - **`dxva2`** Use DXVA2 (DirectX Video Acceleration) hardware acceleration.
+  - **`dxva2`** 使用 DXVA2（DirectX Video Acceleration）硬件加速。
 
-  - **`d3d11va`** Use D3D11VA (DirectX Video Acceleration) hardware acceleration.
+  - **`d3d11va`** 使用 D3D11VA（DirectX Video Acceleration）硬件加速。
 
-  - **`vaapi`** Use VAAPI (Video Acceleration API) hardware acceleration.
+  - **`vaapi`** 使用 VAAPI（Video Acceleration API）硬件加速。
 
-  - **`qsv`** Use the Intel QuickSync Video acceleration for video transcoding.
+  - **`qsv`** 使用 Intel QuickSync Video 加速进行视频转码。
 
-    Unlike most other values, this option does not enable accelerated decoding (that is used automatically whenever a qsv decoder is selected), but accelerated transcoding, without copying the frames into the system memory.
+    与大多数其他取值不同，该取值启用的不是加速解码（选中 qsv 解码器时会自动使用），而是加速转码，无需把帧复制到系统内存。
 
-    For it to work, both the decoder and the encoder must support QSV acceleration and no filters must be used.
+    要使其生效，解码器和编码器都必须支持 QSV 加速，且不得使用滤镜。
 
-  - **`videotoolbox`** Use Video Toolbox hardware acceleration.
+  - **`videotoolbox`** 使用 Video Toolbox 硬件加速。
 
-  This option has no effect if the selected hwaccel is not available or not supported by the chosen decoder.
+  如果所选 hwaccel 不可用或不被所选解码器支持，该选项无效。
 
-  Note that most acceleration methods are intended for playback and will not be faster than software decoding on modern CPUs. Additionally, `ffmpeg` will usually need to copy the decoded frames from the GPU memory into the system memory, resulting in further performance loss. This option is thus mainly useful for testing.
+  注意，大多数加速方法面向播放场景，在现代 CPU 上不会比软件解码更快。此外，`ffmpeg` 通常还需要把解码后的帧从 GPU 内存复制到系统内存，造成进一步的性能损失。因此该选项主要用于测试。
 
-- **`-hwaccel_device[:stream_specifier] hwaccel_device (input,per-stream)`** Select a device to use for hardware acceleration.
+- **`-hwaccel_device[:stream_specifier] hwaccel_device (input,per-stream)`** 选择用于硬件加速的设备。
 
-  This option only makes sense when the `-hwaccel` option is also specified. It can either refer to an existing device created with `-init_hw_device` by name, or it can create a new device as if `-init_hw_device` \<type\>:\<hwaccel_device\> were called immediately before.
+  该选项只在同时指定 `-hwaccel` 选项时才有意义。它既可以按名称引用用 `-init_hw_device` 创建的既有设备，也可以创建新设备，效果如同紧接着调用了 `-init_hw_device` \<type\>:\<hwaccel_device\>。
 
-- **`-hwaccels`** List all hardware acceleration components enabled in this build of ffmpeg. Actual runtime availability depends on the hardware and its suitable driver being installed.
+- **`-hwaccels`** 列出本 ffmpeg 构建启用的所有硬件加速组件。实际运行时可用性取决于硬件及其合适驱动是否已安装。
 
-- **`-fix_sub_duration_heartbeat[:stream_specifier]`** Set a specific output video stream as the heartbeat stream according to which to split and push through currently in-progress subtitle upon receipt of a random access packet.
+- **`-fix_sub_duration_heartbeat[:stream_specifier]`** 把特定输出视频流设置为心跳流：收到随机访问包时，按它拆分并推送当前进行中的字幕。
 
-  This lowers the latency of subtitles for which the end packet or the following subtitle has not yet been received. As a drawback, this will most likely lead to duplication of subtitle events in order to cover the full duration, so when dealing with use cases where latency of when the subtitle event is passed on to output is not relevant this option should not be utilized.
+  这可以降低尚未收到结束包或下一条字幕的字幕的延迟。代价是，为了覆盖完整时长，很可能导致字幕事件重复，因此在字幕事件传递到输出的延迟无关紧要的场景中不应使用该选项。
 
-  Requires `-fix_sub_duration` to be set for the relevant input subtitle stream for this to have any effect, as well as for the input subtitle stream having to be directly mapped to the same output in which the heartbeat stream resides.
+  要使其生效，相关输入字幕流必须设置 `-fix_sub_duration`，且输入字幕流必须直接映射到心跳流所在的同一输出。
 
-## Audio Options
+## 音频选项
 
-- **`-aframes number (output)`** Set the number of audio frames to output. This is an obsolete alias for `-frames:a`, which you should use instead.
+- **`-aframes number (output)`** 设置要输出的音频帧数量。这是 `-frames:a` 的过时别名，应改用后者。
 
-- **`-ar[:stream_specifier] freq (input/output,per-stream)`** Set the audio sampling frequency. For output streams it is set by default to the frequency of the corresponding input stream. For input streams this option only makes sense for audio grabbing devices and raw demuxers and is mapped to the corresponding demuxer options.
+- **`-ar[:stream_specifier] freq (input/output,per-stream)`** 设置音频采样频率。对输出流，默认设置为对应输入流的频率。对输入流，该选项只对音频采集设备和原始解复用器有意义，并映射为相应的解复用器选项。
 
-- **`-aq q (output)`** Set the audio quality (codec-specific, VBR). This is an alias for -q:a.
+- **`-aq q (output)`** 设置音频质量（编解码器特定，VBR）。这是 -q:a 的别名。
 
-- **`-ac[:stream_specifier] channels (input/output,per-stream)`** Set the number of audio channels. For output streams it is set by default to the number of input audio channels. For input streams this option only makes sense for audio grabbing devices and raw demuxers and is mapped to the corresponding demuxer options.
+- **`-ac[:stream_specifier] channels (input/output,per-stream)`** 设置音频声道数。对输出流，默认设置为输入音频声道数。对输入流，该选项只对音频采集设备和原始解复用器有意义，并映射为相应的解复用器选项。
 
-- **`-an (input/output)`** As an input option, blocks all audio streams of a file from being filtered or being automatically selected or mapped for any output. See `-discard` option to disable streams individually.
+- **`-an (input/output)`** 作为输入选项使用时，阻止文件的所有音频流被滤镜处理、被自动选择或被映射到任何输出。逐流禁用请参见 `-discard` 选项。
 
-  As an output option, disables audio recording i.e. automatic selection or mapping of any audio stream. For full manual control see the `-map` option.
+  作为输出选项使用时，禁用音频收录，即自动选择或映射任何音频流。完全手动控制请参见 `-map` 选项。
 
-- **`-acodec codec (input/output)`** Set the audio codec. This is an alias for `-codec:a`.
+- **`-acodec codec (input/output)`** 设置音频编解码器。这是 `-codec:a` 的别名。
 
-- **`-sample_fmt[:stream_specifier] sample_fmt (output,per-stream)`** Set the audio sample format. Use `-sample_fmts` to get a list of supported sample formats.
+- **`-sample_fmt[:stream_specifier] sample_fmt (output,per-stream)`** 设置音频采样格式。用 `-sample_fmts` 可获取支持的采样格式列表。
 
-- **`-af filtergraph (output)`** Create the filtergraph specified by \<filtergraph\> and use it to filter the stream.
+- **`-af filtergraph (output)`** 创建 \<filtergraph\> 指定的滤镜链图，并用它对该流做滤镜处理。
 
-  This is an alias for `-filter:a`, see the [-filter option](ffmpeg.md#main-options).
+  这是 `-filter:a` 的别名，参见 [-filter 选项](#filter_005foption)。
 
-## Advanced Audio options
+## 高级音频选项
 
-- **`-atag fourcc/tag (output)`** Force audio tag/fourcc. This is an alias for `-tag:a`.
+- **`-atag fourcc/tag (output)`** 强制音频 tag/fourcc。这是 `-tag:a` 的别名。
 
-- **`-ch_layout[:stream_specifier] layout (input/output,per-stream)`** Alias for `-channel_layout`.
+- **`-ch_layout[:stream_specifier] layout (input/output,per-stream)`** `-channel_layout` 的别名。
 
-- **`-channel_layout[:stream_specifier] layout (input/output,per-stream)`** Set the audio channel layout. For output streams it is set by default to the input channel layout. For input streams it overrides the channel layout of the input. Not all decoders respect the overridden channel layout. This option also sets the channel layout for audio grabbing devices and raw demuxers and is mapped to the corresponding demuxer option.
+- **`-channel_layout[:stream_specifier] layout (input/output,per-stream)`** 设置音频声道布局。对输出流，默认设置为输入声道布局。对输入流，它会覆盖输入的声道布局。并非所有解码器都遵循被覆盖的声道布局。该选项也会为音频采集设备和原始解复用器设置声道布局，并映射为相应的解复用器选项。
 
-- **`-guess_layout_max channels (input,per-stream)`** If some input channel layout is not known, try to guess only if it corresponds to at most the specified number of channels. For example, 2 tells to `ffmpeg` to recognize 1 channel as mono and 2 channels as stereo but not 6 channels as 5.1. The default is to always try to guess. Use 0 to disable all guessing. Using the `-channel_layout` option to explicitly specify an input layout also disables guessing.
+- **`-guess_layout_max channels (input,per-stream)`** 如果某些输入声道布局未知，只有当其对应不超过指定声道数时才尝试猜测。例如，2 告诉 `ffmpeg` 把 1 声道识别为单声道、2 声道识别为立体声，但不把 6 声道识别为 5.1。默认总是尝试猜测。设为 0 可禁用所有猜测。用 `-channel_layout` 选项显式指定输入布局也会禁用猜测。
 
-## Subtitle options
+## 字幕选项
 
-- **`-scodec codec (input/output)`** Set the subtitle codec. This is an alias for `-codec:s`.
+- **`-scodec codec (input/output)`** 设置字幕编解码器。这是 `-codec:s` 的别名。
 
-- **`-sn (input/output)`** As an input option, blocks all subtitle streams of a file from being filtered or being automatically selected or mapped for any output. See `-discard` option to disable streams individually.
+- **`-sn (input/output)`** 作为输入选项使用时，阻止文件的所有字幕流被滤镜处理、被自动选择或被映射到任何输出。逐流禁用请参见 `-discard` 选项。
 
-  As an output option, disables subtitle recording i.e. automatic selection or mapping of any subtitle stream. For full manual control see the `-map` option.
+  作为输出选项使用时，禁用字幕收录，即自动选择或映射任何字幕流。完全手动控制请参见 `-map` 选项。
 
-## Advanced Subtitle options
+## 高级字幕选项
 
-- **`-fix_sub_duration`** Fix subtitles durations. For each subtitle, wait for the next packet in the same stream and adjust the duration of the first to avoid overlap. This is necessary with some subtitles codecs, especially DVB subtitles, because the duration in the original packet is only a rough estimate and the end is actually marked by an empty subtitle frame. Failing to use this option when necessary can result in exaggerated durations or muxing failures due to non-monotonic timestamps.
+- **`-fix_sub_duration`** 修正字幕时长。对每条字幕，等待同一条流中的下一个包，并调整前者的时长以避免重叠。某些字幕编解码器（尤其是 DVB 字幕）必须这样做，因为原始包中的时长只是粗略估计，真正的结束由一个空字幕帧标记。必要时不用该选项可能导致时长被夸大，或因时间戳非单调而复用失败。
 
-  Note that this option will delay the output of all data until the next subtitle packet is decoded: it may increase memory consumption and latency a lot.
+  注意，该选项会推迟所有数据的输出，直到下一条字幕包被解码：这可能大幅增加内存消耗和延迟。
 
-- **`-canvas_size size`** Set the size of the canvas used to render subtitles.
+- **`-canvas_size size`** 设置渲染字幕所用画布的尺寸。
 
-## Advanced options
+## 高级选项
 
-- **`-map [-]input_file_id[:stream_specifier][:view_specifier][:?] | [linklabel] (output)`** Create one or more streams in the output file. This option has two forms for specifying the data source(s): the first selects one or more streams from some input file (specified with `-i`), the second takes an output from some complex filtergraph (specified with `-filter_complex`).
+- **`-map [-]input_file_id[:stream_specifier][:view_specifier][:?] | [linklabel] (output)`** 在输出文件中创建一条或多条流。该选项有两种指定数据源的形式：第一种从某个输入文件（用 `-i` 指定）选择一条或多条流；第二种取某个复杂滤镜链图（用 `-filter_complex` 指定）的一个输出。
 
-  In the first form, an output stream is created for every stream from the input file with the index \<input_file_id\>. If \<stream_specifier\> is given, only those streams that match the specifier are used (see the [Stream specifiers](common-options.md#stream-specifiers) section for the \<stream_specifier\> syntax).
+  第一种形式下，会为索引为 \<input_file_id\> 的输入文件中的每条流创建输出流。如果给出了 \<stream_specifier\>，则只使用匹配该说明符的流（\<stream_specifier\> 语法参见[流说明符](#Stream-specifiers)小节）。
 
-  A `-` character before the stream identifier creates a "negative" mapping. It disables matching streams from already created mappings.
+  流标识符前的 `-` 字符创建"负"映射：它会把匹配的流从已创建的映射中排除。
 
-  An optional \<view_specifier\> may be given after the stream specifier, which for multiview video specifies the view to be used. The view specifier may have one of the following formats:
+  可以在流说明符之后给出可选的 \<view_specifier\>，多视图视频时指定要使用的视图。视图说明符可以是以下格式之一：
 
-  - **`view:view_id`** select a view by its ID; \<view_id\> may be set to 'all' to use all the views interleaved into one stream;
+  - **`view:view_id`** 按 ID 选择视图；\<view_id\> 可设为 'all'，把所有视图交错合入一条流；
 
-  - **`vidx:view_idx`** select a view by its index; i.e. 0 is the base view, 1 is the first non-base view, etc.
+  - **`vidx:view_idx`** 按索引选择视图；即 0 是基础视图，1 是第一个非基础视图，依此类推。
 
-  - **`vpos:position`** select a view by its display position; \<position\> may be `left` or `right`
+  - **`vpos:position`** 按显示位置选择视图；\<position\> 可以是 `left` 或 `right`
 
-  The default for transcoding is to only use the base view, i.e. the equivalent of `vidx:0`. For streamcopy, view specifiers are not supported and all views are always copied.
+  转码时默认只使用基础视图，即相当于 `vidx:0`。流复制不支持视图说明符，总是复制所有视图。
 
-  A trailing `?` after the stream index will allow the map to be optional: if the map matches no streams the map will be ignored instead of failing. Note the map will still fail if an invalid input file index is used; such as if the map refers to a non-existent input.
+  流索引后的尾随 `?` 使映射可选：如果映射没有匹配到任何流，将忽略该映射而不是失败。注意，如果使用了无效的输入文件索引（例如映射指向不存在的输入），映射仍然会失败。
 
-  An alternative \<\[linklabel\]\> form will map outputs from complex filter graphs (see the `-filter_complex` option) to the output file. \<linklabel\> must correspond to a defined output link label in the graph.
+  另一种 \<\[linklabel\]\> 形式把复杂滤镜图（参见 `-filter_complex` 选项）的输出映射到输出文件。\<linklabel\> 必须对应图中已定义的输出连接标签。
 
-  This option may be specified multiple times, each adding more streams to the output file. Any given input stream may also be mapped any number of times as a source for different output streams, e.g. in order to use different encoding options and/or filters. The streams are created in the output in the same order in which the `-map` options are given on the commandline.
+  该选项可以指定多次，每次向输出文件添加更多流。任何给定输入流也可以作为不同输出流的源被映射任意多次，例如为了使用不同的编码选项和/或滤镜。流在输出中创建的顺序与 `-map` 选项在命令行上给出的顺序相同。
 
-  Using this option disables the default mappings for this output file.
+  使用该选项会禁用该输出文件的默认映射。
 
-  Examples:
+  示例：
 
-  - ***map everything*** To map ALL streams from the first input file to output
+  - ***map everything*** 把第一个输入文件的所有流映射到输出
 
     ``` text
     ffmpeg -i INPUT -map 0 output
     ```
 
-  - ***select specific stream*** If you have two audio streams in the first input file, these streams are identified by \<0:0\> and \<0:1\>. You can use `-map` to select which streams to place in an output file. For example:
+  - ***select specific stream*** 如果第一个输入文件中有两条音频流，这两条流由 \<0:0\> 和 \<0:1\> 标识。可以用 `-map` 选择把哪些流放入输出文件。例如：
 
     ``` text
     ffmpeg -i INPUT -map 0:1 out.wav
     ```
 
-    will map the second input stream in `INPUT` to the (single) output stream in `out.wav`.
+    把 `INPUT` 中的第二条输入流映射到 `out.wav` 的（唯一）输出流。
 
-  - ***create multiple streams*** To select the stream with index 2 from input file `a.mov` (specified by the identifier \<0:2\>), and stream with index 6 from input `b.mov` (specified by the identifier \<1:6\>), and copy them to the output file `out.mov`:
+  - ***create multiple streams*** 从输入文件 `a.mov` 选择索引为 2 的流（由标识符 \<0:2\> 指定），从输入 `b.mov` 选择索引为 6 的流（由标识符 \<1:6\> 指定），并复制到输出文件 `out.mov`：
 
     ``` text
     ffmpeg -i a.mov -i b.mov -c copy -map 0:2 -map 1:6 out.mov
     ```
 
-  - ***create multiple streams 2*** To select all video and the third audio stream from an input file:
+  - ***create multiple streams 2*** 从一个输入文件选择全部视频流和第三条音频流：
 
     ``` text
     ffmpeg -i INPUT -map 0:v -map 0:a:2 OUTPUT
     ```
 
-  - ***negative map*** To map all the streams except the second audio, use negative mappings
+  - ***negative map*** 要映射除第二条音频之外的所有流，使用负映射
 
     ``` text
     ffmpeg -i INPUT -map 0 -map -0:a:1 OUTPUT
     ```
 
-  - ***optional map*** To map the video and audio streams from the first input, and using the trailing `?`, ignore the audio mapping if no audio streams exist in the first input:
+  - ***optional map*** 映射第一个输入的视频和音频流，并利用尾随 `?` 在第一个输入没有音频流时忽略音频映射：
 
     ``` text
     ffmpeg -i INPUT -map 0:v -map 0:a? OUTPUT
     ```
 
-  - ***map by language*** To pick the English audio stream:
+  - ***map by language*** 挑选英语音频流：
 
     ``` text
     ffmpeg -i INPUT -map 0:m:language:eng OUTPUT
     ```
 
-- **`-ignore_unknown`** Ignore input streams with unknown type instead of failing if copying such streams is attempted.
+- **`-ignore_unknown`** 忽略类型未知的输入流，而不是在尝试复制此类流时失败。
 
-- **`-copy_unknown`** Allow input streams with unknown type to be copied instead of failing if copying such streams is attempted.
+- **`-copy_unknown`** 允许复制类型未知的输入流，而不是在尝试复制此类流时失败。
 
-- **`-map_metadata[:metadata_spec_out] infile[:metadata_spec_in] (output,per-metadata)`** Set metadata information of the next output file from \<infile\>. Note that those are file indices (zero-based), not filenames. Optional \<metadata_spec_in/out\> parameters specify, which metadata to copy. A metadata specifier can have the following forms:
+- **`-map_metadata[:metadata_spec_out] infile[:metadata_spec_in] (output,per-metadata)`** 用 \<infile\> 设置下一个输出文件的元数据信息。注意这些是文件索引（从 0 开始），不是文件名。可选的 \<metadata_spec_in/out\> 参数指定要复制哪些元数据。元数据说明符可以是以下形式之一：
 
-  - **`g`** global metadata, i.e. metadata that applies to the whole file
+  - **`g`** 全局元数据，即作用于整个文件的元数据
 
-  - **`s[:stream_spec]`** per-stream metadata. \<stream_spec\> is a stream specifier as described in the [Stream specifiers](common-options.md#stream-specifiers) chapter. In an input metadata specifier, the first matching stream is copied from. In an output metadata specifier, all matching streams are copied to.
+  - **`s[:stream_spec]`** 每流元数据。\<stream_spec\> 是[流说明符](#Stream-specifiers)章节所述的流说明符。作为输入元数据说明符时，从第一条匹配的流复制；作为输出元数据说明符时，复制到所有匹配的流。
 
-  - **`c:chapter_index`** per-chapter metadata. \<chapter_index\> is the zero-based chapter index.
+  - **`c:chapter_index`** 每章节元数据。\<chapter_index\> 是从 0 开始的章节索引。
 
-  - **`p:program_index`** per-program metadata. \<program_index\> is the zero-based program index.
+  - **`p:program_index`** 每节目元数据。\<program_index\> 是从 0 开始的节目索引。
 
-  If metadata specifier is omitted, it defaults to global.
+  若省略元数据说明符，默认为全局。
 
-  By default, global metadata is copied from the first input file, per-stream and per-chapter metadata is copied along with streams/chapters. These default mappings are disabled by creating any mapping of the relevant type. A negative file index can be used to create a dummy mapping that just disables automatic copying.
+  默认情况下，全局元数据从第一个输入文件复制，每流和每章节元数据随流/章节一起复制。创建任何相关类型的映射都会禁用这些默认映射。负文件索引可用于创建仅用于禁用自动复制的哑映射。
 
-  For example to copy metadata from the first stream of the input file to global metadata of the output file:
+  例如，把输入文件第一条流的元数据复制到输出文件的全局元数据：
 
   ``` text
   ffmpeg -i in.ogg -map_metadata 0:s:0 out.mp3
   ```
 
-  To do the reverse, i.e. copy global metadata to all audio streams:
+  反过来，即把全局元数据复制到所有音频流：
 
   ``` text
   ffmpeg -i in.mkv -map_metadata:s:a 0:g out.mkv
   ```
 
-  Note that simple `0` would work as well in this example, since global metadata is assumed by default.
+  注意，本例中简单的 `0` 也可以，因为默认就按全局元数据处理。
 
-- **`-map_chapters input_file_index (output)`** Copy chapters from input file with index \<input_file_index\> to the next output file. If no chapter mapping is specified, then chapters are copied from the first input file with at least one chapter. Use a negative file index to disable any chapter copying.
+- **`-map_chapters input_file_index (output)`** 把索引为 \<input_file_index\> 的输入文件的章节复制到下一个输出文件。如果未指定章节映射，则从至少含一个章节的第一个输入文件复制章节。使用负文件索引可禁用任何章节复制。
 
-- **`-benchmark (global)`** Show benchmarking information at the end of an encode. Shows real, system and user time used and maximum memory consumption. Maximum memory consumption is not supported on all systems, it will usually display as 0 if not supported.
+- **`-benchmark (global)`** 在编码结束时显示基准测试信息。显示实际、系统和用户时间以及最大内存消耗。并非所有系统都支持最大内存消耗统计，不支持时通常显示为 0。
 
-- **`-benchmark_all (global)`** Show benchmarking information during the encode. Shows real, system and user time used in various steps (audio/video encode/decode).
+- **`-benchmark_all (global)`** 在编码过程中显示基准测试信息。显示各步骤（音频/视频编码/解码）使用的实际、系统和用户时间。
 
-- **`-timelimit duration (global)`** Exit after ffmpeg has been running for \<duration\> seconds in CPU user time.
+- **`-timelimit duration (global)`** 当 ffmpeg 以 CPU 用户时间计运行超过 \<duration\> 秒后退出。
 
-- **`-dump (global)`** Dump each input packet to stderr.
+- **`-dump (global)`** 把每个输入包转储到 stderr。
 
-- **`-hex (global)`** When dumping packets, also dump the payload.
+- **`-hex (global)`** 转储包时同时转储载荷。
 
-- **`-readrate speed (input)`** Limit input read speed.
+- **`-readrate speed (input)`** 限制输入读取速度。
 
-  Its value is a floating-point positive number which represents the maximum duration of media, in seconds, that should be ingested in one second of wallclock time. Default value is zero and represents no imposed limitation on speed of ingestion. Value `1` represents real-time speed and is equivalent to `-re`.
+  其值为正浮点数，表示每一秒墙上时钟时间内应摄取的媒体最大时长（秒）。默认值为零，表示对摄取速度不加限制。值 `1` 表示实时速度，等同于 `-re`。
 
-  Mainly used to simulate a capture device or live input stream (e.g. when reading from a file). Should not be used with a low value when input is an actual capture device or live stream as it may cause packet loss.
+  主要用于模拟采集设备或实时输入流（例如从文件读取时）。当输入是真实的采集设备或实时流时，不应使用较低的值，否则可能导致丢包。
 
-  It is useful for when flow speed of output packets is important, such as live streaming.
+  当输出包的流速很重要时（例如流媒体直播）很有用。
 
-- **`-re (input)`** Read input at native frame rate. This is equivalent to setting `-readrate 1`.
+- **`-re (input)`** 以原生帧率读取输入。等同于设置 `-readrate 1`。
 
-- **`-readrate_initial_burst seconds`** Set an initial read burst time, in seconds, after which `-re/-readrate` will be enforced.
+- **`-readrate_initial_burst seconds`** 设置初始读取突发时间（秒），此后强制执行 `-re/-readrate`。
 
-- **`-readrate_catchup speed (input)`** If either the input or output is blocked leading to actual read speed falling behind the specified readrate, then this rate takes effect till the input catches up with the specified readrate. Must not be lower than the primary readrate.
+- **`-readrate_catchup speed (input)`** 如果输入或输出被阻塞，导致实际读取速度落后于指定的 readrate，则该速率生效，直到输入追上指定 readrate。不得低于主 readrate。
 
-- **`-fps_mode[:stream_specifier] parameter (output,per-stream)`** Set video sync method / framerate mode.
+- **`-fps_mode[:stream_specifier] parameter (output,per-stream)`** 设置视频同步方法/帧率模式。
 
-  - **`passthrough`** Each frame is passed with its timestamp from the demuxer to the muxer.
+  - **`passthrough`** 每帧带着来自解复用器的时间戳直接传给复用器。
 
-  - **`cfr`** Frames will be duplicated and dropped to achieve exactly the requested constant frame rate.
+  - **`cfr`** 通过复制和丢弃帧，精确达到请求的恒定帧率。
 
-  - **`vfr`** Frames are passed through with their timestamp or dropped so as to prevent 2 frames from having the same timestamp.
+  - **`vfr`** 帧带着各自时间戳通过，或被丢弃，以避免两帧具有相同时间戳。
 
-  - **`auto`** Chooses between cfr and vfr depending on muxer capabilities. This is the default method.
+  - **`auto`** 根据复用器能力在 cfr 和 vfr 之间选择。这是默认方法。
 
-  Note that the timestamps may be further modified by the muxer, after this. For example, in the case that the format option `avoid_negative_ts` is enabled.
+  注意，此后时间戳还可能被复用器进一步修改，例如格式选项 `avoid_negative_ts` 启用时。
 
-  With -map you can select from which stream the timestamps should be taken. You can leave either video or audio unchanged and sync the remaining stream(s) to the unchanged one.
+  用 -map 可以选择从哪条流取时间戳。可以让视频或音频之一保持不变，把其余流同步到不变的那条。
 
-- **`-frame_drop_threshold parameter`** Frame drop threshold, which specifies how much behind video frames can be before they are dropped. In frame rate units, so 1.0 is one frame. The default is -1.1. One possible usecase is to avoid framedrops in case of noisy timestamps or to increase frame drop precision in case of exact timestamps.
+- **`-frame_drop_threshold parameter`** 丢帧阈值，指定视频帧可以落后多少才被丢弃。以帧率为单位，1.0 即一帧。默认值为 -1.1。一个可能的用途是在时间戳噪声较大时避免丢帧，或在时间戳精确时提高丢帧精度。
 
-- **`-apad parameters (output,per-stream)`** Pad the output audio stream(s). This is the same as applying `-af apad`. Argument is a string of filter parameters composed the same as with the `apad` filter. `-shortest` must be set for this output for the option to take effect.
+- **`-apad parameters (output,per-stream)`** 填充输出音频流。等同于应用 `-af apad`。参数是与 `apad` 滤镜同样构成方式的滤镜参数字符串。要使该选项生效，必须为该输出设置 `-shortest`。
 
-- **`-copyts`** Do not process input timestamps, but keep their values without trying to sanitize them. In particular, do not remove the initial start time offset value.
+- **`-copyts`** 不处理输入时间戳，保留其原值而不尝试清理。特别是，不移除初始起始时间偏移值。
 
-  Note that, depending on the `fps_mode` option or on specific muxer processing (e.g. in case the format option `avoid_negative_ts` is enabled) the output timestamps may mismatch with the input timestamps even when this option is selected.
+  注意，取决于 `fps_mode` 选项或特定复用器处理（例如格式选项 `avoid_negative_ts` 启用时），即使选择了该选项，输出时间戳仍可能与输入时间戳不一致。
 
-- **`-start_at_zero`** When used with `copyts`, shift input timestamps so they start at zero.
+- **`-start_at_zero`** 与 `copyts` 一起使用时，平移输入时间戳使其从零开始。
 
-  This means that using e.g. `-ss 50` will make output timestamps start at 50 seconds, regardless of what timestamp the input file started at.
+  这意味着使用例如 `-ss 50` 会让输出时间戳从 50 秒开始，无论输入文件从什么时间戳开始。
 
-- **`-copytb mode`** Specify how to set the encoder timebase when stream copying. \<mode\> is an integer numeric value, and can assume one of the following values:
+- **`-copytb mode`** 指定流复制时如何设置编码器时间基。\<mode\> 是整数值，可取以下之一：
 
-  - **`1`** Use the demuxer timebase.
+  - **`1`** 使用解复用器时间基。
 
-    The time base is copied to the output encoder from the corresponding input demuxer. This is sometimes required to avoid non monotonically increasing timestamps when copying video streams with variable frame rate.
+    时间基从对应的输入解复用器复制到输出编码器。复制可变帧率的视频流时，有时需要这样做来避免时间戳非单调递增。
 
-  - **`0`** Use the decoder timebase.
+  - **`0`** 使用解码器时间基。
 
-    The time base is copied to the output encoder from the corresponding input decoder.
+    时间基从对应的输入解码器复制到输出编码器。
 
-  - **`-1`** Try to make the choice automatically, in order to generate a sane output.
+  - **`-1`** 尝试自动选择，以生成正常的输出。
 
-  Default value is -1.
+  默认值为 -1。
 
-- **`-enc_time_base[:stream_specifier] timebase (output,per-stream)`** Set the encoder timebase. \<timebase\> can assume one of the following values:
+- **`-enc_time_base[:stream_specifier] timebase (output,per-stream)`** 设置编码器时间基。\<timebase\> 可取以下之一：
 
-  - **`0`** Assign a default value according to the media type.
+  - **`0`** 按媒体类型分配默认值。
 
-    For video - use 1/framerate, for audio - use 1/samplerate.
+    视频用 1/framerate，音频用 1/samplerate。
 
-  - **`demux`** Use the timebase from the demuxer.
+  - **`demux`** 使用解复用器的时间基。
 
-  - **`filter`** Use the timebase from the filtergraph.
+  - **`filter`** 使用滤镜链图的时间基。
 
-  - **`a positive number`** Use the provided number as the timebase.
+  - **`a positive number`** 使用给定数字作为时间基。
 
-    This field can be provided as a ratio of two integers (e.g. 1:24, 1:48000) or as a decimal number (e.g. 0.04166, 2.0833e-5)
+    该字段可以按两个整数之比给出（例如 1:24、1:48000），或按十进制数给出（例如 0.04166、2.0833e-5）
 
-  Default value is 0.
+  默认值为 0。
 
-- **`-bitexact (input/output)`** Enable bitexact mode for (de)muxer and (de/en)coder
+- **`-bitexact (input/output)`** 为（解）复用器和（解/编）码器启用 bitexact 模式
 
-- **`-shortest (output)`** Finish encoding when the shortest output stream ends.
+- **`-shortest (output)`** 在最短的输出流结束时结束编码。
 
-  Note that this option may require buffering frames, which introduces extra latency. The maximum amount of this latency may be controlled with the `-shortest_buf_duration` option.
+  注意，该选项可能需要缓冲帧，从而引入额外延迟。该延迟的最大值可用 `-shortest_buf_duration` 选项控制。
 
-- **`-shortest_buf_duration duration (output)`** The `-shortest` option may require buffering potentially large amounts of data when at least one of the streams is "sparse" (i.e. has large gaps between frames – this is typically the case for subtitles).
+- **`-shortest_buf_duration duration (output)`** 当至少一条流比较"稀疏"时（即帧间间隔很大——字幕通常如此），`-shortest` 选项可能需要缓冲大量数据。
 
-  This option controls the maximum duration of buffered frames in seconds. Larger values may allow the `-shortest` option to produce more accurate results, but increase memory use and latency.
+  该选项控制缓冲帧的最大时长（秒）。更大的值可让 `-shortest` 选项产生更精确的结果，但会增加内存使用和延迟。
 
-  The default value is 10 seconds.
+  默认值为 10 秒。
 
-- **`-dts_delta_threshold threshold`** Timestamp discontinuity delta threshold, expressed as a decimal number of seconds.
+- **`-dts_delta_threshold threshold`** 时间戳不连续增量阈值，以秒的十进制数表示。
 
-  The timestamp discontinuity correction enabled by this option is only applied to input formats accepting timestamp discontinuity (for which the `AVFMT_TS_DISCONT` flag is enabled), e.g. MPEG-TS and HLS, and is automatically disabled when employing the `-copyts` option (unless wrapping is detected).
+  该选项启用的时间戳不连续校正只应用于接受时间戳不连续的输入格式（启用了 `AVFMT_TS_DISCONT` 标志的格式），例如 MPEG-TS 和 HLS；使用 `-copyts` 选项时自动禁用（除非检测到回绕）。
 
-  If a timestamp discontinuity is detected whose absolute value is greater than \<threshold\>, ffmpeg will remove the discontinuity by decreasing/increasing the current DTS and PTS by the corresponding delta value.
+  如果检测到绝对值大于 \<threshold\> 的时间戳不连续，ffmpeg 会通过按相应增量减小/增大当前 DTS 和 PTS 来消除不连续。
 
-  The default value is 10.
+  默认值为 10。
 
-- **`-dts_error_threshold threshold`** Timestamp error delta threshold, expressed as a decimal number of seconds.
+- **`-dts_error_threshold threshold`** 时间戳错误增量阈值，以秒的十进制数表示。
 
-  The timestamp correction enabled by this option is only applied to input formats not accepting timestamp discontinuity (for which the `AVFMT_TS_DISCONT` flag is not enabled).
+  该选项启用的时间戳校正只应用于不接受时间戳不连续的输入格式（未启用 `AVFMT_TS_DISCONT` 标志的格式）。
 
-  If a timestamp discontinuity is detected whose absolute value is greater than \<threshold\>, ffmpeg will drop the PTS/DTS timestamp value.
+  如果检测到绝对值大于 \<threshold\> 的时间戳不连续，ffmpeg 将丢弃 PTS/DTS 时间戳值。
 
-  The default value is `3600*30` (30 hours), which is arbitrarily picked and quite conservative.
+  默认值为 `3600*30`（30 小时），这是任意选取的，相当保守。
 
-- **`-muxdelay seconds (output)`** Set the maximum demux-decode delay.
+- **`-muxdelay seconds (output)`** 设置最大解复用-解码延迟。
 
-- **`-muxpreload seconds (output)`** Set the initial demux-decode delay.
+- **`-muxpreload seconds (output)`** 设置初始解复用-解码延迟。
 
-- **`-streamid output-stream-index:new-value (output)`** Assign a new stream-id value to an output stream. This option should be specified prior to the output filename to which it applies. For the situation where multiple output files exist, a streamid may be reassigned to a different value.
+- **`-streamid output-stream-index:new-value (output)`** 为输出流指定新的 stream-id 值。该选项应在其作用的输出文件名之前指定。存在多个输出文件时，streamid 可以重新指定为不同的值。
 
-  For example, to set the stream 0 PID to 33 and the stream 1 PID to 36 for an output mpegts file:
+  例如，为输出 mpegts 文件把流 0 的 PID 设为 33、流 1 的 PID 设为 36：
 
   ``` text
   ffmpeg -i inurl -streamid 0:33 -streamid 1:36 out.ts
   ```
 
-- **`-bsf[:stream_specifier] bitstream_filters (input/output,per-stream)`** Apply bitstream filters to matching streams. The filters are applied to each packet as it is received from the demuxer (when used as an input option) or before it is sent to the muxer (when used as an output option).
+- **`-bsf[:stream_specifier] bitstream_filters (input/output,per-stream)`** 对匹配的流应用比特流滤镜。作为输入选项使用时，滤镜在每个包从解复用器收到时应用；作为输出选项使用时，在包发送给复用器之前应用。
 
-  \<bitstream_filters\> is a comma-separated list of bitstream filter specifications, each of the form
+  \<bitstream_filters\> 是以逗号分隔的比特流滤镜规格列表，每条规格形如
 
   ``` text
   filter[=optname0=optval0:optname1=optval1:...]
   ```
 
-  Any of the ',=:' characters that are to be a part of an option value need to be escaped with a backslash.
+  ',=:' 中任何要作为选项值一部分的字符都需要用反斜杠转义。
 
-  Use the `-bsfs` option to get the list of bitstream filters.
+  用 `-bsfs` 选项可获取比特流滤镜列表。
 
-  E.g.
+  例如：
 
   ``` text
   ffmpeg -bsf:v h264_mp4toannexb -i h264.mp4 -c:v copy -an out.h264
   ```
 
-  applies the `h264_mp4toannexb` bitstream filter (which converts MP4-encapsulated H.264 stream to Annex B) to the *input* video stream.
+  把 `h264_mp4toannexb` 比特流滤镜（把 MP4 封装的 H.264 流转换为 Annex B）应用到*输入*视频流。
 
-  On the other hand,
+  反过来，
 
   ``` text
   ffmpeg -i file.mov -an -vn -bsf:s mov2textsub -c:s copy -f rawvideo sub.txt
   ```
 
-  applies the `mov2textsub` bitstream filter (which extracts text from MOV subtitles) to the *output* subtitle stream. Note, however, that since both examples use `-c copy`, it matters little whether the filters are applied on input or output - that would change if transcoding was happening.
+  把 `mov2textsub` 比特流滤镜（从 MOV 字幕提取文本）应用到*输出*字幕流。不过要注意，由于两个示例都用 `-c copy`，滤镜应用于输入还是输出差别不大——若发生转码则不然。
 
-- **`-tag[:stream_specifier] codec_tag (input/output,per-stream)`** Force a tag/fourcc for matching streams.
+- **`-tag[:stream_specifier] codec_tag (input/output,per-stream)`** 为匹配的流强制 tag/fourcc。
 
-- **`-timecode hh:mm:ssSEPff`** Specify Timecode for writing. \<SEP\> is ':' for non drop timecode and ';' (or '.') for drop.
+- **`-timecode hh:mm:ssSEPff`** 指定要写入的时间码。\<SEP\> 在非 drop 时间码时为 ':'，drop 时为 ';'（或 '.'）。
 
   ``` text
   ffmpeg -i input.mpg -timecode 01:02:03.04 -r 30000/1001 -s ntsc output.mpg
   ```
 
-- **`-filter_complex filtergraph (global)`** Define a complex filtergraph, i.e. one with arbitrary number of inputs and/or outputs. For simple graphs – those with one input and one output of the same type – see the `-filter` options. \<filtergraph\> is a description of the filtergraph, as described in the "Filtergraph syntax" section of the ffmpeg-filters manual. This option may be specified multiple times - each use creates a new complex filtergraph.
+- **`-filter_complex filtergraph (global)`** 定义复杂滤镜链图，即有任意数量输入和/或输出的滤镜链图。简单图——恰好一个输入和一个输出且类型相同——请参见 `-filter` 选项。\<filtergraph\> 是滤镜链图的描述，见 ffmpeg-filters 手册的"Filtergraph syntax（滤镜链图语法）"一节。该选项可以指定多次——每次使用都会创建一个新的复杂滤镜链图。
 
-  Inputs to a complex filtergraph may come from different source types, distinguished by the format of the corresponding link label:
+  复杂滤镜链图的输入可以来自不同类型的源，以相应连接标签的格式区分：
 
-  - To connect an input stream, use `[file_index:stream_specifier]` (i.e. the same syntax as `-map`). If \<stream_specifier\> matches multiple streams, the first one will be used. For multiview video, the stream specifier may be followed by the view specifier, see documentation for the `-map` option for its syntax.
+  - 连接输入流时，使用 `[file_index:stream_specifier]`（即与 `-map` 相同的语法）。如果 \<stream_specifier\> 匹配多条流，将使用第一条。多视图视频时，流说明符后可跟视图说明符，语法参见 `-map` 选项文档。
 
-  - To connect a loopback decoder use \[dec:\<dec_idx\>\], where \<dec_idx\> is the index of the loopback decoder to be connected to given input. For multiview video, the decoder index may be followed by the view specifier, see documentation for the `-map` option for its syntax.
+  - 连接回环解码器时，使用 \[dec:\<dec_idx\>\]，其中 \<dec_idx\> 是要连接到给定输入的回环解码器索引。多视图视频时，解码器索引后可跟视图说明符，语法参见 `-map` 选项文档。
 
-  - To connect an output from another complex filtergraph, use its link label. E.g the following example:
+  - 连接另一个复杂滤镜链图的输出时，使用其连接标签。例如下面的示例：
 
     ``` text
     ffmpeg -i input.mkv \
@@ -1736,51 +1732,51 @@ The video, audio and subtitle streams mapped to `out2.mkv` are entirely determin
       -map '[stacked]' -c:v ffv1 comparison.mkv
     ```
 
-    reads an input video and
+    该命令读取一个输入视频，然后
 
-    - (line 2) uses a complex filtergraph with one input and two outputs to scale the video to 1920x1080 and duplicate the result to both outputs;
+    - （第 2 行）用一个单输入双输出的复杂滤镜链图把视频缩放到 1920x1080，并把结果复制到两个输出；
 
-    - (line 3) encodes one scaled output with `libx264` and writes the result to `output.mkv`;
+    - （第 3 行）用 `libx264` 编码其中一路缩放输出，把结果写入 `output.mkv`；
 
-    - (line 4) decodes this encoded stream with a loopback decoder;
+    - （第 4 行）用回环解码器解码这条已编码流；
 
-    - (line 5) places the output of the loopback decoder (i.e. the `libx264`-encoded video) side by side with the scaled original input;
+    - （第 5 行）把回环解码器的输出（即 `libx264` 编码的视频）与缩放后的原始输入并排拼接；
 
-    - (line 6) combined video is then losslessly encoded and written into `comparison.mkv`.
+    - （第 6 行）拼接后的视频再经无损编码写入 `comparison.mkv`。
 
-    Note that the two filtergraphs cannot be combined into one, because then there would be a cycle in the transcoding pipeline (filtergraph output goes to encoding, from there to decoding, then back to the same graph), and such cycles are not allowed.
+    注意，这两个滤镜链图不能合并为一个，否则转码管线中会出现环（滤镜链图输出进入编码，从那里进入解码，再回到同一个图），而这样的环是不允许的。
 
-  An unlabeled input will be connected to the first unused input stream of the matching type.
+  未标注的输入会连接到匹配类型中第一条未被占用的输入流。
 
-  Output link labels are referred to with `-map`. Unlabeled outputs are added to the first output file.
+  输出连接标签用 `-map` 引用。未标注的输出会加入第一个输出文件。
 
-  Note that with this option it is possible to use only lavfi sources without normal input files.
+  注意，使用该选项时可以只用 lavfi 源而不使用常规输入文件。
 
-  For example, to overlay an image over video
+  例如，把一张图片叠加到视频上
 
   ``` text
   ffmpeg -i video.mkv -i image.png -filter_complex '[0:v][1:v]overlay[out]' -map
   '[out]' out.mkv
   ```
 
-  Here `[0:v]` refers to the first video stream in the first input file, which is linked to the first (main) input of the overlay filter. Similarly the first video stream in the second input is linked to the second (overlay) input of overlay.
+  这里 `[0:v]` 指第一个输入文件中的第一条视频流，它连接到 overlay 滤镜的第一个（主）输入。类似地，第二个输入中的第一条视频流连接到 overlay 的第二个（叠加）输入。
 
-  Assuming there is only one video stream in each input file, we can omit input labels, so the above is equivalent to
+  假设每个输入文件只有一条视频流，可以省略输入标签，因此上例等价于
 
   ``` text
   ffmpeg -i video.mkv -i image.png -filter_complex 'overlay[out]' -map
   '[out]' out.mkv
   ```
 
-  Furthermore we can omit the output label and the single output from the filter graph will be added to the output file automatically, so we can simply write
+  此外还可以省略输出标签，滤镜图的单一输出会自动加入输出文件，因此可以简写为
 
   ``` text
   ffmpeg -i video.mkv -i image.png -filter_complex 'overlay' out.mkv
   ```
 
-  As a special exception, you can use a bitmap subtitle stream as input: it will be converted into a video with the same size as the largest video in the file, or 720x576 if no video is present. Note that this is an experimental and temporary solution. It will be removed once libavfilter has proper support for subtitles.
+  作为特殊例外，可以使用位图字幕流作为输入：它会被转换为与文件中最大视频同尺寸的视频，若无视频则为 720x576。注意，这是一个实验性临时方案。待 libavfilter 正式支持字幕后将移除。
 
-  For example, to hardcode subtitles on top of a DVB-T recording stored in MPEG-TS format, delaying the subtitles by 1 second:
+  例如，把存储为 MPEG-TS 格式的 DVB-T 录制内容中的字幕硬编码烧入画面，并把字幕延迟 1 秒：
 
   ``` text
   ffmpeg -i input.ts -filter_complex \
@@ -1788,346 +1784,346 @@ The video, audio and subtitle streams mapped to `out2.mkv` are entirely determin
     -sn -map '#0x2dc' output.mkv
   ```
 
-  (0x2d0, 0x2dc and 0x2ef are the MPEG-TS PIDs of respectively the video, audio and subtitles streams; 0:0, 0:3 and 0:7 would have worked too)
+  （0x2d0、0x2dc 和 0x2ef 分别是视频、音频和字幕流的 MPEG-TS PID；用 0:0、0:3 和 0:7 也可以）
 
-  To generate 5 seconds of pure red video using lavfi `color` source:
+  用 lavfi `color` 源生成 5 秒纯红视频：
 
   ``` text
   ffmpeg -filter_complex 'color=c=red' -t 5 out.mkv
   ```
 
-- **`-filter_complex_threads nb_threads (global)`** Defines how many threads are used to process a filter_complex graph. Similar to filter_threads but used for `-filter_complex` graphs only. The default is the number of available CPUs.
+- **`-filter_complex_threads nb_threads (global)`** 定义处理 filter_complex 图使用的线程数。与 filter_threads 类似，但只用于 `-filter_complex` 图。默认值为可用 CPU 数量。
 
-- **`-lavfi filtergraph (global)`** Define a complex filtergraph, i.e. one with arbitrary number of inputs and/or outputs. Equivalent to `-filter_complex`.
+- **`-lavfi filtergraph (global)`** 定义复杂滤镜链图，即有任意数量输入和/或输出的滤镜链图。等同于 `-filter_complex`。
 
-- **`-accurate_seek (input)`** This option enables or disables accurate seeking in input files with the `-ss` option. It is enabled by default, so seeking is accurate when transcoding. Use `-noaccurate_seek` to disable it, which may be useful e.g. when copying some streams and transcoding the others.
+- **`-accurate_seek (input)`** 该选项启用或禁用用 `-ss` 选项在输入文件中精确定位。默认启用，因此转码时定位是精确的。用 `-noaccurate_seek` 禁用；例如部分流复制、其余流转码时可能有用。
 
-- **`-seek_timestamp (input)`** This option enables or disables seeking by timestamp in input files with the `-ss` option. It is disabled by default. If enabled, the argument to the `-ss` option is considered an actual timestamp, and is not offset by the start time of the file. This matters only for files which do not start from timestamp 0, such as transport streams.
+- **`-seek_timestamp (input)`** 该选项启用或禁用用 `-ss` 选项按时间戳在输入文件中定位。默认禁用。启用后，`-ss` 选项的参数被视为实际时间戳，不再按文件起始时间偏移。这只对不从时间戳 0 开始的文件（如传输流）有意义。
 
-- **`-thread_queue_size size (input/output)`** For input, this option sets the maximum number of queued packets when reading from the file or device. With low latency / high rate live streams, packets may be discarded if they are not read in a timely manner; setting this value can force ffmpeg to use a separate input thread and read packets as soon as they arrive. By default ffmpeg only does this if multiple inputs are specified.
+- **`-thread_queue_size size (input/output)`** 对输入，该选项设置从文件或设备读取时队列包的最大数量。低延迟/高速率实时流中，包若未及时读取可能被丢弃；设置该值可强制 ffmpeg 使用单独的输入线程，并在包到达时立即读取。默认情况下，只有指定了多个输入时 ffmpeg 才这样做。
 
-  For output, this option specified the maximum number of packets that may be queued to each muxing thread.
+  对输出，该选项指定每个复用线程可排队包的最大数量。
 
-- **`-sdp_file file (global)`** Print sdp information for an output stream to \<file\>. This allows dumping sdp information when at least one output isn't an rtp stream. (Requires at least one of the output formats to be rtp).
+- **`-sdp_file file (global)`** 把输出流的 sdp 信息打印到 \<file\>。这样在至少一个输出不是 rtp 流时也能转储 sdp 信息。（要求至少一个输出格式为 rtp）。
 
-- **`-discard (input)`** Allows discarding specific streams or frames from streams. Any input stream can be fully discarded, using value `all` whereas selective discarding of frames from a stream occurs at the demuxer and is not supported by all demuxers.
+- **`-discard (input)`** 允许丢弃特定流或流中的特定帧。任何输入流都可以用值 `all` 完全丢弃；而对流中帧的选择性丢弃发生在解复用器，并非所有解复用器都支持。
 
   | Term      | Description                           |
   |-----------|---------------------------------------|
-  | `none`    | Discard no frame.                     |
-  | `default` | Default, which discards no frames.    |
-  | `noref`   | Discard all non-reference frames.     |
-  | `bidir`   | Discard all bidirectional frames.     |
-  | `nokey`   | Discard all frames excepts keyframes. |
-  | `all`     | Discard all frames.                   |
+  | `none`    | 不丢弃任何帧。 |
+  | `default` | 默认，不丢弃帧。 |
+  | `noref`   | 丢弃所有非参考帧。 |
+  | `bidir`   | 丢弃所有双向帧。 |
+  | `nokey`   | 丢弃关键帧以外的所有帧。 |
+  | `all`     | 丢弃所有帧。 |
 
-- **`-abort_on flags (global)`** Stop and abort on various conditions. The following flags are available:
+- **`-abort_on flags (global)`** 在各种条件下停止并中止。可用标志如下：
 
   | Term | Description |
   |----|----|
-  | `empty_output` | No packets were passed to the muxer, the output is empty. |
-  | `empty_output_stream` | No packets were passed to the muxer in some of the output streams. |
+  | `empty_output` | 没有包传给复用器，输出为空。 |
+  | `empty_output_stream` | 某些输出流没有包传给复用器。 |
 
-- **`-max_error_rate (global)`** Set fraction of decoding frame failures across all inputs which when crossed ffmpeg will return exit code 69. Crossing this threshold does not terminate processing. Range is a floating-point number between 0 to 1. Default is 2/3.
+- **`-max_error_rate (global)`** 设置所有输入上解码帧失败的比例阈值，超过该比例 ffmpeg 将返回退出码 69。越过该阈值不会终止处理。取值范围是 0 到 1 之间的浮点数。默认值为 2/3。
 
-- **`-xerror (global)`** Stop and exit on error
+- **`-xerror (global)`** 出错时停止并退出
 
-- **`-max_muxing_queue_size packets (output,per-stream)`** When transcoding audio and/or video streams, ffmpeg will not begin writing into the output until it has one packet for each such stream. While waiting for that to happen, packets for other streams are buffered. This option sets the size of this buffer, in packets, for the matching output stream.
+- **`-max_muxing_queue_size packets (output,per-stream)`** 转码音频和/或视频流时，ffmpeg 在每条此类流都各有一个包之前不会开始写入输出。等待期间，其他流的包会被缓冲。该选项为匹配的输出流设置此缓冲区的大小（以包计）。
 
-  The default value of this option should be high enough for most uses, so only touch this option if you are sure that you need it.
+  该选项的默认值对大多数用途应当足够，因此除非确定需要，否则不要动它。
 
-- **`-muxing_queue_data_threshold bytes (output,per-stream)`** This is a minimum threshold until which the muxing queue size is not taken into account. Defaults to 50 megabytes per stream, and is based on the overall size of packets passed to the muxer.
+- **`-muxing_queue_data_threshold bytes (output,per-stream)`** 这是一个最小阈值，在此之前不考虑复用队列大小。默认每流 50 MB，基于传给复用器的包总体大小。
 
-- **`-auto_conversion_filters (global)`** Enable automatically inserting format conversion filters in all filter graphs, including those defined by `-vf`, `-af`, `-filter_complex` and `-lavfi`. If filter format negotiation requires a conversion, the initialization of the filters will fail. Conversions can still be performed by inserting the relevant conversion filter (scale, aresample) in the graph. On by default, to explicitly disable it you need to specify `-noauto_conversion_filters`.
+- **`-auto_conversion_filters (global)`** 允许在所有滤镜图中自动插入格式转换滤镜，包括 `-vf`、`-af`、`-filter_complex` 和 `-lavfi` 定义的图。如果滤镜格式协商需要转换，滤镜的初始化将失败。仍可在图中插入相关转换滤镜（scale、aresample）来执行转换。默认开启；要显式禁用，需指定 `-noauto_conversion_filters`。
 
-- **`-bits_per_raw_sample[:stream_specifier] value (output,per-stream)`** Declare the number of bits per raw sample in the given output stream to be \<value\>. Note that this option sets the information provided to the encoder/muxer, it does not change the stream to conform to this value. Setting values that do not match the stream properties may result in encoding failures or invalid output files.
+- **`-bits_per_raw_sample[:stream_specifier] value (output,per-stream)`** 声明给定输出流每原始样本的位数为 \<value\>。注意，该选项设置的是提供给编码器/复用器的信息，不会改变流使其符合该值。设置与流属性不符的值可能导致编码失败或输出文件无效。
 
 - **`-stats_enc_pre[:stream_specifier] path (output,per-stream)`**
 
 - **`-stats_enc_post[:stream_specifier] path (output,per-stream)`**
 
-- **`-stats_mux_pre[:stream_specifier] path (output,per-stream)`** Write per-frame encoding information about the matching streams into the file given by \<path\>.
+- **`-stats_mux_pre[:stream_specifier] path (output,per-stream)`** 把匹配流的每帧编码信息写入 \<path\> 给定的文件。
 
-  `-stats_enc_pre` writes information about raw video or audio frames right before they are sent for encoding, while `-stats_enc_post` writes information about encoded packets as they are received from the encoder. `-stats_mux_pre` writes information about packets just as they are about to be sent to the muxer. Every frame or packet produces one line in the specified file. The format of this line is controlled by `-stats_enc_pre_fmt` / `-stats_enc_post_fmt` / `-stats_mux_pre_fmt`.
+  `-stats_enc_pre` 在原始视频或音频帧即将送去编码之前写入其信息；`-stats_enc_post` 在从编码器收到已编码包时写入其信息；`-stats_mux_pre` 在包即将发送给复用器时写入其信息。每帧或每包在指定文件中产生一行。行格式由 `-stats_enc_pre_fmt` / `-stats_enc_post_fmt` / `-stats_mux_pre_fmt` 控制。
 
-  When stats for multiple streams are written into a single file, the lines corresponding to different streams will be interleaved. The precise order of this interleaving is not specified and not guaranteed to remain stable between different invocations of the program, even with the same options.
+  当多条流的统计信息写入同一文件时，不同流的行会交错。这种交错的精确顺序未作规定，也不保证在程序的多次运行之间保持稳定，即使选项完全相同。
 
 - **`-stats_enc_pre_fmt[:stream_specifier] format_spec (output,per-stream)`**
 
 - **`-stats_enc_post_fmt[:stream_specifier] format_spec (output,per-stream)`**
 
-- **`-stats_mux_pre_fmt[:stream_specifier] format_spec (output,per-stream)`** Specify the format for the lines written with `-stats_enc_pre` / `-stats_enc_post` / `-stats_mux_pre`.
+- **`-stats_mux_pre_fmt[:stream_specifier] format_spec (output,per-stream)`** 指定用 `-stats_enc_pre` / `-stats_enc_post` / `-stats_mux_pre` 写入行的格式。
 
-  \<format_spec\> is a string that may contain directives of the form \<{fmt}\>. \<format_spec\> is backslash-escaped — use \\, \\, and \\ to write a literal {, }, or \\ respectively, into the output.
+  \<format_spec\> 是一个字符串，可包含 \<{fmt}\> 形式的指令。\<format_spec\> 采用反斜杠转义——分别用 \\、\\ 和 \\ 把字面量 {、} 或 \\ 写入输出。
 
-  The directives given with \<fmt\> may be one of the following:
+  \<fmt\> 给出的指令可以是以下之一：
 
-  - **`fidx`** Index of the output file.
+  - **`fidx`** 输出文件的索引。
 
-  - **`sidx`** Index of the output stream in the file.
+  - **`sidx`** 输出流在文件中的索引。
 
-  - **`n`** Frame number. Pre-encoding: number of frames sent to the encoder so far. Post-encoding: number of packets received from the encoder so far. Muxing: number of packets submitted to the muxer for this stream so far.
+  - **`n`** 帧编号。编码前：迄今发送给编码器的帧数。编码后：迄今从编码器收到的包数。复用：迄今提交给该流复用器的包数。
 
-  - **`ni`** Input frame number. Index of the input frame (i.e. output by a decoder) that corresponds to this output frame or packet. -1 if unavailable.
+  - **`ni`** 输入帧编号。与该输出帧或包对应的输入帧（即由解码器输出）的索引。不可用时为 -1。
 
-  - **`tb`** Timebase in which this frame/packet's timestamps are expressed, as a rational number \<num/den\>. Note that encoder and muxer may use different timebases.
+  - **`tb`** 该帧/包时间戳所用的时间基，为有理数 \<num/den\>。注意编码器和复用器可能使用不同的时间基。
 
-  - **`tbi`** Timebase for \<ptsi\>, as a rational number \<num/den\>. Available when \<ptsi\> is available, \<0/1\> otherwise.
+  - **`tbi`** \<ptsi\> 所用的时间基，为有理数 \<num/den\>。\<ptsi\> 可用时可用，否则为 \<0/1\>。
 
-  - **`pts`** Presentation timestamp of the frame or packet, as an integer. Should be multiplied by the timebase to compute presentation time.
+  - **`pts`** 帧或包的显示时间戳，为整数。应乘以时间基得到显示时间。
 
-  - **`ptsi`** Presentation timestamp of the input frame (see \<ni\>), as an integer. Should be multiplied by \<tbi\> to compute presentation time. Printed as (2^63 - 1 = 9223372036854775807) when not available.
+  - **`ptsi`** 输入帧的显示时间戳（见 \<ni\>），为整数。应乘以 \<tbi\> 得到显示时间。不可用时打印为 (2^63 - 1 = 9223372036854775807)。
 
-  - **`t`** Presentation time of the frame or packet, as a decimal number. Equal to \<pts\> multiplied by \<tb\>.
+  - **`t`** 帧或包的显示时间，为十进制数。等于 \<pts\> 乘以 \<tb\>。
 
-  - **`ti`** Presentation time of the input frame (see \<ni\>), as a decimal number. Equal to \<ptsi\> multiplied by \<tbi\>. Printed as inf when not available.
+  - **`ti`** 输入帧的显示时间（见 \<ni\>），为十进制数。等于 \<ptsi\> 乘以 \<tbi\>。不可用时打印为 inf。
 
-  - **`dts (packet)`** Decoding timestamp of the packet, as an integer. Should be multiplied by the timebase to compute presentation time.
+  - **`dts (packet)`** 包的解码时间戳，为整数。应乘以时间基得到显示时间。
 
-  - **`dt (packet)`** Decoding time of the frame or packet, as a decimal number. Equal to \<dts\> multiplied by \<tb\>.
+  - **`dt (packet)`** 帧或包的解码时间，为十进制数。等于 \<dts\> 乘以 \<tb\>。
 
-  - **`sn (frame,audio)`** Number of audio samples sent to the encoder so far.
+  - **`sn (frame,audio)`** 迄今发送给编码器的音频采样数。
 
-  - **`samp (frame,audio)`** Number of audio samples in the frame.
+  - **`samp (frame,audio)`** 帧中的音频采样数。
 
-  - **`size (packet)`** Size of the encoded packet in bytes.
+  - **`size (packet)`** 已编码包的大小（字节）。
 
-  - **`br (packet)`** Current bitrate in bits per second.
+  - **`br (packet)`** 当前码率（bit/s）。
 
-  - **`abr (packet)`** Average bitrate for the whole stream so far, in bits per second, -1 if it cannot be determined at this point.
+  - **`abr (packet)`** 迄今整条流的平均码率（bit/s）；此刻无法确定时为 -1。
 
-  - **`key (packet)`** Character 'K' if the packet contains a keyframe, character 'N' otherwise.
+  - **`key (packet)`** 包含关键帧时为字符 'K'，否则为 'N'。
 
-  Directives tagged with *packet* may only be used with `-stats_enc_post_fmt` and `-stats_mux_pre_fmt`.
+  标记为 *packet* 的指令只能用于 `-stats_enc_post_fmt` 和 `-stats_mux_pre_fmt`。
 
-  Directives tagged with *frame* may only be used with `-stats_enc_pre_fmt`.
+  标记为 *frame* 的指令只能用于 `-stats_enc_pre_fmt`。
 
-  Directives tagged with *audio* may only be used with audio streams.
+  标记为 *audio* 的指令只能用于音频流。
 
-  The default format strings are:
+  默认格式字符串为：
 
   | Term            | Description           |
   |-----------------|-----------------------|
   | `pre-encoding`  | {fidx} {sidx} {n} {t} |
   | `post-encoding` | {fidx} {sidx} {n} {t} |
 
-  In the future, new items may be added to the end of the default formatting strings. Users who depend on the format staying exactly the same, should prescribe it manually.
+  未来可能会在默认格式字符串末尾添加新条目。依赖格式保持完全一致的用户应手动指定。
 
-  Note that stats for different streams written into the same file may have different formats.
+  注意，写入同一文件的不同流的统计信息可能采用不同格式。
 
-## Preset files
+## 预设文件
 
-A preset file contains a sequence of \<option\>=\<value\> pairs, one for each line, specifying a sequence of options which would be awkward to specify on the command line. Lines starting with the hash ('#') character are ignored and are used to provide comments. Check the `presets` directory in the FFmpeg source tree for examples.
+预设文件包含一系列 \<option\>=\<value\> 对，每行一个，指定一组在命令行上难以输入的选项。以井号（'#'）字符开头的行会被忽略，用作注释。示例参见 FFmpeg 源码树中的 `presets` 目录。
 
-There are two types of preset files: ffpreset and avpreset files.
+预设文件有两类：ffpreset 和 avpreset 文件。
 
-### ffpreset files
+### ffpreset 文件
 
-ffpreset files are specified with the `vpre`, `apre`, `spre`, and `fpre` options. The `fpre` option takes the filename of the preset instead of a preset name as input and can be used for any kind of codec. For the `vpre`, `apre`, and `spre` options, the options specified in a preset file are applied to the currently selected codec of the same type as the preset option.
+ffpreset 文件用 `vpre`、`apre`、`spre` 和 `fpre` 选项指定。`fpre` 选项以预设文件名而非预设名作为输入，可用于任何类型的编解码器。对 `vpre`、`apre` 和 `spre` 选项，预设文件中指定的选项会应用到与该预设选项同类型的当前所选编解码器上。
 
-The argument passed to the `vpre`, `apre`, and `spre` preset options identifies the preset file to use according to the following rules:
+传给 `vpre`、`apre` 和 `spre` 预设选项的参数按以下规则确定要使用的预设文件：
 
-First ffmpeg searches for a file named \<arg\>.ffpreset in the directories `$FFMPEG_DATADIR` (if set), and `$HOME/.ffmpeg`, and in the datadir defined at configuration time (usually `PREFIX/share/ffmpeg`) or in a `ffpresets` folder along the executable on win32, in that order. For example, if the argument is `libvpx-1080p`, it will search for the file `libvpx-1080p.ffpreset`.
+首先，ffmpeg 按顺序在以下目录中搜索名为 \<arg\>.ffpreset 的文件：`$FFMPEG_DATADIR`（如已设置）、`$HOME/.ffmpeg`、配置时定义的 datadir（通常为 `PREFIX/share/ffmpeg`）；win32 上还会搜索可执行文件旁的 `ffpresets` 文件夹。例如，参数为 `libvpx-1080p` 时，将搜索文件 `libvpx-1080p.ffpreset`。
 
-If no such file is found, then ffmpeg will search for a file named \<codec_name\>-\<arg\>.ffpreset in the above-mentioned directories, where \<codec_name\> is the name of the codec to which the preset file options will be applied. For example, if you select the video codec with `-vcodec libvpx` and use `-vpre 1080p`, then it will search for the file `libvpx-1080p.ffpreset`.
+如果找不到这样的文件，ffmpeg 将在上述目录中搜索名为 \<codec_name\>-\<arg\>.ffpreset 的文件，其中 \<codec_name\> 是预设文件选项将要应用到的编解码器的名称。例如，用 `-vcodec libvpx` 选择视频编解码器并使用 `-vpre 1080p` 时，将搜索文件 `libvpx-1080p.ffpreset`。
 
-### avpreset files
+### avpreset 文件
 
-avpreset files are specified with the `pre` option. They work similar to ffpreset files, but they only allow encoder- specific options. Therefore, an \<option\>=\<value\> pair specifying an encoder cannot be used.
+avpreset 文件用 `pre` 选项指定。其工作方式与 ffpreset 文件类似，但只允许编码器特定选项。因此，不能使用指定编码器的 \<option\>=\<value\> 对。
 
-When the `pre` option is specified, ffmpeg will look for files with the suffix .avpreset in the directories `$AVCONV_DATADIR` (if set), and `$HOME/.avconv`, and in the datadir defined at configuration time (usually `PREFIX/share/ffmpeg`), in that order.
+指定 `pre` 选项时，ffmpeg 会按顺序在以下目录中查找后缀为 .avpreset 的文件：`$AVCONV_DATADIR`（如已设置）、`$HOME/.avconv`、配置时定义的 datadir（通常为 `PREFIX/share/ffmpeg`）。
 
-First ffmpeg searches for a file named \<codec_name\>-\<arg\>.avpreset in the above-mentioned directories, where \<codec_name\> is the name of the codec to which the preset file options will be applied. For example, if you select the video codec with `-vcodec libvpx` and use `-pre 1080p`, then it will search for the file `libvpx-1080p.avpreset`.
+首先，ffmpeg 在上述目录中搜索名为 \<codec_name\>-\<arg\>.avpreset 的文件，其中 \<codec_name\> 是预设文件选项将要应用到的编解码器的名称。例如，用 `-vcodec libvpx` 选择视频编解码器并使用 `-pre 1080p` 时，将搜索文件 `libvpx-1080p.avpreset`。
 
-If no such file is found, then ffmpeg will search for a file named \<arg\>.avpreset in the same directories.
+如果找不到这样的文件，ffmpeg 将在相同目录中搜索名为 \<arg\>.avpreset 的文件。
 
-## vstats file format
+## vstats 文件格式
 
-The `-vstats` and `-vstats_file` options enable generation of a file containing statistics about the generated video outputs.
+`-vstats` 和 `-vstats_file` 选项会生成一个文件，其中包含所产生的视频输出的统计信息。
 
-The `-vstats_version` option controls the format version of the generated file.
+`-vstats_version` 选项控制所生成文件的格式版本。
 
-With version `1` the format is:
+版本 `1` 的格式为：
 
 ``` text
 frame= FRAME q= FRAME_QUALITY PSNR= PSNR f_size= FRAME_SIZE s_size= STREAM_SIZEkB time= TIMESTAMP br= BITRATEkbits/s avg_br= AVERAGE_BITRATEkbits/s
 ```
 
-With version `2` the format is:
+版本 `2` 的格式为：
 
 ``` text
 out= OUT_FILE_INDEX st= OUT_FILE_STREAM_INDEX frame= FRAME_NUMBER q= FRAME_QUALITYf PSNR= PSNR f_size= FRAME_SIZE s_size= STREAM_SIZEkB time= TIMESTAMP br= BITRATEkbits/s avg_br= AVERAGE_BITRATEkbits/s
 ```
 
-The value corresponding to each key is described below:
+各键对应值的说明如下：
 
 | Term     | Description                                      |
 |----------|--------------------------------------------------|
-| `avg_br` | average bitrate expressed in Kbits/s             |
-| `br`     | bitrate expressed in Kbits/s                     |
-| `frame`  | number of encoded frame                          |
-| `out`    | out file index                                   |
-| `PSNR`   | Peak Signal to Noise Ratio                       |
-| `q`      | quality of the frame                             |
-| `f_size` | encoded packet size expressed as number of bytes |
-| `s_size` | stream size expressed in KiB                     |
-| `st`     | out file stream index                            |
-| `time`   | time of the packet                               |
-| `type`   | picture type                                     |
+| `avg_br` | 平均码率，单位 Kbits/s |
+| `br`     | 码率，单位 Kbits/s |
+| `frame`  | 已编码帧的编号 |
+| `out`    | 输出文件索引 |
+| `PSNR`   | 峰值信噪比 |
+| `q`      | 帧的质量 |
+| `f_size` | 已编码包的大小（字节数） |
+| `s_size` | 流大小（KiB） |
+| `st`     | 输出文件的流索引 |
+| `time`   | 包的时间 |
+| `type`   | 图像类型 |
 
-See also the [-stats_enc options](ffmpeg.md#advanced-options) for an alternative way to show encoding statistics.
+另一种显示编码统计信息的方式参见 [-stats_enc 选项](#stats_005fenc_005foptions)。
 
-# Examples
+# 示例
 
-## Video and Audio grabbing
+## 视频和音频采集
 
-If you specify the input format and device then ffmpeg can grab video and audio directly.
+指定输入格式和设备后，ffmpeg 可以直接采集视频和音频。
 
 ``` text
 ffmpeg -f oss -i /dev/dsp -f video4linux2 -i /dev/video0 /tmp/out.mpg
 ```
 
-Or with an ALSA audio source (mono input, card id 1) instead of OSS:
+也可以不用 OSS，改用 ALSA 音频源（单声道输入，声卡 id 为 1）：
 
 ``` text
 ffmpeg -f alsa -ac 1 -i hw:1 -f video4linux2 -i /dev/video0 /tmp/out.mpg
 ```
 
-Note that you must activate the right video source and channel before launching ffmpeg with any TV viewer such as [xawtv](http://linux.bytesex.org/xawtv/) by Gerd Knorr. You also have to set the audio recording levels correctly with a standard mixer.
+注意，在启动 ffmpeg 之前，必须先用任何电视查看程序（例如 Gerd Knorr 的 [xawtv](http://linux.bytesex.org/xawtv/)）激活正确的视频源和频道。还需要用标准混音器正确设置录音电平。
 
-## X11 grabbing
+## X11 抓取
 
-Grab the X11 display with ffmpeg via
+用 ffmpeg 抓取 X11 显示：
 
 ``` text
 ffmpeg -f x11grab -video_size cif -framerate 25 -i :0.0 /tmp/out.mpg
 ```
 
-0.0 is display.screen number of your X11 server, same as the DISPLAY environment variable.
+0.0 是 X11 服务器的 display.screen 编号，与 DISPLAY 环境变量相同。
 
 ``` text
 ffmpeg -f x11grab -video_size cif -framerate 25 -i :0.0+10,20 /tmp/out.mpg
 ```
 
-0.0 is display.screen number of your X11 server, same as the DISPLAY environment variable. 10 is the x-offset and 20 the y-offset for the grabbing.
+0.0 是 X11 服务器的 display.screen 编号，与 DISPLAY 环境变量相同。10 是采集的 x 偏移，20 是 y 偏移。
 
-## Video and Audio file format conversion
+## 视频和音频文件格式转换
 
-Any supported file format and protocol can serve as input to ffmpeg:
+任何受支持的文件格式和协议都可以作为 ffmpeg 的输入：
 
-Examples:
+示例：
 
-- You can use YUV files as input:
+- 可以使用 YUV 文件作为输入：
 
   ``` text
   ffmpeg -i /tmp/test%d.Y /tmp/out.mpg
   ```
 
-  It will use the files:
+  它会使用以下文件：
 
   ``` text
   /tmp/test0.Y, /tmp/test0.U, /tmp/test0.V,
   /tmp/test1.Y, /tmp/test1.U, /tmp/test1.V, etc...
   ```
 
-  The Y files use twice the resolution of the U and V files. They are raw files, without header. They can be generated by all decent video decoders. You must specify the size of the image with the `-s` option if ffmpeg cannot guess it.
+  Y 文件的分辨率是 U、V 文件的两倍。它们是原始文件，没有文件头。所有合格的视频解码器都能生成它们。如果 ffmpeg 无法推断图像尺寸，必须用 `-s` 选项指定。
 
-- You can input from a raw YUV420P file:
+- 可以从原始 YUV420P 文件读取输入：
 
   ``` text
   ffmpeg -i /tmp/test.yuv /tmp/out.avi
   ```
 
-  test.yuv is a file containing raw YUV planar data. Each frame is composed of the Y plane followed by the U and V planes at half vertical and horizontal resolution.
+  test.yuv 是包含原始 YUV 平面数据的文件。每帧由 Y 平面以及垂直和水平分辨率减半的 U、V 平面组成。
 
-- You can output to a raw YUV420P file:
+- 可以输出到原始 YUV420P 文件：
 
   ``` text
   ffmpeg -i mydivx.avi hugefile.yuv
   ```
 
-- You can set several input files and output files:
+- 可以设置多个输入文件和输出文件：
 
   ``` text
   ffmpeg -i /tmp/a.wav -s 640x480 -i /tmp/a.yuv /tmp/a.mpg
   ```
 
-  Converts the audio file a.wav and the raw YUV video file a.yuv to MPEG file a.mpg.
+  把音频文件 a.wav 和原始 YUV 视频文件 a.yuv 转换为 MPEG 文件 a.mpg。
 
-- You can also do audio and video conversions at the same time:
+- 也可以同时进行音频和视频转换：
 
   ``` text
   ffmpeg -i /tmp/a.wav -ar 22050 /tmp/a.mp2
   ```
 
-  Converts a.wav to MPEG audio at 22050 Hz sample rate.
+  把 a.wav 转换为 22050 Hz 采样率的 MPEG 音频。
 
-- You can encode to several formats at the same time and define a mapping from input stream to output streams:
+- 可以同时编码为多种格式，并定义从输入流到输出流的映射：
 
   ``` text
   ffmpeg -i /tmp/a.wav -map 0:a -b:a 64k /tmp/a.mp2 -map 0:a -b:a 128k /tmp/b.mp2
   ```
 
-  Converts a.wav to a.mp2 at 64 kbits and to b.mp2 at 128 kbits. '-map file:index' specifies which input stream is used for each output stream, in the order of the definition of output streams.
+  把 a.wav 以 64 kbits 转换为 a.mp2，以 128 kbits 转换为 b.mp2。'-map file:index' 指定每个输出流使用哪条输入流，按输出流定义的顺序。
 
-- You can transcode decrypted VOBs:
+- 可以转码已解密的 VOB：
 
   ``` text
   ffmpeg -i snatch_1.vob -f avi -c:v mpeg4 -b:v 800k -g 300 -bf 2 -c:a libmp3lame -b:a 128k snatch.avi
   ```
 
-  This is a typical DVD ripping example; the input is a VOB file, the output an AVI file with MPEG-4 video and MP3 audio. Note that in this command we use B-frames so the MPEG-4 stream is DivX5 compatible, and GOP size is 300 which means one intra frame every 10 seconds for 29.97fps input video. Furthermore, the audio stream is MP3-encoded so you need to enable LAME support by passing `--enable-libmp3lame` to configure. The mapping is particularly useful for DVD transcoding to get the desired audio language.
+  这是一个典型的 DVD 提取 (ripping) 示例；输入是 VOB 文件，输出是含 MPEG-4 视频和 MP3 音频的 AVI 文件。注意本命令使用 B 帧，使 MPEG-4 流与 DivX5 兼容；GOP 大小为 300，意味着对 29.97fps 的输入视频每 10 秒一个帧内帧。此外，音频流用 MP3 编码，因此需要在 configure 时传入 `--enable-libmp3lame` 以启用 LAME 支持。这种映射对 DVD 转码获取所需音频语言尤其有用。
 
-  NOTE: To see the supported input formats, use `ffmpeg -demuxers`.
+  注意：查看支持的输入格式请使用 `ffmpeg -demuxers`。
 
-- You can extract images from a video, or create a video from many images:
+- 可以从视频提取图像，或从多张图像创建视频：
 
-  For extracting images from a video:
+  从视频提取图像：
 
   ``` text
   ffmpeg -i foo.avi -r 1 -s WxH -f image2 foo-%03d.jpeg
   ```
 
-  This will extract one video frame per second from the video and will output them in files named `foo-001.jpeg`, `foo-002.jpeg`, etc. Images will be rescaled to fit the new WxH values.
+  这会每秒从视频中提取一帧，输出到名为 `foo-001.jpeg`、`foo-002.jpeg` 等的文件。图像会被重新缩放以适配新的 WxH 值。
 
-  If you want to extract just a limited number of frames, you can use the above command in combination with the `-frames:v` or `-t` option, or in combination with -ss to start extracting from a certain point in time.
+  若只想提取有限数量的帧，可以把上述命令与 `-frames:v` 或 `-t` 选项组合使用，或与 -ss 组合以从某个时间点开始提取。
 
-  For creating a video from many images:
+  从多张图像创建视频：
 
   ``` text
   ffmpeg -f image2 -framerate 12 -i foo-%03d.jpeg -s WxH foo.avi
   ```
 
-  The syntax `foo-%03d.jpeg` specifies to use a decimal number composed of three digits padded with zeroes to express the sequence number. It is the same syntax supported by the C printf function, but only formats accepting a normal integer are suitable.
+  语法 `foo-%03d.jpeg` 指定用三位数字、不足补零的十进制数表示序号。它与 C printf 函数支持的语法相同，但只接受普通整数的格式才适用。
 
-  When importing an image sequence, -i also supports expanding shell-like wildcard patterns (globbing) internally, by selecting the image2-specific `-pattern_type glob` option.
+  导入图像序列时，通过选择 image2 特有的 `-pattern_type glob` 选项，-i 还支持在内部展开类似 shell 的通配符模式 (glob)。
 
-  For example, for creating a video from filenames matching the glob pattern `foo-*.jpeg`:
+  例如，从匹配 glob 模式 `foo-*.jpeg` 的文件名创建视频：
 
   ``` text
   ffmpeg -f image2 -pattern_type glob -framerate 12 -i 'foo-*.jpeg' -s WxH foo.avi
   ```
 
-- You can put many streams of the same type in the output:
+- 可以在输出中放入多条同类型的流：
 
   ``` text
   ffmpeg -i test1.avi -i test2.avi -map 1:1 -map 1:0 -map 0:1 -map 0:0 -c copy -y test12.nut
   ```
 
-  The resulting output file `test12.nut` will contain the first four streams from the input files in reverse order.
+  得到的输出文件 `test12.nut` 将以相反顺序包含输入文件的前四条流。
 
-- To force CBR video output:
+- 强制 CBR 视频输出：
 
   ``` text
   ffmpeg -i myfile.avi -b 4000k -minrate 4000k -maxrate 4000k -bufsize 1835k out.m2v
   ```
 
-- The four options lmin, lmax, mblmin and mblmax use 'lambda' units, but you may use the QP2LAMBDA constant to easily convert from 'q' units:
+- lmin、lmax、mblmin 和 mblmax 四个选项使用 'lambda' 单位，但可以用 QP2LAMBDA 常量轻松从 'q' 单位换算：
 
   ``` text
   ffmpeg -i src.ext -lmax 21*QP2LAMBDA dst.ext
   ```
 
-# See Also
+# 另请参见
 
 ffplay(1), ffprobe(1), ffmpeg-utils(1), ffmpeg-scaler(1), ffmpeg-resampler(1), ffmpeg-codecs(1), ffmpeg-bitstream-filters(1), ffmpeg-formats(1), ffmpeg-devices(1), ffmpeg-protocols(1), ffmpeg-filters(1)

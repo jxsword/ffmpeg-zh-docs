@@ -2,6 +2,8 @@
 # 格式对齐 fmt-zh-docs 惯例：en/zh/status/context/aliases
 # status: approved=定稿 / provisional=暂定（评审后转 approved）
 # 冻结点：M2 批次 B1 完成后冻结 v1（PLAN §9）；基线 12 条见 R3 修订
+# v1 已冻结：2026-11-20（B1 批完成，随批补录 15 条并评审为 approved；
+# v2 解冻条件=出现跨批译法冲突或上游 n10 术语变更，届时走 DR 流程）
 # 原则：muxer=复用器 / demuxer=解复用器（社区主流技术译法，R3 明确）
 
 terms:
@@ -777,4 +779,95 @@ terms:
     zh: "缩略图"
     status: "approved"
     context: "filters（滤镜名 thumbnail 不译）"
+    aliases: []
+
+  # ===== B1 批补录（manual/ffmpeg.md，2026-11-20 评审定稿，v1 冻结） =====
+  - en: "elementary stream"
+    zh: "基本流"
+    status: "approved"
+    context: "manuals/filters（区别于容器内封装）"
+    aliases: ["elementary streams"]
+
+  - en: "loopback decoder"
+    zh: "回环解码器"
+    status: "approved"
+    context: "manuals（-dec 指令，编码器输出解码后回馈滤镜链图）"
+    aliases: ["loopback decoders"]
+
+  - en: "seek point"
+    zh: "定位点"
+    status: "approved"
+    context: "manuals（-ss 精确定位语境）"
+    aliases: []
+
+  - en: "link label"
+    zh: "连接标签"
+    status: "approved"
+    context: "filters（滤镜链图 [label] 连接点命名）"
+    aliases: []
+
+  - en: "stream group"
+    zh: "流组"
+    status: "approved"
+    context: "manuals（-stream_group，IAMF 等）"
+    aliases: []
+
+  - en: "heartbeat stream"
+    zh: "心跳流"
+    status: "approved"
+    context: "manuals（-fix_sub_duration_heartbeat）"
+    aliases: []
+
+  - en: "two-pass"
+    zh: "两遍编码"
+    status: "approved"
+    context: "manuals（-pass 1/2；pass number 译作编码遍数）"
+    aliases: ["two-pass encoding", "pass number"]
+
+  - en: "disposition"
+    zh: "disposition"
+    status: "approved"
+    context: "manuals（FFmpeg 流标志术语，不译；组合词译作 disposition 标志）"
+    aliases: []
+
+  - en: "preset"
+    zh: "预设"
+    status: "approved"
+    context: "manuals（preset file=预设文件；选项名 -pre/-vpre 等不译）"
+    aliases: []
+
+  - en: "program"
+    zh: "节目"
+    status: "approved"
+    context: "manuals/formats（MPEG/IAMF program；节目流区别于 elementary stream）"
+    aliases: []
+
+  - en: "attachment"
+    zh: "附件"
+    status: "approved"
+    context: "manuals/formats（-attach/-dump_attachment；附件流）"
+    aliases: []
+
+  - en: "timecode"
+    zh: "时间码"
+    status: "approved"
+    context: "manuals（-timecode；drop/non drop 保留英文）"
+    aliases: []
+
+  - en: "view specifier"
+    zh: "视图说明符"
+    status: "approved"
+    context: "manuals（多视图视频 view:/vidx:/vpos:）"
+    aliases: []
+
+  - en: "grabbing"
+    zh: "抓取"
+    status: "approved"
+    context: "manuals（X11 屏幕抓取等屏幕语境；设备采集用 capture=采集）"
+    aliases: ["grab"]
+
+  - en: "extradata"
+    zh: "extradata"
+    status: "approved"
+    context: "manuals/API（编解码器额外数据，不译）"
     aliases: []
