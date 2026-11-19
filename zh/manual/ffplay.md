@@ -1,167 +1,163 @@
-!!! warning "翻译占位页"
-    本页为英文原文占位（翻译进行中，进度见[翻译看板](https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md)）。
-    术语与示例以英文原文为准。
-
-# Synopsis
+# 概要
 
 ffplay \[\<options\>\] \[`input_url`\]
 
-# Description
+# 描述
 
-FFplay is a very simple and portable media player using the FFmpeg libraries and the SDL library. It is mostly used as a testbed for the various FFmpeg APIs.
+FFplay 是一个非常简单、可移植的媒体播放器，使用 FFmpeg 库和 SDL 库构建。它主要用作各类 FFmpeg API 的试验平台。
 
-# Options
+# 选项
 
-## Main options
+## 主要选项
 
-- **`-x width`** Force displayed width.
+- **`-x width`** 强制显示宽度。
 
-- **`-y height`** Force displayed height.
+- **`-y height`** 强制显示高度。
 
-- **`-fs`** Start in fullscreen mode.
+- **`-fs`** 以全屏模式启动。
 
-- **`-an`** Disable audio.
+- **`-an`** 禁用音频。
 
-- **`-vn`** Disable video.
+- **`-vn`** 禁用视频。
 
-- **`-sn`** Disable subtitles.
+- **`-sn`** 禁用字幕。
 
-- **`-ss pos`** Seek to \<pos\>. Note that in most formats it is not possible to seek exactly, so `ffplay` will seek to the nearest seek point to \<pos\>.
+- **`-ss pos`** 定位到 \<pos\>。注意多数格式无法做到精确定位，因此 `ffplay` 会定位到距 \<pos\> 最近的定位点。
 
-  \<pos\> must be a time duration specification, see section "the Time duration section in the ffmpeg-utils(1) manual" in `ffmpeg-utils`.
+  \<pos\> 必须是时长描述，参见 `ffmpeg-utils`（ffmpeg-utils(1) 手册）中的 Time duration（时长）一节。
 
-- **`-t duration`** Play \<duration\> seconds of audio/video.
+- **`-t duration`** 播放 \<duration\> 秒的音频/视频。
 
-  \<duration\> must be a time duration specification, see section "the Time duration section in the ffmpeg-utils(1) manual" in `ffmpeg-utils`.
+  \<duration\> 必须是时长描述，参见 `ffmpeg-utils`（ffmpeg-utils(1) 手册）中的 Time duration（时长）一节。
 
-- **`-bytes`** Seek by bytes.
+- **`-bytes`** 按字节定位。
 
-- **`-seek_interval`** Set custom interval, in seconds, for seeking using left/right keys. Default is 10 seconds.
+- **`-seek_interval`** 设置使用左/右方向键定位时的自定义间隔（以秒为单位）。默认为 10 秒。
 
-- **`-nodisp`** Disable graphical display.
+- **`-nodisp`** 禁用图形显示。
 
-- **`-noborder`** Borderless window.
+- **`-noborder`** 无边框窗口。
 
-- **`-alwaysontop`** Window always on top. Available on: X11 with SDL \>= 2.0.5, Windows SDL \>= 2.0.6.
+- **`-alwaysontop`** 窗口置顶。可用平台：X11（SDL \>= 2.0.5）、Windows（SDL \>= 2.0.6）。
 
-- **`-volume`** Set the startup volume. 0 means silence, 100 means no volume reduction or amplification. Negative values are treated as 0, values above 100 are treated as 100.
+- **`-volume`** 设置启动音量。0 表示静音，100 表示既不降低也不放大音量。负值按 0 处理，超过 100 的值按 100 处理。
 
-- **`-f fmt`** Force format.
+- **`-f fmt`** 强制格式。
 
-- **`-window_title title`** Set window title (default is the input filename).
+- **`-window_title title`** 设置窗口标题（默认为输入文件名）。
 
-- **`-left title`** Set the x position for the left of the window (default is a centered window).
+- **`-left title`** 设置窗口左边缘的 x 位置（默认为窗口居中）。
 
-- **`-top title`** Set the y position for the top of the window (default is a centered window).
+- **`-top title`** 设置窗口顶部的 y 位置（默认为窗口居中）。
 
-- **`-loop number`** Loops movie playback \<number\> times. 0 means forever.
+- **`-loop number`** 将影片播放循环 \<number\> 次。0 表示无限循环。
 
-- **`-showmode mode`** Set the show mode to use. Available values for \<mode\> are:
+- **`-showmode mode`** 设置要使用的显示模式。\<mode\> 的可用取值为：
 
   | Term | Description |
   |----|----|
-  | `0, video` | show video |
-  | `1, waves` | show audio waves |
-  | `2, rdft` | show audio frequency band using RDFT ((Inverse) Real Discrete Fourier Transform) |
+  | `0, video` | 显示视频 |
+  | `1, waves` | 显示音频波形 |
+  | `2, rdft` | 使用 RDFT（(逆)实数离散傅里叶变换）显示音频频带 |
 
-  Default value is "video", if video is not present or cannot be played "rdft" is automatically selected.
+  默认值为 "video"；若视频不存在或无法播放，则自动选择 "rdft"。
 
-  You can interactively cycle through the available show modes by pressing the key w.
+  按 w 键可在可用的显示模式之间交互式循环切换。
 
-- **`-vf filtergraph`** Create the filtergraph specified by \<filtergraph\> and use it to filter the video stream.
+- **`-vf filtergraph`** 创建由 \<filtergraph\> 指定的滤镜链图，并用它对视频流进行滤镜处理。
 
-  \<filtergraph\> is a description of the filtergraph to apply to the stream, and must have a single video input and a single video output. In the filtergraph, the input is associated to the label `in`, and the output to the label `out`. See the ffmpeg-filters manual for more information about the filtergraph syntax.
+  \<filtergraph\> 是要应用于该流的滤镜链图描述，必须具有单个视频输入和单个视频输出。在滤镜链图中，输入关联到标签 `in`，输出关联到标签 `out`。滤镜链图语法的更多信息参见 ffmpeg-filters 手册。
 
-  You can specify this parameter multiple times and cycle through the specified filtergraphs along with the show modes by pressing the key w.
+  可以多次指定该参数，按 w 键即可在指定的各个滤镜链图与显示模式之间循环切换。
 
-- **`-af filtergraph`** \<filtergraph\> is a description of the filtergraph to apply to the input audio. Use the option "-filters" to show all the available filters (including sources and sinks).
+- **`-af filtergraph`** \<filtergraph\> 是要应用于输入音频的滤镜链图描述。使用 "-filters" 选项可显示所有可用滤镜（包括源和汇）。
 
-- **`-i input_url`** Read \<input_url\>.
+- **`-i input_url`** 读取 \<input_url\>。
 
-## Advanced options
+## 高级选项
 
-- **`-stats`** Print several playback statistics, in particular show the stream duration, the codec parameters, the current position in the stream and the audio/video synchronisation drift. It is shown by default, unless the log level is lower than `info`. Its display can be forced by manually specifying this option. To disable it, you need to specify `-nostats`.
+- **`-stats`** 打印若干播放统计信息，特别是显示流时长、编解码器参数、当前在流中的位置以及音频/视频同步漂移。默认显示，除非日志级别低于 `info`。手动指定该选项可强制显示。要禁用它，需要指定 `-nostats`。
 
-- **`-fast`** Non-spec-compliant optimizations.
+- **`-fast`** 不完全符合规范标准的优化。
 
-- **`-genpts`** Generate pts.
+- **`-genpts`** 生成 pts。
 
-- **`-sync type`** Set the master clock to audio (`type=audio`), video (`type=video`) or external (`type=ext`). Default is audio. The master clock is used to control audio-video synchronization. Most media players use audio as master clock, but in some cases (streaming or high quality broadcast) it is necessary to change that. This option is mainly used for debugging purposes.
+- **`-sync type`** 将主时钟设为音频（`type=audio`）、视频（`type=video`）或外部（`type=ext`）。默认为音频。主时钟用于控制音视频同步。多数媒体播放器使用音频作为主时钟，但在某些情况下（流媒体或高质量广播）需要改变这一点。该选项主要用于调试目的。
 
-- **`-ast audio_stream_specifier`** Select the desired audio stream using the given stream specifier. The stream specifiers are described in the [Stream specifiers](common-options.md#stream-specifiers) chapter. If this option is not specified, the "best" audio stream is selected in the program of the already selected video stream.
+- **`-ast audio_stream_specifier`** 使用给定的流说明符选择所需的音频流。流说明符在[流说明符](#Stream-specifiers)章节中描述。未指定该选项时，会在已选视频流所在节目中选择"最佳"音频流。
 
-- **`-vst video_stream_specifier`** Select the desired video stream using the given stream specifier. The stream specifiers are described in the [Stream specifiers](common-options.md#stream-specifiers) chapter. If this option is not specified, the "best" video stream is selected.
+- **`-vst video_stream_specifier`** 使用给定的流说明符选择所需的视频流。流说明符在[流说明符](#Stream-specifiers)章节中描述。未指定该选项时，会选择"最佳"视频流。
 
-- **`-sst subtitle_stream_specifier`** Select the desired subtitle stream using the given stream specifier. The stream specifiers are described in the [Stream specifiers](common-options.md#stream-specifiers) chapter. If this option is not specified, the "best" subtitle stream is selected in the program of the already selected video or audio stream.
+- **`-sst subtitle_stream_specifier`** 使用给定的流说明符选择所需的字幕流。流说明符在[流说明符](#Stream-specifiers)章节中描述。未指定该选项时，会在已选视频或音频流所在节目中选择"最佳"字幕流。
 
-- **`-autoexit`** Exit when video is done playing.
+- **`-autoexit`** 视频播放完毕后退出。
 
-- **`-exitonkeydown`** Exit if any key is pressed.
+- **`-exitonkeydown`** 按下任意键时退出。
 
-- **`-exitonmousedown`** Exit if any mouse button is pressed.
+- **`-exitonmousedown`** 按下任意鼠标键时退出。
 
-- **`-codec:media_specifier codec_name`** Force a specific decoder implementation for the stream identified by \<media_specifier\>, which can assume the values `a` (audio), `v` (video), and `s` subtitle.
+- **`-codec:media_specifier codec_name`** 为 \<media_specifier\> 标识的流强制指定特定的解码器实现，\<media_specifier\> 可取值 `a`（音频）、`v`（视频）和 `s`（字幕）。
 
-- **`-acodec codec_name`** Force a specific audio decoder.
+- **`-acodec codec_name`** 强制使用特定的音频解码器。
 
-- **`-vcodec codec_name`** Force a specific video decoder.
+- **`-vcodec codec_name`** 强制使用特定的视频解码器。
 
-- **`-scodec codec_name`** Force a specific subtitle decoder.
+- **`-scodec codec_name`** 强制使用特定的字幕解码器。
 
-- **`-autorotate`** Automatically rotate the video according to file metadata. Enabled by default, use `-noautorotate` to disable it.
+- **`-autorotate`** 根据文件元数据自动旋转视频。默认启用，使用 `-noautorotate` 可禁用。
 
-- **`-framedrop`** Drop video frames if video is out of sync. Enabled by default if the master clock is not set to video. Use this option to enable frame dropping for all master clock sources, use `-noframedrop` to disable it.
+- **`-framedrop`** 视频失去同步时丢弃视频帧。主时钟未设为视频时默认启用。使用该选项可对所有主时钟来源启用丢帧，使用 `-noframedrop` 可禁用。
 
-- **`-infbuf`** Do not limit the input buffer size, read as much data as possible from the input as soon as possible. Enabled by default for realtime streams, where data may be dropped if not read in time. Use this option to enable infinite buffers for all inputs, use `-noinfbuf` to disable it.
+- **`-infbuf`** 不限制输入缓冲区大小，尽快从输入读取尽可能多的数据。对实时流默认启用（若不及时读取，数据可能被丢弃）。使用该选项可为所有输入启用无限缓冲，使用 `-noinfbuf` 可禁用。
 
-- **`-filter_threads nb_threads`** Defines how many threads are used to process a filter pipeline. Each pipeline will produce a thread pool with this many threads available for parallel processing. The default is 0 which means that the thread count will be determined by the number of available CPUs.
+- **`-filter_threads nb_threads`** 定义处理滤镜管线使用多少线程。每条管线都会创建一个包含这么多线程的线程池供并行处理使用。默认值为 0，表示线程数由可用 CPU 数量决定。
 
-- **`-enable_vulkan`** Use vulkan renderer rather than SDL builtin renderer. Depends on libplacebo.
+- **`-enable_vulkan`** 使用 vulkan 渲染器而非 SDL 内置渲染器。依赖 libplacebo。
 
-- **`-vulkan_params`** Vulkan configuration using a list of \<key\>=\<value\> pairs separated by ":".
+- **`-vulkan_params`** 通过以 ":" 分隔的 \<key\>=\<value\> 对列表配置 Vulkan。
 
-- **`-hwaccel`** Use HW accelerated decoding. Enable this option will enable vulkan renderer automatically.
+- **`-hwaccel`** 使用硬件加速解码。启用该选项会自动启用 vulkan 渲染器。
 
-- **`-video_bg pattern`** Set the video background pattern used for transparent videos. For solid color patterns you can use the color name or color code as specified in the section "Color section in the ffmpeg-utils(1) manual" in `ffmpeg-utils`. You can also use the special `tiles` keyword for a checker board style pattern. This is also the default. The `none` pattern does rendering without alpha blending effectively ignoring alpha channel.
+- **`-video_bg pattern`** 设置透明视频使用的视频背景图案。纯色图案可使用颜色名称或颜色代码，参见 `ffmpeg-utils`（ffmpeg-utils(1) 手册）中的 Color（颜色）一节。还可使用特殊关键字 `tiles` 表示棋盘格样式图案，这也是默认值。`none` 图案在渲染时不做 alpha 混合，相当于忽略透明通道。
 
-## While playing
+## 播放期间
 
-- **q, ESC** Quit.
+- **q, ESC** 退出。
 
-- **f** Toggle full screen.
+- **f** 切换全屏。
 
-- **p, SPC** Pause.
+- **p, SPC** 暂停。
 
-- **m** Toggle mute.
+- **m** 切换静音。
 
 - **9, 0**
 
-- **/, \*** Decrease and increase volume respectively.
+- **/, \*** 分别减小和增大音量。
 
-- **a** Cycle audio channel in the current program.
+- **a** 在当前节目中循环切换音频声道。
 
-- **v** Cycle video channel.
+- **v** 循环切换视频声道。
 
-- **t** Cycle subtitle channel in the current program.
+- **t** 在当前节目中循环切换字幕声道。
 
-- **c** Cycle program.
+- **c** 循环切换节目。
 
-- **w** Cycle video filters or show modes.
+- **w** 循环切换视频滤镜或显示模式。
 
-- **s** Step to the next frame.
+- **s** 步进到下一帧。
 
-  Pause if the stream is not already paused, step to the next video frame, and pause.
+  若流尚未暂停则先暂停，步进到下一个视频帧，然后暂停。
 
-- **left/right** Seek backward/forward by 10 seconds or a custom interval if -seek_interval is set.
+- **left/right** 向后/向前定位 10 秒；若设置了 -seek_interval 则按自定义间隔定位。
 
-- **down/up** Seek backward/forward 1 minute.
+- **down/up** 向后/向前定位 1 分钟。
 
-- **page down/page up** Seek to previous/next chapter or backward/forward 10 minutes if no chapters.
+- **page down/page up** 定位到上一个/下一个章节；若无章节则向后/向前 10 分钟。
 
-- **right mouse click** Seek to percentage in file corresponding to fraction of width.
+- **right mouse click** 按点击位置相对窗口宽度的比例定位到文件中的对应百分比处。
 
-- **left mouse double-click** Toggle full screen.
+- **left mouse double-click** 切换全屏。
 
-# See Also
+# 另请参见
 
 ffmpeg(1), ffprobe(1), ffmpeg-utils(1), ffmpeg-scaler(1), ffmpeg-resampler(1), ffmpeg-codecs(1), ffmpeg-bitstream-filters(1), ffmpeg-formats(1), ffmpeg-devices(1), ffmpeg-protocols(1), ffmpeg-filters(1)
