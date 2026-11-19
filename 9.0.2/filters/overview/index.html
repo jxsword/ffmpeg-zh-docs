@@ -1,0 +1,2116 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="FFmpeg 官方文档中文翻译版（基线 n9.0.2，跟随上游 release 增量翻译）">
+      
+      
+        <meta name="author" content="ffmpeg-zh-docs 翻译组">
+      
+      
+        <link rel="canonical" href="https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/overview/">
+      
+      
+        <link rel="prev" href="../../components/devices/">
+      
+      
+        <link rel="next" href="../video/">
+      
+      
+        
+          <link rel="alternate" href="https://ffmpeg.org/documentation.html" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>滤镜总览 - FFmpeg 中文文档</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Noto Sans SC";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#filtering-introduction" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="FFmpeg 中文文档" class="md-header__button md-logo" aria-label="FFmpeg 中文文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FFmpeg 中文文档
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              滤镜总览
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="https://ffmpeg.org/documentation.html" hreflang="en" class="md-select__link">
+              English (Original)
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jxsword/ffmpeg-zh-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ffmpeg-zh-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../manual/ffmpeg/" class="md-tabs__link">
+          
+  
+  
+  手册
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../components/utils/" class="md-tabs__link">
+          
+  
+  
+  组件
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  滤镜
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../libraries/libavutil/" class="md-tabs__link">
+          
+  
+  
+  库
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../general/faq/" class="md-tabs__link">
+          
+  
+  
+  General
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="FFmpeg 中文文档" class="md-nav__button md-logo" aria-label="FFmpeg 中文文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    FFmpeg 中文文档
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jxsword/ffmpeg-zh-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ffmpeg-zh-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    手册
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    手册
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/ffmpeg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffmpeg 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/ffplay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffplay 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/ffprobe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffprobe 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/common-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    公共选项（ffmpeg/ffplay/ffprobe）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    组件
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    组件
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具（Utils）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/scaler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    缩放器（Scaler）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/resampler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    重采样器（Resampler）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/codecs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    编解码器（Codecs）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/bitstream-filters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    比特流滤镜（Bitstream Filters）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    格式（Formats）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    协议（Protocols）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    设备（Devices）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    滤镜
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    滤镜
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    滤镜总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../video/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    视频滤镜（364）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音频滤镜（135）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multimedia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    多媒体滤镜（37）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    库
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    库
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavutil/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavutil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavcodec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavcodec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavformat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavformat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavdevice/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavdevice
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavfilter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavfilter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libswscale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libswscale
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libswresample/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libswresample
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    General
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/general/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    通用目录（General）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    平台（Platform）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/developer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开发者（Developer）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/git-howto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git 使用（Git Howto）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/fate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FATE 测试
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/authors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作者（Authors）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/mailing-list-faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    邮件列表 FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/nut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NUT 格式
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/community/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    社区（Community）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/drawvg-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    drawvg 参考
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/APIchanges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API 变更日志（英文原文）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="filtering-introduction">Filtering Introduction<a class="headerlink" href="#filtering-introduction" title="Permanent link">&para;</a></h1>
+<p>Filtering in FFmpeg is enabled through the libavfilter library.</p>
+<p>In libavfilter, a filter can have multiple inputs and multiple outputs. To illustrate the sorts of things that are possible, we consider the following filtergraph.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>                [main]
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>input --&gt; split ---------------------&gt; overlay --&gt; output
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>            |                             ^
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>            |[tmp]                  [flip]|
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>            +-----&gt; crop --&gt; vflip -------+
+</code></pre></div>
+<p>This filtergraph splits the input stream in two streams, then sends one stream through the crop filter and the vflip filter, before merging it back with the other stream by overlaying it on top. You can use the following command to achieve this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ffmpeg -i INPUT -vf "split [main][tmp]; [tmp] crop=iw:ih/2:0:0, vflip [flip]; [main][flip] overlay=0:H/2" OUTPUT
+</code></pre></div>
+<p>The result will be that the top half of the video is mirrored onto the bottom half of the output video.</p>
+<p>Filters in the same linear chain are separated by commas, and distinct linear chains of filters are separated by semicolons. In our example, \&lt;crop,vflip&gt; are in one linear chain, \&lt;split&gt; and \&lt;overlay&gt; are separately in another. The points where the linear chains join are labelled by names enclosed in square brackets. In the example, the split filter generates two outputs that are associated to the labels \&lt;[main]&gt; and \&lt;[tmp]&gt;.</p>
+<p>The stream sent to the second output of \&lt;split&gt;, labelled as \&lt;[tmp]&gt;, is processed through the \&lt;crop&gt; filter, which crops away the lower half part of the video, and then vertically flipped. The \&lt;overlay&gt; filter takes in input the first unchanged output of the split filter (which was labelled as \&lt;[main]&gt;), and overlay on its lower half the output generated by the \&lt;crop,vflip&gt; filterchain.</p>
+<p>Some filters take in input a list of parameters: they are specified after the filter name and an equal sign, and are separated from each other by a colon.</p>
+<p>There exist so-called \&lt;source filters&gt; that do not have an audio/video input, and \&lt;sink filters&gt; that will not have audio/video output.</p>
+<h1 id="graph2dot">graph2dot<a class="headerlink" href="#graph2dot" title="Permanent link">&para;</a></h1>
+<p>The <code>graph2dot</code> program included in the FFmpeg <code>tools</code> directory can be used to parse a filtergraph description and issue a corresponding textual representation in the dot language.</p>
+<p>Invoke the command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>graph2dot -h
+</code></pre></div>
+<p>to see how to use <code>graph2dot</code>.</p>
+<p>You can then pass the dot description to the <code>dot</code> program (from the graphviz suite of programs) and obtain a graphical representation of the filtergraph.</p>
+<p>For example the sequence of commands:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>echo GRAPH_DESCRIPTION | \
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>tools/graph2dot -o graph.tmp &amp;&amp; \
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>dot -Tpng graph.tmp -o graph.png &amp;&amp; \
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>display graph.png
+</code></pre></div>
+<p>can be used to create and display an image representing the graph described by the \&lt;GRAPH_DESCRIPTION&gt; string. Note that this string must be a complete self-contained graph, with its inputs and outputs explicitly defined. For example if your command line is of the form:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ffmpeg -i infile -vf scale=640:360 outfile
+</code></pre></div>
+<p>your \&lt;GRAPH_DESCRIPTION&gt; string will need to be of the form:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>nullsrc,scale=640:360,nullsink
+</code></pre></div>
+<p>you may also need to set the \&lt;nullsrc&gt; parameters and add a \&lt;format&gt; filter in order to simulate a specific input file.</p>
+<h1 id="filtergraph-description">Filtergraph description<a class="headerlink" href="#filtergraph-description" title="Permanent link">&para;</a></h1>
+<p>A filtergraph is a directed graph of connected filters. It can contain cycles, and there can be multiple links between a pair of filters. Each link has one input pad on one side connecting it to one filter from which it takes its input, and one output pad on the other side connecting it to one filter accepting its output.</p>
+<p>Each filter in a filtergraph is an instance of a filter class registered in the application, which defines the features and the number of input and output pads of the filter.</p>
+<p>A filter with no input pads is called a "source", and a filter with no output pads is called a "sink".</p>
+<h2 id="filtergraph-syntax">Filtergraph syntax<a class="headerlink" href="#filtergraph-syntax" title="Permanent link">&para;</a></h2>
+<p>A filtergraph has a textual representation, which is recognized by the <code>-filter</code>/<code>-vf</code>/<code>-af</code> and <code>-filter_complex</code> options in <code>ffmpeg</code> and <code>-vf</code>/<code>-af</code> in <code>ffplay</code>, and by the <code>avfilter_graph_parse_ptr()</code> function defined in <code>libavfilter/avfilter.h</code>.</p>
+<p>A filterchain consists of a sequence of connected filters, each one connected to the previous one in the sequence. A filterchain is represented by a list of ","-separated filter descriptions.</p>
+<p>A filtergraph consists of a sequence of filterchains. A sequence of filterchains is represented by a list of ";"-separated filterchain descriptions.</p>
+<p>A filter is represented by a string of the form: [\&lt;in_link_1&gt;]...[\&lt;in_link_N&gt;]\&lt;filter_name&gt;@\&lt;id&gt;=\&lt;arguments&gt;[\&lt;out_link_1&gt;]...[\&lt;out_link_M&gt;]</p>
+<p>\&lt;filter_name&gt; is the name of the filter class of which the described filter is an instance of, and has to be the name of one of the filter classes registered in the program optionally followed by "@\&lt;id&gt;". The name of the filter class is optionally followed by a string "=\&lt;arguments&gt;".</p>
+<p>\&lt;arguments&gt; is a string which contains the parameters used to initialize the filter instance. It may have one of two forms:</p>
+<ul>
+<li>
+<p>A ':'-separated list of \&lt;key=value&gt; pairs.</p>
+</li>
+<li>
+<p>A ':'-separated list of \&lt;value&gt;. In this case, the keys are assumed to be the option names in the order they are declared. E.g. the <code>fade</code> filter declares three options in this order – <code>type</code>, <code>start_frame</code> and <code>nb_frames</code>. Then the parameter list \&lt;in:0:30&gt; means that the value \&lt;in&gt; is assigned to the option <code>type</code>, \&lt;0&gt; to <code>start_frame</code> and \&lt;30&gt; to <code>nb_frames</code>.</p>
+</li>
+<li>
+<p>A ':'-separated list of mixed direct \&lt;value&gt; and long \&lt;key=value&gt; pairs. The direct \&lt;value&gt; must precede the \&lt;key=value&gt; pairs, and follow the same constraints order of the previous point. The following \&lt;key=value&gt; pairs can be set in any preferred order.</p>
+</li>
+</ul>
+<p>If the option value itself is a list of items (e.g. the <code>format</code> filter takes a list of pixel formats), the items in the list are usually separated by <code>|</code>.</p>
+<p>The list of arguments can be quoted using the character <code>'</code> as initial and ending mark, and the character <code>\</code> for escaping the characters within the quoted text; otherwise the argument string is considered terminated when the next special character (belonging to the set <code>[]=;,</code>) is encountered.</p>
+<p>A special syntax implemented in the <code>ffmpeg</code> CLI tool allows loading option values from files. This is done be prepending a slash '/' to the option name, then the supplied value is interpreted as a path from which the actual value is loaded. E.g.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ffmpeg -i &lt;INPUT&gt; -vf drawtext=/text=/tmp/some_text &lt;OUTPUT&gt;
+</code></pre></div>
+<p>will load the text to be drawn from <code>/tmp/some_text</code>. API users wishing to implement a similar feature should use the <code>avfilter_graph_segment_*()</code> functions together with custom IO code.</p>
+<p>The name and arguments of the filter are optionally preceded and followed by a list of link labels. A link label allows one to name a link and associate it to a filter output or input pad. The preceding labels \&lt;in_link_1&gt; ... \&lt;in_link_N&gt;, are associated to the filter input pads, the following labels \&lt;out_link_1&gt; ... \&lt;out_link_M&gt;, are associated to the output pads.</p>
+<p>When two link labels with the same name are found in the filtergraph, a link between the corresponding input and output pad is created.</p>
+<p>If an output pad is not labelled, it is linked by default to the first unlabelled input pad of the next filter in the filterchain. For example in the filterchain</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>nullsrc, split[L1], [L2]overlay, nullsink
+</code></pre></div>
+<p>the split filter instance has two output pads, and the overlay filter instance two input pads. The first output pad of split is labelled "L1", the first input pad of overlay is labelled "L2", and the second output pad of split is linked to the second input pad of overlay, which are both unlabelled.</p>
+<p>In a filter description, if the input label of the first filter is not specified, "in" is assumed; if the output label of the last filter is not specified, "out" is assumed.</p>
+<p>In a complete filterchain all the unlabelled filter input and output pads must be connected. A filtergraph is considered valid if all the filter input and output pads of all the filterchains are connected.</p>
+<p>Leading and trailing whitespaces (space, tabs, or line feeds) separating tokens in the filtergraph specification are ignored. This means that the filtergraph can be expressed using empty lines and spaces to improve readability.</p>
+<p>For example, the filtergraph:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>testsrc,split[L1],hflip[L2];[L1][L2] hstack
+</code></pre></div>
+<p>can be represented as:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>testsrc,
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>split [L1], hflip [L2];
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>[L1][L2] hstack
+</code></pre></div>
+<p>Libavfilter will automatically insert <a href="../video/scale/#scale">scale</a> filters where format conversion is required. It is possible to specify swscale flags for those automatically inserted scalers by prepending <code>sws_flags=flags;</code> to the filtergraph description.</p>
+<p>Here is a BNF description of the filtergraph syntax:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">NAME</span><span class="w">             </span><span class="o">::=</span><span class="w"> </span><span class="n">sequence</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">alphanumeric</span><span class="w"> </span><span class="n">characters</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="sc">'_'</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">FILTER_NAME</span><span class="w">      </span><span class="o">::=</span><span class="w"> </span><span class="n">NAME</span><span class="p">[</span><span class="s">"@"</span><span class="n">NAME</span><span class="p">]</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">LINKLABEL</span><span class="w">        </span><span class="o">::=</span><span class="w"> </span><span class="s">"["</span><span class="w"> </span><span class="n">NAME</span><span class="w"> </span><span class="s">"]"</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="n">LINKLABELS</span><span class="w">       </span><span class="o">::=</span><span class="w"> </span><span class="n">LINKLABEL</span><span class="w"> </span><span class="p">[</span><span class="n">LINKLABELS</span><span class="p">]</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="n">FILTER_ARGUMENTS</span><span class="w"> </span><span class="o">::=</span><span class="w"> </span><span class="n">sequence</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">chars</span><span class="w"> </span><span class="p">(</span><span class="n">possibly</span><span class="w"> </span><span class="n">quoted</span><span class="p">)</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="n">FILTER</span><span class="w">           </span><span class="o">::=</span><span class="w"> </span><span class="p">[</span><span class="n">LINKLABELS</span><span class="p">]</span><span class="w"> </span><span class="n">FILTER_NAME</span><span class="w"> </span><span class="p">[</span><span class="s">"="</span><span class="w"> </span><span class="n">FILTER_ARGUMENTS</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="n">LINKLABELS</span><span class="p">]</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="n">FILTERCHAIN</span><span class="w">      </span><span class="o">::=</span><span class="w"> </span><span class="n">FILTER</span><span class="w"> </span><span class="p">[,</span><span class="n">FILTERCHAIN</span><span class="p">]</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="n">FILTERGRAPH</span><span class="w">      </span><span class="o">::=</span><span class="w"> </span><span class="p">[</span><span class="n">sws_flags</span><span class="o">=</span><span class="n">flags</span><span class="p">;]</span><span class="w"> </span><span class="n">FILTERCHAIN</span><span class="w"> </span><span class="p">[;</span><span class="n">FILTERGRAPH</span><span class="p">]</span>
+</code></pre></div>
+<h2 id="notes-on-filtergraph-escaping">Notes on filtergraph escaping<a class="headerlink" href="#notes-on-filtergraph-escaping" title="Permanent link">&para;</a></h2>
+<p>Filtergraph description composition entails several levels of escaping. See section "the "Quoting and escaping" section in the ffmpeg-utils(1) manual" in <code>ffmpeg-utils</code> for more information about the employed escaping procedure.</p>
+<p>A first level escaping affects the content of each filter option value, which may contain the special character <code>:</code> used to separate values, or one of the escaping characters <code>\'</code>.</p>
+<p>A second level escaping affects the whole filter description, which may contain the escaping characters <code>\'</code> or the special characters <code>[],;</code> used by the filtergraph description.</p>
+<p>Finally, when you specify a filtergraph on a shell commandline, you need to perform a third level escaping for the shell special characters contained within it.</p>
+<p>For example, consider the following string to be embedded in the <a href="../video/drawtext/#drawtext">drawtext</a> filter description <code>text</code> value:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>this is a 'string': may contain one, or more, special characters
+</code></pre></div>
+<p>This string contains the <code>'</code> special escaping character, and the <code>:</code> special character, so it needs to be escaped in this way:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>text=this is a \'string\'\: may contain one, or more, special characters
+</code></pre></div>
+<p>A second level of escaping is required when embedding the filter description in a filtergraph description, in order to escape all the filtergraph special characters. Thus the example above becomes:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>drawtext=text=this is a \\\'string\\\'\\: may contain one\, or more\, special characters
+</code></pre></div>
+<p>(note that in addition to the <code>\'</code> escaping special characters, also <code>,</code> needs to be escaped).</p>
+<p>Finally an additional level of escaping is needed when writing the filtergraph description in a shell command, which depends on the escaping rules of the adopted shell. For example, assuming that <code>\</code> is special and needs to be escaped with another <code>\</code>, the previous string will finally result in:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>-vf "drawtext=text=this is a \\\\\\'string\\\\\\'\\\\: may contain one\\, or more\\, special characters"
+</code></pre></div>
+<p>In order to avoid cumbersome escaping when using a commandline tool accepting a filter specification as input, it is advisable to avoid direct inclusion of the filter or options specification in the shell.</p>
+<p>For example, in case of the <a href="../video/drawtext/#drawtext">drawtext filter</a>, you might prefer to use the <code>textfile</code> option in place of <code>text</code> to specify the text to render.</p>
+<h1 id="timeline-editing">Timeline editing<a class="headerlink" href="#timeline-editing" title="Permanent link">&para;</a></h1>
+<p>Some filters support a generic <code>enable</code> option. For the filters supporting timeline editing, this option can be set to an expression which is evaluated before sending a frame to the filter. If the evaluation is non-zero, the filter will be enabled, otherwise the frame will be sent unchanged to the next filter in the filtergraph.</p>
+<p>The expression accepts the following values:</p>
+<ul>
+<li>
+<p><strong><code>t</code></strong> timestamp expressed in seconds, NAN if the input timestamp is unknown</p>
+</li>
+<li>
+<p><strong><code>n</code></strong> sequential number of the input frame, starting from 0</p>
+</li>
+<li>
+<p><strong><code>pos</code></strong> the position in the file of the input frame, NAN if unknown; deprecated, do not use</p>
+</li>
+<li>
+<p><strong><code>w</code></strong></p>
+</li>
+<li>
+<p><strong><code>h</code></strong> width and height of the input frame if video</p>
+</li>
+</ul>
+<p>Additionally, these filters support an <code>enable</code> command that can be used to re-define the expression.</p>
+<p>Like any other filtering option, the <code>enable</code> option follows the same rules.</p>
+<p>For example, to enable a blur filter (<a href="../video/smartblur/#smartblur">smartblur</a>) from 10 seconds to 3 minutes, and a <a href="../video/curves/#curves">curves</a> filter starting at 3 seconds:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>smartblur = enable='between(t,10,3*60)',
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>curves    = enable='gte(t,3)' : preset=cross_process
+</code></pre></div>
+<p>See <code>ffmpeg -filters</code> to view which filters have timeline support.</p>
+<h1 id="changing-options-at-runtime-with-a-command">Changing options at runtime with a command<a class="headerlink" href="#changing-options-at-runtime-with-a-command" title="Permanent link">&para;</a></h1>
+<p>Some options can be changed during the operation of the filter using a command. These options are marked 'T' on the output of <code>ffmpeg</code> <code>-h filter=&lt;name of filter&gt;</code>. The name of the command is the name of the option and the argument is the new value.</p>
+<h1 id="options-for-filters-with-several-inputs-framesync">Options for filters with several inputs (framesync)<a class="headerlink" href="#options-for-filters-with-several-inputs-framesync" title="Permanent link">&para;</a></h1>
+<p>Some filters with several inputs support a common set of options. These options can only be set by name, not with the short notation.</p>
+<ul>
+<li><strong><code>eof_action</code></strong> The action to take when EOF is encountered on the secondary input; it accepts one of the following values:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>repeat</code></td>
+<td>Repeat the last frame (the default).</td>
+</tr>
+<tr>
+<td><code>endall</code></td>
+<td>End both streams.</td>
+</tr>
+<tr>
+<td><code>pass</code></td>
+<td>Pass the main input through.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p><strong><code>shortest</code></strong> If set to 1, force the output to terminate when the shortest input terminates. Default value is 0.</p>
+</li>
+<li>
+<p><strong><code>repeatlast</code></strong> If set to 1, force the filter to extend the last frame of secondary streams until the end of the primary stream. A value of 0 disables this behavior. Default value is 1.</p>
+</li>
+<li>
+<p><strong><code>ts_sync_mode</code></strong> How strictly to sync streams based on secondary input timestamps; it accepts one of the following values:</p>
+</li>
+<li>
+<p><strong><code>default</code></strong> Frame from secondary input with the nearest lower or equal timestamp to the primary input frame.</p>
+</li>
+<li>
+<p><strong><code>nearest</code></strong> Frame from secondary input with the absolute nearest timestamp to the primary input frame.</p>
+</li>
+</ul>
+<p>When you configure your FFmpeg build, you can disable any of the existing filters using <code>--disable-filters</code>. The configure output will show the audio filters included in your build.</p>
+<p>Below is a description of the currently available audio filters.</p>
+<p>Below is a description of the currently available audio sources.</p>
+<p>Below is a description of the currently available audio sinks.</p>
+<p>When you configure your FFmpeg build, you can disable any of the existing filters using <code>--disable-filters</code>. The configure output will show the video filters included in your build.</p>
+<p>Below is a description of the currently available video filters.</p>
+<p>Below is a description of the currently available Nvidia CUDA video filters.</p>
+<p>Prerequisites:</p>
+<ul>
+<li>Install Nvidia CUDA Toolkit</li>
+</ul>
+<p>Note: If FFmpeg detects the Nvidia CUDA Toolkit during configuration, it will enable CUDA filters automatically without requiring any additional flags. If you want to explicitly enable them, use the following options:</p>
+<ul>
+<li>
+<p>Configure FFmpeg with <code>--enable-cuda-nvcc --enable-nonfree</code>.</p>
+</li>
+<li>
+<p>Configure FFmpeg with <code>--enable-cuda-llvm</code>. Additional requirement: <code>llvm</code> lib must be installed.</p>
+</li>
+</ul>
+<p>Running CUDA filters requires you to initialize a hardware device and to pass that device to all filters in any filter graph.</p>
+<ul>
+<li>
+<p><strong><code>-init_hw_device cuda[=name][:device[,key=value...]]</code></strong> Initialise a new hardware device of type \&lt;cuda&gt; called \&lt;name&gt;, using the given device parameters.</p>
+</li>
+<li>
+<p><strong><code>-filter_hw_device name</code></strong> Pass the hardware device called \&lt;name&gt; to all filters in any filter graph.</p>
+</li>
+</ul>
+<p>For more detailed information see <a href="https://www.ffmpeg.org/ffmpeg.html#Advanced-Video-options">https://www.ffmpeg.org/ffmpeg.html#Advanced-Video-options</a></p>
+<ul>
+<li>Example of initializing second CUDA device on the system and running scale_cuda and bilateral_cuda filters.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>./ffmpeg -hwaccel cuda -hwaccel_output_format cuda -i input.mp4 -init_hw_device cuda:1 -filter_complex \
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>"[0:v]scale_cuda=format=yuv444p[scaled_video];[scaled_video]bilateral_cuda=window_size=9:sigmaS=3.0:sigmaR=50.0" \
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>-an -sn -c:v h264_nvenc -cq 20 out.mp4
+</code></pre></div>
+<p>Since CUDA filters operate exclusively on GPU memory, frame data must sometimes be uploaded (<a href="../video/hwupload/#hwupload">hwupload</a>) to hardware surfaces associated with the appropriate CUDA device before processing, and downloaded (<a href="../video/hwdownload/#hwdownload">hwdownload</a>) back to normal memory afterward, if required. Whether <a href="../video/hwupload/#hwupload">hwupload</a> or <a href="../video/hwdownload/#hwdownload">hwdownload</a> is necessary depends on the specific workflow:</p>
+<ul>
+<li>
+<p>If the input frames are already in GPU memory (e.g., when using <code>-hwaccel cuda</code> or <code>-hwaccel_output_format cuda</code>), explicit use of <a href="../video/hwupload/#hwupload">hwupload</a> is not needed, as the data is already in the appropriate memory space.</p>
+</li>
+<li>
+<p>If the input frames are in CPU memory (e.g., software-decoded frames or frames processed by CPU-based filters), it is necessary to use <a href="../video/hwupload/#hwupload">hwupload</a> to transfer the data to GPU memory for CUDA processing.</p>
+</li>
+<li>
+<p>If the output of the CUDA filters needs to be further processed by software-based filters or saved in a format not supported by GPU-based encoders, <a href="../video/hwdownload/#hwdownload">hwdownload</a> is required to transfer the data back to CPU memory.</p>
+</li>
+</ul>
+<p>Note that <a href="../video/hwupload/#hwupload">hwupload</a> uploads data to a surface with the same layout as the software frame, so it may be necessary to add a <a href="../video/format/#format">format</a> filter immediately before <a href="../video/hwupload/#hwupload">hwupload</a> to ensure the input is in the correct format. Similarly, <a href="../video/hwdownload/#hwdownload">hwdownload</a> may not support all output formats, so an additional <a href="../video/format/#format">format</a> filter may need to be inserted immediately after <a href="../video/hwdownload/#hwdownload">hwdownload</a> in the filter graph to ensure compatibility.</p>
+<p>Below is a description of the currently available OpenCL video filters.</p>
+<p>To enable compilation of these filters you need to configure FFmpeg with <code>--enable-opencl</code>.</p>
+<p>Running OpenCL filters requires you to initialize a hardware device and to pass that device to all filters in any filter graph.</p>
+<ul>
+<li>
+<p><strong><code>-init_hw_device opencl[=name][:device[,key=value...]]</code></strong> Initialise a new hardware device of type \&lt;opencl&gt; called \&lt;name&gt;, using the given device parameters.</p>
+</li>
+<li>
+<p><strong><code>-filter_hw_device name</code></strong> Pass the hardware device called \&lt;name&gt; to all filters in any filter graph.</p>
+</li>
+</ul>
+<p>For more detailed information see <a href="https://www.ffmpeg.org/ffmpeg.html#Advanced-Video-options">https://www.ffmpeg.org/ffmpeg.html#Advanced-Video-options</a></p>
+<ul>
+<li>Example of choosing the first device on the second platform and running avgblur_opencl filter with default parameters on it.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>-init_hw_device opencl=gpu:1.0 -filter_hw_device gpu -i INPUT -vf "hwupload, avgblur_opencl, hwdownload" OUTPUT
+</code></pre></div>
+<p>Since OpenCL filters are not able to access frame data in normal memory, all frame data needs to be uploaded(<a href="../video/hwupload/#hwupload">hwupload</a>) to hardware surfaces connected to the appropriate device before being used and then downloaded(<a href="../video/hwdownload/#hwdownload">hwdownload</a>) back to normal memory. Note that <a href="../video/hwupload/#hwupload">hwupload</a> will upload to a surface with the same layout as the software frame, so it may be necessary to add a <a href="../video/format/#format">format</a> filter immediately before to get the input into the right format and <a href="../video/hwdownload/#hwdownload">hwdownload</a> does not support all formats on the output - it may be necessary to insert an additional <a href="../video/format/#format">format</a> filter immediately following in the graph to get the output in a supported format.</p>
+<p>VAAPI Video filters are usually used with VAAPI decoder and VAAPI encoder. Below is a description of VAAPI video filters.</p>
+<p>To enable compilation of these filters you need to configure FFmpeg with <code>--enable-vaapi</code>.</p>
+<p>To use vaapi filters, you need to setup the vaapi device correctly. For more information, please read <a href="https://trac.ffmpeg.org/wiki/Hardware/VAAPI">https://trac.ffmpeg.org/wiki/Hardware/VAAPI</a></p>
+<p>Below is a description of the currently available VideoToolbox video filters.</p>
+<p>VideoToolbox filter depends on VideoToolbox framework, and is auto detected when building ffmpeg for an Apple platform such as macOS. Add <code>--enable-videotoolbox</code> to configure if autodetect is disabled.</p>
+<p>Below is a description of the currently available Vulkan video filters.</p>
+<p>To enable compilation of these filters you need to configure FFmpeg with <code>--enable-vulkan</code>, and have a SPIR-V compiler (<code>glslc</code> or <code>glslangValidator</code>) available at build time.</p>
+<p>Running Vulkan filters requires you to initialize a hardware device and to pass that device to all filters in any filter graph.</p>
+<ul>
+<li>
+<p><strong><code>-init_hw_device vulkan[=name][:device[,key=value...]]</code></strong> Initialise a new hardware device of type \&lt;vulkan&gt; called \&lt;name&gt;, using the given device parameters and options in \&lt;key=value&gt;. The following options are supported:</p>
+</li>
+<li>
+<p><strong><code>debug</code></strong> Switches validation layers on if set to 1.</p>
+</li>
+<li>
+<p><strong><code>linear_images</code></strong> Allocates linear images. Does not apply to decoding.</p>
+</li>
+<li>
+<p><strong><code>disable_multiplane</code></strong> Disables multiplane images. Does not apply to decoding.</p>
+</li>
+<li>
+<p><strong><code>avoid_host_import</code></strong> Avoids the use of dynamic host memory imports, in favor of a regular memcpy() into a previously mapped buffer.</p>
+</li>
+<li>
+<p><strong><code>-filter_hw_device name</code></strong> Pass the hardware device called \&lt;name&gt; to all filters in any filter graph.</p>
+</li>
+</ul>
+<p>For more detailed information see <a href="https://www.ffmpeg.org/ffmpeg.html#Advanced-Video-options">https://www.ffmpeg.org/ffmpeg.html#Advanced-Video-options</a></p>
+<ul>
+<li>Example of choosing the first device and running nlmeans_vulkan filter with default parameters on it.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>-init_hw_device vulkan=vk:0 -filter_hw_device vk -i INPUT -vf "hwupload,nlmeans_vulkan,hwdownload" OUTPUT
+</code></pre></div>
+<p>As Vulkan filters are not able to access frame data in normal memory, all frame data needs to be uploaded (<a href="../video/hwupload/#hwupload">hwupload</a>) to hardware surfaces connected to the appropriate device before being used and then downloaded (<a href="../video/hwdownload/#hwdownload">hwdownload</a>) back to normal memory. Note that <a href="../video/hwupload/#hwupload">hwupload</a> will upload to a frame with the same layout as the software frame, so it may be necessary to add a <a href="../video/format/#format">format</a> filter immediately before to get the input into the right format and <a href="../video/hwdownload/#hwdownload">hwdownload</a> does not support all formats on the output - it is usually necessary to insert an additional <a href="../video/format/#format">format</a> filter immediately following in the graph to get the output in a supported format.</p>
+<p>Below is a description of the currently available QSV video filters.</p>
+<p>To enable compilation of these filters you need to configure FFmpeg with <code>--enable-libmfx</code> or <code>--enable-libvpl</code>.</p>
+<p>To use QSV filters, you need to setup the QSV device correctly. For more information, please read <a href="https://trac.ffmpeg.org/wiki/Hardware/QuickSync">https://trac.ffmpeg.org/wiki/Hardware/QuickSync</a></p>
+<p>Below is a description of the currently available video sources.</p>
+<p>Below is a description of the currently available video sinks.</p>
+<p>Below is a description of the currently available multimedia filters.</p>
+<p>Below is a description of the currently available multimedia sources.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      除 wiki 精选页（CC BY-SA 3.0）外，译文基于 FFmpeg 官方文档（LGPL 2.1+）以 LGPL-2.1-or-later 提供 · 译自 n9.0.2
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "content.code.copy", "navigation.instant", "toc.integrate"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

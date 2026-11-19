@@ -1,0 +1,3356 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="FFmpeg 官方文档中文翻译版（基线 n9.0.2，跟随上游 release 增量翻译）">
+      
+      
+        <meta name="author" content="ffmpeg-zh-docs 翻译组">
+      
+      
+        <link rel="canonical" href="https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/components/utils/">
+      
+      
+        <link rel="prev" href="../../manual/common-options/">
+      
+      
+        <link rel="next" href="../scaler/">
+      
+      
+        
+          <link rel="alternate" href="https://ffmpeg.org/documentation.html" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>工具（Utils） - FFmpeg 中文文档</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Noto Sans SC";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#description" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="FFmpeg 中文文档" class="md-header__button md-logo" aria-label="FFmpeg 中文文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FFmpeg 中文文档
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              工具（Utils）
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="https://ffmpeg.org/documentation.html" hreflang="en" class="md-select__link">
+              English (Original)
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jxsword/ffmpeg-zh-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ffmpeg-zh-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../manual/ffmpeg/" class="md-tabs__link">
+          
+  
+  
+  手册
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  组件
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../filters/overview/" class="md-tabs__link">
+          
+  
+  
+  滤镜
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../libraries/libavutil/" class="md-tabs__link">
+          
+  
+  
+  库
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../general/faq/" class="md-tabs__link">
+          
+  
+  
+  General
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="FFmpeg 中文文档" class="md-nav__button md-logo" aria-label="FFmpeg 中文文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    FFmpeg 中文文档
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jxsword/ffmpeg-zh-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ffmpeg-zh-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    手册
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    手册
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/ffmpeg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffmpeg 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/ffplay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffplay 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/ffprobe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffprobe 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/common-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    公共选项（ffmpeg/ffplay/ffprobe）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    组件
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    组件
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具（Utils）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scaler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    缩放器（Scaler）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resampler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    重采样器（Resampler）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../codecs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    编解码器（Codecs）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bitstream-filters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    比特流滤镜（Bitstream Filters）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    格式（Formats）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    协议（Protocols）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    设备（Devices）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    滤镜
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    滤镜
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    滤镜总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/video/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    视频滤镜（364）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音频滤镜（135）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/multimedia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    多媒体滤镜（37）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    库
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    库
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavutil/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavutil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavcodec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavcodec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavformat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavformat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavdevice/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavdevice
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavfilter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavfilter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libswscale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libswscale
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libswresample/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libswresample
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    General
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/general/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    通用目录（General）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    平台（Platform）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/developer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开发者（Developer）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/git-howto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git 使用（Git Howto）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/fate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FATE 测试
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/authors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作者（Authors）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/mailing-list-faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    邮件列表 FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/nut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NUT 格式
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/community/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    社区（Community）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/drawvg-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    drawvg 参考
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/APIchanges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API 变更日志（英文原文）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<div class="admonition warning">
+<p class="admonition-title">翻译占位页</p>
+<p>本页为英文原文占位（翻译进行中，进度见<a href="https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md">翻译看板</a>）。
+术语与示例以英文原文为准。</p>
+</div>
+<h1 id="description">Description<a class="headerlink" href="#description" title="Permanent link">&para;</a></h1>
+<p>This document describes some generic features and utilities provided by the libavutil library.</p>
+<h1 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link">&para;</a></h1>
+<p>This section documents the syntax and formats employed by the FFmpeg libraries and tools.</p>
+<h2 id="quoting-and-escaping">Quoting and escaping<a class="headerlink" href="#quoting-and-escaping" title="Permanent link">&para;</a></h2>
+<p>FFmpeg adopts the following quoting and escaping mechanism, unless explicitly specified. The following rules are applied:</p>
+<ul>
+<li>
+<p><code>'</code> and <code>\</code> are special characters (respectively used for quoting and escaping). In addition to them, there might be other special characters depending on the specific syntax where the escaping and quoting are employed.</p>
+</li>
+<li>
+<p>A special character is escaped by prefixing it with a <code>\</code>.</p>
+</li>
+<li>
+<p>All characters enclosed between <code>''</code> are included literally in the parsed string. The quote character <code>'</code> itself cannot be quoted, so you may need to close the quote and escape it.</p>
+</li>
+<li>
+<p>Leading and trailing whitespaces, unless escaped or quoted, are removed from the parsed string.</p>
+</li>
+</ul>
+<p>Note that you may need to add a second level of escaping when using the command line or a script, which depends on the syntax of the adopted shell language.</p>
+<p>The function <code>av_get_token</code> defined in <code>libavutil/avstring.h</code> can be used to parse a token quoted or escaped according to the rules defined above.</p>
+<p>The tool <code>tools/ffescape</code> in the FFmpeg source tree can be used to automatically quote or escape a string in a script.</p>
+<h3 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Escape the string <code>Crime d'Amour</code> containing the <code>'</code> special character:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Crime d\'Amour
+</code></pre></div>
+<ul>
+<li>The string above contains a quote, so the <code>'</code> needs to be escaped when quoting it:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>'Crime d'\''Amour'
+</code></pre></div>
+<ul>
+<li>Include leading or trailing whitespaces using quoting:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>'  this string starts and ends with whitespaces  '
+</code></pre></div>
+<ul>
+<li>Escaping and quoting can be mixed together:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>' The string '\'string\'' is a string '
+</code></pre></div>
+<ul>
+<li>To include a literal <code>\</code> you can use either escaping or quoting:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>'c:\foo' can be written as c:\\foo
+</code></pre></div>
+<h2 id="date">Date<a class="headerlink" href="#date" title="Permanent link">&para;</a></h2>
+<p>The accepted syntax is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>[(YYYY-MM-DD|YYYYMMDD)[T|t| ]]((HH:MM:SS[.m...]]])|(HHMMSS[.m...]]]))[Z]
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>now
+</code></pre></div>
+<p>If the value is "now" it takes the current time.</p>
+<p>Time is local time unless Z is appended, in which case it is interpreted as UTC. If the year-month-day part is not specified it takes the current year-month-day.</p>
+<h2 id="time-duration">Time duration<a class="headerlink" href="#time-duration" title="Permanent link">&para;</a></h2>
+<p>There are two accepted syntaxes for expressing time duration.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>[-][HH:]MM:SS[.m...]
+</code></pre></div>
+<p>\&lt;HH&gt; expresses the number of hours, \&lt;MM&gt; the number of minutes for a maximum of 2 digits, and \&lt;SS&gt; the number of seconds for a maximum of 2 digits. The \&lt;m&gt; at the end expresses decimal value for \&lt;SS&gt;.</p>
+<p><em>or</em></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>[-]S+[.m...][s|ms|us]
+</code></pre></div>
+<p>\&lt;S&gt; expresses the number of seconds, with the optional decimal part \&lt;m&gt;. The optional literal suffixes <code>s</code>, <code>ms</code> or <code>us</code> indicate to interpret the value as seconds, milliseconds or microseconds, respectively.</p>
+<p>In both expressions, the optional <code>-</code> indicates negative duration.</p>
+<h3 id="examples_1">Examples<a class="headerlink" href="#examples_1" title="Permanent link">&para;</a></h3>
+<p>The following examples are all valid time duration:</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>55</code></td>
+<td>55 seconds</td>
+</tr>
+<tr>
+<td><code>0.2</code></td>
+<td>0.2 seconds</td>
+</tr>
+<tr>
+<td><code>200ms</code></td>
+<td>200 milliseconds, that's 0.2s</td>
+</tr>
+<tr>
+<td><code>200000us</code></td>
+<td>200000 microseconds, that's 0.2s</td>
+</tr>
+<tr>
+<td><code>12:03:45</code></td>
+<td>12 hours, 03 minutes and 45 seconds</td>
+</tr>
+<tr>
+<td><code>23.189</code></td>
+<td>23.189 seconds</td>
+</tr>
+</tbody>
+</table>
+<h2 id="video-size">Video size<a class="headerlink" href="#video-size" title="Permanent link">&para;</a></h2>
+<p>Specify the size of the sourced video, it may be a string of the form \&lt;width&gt;x\&lt;height&gt;, or the name of a size abbreviation.</p>
+<p>The following abbreviations are recognized:</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ntsc</code></td>
+<td>720x480</td>
+</tr>
+<tr>
+<td><code>pal</code></td>
+<td>720x576</td>
+</tr>
+<tr>
+<td><code>qntsc</code></td>
+<td>352x240</td>
+</tr>
+<tr>
+<td><code>qpal</code></td>
+<td>352x288</td>
+</tr>
+<tr>
+<td><code>sntsc</code></td>
+<td>640x480</td>
+</tr>
+<tr>
+<td><code>spal</code></td>
+<td>768x576</td>
+</tr>
+<tr>
+<td><code>film</code></td>
+<td>352x240</td>
+</tr>
+<tr>
+<td><code>ntsc-film</code></td>
+<td>352x240</td>
+</tr>
+<tr>
+<td><code>sqcif</code></td>
+<td>128x96</td>
+</tr>
+<tr>
+<td><code>qcif</code></td>
+<td>176x144</td>
+</tr>
+<tr>
+<td><code>cif</code></td>
+<td>352x288</td>
+</tr>
+<tr>
+<td><code>4cif</code></td>
+<td>704x576</td>
+</tr>
+<tr>
+<td><code>16cif</code></td>
+<td>1408x1152</td>
+</tr>
+<tr>
+<td><code>qqvga</code></td>
+<td>160x120</td>
+</tr>
+<tr>
+<td><code>qvga</code></td>
+<td>320x240</td>
+</tr>
+<tr>
+<td><code>vga</code></td>
+<td>640x480</td>
+</tr>
+<tr>
+<td><code>svga</code></td>
+<td>800x600</td>
+</tr>
+<tr>
+<td><code>xga</code></td>
+<td>1024x768</td>
+</tr>
+<tr>
+<td><code>uxga</code></td>
+<td>1600x1200</td>
+</tr>
+<tr>
+<td><code>qxga</code></td>
+<td>2048x1536</td>
+</tr>
+<tr>
+<td><code>sxga</code></td>
+<td>1280x1024</td>
+</tr>
+<tr>
+<td><code>qsxga</code></td>
+<td>2560x2048</td>
+</tr>
+<tr>
+<td><code>hsxga</code></td>
+<td>5120x4096</td>
+</tr>
+<tr>
+<td><code>wvga</code></td>
+<td>852x480</td>
+</tr>
+<tr>
+<td><code>wxga</code></td>
+<td>1366x768</td>
+</tr>
+<tr>
+<td><code>wsxga</code></td>
+<td>1600x1024</td>
+</tr>
+<tr>
+<td><code>wuxga</code></td>
+<td>1920x1200</td>
+</tr>
+<tr>
+<td><code>woxga</code></td>
+<td>2560x1600</td>
+</tr>
+<tr>
+<td><code>wqsxga</code></td>
+<td>3200x2048</td>
+</tr>
+<tr>
+<td><code>wquxga</code></td>
+<td>3840x2400</td>
+</tr>
+<tr>
+<td><code>whsxga</code></td>
+<td>6400x4096</td>
+</tr>
+<tr>
+<td><code>whuxga</code></td>
+<td>7680x4800</td>
+</tr>
+<tr>
+<td><code>cga</code></td>
+<td>320x200</td>
+</tr>
+<tr>
+<td><code>ega</code></td>
+<td>640x350</td>
+</tr>
+<tr>
+<td><code>hd480</code></td>
+<td>852x480</td>
+</tr>
+<tr>
+<td><code>hd720</code></td>
+<td>1280x720</td>
+</tr>
+<tr>
+<td><code>hd1080</code></td>
+<td>1920x1080</td>
+</tr>
+<tr>
+<td><code>2k</code></td>
+<td>2048x1080</td>
+</tr>
+<tr>
+<td><code>2kflat</code></td>
+<td>1998x1080</td>
+</tr>
+<tr>
+<td><code>2kscope</code></td>
+<td>2048x858</td>
+</tr>
+<tr>
+<td><code>4k</code></td>
+<td>4096x2160</td>
+</tr>
+<tr>
+<td><code>4kflat</code></td>
+<td>3996x2160</td>
+</tr>
+<tr>
+<td><code>4kscope</code></td>
+<td>4096x1716</td>
+</tr>
+<tr>
+<td><code>nhd</code></td>
+<td>640x360</td>
+</tr>
+<tr>
+<td><code>hqvga</code></td>
+<td>240x160</td>
+</tr>
+<tr>
+<td><code>wqvga</code></td>
+<td>400x240</td>
+</tr>
+<tr>
+<td><code>fwqvga</code></td>
+<td>432x240</td>
+</tr>
+<tr>
+<td><code>hvga</code></td>
+<td>480x320</td>
+</tr>
+<tr>
+<td><code>qhd</code></td>
+<td>960x540</td>
+</tr>
+<tr>
+<td><code>2kdci</code></td>
+<td>2048x1080</td>
+</tr>
+<tr>
+<td><code>4kdci</code></td>
+<td>4096x2160</td>
+</tr>
+<tr>
+<td><code>uhd2160</code></td>
+<td>3840x2160</td>
+</tr>
+<tr>
+<td><code>uhd4320</code></td>
+<td>7680x4320</td>
+</tr>
+</tbody>
+</table>
+<h2 id="video-rate">Video rate<a class="headerlink" href="#video-rate" title="Permanent link">&para;</a></h2>
+<p>Specify the frame rate of a video, expressed as the number of frames generated per second. It has to be a string in the format \&lt;frame_rate_num&gt;/\&lt;frame_rate_den&gt;, an integer number, a float number or a valid video frame rate abbreviation.</p>
+<p>The following abbreviations are recognized:</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ntsc</code></td>
+<td>30000/1001</td>
+</tr>
+<tr>
+<td><code>pal</code></td>
+<td>25/1</td>
+</tr>
+<tr>
+<td><code>qntsc</code></td>
+<td>30000/1001</td>
+</tr>
+<tr>
+<td><code>qpal</code></td>
+<td>25/1</td>
+</tr>
+<tr>
+<td><code>sntsc</code></td>
+<td>30000/1001</td>
+</tr>
+<tr>
+<td><code>spal</code></td>
+<td>25/1</td>
+</tr>
+<tr>
+<td><code>film</code></td>
+<td>24/1</td>
+</tr>
+<tr>
+<td><code>ntsc-film</code></td>
+<td>24000/1001</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ratio">Ratio<a class="headerlink" href="#ratio" title="Permanent link">&para;</a></h2>
+<p>A ratio can be expressed as an expression, or in the form \&lt;numerator&gt;:\&lt;denominator&gt;.</p>
+<p>Note that a ratio with infinite (1/0) or negative value is considered valid, so you should check on the returned value if you want to exclude those values.</p>
+<p>The undefined value can be expressed using the "0:0" string.</p>
+<h2 id="color">Color<a class="headerlink" href="#color" title="Permanent link">&para;</a></h2>
+<p>It can be the name of a color as defined below (case insensitive match) or a <code>[0x|#]RRGGBB[AA]</code> sequence, possibly followed by @ and a string representing the alpha component.</p>
+<p>The alpha component may be a string composed by "0x" followed by an hexadecimal number or a decimal number between 0.0 and 1.0, which represents the opacity value (<code>0x00</code> or <code>0.0</code> means completely transparent, <code>0xff</code> or <code>1.0</code> completely opaque). If the alpha component is not specified then <code>0xff</code> is assumed.</p>
+<p>The string <code>random</code> will result in a random color.</p>
+<p>The following names of colors are recognized:</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AliceBlue</code></td>
+<td>0xF0F8FF</td>
+</tr>
+<tr>
+<td><code>AntiqueWhite</code></td>
+<td>0xFAEBD7</td>
+</tr>
+<tr>
+<td><code>Aqua</code></td>
+<td>0x00FFFF</td>
+</tr>
+<tr>
+<td><code>Aquamarine</code></td>
+<td>0x7FFFD4</td>
+</tr>
+<tr>
+<td><code>Azure</code></td>
+<td>0xF0FFFF</td>
+</tr>
+<tr>
+<td><code>Beige</code></td>
+<td>0xF5F5DC</td>
+</tr>
+<tr>
+<td><code>Bisque</code></td>
+<td>0xFFE4C4</td>
+</tr>
+<tr>
+<td><code>Black</code></td>
+<td>0x000000</td>
+</tr>
+<tr>
+<td><code>BlanchedAlmond</code></td>
+<td>0xFFEBCD</td>
+</tr>
+<tr>
+<td><code>Blue</code></td>
+<td>0x0000FF</td>
+</tr>
+<tr>
+<td><code>BlueViolet</code></td>
+<td>0x8A2BE2</td>
+</tr>
+<tr>
+<td><code>Brown</code></td>
+<td>0xA52A2A</td>
+</tr>
+<tr>
+<td><code>BurlyWood</code></td>
+<td>0xDEB887</td>
+</tr>
+<tr>
+<td><code>CadetBlue</code></td>
+<td>0x5F9EA0</td>
+</tr>
+<tr>
+<td><code>Chartreuse</code></td>
+<td>0x7FFF00</td>
+</tr>
+<tr>
+<td><code>Chocolate</code></td>
+<td>0xD2691E</td>
+</tr>
+<tr>
+<td><code>Coral</code></td>
+<td>0xFF7F50</td>
+</tr>
+<tr>
+<td><code>CornflowerBlue</code></td>
+<td>0x6495ED</td>
+</tr>
+<tr>
+<td><code>Cornsilk</code></td>
+<td>0xFFF8DC</td>
+</tr>
+<tr>
+<td><code>Crimson</code></td>
+<td>0xDC143C</td>
+</tr>
+<tr>
+<td><code>Cyan</code></td>
+<td>0x00FFFF</td>
+</tr>
+<tr>
+<td><code>DarkBlue</code></td>
+<td>0x00008B</td>
+</tr>
+<tr>
+<td><code>DarkCyan</code></td>
+<td>0x008B8B</td>
+</tr>
+<tr>
+<td><code>DarkGoldenRod</code></td>
+<td>0xB8860B</td>
+</tr>
+<tr>
+<td><code>DarkGray</code></td>
+<td>0xA9A9A9</td>
+</tr>
+<tr>
+<td><code>DarkGreen</code></td>
+<td>0x006400</td>
+</tr>
+<tr>
+<td><code>DarkKhaki</code></td>
+<td>0xBDB76B</td>
+</tr>
+<tr>
+<td><code>DarkMagenta</code></td>
+<td>0x8B008B</td>
+</tr>
+<tr>
+<td><code>DarkOliveGreen</code></td>
+<td>0x556B2F</td>
+</tr>
+<tr>
+<td><code>Darkorange</code></td>
+<td>0xFF8C00</td>
+</tr>
+<tr>
+<td><code>DarkOrchid</code></td>
+<td>0x9932CC</td>
+</tr>
+<tr>
+<td><code>DarkRed</code></td>
+<td>0x8B0000</td>
+</tr>
+<tr>
+<td><code>DarkSalmon</code></td>
+<td>0xE9967A</td>
+</tr>
+<tr>
+<td><code>DarkSeaGreen</code></td>
+<td>0x8FBC8F</td>
+</tr>
+<tr>
+<td><code>DarkSlateBlue</code></td>
+<td>0x483D8B</td>
+</tr>
+<tr>
+<td><code>DarkSlateGray</code></td>
+<td>0x2F4F4F</td>
+</tr>
+<tr>
+<td><code>DarkTurquoise</code></td>
+<td>0x00CED1</td>
+</tr>
+<tr>
+<td><code>DarkViolet</code></td>
+<td>0x9400D3</td>
+</tr>
+<tr>
+<td><code>DeepPink</code></td>
+<td>0xFF1493</td>
+</tr>
+<tr>
+<td><code>DeepSkyBlue</code></td>
+<td>0x00BFFF</td>
+</tr>
+<tr>
+<td><code>DimGray</code></td>
+<td>0x696969</td>
+</tr>
+<tr>
+<td><code>DodgerBlue</code></td>
+<td>0x1E90FF</td>
+</tr>
+<tr>
+<td><code>FireBrick</code></td>
+<td>0xB22222</td>
+</tr>
+<tr>
+<td><code>FloralWhite</code></td>
+<td>0xFFFAF0</td>
+</tr>
+<tr>
+<td><code>ForestGreen</code></td>
+<td>0x228B22</td>
+</tr>
+<tr>
+<td><code>Fuchsia</code></td>
+<td>0xFF00FF</td>
+</tr>
+<tr>
+<td><code>Gainsboro</code></td>
+<td>0xDCDCDC</td>
+</tr>
+<tr>
+<td><code>GhostWhite</code></td>
+<td>0xF8F8FF</td>
+</tr>
+<tr>
+<td><code>Gold</code></td>
+<td>0xFFD700</td>
+</tr>
+<tr>
+<td><code>GoldenRod</code></td>
+<td>0xDAA520</td>
+</tr>
+<tr>
+<td><code>Gray</code></td>
+<td>0x808080</td>
+</tr>
+<tr>
+<td><code>Green</code></td>
+<td>0x008000</td>
+</tr>
+<tr>
+<td><code>GreenYellow</code></td>
+<td>0xADFF2F</td>
+</tr>
+<tr>
+<td><code>HoneyDew</code></td>
+<td>0xF0FFF0</td>
+</tr>
+<tr>
+<td><code>HotPink</code></td>
+<td>0xFF69B4</td>
+</tr>
+<tr>
+<td><code>IndianRed</code></td>
+<td>0xCD5C5C</td>
+</tr>
+<tr>
+<td><code>Indigo</code></td>
+<td>0x4B0082</td>
+</tr>
+<tr>
+<td><code>Ivory</code></td>
+<td>0xFFFFF0</td>
+</tr>
+<tr>
+<td><code>Khaki</code></td>
+<td>0xF0E68C</td>
+</tr>
+<tr>
+<td><code>Lavender</code></td>
+<td>0xE6E6FA</td>
+</tr>
+<tr>
+<td><code>LavenderBlush</code></td>
+<td>0xFFF0F5</td>
+</tr>
+<tr>
+<td><code>LawnGreen</code></td>
+<td>0x7CFC00</td>
+</tr>
+<tr>
+<td><code>LemonChiffon</code></td>
+<td>0xFFFACD</td>
+</tr>
+<tr>
+<td><code>LightBlue</code></td>
+<td>0xADD8E6</td>
+</tr>
+<tr>
+<td><code>LightCoral</code></td>
+<td>0xF08080</td>
+</tr>
+<tr>
+<td><code>LightCyan</code></td>
+<td>0xE0FFFF</td>
+</tr>
+<tr>
+<td><code>LightGoldenRodYellow</code></td>
+<td>0xFAFAD2</td>
+</tr>
+<tr>
+<td><code>LightGreen</code></td>
+<td>0x90EE90</td>
+</tr>
+<tr>
+<td><code>LightGrey</code></td>
+<td>0xD3D3D3</td>
+</tr>
+<tr>
+<td><code>LightPink</code></td>
+<td>0xFFB6C1</td>
+</tr>
+<tr>
+<td><code>LightSalmon</code></td>
+<td>0xFFA07A</td>
+</tr>
+<tr>
+<td><code>LightSeaGreen</code></td>
+<td>0x20B2AA</td>
+</tr>
+<tr>
+<td><code>LightSkyBlue</code></td>
+<td>0x87CEFA</td>
+</tr>
+<tr>
+<td><code>LightSlateGray</code></td>
+<td>0x778899</td>
+</tr>
+<tr>
+<td><code>LightSteelBlue</code></td>
+<td>0xB0C4DE</td>
+</tr>
+<tr>
+<td><code>LightYellow</code></td>
+<td>0xFFFFE0</td>
+</tr>
+<tr>
+<td><code>Lime</code></td>
+<td>0x00FF00</td>
+</tr>
+<tr>
+<td><code>LimeGreen</code></td>
+<td>0x32CD32</td>
+</tr>
+<tr>
+<td><code>Linen</code></td>
+<td>0xFAF0E6</td>
+</tr>
+<tr>
+<td><code>Magenta</code></td>
+<td>0xFF00FF</td>
+</tr>
+<tr>
+<td><code>Maroon</code></td>
+<td>0x800000</td>
+</tr>
+<tr>
+<td><code>MediumAquaMarine</code></td>
+<td>0x66CDAA</td>
+</tr>
+<tr>
+<td><code>MediumBlue</code></td>
+<td>0x0000CD</td>
+</tr>
+<tr>
+<td><code>MediumOrchid</code></td>
+<td>0xBA55D3</td>
+</tr>
+<tr>
+<td><code>MediumPurple</code></td>
+<td>0x9370D8</td>
+</tr>
+<tr>
+<td><code>MediumSeaGreen</code></td>
+<td>0x3CB371</td>
+</tr>
+<tr>
+<td><code>MediumSlateBlue</code></td>
+<td>0x7B68EE</td>
+</tr>
+<tr>
+<td><code>MediumSpringGreen</code></td>
+<td>0x00FA9A</td>
+</tr>
+<tr>
+<td><code>MediumTurquoise</code></td>
+<td>0x48D1CC</td>
+</tr>
+<tr>
+<td><code>MediumVioletRed</code></td>
+<td>0xC71585</td>
+</tr>
+<tr>
+<td><code>MidnightBlue</code></td>
+<td>0x191970</td>
+</tr>
+<tr>
+<td><code>MintCream</code></td>
+<td>0xF5FFFA</td>
+</tr>
+<tr>
+<td><code>MistyRose</code></td>
+<td>0xFFE4E1</td>
+</tr>
+<tr>
+<td><code>Moccasin</code></td>
+<td>0xFFE4B5</td>
+</tr>
+<tr>
+<td><code>NavajoWhite</code></td>
+<td>0xFFDEAD</td>
+</tr>
+<tr>
+<td><code>Navy</code></td>
+<td>0x000080</td>
+</tr>
+<tr>
+<td><code>OldLace</code></td>
+<td>0xFDF5E6</td>
+</tr>
+<tr>
+<td><code>Olive</code></td>
+<td>0x808000</td>
+</tr>
+<tr>
+<td><code>OliveDrab</code></td>
+<td>0x6B8E23</td>
+</tr>
+<tr>
+<td><code>Orange</code></td>
+<td>0xFFA500</td>
+</tr>
+<tr>
+<td><code>OrangeRed</code></td>
+<td>0xFF4500</td>
+</tr>
+<tr>
+<td><code>Orchid</code></td>
+<td>0xDA70D6</td>
+</tr>
+<tr>
+<td><code>PaleGoldenRod</code></td>
+<td>0xEEE8AA</td>
+</tr>
+<tr>
+<td><code>PaleGreen</code></td>
+<td>0x98FB98</td>
+</tr>
+<tr>
+<td><code>PaleTurquoise</code></td>
+<td>0xAFEEEE</td>
+</tr>
+<tr>
+<td><code>PaleVioletRed</code></td>
+<td>0xD87093</td>
+</tr>
+<tr>
+<td><code>PapayaWhip</code></td>
+<td>0xFFEFD5</td>
+</tr>
+<tr>
+<td><code>PeachPuff</code></td>
+<td>0xFFDAB9</td>
+</tr>
+<tr>
+<td><code>Peru</code></td>
+<td>0xCD853F</td>
+</tr>
+<tr>
+<td><code>Pink</code></td>
+<td>0xFFC0CB</td>
+</tr>
+<tr>
+<td><code>Plum</code></td>
+<td>0xDDA0DD</td>
+</tr>
+<tr>
+<td><code>PowderBlue</code></td>
+<td>0xB0E0E6</td>
+</tr>
+<tr>
+<td><code>Purple</code></td>
+<td>0x800080</td>
+</tr>
+<tr>
+<td><code>Red</code></td>
+<td>0xFF0000</td>
+</tr>
+<tr>
+<td><code>RosyBrown</code></td>
+<td>0xBC8F8F</td>
+</tr>
+<tr>
+<td><code>RoyalBlue</code></td>
+<td>0x4169E1</td>
+</tr>
+<tr>
+<td><code>SaddleBrown</code></td>
+<td>0x8B4513</td>
+</tr>
+<tr>
+<td><code>Salmon</code></td>
+<td>0xFA8072</td>
+</tr>
+<tr>
+<td><code>SandyBrown</code></td>
+<td>0xF4A460</td>
+</tr>
+<tr>
+<td><code>SeaGreen</code></td>
+<td>0x2E8B57</td>
+</tr>
+<tr>
+<td><code>SeaShell</code></td>
+<td>0xFFF5EE</td>
+</tr>
+<tr>
+<td><code>Sienna</code></td>
+<td>0xA0522D</td>
+</tr>
+<tr>
+<td><code>Silver</code></td>
+<td>0xC0C0C0</td>
+</tr>
+<tr>
+<td><code>SkyBlue</code></td>
+<td>0x87CEEB</td>
+</tr>
+<tr>
+<td><code>SlateBlue</code></td>
+<td>0x6A5ACD</td>
+</tr>
+<tr>
+<td><code>SlateGray</code></td>
+<td>0x708090</td>
+</tr>
+<tr>
+<td><code>Snow</code></td>
+<td>0xFFFAFA</td>
+</tr>
+<tr>
+<td><code>SpringGreen</code></td>
+<td>0x00FF7F</td>
+</tr>
+<tr>
+<td><code>SteelBlue</code></td>
+<td>0x4682B4</td>
+</tr>
+<tr>
+<td><code>Tan</code></td>
+<td>0xD2B48C</td>
+</tr>
+<tr>
+<td><code>Teal</code></td>
+<td>0x008080</td>
+</tr>
+<tr>
+<td><code>Thistle</code></td>
+<td>0xD8BFD8</td>
+</tr>
+<tr>
+<td><code>Tomato</code></td>
+<td>0xFF6347</td>
+</tr>
+<tr>
+<td><code>Turquoise</code></td>
+<td>0x40E0D0</td>
+</tr>
+<tr>
+<td><code>Violet</code></td>
+<td>0xEE82EE</td>
+</tr>
+<tr>
+<td><code>Wheat</code></td>
+<td>0xF5DEB3</td>
+</tr>
+<tr>
+<td><code>White</code></td>
+<td>0xFFFFFF</td>
+</tr>
+<tr>
+<td><code>WhiteSmoke</code></td>
+<td>0xF5F5F5</td>
+</tr>
+<tr>
+<td><code>Yellow</code></td>
+<td>0xFFFF00</td>
+</tr>
+<tr>
+<td><code>YellowGreen</code></td>
+<td>0x9ACD32</td>
+</tr>
+</tbody>
+</table>
+<h2 id="channel-layout">Channel Layout<a class="headerlink" href="#channel-layout" title="Permanent link">&para;</a></h2>
+<p>A channel layout specifies the spatial disposition of the channels in a multi-channel audio stream. To specify a channel layout, FFmpeg makes use of a special syntax.</p>
+<p>Individual channels are identified by an id, as given by the table below:</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FL</code></td>
+<td>front left</td>
+</tr>
+<tr>
+<td><code>FR</code></td>
+<td>front right</td>
+</tr>
+<tr>
+<td><code>FC</code></td>
+<td>front center</td>
+</tr>
+<tr>
+<td><code>LFE</code></td>
+<td>low frequency</td>
+</tr>
+<tr>
+<td><code>BL</code></td>
+<td>back left</td>
+</tr>
+<tr>
+<td><code>BR</code></td>
+<td>back right</td>
+</tr>
+<tr>
+<td><code>FLC</code></td>
+<td>front left-of-center</td>
+</tr>
+<tr>
+<td><code>FRC</code></td>
+<td>front right-of-center</td>
+</tr>
+<tr>
+<td><code>BC</code></td>
+<td>back center</td>
+</tr>
+<tr>
+<td><code>SL</code></td>
+<td>side left</td>
+</tr>
+<tr>
+<td><code>SR</code></td>
+<td>side right</td>
+</tr>
+<tr>
+<td><code>TC</code></td>
+<td>top center</td>
+</tr>
+<tr>
+<td><code>TFL</code></td>
+<td>top front left</td>
+</tr>
+<tr>
+<td><code>TFC</code></td>
+<td>top front center</td>
+</tr>
+<tr>
+<td><code>TFR</code></td>
+<td>top front right</td>
+</tr>
+<tr>
+<td><code>TBL</code></td>
+<td>top back left</td>
+</tr>
+<tr>
+<td><code>TBC</code></td>
+<td>top back center</td>
+</tr>
+<tr>
+<td><code>TBR</code></td>
+<td>top back right</td>
+</tr>
+<tr>
+<td><code>DL</code></td>
+<td>downmix left</td>
+</tr>
+<tr>
+<td><code>DR</code></td>
+<td>downmix right</td>
+</tr>
+<tr>
+<td><code>WL</code></td>
+<td>wide left</td>
+</tr>
+<tr>
+<td><code>WR</code></td>
+<td>wide right</td>
+</tr>
+<tr>
+<td><code>SDL</code></td>
+<td>surround direct left</td>
+</tr>
+<tr>
+<td><code>SDR</code></td>
+<td>surround direct right</td>
+</tr>
+<tr>
+<td><code>LFE2</code></td>
+<td>low frequency 2</td>
+</tr>
+</tbody>
+</table>
+<p>Standard channel layout compositions can be specified by using the following identifiers:</p>
+<ul>
+<li>
+<p><strong><code>mono</code></strong> FC</p>
+</li>
+<li>
+<p><strong><code>stereo</code></strong> FL+FR</p>
+</li>
+<li>
+<p><strong><code>2.1</code></strong> FL+FR+LFE</p>
+</li>
+<li>
+<p><strong><code>3.0</code></strong> FL+FR+FC</p>
+</li>
+<li>
+<p><strong><code>3.0(back)</code></strong> FL+FR+BC</p>
+</li>
+<li>
+<p><strong><code>4.0</code></strong> FL+FR+FC+BC</p>
+</li>
+<li>
+<p><strong><code>quad</code></strong> FL+FR+BL+BR</p>
+</li>
+<li>
+<p><strong><code>quad(side)</code></strong> FL+FR+SL+SR</p>
+</li>
+<li>
+<p><strong><code>3.1</code></strong> FL+FR+FC+LFE</p>
+</li>
+<li>
+<p><strong><code>5.0</code></strong> FL+FR+FC+BL+BR</p>
+</li>
+<li>
+<p><strong><code>5.0(side)</code></strong> FL+FR+FC+SL+SR</p>
+</li>
+<li>
+<p><strong><code>4.1</code></strong> FL+FR+FC+LFE+BC</p>
+</li>
+<li>
+<p><strong><code>5.1</code></strong> FL+FR+FC+LFE+BL+BR</p>
+</li>
+<li>
+<p><strong><code>5.1(side)</code></strong> FL+FR+FC+LFE+SL+SR</p>
+</li>
+<li>
+<p><strong><code>6.0</code></strong> FL+FR+FC+BC+SL+SR</p>
+</li>
+<li>
+<p><strong><code>6.0(front)</code></strong> FL+FR+FLC+FRC+SL+SR</p>
+</li>
+<li>
+<p><strong><code>3.1.2</code></strong> FL+FR+FC+LFE+TFL+TFR</p>
+</li>
+<li>
+<p><strong><code>hexagonal</code></strong> FL+FR+FC+BL+BR+BC</p>
+</li>
+<li>
+<p><strong><code>6.1</code></strong> FL+FR+FC+LFE+BC+SL+SR</p>
+</li>
+<li>
+<p><strong><code>6.1</code></strong> FL+FR+FC+LFE+BL+BR+BC</p>
+</li>
+<li>
+<p><strong><code>6.1(front)</code></strong> FL+FR+LFE+FLC+FRC+SL+SR</p>
+</li>
+<li>
+<p><strong><code>7.0</code></strong> FL+FR+FC+BL+BR+SL+SR</p>
+</li>
+<li>
+<p><strong><code>7.0(front)</code></strong> FL+FR+FC+FLC+FRC+SL+SR</p>
+</li>
+<li>
+<p><strong><code>7.1</code></strong> FL+FR+FC+LFE+BL+BR+SL+SR</p>
+</li>
+<li>
+<p><strong><code>7.1(wide)</code></strong> FL+FR+FC+LFE+BL+BR+FLC+FRC</p>
+</li>
+<li>
+<p><strong><code>7.1(wide-side)</code></strong> FL+FR+FC+LFE+FLC+FRC+SL+SR</p>
+</li>
+<li>
+<p><strong><code>5.1.2</code></strong> FL+FR+FC+LFE+BL+BR+TFL+TFR</p>
+</li>
+<li>
+<p><strong><code>octagonal</code></strong> FL+FR+FC+BL+BR+BC+SL+SR</p>
+</li>
+<li>
+<p><strong><code>cube</code></strong> FL+FR+BL+BR+TFL+TFR+TBL+TBR</p>
+</li>
+<li>
+<p><strong><code>5.1.4</code></strong> FL+FR+FC+LFE+BL+BR+TFL+TFR+TBL+TBR</p>
+</li>
+<li>
+<p><strong><code>7.1.2</code></strong> FL+FR+FC+LFE+BL+BR+SL+SR+TFL+TFR</p>
+</li>
+<li>
+<p><strong><code>7.1.4</code></strong> FL+FR+FC+LFE+BL+BR+SL+SR+TFL+TFR+TBL+TBR</p>
+</li>
+<li>
+<p><strong><code>7.2.3</code></strong> FL+FR+FC+LFE+BL+BR+SL+SR+TFL+TFR+TBC+LFE2</p>
+</li>
+<li>
+<p><strong><code>9.1.4</code></strong> FL+FR+FC+LFE+BL+BR+FLC+FRC+SL+SR+TFL+TFR+TBL+TBR</p>
+</li>
+<li>
+<p><strong><code>9.1.6</code></strong> FL+FR+FC+LFE+BL+BR+FLC+FRC+SL+SR+TFL+TFR+TBL+TBR+TSL+TSR</p>
+</li>
+<li>
+<p><strong><code>hexadecagonal</code></strong> FL+FR+FC+BL+BR+BC+SL+SR+WL+WR+TBL+TBR+TBC+TFC+TFL+TFR</p>
+</li>
+<li>
+<p><strong><code>binaural</code></strong> BIL+BIR</p>
+</li>
+<li>
+<p><strong><code>downmix</code></strong> DL+DR</p>
+</li>
+<li>
+<p><strong><code>22.2</code></strong> FL+FR+FC+LFE+BL+BR+FLC+FRC+BC+SL+SR+TC+TFL+TFC+TFR+TBL+TBC+TBR+LFE2+TSL+TSR+BFC+BFL+BFR</p>
+</li>
+</ul>
+<p>A custom channel layout can be specified as a sequence of terms, separated by '+'. Each term can be:</p>
+<ul>
+<li>the name of a single channel (e.g. <code>FL</code>, <code>FR</code>, <code>FC</code>, <code>LFE</code>, etc.), each optionally containing a custom name after a '@', (e.g. <code>FL@Left</code>, <code>FR@Right</code>, <code>FC@Center</code>, <code>LFE@Low_Frequency</code>, etc.)</li>
+</ul>
+<p>A standard channel layout can be specified by the following:</p>
+<ul>
+<li>
+<p>the name of a single channel (e.g. <code>FL</code>, <code>FR</code>, <code>FC</code>, <code>LFE</code>, etc.)</p>
+</li>
+<li>
+<p>the name of a standard channel layout (e.g. <code>mono</code>, <code>stereo</code>, <code>4.0</code>, <code>quad</code>, <code>5.0</code>, etc.)</p>
+</li>
+<li>
+<p>a number of channels, in decimal, followed by 'c', yielding the default channel layout for that number of channels (see the function <code>av_channel_layout_default</code>). Note that not all channel counts have a default layout.</p>
+</li>
+<li>
+<p>a number of channels, in decimal, followed by 'C', yielding an unknown channel layout with the specified number of channels. Note that not all channel layout specification strings support unknown channel layouts.</p>
+</li>
+<li>
+<p>a channel layout mask, in hexadecimal starting with "0x" (see the <code>AV_CH_*</code> macros in <code>libavutil/channel_layout.h</code>.</p>
+</li>
+</ul>
+<p>Before libavutil version 53 the trailing character "c" to specify a number of channels was optional, but now it is required, while a channel layout mask can also be specified as a decimal number (if and only if not followed by "c" or "C").</p>
+<p>See also the function <code>av_channel_layout_from_string</code> defined in <code>libavutil/channel_layout.h</code>.</p>
+<h1 id="expression-evaluation">Expression Evaluation<a class="headerlink" href="#expression-evaluation" title="Permanent link">&para;</a></h1>
+<p>When evaluating an arithmetic expression, FFmpeg uses an internal formula evaluator, implemented through the <code>libavutil/eval.h</code> interface.</p>
+<p>An expression may contain unary, binary operators, constants, and functions.</p>
+<p>Two expressions \&lt;expr1&gt; and \&lt;expr2&gt; can be combined to form another expression "\&lt;expr1&gt;;\&lt;expr2&gt;". \&lt;expr1&gt; and \&lt;expr2&gt; are evaluated in turn, and the new expression evaluates to the value of \&lt;expr2&gt;.</p>
+<p>The following binary operators are available: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>^</code>.</p>
+<p>The following unary operators are available: <code>+</code>, <code>-</code>.</p>
+<p>Some internal variables can be used to store and load intermediary results. They can be accessed using the <code>ld</code> and <code>st</code> functions with an index argument varying from 0 to 9 to specify which internal variable to access.</p>
+<p>The following functions are available:</p>
+<ul>
+<li>
+<p><strong><code>abs(x)</code></strong> Compute absolute value of \&lt;x&gt;.</p>
+</li>
+<li>
+<p><strong><code>acos(x)</code></strong> Compute arccosine of \&lt;x&gt;.</p>
+</li>
+<li>
+<p><strong><code>asin(x)</code></strong> Compute arcsine of \&lt;x&gt;.</p>
+</li>
+<li>
+<p><strong><code>atan(x)</code></strong> Compute arctangent of \&lt;x&gt;.</p>
+</li>
+<li>
+<p><strong><code>atan2(y, x)</code></strong> Compute principal value of the arc tangent of \&lt;y&gt;/\&lt;x&gt;.</p>
+</li>
+<li>
+<p><strong><code>between(x, min, max)</code></strong> Return 1 if \&lt;x&gt; is greater than or equal to \&lt;min&gt; and lesser than or equal to \&lt;max&gt;, 0 otherwise.</p>
+</li>
+<li>
+<p><strong><code>bitand(x, y)</code></strong></p>
+</li>
+<li>
+<p><strong><code>bitor(x, y)</code></strong> Compute bitwise and/or operation on \&lt;x&gt; and \&lt;y&gt;.</p>
+</li>
+</ul>
+<p>The results of the evaluation of \&lt;x&gt; and \&lt;y&gt; are converted to integers before executing the bitwise operation.</p>
+<p>Note that both the conversion to integer and the conversion back to floating point can lose precision. Beware of unexpected results for large numbers (usually 2^53 and larger).</p>
+<ul>
+<li>
+<p><strong><code>ceil(expr)</code></strong> Round the value of expression \&lt;expr&gt; upwards to the nearest integer. For example, "ceil(1.5)" is "2.0".</p>
+</li>
+<li>
+<p><strong><code>clip(x, min, max)</code></strong> Return the value of \&lt;x&gt; clipped between \&lt;min&gt; and \&lt;max&gt;.</p>
+</li>
+<li>
+<p><strong><code>cos(x)</code></strong> Compute cosine of \&lt;x&gt;.</p>
+</li>
+<li>
+<p><strong><code>cosh(x)</code></strong> Compute hyperbolic cosine of \&lt;x&gt;.</p>
+</li>
+<li>
+<p><strong><code>eq(x, y)</code></strong> Return 1 if \&lt;x&gt; and \&lt;y&gt; are equivalent, 0 otherwise.</p>
+</li>
+<li>
+<p><strong><code>exp(x)</code></strong> Compute exponential of \&lt;x&gt; (with base <code>e</code>, the Euler's number).</p>
+</li>
+<li>
+<p><strong><code>floor(expr)</code></strong> Round the value of expression \&lt;expr&gt; downwards to the nearest integer. For example, "floor(-1.5)" is "-2.0".</p>
+</li>
+<li>
+<p><strong><code>gauss(x)</code></strong> Compute Gauss function of \&lt;x&gt;, corresponding to <code>exp(-x*x/2) / sqrt(2*PI)</code>.</p>
+</li>
+<li>
+<p><strong><code>gcd(x, y)</code></strong> Return the greatest common divisor of \&lt;x&gt; and \&lt;y&gt;. If both \&lt;x&gt; and \&lt;y&gt; are 0 or either or both are less than zero then behavior is undefined.</p>
+</li>
+<li>
+<p><strong><code>gt(x, y)</code></strong> Return 1 if \&lt;x&gt; is greater than \&lt;y&gt;, 0 otherwise.</p>
+</li>
+<li>
+<p><strong><code>gte(x, y)</code></strong> Return 1 if \&lt;x&gt; is greater than or equal to \&lt;y&gt;, 0 otherwise.</p>
+</li>
+<li>
+<p><strong><code>hypot(x, y)</code></strong> This function is similar to the C function with the same name; it returns "sqrt(\&lt;x&gt;*\&lt;x&gt; + \&lt;y&gt;*\&lt;y&gt;)", the length of the hypotenuse of a right triangle with sides of length \&lt;x&gt; and \&lt;y&gt;, or the distance of the point (\&lt;x&gt;, \&lt;y&gt;) from the origin.</p>
+</li>
+<li>
+<p><strong><code>if(x, y)</code></strong> Evaluate \&lt;x&gt;, and if the result is non-zero return the result of the evaluation of \&lt;y&gt;, return 0 otherwise.</p>
+</li>
+<li>
+<p><strong><code>if(x, y, z)</code></strong> Evaluate \&lt;x&gt;, and if the result is non-zero return the evaluation result of \&lt;y&gt;, otherwise the evaluation result of \&lt;z&gt;.</p>
+</li>
+<li>
+<p><strong><code>ifnot(x, y)</code></strong> Evaluate \&lt;x&gt;, and if the result is zero return the result of the evaluation of \&lt;y&gt;, return 0 otherwise.</p>
+</li>
+<li>
+<p><strong><code>ifnot(x, y, z)</code></strong> Evaluate \&lt;x&gt;, and if the result is zero return the evaluation result of \&lt;y&gt;, otherwise the evaluation result of \&lt;z&gt;.</p>
+</li>
+<li>
+<p><strong><code>isinf(x)</code></strong> Return 1.0 if \&lt;x&gt; is +/-INFINITY, 0.0 otherwise.</p>
+</li>
+<li>
+<p><strong><code>isnan(x)</code></strong> Return 1.0 if \&lt;x&gt; is NAN, 0.0 otherwise.</p>
+</li>
+<li>
+<p><strong><code>ld(idx)</code></strong> Load the value of the internal variable with index \&lt;idx&gt;, which was previously stored with st(\&lt;idx&gt;, \&lt;expr&gt;). The function returns the loaded value.</p>
+</li>
+<li>
+<p><strong><code>lerp(x, y, z)</code></strong> Return linear interpolation between \&lt;x&gt; and \&lt;y&gt; by amount of \&lt;z&gt;.</p>
+</li>
+<li>
+<p><strong><code>log(x)</code></strong> Compute natural logarithm of \&lt;x&gt;.</p>
+</li>
+<li>
+<p><strong><code>lt(x, y)</code></strong> Return 1 if \&lt;x&gt; is lesser than \&lt;y&gt;, 0 otherwise.</p>
+</li>
+<li>
+<p><strong><code>lte(x, y)</code></strong> Return 1 if \&lt;x&gt; is lesser than or equal to \&lt;y&gt;, 0 otherwise.</p>
+</li>
+<li>
+<p><strong><code>max(x, y)</code></strong> Return the maximum between \&lt;x&gt; and \&lt;y&gt;.</p>
+</li>
+<li>
+<p><strong><code>min(x, y)</code></strong> Return the minimum between \&lt;x&gt; and \&lt;y&gt;.</p>
+</li>
+<li>
+<p><strong><code>mod(x, y)</code></strong> Compute the remainder of division of \&lt;x&gt; by \&lt;y&gt;.</p>
+</li>
+<li>
+<p><strong><code>not(expr)</code></strong> Return 1.0 if \&lt;expr&gt; is zero, 0.0 otherwise.</p>
+</li>
+<li>
+<p><strong><code>pow(x, y)</code></strong> Compute the power of \&lt;x&gt; elevated \&lt;y&gt;, it is equivalent to "(\&lt;x&gt;)^(\&lt;y&gt;)".</p>
+</li>
+<li>
+<p><strong><code>print(t)</code></strong></p>
+</li>
+<li>
+<p><strong><code>print(t, l)</code></strong> Print the value of expression \&lt;t&gt; with loglevel \&lt;l&gt;. If \&lt;l&gt; is not specified then a default log level is used. Return the value of the expression printed.</p>
+</li>
+<li>
+<p><strong><code>random(idx)</code></strong> Return a pseudo random value between 0.0 and 1.0. \&lt;idx&gt; is the index of the internal variable used to save the seed/state, which can be previously stored with <code>st(idx)</code>.</p>
+</li>
+</ul>
+<p>To initialize the seed, you need to store the seed value as a 64-bit unsigned integer in the internal variable with index \&lt;idx&gt;.</p>
+<p>For example, to store the seed with value <code>42</code> in the internal variable with index <code>0</code> and print a few random values:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">st</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">42</span><span class="p">);</span><span class="w"> </span><span class="n">print</span><span class="p">(</span><span class="n">random</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span><span class="w"> </span><span class="n">print</span><span class="p">(</span><span class="n">random</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span><span class="w"> </span><span class="n">print</span><span class="p">(</span><span class="n">random</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+</code></pre></div>
+<ul>
+<li><strong><code>randomi(idx, min, max)</code></strong> Return a pseudo random value in the interval between \&lt;min&gt; and \&lt;max&gt;. \&lt;idx&gt; is the index of the internal variable which will be used to save the seed/state, which can be previously stored with <code>st(idx)</code>.</li>
+</ul>
+<p>To initialize the seed, you need to store the seed value as a 64-bit unsigned integer in the internal variable with index \&lt;idx&gt;.</p>
+<ul>
+<li><strong><code>root(expr, max)</code></strong> Find an input value for which the function represented by \&lt;expr&gt; with argument \&lt;ld(0)&gt; is 0 in the interval 0..\&lt;max&gt;.</li>
+</ul>
+<p>The expression in \&lt;expr&gt; must denote a continuous function or the result is undefined.</p>
+<p>\&lt;ld(0)&gt; is used to represent the function input value, which means that the given expression will be evaluated multiple times with various input values that the expression can access through <code>ld(0)</code>. When the expression evaluates to 0 then the corresponding input value will be returned.</p>
+<ul>
+<li>
+<p><strong><code>round(expr)</code></strong> Round the value of expression \&lt;expr&gt; to the nearest integer. For example, "round(1.5)" is "2.0".</p>
+</li>
+<li>
+<p><strong><code>sgn(x)</code></strong> Compute sign of \&lt;x&gt;.</p>
+</li>
+<li>
+<p><strong><code>sin(x)</code></strong> Compute sine of \&lt;x&gt;.</p>
+</li>
+<li>
+<p><strong><code>sinh(x)</code></strong> Compute hyperbolic sine of \&lt;x&gt;.</p>
+</li>
+<li>
+<p><strong><code>sqrt(expr)</code></strong> Compute the square root of \&lt;expr&gt;. This is equivalent to "(\&lt;expr&gt;)^.5".</p>
+</li>
+<li>
+<p><strong><code>squish(x)</code></strong> Compute expression <code>1/(1 + exp(4*x))</code>.</p>
+</li>
+<li>
+<p><strong><code>st(idx, expr)</code></strong> Store the value of the expression \&lt;expr&gt; in an internal variable. \&lt;idx&gt; specifies the index of the variable where to store the value, and it is a value ranging from 0 to 9. The function returns the value stored in the internal variable.</p>
+</li>
+</ul>
+<p>The stored value can be retrieved with <code>ld(var)</code>.</p>
+<p>Note: variables are currently not shared between expressions.</p>
+<ul>
+<li>
+<p><strong><code>tan(x)</code></strong> Compute tangent of \&lt;x&gt;.</p>
+</li>
+<li>
+<p><strong><code>tanh(x)</code></strong> Compute hyperbolic tangent of \&lt;x&gt;.</p>
+</li>
+<li>
+<p><strong><code>taylor(expr, x)</code></strong></p>
+</li>
+<li>
+<p><strong><code>taylor(expr, x, idx)</code></strong> Evaluate a Taylor series at \&lt;x&gt;, given an expression representing the <code>ld(idx)</code>-th derivative of a function at 0.</p>
+</li>
+</ul>
+<p>When the series does not converge the result is undefined.</p>
+<p>\&lt;ld(idx)&gt; is used to represent the derivative order in \&lt;expr&gt;, which means that the given expression will be evaluated multiple times with various input values that the expression can access through <code>ld(idx)</code>. If \&lt;idx&gt; is not specified then 0 is assumed.</p>
+<p>Note, when you have the derivatives at y instead of 0, <code>taylor(expr, x-y)</code> can be used.</p>
+<ul>
+<li>
+<p><strong><code>time(0)</code></strong> Return the current (wallclock) time in seconds.</p>
+</li>
+<li>
+<p><strong><code>trunc(expr)</code></strong> Round the value of expression \&lt;expr&gt; towards zero to the nearest integer. For example, "trunc(-1.5)" is "-1.0".</p>
+</li>
+<li>
+<p><strong><code>while(cond, expr)</code></strong> Evaluate expression \&lt;expr&gt; while the expression \&lt;cond&gt; is non-zero, and returns the value of the last \&lt;expr&gt; evaluation, or NAN if \&lt;cond&gt; was always false.</p>
+</li>
+</ul>
+<p>The following constants are available:</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PI</code></td>
+<td>area of the unit disc, approximately 3.14</td>
+</tr>
+<tr>
+<td><code>E</code></td>
+<td>exp(1) (Euler's number), approximately 2.718</td>
+</tr>
+<tr>
+<td><code>PHI</code></td>
+<td>golden ratio (1+sqrt(5))/2, approximately 1.618</td>
+</tr>
+</tbody>
+</table>
+<p>Assuming that an expression is considered "true" if it has a non-zero value, note that:</p>
+<p><code>*</code> works like AND</p>
+<p><code>+</code> works like OR</p>
+<p>For example the construct:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>if (A AND B) then C
+</code></pre></div>
+<p>is equivalent to:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>if(A*B, C)
+</code></pre></div>
+<p>In your C code, you can extend the list of unary and binary functions, and define recognized constants, so that they are available for your expressions.</p>
+<p>The evaluator also recognizes the International System unit prefixes. If 'i' is appended after the prefix, binary prefixes are used, which are based on powers of 1024 instead of powers of 1000. The 'B' postfix multiplies the value by 8, and can be appended after a unit prefix or used alone. This allows using for example 'KB', 'MiB', 'G' and 'B' as number postfix.</p>
+<p>The list of available International System prefixes follows, with indication of the corresponding powers of 10 and of 2.</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>y</code></td>
+<td>10^-24 / 2^-80</td>
+</tr>
+<tr>
+<td><code>z</code></td>
+<td>10^-21 / 2^-70</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td>10^-18 / 2^-60</td>
+</tr>
+<tr>
+<td><code>f</code></td>
+<td>10^-15 / 2^-50</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>10^-12 / 2^-40</td>
+</tr>
+<tr>
+<td><code>n</code></td>
+<td>10^-9 / 2^-30</td>
+</tr>
+<tr>
+<td><code>u</code></td>
+<td>10^-6 / 2^-20</td>
+</tr>
+<tr>
+<td><code>m</code></td>
+<td>10^-3 / 2^-10</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td>10^-2</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td>10^-1</td>
+</tr>
+<tr>
+<td><code>h</code></td>
+<td>10^2</td>
+</tr>
+<tr>
+<td><code>k</code></td>
+<td>10^3 / 2^10</td>
+</tr>
+<tr>
+<td><code>K</code></td>
+<td>10^3 / 2^10</td>
+</tr>
+<tr>
+<td><code>M</code></td>
+<td>10^6 / 2^20</td>
+</tr>
+<tr>
+<td><code>G</code></td>
+<td>10^9 / 2^30</td>
+</tr>
+<tr>
+<td><code>T</code></td>
+<td>10^12 / 2^40</td>
+</tr>
+<tr>
+<td><code>P</code></td>
+<td>10^15 / 2^50</td>
+</tr>
+<tr>
+<td><code>E</code></td>
+<td>10^18 / 2^60</td>
+</tr>
+<tr>
+<td><code>Z</code></td>
+<td>10^21 / 2^70</td>
+</tr>
+<tr>
+<td><code>Y</code></td>
+<td>10^24 / 2^80</td>
+</tr>
+</tbody>
+</table>
+<h1 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h1>
+<p>ffmpeg(1), ffplay(1), ffprobe(1), libavutil(3)</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      除 wiki 精选页（CC BY-SA 3.0）外，译文基于 FFmpeg 官方文档（LGPL 2.1+）以 LGPL-2.1-or-later 提供 · 译自 n9.0.2
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "content.code.copy", "navigation.instant", "toc.integrate"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

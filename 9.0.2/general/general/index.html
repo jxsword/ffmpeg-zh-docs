@@ -1,0 +1,7257 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="FFmpeg 官方文档中文翻译版（基线 n9.0.2，跟随上游 release 增量翻译）">
+      
+      
+        <meta name="author" content="ffmpeg-zh-docs 翻译组">
+      
+      
+        <link rel="canonical" href="https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/general/general/">
+      
+      
+        <link rel="prev" href="../faq/">
+      
+      
+        <link rel="next" href="../platform/">
+      
+      
+        
+          <link rel="alternate" href="https://ffmpeg.org/documentation.html" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>通用目录（General） - FFmpeg 中文文档</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Noto Sans SC";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#external-libraries" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="FFmpeg 中文文档" class="md-header__button md-logo" aria-label="FFmpeg 中文文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FFmpeg 中文文档
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              通用目录（General）
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="https://ffmpeg.org/documentation.html" hreflang="en" class="md-select__link">
+              English (Original)
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jxsword/ffmpeg-zh-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ffmpeg-zh-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../manual/ffmpeg/" class="md-tabs__link">
+          
+  
+  
+  手册
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../components/utils/" class="md-tabs__link">
+          
+  
+  
+  组件
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../filters/overview/" class="md-tabs__link">
+          
+  
+  
+  滤镜
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../libraries/libavutil/" class="md-tabs__link">
+          
+  
+  
+  库
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../faq/" class="md-tabs__link">
+          
+  
+  
+  General
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="FFmpeg 中文文档" class="md-nav__button md-logo" aria-label="FFmpeg 中文文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    FFmpeg 中文文档
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jxsword/ffmpeg-zh-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ffmpeg-zh-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    手册
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    手册
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/ffmpeg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffmpeg 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/ffplay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffplay 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/ffprobe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffprobe 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/common-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    公共选项（ffmpeg/ffplay/ffprobe）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    组件
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    组件
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具（Utils）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/scaler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    缩放器（Scaler）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/resampler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    重采样器（Resampler）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/codecs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    编解码器（Codecs）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/bitstream-filters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    比特流滤镜（Bitstream Filters）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    格式（Formats）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    协议（Protocols）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    设备（Devices）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    滤镜
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    滤镜
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    滤镜总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/video/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    视频滤镜（364）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音频滤镜（135）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/multimedia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    多媒体滤镜（37）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    库
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    库
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavutil/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavutil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavcodec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavcodec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavformat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavformat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavdevice/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavdevice
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavfilter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavfilter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libswscale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libswscale
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libswresample/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libswresample
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    General
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    通用目录（General）
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    通用目录（General）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#alliance-for-open-media-aom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alliance for Open Media (AOM)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#amd-amfvce" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AMD AMF/VCE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#avisynth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AviSynth
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chromaprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chromaprint
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#codec2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        codec2
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dav1d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dav1d
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#davs2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        davs2
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uavs3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        uavs3d
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#game-music-emu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Game Music Emu
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#intel-quicksync-video" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intel QuickSync Video
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kvazaar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kvazaar
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lame" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LAME
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lcevcdec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LCEVCdec
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#libilbc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        libilbc
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#libjxl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        libjxl
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#libvpx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        libvpx
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modplug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ModPlug
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#onnx-runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ONNX Runtime
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#opencore-visualon-and-fraunhofer-libraries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenCORE, VisualOn, and Fraunhofer libraries
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenCORE, VisualOn, and Fraunhofer libraries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#opencore-amr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenCORE AMR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visualon-amr-wb-encoder-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VisualOn AMR-WB encoder library
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fraunhofer-aac-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fraunhofer AAC library
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fraunhofer-mpeg-h-3d-audio-decoder-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fraunhofer MPEG-H 3D Audio decoder library
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lc3-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LC3 library
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openh264" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenH264
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openjpeg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenJPEG
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rav1e" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rav1e
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#svt-av1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SVT-AV1
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#svt-jpeg-xs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SVT-JPEG-XS
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#twolame" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TwoLAME
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vapoursynth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VapourSynth
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#x264" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        x264
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#x265" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        x265
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xavs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        xavs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xavs2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        xavs2
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extra-fast-essential-video-encoder-xeve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        eXtra-fast Essential Video Encoder (XEVE)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extra-fast-essential-video-decoder-xevd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        eXtra-fast Essential Video Decoder (XEVD)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zvbi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ZVBI
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    平台（Platform）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开发者（Developer）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../git-howto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git 使用（Git Howto）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FATE 测试
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../authors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作者（Authors）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mailing-list-faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    邮件列表 FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NUT 格式
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../community/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    社区（Community）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../drawvg-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    drawvg 参考
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../APIchanges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API 变更日志（英文原文）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<div class="admonition warning">
+<p class="admonition-title">翻译占位页</p>
+<p>本页为英文原文占位（翻译进行中，进度见<a href="https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md">翻译看板</a>）。
+术语与示例以英文原文为准。</p>
+</div>
+<h1 id="external-libraries">External libraries<a class="headerlink" href="#external-libraries" title="Permanent link">&para;</a></h1>
+<p>FFmpeg can be hooked up with a number of external libraries to add support for more formats. None of them are used by default, their use has to be explicitly requested by passing the appropriate flags to <code>./configure</code>.</p>
+<h2 id="alliance-for-open-media-aom">Alliance for Open Media (AOM)<a class="headerlink" href="#alliance-for-open-media-aom" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the AOM library for AV1 decoding and encoding.</p>
+<p>Go to <a href="http://aomedia.org/">http://aomedia.org/</a> and follow the instructions for installing the library. Then pass <code>--enable-libaom</code> to configure to enable it.</p>
+<h2 id="amd-amfvce">AMD AMF/VCE<a class="headerlink" href="#amd-amfvce" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can use the AMD Advanced Media Framework library for accelerated H.264 and HEVC(only windows) encoding on hardware with Video Coding Engine (VCE).</p>
+<p>To enable support you must obtain the AMF framework header files(version 1.4.9+) from <a href="https://github.com/GPUOpen-LibrariesAndSDKs/AMF.git">https://github.com/GPUOpen-LibrariesAndSDKs/AMF.git</a>.</p>
+<p>Create an <code>AMF/</code> directory in the system include path. Copy the contents of <code>AMF/amf/public/include/</code> into that directory. Then configure FFmpeg with <code>--enable-amf</code>.</p>
+<p>Initialization of amf encoder occurs in this order: 1) trying to initialize through dx11(only windows) 2) trying to initialize through dx9(only windows) 3) trying to initialize through vulkan</p>
+<p>To use h.264(AMD VCE) encoder on linux amdgru-pro version 19.20+ and amf-amdgpu-pro package(amdgru-pro contains, but does not install automatically) are required.</p>
+<p>This driver can be installed using amdgpu-pro-install script in official amd driver archive.</p>
+<h2 id="avisynth">AviSynth<a class="headerlink" href="#avisynth" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can read AviSynth scripts as input. To enable support, pass <code>--enable-avisynth</code> to configure after installing the headers provided by <a href="https://github.com/AviSynth/AviSynthPlus">AviSynth+</a>. AviSynth+ can be configured to install only the headers by either passing <code>-DHEADERS_ONLY:bool=on</code> to the normal CMake-based build system, or by using the supplied <code>GNUmakefile</code>.</p>
+<p>For Windows, supported AviSynth variants are <a href="http://avisynth.nl">AviSynth 2.6 RC1 or higher</a> for 32-bit builds and <a href="http://avisynth.nl/index.php/AviSynth+">AviSynth+ r1718 or higher</a> for 32-bit and 64-bit builds.</p>
+<p>For Linux, macOS, and BSD, the only supported AviSynth variant is <a href="https://github.com/AviSynth/AviSynthPlus">AviSynth+</a>, starting with version 3.5.</p>
+<p>In 2016, AviSynth+ added support for building with GCC. However, due to the eccentricities of Windows' calling conventions, 32-bit GCC builds of AviSynth+ are not compatible with typical 32-bit builds of FFmpeg.</p>
+<p>By default, FFmpeg assumes compatibility with 32-bit MSVC builds of AviSynth+ since that is the most widely-used and entrenched build configuration. Users can override this and enable support for 32-bit GCC builds of AviSynth+ by passing <code>-DAVSC_WIN32_GCC32</code> to <code>--extra-cflags</code> when configuring FFmpeg.</p>
+<p>64-bit builds of FFmpeg are not affected, and can use either MSVC or GCC builds of AviSynth+ without any special flags.</p>
+<p>AviSynth(+) is loaded dynamically. Distributors can build FFmpeg with <code>--enable-avisynth</code>, and the binaries will work regardless of the end user having AviSynth installed. If/when an end user would like to use AviSynth scripts, then they can install AviSynth(+) and FFmpeg will be able to find and use it to open scripts.</p>
+<h2 id="chromaprint">Chromaprint<a class="headerlink" href="#chromaprint" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the Chromaprint library for generating audio fingerprints. Pass <code>--enable-chromaprint</code> to configure to enable it. See <a href="https://acoustid.org/chromaprint">https://acoustid.org/chromaprint</a>.</p>
+<h2 id="codec2">codec2<a class="headerlink" href="#codec2" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the codec2 library for codec2 decoding and encoding. There is currently no native decoder, so libcodec2 must be used for decoding.</p>
+<p>Go to <a href="http://freedv.org/">http://freedv.org/</a>, download "Codec 2 source archive". Build and install using CMake. Debian users can install the libcodec2-dev package instead. Once libcodec2 is installed you can pass <code>--enable-libcodec2</code> to configure to enable it.</p>
+<p>The easiest way to use codec2 is with .c2 files, since they contain the mode information required for decoding. To encode such a file, use a .c2 file extension and give the libcodec2 encoder the -mode option: <code>ffmpeg -i input.wav -mode 700C output.c2</code>. Playback is as simple as <code>ffplay output.c2</code>. For a list of supported modes, run <code>ffmpeg -h encoder=libcodec2</code>. Raw codec2 files are also supported. To make sense of them the mode in use needs to be specified as a format option: <code>ffmpeg -f codec2raw -mode 1300 -i input.raw output.wav</code>.</p>
+<h2 id="dav1d">dav1d<a class="headerlink" href="#dav1d" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the dav1d library for AV1 video decoding.</p>
+<p>Go to <a href="https://code.videolan.org/videolan/dav1d">https://code.videolan.org/videolan/dav1d</a> and follow the instructions for installing the library. Then pass <code>--enable-libdav1d</code> to configure to enable it.</p>
+<h2 id="davs2">davs2<a class="headerlink" href="#davs2" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the davs2 library for AVS2-P2/IEEE1857.4 video decoding.</p>
+<p>Go to <a href="https://github.com/pkuvcl/davs2">https://github.com/pkuvcl/davs2</a> and follow the instructions for installing the library. Then pass <code>--enable-libdavs2</code> to configure to enable it.</p>
+<p>libdavs2 is under the GNU Public License Version 2 or later (see <a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</a> for details), you must upgrade FFmpeg's license to GPL in order to use it.</p>
+<h2 id="uavs3d">uavs3d<a class="headerlink" href="#uavs3d" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the uavs3d library for AVS3-P2/IEEE1857.10 video decoding.</p>
+<p>Go to <a href="https://github.com/uavs3/uavs3d">https://github.com/uavs3/uavs3d</a> and follow the instructions for installing the library. Then pass <code>--enable-libuavs3d</code> to configure to enable it.</p>
+<h2 id="game-music-emu">Game Music Emu<a class="headerlink" href="#game-music-emu" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the Game Music Emu library to read audio from supported video game music file formats. Pass <code>--enable-libgme</code> to configure to enable it. See <a href="https://bitbucket.org/mpyne/game-music-emu/overview">https://bitbucket.org/mpyne/game-music-emu/overview</a>.</p>
+<h2 id="intel-quicksync-video">Intel QuickSync Video<a class="headerlink" href="#intel-quicksync-video" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can use Intel QuickSync Video (QSV) for accelerated decoding and encoding of multiple codecs. To use QSV, FFmpeg must be linked against the <code>libmfx</code> dispatcher, which loads the actual decoding libraries.</p>
+<p>The dispatcher is open source and can be downloaded from <a href="https://github.com/lu-zero/mfx_dispatch.git">https://github.com/lu-zero/mfx_dispatch.git</a>. FFmpeg needs to be configured with the <code>--enable-libmfx</code> option and <code>pkg-config</code> needs to be able to locate the dispatcher's <code>.pc</code> files.</p>
+<h2 id="kvazaar">Kvazaar<a class="headerlink" href="#kvazaar" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the Kvazaar library for HEVC encoding.</p>
+<p>Go to <a href="https://github.com/ultravideo/kvazaar">https://github.com/ultravideo/kvazaar</a> and follow the instructions for installing the library. Then pass <code>--enable-libkvazaar</code> to configure to enable it.</p>
+<h2 id="lame">LAME<a class="headerlink" href="#lame" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the LAME library for MP3 encoding.</p>
+<p>Go to <a href="http://lame.sourceforge.net/">http://lame.sourceforge.net/</a> and follow the instructions for installing the library. Then pass <code>--enable-libmp3lame</code> to configure to enable it.</p>
+<h2 id="lcevcdec">LCEVCdec<a class="headerlink" href="#lcevcdec" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the liblcevc_dec library for LCEVC enhancement layer decoding on supported bitstreams.</p>
+<p>Go to <a href="https://github.com/v-novaltd/LCEVCdec">https://github.com/v-novaltd/LCEVCdec</a> and follow the instructions for installing the library. Then pass <code>--enable-liblcevc-dec</code> to configure to enable it.</p>
+<p>LCEVCdec is under the BSD-3-Clause-Clear License.</p>
+<h2 id="libilbc">libilbc<a class="headerlink" href="#libilbc" title="Permanent link">&para;</a></h2>
+<p>iLBC is a narrowband speech codec that has been made freely available by Google as part of the WebRTC project. libilbc is a packaging friendly copy of the iLBC codec. FFmpeg can make use of the libilbc library for iLBC decoding and encoding.</p>
+<p>Go to <a href="https://github.com/TimothyGu/libilbc">https://github.com/TimothyGu/libilbc</a> and follow the instructions for installing the library. Then pass <code>--enable-libilbc</code> to configure to enable it.</p>
+<h2 id="libjxl">libjxl<a class="headerlink" href="#libjxl" title="Permanent link">&para;</a></h2>
+<p>JPEG XL is an image format intended to fully replace legacy JPEG for an extended period of life. See <a href="https://jpegxl.info/">https://jpegxl.info/</a> for more information, and see <a href="https://github.com/libjxl/libjxl">https://github.com/libjxl/libjxl</a> for the library source. You can pass <code>--enable-libjxl</code> to configure in order enable the libjxl wrapper.</p>
+<h2 id="libvpx">libvpx<a class="headerlink" href="#libvpx" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the libvpx library for VP8/VP9 decoding and encoding.</p>
+<p>Go to <a href="http://www.webmproject.org/">http://www.webmproject.org/</a> and follow the instructions for installing the library. Then pass <code>--enable-libvpx</code> to configure to enable it.</p>
+<h2 id="modplug">ModPlug<a class="headerlink" href="#modplug" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of this library, originating in Modplug-XMMS, to read from MOD-like music files. See <a href="https://github.com/Konstanty/libmodplug">https://github.com/Konstanty/libmodplug</a>. Pass <code>--enable-libmodplug</code> to configure to enable it.</p>
+<h2 id="onnx-runtime">ONNX Runtime<a class="headerlink" href="#onnx-runtime" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the ONNX Runtime library as a backend for DNN based filters.</p>
+<p>Go to <a href="https://onnxruntime.ai/">https://onnxruntime.ai/</a> and follow the instructions for installing the library. Pre-built packages are available for various platforms.</p>
+<p>Configure FFmpeg with ONNX Runtime support:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>./configure \
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    --enable-libonnxruntime \
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    --extra-cflags="-I/path/to/onnxruntime/include" \
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    --extra-ldflags="-L/path/to/onnxruntime/lib"
+</code></pre></div>
+<p>On ELF-based systems (Linux, BSD) you may also want to embed the library search path so that the installed <code>ffmpeg</code> binary finds the shared library at run time without setting <code>LD_LIBRARY_PATH</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>./configure \
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    --enable-libonnxruntime \
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    --extra-cflags="-I/path/to/onnxruntime/include" \
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    --extra-ldflags="-L/path/to/onnxruntime/lib -Wl,-rpath,/path/to/onnxruntime/lib"
+</code></pre></div>
+<p>The <code>-Wl,-rpath</code> flag is ELF-specific and should be omitted on other platforms (Windows, macOS).</p>
+<p>For MinGW GCC builds, add the <code>-D_stdcall=__stdcall</code> flag for compatibility with ONNX Runtime headers.</p>
+<h2 id="opencore-visualon-and-fraunhofer-libraries">OpenCORE, VisualOn, and Fraunhofer libraries<a class="headerlink" href="#opencore-visualon-and-fraunhofer-libraries" title="Permanent link">&para;</a></h2>
+<p>Spun off Google Android sources, OpenCore, VisualOn and Fraunhofer libraries provide encoders for a number of audio codecs.</p>
+<p>OpenCORE and VisualOn libraries are under the Apache License 2.0 (see <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a> for details), which is incompatible to the LGPL version 2.1 and GPL version 2. You have to upgrade FFmpeg's license to LGPL version 3 (or if you have enabled GPL components, GPL version 3) by passing <code>--enable-version3</code> to configure in order to use it.</p>
+<p>The license of the Fraunhofer AAC library is incompatible with the GPL. Therefore, for GPL builds, you have to pass <code>--enable-nonfree</code> to configure in order to use it. To the best of our knowledge, it is compatible with the LGPL.</p>
+<h3 id="opencore-amr">OpenCORE AMR<a class="headerlink" href="#opencore-amr" title="Permanent link">&para;</a></h3>
+<p>FFmpeg can make use of the OpenCORE libraries for AMR-NB decoding/encoding and AMR-WB decoding.</p>
+<p>Go to <a href="http://sourceforge.net/projects/opencore-amr/">http://sourceforge.net/projects/opencore-amr/</a> and follow the instructions for installing the libraries. Then pass <code>--enable-libopencore-amrnb</code> and/or <code>--enable-libopencore-amrwb</code> to configure to enable them.</p>
+<h3 id="visualon-amr-wb-encoder-library">VisualOn AMR-WB encoder library<a class="headerlink" href="#visualon-amr-wb-encoder-library" title="Permanent link">&para;</a></h3>
+<p>FFmpeg can make use of the VisualOn AMR-WBenc library for AMR-WB encoding.</p>
+<p>Go to <a href="http://sourceforge.net/projects/opencore-amr/">http://sourceforge.net/projects/opencore-amr/</a> and follow the instructions for installing the library. Then pass <code>--enable-libvo-amrwbenc</code> to configure to enable it.</p>
+<h3 id="fraunhofer-aac-library">Fraunhofer AAC library<a class="headerlink" href="#fraunhofer-aac-library" title="Permanent link">&para;</a></h3>
+<p>FFmpeg can make use of the Fraunhofer AAC library for AAC decoding &amp; encoding.</p>
+<p>Go to <a href="http://sourceforge.net/projects/opencore-amr/">http://sourceforge.net/projects/opencore-amr/</a> and follow the instructions for installing the library. Then pass <code>--enable-libfdk-aac</code> to configure to enable it.</p>
+<h3 id="fraunhofer-mpeg-h-3d-audio-decoder-library">Fraunhofer MPEG-H 3D Audio decoder library<a class="headerlink" href="#fraunhofer-mpeg-h-3d-audio-decoder-library" title="Permanent link">&para;</a></h3>
+<p>FFmpeg can make use of the Fraunhofer MPEG-H decoder library for MPEG-H 3DA decoding.</p>
+<p>Go to <a href="https://github.com/Fraunhofer-IIS/mpeghdec">https://github.com/Fraunhofer-IIS/mpeghdec</a> and follow the instructions for installing the library. Then pass <code>--enable-libmpeghdec --enable-nonfree</code> to configure to enable it.</p>
+<h3 id="lc3-library">LC3 library<a class="headerlink" href="#lc3-library" title="Permanent link">&para;</a></h3>
+<p>FFmpeg can make use of the Google LC3 library for LC3 decoding &amp; encoding.</p>
+<p>Go to <a href="https://github.com/google/liblc3/">https://github.com/google/liblc3/</a> and follow the instructions for installing the library. Then pass <code>--enable-liblc3</code> to configure to enable it.</p>
+<h2 id="openh264">OpenH264<a class="headerlink" href="#openh264" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the OpenH264 library for H.264 decoding and encoding.</p>
+<p>Go to <a href="http://www.openh264.org/">http://www.openh264.org/</a> and follow the instructions for installing the library. Then pass <code>--enable-libopenh264</code> to configure to enable it.</p>
+<p>For decoding, this library is much more limited than the built-in decoder in libavcodec; currently, this library lacks support for decoding B-frames and some other main/high profile features. (It currently only supports constrained baseline profile and CABAC.) Using it is mostly useful for testing and for taking advantage of Cisco's patent portfolio license (<a href="http://www.openh264.org/BINARY_LICENSE.txt">http://www.openh264.org/BINARY_LICENSE.txt</a>).</p>
+<h2 id="openjpeg">OpenJPEG<a class="headerlink" href="#openjpeg" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can use the OpenJPEG libraries for decoding/encoding J2K videos. Go to <a href="http://www.openjpeg.org/">http://www.openjpeg.org/</a> to get the libraries and follow the installation instructions. To enable using OpenJPEG in FFmpeg, pass <code>--enable-libopenjpeg</code> to <code>./configure</code>.</p>
+<h2 id="rav1e">rav1e<a class="headerlink" href="#rav1e" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of rav1e (Rust AV1 Encoder) via its C bindings to encode videos. Go to <a href="https://github.com/xiph/rav1e/">https://github.com/xiph/rav1e/</a> and follow the instructions to build the C library. To enable using rav1e in FFmpeg, pass <code>--enable-librav1e</code> to <code>./configure</code>.</p>
+<h2 id="svt-av1">SVT-AV1<a class="headerlink" href="#svt-av1" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the Scalable Video Technology for AV1 library for AV1 encoding.</p>
+<p>Go to <a href="https://gitlab.com/AOMediaCodec/SVT-AV1/">https://gitlab.com/AOMediaCodec/SVT-AV1/</a> and follow the instructions for installing the library. Then pass <code>--enable-libsvtav1</code> to configure to enable it.</p>
+<h2 id="svt-jpeg-xs">SVT-JPEG-XS<a class="headerlink" href="#svt-jpeg-xs" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the Scalable Video Technology for JPEG-XS library for JPEG-XS decoding and encoding.</p>
+<p>Go to <a href="https://github.com/OpenVisualCloud/SVT-JPEG-XS">https://github.com/OpenVisualCloud/SVT-JPEG-XS</a> and follow the instructions for installing the library. Then pass <code>--enable-libsvtjpegxs</code> to configure to enable it.</p>
+<h2 id="twolame">TwoLAME<a class="headerlink" href="#twolame" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the TwoLAME library for MP2 encoding.</p>
+<p>Go to <a href="http://www.twolame.org/">http://www.twolame.org/</a> and follow the instructions for installing the library. Then pass <code>--enable-libtwolame</code> to configure to enable it.</p>
+<h2 id="vapoursynth">VapourSynth<a class="headerlink" href="#vapoursynth" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can read VapourSynth scripts as input. To enable support, pass <code>--enable-vapoursynth</code> to configure. Vapoursynth is detected via <code>pkg-config</code>. Versions 42 or greater supported. See <a href="http://www.vapoursynth.com/">http://www.vapoursynth.com/</a>.</p>
+<p>Due to security concerns, Vapoursynth scripts will not be autodetected so the input format has to be forced. For ff* CLI tools, add <code>-f vapoursynth</code> before the input <code>-i yourscript.vpy</code>.</p>
+<h2 id="x264">x264<a class="headerlink" href="#x264" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the x264 library for H.264 encoding.</p>
+<p>Go to <a href="http://www.videolan.org/developers/x264.html">http://www.videolan.org/developers/x264.html</a> and follow the instructions for installing the library. Then pass <code>--enable-libx264</code> to configure to enable it.</p>
+<p>x264 is under the GNU Public License Version 2 or later (see <a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</a> for details), you must upgrade FFmpeg's license to GPL in order to use it.</p>
+<h2 id="x265">x265<a class="headerlink" href="#x265" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the x265 library for HEVC encoding.</p>
+<p>Go to <a href="http://x265.org/developers.html">http://x265.org/developers.html</a> and follow the instructions for installing the library. Then pass <code>--enable-libx265</code> to configure to enable it.</p>
+<p>x265 is under the GNU Public License Version 2 or later (see <a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</a> for details), you must upgrade FFmpeg's license to GPL in order to use it.</p>
+<h2 id="xavs">xavs<a class="headerlink" href="#xavs" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the xavs library for AVS encoding.</p>
+<p>Go to <a href="http://xavs.sf.net/">http://xavs.sf.net/</a> and follow the instructions for installing the library. Then pass <code>--enable-libxavs</code> to configure to enable it.</p>
+<h2 id="xavs2">xavs2<a class="headerlink" href="#xavs2" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the xavs2 library for AVS2-P2/IEEE1857.4 video encoding.</p>
+<p>Go to <a href="https://github.com/pkuvcl/xavs2">https://github.com/pkuvcl/xavs2</a> and follow the instructions for installing the library. Then pass <code>--enable-libxavs2</code> to configure to enable it.</p>
+<p>libxavs2 is under the GNU Public License Version 2 or later (see <a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</a> for details), you must upgrade FFmpeg's license to GPL in order to use it.</p>
+<h2 id="extra-fast-essential-video-encoder-xeve">eXtra-fast Essential Video Encoder (XEVE)<a class="headerlink" href="#extra-fast-essential-video-encoder-xeve" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the XEVE library for EVC video encoding.</p>
+<p>Go to <a href="https://github.com/mpeg5/xeve">https://github.com/mpeg5/xeve</a> and follow the instructions for installing the XEVE library. Then pass <code>--enable-libxeve</code> to configure to enable it.</p>
+<h2 id="extra-fast-essential-video-decoder-xevd">eXtra-fast Essential Video Decoder (XEVD)<a class="headerlink" href="#extra-fast-essential-video-decoder-xevd" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can make use of the XEVD library for EVC video decoding.</p>
+<p>Go to <a href="https://github.com/mpeg5/xevd">https://github.com/mpeg5/xevd</a> and follow the instructions for installing the XEVD library. Then pass <code>--enable-libxevd</code> to configure to enable it.</p>
+<h2 id="zvbi">ZVBI<a class="headerlink" href="#zvbi" title="Permanent link">&para;</a></h2>
+<p>ZVBI is a VBI decoding library which can be used by FFmpeg to decode DVB teletext pages and DVB teletext subtitles.</p>
+<p>Go to <a href="http://sourceforge.net/projects/zapping/">http://sourceforge.net/projects/zapping/</a> and follow the instructions for installing the library. Then pass <code>--enable-libzvbi</code> to configure to enable it.</p>
+<h1 id="supported-file-formats-codecs-or-features">Supported File Formats, Codecs or Features<a class="headerlink" href="#supported-file-formats-codecs-or-features" title="Permanent link">&para;</a></h1>
+<p>You can use the <code>-formats</code> and <code>-codecs</code> options to have an exhaustive list.</p>
+<h2 id="file-formats">File Formats<a class="headerlink" href="#file-formats" title="Permanent link">&para;</a></h2>
+<p>FFmpeg supports the following file formats through the <code>libavformat</code> library:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>Encoding</td>
+<td>Decoding</td>
+<td>Comments</td>
+</tr>
+<tr>
+<td>3dostr</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>4xm</td>
+<td></td>
+<td>X</td>
+<td>4X Technologies format, used in some games.</td>
+</tr>
+<tr>
+<td>8088flex TMV</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>AAX</td>
+<td></td>
+<td>X</td>
+<td>Audible Enhanced Audio format, used in audiobooks.</td>
+</tr>
+<tr>
+<td>AA</td>
+<td></td>
+<td>X</td>
+<td>Audible Format 2, 3, and 4, used in audiobooks.</td>
+</tr>
+<tr>
+<td>ACT Voice</td>
+<td></td>
+<td>X</td>
+<td>contains G.729 audio</td>
+</tr>
+<tr>
+<td>Adobe Filmstrip</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Audio IFF (AIFF)</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>American Laser Games MM</td>
+<td></td>
+<td>X</td>
+<td>Multimedia format used in games like Mad Dog McCree.</td>
+</tr>
+<tr>
+<td>3GPP AMR</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Amazing Studio Packed Animation File</td>
+<td></td>
+<td>X</td>
+<td>Multimedia format used in game Heart Of Darkness.</td>
+</tr>
+<tr>
+<td>Apple HTTP Live Streaming</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Artworx Data Format</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Interplay ACM</td>
+<td></td>
+<td>X</td>
+<td>Audio only format used in some Interplay games.</td>
+</tr>
+<tr>
+<td>ADP</td>
+<td></td>
+<td>X</td>
+<td>Audio format used on the Nintendo Gamecube.</td>
+</tr>
+<tr>
+<td>AFC</td>
+<td></td>
+<td>X</td>
+<td>Audio format used on the Nintendo Gamecube.</td>
+</tr>
+<tr>
+<td>ADS/SS2</td>
+<td></td>
+<td>X</td>
+<td>Audio format used on the PS2.</td>
+</tr>
+<tr>
+<td>APNG</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ASF</td>
+<td>X</td>
+<td>X</td>
+<td>Advanced / Active Streaming Format.</td>
+</tr>
+<tr>
+<td>AST</td>
+<td>X</td>
+<td>X</td>
+<td>Audio format used on the Nintendo Wii.</td>
+</tr>
+<tr>
+<td>AVI</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>AviSynth</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>AVR</td>
+<td></td>
+<td>X</td>
+<td>Audio format used on Mac.</td>
+</tr>
+<tr>
+<td>AVS</td>
+<td></td>
+<td>X</td>
+<td>Multimedia format used by the Creature Shock game.</td>
+</tr>
+<tr>
+<td>Beam Software SIFF</td>
+<td></td>
+<td>X</td>
+<td>Audio and video format used in some games by Beam Software.</td>
+</tr>
+<tr>
+<td>Bethesda Softworks VID</td>
+<td></td>
+<td>X</td>
+<td>Used in some games from Bethesda Softworks.</td>
+</tr>
+<tr>
+<td>Binary text</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Bink</td>
+<td></td>
+<td>X</td>
+<td>Multimedia format used by many games.</td>
+</tr>
+<tr>
+<td>Bink Audio</td>
+<td></td>
+<td>X</td>
+<td>Audio only multimedia format used by some games.</td>
+</tr>
+<tr>
+<td>Bitmap Brothers JV</td>
+<td></td>
+<td>X</td>
+<td>Used in Z and Z95 games.</td>
+</tr>
+<tr>
+<td>BRP</td>
+<td></td>
+<td>X</td>
+<td>Argonaut Games format.</td>
+</tr>
+<tr>
+<td>Brute Force &amp; Ignorance</td>
+<td></td>
+<td>X</td>
+<td>Used in the game Flash Traffic: City of Angels.</td>
+</tr>
+<tr>
+<td>BFSTM</td>
+<td></td>
+<td>X</td>
+<td>Audio format used on the Nintendo WiiU (based on BRSTM).</td>
+</tr>
+<tr>
+<td>BRSTM</td>
+<td></td>
+<td>X</td>
+<td>Audio format used on the Nintendo Wii.</td>
+</tr>
+<tr>
+<td>BW64</td>
+<td></td>
+<td>X</td>
+<td>Broadcast Wave 64bit.</td>
+</tr>
+<tr>
+<td>BWF</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>codec2 (raw)</td>
+<td>X</td>
+<td>X</td>
+<td>Must be given -mode format option to decode correctly.</td>
+</tr>
+<tr>
+<td>codec2 (.c2 files)</td>
+<td>X</td>
+<td>X</td>
+<td>Contains header with version and mode info, simplifying playback.</td>
+</tr>
+<tr>
+<td>CRI ADX</td>
+<td>X</td>
+<td>X</td>
+<td>Audio-only format used in console video games.</td>
+</tr>
+<tr>
+<td>CRI AIX</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>CRI HCA</td>
+<td></td>
+<td>X</td>
+<td>Audio-only format used in console video games.</td>
+</tr>
+<tr>
+<td>Discworld II BMV</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Interplay C93</td>
+<td></td>
+<td>X</td>
+<td>Used in the game Cyberia from Interplay.</td>
+</tr>
+<tr>
+<td>Delphine Software International CIN</td>
+<td></td>
+<td>X</td>
+<td>Multimedia format used by Delphine Software games.</td>
+</tr>
+<tr>
+<td>Digital Speech Standard (DSS)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>CD+G</td>
+<td></td>
+<td>X</td>
+<td>Video format used by CD+G karaoke disks</td>
+</tr>
+<tr>
+<td>Phantom Cine</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Commodore CDXL</td>
+<td></td>
+<td>X</td>
+<td>Amiga CD video format</td>
+</tr>
+<tr>
+<td>Core Audio Format</td>
+<td>X</td>
+<td>X</td>
+<td>Apple Core Audio Format</td>
+</tr>
+<tr>
+<td>CRC testing format</td>
+<td>X</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Creative Voice</td>
+<td>X</td>
+<td>X</td>
+<td>Created for the Sound Blaster Pro.</td>
+</tr>
+<tr>
+<td>CRYO APC</td>
+<td></td>
+<td>X</td>
+<td>Audio format used in some games by CRYO Interactive Entertainment.</td>
+</tr>
+<tr>
+<td>D-Cinema audio</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Deluxe Paint Animation</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>DCSTR</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>DFA</td>
+<td></td>
+<td>X</td>
+<td>This format is used in Chronomaster game</td>
+</tr>
+<tr>
+<td>DirectDraw Surface</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>DSD Stream File (DSF)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>DV video</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>DXA</td>
+<td></td>
+<td>X</td>
+<td>This format is used in the non-Windows version of the Feeble Files game and different game cutscenes repacked for use with ScummVM.</td>
+</tr>
+<tr>
+<td>Electronic Arts cdata</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Electronic Arts Multimedia</td>
+<td></td>
+<td>X</td>
+<td>Used in various EA games; files have extensions like WVE and UV2.</td>
+</tr>
+<tr>
+<td>Ensoniq Paris Audio File</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>FFM (FFserver live feed)</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Flash (SWF)</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Flash 9 (AVM2)</td>
+<td>X</td>
+<td>X</td>
+<td>Only embedded audio is decoded.</td>
+</tr>
+<tr>
+<td>FLI/FLC/FLX animation</td>
+<td></td>
+<td>X</td>
+<td>.fli/.flc files</td>
+</tr>
+<tr>
+<td>Flash Video (FLV)</td>
+<td>X</td>
+<td>X</td>
+<td>Macromedia Flash video files</td>
+</tr>
+<tr>
+<td>framecrc testing format</td>
+<td>X</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>FunCom ISS</td>
+<td></td>
+<td>X</td>
+<td>Audio format used in various games from FunCom like The Longest Journey.</td>
+</tr>
+<tr>
+<td>G.723.1</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>G.726</td>
+<td></td>
+<td>X</td>
+<td>Both left- and right-justified.</td>
+</tr>
+<tr>
+<td>G.729 BIT</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>G.729 raw</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>GENH</td>
+<td></td>
+<td>X</td>
+<td>Audio format for various games.</td>
+</tr>
+<tr>
+<td>GIF Animation</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>GXF</td>
+<td>X</td>
+<td>X</td>
+<td>General eXchange Format SMPTE 360M, used by Thomson Grass Valley playout servers.</td>
+</tr>
+<tr>
+<td>HNM</td>
+<td></td>
+<td>X</td>
+<td>Only version 4 supported, used in some games from Cryo Interactive</td>
+</tr>
+<tr>
+<td>iCEDraw File</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ICO</td>
+<td>X</td>
+<td>X</td>
+<td>Microsoft Windows ICO</td>
+</tr>
+<tr>
+<td>id Quake II CIN video</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>id RoQ</td>
+<td>X</td>
+<td>X</td>
+<td>Used in Quake III, Jedi Knight 2 and other computer games.</td>
+</tr>
+<tr>
+<td>IEC61937 encapsulation</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>IFF</td>
+<td></td>
+<td>X</td>
+<td>Interchange File Format</td>
+</tr>
+<tr>
+<td>IFV</td>
+<td></td>
+<td>X</td>
+<td>A format used by some old CCTV DVRs.</td>
+</tr>
+<tr>
+<td>iLBC</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Interplay MVE</td>
+<td></td>
+<td>X</td>
+<td>Format used in various Interplay computer games.</td>
+</tr>
+<tr>
+<td>Iterated Systems ClearVideo</td>
+<td></td>
+<td>X</td>
+<td>I-frames only</td>
+</tr>
+<tr>
+<td>IV8</td>
+<td></td>
+<td>X</td>
+<td>A format generated by IndigoVision 8000 video server.</td>
+</tr>
+<tr>
+<td>IVF (On2)</td>
+<td>X</td>
+<td>X</td>
+<td>A format used by libvpx</td>
+</tr>
+<tr>
+<td>Internet Video Recording</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>IRCAM</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>LAF</td>
+<td></td>
+<td>X</td>
+<td>Limitless Audio Format</td>
+</tr>
+<tr>
+<td>LATM</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>LMLM4</td>
+<td></td>
+<td>X</td>
+<td>Used by Linux Media Labs MPEG-4 PCI boards</td>
+</tr>
+<tr>
+<td>LOAS</td>
+<td></td>
+<td>X</td>
+<td>contains LATM multiplexed AAC audio</td>
+</tr>
+<tr>
+<td>LRC</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>LVF</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>LXF</td>
+<td></td>
+<td>X</td>
+<td>VR native stream format, used by Leitch/Harris' video servers.</td>
+</tr>
+<tr>
+<td>Magic Lantern Video (MLV)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Matroska</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Matroska audio</td>
+<td>X</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>FFmpeg metadata</td>
+<td>X</td>
+<td>X</td>
+<td>Metadata in text format.</td>
+</tr>
+<tr>
+<td>MAXIS XA</td>
+<td></td>
+<td>X</td>
+<td>Used in Sim City 3000; file extension .xa.</td>
+</tr>
+<tr>
+<td>MCA</td>
+<td></td>
+<td>X</td>
+<td>Used in some games from Capcom; file extension .mca.</td>
+</tr>
+<tr>
+<td>MD Studio</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Metal Gear Solid: The Twin Snakes</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Megalux Frame</td>
+<td></td>
+<td>X</td>
+<td>Used by Megalux Ultimate Paint</td>
+</tr>
+<tr>
+<td>MobiClip MODS</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>MobiClip MOFLEX</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Mobotix .mxg</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Monkey's Audio</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Motion Pixels MVI</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>MOV/QuickTime/MP4</td>
+<td>X</td>
+<td>X</td>
+<td>3GP, 3GP2, PSP, iPod variants supported</td>
+</tr>
+<tr>
+<td>MP2</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>MP3</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>MPEG-1 System</td>
+<td>X</td>
+<td>X</td>
+<td>muxed audio and video, VCD format supported</td>
+</tr>
+<tr>
+<td>MPEG-PS (program stream)</td>
+<td>X</td>
+<td>X</td>
+<td>also known as <code>VOB</code> file, SVCD and DVD format supported</td>
+</tr>
+<tr>
+<td>MPEG-TS (transport stream)</td>
+<td>X</td>
+<td>X</td>
+<td>also known as DVB Transport Stream</td>
+</tr>
+<tr>
+<td>MPEG-4</td>
+<td>X</td>
+<td>X</td>
+<td>MPEG-4 is a variant of QuickTime.</td>
+</tr>
+<tr>
+<td>MSF</td>
+<td></td>
+<td>X</td>
+<td>Audio format used on the PS3.</td>
+</tr>
+<tr>
+<td>Mirillis FIC video</td>
+<td></td>
+<td>X</td>
+<td>No cursor rendering.</td>
+</tr>
+<tr>
+<td>MIDI Sample Dump Standard</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>MIME multipart JPEG</td>
+<td>X</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>MSN TCP webcam</td>
+<td></td>
+<td>X</td>
+<td>Used by MSN Messenger webcam streams.</td>
+</tr>
+<tr>
+<td>MTV</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Musepack</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Musepack SV8</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Material eXchange Format (MXF)</td>
+<td>X</td>
+<td>X</td>
+<td>SMPTE 377M, used by D-Cinema, broadcast industry.</td>
+</tr>
+<tr>
+<td>Material eXchange Format (MXF), D-10 Mapping</td>
+<td>X</td>
+<td>X</td>
+<td>SMPTE 386M, D-10/IMX Mapping.</td>
+</tr>
+<tr>
+<td>NC camera feed</td>
+<td></td>
+<td>X</td>
+<td>NC (AVIP NC4600) camera streams</td>
+</tr>
+<tr>
+<td>NIST SPeech HEader REsources</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Computerized Speech Lab NSP</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>NTT TwinVQ (VQF)</td>
+<td></td>
+<td>X</td>
+<td>Nippon Telegraph and Telephone Corporation TwinVQ.</td>
+</tr>
+<tr>
+<td>Nullsoft Streaming Video</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>NuppelVideo</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>NUT</td>
+<td>X</td>
+<td>X</td>
+<td>NUT Open Container Format</td>
+</tr>
+<tr>
+<td>Ogg</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Playstation Portable PMP</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Portable Voice Format</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>RK Audio (RKA)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>TechnoTrend PVA</td>
+<td></td>
+<td>X</td>
+<td>Used by TechnoTrend DVB PCI boards.</td>
+</tr>
+<tr>
+<td>QCP</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw ADTS (AAC)</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw AC-3</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw AMR-NB</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw AMR-WB</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw APAC</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw APV</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw aptX</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw aptX HD</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw Bonk</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw Chinese AVS video</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw DFPWM</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw Dirac</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw DNxHD</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw DTS</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw DTS-HD</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw E-AC-3</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw EVC</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw FLAC</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw G.728</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw GSM</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw H.261</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw H.263</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw H.264</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw HEVC</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw Ingenient MJPEG</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw MJPEG</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw MLP</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw MPEG</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw MPEG-1</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw MPEG-2</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw MPEG-4</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw NULL</td>
+<td>X</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>raw video</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw id RoQ</td>
+<td>X</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>raw OBU</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw OSQ</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw SBC</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw Shorten</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw TAK</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw TrueHD</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw VC-1</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM A-law</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM mu-law</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM Archimedes VIDC</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM signed 8 bit</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM signed 16 bit big-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM signed 16 bit little-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM signed 24 bit big-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM signed 24 bit little-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM signed 32 bit big-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM signed 32 bit little-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM signed 64 bit big-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM signed 64 bit little-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM unsigned 8 bit</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM unsigned 16 bit big-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM unsigned 16 bit little-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM unsigned 24 bit big-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM unsigned 24 bit little-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM unsigned 32 bit big-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM unsigned 32 bit little-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM 16.8 floating point little-endian</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM 24.0 floating point little-endian</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM floating-point 32 bit big-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM floating-point 32 bit little-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM floating-point 64 bit big-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>raw PCM floating-point 64 bit little-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>RDT</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>REDCODE R3D</td>
+<td></td>
+<td>X</td>
+<td>File format used by RED Digital cameras, contains JPEG 2000 frames and PCM audio.</td>
+</tr>
+<tr>
+<td>RealMedia</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Redirector</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>RedSpark</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Renderware TeXture Dictionary</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Resolume DXV</td>
+<td>X</td>
+<td>X</td>
+<td>Encoding is only supported for the DXT1 (Normal Quality, No Alpha) texture format.</td>
+</tr>
+<tr>
+<td>RF64</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>RL2</td>
+<td></td>
+<td>X</td>
+<td>Audio and video format used in some games by Entertainment Software Partners.</td>
+</tr>
+<tr>
+<td>RPL/ARMovie</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Lego Mindstorms RSO</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>RSD</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>RTMP</td>
+<td>X</td>
+<td>X</td>
+<td>Output is performed by publishing stream to RTMP server</td>
+</tr>
+<tr>
+<td>RTP</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>RTSP</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Sample Dump eXchange</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>SAP</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>SBG</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>SDNS</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>SDP</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>SER</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Digital Pictures SGA</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Sega FILM/CPK</td>
+<td>X</td>
+<td>X</td>
+<td>Used in many Sega Saturn console games.</td>
+</tr>
+<tr>
+<td>Silicon Graphics Movie</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Sierra SOL</td>
+<td></td>
+<td>X</td>
+<td>.sol files used in Sierra Online games.</td>
+</tr>
+<tr>
+<td>Sierra VMD</td>
+<td></td>
+<td>X</td>
+<td>Used in Sierra CD-ROM games.</td>
+</tr>
+<tr>
+<td>Smacker</td>
+<td></td>
+<td>X</td>
+<td>Multimedia format used by many games.</td>
+</tr>
+<tr>
+<td>SMJPEG</td>
+<td>X</td>
+<td>X</td>
+<td>Used in certain Loki game ports.</td>
+</tr>
+<tr>
+<td>SMPTE 337M encapsulation</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Smush</td>
+<td></td>
+<td>X</td>
+<td>Multimedia format used in some LucasArts games.</td>
+</tr>
+<tr>
+<td>Sony OpenMG (OMA)</td>
+<td>X</td>
+<td>X</td>
+<td>Audio format used in Sony Sonic Stage and Sony Vegas.</td>
+</tr>
+<tr>
+<td>Sony PlayStation STR</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Sony Wave64 (W64)</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>SoX native format</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>SUN AU format</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>SUP raw PGS subtitles</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>SVAG</td>
+<td></td>
+<td>X</td>
+<td>Audio format used in Konami PS2 games.</td>
+</tr>
+<tr>
+<td>TDSC</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Text files</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>THP</td>
+<td></td>
+<td>X</td>
+<td>Used on the Nintendo GameCube.</td>
+</tr>
+<tr>
+<td>Tiertex Limited SEQ</td>
+<td></td>
+<td>X</td>
+<td>Tiertex .seq files used in the DOS CD-ROM version of the game Flashback.</td>
+</tr>
+<tr>
+<td>True Audio</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>VAG</td>
+<td></td>
+<td>X</td>
+<td>Audio format used in many Sony PS2 games.</td>
+</tr>
+<tr>
+<td>VC-1 test bitstream</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Vidvox Hap</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Vivo</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>VPK</td>
+<td></td>
+<td>X</td>
+<td>Audio format used in Sony PS games.</td>
+</tr>
+<tr>
+<td>Marble WADY</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>WAV</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Waveform Archiver</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>WavPack</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>WebM</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Windows Televison (WTV)</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Wing Commander III movie</td>
+<td></td>
+<td>X</td>
+<td>Multimedia format used in Origin's Wing Commander III computer game.</td>
+</tr>
+<tr>
+<td>Westwood Studios audio</td>
+<td>X</td>
+<td>X</td>
+<td>Multimedia format used in Westwood Studios games.</td>
+</tr>
+<tr>
+<td>Westwood Studios VQA</td>
+<td></td>
+<td>X</td>
+<td>Multimedia format used in Westwood Studios games.</td>
+</tr>
+<tr>
+<td>Wideband Single-bit Data (WSD)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>WVE</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Konami XMD</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>XMV</td>
+<td></td>
+<td>X</td>
+<td>Microsoft video container used in Xbox games.</td>
+</tr>
+<tr>
+<td>XVAG</td>
+<td></td>
+<td>X</td>
+<td>Audio format used on the PS3.</td>
+</tr>
+<tr>
+<td>xWMA</td>
+<td></td>
+<td>X</td>
+<td>Microsoft audio container used by XAudio 2.</td>
+</tr>
+<tr>
+<td>eXtended BINary text (XBIN)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>YUV4MPEG pipe</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Psygnosis YOP</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><code>X</code> means that the feature in that column (encoding / decoding) is supported.</p>
+<h2 id="image-formats">Image Formats<a class="headerlink" href="#image-formats" title="Permanent link">&para;</a></h2>
+<p>FFmpeg can read and write images for each frame of a video sequence. The following image formats are supported:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>Encoding</td>
+<td>Decoding</td>
+<td>Comments</td>
+</tr>
+<tr>
+<td>.Y.U.V</td>
+<td>X</td>
+<td>X</td>
+<td>one raw file per component</td>
+</tr>
+<tr>
+<td>Alias PIX</td>
+<td>X</td>
+<td>X</td>
+<td>Alias/Wavefront PIX image format</td>
+</tr>
+<tr>
+<td>animated GIF</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>APNG</td>
+<td>X</td>
+<td>X</td>
+<td>Animated Portable Network Graphics</td>
+</tr>
+<tr>
+<td>BMP</td>
+<td>X</td>
+<td>X</td>
+<td>Microsoft BMP image</td>
+</tr>
+<tr>
+<td>BRender PIX</td>
+<td></td>
+<td>X</td>
+<td>Argonaut BRender 3D engine image format.</td>
+</tr>
+<tr>
+<td>CRI</td>
+<td></td>
+<td>X</td>
+<td>Cintel RAW</td>
+</tr>
+<tr>
+<td>DPX</td>
+<td>X</td>
+<td>X</td>
+<td>Digital Picture Exchange</td>
+</tr>
+<tr>
+<td>EXR</td>
+<td></td>
+<td>X</td>
+<td>OpenEXR</td>
+</tr>
+<tr>
+<td>FITS</td>
+<td>X</td>
+<td>X</td>
+<td>Flexible Image Transport System</td>
+</tr>
+<tr>
+<td>HDR</td>
+<td>X</td>
+<td>X</td>
+<td>Radiance HDR RGBE Image format</td>
+</tr>
+<tr>
+<td>IMG</td>
+<td></td>
+<td>X</td>
+<td>GEM Raster image</td>
+</tr>
+<tr>
+<td>JPEG</td>
+<td>X</td>
+<td>X</td>
+<td>Progressive JPEG is not supported.</td>
+</tr>
+<tr>
+<td>JPEG 2000</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>JPEG-LS</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>JPEG-XS</td>
+<td>E</td>
+<td>E</td>
+<td>Supported through external library libsvtjpegxs</td>
+</tr>
+<tr>
+<td>LJPEG</td>
+<td>X</td>
+<td></td>
+<td>Lossless JPEG</td>
+</tr>
+<tr>
+<td>Media 100</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>MSP</td>
+<td></td>
+<td>X</td>
+<td>Microsoft Paint image</td>
+</tr>
+<tr>
+<td>PAM</td>
+<td>X</td>
+<td>X</td>
+<td>PAM is a PNM extension with alpha support.</td>
+</tr>
+<tr>
+<td>PBM</td>
+<td>X</td>
+<td>X</td>
+<td>Portable BitMap image</td>
+</tr>
+<tr>
+<td>PCD</td>
+<td></td>
+<td>X</td>
+<td>PhotoCD</td>
+</tr>
+<tr>
+<td>PCX</td>
+<td>X</td>
+<td>X</td>
+<td>PC Paintbrush</td>
+</tr>
+<tr>
+<td>PFM</td>
+<td>X</td>
+<td>X</td>
+<td>Portable FloatMap image</td>
+</tr>
+<tr>
+<td>PGM</td>
+<td>X</td>
+<td>X</td>
+<td>Portable GrayMap image</td>
+</tr>
+<tr>
+<td>PGMYUV</td>
+<td>X</td>
+<td>X</td>
+<td>PGM with U and V components in YUV 4:2:0</td>
+</tr>
+<tr>
+<td>PGX</td>
+<td></td>
+<td>X</td>
+<td>PGX file decoder</td>
+</tr>
+<tr>
+<td>PHM</td>
+<td>X</td>
+<td>X</td>
+<td>Portable HalfFloatMap image</td>
+</tr>
+<tr>
+<td>PIC</td>
+<td></td>
+<td>X</td>
+<td>Pictor/PC Paint</td>
+</tr>
+<tr>
+<td>PNG</td>
+<td>X</td>
+<td>X</td>
+<td>Portable Network Graphics image</td>
+</tr>
+<tr>
+<td>PPM</td>
+<td>X</td>
+<td>X</td>
+<td>Portable PixelMap image</td>
+</tr>
+<tr>
+<td>PSD</td>
+<td></td>
+<td>X</td>
+<td>Photoshop</td>
+</tr>
+<tr>
+<td>PTX</td>
+<td></td>
+<td>X</td>
+<td>V.Flash PTX format</td>
+</tr>
+<tr>
+<td>QOI</td>
+<td>X</td>
+<td>X</td>
+<td>Quite OK Image format</td>
+</tr>
+<tr>
+<td>SGI</td>
+<td>X</td>
+<td>X</td>
+<td>SGI RGB image format</td>
+</tr>
+<tr>
+<td>Sun Rasterfile</td>
+<td>X</td>
+<td>X</td>
+<td>Sun RAS image format</td>
+</tr>
+<tr>
+<td>TIFF</td>
+<td>X</td>
+<td>X</td>
+<td>YUV, JPEG and some extension is not supported yet.</td>
+</tr>
+<tr>
+<td>Truevision Targa</td>
+<td>X</td>
+<td>X</td>
+<td>Targa (.TGA) image format</td>
+</tr>
+<tr>
+<td>VBN</td>
+<td>X</td>
+<td>X</td>
+<td>Vizrt Binary Image format</td>
+</tr>
+<tr>
+<td>WBMP</td>
+<td>X</td>
+<td>X</td>
+<td>Wireless Application Protocol Bitmap image format</td>
+</tr>
+<tr>
+<td>WebP</td>
+<td>E</td>
+<td>X</td>
+<td>WebP image format, encoding supported through external library libwebp</td>
+</tr>
+<tr>
+<td>XBM</td>
+<td>X</td>
+<td>X</td>
+<td>X BitMap image format</td>
+</tr>
+<tr>
+<td>XFace</td>
+<td>X</td>
+<td>X</td>
+<td>X-Face image format</td>
+</tr>
+<tr>
+<td>XPM</td>
+<td></td>
+<td>X</td>
+<td>X PixMap image format</td>
+</tr>
+<tr>
+<td>XWD</td>
+<td>X</td>
+<td>X</td>
+<td>X Window Dump image format</td>
+</tr>
+</tbody>
+</table>
+<p><code>X</code> means that the feature in that column (encoding / decoding) is supported.</p>
+<p><code>E</code> means that support is provided through an external library.</p>
+<h2 id="video-codecs">Video Codecs<a class="headerlink" href="#video-codecs" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>Encoding</td>
+<td>Decoding</td>
+<td>Comments</td>
+</tr>
+<tr>
+<td>4X Movie</td>
+<td></td>
+<td>X</td>
+<td>Used in certain computer games.</td>
+</tr>
+<tr>
+<td>8088flex TMV</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>A64 multicolor</td>
+<td>X</td>
+<td></td>
+<td>Creates video suitable to be played on a commodore 64 (multicolor mode).</td>
+</tr>
+<tr>
+<td>Amazing Studio PAF Video</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>American Laser Games MM</td>
+<td></td>
+<td>X</td>
+<td>Used in games like Mad Dog McCree.</td>
+</tr>
+<tr>
+<td>Amuse Graphics Movie</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>AMV Video</td>
+<td>X</td>
+<td>X</td>
+<td>Used in Chinese MP3 players.</td>
+</tr>
+<tr>
+<td>ANSI/ASCII art</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Apple Intermediate Codec</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Apple MJPEG-B</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Apple Pixlet</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Apple ProRes</td>
+<td>X</td>
+<td>X</td>
+<td>fourcc: apch,apcn,apcs,apco,ap4h,ap4x</td>
+</tr>
+<tr>
+<td>Apple QuickDraw</td>
+<td></td>
+<td>X</td>
+<td>fourcc: qdrw</td>
+</tr>
+<tr>
+<td>APV</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Argonaut Video</td>
+<td></td>
+<td>X</td>
+<td>Used in some Argonaut games.</td>
+</tr>
+<tr>
+<td>Asus v1</td>
+<td>X</td>
+<td>X</td>
+<td>fourcc: ASV1</td>
+</tr>
+<tr>
+<td>Asus v2</td>
+<td>X</td>
+<td>X</td>
+<td>fourcc: ASV2</td>
+</tr>
+<tr>
+<td>ATI VCR1</td>
+<td></td>
+<td>X</td>
+<td>fourcc: VCR1</td>
+</tr>
+<tr>
+<td>ATI VCR2</td>
+<td></td>
+<td>X</td>
+<td>fourcc: VCR2</td>
+</tr>
+<tr>
+<td>Auravision Aura</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Auravision Aura 2</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Autodesk Animator Flic video</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Autodesk RLE</td>
+<td></td>
+<td>X</td>
+<td>fourcc: AASC</td>
+</tr>
+<tr>
+<td>AV1</td>
+<td>E</td>
+<td>E</td>
+<td>Supported through external libraries libaom, libdav1d, librav1e and libsvtav1</td>
+</tr>
+<tr>
+<td>Avid 1:1 10-bit RGB Packer</td>
+<td>X</td>
+<td>X</td>
+<td>fourcc: AVrp</td>
+</tr>
+<tr>
+<td>AVS (Audio Video Standard) video</td>
+<td></td>
+<td>X</td>
+<td>Video encoding used by the Creature Shock game.</td>
+</tr>
+<tr>
+<td>AVS2-P2/IEEE1857.4</td>
+<td>E</td>
+<td>E</td>
+<td>Supported through external libraries libxavs2 and libdavs2</td>
+</tr>
+<tr>
+<td>AVS3-P2/IEEE1857.10</td>
+<td></td>
+<td>E</td>
+<td>Supported through external library libuavs3d</td>
+</tr>
+<tr>
+<td>AYUV</td>
+<td>X</td>
+<td>X</td>
+<td>Microsoft uncompressed packed 4:4:4:4</td>
+</tr>
+<tr>
+<td>Beam Software VB</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Bethesda VID video</td>
+<td></td>
+<td>X</td>
+<td>Used in some games from Bethesda Softworks.</td>
+</tr>
+<tr>
+<td>Bink Video</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>BitJazz SheerVideo</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Bitmap Brothers JV video</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>y41p Brooktree uncompressed 4:1:1 12-bit</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Brooktree ProSumer Video</td>
+<td></td>
+<td>X</td>
+<td>fourcc: BT20</td>
+</tr>
+<tr>
+<td>Brute Force &amp; Ignorance</td>
+<td></td>
+<td>X</td>
+<td>Used in the game Flash Traffic: City of Angels.</td>
+</tr>
+<tr>
+<td>C93 video</td>
+<td></td>
+<td>X</td>
+<td>Codec used in Cyberia game.</td>
+</tr>
+<tr>
+<td>CamStudio</td>
+<td></td>
+<td>X</td>
+<td>fourcc: CSCD</td>
+</tr>
+<tr>
+<td>CD+G</td>
+<td></td>
+<td>X</td>
+<td>Video codec for CD+G karaoke disks</td>
+</tr>
+<tr>
+<td>CDXL</td>
+<td></td>
+<td>X</td>
+<td>Amiga CD video codec</td>
+</tr>
+<tr>
+<td>Chinese AVS video</td>
+<td>E</td>
+<td>X</td>
+<td>AVS1-P2, JiZhun profile, encoding through external library libxavs</td>
+</tr>
+<tr>
+<td>Delphine Software International CIN video</td>
+<td></td>
+<td>X</td>
+<td>Codec used in Delphine Software International games.</td>
+</tr>
+<tr>
+<td>Discworld II BMV Video</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>CineForm HD</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Canopus HQ</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Canopus HQA</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Canopus HQX</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Canopus Lossless Codec</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>CDToons</td>
+<td></td>
+<td>X</td>
+<td>Codec used in various Broderbund games.</td>
+</tr>
+<tr>
+<td>Cinepak</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Cirrus Logic AccuPak</td>
+<td>X</td>
+<td>X</td>
+<td>fourcc: CLJR</td>
+</tr>
+<tr>
+<td>CPiA Video Format</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Creative YUV (CYUV)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>DFA</td>
+<td></td>
+<td>X</td>
+<td>Codec used in Chronomaster game.</td>
+</tr>
+<tr>
+<td>Dirac</td>
+<td>E</td>
+<td>X</td>
+<td>supported though the native vc2 (Dirac Pro) encoder</td>
+</tr>
+<tr>
+<td>Deluxe Paint Animation</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>DNxHD</td>
+<td>X</td>
+<td>X</td>
+<td>aka SMPTE VC3</td>
+</tr>
+<tr>
+<td>Duck TrueMotion 1.0</td>
+<td></td>
+<td>X</td>
+<td>fourcc: DUCK</td>
+</tr>
+<tr>
+<td>Duck TrueMotion 2.0</td>
+<td></td>
+<td>X</td>
+<td>fourcc: TM20</td>
+</tr>
+<tr>
+<td>Duck TrueMotion 2.0 RT</td>
+<td></td>
+<td>X</td>
+<td>fourcc: TR20</td>
+</tr>
+<tr>
+<td>DV (Digital Video)</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Dxtory capture format</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Feeble Files/ScummVM DXA</td>
+<td></td>
+<td>X</td>
+<td>Codec originally used in Feeble Files game.</td>
+</tr>
+<tr>
+<td>Electronic Arts CMV video</td>
+<td></td>
+<td>X</td>
+<td>Used in NHL 95 game.</td>
+</tr>
+<tr>
+<td>Electronic Arts Madcow video</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Electronic Arts TGV video</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Electronic Arts TGQ video</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Electronic Arts TQI video</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Escape 124</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Escape 130</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>EVC / MPEG-5 Part 1</td>
+<td>E</td>
+<td>E</td>
+<td>encoding and decoding supported through external libraries libxeve and libxevd</td>
+</tr>
+<tr>
+<td>FFmpeg video codec #1</td>
+<td>X</td>
+<td>X</td>
+<td>lossless codec (fourcc: FFV1)</td>
+</tr>
+<tr>
+<td>Flash Screen Video v1</td>
+<td>X</td>
+<td>X</td>
+<td>fourcc: FSV1</td>
+</tr>
+<tr>
+<td>Flash Screen Video v2</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Flash Video (FLV)</td>
+<td>X</td>
+<td>X</td>
+<td>Sorenson H.263 used in Flash</td>
+</tr>
+<tr>
+<td>FM Screen Capture Codec</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Forward Uncompressed</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Fraps</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Go2Meeting</td>
+<td></td>
+<td>X</td>
+<td>fourcc: G2M2, G2M3</td>
+</tr>
+<tr>
+<td>Go2Webinar</td>
+<td></td>
+<td>X</td>
+<td>fourcc: G2M4</td>
+</tr>
+<tr>
+<td>Gremlin Digital Video</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>H.261</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>H.263 / H.263-1996</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>H.263+ / H.263-1998 / H.263 version 2</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10</td>
+<td>E</td>
+<td>X</td>
+<td>encoding supported through external library libx264 and OpenH264</td>
+</tr>
+<tr>
+<td>HEVC</td>
+<td>X</td>
+<td>X</td>
+<td>encoding supported through external library libx265 and libkvazaar</td>
+</tr>
+<tr>
+<td>HNM version 4</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>HuffYUV</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>HuffYUV FFmpeg variant</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>IBM Ultimotion</td>
+<td></td>
+<td>X</td>
+<td>fourcc: ULTI</td>
+</tr>
+<tr>
+<td>id Cinematic video</td>
+<td></td>
+<td>X</td>
+<td>Used in Quake II.</td>
+</tr>
+<tr>
+<td>id RoQ video</td>
+<td>X</td>
+<td>X</td>
+<td>Used in Quake III, Jedi Knight 2, other computer games.</td>
+</tr>
+<tr>
+<td>IFF ILBM</td>
+<td></td>
+<td>X</td>
+<td>IFF interleaved bitmap</td>
+</tr>
+<tr>
+<td>IFF ByteRun1</td>
+<td></td>
+<td>X</td>
+<td>IFF run length encoded bitmap</td>
+</tr>
+<tr>
+<td>Infinity IMM4</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Intel H.263</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Intel Indeo 2</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Intel Indeo 3</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Intel Indeo 4</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Intel Indeo 5</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Interplay C93</td>
+<td></td>
+<td>X</td>
+<td>Used in the game Cyberia from Interplay.</td>
+</tr>
+<tr>
+<td>Interplay MVE video</td>
+<td></td>
+<td>X</td>
+<td>Used in Interplay .MVE files.</td>
+</tr>
+<tr>
+<td>J2K</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Karl Morton's video codec</td>
+<td></td>
+<td>X</td>
+<td>Codec used in Worms games.</td>
+</tr>
+<tr>
+<td>Kega Game Video (KGV1)</td>
+<td></td>
+<td>X</td>
+<td>Kega emulator screen capture codec.</td>
+</tr>
+<tr>
+<td>Lagarith</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>LCEVC / MPEG-5 LCEVC / MPEG-5 Part 2</td>
+<td></td>
+<td>E</td>
+<td>decoding supported through external library liblcevc-dec</td>
+</tr>
+<tr>
+<td>LCL (LossLess Codec Library) MSZH</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>LCL (LossLess Codec Library) ZLIB</td>
+<td>E</td>
+<td>E</td>
+<td></td>
+</tr>
+<tr>
+<td>LEAD MCMP</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>LOCO</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>LucasArts SANM/Smush</td>
+<td></td>
+<td>X</td>
+<td>Used in LucasArts games / SMUSH animations.</td>
+</tr>
+<tr>
+<td>lossless MJPEG</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>MagicYUV Video</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Mandsoft Screen Capture Codec</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Microsoft ATC Screen</td>
+<td></td>
+<td>X</td>
+<td>Also known as Microsoft Screen 3.</td>
+</tr>
+<tr>
+<td>Microsoft Expression Encoder Screen</td>
+<td></td>
+<td>X</td>
+<td>Also known as Microsoft Titanium Screen 2.</td>
+</tr>
+<tr>
+<td>Microsoft RLE</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Microsoft Screen 1</td>
+<td></td>
+<td>X</td>
+<td>Also known as Windows Media Video V7 Screen.</td>
+</tr>
+<tr>
+<td>Microsoft Screen 2</td>
+<td></td>
+<td>X</td>
+<td>Also known as Windows Media Video V9 Screen.</td>
+</tr>
+<tr>
+<td>Microsoft Video 1</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Mimic</td>
+<td></td>
+<td>X</td>
+<td>Used in MSN Messenger Webcam streams.</td>
+</tr>
+<tr>
+<td>Miro VideoXL</td>
+<td></td>
+<td>X</td>
+<td>fourcc: VIXL</td>
+</tr>
+<tr>
+<td>MJPEG (Motion JPEG)</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Mobotix MxPEG video</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Motion Pixels video</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>MPEG-1 video</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>MPEG-2 video</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>MPEG-4 part 2</td>
+<td>X</td>
+<td>X</td>
+<td>libxvidcore can be used alternatively for encoding.</td>
+</tr>
+<tr>
+<td>MPEG-4 part 2 Microsoft variant version 1</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>MPEG-4 part 2 Microsoft variant version 2</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>MPEG-4 part 2 Microsoft variant version 3</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Newtek SpeedHQ</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Nintendo Gamecube THP video</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>NotchLC</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>NuppelVideo/RTjpeg</td>
+<td></td>
+<td>X</td>
+<td>Video encoding used in NuppelVideo files.</td>
+</tr>
+<tr>
+<td>On2 VP3</td>
+<td></td>
+<td>X</td>
+<td>still experimental</td>
+</tr>
+<tr>
+<td>On2 VP4</td>
+<td></td>
+<td>X</td>
+<td>fourcc: VP40</td>
+</tr>
+<tr>
+<td>On2 VP5</td>
+<td></td>
+<td>X</td>
+<td>fourcc: VP50</td>
+</tr>
+<tr>
+<td>On2 VP6</td>
+<td></td>
+<td>X</td>
+<td>fourcc: VP60,VP61,VP62</td>
+</tr>
+<tr>
+<td>On2 VP7</td>
+<td></td>
+<td>X</td>
+<td>fourcc: VP70,VP71</td>
+</tr>
+<tr>
+<td>VP8</td>
+<td>E</td>
+<td>X</td>
+<td>fourcc: VP80, encoding supported through external library libvpx</td>
+</tr>
+<tr>
+<td>VP9</td>
+<td>E</td>
+<td>X</td>
+<td>encoding supported through external library libvpx</td>
+</tr>
+<tr>
+<td>Pinnacle TARGA CineWave YUV16</td>
+<td></td>
+<td>X</td>
+<td>fourcc: Y216</td>
+</tr>
+<tr>
+<td>Q-team QPEG</td>
+<td></td>
+<td>X</td>
+<td>fourccs: QPEG, Q1.0, Q1.1</td>
+</tr>
+<tr>
+<td>QuickTime 8BPS video</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>QuickTime Animation (RLE) video</td>
+<td>X</td>
+<td>X</td>
+<td>fourcc: 'rle '</td>
+</tr>
+<tr>
+<td>QuickTime Graphics (SMC)</td>
+<td>X</td>
+<td>X</td>
+<td>fourcc: 'smc '</td>
+</tr>
+<tr>
+<td>QuickTime video (RPZA)</td>
+<td>X</td>
+<td>X</td>
+<td>fourcc: rpza</td>
+</tr>
+<tr>
+<td>R10K AJA Kona 10-bit RGB Codec</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>R210 Quicktime Uncompressed RGB 10-bit</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Raw Video</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>RealVideo 1.0</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>RealVideo 2.0</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>RealVideo 3.0</td>
+<td></td>
+<td>X</td>
+<td>still far from ideal</td>
+</tr>
+<tr>
+<td>RealVideo 4.0</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>RealVideo 6.0</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Renderware TXD (TeXture Dictionary)</td>
+<td></td>
+<td>X</td>
+<td>Texture dictionaries used by the Renderware Engine.</td>
+</tr>
+<tr>
+<td>RivaTuner Video</td>
+<td></td>
+<td>X</td>
+<td>fourcc: 'RTV1'</td>
+</tr>
+<tr>
+<td>RL2 video</td>
+<td></td>
+<td>X</td>
+<td>used in some games by Entertainment Software Partners</td>
+</tr>
+<tr>
+<td>ScreenPressor</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Screenpresso</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Screen Recorder Gold Codec</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Sierra VMD video</td>
+<td></td>
+<td>X</td>
+<td>Used in Sierra VMD files.</td>
+</tr>
+<tr>
+<td>Silicon Graphics Motion Video Compressor 1 (MVC1)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Silicon Graphics Motion Video Compressor 2 (MVC2)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Silicon Graphics RLE 8-bit video</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Smacker video</td>
+<td></td>
+<td>X</td>
+<td>Video encoding used in Smacker.</td>
+</tr>
+<tr>
+<td>SMPTE VC-1</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Snow</td>
+<td>X</td>
+<td>X</td>
+<td>experimental wavelet codec (fourcc: SNOW)</td>
+</tr>
+<tr>
+<td>Sony PlayStation MDEC (Motion DECoder)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Sorenson Vector Quantizer 1</td>
+<td>X</td>
+<td>X</td>
+<td>fourcc: SVQ1</td>
+</tr>
+<tr>
+<td>Sorenson Vector Quantizer 3</td>
+<td></td>
+<td>X</td>
+<td>fourcc: SVQ3</td>
+</tr>
+<tr>
+<td>Sunplus JPEG (SP5X)</td>
+<td></td>
+<td>X</td>
+<td>fourcc: SP5X</td>
+</tr>
+<tr>
+<td>TechSmith Screen Capture Codec</td>
+<td></td>
+<td>X</td>
+<td>fourcc: TSCC</td>
+</tr>
+<tr>
+<td>TechSmith Screen Capture Codec 2</td>
+<td></td>
+<td>X</td>
+<td>fourcc: TSC2</td>
+</tr>
+<tr>
+<td>Theora</td>
+<td>E</td>
+<td>X</td>
+<td>encoding supported through external library libtheora</td>
+</tr>
+<tr>
+<td>Tiertex Limited SEQ video</td>
+<td></td>
+<td>X</td>
+<td>Codec used in DOS CD-ROM FlashBack game.</td>
+</tr>
+<tr>
+<td>Ut Video</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>v210 QuickTime uncompressed 4:2:2 10-bit</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>v308 QuickTime uncompressed 4:4:4</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>v408 QuickTime uncompressed 4:4:4:4</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>v410 QuickTime uncompressed 4:4:4 10-bit</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>VBLE Lossless Codec</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>vMix Video</td>
+<td></td>
+<td>X</td>
+<td>fourcc: 'VMX1'</td>
+</tr>
+<tr>
+<td>VMware Screen Codec / VMware Video</td>
+<td></td>
+<td>X</td>
+<td>Codec used in videos captured by VMware.</td>
+</tr>
+<tr>
+<td>Westwood Studios VQA (Vector Quantized Animation) video</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Windows Media Image</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Windows Media Video 7</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Windows Media Video 8</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Windows Media Video 9</td>
+<td></td>
+<td>X</td>
+<td>not completely working</td>
+</tr>
+<tr>
+<td>Wing Commander III / Xan</td>
+<td></td>
+<td>X</td>
+<td>Used in Wing Commander III .MVE files.</td>
+</tr>
+<tr>
+<td>Wing Commander IV / Xan</td>
+<td></td>
+<td>X</td>
+<td>Used in Wing Commander IV.</td>
+</tr>
+<tr>
+<td>Winnov WNV1</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>WMV7</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>YAMAHA SMAF</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Psygnosis YOP Video</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>yuv4</td>
+<td>X</td>
+<td>X</td>
+<td>libquicktime uncompressed packed 4:2:0</td>
+</tr>
+<tr>
+<td>ZeroCodec Lossless Video</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ZLIB</td>
+<td>X</td>
+<td>X</td>
+<td>part of LCL, encoder experimental</td>
+</tr>
+<tr>
+<td>Zip Motion Blocks Video</td>
+<td>X</td>
+<td>X</td>
+<td>Encoder works only in PAL8.</td>
+</tr>
+</tbody>
+</table>
+<p><code>X</code> means that the feature in that column (encoding / decoding) is supported.</p>
+<p><code>E</code> means that support is provided through an external library.</p>
+<h2 id="audio-codecs">Audio Codecs<a class="headerlink" href="#audio-codecs" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>Encoding</td>
+<td>Decoding</td>
+<td>Comments</td>
+</tr>
+<tr>
+<td>8SVX exponential</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>8SVX fibonacci</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>AAC</td>
+<td>EX</td>
+<td>X</td>
+<td>encoding supported through internal encoder and external library libfdk-aac</td>
+</tr>
+<tr>
+<td>AAC+</td>
+<td>E</td>
+<td>IX</td>
+<td>encoding supported through external library libfdk-aac</td>
+</tr>
+<tr>
+<td>AC-3</td>
+<td>IX</td>
+<td>IX</td>
+<td></td>
+</tr>
+<tr>
+<td>ACELP.KELVIN</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM 4X Movie</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM Yamaha AICA</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM AmuseGraphics Movie</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM Argonaut Games</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM CDROM XA</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM Creative Technology</td>
+<td></td>
+<td>X</td>
+<td>16 -&gt; 4, 8 -&gt; 4, 8 -&gt; 3, 8 -&gt; 2</td>
+</tr>
+<tr>
+<td>ADPCM Electronic Arts</td>
+<td></td>
+<td>X</td>
+<td>Used in various EA titles.</td>
+</tr>
+<tr>
+<td>ADPCM Electronic Arts Maxis CDROM XS</td>
+<td></td>
+<td>X</td>
+<td>Used in Sim City 3000.</td>
+</tr>
+<tr>
+<td>ADPCM Electronic Arts R1</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM Electronic Arts R2</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM Electronic Arts R3</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM Electronic Arts XAS</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM G.722</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM G.726</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM IMA Acorn Replay</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM IMA AMV</td>
+<td>X</td>
+<td>X</td>
+<td>Used in AMV files</td>
+</tr>
+<tr>
+<td>ADPCM IMA Cunning Developments</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM IMA Electronic Arts EACS</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM IMA Electronic Arts SEAD</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM IMA Funcom</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM IMA High Voltage Software ALP</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM IMA Mobiclip MOFLEX</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM IMA QuickTime</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM IMA Simon &amp; Schuster Interactive</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM IMA Ubisoft APM</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM IMA Loki SDL MJPEG</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM IMA WAV</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM IMA Westwood</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM ISS IMA</td>
+<td></td>
+<td>X</td>
+<td>Used in FunCom games.</td>
+</tr>
+<tr>
+<td>ADPCM IMA Dialogic</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM IMA Duck DK3</td>
+<td></td>
+<td>X</td>
+<td>Used in some Sega Saturn console games.</td>
+</tr>
+<tr>
+<td>ADPCM IMA Duck DK4</td>
+<td></td>
+<td>X</td>
+<td>Used in some Sega Saturn console games.</td>
+</tr>
+<tr>
+<td>ADPCM IMA Radical</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM IMA Xbox</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM Microsoft</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM MS IMA</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM Nintendo Gamecube AFC</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM Nintendo Gamecube DTK</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM Nintendo THP</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM Playstation</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM QT IMA</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM Sanyo</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM SEGA CRI ADX</td>
+<td>X</td>
+<td>X</td>
+<td>Used in Sega Dreamcast games.</td>
+</tr>
+<tr>
+<td>ADPCM Shockwave Flash</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM Sound Blaster Pro 2-bit</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM Sound Blaster Pro 2.6-bit</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM Sound Blaster Pro 4-bit</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM VIMA</td>
+<td></td>
+<td>X</td>
+<td>Used in LucasArts SMUSH animations.</td>
+</tr>
+<tr>
+<td>ADPCM Konami XMD</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM Westwood Studios IMA</td>
+<td>X</td>
+<td>X</td>
+<td>Used in Westwood Studios games like Command and Conquer.</td>
+</tr>
+<tr>
+<td>ADPCM Yamaha</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ADPCM Zork</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>AMR-NB</td>
+<td>E</td>
+<td>X</td>
+<td>encoding supported through external library libopencore-amrnb</td>
+</tr>
+<tr>
+<td>AMR-WB</td>
+<td>E</td>
+<td>X</td>
+<td>encoding supported through external library libvo-amrwbenc</td>
+</tr>
+<tr>
+<td>Amazing Studio PAF Audio</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Apple lossless audio</td>
+<td>X</td>
+<td>X</td>
+<td>QuickTime fourcc 'alac'</td>
+</tr>
+<tr>
+<td>aptX</td>
+<td>X</td>
+<td>X</td>
+<td>Used in Bluetooth A2DP</td>
+</tr>
+<tr>
+<td>aptX HD</td>
+<td>X</td>
+<td>X</td>
+<td>Used in Bluetooth A2DP</td>
+</tr>
+<tr>
+<td>ATRAC1</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ATRAC3</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ATRAC3+</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>ATRAC9</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Bink Audio</td>
+<td></td>
+<td>X</td>
+<td>Used in Bink and Smacker files in many games.</td>
+</tr>
+<tr>
+<td>Bonk audio</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>codec2</td>
+<td>E</td>
+<td>E</td>
+<td>en/decoding supported through external library libcodec2</td>
+</tr>
+<tr>
+<td>CRI HCA</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Delphine Software International CIN audio</td>
+<td></td>
+<td>X</td>
+<td>Codec used in Delphine Software International games.</td>
+</tr>
+<tr>
+<td>DFPWM</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Digital Speech Standard - Standard Play mode (DSS SP)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Discworld II BMV Audio</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>COOK</td>
+<td></td>
+<td>X</td>
+<td>All versions except 5.1 are supported.</td>
+</tr>
+<tr>
+<td>DCA (DTS Coherent Acoustics)</td>
+<td>X</td>
+<td>X</td>
+<td>supported extensions: XCh, XXCH, X96, XBR, XLL, LBR (partially)</td>
+</tr>
+<tr>
+<td>Dolby E</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>DPCM Cuberoot-Delta-Exact</td>
+<td></td>
+<td>X</td>
+<td>Used in few games.</td>
+</tr>
+<tr>
+<td>DPCM Gremlin</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>DPCM id RoQ</td>
+<td>X</td>
+<td>X</td>
+<td>Used in Quake III, Jedi Knight 2 and other computer games.</td>
+</tr>
+<tr>
+<td>DPCM Marble WADY</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>DPCM Interplay</td>
+<td></td>
+<td>X</td>
+<td>Used in various Interplay computer games.</td>
+</tr>
+<tr>
+<td>DPCM Squareroot-Delta-Exact</td>
+<td></td>
+<td>X</td>
+<td>Used in various games.</td>
+</tr>
+<tr>
+<td>DPCM Sierra Online</td>
+<td></td>
+<td>X</td>
+<td>Used in Sierra Online game audio files.</td>
+</tr>
+<tr>
+<td>DPCM Sol</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>DPCM Xan</td>
+<td></td>
+<td>X</td>
+<td>Used in Origin's Wing Commander IV AVI files.</td>
+</tr>
+<tr>
+<td>DPCM Xilam DERF</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>DSD (Direct Stream Digital), least significant bit first</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>DSD (Direct Stream Digital), most significant bit first</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>DSD (Direct Stream Digital), least significant bit first, planar</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>DSD (Direct Stream Digital), most significant bit first, planar</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>DSP Group TrueSpeech</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>DST (Direct Stream Transfer)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>DV audio</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Enhanced AC-3</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>EVRC (Enhanced Variable Rate Codec)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>FLAC (Free Lossless Audio Codec)</td>
+<td>X</td>
+<td>IX</td>
+<td></td>
+</tr>
+<tr>
+<td>FTR Voice</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>G.723.1</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>G.728</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>G.729</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>GSM</td>
+<td>E</td>
+<td>X</td>
+<td>encoding supported through external library libgsm</td>
+</tr>
+<tr>
+<td>GSM Microsoft variant</td>
+<td>E</td>
+<td>X</td>
+<td>encoding supported through external library libgsm</td>
+</tr>
+<tr>
+<td>IAC (Indeo Audio Coder)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>iLBC (Internet Low Bitrate Codec)</td>
+<td>E</td>
+<td>EX</td>
+<td>encoding and decoding supported through external library libilbc</td>
+</tr>
+<tr>
+<td>IMC (Intel Music Coder)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Interplay ACM</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>LC3</td>
+<td>E</td>
+<td>E</td>
+<td>supported through external library liblc3</td>
+</tr>
+<tr>
+<td>MACE (Macintosh Audio Compression/Expansion) 6:1</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Marian's A-pac audio</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>MI-SC4 (Micronas SC-4 Audio)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>MLP (Meridian Lossless Packing)</td>
+<td>X</td>
+<td>X</td>
+<td>Used in DVD-Audio discs.</td>
+</tr>
+<tr>
+<td>Monkey's Audio</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>MP1 (MPEG audio layer 1)</td>
+<td></td>
+<td>IX</td>
+<td></td>
+</tr>
+<tr>
+<td>MP2 (MPEG audio layer 2)</td>
+<td>IX</td>
+<td>IX</td>
+<td>encoding supported also through external library TwoLAME</td>
+</tr>
+<tr>
+<td>MP3 (MPEG audio layer 3)</td>
+<td>E</td>
+<td>IX</td>
+<td>encoding supported through external library LAME, ADU MP3 and MP3onMP4 also supported</td>
+</tr>
+<tr>
+<td>MPEG-4 Audio Lossless Coding (ALS)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>MPEG-H 3D Audio</td>
+<td></td>
+<td>E</td>
+<td>decoding supported through external library libmpeghdec</td>
+</tr>
+<tr>
+<td>MobiClip FastAudio</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Musepack SV7</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Musepack SV8</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Nellymoser Asao</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>On2 AVC (Audio for Video Codec)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Opus</td>
+<td>E</td>
+<td>X</td>
+<td>encoding supported through external library libopus</td>
+</tr>
+<tr>
+<td>OSQ (Original Sound Quality)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM A-law</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM mu-law</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM Archimedes VIDC</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM signed 8-bit planar</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM signed 16-bit big-endian planar</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM signed 16-bit little-endian planar</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM signed 24-bit little-endian planar</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM signed 32-bit little-endian planar</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM 32-bit floating point big-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM 32-bit floating point little-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM 64-bit floating point big-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM 64-bit floating point little-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM D-Cinema audio signed 24-bit</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM signed 8-bit</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM signed 16-bit big-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM signed 16-bit little-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM signed 24-bit big-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM signed 24-bit little-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM signed 32-bit big-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM signed 32-bit little-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM signed 16/20/24-bit big-endian in MPEG-TS</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM unsigned 8-bit</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM unsigned 16-bit big-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM unsigned 16-bit little-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM unsigned 24-bit big-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM unsigned 24-bit little-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM unsigned 32-bit big-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM unsigned 32-bit little-endian</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>PCM SGA</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>QCELP / PureVoice</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>QDesign Music Codec 1</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>QDesign Music Codec 2</td>
+<td></td>
+<td>X</td>
+<td>There are still some distortions.</td>
+</tr>
+<tr>
+<td>RealAudio 1.0 (14.4K)</td>
+<td>X</td>
+<td>X</td>
+<td>Real 14400 bit/s codec</td>
+</tr>
+<tr>
+<td>RealAudio 2.0 (28.8K)</td>
+<td></td>
+<td>X</td>
+<td>Real 28800 bit/s codec</td>
+</tr>
+<tr>
+<td>RealAudio 3.0 (dnet)</td>
+<td>IX</td>
+<td>X</td>
+<td>Real low bitrate AC-3 codec</td>
+</tr>
+<tr>
+<td>RealAudio Lossless</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>RealAudio SIPR / ACELP.NET</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>RK Audio (RKA)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>SBC (low-complexity subband codec)</td>
+<td>X</td>
+<td>X</td>
+<td>Used in Bluetooth A2DP</td>
+</tr>
+<tr>
+<td>Shorten</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Sierra VMD audio</td>
+<td></td>
+<td>X</td>
+<td>Used in Sierra VMD files.</td>
+</tr>
+<tr>
+<td>Smacker audio</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>SMPTE 302M AES3 audio</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Sonic</td>
+<td>X</td>
+<td>X</td>
+<td>experimental codec</td>
+</tr>
+<tr>
+<td>Sonic lossless</td>
+<td>X</td>
+<td>X</td>
+<td>experimental codec</td>
+</tr>
+<tr>
+<td>Speex</td>
+<td>E</td>
+<td>EX</td>
+<td>supported through external library libspeex</td>
+</tr>
+<tr>
+<td>TAK (Tom's lossless Audio Kompressor)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>True Audio (TTA)</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>TrueHD</td>
+<td>X</td>
+<td>X</td>
+<td>Used in HD-DVD and Blu-Ray discs.</td>
+</tr>
+<tr>
+<td>TwinVQ (VQF flavor)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>VIMA</td>
+<td></td>
+<td>X</td>
+<td>Used in LucasArts SMUSH animations.</td>
+</tr>
+<tr>
+<td>ViewQuest VQC</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Vorbis</td>
+<td>E</td>
+<td>X</td>
+<td>A native but very primitive encoder exists.</td>
+</tr>
+<tr>
+<td>Voxware MetaSound</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Waveform Archiver</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>WavPack</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Westwood Audio (SND1)</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Windows Media Audio 1</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Windows Media Audio 2</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Windows Media Audio Lossless</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Windows Media Audio Pro</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Windows Media Audio Voice</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Xbox Media Audio 1</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Xbox Media Audio 2</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><code>X</code> means that the feature in that column (encoding / decoding) is supported.</p>
+<p><code>E</code> means that support is provided through an external library.</p>
+<p><code>I</code> means that an integer-only version is available, too (ensures high performance on systems without hardware floating point support).</p>
+<h2 id="subtitle-formats">Subtitle Formats<a class="headerlink" href="#subtitle-formats" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>Muxing</td>
+<td>Demuxing</td>
+<td>Encoding</td>
+<td>Decoding</td>
+</tr>
+<tr>
+<td>3GPP Timed Text</td>
+<td></td>
+<td></td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>AQTitle</td>
+<td></td>
+<td>X</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr>
+<td>DVB</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>DVB teletext</td>
+<td></td>
+<td>X</td>
+<td></td>
+<td>E</td>
+</tr>
+<tr>
+<td>DVD</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>JACOsub</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr>
+<td>MicroDVD</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr>
+<td>MPL2</td>
+<td></td>
+<td>X</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr>
+<td>MPsub (MPlayer)</td>
+<td></td>
+<td>X</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr>
+<td>PGS</td>
+<td></td>
+<td></td>
+<td></td>
+<td>X</td>
+</tr>
+<tr>
+<td>PJS (Phoenix)</td>
+<td></td>
+<td>X</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr>
+<td>RealText</td>
+<td></td>
+<td>X</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr>
+<td>SAMI</td>
+<td></td>
+<td>X</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr>
+<td>Spruce format (STL)</td>
+<td></td>
+<td>X</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr>
+<td>SSA/ASS</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>SubRip (SRT)</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>SubViewer v1</td>
+<td></td>
+<td>X</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr>
+<td>SubViewer</td>
+<td></td>
+<td>X</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr>
+<td>TED Talks captions</td>
+<td></td>
+<td>X</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr>
+<td>TTML</td>
+<td>X</td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>VobSub (IDX+SUB)</td>
+<td></td>
+<td>X</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr>
+<td>VPlayer</td>
+<td></td>
+<td>X</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr>
+<td>WebVTT</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>XSUB</td>
+<td></td>
+<td></td>
+<td>X</td>
+<td>X</td>
+</tr>
+</tbody>
+</table>
+<p><code>X</code> means that the feature is supported.</p>
+<p><code>E</code> means that support is provided through an external library.</p>
+<h2 id="network-protocols">Network Protocols<a class="headerlink" href="#network-protocols" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>Support</td>
+</tr>
+<tr>
+<td>AMQP</td>
+<td>E</td>
+</tr>
+<tr>
+<td>file</td>
+<td>X</td>
+</tr>
+<tr>
+<td>FTP</td>
+<td>X</td>
+</tr>
+<tr>
+<td>Gopher</td>
+<td>X</td>
+</tr>
+<tr>
+<td>Gophers</td>
+<td>X</td>
+</tr>
+<tr>
+<td>HLS</td>
+<td>X</td>
+</tr>
+<tr>
+<td>HTTP</td>
+<td>X</td>
+</tr>
+<tr>
+<td>HTTPS</td>
+<td>X</td>
+</tr>
+<tr>
+<td>Icecast</td>
+<td>X</td>
+</tr>
+<tr>
+<td>MMSH</td>
+<td>X</td>
+</tr>
+<tr>
+<td>MMST</td>
+<td>X</td>
+</tr>
+<tr>
+<td>pipe</td>
+<td>X</td>
+</tr>
+<tr>
+<td>Pro-MPEG FEC</td>
+<td>X</td>
+</tr>
+<tr>
+<td>RTMP</td>
+<td>X</td>
+</tr>
+<tr>
+<td>RTMPE</td>
+<td>X</td>
+</tr>
+<tr>
+<td>RTMPS</td>
+<td>X</td>
+</tr>
+<tr>
+<td>RTMPT</td>
+<td>X</td>
+</tr>
+<tr>
+<td>RTMPTE</td>
+<td>X</td>
+</tr>
+<tr>
+<td>RTMPTS</td>
+<td>X</td>
+</tr>
+<tr>
+<td>RTP</td>
+<td>X</td>
+</tr>
+<tr>
+<td>SAMBA</td>
+<td>E</td>
+</tr>
+<tr>
+<td>SCTP</td>
+<td>X</td>
+</tr>
+<tr>
+<td>SFTP</td>
+<td>E</td>
+</tr>
+<tr>
+<td>TCP</td>
+<td>X</td>
+</tr>
+<tr>
+<td>TLS</td>
+<td>X</td>
+</tr>
+<tr>
+<td>UDP</td>
+<td>X</td>
+</tr>
+<tr>
+<td>ZMQ</td>
+<td>E</td>
+</tr>
+</tbody>
+</table>
+<p><code>X</code> means that the protocol is supported.</p>
+<p><code>E</code> means that support is provided through an external library.</p>
+<h2 id="inputoutput-devices">Input/Output Devices<a class="headerlink" href="#inputoutput-devices" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>Input</td>
+<td>Output</td>
+</tr>
+<tr>
+<td>ALSA</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>BKTR</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>caca</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr>
+<td>DV1394</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Lavfi virtual device</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Linux framebuffer</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>JACK</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>LIBCDIO</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>LIBDC1394</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>OpenAL</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>OpenGL</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr>
+<td>OSS</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>PulseAudio</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>SDL</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr>
+<td>Video4Linux2</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>VfW capture</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>X11 grabbing</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>Win32 grabbing</td>
+<td>X</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><code>X</code> means that input/output is supported.</p>
+<h2 id="timecode">Timecode<a class="headerlink" href="#timecode" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Codec/format</td>
+<td>Read</td>
+<td>Write</td>
+</tr>
+<tr>
+<td>AVI</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>DV</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>GXF</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>MOV</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>MPEG1/2</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>MXF</td>
+<td>X</td>
+<td>X</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      除 wiki 精选页（CC BY-SA 3.0）外，译文基于 FFmpeg 官方文档（LGPL 2.1+）以 LGPL-2.1-or-later 提供 · 译自 n9.0.2
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "content.code.copy", "navigation.instant", "toc.integrate"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

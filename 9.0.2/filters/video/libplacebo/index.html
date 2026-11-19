@@ -1,0 +1,2366 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="FFmpeg 官方文档中文翻译版（基线 n9.0.2，跟随上游 release 增量翻译）">
+      
+      
+        <meta name="author" content="ffmpeg-zh-docs 翻译组">
+      
+      
+        <link rel="canonical" href="https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/libplacebo/">
+      
+      
+      
+      
+        
+          <link rel="alternate" href="https://ffmpeg.org/documentation.html" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>libplacebo - FFmpeg 中文文档</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Noto Sans SC";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#libplacebo" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="FFmpeg 中文文档" class="md-header__button md-logo" aria-label="FFmpeg 中文文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FFmpeg 中文文档
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              libplacebo
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="https://ffmpeg.org/documentation.html" hreflang="en" class="md-select__link">
+              English (Original)
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jxsword/ffmpeg-zh-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ffmpeg-zh-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../manual/ffmpeg/" class="md-tabs__link">
+          
+  
+  
+  手册
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../components/utils/" class="md-tabs__link">
+          
+  
+  
+  组件
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/" class="md-tabs__link">
+          
+  
+  
+  滤镜
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../libraries/libavutil/" class="md-tabs__link">
+          
+  
+  
+  库
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../general/faq/" class="md-tabs__link">
+          
+  
+  
+  General
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="FFmpeg 中文文档" class="md-nav__button md-logo" aria-label="FFmpeg 中文文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    FFmpeg 中文文档
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jxsword/ffmpeg-zh-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ffmpeg-zh-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    手册
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    手册
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../manual/ffmpeg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffmpeg 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../manual/ffplay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffplay 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../manual/ffprobe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffprobe 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../manual/common-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    公共选项（ffmpeg/ffplay/ffprobe）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    组件
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    组件
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../components/utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具（Utils）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../components/scaler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    缩放器（Scaler）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../components/resampler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    重采样器（Resampler）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../components/codecs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    编解码器（Codecs）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../components/bitstream-filters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    比特流滤镜（Bitstream Filters）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../components/formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    格式（Formats）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../components/protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    协议（Protocols）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../components/devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    设备（Devices）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    滤镜
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    滤镜
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    滤镜总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    视频滤镜（364）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音频滤镜（135）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../multimedia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    多媒体滤镜（37）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    库
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    库
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libraries/libavutil/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavutil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libraries/libavcodec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavcodec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libraries/libavformat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavformat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libraries/libavdevice/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavdevice
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libraries/libavfilter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavfilter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libraries/libswscale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libswscale
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libraries/libswresample/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libswresample
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    General
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/general/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    通用目录（General）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    平台（Platform）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/developer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开发者（Developer）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/git-howto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git 使用（Git Howto）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/fate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FATE 测试
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/authors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作者（Authors）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/mailing-list-faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    邮件列表 FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/nut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NUT 格式
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/community/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    社区（Community）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/drawvg-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    drawvg 参考
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/APIchanges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API 变更日志（英文原文）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="libplacebo">libplacebo<a class="headerlink" href="#libplacebo" title="Permanent link">&para;</a></h1>
+<p>Flexible GPU-accelerated processing filter based on libplacebo (<a href="https://code.videolan.org/videolan/libplacebo">https://code.videolan.org/videolan/libplacebo</a>).</p>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link">&para;</a></h2>
+<p>The options for this filter are divided into the following sections:</p>
+<h3 id="output-mode">Output mode<a class="headerlink" href="#output-mode" title="Permanent link">&para;</a></h3>
+<p>These options control the overall output mode. By default, libplacebo will try to preserve the source colorimetry and size as best as it can, but it will apply any embedded film grain, dolby vision metadata or anamorphic SAR present in source frames.</p>
+<ul>
+<li>
+<p><strong><code>inputs</code></strong> Set the number of inputs. This can be used, alongside the <code>idx</code> variable, to allow placing/blending multiple inputs inside the output frame. This effectively enables functionality similar to <a href="../hstack/#hstack">hstack</a>, <a href="../overlay/#overlay">overlay</a>, etc.</p>
+</li>
+<li>
+<p><strong><code>w</code></strong></p>
+</li>
+<li>
+<p><strong><code>h</code></strong> Set the output video dimension expression. Default values are <code>iw</code> and <code>ih</code>.</p>
+</li>
+</ul>
+<p>Allows for the same expressions as the <a href="../scale/#scale">scale</a> filter.</p>
+<ul>
+<li>
+<p><strong><code>crop_x</code></strong></p>
+</li>
+<li>
+<p><strong><code>crop_y</code></strong> Set the input crop x/y expressions, default values are <code>(iw-cw)/2</code> and <code>(ih-ch)/2</code>.</p>
+</li>
+<li>
+<p><strong><code>crop_w</code></strong></p>
+</li>
+<li>
+<p><strong><code>crop_h</code></strong> Set the input crop width/height expressions, default values are <code>iw</code> and <code>ih</code>.</p>
+</li>
+<li>
+<p><strong><code>pos_x</code></strong></p>
+</li>
+<li>
+<p><strong><code>pos_y</code></strong> Set the output placement x/y expressions, default values are <code>(ow-pw)/2</code> and <code>(oh-ph)/2</code>.</p>
+</li>
+<li>
+<p><strong><code>pos_w</code></strong></p>
+</li>
+<li>
+<p><strong><code>pos_h</code></strong> Set the output placement width/height expressions, default values are <code>ow</code> and <code>oh</code>.</p>
+</li>
+<li>
+<p><strong><code>rotate</code></strong> Rotate the input frame clockwise by the specified angle.</p>
+</li>
+<li>
+<p><strong><code>0, 360</code></strong></p>
+</li>
+<li>
+<p><strong><code>90</code></strong></p>
+</li>
+<li>
+<p><strong><code>180</code></strong></p>
+</li>
+<li>
+<p><strong><code>270</code></strong></p>
+</li>
+<li>
+<p><strong><code>fps</code></strong> Set the output frame rate. This can be rational, e.g. <code>60000/1001</code>. If set to the special string <code>none</code> (the default), input timestamps will instead be passed through to the output unmodified. Otherwise, the input video frames will be interpolated as necessary to rescale the video to the specified target framerate, in a manner as determined by the <code>frame_mixer</code> option.</p>
+</li>
+<li>
+<p><strong><code>format</code></strong> Set the output format override. If unset (the default), frames will be output in the same format as the respective input frames. Otherwise, format conversion will be performed.</p>
+</li>
+<li>
+<p><strong><code>force_original_aspect_ratio</code></strong></p>
+</li>
+<li>
+<p><strong><code>force_divisible_by</code></strong> Work the same as the identical <a href="../scale/#scale">scale</a> filter options. Note that <code>force_divisible_by</code> also works with <code>fit_sense=constraint</code>.</p>
+</li>
+<li>
+<p><strong><code>reset_sar</code></strong> If enabled, output frames will always have a pixel aspect ratio of 1:1. If disabled (the default), any aspect ratio mismatches, including those from e.g. anamorphic video sources, are forwarded to the output pixel aspect ratio.</p>
+</li>
+<li>
+<p><strong><code>normalize_sar</code></strong> Like <code>reset_sar</code>, but instead of stretching the video content to fill the new output aspect ratio, the content is instead padded or cropped as necessary. Mutually exclusive with <code>fit_mode</code>. Disabled by default.</p>
+</li>
+<li>
+<p><strong><code>pad_crop_ratio</code></strong> Specifies a ratio (between <code>0.0</code> and <code>1.0</code>) between padding and cropping when the input aspect ratio does not match the output aspect ratio and <code>normalize_sar</code> is in effect. The default of <code>0.0</code> always pads the content with black borders, while a value of <code>1.0</code> always crops off parts of the content. Intermediate values are possible, leading to a mix of the two approaches.</p>
+</li>
+<li>
+<p><strong><code>fit_mode</code></strong> Specify the content fit strategy according to a list of predefined modes. Determines how the input image is to be placed inside the destination crop rectangle (as defined by <code>pos_x/y</code> and <code>pos_w/h</code>). The names and their implementations are taken from the CSS 'object-fit' property. Note that this option is mutually exclusive with <code>normalize_sar</code>. Defaults to <code>fill</code>. Valid values are:</p>
+</li>
+<li>
+<p><strong><code>fill</code></strong> Stretch the input to the output rectangle, ignoring aspect ratio mismatches. Note that unless <code>reset_sar</code> is also enabled, the output will still have the correct pixel aspect ratio tagged.</p>
+</li>
+<li>
+<p><strong><code>contain</code></strong> Scale the input to fit inside the output, preserving aspect ratio by padding. Equivalent to <code>normalize_sar</code> with <code>pad_crop_ratio</code> set to <code>0.0</code>.</p>
+</li>
+<li>
+<p><strong><code>cover</code></strong> Scale the input to fill the output, preserving aspect ratio by cropping. Equivalent to <code>normalize_sar</code> with <code>pad_crop_ratio</code> set to <code>1.0</code>.</p>
+</li>
+<li>
+<p><strong><code>none, place</code></strong> Don't scale the input. The input will be placed inside the output rectangle at its natural size; which may result in additional padding or cropping.</p>
+</li>
+<li>
+<p><strong><code>scale_down</code></strong> Scale the input down as much as needed to fit inside the output. Equivalent to either <code>contain</code> or <code>none</code>, depending on whether the input is larger than the output or not.</p>
+</li>
+<li>
+<p><strong><code>fit_sense</code></strong> When <code>fit_mode</code> is in use, this option controls how the fit strategy is applied against the specified output resolution. Mutually exclusive with <code>force_original_aspect_ratio</code>. Valid values are:</p>
+</li>
+<li>
+<p><strong><code>target</code></strong> The computed output resolution is taken as the exact size of the output frame. This is the default behavior.</p>
+</li>
+<li>
+<p><strong><code>constraint</code></strong> The computed output resolution is a size reference against which the fit mode is applied, enlarging or decreasing the true frame size as needed to fit the content.</p>
+</li>
+<li>
+<p><strong><code>fillcolor</code></strong> Set the color used to fill the output area not covered by the output image, for example as a result of <code>normalize_sar</code>. For the general syntax of this option, check the section ""Color" section in the ffmpeg-utils manual" in <code>ffmpeg-utils</code>. Defaults to <code>black@0</code>.</p>
+</li>
+<li>
+<p><strong><code>corner_rounding</code></strong> Render frames with rounded corners. The value, given as a float ranging from <code>0.0</code> to <code>1.0</code>, indicates the relative degree of rounding, from fully square to fully circular. In other words, it gives the radius divided by half the smaller side length. Defaults to <code>0.0</code>.</p>
+</li>
+<li>
+<p><strong><code>lut</code></strong> Specifies a custom LUT (in Adobe .cube format) to apply to the colors as part of color conversion. The exact interpretation depends on the value of <code>lut_type</code>.</p>
+</li>
+<li>
+<p><strong><code>lut_type</code></strong> Controls the interpretation of color values fed to and from the LUT specified as <code>lut</code>. Valid values are:</p>
+</li>
+<li>
+<p><strong><code>auto</code></strong> Chooses the interpretation of the LUT automatically from tagged metadata, and otherwise falls back to <code>native</code>. (Default)</p>
+</li>
+<li>
+<p><strong><code>native</code></strong> Applied to raw image contents in its native RGB colorspace (non-linear light), before conversion to the output color space.</p>
+</li>
+<li>
+<p><strong><code>normalized</code></strong> Applied to the normalized RGB image contents, in linear light, before conversion to the output color space.</p>
+</li>
+<li>
+<p><strong><code>conversion</code></strong> Fully replaces the conversion from the image color space to the output color space. If such a LUT is present, it has the highest priority, and overrides any ICC profiles, as well as options related to tone mapping and output colorimetry (<code>color_primaries</code>, <code>color_trc</code>).</p>
+</li>
+<li>
+<p><strong><code>extra_opts</code></strong> Pass extra libplacebo internal configuration options. These can be specified as a list of \&lt;key&gt;=\&lt;value&gt; pairs separated by ':'. The following example shows how to configure a custom filter kernel ("EWA LanczosSharp") and use it to double the input image resolution:</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>-vf "libplacebo=w=iw*2:h=ih*2:extra_opts='upscaler=custom\:upscaler_preset=ewa_lanczos\:upscaler_blur=0.9812505644269356'"
+</code></pre></div>
+<ul>
+<li><strong><code>shader_cache</code></strong> File path of a cache directory that libplacebo will use to store and load cached shader objects. This cache is not cleaned up automatically. If the path does not end in a directory separator, the generated filenames will be effectively prefixed by the last path component. All directories must already exist.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>-vf "libplacebo=shader_cache=/tmp/pl-shader-"
+</code></pre></div>
+<ul>
+<li>
+<p><strong><code>colorspace</code></strong></p>
+</li>
+<li>
+<p><strong><code>color_primaries</code></strong></p>
+</li>
+<li>
+<p><strong><code>color_trc</code></strong></p>
+</li>
+<li>
+<p><strong><code>range</code></strong></p>
+</li>
+<li>
+<p><strong><code>chroma_location</code></strong> Configure the colorspace that output frames will be delivered in. The default value of <code>auto</code> outputs frames in the same format as the input frames, leading to no change. For any other value, conversion will be performed.</p>
+</li>
+</ul>
+<p>See the <a href="../setparams/#setparams">setparams</a> filter for a list of possible values.</p>
+<ul>
+<li>
+<p><strong><code>alpha_mode</code></strong> Choose the desired output alpha mode, when the output format has an alpha channel. See the <a href="../setparams/#setparams">setparams</a> filter for a list of possible values.</p>
+</li>
+<li>
+<p><strong><code>apply_filmgrain</code></strong> Apply film grain (e.g. AV1 or H.274) if present in source frames, and strip it from the output. Enabled by default.</p>
+</li>
+<li>
+<p><strong><code>apply_dolbyvision</code></strong> Apply Dolby Vision RPU metadata if present in source frames, and strip it from the output. Enabled by default. Note that Dolby Vision will always output BT.2020+PQ, overriding the usual input frame metadata. These will also be picked as the values of <code>auto</code> for the respective frame output options.</p>
+</li>
+</ul>
+<p>In addition to the expression constants documented for the <a href="../scale/#scale">scale</a> filter, the <code>crop_w</code>, <code>crop_h</code>, <code>crop_x</code>, <code>crop_y</code>, <code>pos_w</code>, <code>pos_h</code>, <code>pos_x</code> and <code>pos_y</code> options can also contain the following constants:</p>
+<ul>
+<li>
+<p><strong><code>in_idx, idx</code></strong> The (0-based) numeric index of the currently active input stream.</p>
+</li>
+<li>
+<p><strong><code>crop_w, cw</code></strong></p>
+</li>
+<li>
+<p><strong><code>crop_h, ch</code></strong> The computed values of <code>crop_w</code> and <code>crop_h</code>.</p>
+</li>
+<li>
+<p><strong><code>pos_w, pw</code></strong></p>
+</li>
+<li>
+<p><strong><code>pos_h, ph</code></strong> The computed values of <code>pos_w</code> and <code>pos_h</code>.</p>
+</li>
+<li>
+<p><strong><code>in_t, t</code></strong> The input frame timestamp, in seconds. NAN if input timestamp is unknown.</p>
+</li>
+<li>
+<p><strong><code>out_t, ot</code></strong> The input frame timestamp, in seconds. NAN if input timestamp is unknown.</p>
+</li>
+<li>
+<p><strong><code>n</code></strong> The input frame number, starting with 0.</p>
+</li>
+</ul>
+<h3 id="scaling">Scaling<a class="headerlink" href="#scaling" title="Permanent link">&para;</a></h3>
+<p>The options in this section control how libplacebo performs upscaling and (if necessary) downscaling. Note that libplacebo will always internally operate on 4:4:4 content, so any sub-sampled chroma formats such as <code>yuv420p</code> will necessarily be upsampled and downsampled as part of the rendering process. That means scaling might be in effect even if the source and destination resolution are the same.</p>
+<ul>
+<li>
+<p><strong><code>upscaler</code></strong></p>
+</li>
+<li>
+<p><strong><code>downscaler</code></strong> Configure the filter kernel used for upscaling and downscaling. The respective defaults are <code>spline36</code> and <code>mitchell</code>. For a full list of possible values, pass <code>help</code> to these options. The most important values are:</p>
+</li>
+<li>
+<p><strong><code>none</code></strong> Forces the use of built-in GPU texture sampling (typically bilinear). Extremely fast but poor quality, especially when downscaling.</p>
+</li>
+<li>
+<p><strong><code>bilinear</code></strong> Bilinear interpolation. Can generally be done for free on GPUs, except when doing so would lead to aliasing. Fast and low quality.</p>
+</li>
+<li>
+<p><strong><code>nearest</code></strong> Nearest-neighbour interpolation. Sharp but highly aliasing.</p>
+</li>
+<li>
+<p><strong><code>oversample</code></strong> Algorithm that looks visually similar to nearest-neighbour interpolation but tries to preserve pixel aspect ratio. Good for pixel art, since it results in minimal distortion of the artistic appearance.</p>
+</li>
+<li>
+<p><strong><code>lanczos</code></strong> Standard sinc-sinc interpolation kernel.</p>
+</li>
+<li>
+<p><strong><code>spline36</code></strong> Cubic spline approximation of lanczos. No difference in performance, but has very slightly less ringing.</p>
+</li>
+<li>
+<p><strong><code>ewa_lanczos</code></strong> Elliptically weighted average version of lanczos, based on a jinc-jinc kernel. This is also popularly referred to as just "Jinc scaling". Slow but very high quality.</p>
+</li>
+<li>
+<p><strong><code>gaussian</code></strong> Gaussian kernel. Has certain ideal mathematical properties, but subjectively very blurry.</p>
+</li>
+<li>
+<p><strong><code>mitchell</code></strong> Cubic BC spline with parameters recommended by Mitchell and Netravali. Very little ringing.</p>
+</li>
+<li>
+<p><strong><code>frame_mixer</code></strong> Controls the kernel used for mixing frames temporally. The default value is <code>none</code>, which disables frame mixing. For a full list of possible values, pass <code>help</code> to this option. The most important values are:</p>
+</li>
+<li>
+<p><strong><code>none</code></strong> Disables frame mixing, giving a result equivalent to "nearest neighbour" semantics.</p>
+</li>
+<li>
+<p><strong><code>oversample</code></strong> Oversamples the input video to create a "Smooth Motion"-type effect: if an output frame would exactly fall on the transition between two video frames, it is blended according to the relative overlap. This is the recommended option whenever preserving the original subjective appearance is desired.</p>
+</li>
+<li>
+<p><strong><code>mitchell_clamp</code></strong> Larger filter kernel that smoothly interpolates multiple frames in a manner designed to eliminate ringing and other artefacts as much as possible. This is the recommended option wherever maximum visual smoothness is desired.</p>
+</li>
+<li>
+<p><strong><code>linear</code></strong> Linear blend/fade between frames. Especially useful for constructing e.g. slideshows.</p>
+</li>
+<li>
+<p><strong><code>antiringing</code></strong> Enables anti-ringing (for non-EWA filters). The value (between <code>0.0</code> and <code>1.0</code>) configures the strength of the anti-ringing algorithm. May increase aliasing if set too high. Disabled by default.</p>
+</li>
+<li>
+<p><strong><code>sigmoid</code></strong> Enable sigmoidal compression during upscaling. Reduces ringing slightly. Enabled by default.</p>
+</li>
+</ul>
+<h3 id="deinterlacing">Deinterlacing<a class="headerlink" href="#deinterlacing" title="Permanent link">&para;</a></h3>
+<p>Deinterlacing is automatically supported when frames are tagged as interlaced, however frames are not deinterlaced unless a deinterlacing algorithm is chosen.</p>
+<ul>
+<li>
+<p><strong><code>deinterlace</code></strong> The the deinterlacing algorithm to use.</p>
+</li>
+<li>
+<p><strong><code>weave</code></strong> No deinterlacing, weave fields together into a single frame. This is the default.</p>
+</li>
+<li>
+<p><strong><code>bob</code></strong> Naive bob deinterlacing, simply repeat each field line twice.</p>
+</li>
+<li>
+<p><strong><code>yadif</code></strong> Yet another deinterlacing filter. See the <a href="../yadif/#yadif">yadif</a> filter for more details.</p>
+</li>
+<li>
+<p><strong><code>bwdif</code></strong> Bob weaver deinterlacing filter. See the <a href="../bwdif/#bwdif">bwdif</a> filter for more details.</p>
+</li>
+<li>
+<p><strong><code>skip_spatial_check</code></strong> Skip the spatial deinterlacing check when using <code>yadif</code> deinterlacing.</p>
+</li>
+<li>
+<p><strong><code>send_fields</code></strong> Output a frame for each field, rather than for each frame. Note that this will always double the tagged output frame rate, even if the input does not contain any interlaced frames. Disabled by default.</p>
+</li>
+</ul>
+<h3 id="debanding">Debanding<a class="headerlink" href="#debanding" title="Permanent link">&para;</a></h3>
+<p>Libplacebo comes with a built-in debanding filter that is good at counteracting many common sources of banding and blocking. Turning this on is highly recommended whenever quality is desired.</p>
+<ul>
+<li>
+<p><strong><code>deband</code></strong> Enable (fast) debanding algorithm. Disabled by default.</p>
+</li>
+<li>
+<p><strong><code>deband_iterations</code></strong> Number of deband iterations of the debanding algorithm. Each iteration is performed with progressively increased radius (and diminished threshold). Recommended values are in the range <code>1</code> to <code>4</code>. Defaults to <code>1</code>.</p>
+</li>
+<li>
+<p><strong><code>deband_threshold</code></strong> Debanding filter strength. Higher numbers lead to more aggressive debanding. Defaults to <code>4.0</code>.</p>
+</li>
+<li>
+<p><strong><code>deband_radius</code></strong> Debanding filter radius. A higher radius is better for slow gradients, while a lower radius is better for steep gradients. Defaults to <code>16.0</code>.</p>
+</li>
+<li>
+<p><strong><code>deband_grain</code></strong> Amount of extra output grain to add. Helps hide imperfections. Defaults to <code>6.0</code>.</p>
+</li>
+</ul>
+<h3 id="color-adjustment">Color adjustment<a class="headerlink" href="#color-adjustment" title="Permanent link">&para;</a></h3>
+<p>A collection of subjective color controls. Not very rigorous, so the exact effect will vary somewhat depending on the input primaries and colorspace.</p>
+<ul>
+<li>
+<p><strong><code>brightness</code></strong> Brightness boost, between <code>-1.0</code> and <code>1.0</code>. Defaults to <code>0.0</code>.</p>
+</li>
+<li>
+<p><strong><code>contrast</code></strong> Contrast gain, between <code>0.0</code> and <code>16.0</code>. Defaults to <code>1.0</code>.</p>
+</li>
+<li>
+<p><strong><code>saturation</code></strong> Saturation gain, between <code>0.0</code> and <code>16.0</code>. Defaults to <code>1.0</code>.</p>
+</li>
+<li>
+<p><strong><code>hue</code></strong> Hue shift in radians, between <code>-3.14</code> and <code>3.14</code>. Defaults to <code>0.0</code>. This will rotate the UV subvector, defaulting to BT.709 coefficients for RGB inputs.</p>
+</li>
+<li>
+<p><strong><code>gamma</code></strong> Gamma adjustment, between <code>0.0</code> and <code>16.0</code>. Defaults to <code>1.0</code>.</p>
+</li>
+<li>
+<p><strong><code>temperature</code></strong> Color temperature adjustment. Lower values make the output warmer/redder, down to <code>1667</code>, while higher values make the output cooler/bluer, up to <code>25000</code>. Defaults to <code>6500</code> (neutral white).</p>
+</li>
+<li>
+<p><strong><code>cones</code></strong> Cone model to use for color blindness simulation. Accepts any combination of <code>l</code>, <code>m</code> and <code>s</code>. Here are some examples:</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>m</code></td>
+<td>Deuteranomaly / deuteranopia (affecting 3%-4% of the population)</td>
+</tr>
+<tr>
+<td><code>l</code></td>
+<td>Protanomaly / protanopia (affecting 1%-2% of the population)</td>
+</tr>
+<tr>
+<td><code>l+m</code></td>
+<td>Monochromacy (very rare)</td>
+</tr>
+<tr>
+<td><code>l+m+s</code></td>
+<td>Achromatopsy (complete loss of daytime vision, extremely rare)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong><code>cone-strength</code></strong> Gain factor for the cones specified by <code>cones</code>, between <code>0.0</code> and <code>10.0</code>. A value of <code>1.0</code> results in no change to color vision. A value of <code>0.0</code> (the default) simulates complete loss of those cones. Values above <code>1.0</code> result in exaggerating the differences between cones, which may help compensate for reduced color vision.</li>
+</ul>
+<h3 id="peak-detection">Peak detection<a class="headerlink" href="#peak-detection" title="Permanent link">&para;</a></h3>
+<p>To help deal with sources that only have static HDR10 metadata (or no tagging whatsoever), libplacebo uses its own internal frame analysis compute shader to analyze source frames and adapt the tone mapping function in realtime. If this is too slow, or if exactly reproducible frame-perfect results are needed, it's recommended to turn this feature off.</p>
+<ul>
+<li>
+<p><strong><code>peak_detect</code></strong> Enable HDR peak detection. Ignores static MaxCLL/MaxFALL values in favor of dynamic detection from the input. Note that the detected values do not get written back to the output frames, they merely guide the internal tone mapping process. Enabled by default.</p>
+</li>
+<li>
+<p><strong><code>smoothing_period</code></strong> Peak detection smoothing period, between <code>0.0</code> and <code>1000.0</code>. Higher values result in peak detection becoming less responsive to changes in the input. Defaults to <code>20.0</code>.</p>
+</li>
+<li>
+<p><strong><code>scene_threshold_low</code></strong></p>
+</li>
+<li>
+<p><strong><code>scene_threshold_high</code></strong> Lower and upper thresholds for scene change detection. Expressed in a logarithmic scale between <code>0.0</code> and <code>100.0</code>. Default to <code>1.0</code> and <code>3.0</code>, respectively. Setting either to a negative value disables this functionality.</p>
+</li>
+<li>
+<p><strong><code>percentile</code></strong> Which percentile of the frame brightness histogram to use as the source peak for tone-mapping. Defaults to <code>99.995</code>, a fairly conservative value. Setting this to <code>100.0</code> disables frame histogram measurement and instead uses the true peak brightness for tone-mapping.</p>
+</li>
+</ul>
+<h3 id="tone-mapping">Tone mapping<a class="headerlink" href="#tone-mapping" title="Permanent link">&para;</a></h3>
+<p>The options in this section control how libplacebo performs tone-mapping and gamut-mapping when dealing with mismatches between wide-gamut or HDR content. In general, libplacebo relies on accurate source tagging and mastering display gamut information to produce the best results.</p>
+<ul>
+<li>
+<p><strong><code>gamut_mode</code></strong> How to handle out-of-gamut colors that can occur as a result of colorimetric gamut mapping.</p>
+</li>
+<li>
+<p><strong><code>clip</code></strong> Do nothing, simply clip out-of-range colors to the RGB volume. Low quality but extremely fast.</p>
+</li>
+<li>
+<p><strong><code>perceptual</code></strong> Perceptually soft-clip colors to the gamut volume. This is the default.</p>
+</li>
+<li>
+<p><strong><code>relative</code></strong> Relative colorimetric hard-clip. Similar to <code>perceptual</code> but without the soft knee.</p>
+</li>
+<li>
+<p><strong><code>saturation</code></strong> Saturation mapping, maps primaries directly to primaries in RGB space. Not recommended except for artificial computer graphics for which a bright, saturated display is desired.</p>
+</li>
+<li>
+<p><strong><code>absolute</code></strong> Absolute colorimetric hard-clip. Performs no adjustment of the white point.</p>
+</li>
+<li>
+<p><strong><code>desaturate</code></strong> Hard-desaturates out-of-gamut colors towards white, while preserving the luminance. Has a tendency to distort the visual appearance of bright objects.</p>
+</li>
+<li>
+<p><strong><code>darken</code></strong> Linearly reduces content brightness to preserves saturated details, followed by clipping the remaining out-of-gamut colors.</p>
+</li>
+<li>
+<p><strong><code>warn</code></strong> Highlight out-of-gamut pixels (by inverting/marking them).</p>
+</li>
+<li>
+<p><strong><code>linear</code></strong> Linearly reduces chromaticity of the entire image to make it fit within the target color volume. Be careful when using this on BT.2020 sources without proper mastering metadata, as doing so will lead to excessive desaturation.</p>
+</li>
+<li>
+<p><strong><code>tonemapping</code></strong> Tone-mapping algorithm to use. Available values are:</p>
+</li>
+<li>
+<p><strong><code>auto</code></strong> Automatic selection based on internal heuristics. This is the default.</p>
+</li>
+<li>
+<p><strong><code>clip</code></strong> Performs no tone-mapping, just clips out-of-range colors. Retains perfect color accuracy for in-range colors but completely destroys out-of-range information. Does not perform any black point adaptation. Not configurable.</p>
+</li>
+<li>
+<p><strong><code>st2094-40</code></strong> EETF from SMPTE ST 2094-40 Annex B, which applies the Bezier curves from HDR10+ dynamic metadata based on Bezier curves to perform tone-mapping. The OOTF used is adjusted based on the ratio between the targeted and actual display peak luminances.</p>
+</li>
+<li>
+<p><strong><code>st2094-10</code></strong> EETF from SMPTE ST 2094-10 Annex B.2, which takes into account the input signal average luminance in addition to the maximum/minimum. The configurable contrast parameter influences the slope of the linear output segment, defaulting to <code>1.0</code> for no increase/decrease in contrast. Note that this does not currently include the subjective gain/offset/gamma controls defined in Annex B.3.</p>
+</li>
+<li>
+<p><strong><code>bt.2390</code></strong> EETF from the ITU-R Report BT.2390, a hermite spline roll-off with linear segment. The knee point offset is configurable. Note that this parameter defaults to <code>1.0</code>, rather than the value of <code>0.5</code> from the ITU-R spec.</p>
+</li>
+<li>
+<p><strong><code>bt.2446a</code></strong> EETF from ITU-R Report BT.2446, method A. Designed for well-mastered HDR sources. Can be used for both forward and inverse tone mapping. Not configurable.</p>
+</li>
+<li>
+<p><strong><code>spline</code></strong> Simple spline consisting of two polynomials, joined by a single pivot point. The parameter gives the pivot point (in PQ space), defaulting to <code>0.30</code>. Can be used for both forward and inverse tone mapping.</p>
+</li>
+<li>
+<p><strong><code>reinhard</code></strong> Simple non-linear, global tone mapping algorithm. The parameter specifies the local contrast coefficient at the display peak. Essentially, a parameter of <code>0.5</code> implies that the reference white will be about half as bright as when clipping. Defaults to <code>0.5</code>, which results in the simplest formulation of this function.</p>
+</li>
+<li>
+<p><strong><code>mobius</code></strong> Generalization of the reinhard tone mapping algorithm to support an additional linear slope near black. The tone mapping parameter indicates the trade-off between the linear section and the non-linear section. Essentially, for a given parameter \&lt;x&gt;, every color value below \&lt;x&gt; will be mapped linearly, while higher values get non-linearly tone-mapped. Values near <code>1.0</code> make this curve behave like <code>clip</code>, while values near <code>0.0</code> make this curve behave like <code>reinhard</code>. The default value is <code>0.3</code>, which provides a good balance between colorimetric accuracy and preserving out-of-gamut details.</p>
+</li>
+<li>
+<p><strong><code>hable</code></strong> Piece-wise, filmic tone-mapping algorithm developed by John Hable for use in Uncharted 2, inspired by a similar tone-mapping algorithm used by Kodak. Popularized by its use in video games with HDR rendering. Preserves both dark and bright details very well, but comes with the drawback of changing the average brightness quite significantly. This is sort of similar to <code>reinhard</code> with parameter <code>0.24</code>.</p>
+</li>
+<li>
+<p><strong><code>gamma</code></strong> Fits a gamma (power) function to transfer between the source and target color spaces, effectively resulting in a perceptual hard-knee joining two roughly linear sections. This preserves details at all scales fairly accurately, but can result in an image with a muted or dull appearance. The parameter is used as the cutoff point, defaulting to <code>0.5</code>.</p>
+</li>
+<li>
+<p><strong><code>linear</code></strong> Linearly stretches the input range to the output range, in PQ space. This will preserve all details accurately, but results in a significantly different average brightness. Can be used for inverse tone-mapping in addition to regular tone-mapping. The parameter can be used as an additional linear gain coefficient (defaulting to <code>1.0</code>).</p>
+</li>
+<li>
+<p><strong><code>tonemapping_param</code></strong> For tunable tone mapping functions, this parameter can be used to fine-tune the curve behavior. Refer to the documentation of <code>tonemapping</code>. The default value of <code>0.0</code> is replaced by the curve's preferred default setting.</p>
+</li>
+<li>
+<p><strong><code>inverse_tonemapping</code></strong> If enabled, this filter will also attempt stretching SDR signals to fill HDR output color volumes. Disabled by default.</p>
+</li>
+<li>
+<p><strong><code>tonemapping_lut_size</code></strong> Size of the tone-mapping LUT, between <code>2</code> and <code>1024</code>. Defaults to <code>256</code>. Note that this figure is squared when combined with <code>peak_detect</code>.</p>
+</li>
+<li>
+<p><strong><code>contrast_recovery</code></strong> Contrast recovery strength. If set to a value above <code>0.0</code>, the source image will be divided into high-frequency and low-frequency components, and a portion of the high-frequency image is added back onto the tone-mapped output. May cause excessive ringing artifacts for some HDR sources, but can improve the subjective sharpness and detail left over in the image after tone-mapping. Defaults to <code>0.30</code>.</p>
+</li>
+<li>
+<p><strong><code>contrast_smoothness</code></strong> Contrast recovery lowpass kernel size. Defaults to <code>3.5</code>. Increasing or decreasing this will affect the visual appearance substantially. Has no effect when <code>contrast_recovery</code> is disabled.</p>
+</li>
+</ul>
+<h3 id="dithering">Dithering<a class="headerlink" href="#dithering" title="Permanent link">&para;</a></h3>
+<p>By default, libplacebo will dither whenever necessary, which includes rendering to any integer format below 16-bit precision. It's recommended to always leave this on, since not doing so may result in visible banding in the output, even if the <code>debanding</code> filter is enabled. If maximum performance is needed, use <code>ordered_fixed</code> instead of disabling dithering.</p>
+<ul>
+<li>
+<p><strong><code>dithering</code></strong> Dithering method to use. Accepts the following values:</p>
+</li>
+<li>
+<p><strong><code>none</code></strong> Disables dithering completely. May result in visible banding.</p>
+</li>
+<li>
+<p><strong><code>blue</code></strong> Dither with pseudo-blue noise. This is the default.</p>
+</li>
+<li>
+<p><strong><code>ordered</code></strong> Tunable ordered dither pattern.</p>
+</li>
+<li>
+<p><strong><code>ordered_fixed</code></strong> Faster ordered dither with a fixed size of <code>6</code>. Texture-less.</p>
+</li>
+<li>
+<p><strong><code>white</code></strong> Dither with white noise. Texture-less.</p>
+</li>
+<li>
+<p><strong><code>dither_lut_size</code></strong> Dither LUT size, as log base2 between <code>1</code> and <code>8</code>. Defaults to <code>6</code>, corresponding to a LUT size of <code>64x64</code>.</p>
+</li>
+<li>
+<p><strong><code>dither_temporal</code></strong> Enables temporal dithering. Disabled by default.</p>
+</li>
+</ul>
+<h3 id="custom-shaders">Custom shaders<a class="headerlink" href="#custom-shaders" title="Permanent link">&para;</a></h3>
+<p>libplacebo supports a number of custom shaders based on the mpv .hook GLSL syntax. A collection of such shaders can be found here: <a href="https://github.com/mpv-player/mpv/wiki/User-Scripts#user-shaders">https://github.com/mpv-player/mpv/wiki/User-Scripts#user-shaders</a></p>
+<p>A full description of the mpv shader format is beyond the scope of this section, but a summary can be found here: <a href="https://mpv.io/manual/master/#options-glsl-shader">https://mpv.io/manual/master/#options-glsl-shader</a></p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>custom_shader_path</code></td>
+<td>Specifies a path to a custom shader file to load at runtime.</td>
+</tr>
+<tr>
+<td><code>custom_shader_bin</code></td>
+<td>Specifies a complete custom shader as a raw string.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="debugging-performance">Debugging / performance<a class="headerlink" href="#debugging-performance" title="Permanent link">&para;</a></h3>
+<p>All of the options in this section default off. They may be of assistance when attempting to squeeze the maximum performance at the cost of quality.</p>
+<ul>
+<li>
+<p><strong><code>skip_aa</code></strong> Disable anti-aliasing when downscaling.</p>
+</li>
+<li>
+<p><strong><code>disable_linear</code></strong> Disable linear light scaling.</p>
+</li>
+<li>
+<p><strong><code>disable_builtin</code></strong> Disable built-in GPU sampling (forces LUT).</p>
+</li>
+<li>
+<p><strong><code>disable_fbos</code></strong> Forcibly disable FBOs, resulting in loss of almost all functionality, but offering the maximum possible speed.</p>
+</li>
+</ul>
+<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
+<p>This filter supports almost all of the above options as <a href="#commands">commands</a>.</p>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Tone-map input to standard gamut BT.709 output:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>libplacebo=colorspace=bt709:color_primaries=bt709:color_trc=bt709:range=tv
+</code></pre></div>
+<ul>
+<li>Rescale input to fit into standard 1080p, with high quality scaling:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>libplacebo=w=1920:h=1080:force_original_aspect_ratio=decrease:normalize_sar=true:upscaler=ewa_lanczos:downscaler=ewa_lanczos
+</code></pre></div>
+<ul>
+<li>Interpolate low FPS / VFR input to smoothed constant 60 fps output:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>libplacebo=fps=60:frame_mixer=mitchell_clamp
+</code></pre></div>
+<ul>
+<li>Convert input to standard sRGB JPEG:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>libplacebo=format=yuv420p:colorspace=bt470bg:color_primaries=bt709:color_trc=iec61966-2-1:range=pc
+</code></pre></div>
+<ul>
+<li>Use higher quality debanding settings:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>libplacebo=deband=true:deband_iterations=3:deband_radius=8:deband_threshold=6
+</code></pre></div>
+<ul>
+<li>Run this filter on the CPU, on systems with Mesa installed (and with the most expensive options disabled):</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ffmpeg ... -init_hw_device vulkan:llvmpipe ... -vf libplacebo=upscaler=none:downscaler=none:peak_detect=false
+</code></pre></div>
+<ul>
+<li>Suppress CPU-based AV1/H.274 film grain application in the decoder, in favor of doing it with this filter. Note that this is only a gain if the frames are either already on the GPU, or if you're using libplacebo for other purposes, since otherwise the VRAM roundtrip will more than offset any expected speedup.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>ffmpeg -export_side_data +film_grain ... -vf libplacebo=apply_filmgrain=true
+</code></pre></div>
+<ul>
+<li>Interop with VAAPI hwdec to avoid round-tripping through RAM:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>ffmpeg -init_hw_device vulkan -hwaccel vaapi -hwaccel_output_format vaapi ... -vf libplacebo
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      除 wiki 精选页（CC BY-SA 3.0）外，译文基于 FFmpeg 官方文档（LGPL 2.1+）以 LGPL-2.1-or-later 提供 · 译自 n9.0.2
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "content.code.copy", "navigation.instant", "toc.integrate"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2186 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="FFmpeg 官方文档中文翻译版（基线 n9.0.2，跟随上游 release 增量翻译）">
+      
+      
+        <meta name="author" content="ffmpeg-zh-docs 翻译组">
+      
+      
+        <link rel="canonical" href="https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/">
+      
+      
+        <link rel="prev" href="../overview/">
+      
+      
+        <link rel="next" href="../audio/">
+      
+      
+        
+          <link rel="alternate" href="https://ffmpeg.org/documentation.html" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>视频滤镜（364） - FFmpeg 中文文档</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Noto Sans SC";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#364" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="FFmpeg 中文文档" class="md-header__button md-logo" aria-label="FFmpeg 中文文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FFmpeg 中文文档
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              视频滤镜（364）
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="https://ffmpeg.org/documentation.html" hreflang="en" class="md-select__link">
+              English (Original)
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jxsword/ffmpeg-zh-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ffmpeg-zh-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../manual/ffmpeg/" class="md-tabs__link">
+          
+  
+  
+  手册
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../components/utils/" class="md-tabs__link">
+          
+  
+  
+  组件
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../overview/" class="md-tabs__link">
+          
+  
+  
+  滤镜
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../libraries/libavutil/" class="md-tabs__link">
+          
+  
+  
+  库
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../general/faq/" class="md-tabs__link">
+          
+  
+  
+  General
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="FFmpeg 中文文档" class="md-nav__button md-logo" aria-label="FFmpeg 中文文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    FFmpeg 中文文档
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jxsword/ffmpeg-zh-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ffmpeg-zh-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    手册
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    手册
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/ffmpeg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffmpeg 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/ffplay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffplay 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/ffprobe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffprobe 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/common-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    公共选项（ffmpeg/ffplay/ffprobe）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    组件
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    组件
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具（Utils）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/scaler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    缩放器（Scaler）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/resampler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    重采样器（Resampler）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/codecs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    编解码器（Codecs）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/bitstream-filters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    比特流滤镜（Bitstream Filters）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    格式（Formats）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    协议（Protocols）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    设备（Devices）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    滤镜
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    滤镜
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    滤镜总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    视频滤镜（364）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音频滤镜（135）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multimedia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    多媒体滤镜（37）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    库
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    库
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavutil/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavutil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavcodec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavcodec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavformat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavformat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavdevice/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavdevice
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavfilter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavfilter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libswscale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libswscale
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libswresample/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libswresample
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    General
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/general/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    通用目录（General）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    平台（Platform）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/developer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开发者（Developer）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/git-howto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git 使用（Git Howto）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/fate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FATE 测试
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/authors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作者（Authors）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/mailing-list-faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    邮件列表 FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/nut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NUT 格式
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/community/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    社区（Community）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/drawvg-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    drawvg 参考
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/APIchanges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API 变更日志（英文原文）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="364">视频滤镜（364 个滤镜）<a class="headerlink" href="#364" title="Permanent link">&para;</a></h1>
+<ul>
+<li><a href="addroi/">addroi</a></li>
+<li><a href="allrgb/">allrgb</a></li>
+<li><a href="alphaextract/">alphaextract</a></li>
+<li><a href="alphamerge/">alphamerge</a></li>
+<li><a href="amplify/">amplify</a></li>
+<li><a href="ass/">ass</a></li>
+<li><a href="atadenoise/">atadenoise</a></li>
+<li><a href="avgblur/">avgblur</a></li>
+<li><a href="avgblur_opencl/">avgblur_opencl</a></li>
+<li><a href="avgblur_vulkan/">avgblur_vulkan</a></li>
+<li><a href="backgroundkey/">backgroundkey</a></li>
+<li><a href="bbox/">bbox</a></li>
+<li><a href="bilateral/">bilateral</a></li>
+<li><a href="bilateral_cuda/">bilateral_cuda</a></li>
+<li><a href="bitplanenoise/">bitplanenoise</a></li>
+<li><a href="blackdetect/">blackdetect</a></li>
+<li><a href="blackframe/">blackframe</a></li>
+<li><a href="blend/">blend</a></li>
+<li><a href="blend_vulkan/">blend_vulkan</a></li>
+<li><a href="blockdetect/">blockdetect</a></li>
+<li><a href="blurdetect/">blurdetect</a></li>
+<li><a href="bm3d/">bm3d</a></li>
+<li><a href="boxblur/">boxblur</a></li>
+<li><a href="boxblur_opencl/">boxblur_opencl</a></li>
+<li><a href="buffer/">buffer</a></li>
+<li><a href="buffersink/">buffersink</a></li>
+<li><a href="bwdif/">bwdif</a></li>
+<li><a href="bwdif_cuda/">bwdif_cuda</a></li>
+<li><a href="bwdif_vulkan/">bwdif_vulkan</a></li>
+<li><a href="cas/">cas</a></li>
+<li><a href="ccrepack/">ccrepack</a></li>
+<li><a href="cellauto/">cellauto</a></li>
+<li><a href="chromaber_vulkan/">chromaber_vulkan</a></li>
+<li><a href="chromahold/">chromahold</a></li>
+<li><a href="chromakey/">chromakey</a></li>
+<li><a href="chromakey_cuda/">chromakey_cuda</a></li>
+<li><a href="chromanr/">chromanr</a></li>
+<li><a href="chromashift/">chromashift</a></li>
+<li><a href="ciescope/">ciescope</a></li>
+<li><a href="codecview/">codecview</a></li>
+<li><a href="color_vulkan/">color_vulkan</a></li>
+<li><a href="colorbalance/">colorbalance</a></li>
+<li><a href="colorchannelmixer/">colorchannelmixer</a></li>
+<li><a href="colorcontrast/">colorcontrast</a></li>
+<li><a href="colorcorrect/">colorcorrect</a></li>
+<li><a href="colordetect/">colordetect</a></li>
+<li><a href="colorhold/">colorhold</a></li>
+<li><a href="colorize/">colorize</a></li>
+<li><a href="colorkey/">colorkey</a></li>
+<li><a href="colorkey_opencl/">colorkey_opencl</a></li>
+<li><a href="colorlevels/">colorlevels</a></li>
+<li><a href="colormap/">colormap</a></li>
+<li><a href="colormatrix/">colormatrix</a></li>
+<li><a href="colorspace/">colorspace</a></li>
+<li><a href="colorspace_cuda/">colorspace_cuda</a></li>
+<li><a href="colortemperature/">colortemperature</a></li>
+<li><a href="convolution/">convolution</a></li>
+<li><a href="convolution_opencl/">convolution_opencl</a></li>
+<li><a href="convolve/">convolve</a></li>
+<li><a href="copy/">copy</a></li>
+<li><a href="coreimage/">coreimage</a></li>
+<li><a href="coreimagesrc/">coreimagesrc</a></li>
+<li><a href="corr/">corr</a></li>
+<li><a href="cover_rect/">cover_rect</a></li>
+<li><a href="crop/">crop</a></li>
+<li><a href="cropdetect/">cropdetect</a></li>
+<li><a href="cue/">cue</a></li>
+<li><a href="curves/">curves</a></li>
+<li><a href="datascope/">datascope</a></li>
+<li><a href="dblur/">dblur</a></li>
+<li><a href="dctdnoiz/">dctdnoiz</a></li>
+<li><a href="ddagrab/">ddagrab</a></li>
+<li><a href="deband/">deband</a></li>
+<li><a href="deblock/">deblock</a></li>
+<li><a href="decimate/">decimate</a></li>
+<li><a href="deconvolve/">deconvolve</a></li>
+<li><a href="dedot/">dedot</a></li>
+<li><a href="deflate/">deflate</a></li>
+<li><a href="deflicker/">deflicker</a></li>
+<li><a href="deinterlace_d3d12/">deinterlace_d3d12</a></li>
+<li><a href="dejudder/">dejudder</a></li>
+<li><a href="delogo/">delogo</a></li>
+<li><a href="derain/">derain</a></li>
+<li><a href="deshake/">deshake</a></li>
+<li><a href="deshake_opencl/">deshake_opencl</a></li>
+<li><a href="despill/">despill</a></li>
+<li><a href="detelecine/">detelecine</a></li>
+<li><a href="dilation/">dilation</a></li>
+<li><a href="dilation_opencl/">dilation_opencl</a></li>
+<li><a href="displace/">displace</a></li>
+<li><a href="dnn_classify/">dnn_classify</a></li>
+<li><a href="dnn_detect/">dnn_detect</a></li>
+<li><a href="dnn_processing/">dnn_processing</a></li>
+<li><a href="drawbox/">drawbox</a></li>
+<li><a href="drawbox_vaapi/">drawbox_vaapi</a></li>
+<li><a href="drawgraph/">drawgraph</a></li>
+<li><a href="drawgrid/">drawgrid</a></li>
+<li><a href="drawtext/">drawtext</a></li>
+<li><a href="drawvg/">drawvg</a></li>
+<li><a href="edgedetect/">edgedetect</a></li>
+<li><a href="elbg/">elbg</a></li>
+<li><a href="entropy/">entropy</a></li>
+<li><a href="epx/">epx</a></li>
+<li><a href="eq/">eq</a></li>
+<li><a href="erosion/">erosion</a></li>
+<li><a href="erosion_opencl/">erosion_opencl</a></li>
+<li><a href="estdif/">estdif</a></li>
+<li><a href="exposure/">exposure</a></li>
+<li><a href="extractplanes/">extractplanes</a></li>
+<li><a href="fade/">fade</a></li>
+<li><a href="feedback/">feedback</a></li>
+<li><a href="fftdnoiz/">fftdnoiz</a></li>
+<li><a href="fftfilt/">fftfilt</a></li>
+<li><a href="field/">field</a></li>
+<li><a href="fieldhint/">fieldhint</a></li>
+<li><a href="fieldmatch/">fieldmatch</a></li>
+<li><a href="fieldorder/">fieldorder</a></li>
+<li><a href="fillborders/">fillborders</a></li>
+<li><a href="find_rect/">find_rect</a></li>
+<li><a href="flip_vulkan/">flip_vulkan</a></li>
+<li><a href="floodfill/">floodfill</a></li>
+<li><a href="format/">format</a></li>
+<li><a href="fps/">fps</a></li>
+<li><a href="framepack/">framepack</a></li>
+<li><a href="framerate/">framerate</a></li>
+<li><a href="framestep/">framestep</a></li>
+<li><a href="frc_amf/">frc_amf</a></li>
+<li><a href="freezedetect/">freezedetect</a></li>
+<li><a href="freezeframes/">freezeframes</a></li>
+<li><a href="frei0r/">frei0r</a></li>
+<li><a href="frei0r_src/">frei0r_src</a></li>
+<li><a href="fspp/">fspp</a></li>
+<li><a href="fsync/">fsync</a></li>
+<li><a href="gblur/">gblur</a></li>
+<li><a href="gblur_vulkan/">gblur_vulkan</a></li>
+<li><a href="geq/">geq</a></li>
+<li><a href="gfxcapture/">gfxcapture</a></li>
+<li><a href="gradfun/">gradfun</a></li>
+<li><a href="gradients/">gradients</a></li>
+<li><a href="graphmonitor/">graphmonitor</a></li>
+<li><a href="grayworld/">grayworld</a></li>
+<li><a href="greyedge/">greyedge</a></li>
+<li><a href="guided/">guided</a></li>
+<li><a href="haldclut/">haldclut</a></li>
+<li><a href="hflip/">hflip</a></li>
+<li><a href="hflip_vulkan/">hflip_vulkan</a></li>
+<li><a href="histeq/">histeq</a></li>
+<li><a href="histogram/">histogram</a></li>
+<li><a href="hqdn3d/">hqdn3d</a></li>
+<li><a href="hqx/">hqx</a></li>
+<li><a href="hstack/">hstack</a></li>
+<li><a href="hstack_qsv/">hstack_qsv</a></li>
+<li><a href="hstack_vaapi/">hstack_vaapi</a></li>
+<li><a href="hsvhold/">hsvhold</a></li>
+<li><a href="hsvkey/">hsvkey</a></li>
+<li><a href="hue/">hue</a></li>
+<li><a href="huesaturation/">huesaturation</a></li>
+<li><a href="hwdownload/">hwdownload</a></li>
+<li><a href="hwmap/">hwmap</a></li>
+<li><a href="hwupload/">hwupload</a></li>
+<li><a href="hwupload_cuda/">hwupload_cuda</a></li>
+<li><a href="hysteresis/">hysteresis</a></li>
+<li><a href="iccdetect/">iccdetect</a></li>
+<li><a href="iccgen/">iccgen</a></li>
+<li><a href="identity/">identity</a></li>
+<li><a href="idet/">idet</a></li>
+<li><a href="il/">il</a></li>
+<li><a href="inflate/">inflate</a></li>
+<li><a href="interlace/">interlace</a></li>
+<li><a href="kerndeint/">kerndeint</a></li>
+<li><a href="kirsch/">kirsch</a></li>
+<li><a href="lagfun/">lagfun</a></li>
+<li><a href="lcevc/">lcevc</a></li>
+<li><a href="lenscorrection/">lenscorrection</a></li>
+<li><a href="lensfun/">lensfun</a></li>
+<li><a href="libplacebo/">libplacebo</a></li>
+<li><a href="libvmaf/">libvmaf</a></li>
+<li><a href="libvmaf_cuda/">libvmaf_cuda</a></li>
+<li><a href="life/">life</a></li>
+<li><a href="limitdiff/">limitdiff</a></li>
+<li><a href="limiter/">limiter</a></li>
+<li><a href="loop/">loop</a></li>
+<li><a href="lumakey/">lumakey</a></li>
+<li><a href="lut/">lut</a></li>
+<li><a href="lut1d/">lut1d</a></li>
+<li><a href="lut2/">lut2</a></li>
+<li><a href="lut3d/">lut3d</a></li>
+<li><a href="mandelbrot/">mandelbrot</a></li>
+<li><a href="maskedclamp/">maskedclamp</a></li>
+<li><a href="maskedmax/">maskedmax</a></li>
+<li><a href="maskedmerge/">maskedmerge</a></li>
+<li><a href="maskedmin/">maskedmin</a></li>
+<li><a href="maskedthreshold/">maskedthreshold</a></li>
+<li><a href="maskfun/">maskfun</a></li>
+<li><a href="mcdeint/">mcdeint</a></li>
+<li><a href="median/">median</a></li>
+<li><a href="mergeplanes/">mergeplanes</a></li>
+<li><a href="mestimate/">mestimate</a></li>
+<li><a href="mestimate_d3d12/">mestimate_d3d12</a></li>
+<li><a href="midequalizer/">midequalizer</a></li>
+<li><a href="minterpolate/">minterpolate</a></li>
+<li><a href="mix/">mix</a></li>
+<li><a href="monochrome/">monochrome</a></li>
+<li><a href="morpho/">morpho</a></li>
+<li><a href="mpdecimate/">mpdecimate</a></li>
+<li><a href="mptestsrc/">mptestsrc</a></li>
+<li><a href="msad/">msad</a></li>
+<li><a href="multiply/">multiply</a></li>
+<li><a href="negate/">negate</a></li>
+<li><a href="nlmeans/">nlmeans</a></li>
+<li><a href="nlmeans_opencl/">nlmeans_opencl</a></li>
+<li><a href="nlmeans_vulkan/">nlmeans_vulkan</a></li>
+<li><a href="nnedi/">nnedi</a></li>
+<li><a href="noformat/">noformat</a></li>
+<li><a href="noise/">noise</a></li>
+<li><a href="normalize/">normalize</a></li>
+<li><a href="null/">null</a></li>
+<li><a href="nullsink/">nullsink</a></li>
+<li><a href="ocio/">ocio</a></li>
+<li><a href="ocr/">ocr</a></li>
+<li><a href="ocv/">ocv</a></li>
+<li><a href="openclsrc/">openclsrc</a></li>
+<li><a href="oscilloscope/">oscilloscope</a></li>
+<li><a href="overlay/">overlay</a></li>
+<li><a href="overlay_cuda/">overlay_cuda</a></li>
+<li><a href="overlay_opencl/">overlay_opencl</a></li>
+<li><a href="overlay_vaapi/">overlay_vaapi</a></li>
+<li><a href="overlay_vulkan/">overlay_vulkan</a></li>
+<li><a href="owdenoise/">owdenoise</a></li>
+<li><a href="pad/">pad</a></li>
+<li><a href="pad_cuda/">pad_cuda</a></li>
+<li><a href="pad_opencl/">pad_opencl</a></li>
+<li><a href="pad_vaapi/">pad_vaapi</a></li>
+<li><a href="palettegen/">palettegen</a></li>
+<li><a href="paletteuse/">paletteuse</a></li>
+<li><a href="perlin/">perlin</a></li>
+<li><a href="perspective/">perspective</a></li>
+<li><a href="phase/">phase</a></li>
+<li><a href="photosensitivity/">photosensitivity</a></li>
+<li><a href="pixdesctest/">pixdesctest</a></li>
+<li><a href="pixelize/">pixelize</a></li>
+<li><a href="pixscope/">pixscope</a></li>
+<li><a href="pp7/">pp7</a></li>
+<li><a href="premultiply/">premultiply</a></li>
+<li><a href="premultiply_dynamic/">premultiply_dynamic</a></li>
+<li><a href="prewitt/">prewitt</a></li>
+<li><a href="prewitt_opencl/">prewitt_opencl</a></li>
+<li><a href="program_opencl/">program_opencl</a></li>
+<li><a href="pseudocolor/">pseudocolor</a></li>
+<li><a href="psnr/">psnr</a></li>
+<li><a href="pullup/">pullup</a></li>
+<li><a href="qp/">qp</a></li>
+<li><a href="qrencode/">qrencode</a></li>
+<li><a href="qrencodesrc/">qrencodesrc</a></li>
+<li><a href="quirc/">quirc</a></li>
+<li><a href="random/">random</a></li>
+<li><a href="readeia608/">readeia608</a></li>
+<li><a href="readvitc/">readvitc</a></li>
+<li><a href="remap/">remap</a></li>
+<li><a href="remap_opencl/">remap_opencl</a></li>
+<li><a href="removegrain/">removegrain</a></li>
+<li><a href="removelogo/">removelogo</a></li>
+<li><a href="repeatfields/">repeatfields</a></li>
+<li><a href="reverse/">reverse</a></li>
+<li><a href="rgbashift/">rgbashift</a></li>
+<li><a href="roberts/">roberts</a></li>
+<li><a href="roberts_opencl/">roberts_opencl</a></li>
+<li><a href="rotate/">rotate</a></li>
+<li><a href="sab/">sab</a></li>
+<li><a href="scale/">scale</a></li>
+<li><a href="scale_cuda/">scale_cuda</a></li>
+<li><a href="scale_vt/">scale_vt</a></li>
+<li><a href="scdet/">scdet</a></li>
+<li><a href="scharr/">scharr</a></li>
+<li><a href="scroll/">scroll</a></li>
+<li><a href="selectivecolor/">selectivecolor</a></li>
+<li><a href="separatefields/">separatefields</a></li>
+<li><a href="setdar/">setdar</a></li>
+<li><a href="setfield/">setfield</a></li>
+<li><a href="setparams/">setparams</a></li>
+<li><a href="shear/">shear</a></li>
+<li><a href="showinfo/">showinfo</a></li>
+<li><a href="showpalette/">showpalette</a></li>
+<li><a href="shuffleframes/">shuffleframes</a></li>
+<li><a href="shufflepixels/">shufflepixels</a></li>
+<li><a href="shuffleplanes/">shuffleplanes</a></li>
+<li><a href="sierpinski/">sierpinski</a></li>
+<li><a href="signalstats/">signalstats</a></li>
+<li><a href="signature/">signature</a></li>
+<li><a href="siti/">siti</a></li>
+<li><a href="smartblur/">smartblur</a></li>
+<li><a href="sobel/">sobel</a></li>
+<li><a href="sobel_opencl/">sobel_opencl</a></li>
+<li><a href="spp/">spp</a></li>
+<li><a href="sr/">sr</a></li>
+<li><a href="sr_amf/">sr_amf</a></li>
+<li><a href="ssim/">ssim</a></li>
+<li><a href="stereo3d/">stereo3d</a></li>
+<li><a href="streamselect/">streamselect</a></li>
+<li><a href="subtitles/">subtitles</a></li>
+<li><a href="super2xsai/">super2xsai</a></li>
+<li><a href="swaprect/">swaprect</a></li>
+<li><a href="swapuv/">swapuv</a></li>
+<li><a href="tblend/">tblend</a></li>
+<li><a href="telecine/">telecine</a></li>
+<li><a href="thistogram/">thistogram</a></li>
+<li><a href="threshold/">threshold</a></li>
+<li><a href="thumbnail/">thumbnail</a></li>
+<li><a href="thumbnail_cuda/">thumbnail_cuda</a></li>
+<li><a href="tile/">tile</a></li>
+<li><a href="tiltandshift/">tiltandshift</a></li>
+<li><a href="tinterlace/">tinterlace</a></li>
+<li><a href="tmedian/">tmedian</a></li>
+<li><a href="tmidequalizer/">tmidequalizer</a></li>
+<li><a href="tmix/">tmix</a></li>
+<li><a href="tonemap/">tonemap</a></li>
+<li><a href="tonemap_opencl/">tonemap_opencl</a></li>
+<li><a href="tonemap_vaapi/">tonemap_vaapi</a></li>
+<li><a href="tpad/">tpad</a></li>
+<li><a href="transpose/">transpose</a></li>
+<li><a href="transpose_cuda/">transpose_cuda</a></li>
+<li><a href="transpose_vt/">transpose_vt</a></li>
+<li><a href="transpose_vulkan/">transpose_vulkan</a></li>
+<li><a href="trim/">trim</a></li>
+<li><a href="unpremultiply/">unpremultiply</a></li>
+<li><a href="unsharp/">unsharp</a></li>
+<li><a href="unsharp_opencl/">unsharp_opencl</a></li>
+<li><a href="untile/">untile</a></li>
+<li><a href="uspp/">uspp</a></li>
+<li><a href="v360/">v360</a></li>
+<li><a href="vaguedenoiser/">vaguedenoiser</a></li>
+<li><a href="varblur/">varblur</a></li>
+<li><a href="vectorscope/">vectorscope</a></li>
+<li><a href="vflip/">vflip</a></li>
+<li><a href="vflip_vulkan/">vflip_vulkan</a></li>
+<li><a href="vfrdet/">vfrdet</a></li>
+<li><a href="vibrance/">vibrance</a></li>
+<li><a href="vidstabdetect/">vidstabdetect</a></li>
+<li><a href="vidstabtransform/">vidstabtransform</a></li>
+<li><a href="vif/">vif</a></li>
+<li><a href="vignette/">vignette</a></li>
+<li><a href="vmafmotion/">vmafmotion</a></li>
+<li><a href="vpp_amf/">vpp_amf</a></li>
+<li><a href="vstack/">vstack</a></li>
+<li><a href="vstack_qsv/">vstack_qsv</a></li>
+<li><a href="vstack_vaapi/">vstack_vaapi</a></li>
+<li><a href="w3fdif/">w3fdif</a></li>
+<li><a href="waveform/">waveform</a></li>
+<li><a href="weave/">weave</a></li>
+<li><a href="xbr/">xbr</a></li>
+<li><a href="xcorrelate/">xcorrelate</a></li>
+<li><a href="xfade/">xfade</a></li>
+<li><a href="xfade_opencl/">xfade_opencl</a></li>
+<li><a href="xmedian/">xmedian</a></li>
+<li><a href="xpsnr/">xpsnr</a></li>
+<li><a href="xstack/">xstack</a></li>
+<li><a href="xstack_qsv/">xstack_qsv</a></li>
+<li><a href="xstack_vaapi/">xstack_vaapi</a></li>
+<li><a href="yadif/">yadif</a></li>
+<li><a href="yadif_cuda/">yadif_cuda</a></li>
+<li><a href="yaepblur/">yaepblur</a></li>
+<li><a href="zoneplate/">zoneplate</a></li>
+<li><a href="zoompan/">zoompan</a></li>
+<li><a href="zscale/">zscale</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      除 wiki 精选页（CC BY-SA 3.0）外，译文基于 FFmpeg 官方文档（LGPL 2.1+）以 LGPL-2.1-or-later 提供 · 译自 n9.0.2
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "content.code.copy", "navigation.instant", "toc.integrate"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

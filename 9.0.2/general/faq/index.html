@@ -1,0 +1,2219 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="FFmpeg 官方文档中文翻译版（基线 n9.0.2，跟随上游 release 增量翻译）">
+      
+      
+        <meta name="author" content="ffmpeg-zh-docs 翻译组">
+      
+      
+        <link rel="canonical" href="https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/general/faq/">
+      
+      
+        <link rel="prev" href="../../libraries/libswresample/">
+      
+      
+        <link rel="next" href="../general/">
+      
+      
+        
+          <link rel="alternate" href="https://ffmpeg.org/documentation.html" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>FAQ - FFmpeg 中文文档</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Noto Sans SC";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#general-questions" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="FFmpeg 中文文档" class="md-header__button md-logo" aria-label="FFmpeg 中文文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FFmpeg 中文文档
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              FAQ
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="https://ffmpeg.org/documentation.html" hreflang="en" class="md-select__link">
+              English (Original)
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jxsword/ffmpeg-zh-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ffmpeg-zh-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../manual/ffmpeg/" class="md-tabs__link">
+          
+  
+  
+  手册
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../components/utils/" class="md-tabs__link">
+          
+  
+  
+  组件
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../filters/overview/" class="md-tabs__link">
+          
+  
+  
+  滤镜
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../libraries/libavutil/" class="md-tabs__link">
+          
+  
+  
+  库
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  General
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="FFmpeg 中文文档" class="md-nav__button md-logo" aria-label="FFmpeg 中文文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    FFmpeg 中文文档
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jxsword/ffmpeg-zh-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ffmpeg-zh-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    手册
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    手册
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/ffmpeg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffmpeg 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/ffplay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffplay 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/ffprobe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffprobe 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/common-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    公共选项（ffmpeg/ffplay/ffprobe）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    组件
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    组件
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具（Utils）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/scaler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    缩放器（Scaler）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/resampler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    重采样器（Resampler）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/codecs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    编解码器（Codecs）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/bitstream-filters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    比特流滤镜（Bitstream Filters）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    格式（Formats）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    协议（Protocols）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    设备（Devices）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    滤镜
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    滤镜
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    滤镜总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/video/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    视频滤镜（364）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音频滤镜（135）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/multimedia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    多媒体滤镜（37）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    库
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    库
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavutil/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavutil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavcodec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavcodec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavformat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavformat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavdevice/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavdevice
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavfilter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavfilter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libswscale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libswscale
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libswresample/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libswresample
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    General
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-doesnt-ffmpeg-support-feature-xyz" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why doesn't FFmpeg support feature [xyz]?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffmpeg-does-not-support-codec-xxx-can-you-include-a-windows-dll-loader-to-support-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FFmpeg does not support codec XXX. Can you include a Windows DLL loader to support it?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-cannot-read-this-file-although-this-format-seems-to-be-supported-by-ffmpeg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I cannot read this file although this format seems to be supported by ffmpeg.
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#which-codecs-are-supported-by-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Which codecs are supported by Windows?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../general/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    通用目录（General）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    平台（Platform）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开发者（Developer）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../git-howto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git 使用（Git Howto）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FATE 测试
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../authors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作者（Authors）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mailing-list-faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    邮件列表 FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NUT 格式
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../community/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    社区（Community）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../drawvg-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    drawvg 参考
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../APIchanges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API 变更日志（英文原文）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<div class="admonition warning">
+<p class="admonition-title">翻译占位页</p>
+<p>本页为英文原文占位（翻译进行中，进度见<a href="https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md">翻译看板</a>）。
+术语与示例以英文原文为准。</p>
+</div>
+<h1 id="general-questions">General Questions<a class="headerlink" href="#general-questions" title="Permanent link">&para;</a></h1>
+<h2 id="why-doesnt-ffmpeg-support-feature-xyz">Why doesn't FFmpeg support feature [xyz]?<a class="headerlink" href="#why-doesnt-ffmpeg-support-feature-xyz" title="Permanent link">&para;</a></h2>
+<p>Because no one has taken on that task yet. FFmpeg development is driven by the tasks that are important to the individual developers. If there is a feature that is important to you, the best way to get it implemented is to undertake the task yourself or sponsor a developer.</p>
+<h2 id="ffmpeg-does-not-support-codec-xxx-can-you-include-a-windows-dll-loader-to-support-it">FFmpeg does not support codec XXX. Can you include a Windows DLL loader to support it?<a class="headerlink" href="#ffmpeg-does-not-support-codec-xxx-can-you-include-a-windows-dll-loader-to-support-it" title="Permanent link">&para;</a></h2>
+<p>No. Windows DLLs are not portable, bloated and often slow. Moreover FFmpeg strives to support all codecs natively. A DLL loader is not conducive to that goal.</p>
+<h2 id="i-cannot-read-this-file-although-this-format-seems-to-be-supported-by-ffmpeg">I cannot read this file although this format seems to be supported by ffmpeg.<a class="headerlink" href="#i-cannot-read-this-file-although-this-format-seems-to-be-supported-by-ffmpeg" title="Permanent link">&para;</a></h2>
+<p>Even if ffmpeg can read the container format, it may not support all its codecs. Please consult the supported codec list in the ffmpeg documentation.</p>
+<h2 id="which-codecs-are-supported-by-windows">Which codecs are supported by Windows?<a class="headerlink" href="#which-codecs-are-supported-by-windows" title="Permanent link">&para;</a></h2>
+<p>Windows does not support standard formats like MPEG very well, unless you install some additional codecs.</p>
+<p>The following list of video codecs should work on most Windows systems:</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>msmpeg4v2</code></td>
+<td>.avi/.asf</td>
+</tr>
+<tr>
+<td><code>msmpeg4</code></td>
+<td>.asf only</td>
+</tr>
+<tr>
+<td><code>wmv1</code></td>
+<td>.asf only</td>
+</tr>
+<tr>
+<td><code>wmv2</code></td>
+<td>.asf only</td>
+</tr>
+<tr>
+<td><code>mpeg4</code></td>
+<td>Only if you have some MPEG-4 codec like ffdshow or Xvid installed.</td>
+</tr>
+<tr>
+<td><code>mpeg1video</code></td>
+<td>.mpg only</td>
+</tr>
+</tbody>
+</table>
+<p>Note, ASF files often have .wmv or .wma extensions in Windows. It should also be mentioned that Microsoft claims a patent on the ASF format, and may sue or threaten users who create ASF files with non-Microsoft software. It is strongly advised to avoid ASF where possible.</p>
+<p>The following list of audio codecs should work on most Windows systems:</p>
+<ul>
+<li>
+<p><strong><code>adpcm_ima_wav</code></strong></p>
+</li>
+<li>
+<p><strong><code>adpcm_ms</code></strong></p>
+</li>
+<li>
+<p><strong><code>pcm_s16le</code></strong> always</p>
+</li>
+<li>
+<p><strong><code>libmp3lame</code></strong> If some MP3 codec like LAME is installed.</p>
+</li>
+</ul>
+<h1 id="compilation">Compilation<a class="headerlink" href="#compilation" title="Permanent link">&para;</a></h1>
+<h2 id="error-cant-find-a-register-in-class-general_regs-while-reloading-asm"><code>error: can't find a register in class 'GENERAL_REGS' while reloading 'asm'</code><a class="headerlink" href="#error-cant-find-a-register-in-class-general_regs-while-reloading-asm" title="Permanent link">&para;</a></h2>
+<p>This is a bug in gcc. Do not report it to us. Instead, please report it to the gcc developers. Note that we will not add workarounds for gcc bugs.</p>
+<p>Also note that (some of) the gcc developers believe this is not a bug or not a bug they should fix: <a href="https://gcc.gnu.org/bugzilla/show_bug.cgi?id=11203">https://gcc.gnu.org/bugzilla/show_bug.cgi?id=11203</a>. Then again, some of them do not know the difference between an undecidable problem and an NP-hard problem...</p>
+<h2 id="i-have-installed-this-library-with-my-distros-package-manager-why-does-configure-not-see-it">I have installed this library with my distro's package manager. Why does <code>configure</code> not see it?<a class="headerlink" href="#i-have-installed-this-library-with-my-distros-package-manager-why-does-configure-not-see-it" title="Permanent link">&para;</a></h2>
+<p>Distributions usually split libraries in several packages. The main package contains the files necessary to run programs using the library. The development package contains the files necessary to build programs using the library. Sometimes, docs and/or data are in a separate package too.</p>
+<p>To build FFmpeg, you need to install the development package. It is usually called <code>libfoo-dev</code> or <code>libfoo-devel</code>. You can remove it after the build is finished, but be sure to keep the main package.</p>
+<h2 id="how-do-i-make-pkg-config-find-my-libraries">How do I make <code>pkg-config</code> find my libraries?<a class="headerlink" href="#how-do-i-make-pkg-config-find-my-libraries" title="Permanent link">&para;</a></h2>
+<p>Somewhere along with your libraries, there is a <code>.pc</code> file (or several) in a <code>pkgconfig</code> directory. You need to set environment variables to point <code>pkg-config</code> to these files.</p>
+<p>If you need to <em>add</em> directories to <code>pkg-config</code>s search list (typical use case: library installed separately), add it to <code>$PKG_CONFIG_PATH</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>export PKG_CONFIG_PATH=/opt/x264/lib/pkgconfig:/opt/opus/lib/pkgconfig
+</code></pre></div>
+<p>If you need to <em>replace</em> <code>pkg-config</code>s search list (typical use case: cross-compiling), set it in <code>$PKG_CONFIG_LIBDIR</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>export PKG_CONFIG_LIBDIR=/home/me/cross/usr/lib/pkgconfig:/home/me/cross/usr/local/lib/pkgconfig
+</code></pre></div>
+<p>If you need to know the library's internal dependencies (typical use: static linking), add the <code>--static</code> option to <code>pkg-config</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>./configure --pkg-config-flags=--static
+</code></pre></div>
+<h2 id="how-do-i-use-pkg-config-when-cross-compiling">How do I use <code>pkg-config</code> when cross-compiling?<a class="headerlink" href="#how-do-i-use-pkg-config-when-cross-compiling" title="Permanent link">&para;</a></h2>
+<p>The best way is to install <code>pkg-config</code> in your cross-compilation environment. It will automatically use the cross-compilation libraries.</p>
+<p>You can also use <code>pkg-config</code> from the host environment by specifying explicitly <code>--pkg-config=pkg-config</code> to <code>configure</code>. In that case, you must point <code>pkg-config</code> to the correct directories using the <code>PKG_CONFIG_LIBDIR</code>, as explained in the previous entry.</p>
+<p>As an intermediate solution, you can place in your cross-compilation environment a script that calls the host <code>pkg-config</code> with <code>PKG_CONFIG_LIBDIR</code> set. That script can look like that:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="ch">#!/bin/sh</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">PKG_CONFIG_LIBDIR</span><span class="o">=</span>/path/to/cross/lib/pkgconfig
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nb">export</span><span class="w"> </span>PKG_CONFIG_LIBDIR
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nb">exec</span><span class="w"> </span>/usr/bin/pkg-config<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+</code></pre></div>
+<h1 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h1>
+<h2 id="ffmpeg-does-not-work-what-is-wrong">ffmpeg does not work; what is wrong?<a class="headerlink" href="#ffmpeg-does-not-work-what-is-wrong" title="Permanent link">&para;</a></h2>
+<p>Try a <code>make distclean</code> in the ffmpeg source directory before the build. If this does not help see (<a href="https://ffmpeg.org/bugreports.html">https://ffmpeg.org/bugreports.html</a>).</p>
+<h2 id="how-do-i-encode-single-pictures-into-movies">How do I encode single pictures into movies?<a class="headerlink" href="#how-do-i-encode-single-pictures-into-movies" title="Permanent link">&para;</a></h2>
+<p>First, rename your pictures to follow a numerical sequence. For example, img1.jpg, img2.jpg, img3.jpg,... Then you may run:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ffmpeg -f image2 -i img%d.jpg /tmp/a.mpg
+</code></pre></div>
+<p>Notice that <code>%d</code> is replaced by the image number.</p>
+<p><code>img%03d.jpg</code> means the sequence <code>img001.jpg</code>, <code>img002.jpg</code>, etc.</p>
+<p>Use the <code>-start_number</code> option to declare a starting number for the sequence. This is useful if your sequence does not start with <code>img001.jpg</code> but is still in a numerical order. The following example will start with <code>img100.jpg</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ffmpeg -f image2 -start_number 100 -i img%d.jpg /tmp/a.mpg
+</code></pre></div>
+<p>If you have large number of pictures to rename, you can use the following command to ease the burden. The command, using the bourne shell syntax, symbolically links all files in the current directory that match <code>*jpg</code> to the <code>/tmp</code> directory in the sequence of <code>img001.jpg</code>, <code>img002.jpg</code> and so on.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="o">*</span><span class="n">jpg</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="n">counter</span><span class="o">=</span><span class="n">$</span><span class="p">(</span><span class="n">printf</span><span class="w"> </span><span class="o">%</span><span class="mo">03</span><span class="n">d</span><span class="w"> </span><span class="n">$x</span><span class="p">);</span><span class="w"> </span><span class="n">ln</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="s">"$i"</span><span class="w"> </span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">img</span><span class="s">"$counter"</span><span class="p">.</span><span class="n">jpg</span><span class="p">;</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="n">$</span><span class="p">((</span><span class="n">$x</span><span class="o">+</span><span class="mi">1</span><span class="p">));</span><span class="w"> </span><span class="n">done</span>
+</code></pre></div>
+<p>If you want to sequence them by oldest modified first, substitute <code>$(ls -r -t *jpg)</code> in place of <code>*jpg</code>.</p>
+<p>Then run:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ffmpeg -f image2 -i /tmp/img%03d.jpg /tmp/a.mpg
+</code></pre></div>
+<p>The same logic is used for any image format that ffmpeg reads.</p>
+<p>You can also use <code>cat</code> to pipe images to ffmpeg:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>cat *.jpg | ffmpeg -f image2pipe -c:v mjpeg -i - output.mpg
+</code></pre></div>
+<h2 id="how-do-i-encode-movie-to-single-pictures">How do I encode movie to single pictures?<a class="headerlink" href="#how-do-i-encode-movie-to-single-pictures" title="Permanent link">&para;</a></h2>
+<p>Use:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>ffmpeg -i movie.mpg movie%d.jpg
+</code></pre></div>
+<p>The <code>movie.mpg</code> used as input will be converted to <code>movie1.jpg</code>, <code>movie2.jpg</code>, etc...</p>
+<p>Instead of relying on file format self-recognition, you may also use</p>
+<ul>
+<li>
+<p><strong><code>-c:v ppm</code></strong></p>
+</li>
+<li>
+<p><strong><code>-c:v png</code></strong></p>
+</li>
+<li>
+<p><strong><code>-c:v mjpeg</code></strong></p>
+</li>
+</ul>
+<p>to force the encoding.</p>
+<p>Applying that to the previous example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ffmpeg -i movie.mpg -f image2 -c:v mjpeg menu%d.jpg
+</code></pre></div>
+<p>Beware that there is no "jpeg" codec. Use "mjpeg" instead.</p>
+<h2 id="why-do-i-see-a-slight-quality-degradation-with-multithreaded-mpeg-encoding">Why do I see a slight quality degradation with multithreaded MPEG* encoding?<a class="headerlink" href="#why-do-i-see-a-slight-quality-degradation-with-multithreaded-mpeg-encoding" title="Permanent link">&para;</a></h2>
+<p>For multithreaded MPEG* encoding, the encoded slices must be independent, otherwise thread n would practically have to wait for n-1 to finish, so it's quite logical that there is a small reduction of quality. This is not a bug.</p>
+<h2 id="how-can-i-read-from-the-standard-input-or-write-to-the-standard-output">How can I read from the standard input or write to the standard output?<a class="headerlink" href="#how-can-i-read-from-the-standard-input-or-write-to-the-standard-output" title="Permanent link">&para;</a></h2>
+<p>Use <code>-</code> as file name.</p>
+<h2 id="-f-jpeg-doesnt-work">-f jpeg doesn't work.<a class="headerlink" href="#-f-jpeg-doesnt-work" title="Permanent link">&para;</a></h2>
+<p>Try '-f image2 test%d.jpg'.</p>
+<h2 id="why-can-i-not-change-the-frame-rate">Why can I not change the frame rate?<a class="headerlink" href="#why-can-i-not-change-the-frame-rate" title="Permanent link">&para;</a></h2>
+<p>Some codecs, like MPEG-1/2, only allow a small number of fixed frame rates. Choose a different codec with the -c:v command line option.</p>
+<h2 id="how-do-i-encode-xvid-or-divx-video-with-ffmpeg">How do I encode Xvid or DivX video with ffmpeg?<a class="headerlink" href="#how-do-i-encode-xvid-or-divx-video-with-ffmpeg" title="Permanent link">&para;</a></h2>
+<p>Both Xvid and DivX (version 4+) are implementations of the ISO MPEG-4 standard (note that there are many other coding formats that use this same standard). Thus, use '-c:v mpeg4' to encode in these formats. The default fourcc stored in an MPEG-4-coded file will be 'FMP4'. If you want a different fourcc, use the '-vtag' option. E.g., '-vtag xvid' will force the fourcc 'xvid' to be stored as the video fourcc rather than the default.</p>
+<h2 id="which-are-good-parameters-for-encoding-high-quality-mpeg-4">Which are good parameters for encoding high quality MPEG-4?<a class="headerlink" href="#which-are-good-parameters-for-encoding-high-quality-mpeg-4" title="Permanent link">&para;</a></h2>
+<p>'-mbd rd -flags +mv4+aic -trellis 2 -cmp 2 -subcmp 2 -g 300 -pass 1/2', things to try: '-bf 2', '-mpv_flags qp_rd', '-mpv_flags mv0', '-mpv_flags skip_rd'.</p>
+<h2 id="which-are-good-parameters-for-encoding-high-quality-mpeg-1mpeg-2">Which are good parameters for encoding high quality MPEG-1/MPEG-2?<a class="headerlink" href="#which-are-good-parameters-for-encoding-high-quality-mpeg-1mpeg-2" title="Permanent link">&para;</a></h2>
+<p>'-mbd rd -trellis 2 -cmp 2 -subcmp 2 -g 100 -pass 1/2' but beware the '-g 100' might cause problems with some decoders. Things to try: '-bf 2', '-mpv_flags qp_rd', '-mpv_flags mv0', '-mpv_flags skip_rd'.</p>
+<h2 id="interlaced-video-looks-very-bad-when-encoded-with-ffmpeg-what-is-wrong">Interlaced video looks very bad when encoded with ffmpeg, what is wrong?<a class="headerlink" href="#interlaced-video-looks-very-bad-when-encoded-with-ffmpeg-what-is-wrong" title="Permanent link">&para;</a></h2>
+<p>You should use '-flags +ilme+ildct' and maybe '-flags +alt' for interlaced material, and try '-top 0/1' if the result looks really messed-up.</p>
+<h2 id="how-can-i-read-directshow-files">How can I read DirectShow files?<a class="headerlink" href="#how-can-i-read-directshow-files" title="Permanent link">&para;</a></h2>
+<p>If you have built FFmpeg with <code>./configure --enable-avisynth</code> (only possible on MinGW/Cygwin platforms), then you may use any file that DirectShow can read as input.</p>
+<p>Just create an "input.avs" text file with this single line ...</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>DirectShowSource("C:\path to your file\yourfile.asf")
+</code></pre></div>
+<p>... and then feed that text file to ffmpeg:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>ffmpeg -i input.avs
+</code></pre></div>
+<p>For ANY other help on AviSynth, please visit the <a href="http://www.avisynth.org/">AviSynth homepage</a>.</p>
+<h2 id="how-can-i-join-video-files">How can I join video files?<a class="headerlink" href="#how-can-i-join-video-files" title="Permanent link">&para;</a></h2>
+<p>To "join" video files is quite ambiguous. The following list explains the different kinds of "joining" and points out how those are addressed in FFmpeg. To join video files may mean:</p>
+<ul>
+<li>
+<p>To put them one after the other: this is called to <em>concatenate</em> them (in short: concat) and is addressed <a href="#how-can-i-concatenate-video-files">in this very faq</a>.</p>
+</li>
+<li>
+<p>To put them together in the same file, to let the user choose between the different versions (example: different audio languages): this is called to <em>multiplex</em> them together (in short: mux), and is done by simply invoking ffmpeg with several <code>-i</code> options.</p>
+</li>
+<li>
+<p>For audio, to put all channels together in a single stream (example: two mono streams into one stereo stream): this is sometimes called to <em>merge</em> them, and can be done using the <a href="../../filters/overview/#amerge"><code>amerge</code></a> filter.</p>
+</li>
+<li>
+<p>For audio, to play one on top of the other: this is called to <em>mix</em> them, and can be done by first merging them into a single stream and then using the <a href="../../filters/overview/#pan"><code>pan</code></a> filter to mix the channels at will.</p>
+</li>
+<li>
+<p>For video, to display both together, side by side or one on top of a part of the other; it can be done using the <a href="../../filters/overview/#overlay"><code>overlay</code></a> video filter.</p>
+</li>
+</ul>
+<h2 id="how-can-i-concatenate-video-files">How can I concatenate video files?<a class="headerlink" href="#how-can-i-concatenate-video-files" title="Permanent link">&para;</a></h2>
+<p>There are several solutions, depending on the exact circumstances.</p>
+<h3 id="concatenating-using-the-concat-filter">Concatenating using the concat <em>filter</em><a class="headerlink" href="#concatenating-using-the-concat-filter" title="Permanent link">&para;</a></h3>
+<p>FFmpeg has a <a href="../../filters/overview/#concat"><code>concat</code></a> filter designed specifically for that, with examples in the documentation. This operation is recommended if you need to re-encode.</p>
+<h3 id="concatenating-using-the-concat-demuxer">Concatenating using the concat <em>demuxer</em><a class="headerlink" href="#concatenating-using-the-concat-demuxer" title="Permanent link">&para;</a></h3>
+<p>FFmpeg has a <a href="../../components/formats/#concat"><code>concat</code></a> demuxer which you can use when you want to avoid a re-encode and your format doesn't support file level concatenation.</p>
+<h3 id="concatenating-using-the-concat-protocol-file-level">Concatenating using the concat <em>protocol</em> (file level)<a class="headerlink" href="#concatenating-using-the-concat-protocol-file-level" title="Permanent link">&para;</a></h3>
+<p>FFmpeg has a <a href="../../components/protocols/#concat"><code>concat</code></a> protocol designed specifically for that, with examples in the documentation.</p>
+<p>A few multimedia containers (MPEG-1, MPEG-2 PS, DV) allow one to concatenate video by merely concatenating the files containing them.</p>
+<p>Hence you may concatenate your multimedia files by first transcoding them to these privileged formats, then using the humble <code>cat</code> command (or the equally humble <code>copy</code> under Windows), and finally transcoding back to your format of choice.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ffmpeg -i input1.avi -qscale:v 1 intermediate1.mpg
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>ffmpeg -i input2.avi -qscale:v 1 intermediate2.mpg
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>cat intermediate1.mpg intermediate2.mpg &gt; intermediate_all.mpg
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>ffmpeg -i intermediate_all.mpg -qscale:v 2 output.avi
+</code></pre></div>
+<p>Additionally, you can use the <code>concat</code> protocol instead of <code>cat</code> or <code>copy</code> which will avoid creation of a potentially huge intermediate file.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ffmpeg -i input1.avi -qscale:v 1 intermediate1.mpg
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>ffmpeg -i input2.avi -qscale:v 1 intermediate2.mpg
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>ffmpeg -i concat:"intermediate1.mpg|intermediate2.mpg" -c copy intermediate_all.mpg
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>ffmpeg -i intermediate_all.mpg -qscale:v 2 output.avi
+</code></pre></div>
+<p>Note that you may need to escape the character "|" which is special for many shells.</p>
+<p>Another option is usage of named pipes, should your platform support it:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>mkfifo intermediate1.mpg
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>mkfifo intermediate2.mpg
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>ffmpeg -i input1.avi -qscale:v 1 -y intermediate1.mpg &lt; /dev/null &amp;
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>ffmpeg -i input2.avi -qscale:v 1 -y intermediate2.mpg &lt; /dev/null &amp;
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>cat intermediate1.mpg intermediate2.mpg |\
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>ffmpeg -f mpeg -i - -c:v mpeg4 -c:a libmp3lame output.avi
+</code></pre></div>
+<h3 id="concatenating-using-raw-audio-and-video">Concatenating using raw audio and video<a class="headerlink" href="#concatenating-using-raw-audio-and-video" title="Permanent link">&para;</a></h3>
+<p>Similarly, the yuv4mpegpipe format, and the raw video, raw audio codecs also allow concatenation, and the transcoding step is almost lossless. When using multiple yuv4mpegpipe(s), the first line needs to be discarded from all but the first stream. This can be accomplished by piping through <code>tail</code> as seen below. Note that when piping through <code>tail</code> you must use command grouping, <code>{ ;}</code>, to background properly.</p>
+<p>For example, let's say we want to concatenate two FLV files into an output.flv file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>mkfifo temp1.a
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>mkfifo temp1.v
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>mkfifo temp2.a
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>mkfifo temp2.v
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>mkfifo all.a
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>mkfifo all.v
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>ffmpeg -i input1.flv -vn -f u16le -c:a pcm_s16le -ac 2 -ar 44100 - &gt; temp1.a &lt; /dev/null &amp;
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>ffmpeg -i input2.flv -vn -f u16le -c:a pcm_s16le -ac 2 -ar 44100 - &gt; temp2.a &lt; /dev/null &amp;
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>ffmpeg -i input1.flv -an -f yuv4mpegpipe - &gt; temp1.v &lt; /dev/null &amp;
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>{ ffmpeg -i input2.flv -an -f yuv4mpegpipe - &lt; /dev/null | tail -n +2 &gt; temp2.v ; } &amp;
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>cat temp1.a temp2.a &gt; all.a &amp;
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>cat temp1.v temp2.v &gt; all.v &amp;
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>ffmpeg -f u16le -c:a pcm_s16le -ac 2 -ar 44100 -i all.a \
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>       -f yuv4mpegpipe -i all.v \
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>       -y output.flv
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>rm temp[12].[av] all.[av]
+</code></pre></div>
+<h2 id="using-f-lavfi-audio-becomes-mono-for-no-apparent-reason">Using <code>-f lavfi</code>, audio becomes mono for no apparent reason.<a class="headerlink" href="#using-f-lavfi-audio-becomes-mono-for-no-apparent-reason" title="Permanent link">&para;</a></h2>
+<p>Use <code>-dumpgraph -</code> to find out exactly where the channel layout is lost.</p>
+<p>Most likely, it is through <code>auto-inserted aresample</code>. Try to understand why the converting filter was needed at that place.</p>
+<p>Just before the output is a likely place, as <code>-f lavfi</code> currently only support packed S16.</p>
+<p>Then insert the correct <code>aformat</code> explicitly in the filtergraph, specifying the exact format.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>aformat=sample_fmts=s16:channel_layouts=stereo
+</code></pre></div>
+<h2 id="why-does-ffmpeg-not-see-the-subtitles-in-my-vob-file">Why does FFmpeg not see the subtitles in my VOB file?<a class="headerlink" href="#why-does-ffmpeg-not-see-the-subtitles-in-my-vob-file" title="Permanent link">&para;</a></h2>
+<p>VOB and a few other formats do not have a global header that describes everything present in the file. Instead, applications are supposed to scan the file to see what it contains. Since VOB files are frequently large, only the beginning is scanned. If the subtitles happen only later in the file, they will not be initially detected.</p>
+<p>Some applications, including the <code>ffmpeg</code> command-line tool, can only work with streams that were detected during the initial scan; streams that are detected later are ignored.</p>
+<p>The size of the initial scan is controlled by two options: <code>probesize</code> (default ~5 Mo) and <code>analyzeduration</code> (default 5,000,000 µs = 5 s). For the subtitle stream to be detected, both values must be large enough.</p>
+<h2 id="why-was-the-ffmpeg-sameq-option-removed-what-to-use-instead">Why was the <code>ffmpeg</code> <code>-sameq</code> option removed? What to use instead?<a class="headerlink" href="#why-was-the-ffmpeg-sameq-option-removed-what-to-use-instead" title="Permanent link">&para;</a></h2>
+<p>The <code>-sameq</code> option meant "same quantizer", and made sense only in a very limited set of cases. Unfortunately, a lot of people mistook it for "same quality" and used it in places where it did not make sense: it had roughly the expected visible effect, but achieved it in a very inefficient way.</p>
+<p>Each encoder has its own set of options to set the quality-vs-size balance, use the options for the encoder you are using to set the quality level to a point acceptable for your tastes. The most common options to do that are <code>-qscale</code> and <code>-qmax</code>, but you should peruse the documentation of the encoder you chose.</p>
+<h2 id="i-have-a-stretched-video-why-does-scaling-not-fix-it">I have a stretched video, why does scaling not fix it?<a class="headerlink" href="#i-have-a-stretched-video-why-does-scaling-not-fix-it" title="Permanent link">&para;</a></h2>
+<p>A lot of video codecs and formats can store the <em>aspect ratio</em> of the video: this is the ratio between the width and the height of either the full image (DAR, display aspect ratio) or individual pixels (SAR, sample aspect ratio). For example, EGA screens at resolution 640×350 had 4:3 DAR and 35:48 SAR.</p>
+<p>Most still image processing work with square pixels, i.e. 1:1 SAR, but a lot of video standards, especially from the analogic-numeric transition era, use non-square pixels.</p>
+<p>Most processing filters in FFmpeg handle the aspect ratio to avoid stretching the image: cropping adjusts the DAR to keep the SAR constant, scaling adjusts the SAR to keep the DAR constant.</p>
+<p>If you want to stretch, or "unstretch", the image, you need to override the information with the <a href="../../filters/overview/#setdar_002c-setsar"><code>setdar or setsar filters</code></a>.</p>
+<p>Do not forget to examine carefully the original video to check whether the stretching comes from the image or from the aspect ratio information.</p>
+<p>For example, to fix a badly encoded EGA capture, use the following commands, either the first one to upscale to square pixels or the second one to set the correct aspect ratio or the third one to avoid transcoding (may not work depending on the format / codec / player / phase of the moon):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>ffmpeg -i ega_screen.nut -vf scale=640:480,setsar=1 ega_screen_scaled.nut
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>ffmpeg -i ega_screen.nut -vf setdar=4/3 ega_screen_anamorphic.nut
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>ffmpeg -i ega_screen.nut -aspect 4/3 -c copy ega_screen_overridden.nut
+</code></pre></div>
+<h2 id="how-do-i-run-ffmpeg-as-a-background-task">How do I run ffmpeg as a background task?<a class="headerlink" href="#how-do-i-run-ffmpeg-as-a-background-task" title="Permanent link">&para;</a></h2>
+<p>ffmpeg normally checks the console input, for entries like "q" to stop and "?" to give help, while performing operations. ffmpeg does not have a way of detecting when it is running as a background task. When it checks the console input, that can cause the process running ffmpeg in the background to suspend.</p>
+<p>To prevent those input checks, allowing ffmpeg to run as a background task, use the <a href="../../manual/ffmpeg/#stdin-option"><code>-nostdin</code> option</a> in the ffmpeg invocation. This is effective whether you run ffmpeg in a shell or invoke ffmpeg in its own process via an operating system API.</p>
+<p>As an alternative, when you are running ffmpeg in a shell, you can redirect standard input to <code>/dev/null</code> (on Linux and macOS) or <code>NUL</code> (on Windows). You can do this redirect either on the ffmpeg invocation, or from a shell script which calls ffmpeg.</p>
+<p>For example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>ffmpeg -nostdin -i INPUT OUTPUT
+</code></pre></div>
+<p>or (on Linux, macOS, and other UNIX-like shells):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>ffmpeg -i INPUT OUTPUT &lt;/dev/null
+</code></pre></div>
+<p>or (on Windows):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>ffmpeg -i INPUT OUTPUT &lt;NUL
+</code></pre></div>
+<h2 id="how-do-i-prevent-ffmpeg-from-suspending-with-a-message-like-suspended-tty-output">How do I prevent ffmpeg from suspending with a message like <em>suspended (tty output)</em>?<a class="headerlink" href="#how-do-i-prevent-ffmpeg-from-suspending-with-a-message-like-suspended-tty-output" title="Permanent link">&para;</a></h2>
+<p>If you run ffmpeg in the background, you may find that its process suspends. There may be a message like <em>suspended (tty output)</em>. The question is how to prevent the process from being suspended.</p>
+<p>For example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>% ffmpeg -i INPUT OUTPUT &amp;&gt; ~/tmp/log.txt &amp;
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>[1] 93352
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>%
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>[1]  + suspended (tty output)  ffmpeg -i INPUT OUTPUT &amp;&gt;
+</code></pre></div>
+<p>The message "tty output" notwithstanding, the problem here is that ffmpeg normally checks the console input when it runs. The operating system detects this, and suspends the process until you can bring it to the foreground and attend to it.</p>
+<p>The solution is to use the right techniques to tell ffmpeg not to consult console input. You can use the <a href="../../manual/ffmpeg/#stdin-option"><code>-nostdin</code> option</a>, or redirect standard input with <code>&lt; /dev/null</code>. See FAQ <a href="./#i-have-a-stretched-video-why-does-scaling-not-fix-it"><em>How do I run ffmpeg as a background task?</em></a> for details.</p>
+<h1 id="development">Development<a class="headerlink" href="#development" title="Permanent link">&para;</a></h1>
+<h2 id="are-there-examples-illustrating-how-to-use-the-ffmpeg-libraries-particularly-libavcodec-and-libavformat">Are there examples illustrating how to use the FFmpeg libraries, particularly libavcodec and libavformat?<a class="headerlink" href="#are-there-examples-illustrating-how-to-use-the-ffmpeg-libraries-particularly-libavcodec-and-libavformat" title="Permanent link">&para;</a></h2>
+<p>Yes. Check the <code>doc/examples</code> directory in the source repository, also available online at: <a href="https://github.com/FFmpeg/FFmpeg/tree/master/doc/examples">https://github.com/FFmpeg/FFmpeg/tree/master/doc/examples</a>.</p>
+<p>Examples are also installed by default, usually in <code>$PREFIX/share/ffmpeg/examples</code>.</p>
+<p>Also you may read the Developers Guide of the FFmpeg documentation. Alternatively, examine the source code for one of the many open source projects that already incorporate FFmpeg at (<a href="https://ffmpeg.org/projects.html">projects.html</a>).</p>
+<h2 id="can-you-support-my-c-compiler-xxx">Can you support my C compiler XXX?<a class="headerlink" href="#can-you-support-my-c-compiler-xxx" title="Permanent link">&para;</a></h2>
+<p>It depends. If your compiler is C99-compliant, then patches to support it are likely to be welcome if they do not pollute the source code with <code>#ifdef</code>s related to the compiler.</p>
+<h2 id="is-microsoft-visual-c-supported">Is Microsoft Visual C++ supported?<a class="headerlink" href="#is-microsoft-visual-c-supported" title="Permanent link">&para;</a></h2>
+<p>Yes. Please see the <a href="../platform/">Microsoft Visual C++</a> section in the FFmpeg documentation.</p>
+<h2 id="can-you-add-automake-libtool-or-autoconf-support">Can you add automake, libtool or autoconf support?<a class="headerlink" href="#can-you-add-automake-libtool-or-autoconf-support" title="Permanent link">&para;</a></h2>
+<p>No. These tools are too bloated and they complicate the build.</p>
+<h2 id="why-not-rewrite-ffmpeg-in-object-oriented-c">Why not rewrite FFmpeg in object-oriented C++?<a class="headerlink" href="#why-not-rewrite-ffmpeg-in-object-oriented-c" title="Permanent link">&para;</a></h2>
+<p>FFmpeg is already organized in a highly modular manner and does not need to be rewritten in a formal object language. Further, many of the developers favor straight C; it works for them. For more arguments on this matter, read <a href="https://web.archive.org/web/20111004021423/http://kernel.org/pub/linux/docs/lkml/#s15">"Programming Religion"</a>.</p>
+<h2 id="why-are-the-ffmpeg-programs-devoid-of-debugging-symbols">Why are the ffmpeg programs devoid of debugging symbols?<a class="headerlink" href="#why-are-the-ffmpeg-programs-devoid-of-debugging-symbols" title="Permanent link">&para;</a></h2>
+<p>The build process creates <code>ffmpeg_g</code>, <code>ffplay_g</code>, etc. which contain full debug information. Those binaries are stripped to create <code>ffmpeg</code>, <code>ffplay</code>, etc. If you need the debug information, use the *_g versions.</p>
+<h2 id="i-do-not-like-the-lgpl-can-i-contribute-code-under-the-gpl-instead">I do not like the LGPL, can I contribute code under the GPL instead?<a class="headerlink" href="#i-do-not-like-the-lgpl-can-i-contribute-code-under-the-gpl-instead" title="Permanent link">&para;</a></h2>
+<p>Yes, as long as the code is optional and can easily and cleanly be placed under #if CONFIG_GPL without breaking anything. So, for example, a new codec or filter would be OK under GPL while a bug fix to LGPL code would not.</p>
+<h2 id="im-using-ffmpeg-from-within-my-c-application-but-the-linker-complains-about-missing-symbols-from-the-libraries-themselves">I'm using FFmpeg from within my C application but the linker complains about missing symbols from the libraries themselves.<a class="headerlink" href="#im-using-ffmpeg-from-within-my-c-application-but-the-linker-complains-about-missing-symbols-from-the-libraries-themselves" title="Permanent link">&para;</a></h2>
+<p>FFmpeg builds static libraries by default. In static libraries, dependencies are not handled. That has two consequences. First, you must specify the libraries in dependency order: <code>-lavdevice</code> must come before <code>-lavformat</code>, <code>-lavutil</code> must come after everything else, etc. Second, external libraries that are used in FFmpeg have to be specified too.</p>
+<p>An easy way to get the full list of required libraries in dependency order is to use <code>pkg-config</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>c99 -o program program.c $(pkg-config --cflags --libs libavformat libavcodec)
+</code></pre></div>
+<p>See <code>doc/example/Makefile</code> and <code>doc/example/pc-uninstalled</code> for more details.</p>
+<h2 id="im-using-ffmpeg-from-within-my-c-application-but-the-linker-complains-about-missing-symbols-which-seem-to-be-available">I'm using FFmpeg from within my C++ application but the linker complains about missing symbols which seem to be available.<a class="headerlink" href="#im-using-ffmpeg-from-within-my-c-application-but-the-linker-complains-about-missing-symbols-which-seem-to-be-available" title="Permanent link">&para;</a></h2>
+<p>FFmpeg is a pure C project, so to use the libraries within your C++ application you need to explicitly state that you are using a C library. You can do this by encompassing your FFmpeg includes using <code>extern "C"</code>.</p>
+<p>See <a href="http://www.parashift.com/c++-faq-lite/mixing-c-and-cpp.html#faq-32.3">http://www.parashift.com/c++-faq-lite/mixing-c-and-cpp.html#faq-32.3</a></p>
+<h2 id="im-using-libavutil-from-within-my-c-application-but-the-compiler-complains-about-uint64_c-was-not-declared-in-this-scope">I'm using libavutil from within my C++ application but the compiler complains about 'UINT64_C' was not declared in this scope<a class="headerlink" href="#im-using-libavutil-from-within-my-c-application-but-the-compiler-complains-about-uint64_c-was-not-declared-in-this-scope" title="Permanent link">&para;</a></h2>
+<p>FFmpeg is a pure C project using C99 math features, in order to enable C++ to use them you have to append -D__STDC_CONSTANT_MACROS to your CXXFLAGS</p>
+<h2 id="i-have-a-file-in-memory-a-api-different-from-openread-libc-how-do-i-use-it-with-libavformat">I have a file in memory / a API different from *open/*read/ libc how do I use it with libavformat?<a class="headerlink" href="#i-have-a-file-in-memory-a-api-different-from-openread-libc-how-do-i-use-it-with-libavformat" title="Permanent link">&para;</a></h2>
+<p>You have to create a custom AVIOContext using <code>avio_alloc_context</code>, see <code>libavformat/aviobuf.c</code> in FFmpeg and <code>libmpdemux/demux_lavf.c</code> in MPlayer or MPlayer2 sources.</p>
+<h2 id="where-is-the-documentation-about-ffv1-msmpeg4-asv1-4xm">Where is the documentation about ffv1, msmpeg4, asv1, 4xm?<a class="headerlink" href="#where-is-the-documentation-about-ffv1-msmpeg4-asv1-4xm" title="Permanent link">&para;</a></h2>
+<p>see <a href="https://www.ffmpeg.org/~michael/">https://www.ffmpeg.org/~michael/</a></p>
+<h2 id="how-do-i-feed-h263-rtp-and-other-codecs-in-rtp-to-libavcodec">How do I feed H.263-RTP (and other codecs in RTP) to libavcodec?<a class="headerlink" href="#how-do-i-feed-h263-rtp-and-other-codecs-in-rtp-to-libavcodec" title="Permanent link">&para;</a></h2>
+<p>Even if peculiar since it is network oriented, RTP is a container like any other. You have to <em>demux</em> RTP before feeding the payload to libavcodec. In this specific case please look at RFC 4629 to see how it should be done.</p>
+<h2 id="avstreamr_frame_rate-is-wrong-it-is-much-larger-than-the-frame-rate">AVStream.r_frame_rate is wrong, it is much larger than the frame rate.<a class="headerlink" href="#avstreamr_frame_rate-is-wrong-it-is-much-larger-than-the-frame-rate" title="Permanent link">&para;</a></h2>
+<p><code>r_frame_rate</code> is NOT the average frame rate, it is the smallest frame rate that can accurately represent all timestamps. So no, it is not wrong if it is larger than the average! For example, if you have mixed 25 and 30 fps content, then <code>r_frame_rate</code> will be 150 (it is the least common multiple). If you are looking for the average frame rate, see <code>AVStream.avg_frame_rate</code>.</p>
+<h2 id="why-is-make-fate-not-running-all-tests">Why is <code>make fate</code> not running all tests?<a class="headerlink" href="#why-is-make-fate-not-running-all-tests" title="Permanent link">&para;</a></h2>
+<p>Make sure you have the fate-suite samples and the <code>SAMPLES</code> Make variable or <code>FATE_SAMPLES</code> environment variable or the <code>--samples</code> <code>configure</code> option is set to the right path.</p>
+<h2 id="why-is-make-fate-not-finding-the-samples">Why is <code>make fate</code> not finding the samples?<a class="headerlink" href="#why-is-make-fate-not-finding-the-samples" title="Permanent link">&para;</a></h2>
+<p>Do you happen to have a <code>~</code> character in the samples path to indicate a home directory? The value is used in ways where the shell cannot expand it, causing FATE to not find files. Just replace <code>~</code> by the full path.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      除 wiki 精选页（CC BY-SA 3.0）外，译文基于 FFmpeg 官方文档（LGPL 2.1+）以 LGPL-2.1-or-later 提供 · 译自 n9.0.2
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "content.code.copy", "navigation.instant", "toc.integrate"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

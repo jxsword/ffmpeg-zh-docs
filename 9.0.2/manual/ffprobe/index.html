@@ -1,0 +1,2200 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="FFmpeg 官方文档中文翻译版（基线 n9.0.2，跟随上游 release 增量翻译）">
+      
+      
+        <meta name="author" content="ffmpeg-zh-docs 翻译组">
+      
+      
+        <link rel="canonical" href="https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/manual/ffprobe/">
+      
+      
+        <link rel="prev" href="../ffplay/">
+      
+      
+        <link rel="next" href="../common-options/">
+      
+      
+        
+          <link rel="alternate" href="https://ffmpeg.org/documentation.html" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>ffprobe 手册 - FFmpeg 中文文档</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Noto Sans SC";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#synopsis" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="FFmpeg 中文文档" class="md-header__button md-logo" aria-label="FFmpeg 中文文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FFmpeg 中文文档
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ffprobe 手册
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="https://ffmpeg.org/documentation.html" hreflang="en" class="md-select__link">
+              English (Original)
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jxsword/ffmpeg-zh-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ffmpeg-zh-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../ffmpeg/" class="md-tabs__link">
+          
+  
+  
+  手册
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../components/utils/" class="md-tabs__link">
+          
+  
+  
+  组件
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../filters/overview/" class="md-tabs__link">
+          
+  
+  
+  滤镜
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../libraries/libavutil/" class="md-tabs__link">
+          
+  
+  
+  库
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../general/faq/" class="md-tabs__link">
+          
+  
+  
+  General
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="FFmpeg 中文文档" class="md-nav__button md-logo" aria-label="FFmpeg 中文文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    FFmpeg 中文文档
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jxsword/ffmpeg-zh-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ffmpeg-zh-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    手册
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    手册
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ffmpeg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffmpeg 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ffplay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffplay 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffprobe 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../common-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    公共选项（ffmpeg/ffplay/ffprobe）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    组件
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    组件
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具（Utils）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/scaler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    缩放器（Scaler）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/resampler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    重采样器（Resampler）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/codecs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    编解码器（Codecs）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/bitstream-filters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    比特流滤镜（Bitstream Filters）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    格式（Formats）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    协议（Protocols）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    设备（Devices）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    滤镜
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    滤镜
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    滤镜总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/video/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    视频滤镜（364）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音频滤镜（135）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/multimedia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    多媒体滤镜（37）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    库
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    库
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavutil/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavutil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavcodec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavcodec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavformat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavformat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavdevice/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavdevice
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavfilter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavfilter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libswscale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libswscale
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libswresample/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libswresample
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    General
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/general/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    通用目录（General）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    平台（Platform）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/developer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开发者（Developer）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/git-howto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git 使用（Git Howto）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/fate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FATE 测试
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/authors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作者（Authors）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/mailing-list-faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    邮件列表 FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/nut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NUT 格式
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/community/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    社区（Community）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/drawvg-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    drawvg 参考
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/APIchanges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API 变更日志（英文原文）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<div class="admonition warning">
+<p class="admonition-title">翻译占位页</p>
+<p>本页为英文原文占位（翻译进行中，进度见<a href="https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md">翻译看板</a>）。
+术语与示例以英文原文为准。</p>
+</div>
+<h1 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">&para;</a></h1>
+<p>ffprobe [\&lt;options&gt;] <code>input_url</code></p>
+<h1 id="description">Description<a class="headerlink" href="#description" title="Permanent link">&para;</a></h1>
+<p>ffprobe gathers information from multimedia streams and prints it in human- and machine-readable fashion.</p>
+<p>For example it can be used to check the format of the container used by a multimedia stream and the format and type of each media stream contained in it.</p>
+<p>If a url is specified in input, ffprobe will try to open and probe the url content. If the url cannot be opened or recognized as a multimedia file, a positive exit code is returned.</p>
+<p>If no output is specified as output with <code>o</code> ffprobe will write to stdout.</p>
+<p>ffprobe may be employed both as a standalone application or in combination with a textual filter, which may perform more sophisticated processing, e.g. statistical processing or plotting.</p>
+<p>Options are used to list some of the formats supported by ffprobe or for specifying which information to display, and for setting how ffprobe will show it.</p>
+<p>ffprobe output is designed to be easily parsable by a textual filter, and consists of one or more sections of a form defined by the selected writer, which is specified by the <code>output_format</code> option.</p>
+<p>Sections may contain other nested sections, and are identified by a name (which may be shared by other sections), and an unique name. See the output of <code>sections</code>.</p>
+<p>Metadata tags stored in the container or in the streams are recognized and printed in the corresponding "FORMAT", "STREAM", "STREAM_GROUP_STREAM" or "PROGRAM_STREAM" section.</p>
+<h1 id="options">Options<a class="headerlink" href="#options" title="Permanent link">&para;</a></h1>
+<h2 id="main-options">Main options<a class="headerlink" href="#main-options" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><strong><code>-f format</code></strong> Force format to use.</p>
+</li>
+<li>
+<p><strong><code>-unit</code></strong> Show the unit of the displayed values.</p>
+</li>
+<li>
+<p><strong><code>-prefix</code></strong> Use SI prefixes for the displayed values. Unless the "-byte_binary_prefix" option is used all the prefixes are decimal.</p>
+</li>
+<li>
+<p><strong><code>-byte_binary_prefix</code></strong> Force the use of binary prefixes for byte values.</p>
+</li>
+<li>
+<p><strong><code>-sexagesimal</code></strong> Use sexagesimal format HH:MM:SS.MICROSECONDS for time values.</p>
+</li>
+<li>
+<p><strong><code>-pretty</code></strong> Prettify the format of the displayed values, it corresponds to the options "-unit -prefix -byte_binary_prefix -sexagesimal".</p>
+</li>
+<li>
+<p><strong><code>-output_format, -of, -print_format writer_name[=writer_options]</code></strong> Set the output printing format.</p>
+</li>
+</ul>
+<p>\&lt;writer_name&gt; specifies the name of the writer, and \&lt;writer_options&gt; specifies the options to be passed to the writer.</p>
+<p>For example for printing the output in JSON format, specify:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>-output_format json
+</code></pre></div>
+<p>For more details on the available output printing formats, see the Writers section below.</p>
+<ul>
+<li>
+<p><strong><code>-sections</code></strong> Print sections structure and section information, and exit. The output is not meant to be parsed by a machine.</p>
+</li>
+<li>
+<p><strong><code>-select_streams stream_specifier</code></strong> Select only the streams specified by \&lt;stream_specifier&gt;. This option affects only the options related to streams (e.g. <code>show_streams</code>, <code>show_packets</code>, etc.).</p>
+</li>
+</ul>
+<p>For example to show only audio streams, you can use the command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ffprobe -show_streams -select_streams a INPUT
+</code></pre></div>
+<p>To show only video packets belonging to the video stream with index 1:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ffprobe -show_packets -select_streams v:1 INPUT
+</code></pre></div>
+<ul>
+<li><strong><code>-show_data</code></strong> Show payload data, as a hexadecimal and ASCII dump (other formats can be selected using <code>-data_dump_format</code>). Coupled with <code>-show_packets</code>, it will dump the packets' data. Coupled with <code>-show_streams</code>, it will dump the codec extradata.</li>
+</ul>
+<p>The dump is printed as the "data" field. It may contain newlines.</p>
+<ul>
+<li>
+<p><strong><code>-show_data_hash algorithm</code></strong> Show a hash of payload data, for packets with <code>-show_packets</code> and for codec extradata with <code>-show_streams</code>.</p>
+</li>
+<li>
+<p><strong><code>-data_dump_format format</code></strong> Select a format used for the data dumps enabled with the <code>-show_data</code> option. The default is <code>xxd</code> which is a hexdump format compatible with the well-known <code>xxd</code> program. <code>base64</code> is also supported.</p>
+</li>
+<li>
+<p><strong><code>-show_error</code></strong> Show information about the error found when trying to probe the input.</p>
+</li>
+</ul>
+<p>The error information is printed within a section with name "ERROR".</p>
+<ul>
+<li><strong><code>-show_format</code></strong> Show information about the container format of the input multimedia stream.</li>
+</ul>
+<p>All the container format information is printed within a section with name "FORMAT".</p>
+<ul>
+<li><strong><code>-show_entries section_entries</code></strong> Set list of entries to show.</li>
+</ul>
+<p>Entries are specified according to the following syntax. \&lt;section_entries&gt; contains a list of section entries separated by <code>:</code>. Each section entry is composed by a section name (or unique name), optionally followed by a list of entries local to that section, separated by <code>,</code>.</p>
+<p>If section name is specified but is followed by no <code>=</code>, all entries are printed to output, together with all the contained sections. Otherwise only the entries specified in the local section entries list are printed. In particular, if <code>=</code> is specified but the list of local entries is empty, then no entries will be shown for that section.</p>
+<p>Note that the order of specification of the local section entries is not honored in the output, and the usual display order will be retained.</p>
+<p>The formal syntax is given by:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>LOCAL_SECTION_ENTRIES ::= SECTION_ENTRY_NAME[,LOCAL_SECTION_ENTRIES]
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>SECTION_ENTRY         ::= SECTION_NAME[=[LOCAL_SECTION_ENTRIES]]
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>SECTION_ENTRIES       ::= SECTION_ENTRY[:SECTION_ENTRIES]
+</code></pre></div>
+<p>For example, to show only the index and type of each stream, and the PTS time, duration time, and stream index of the packets, you can specify the argument:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>packet=pts_time,duration_time,stream_index : stream=index,codec_type
+</code></pre></div>
+<p>To show all the entries in the section "format", but only the codec type in the section "stream", specify the argument:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>format : stream=codec_type
+</code></pre></div>
+<p>To show all the tags in the stream and format sections:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>stream_tags : format_tags
+</code></pre></div>
+<p>To show only the <code>title</code> tag (if available) in the stream sections:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>stream_tags=title
+</code></pre></div>
+<ul>
+<li><strong><code>-show_packets</code></strong> Show information about each packet contained in the input multimedia stream.</li>
+</ul>
+<p>The information for each single packet is printed within a dedicated section with name "PACKET".</p>
+<ul>
+<li><strong><code>-show_frames</code></strong> Show information about each frame and subtitle contained in the input multimedia stream.</li>
+</ul>
+<p>The information for each single frame is printed within a dedicated section with name "FRAME" or "SUBTITLE".</p>
+<ul>
+<li><strong><code>-show_log loglevel</code></strong> Show logging information from the decoder about each frame according to the value set in \&lt;loglevel&gt;, (see <code>-loglevel</code>). This option requires <code>-show_frames</code>.</li>
+</ul>
+<p>The information for each log message is printed within a dedicated section with name "LOG".</p>
+<ul>
+<li><strong><code>-show_streams</code></strong> Show information about each media stream contained in the input multimedia stream.</li>
+</ul>
+<p>Each media stream information is printed within a dedicated section with name "STREAM".</p>
+<ul>
+<li><strong><code>-show_programs</code></strong> Show information about programs and their streams contained in the input multimedia stream.</li>
+</ul>
+<p>Each media stream information is printed within a dedicated section with name "PROGRAM_STREAM".</p>
+<ul>
+<li><strong><code>-show_stream_groups</code></strong> Show information about stream groups and their streams contained in the input multimedia stream.</li>
+</ul>
+<p>Each media stream information is printed within a dedicated section with name "STREAM_GROUP_STREAM".</p>
+<ul>
+<li><strong><code>-show_chapters</code></strong> Show information about chapters stored in the format.</li>
+</ul>
+<p>Each chapter is printed within a dedicated section with name "CHAPTER".</p>
+<ul>
+<li>
+<p><strong><code>-count_frames</code></strong> Count the number of frames per stream and report it in the corresponding stream section.</p>
+</li>
+<li>
+<p><strong><code>-count_packets</code></strong> Count the number of packets per stream and report it in the corresponding stream section.</p>
+</li>
+<li>
+<p><strong><code>-read_intervals read_intervals</code></strong> Read only the specified intervals. \&lt;read_intervals&gt; must be a sequence of interval specifications separated by ",". <code>ffprobe</code> will seek to the interval starting point, and will continue reading from that.</p>
+</li>
+</ul>
+<p>Each interval is specified by two optional parts, separated by "%".</p>
+<p>The first part specifies the interval start position. It is interpreted as an absolute position, or as a relative offset from the current position if it is preceded by the "+" character. If this first part is not specified, no seeking will be performed when reading this interval.</p>
+<p>The second part specifies the interval end position. It is interpreted as an absolute position, or as a relative offset from the current position if it is preceded by the "+" character. If the offset specification starts with "#", it is interpreted as the number of packets to read (not including the flushing packets) from the interval start. If no second part is specified, the program will read until the end of the input.</p>
+<p>Note that seeking is not accurate, thus the actual interval start point may be different from the specified position. Also, when an interval duration is specified, the absolute end time will be computed by adding the duration to the interval start point found by seeking the file, rather than to the specified start value.</p>
+<p>The formal syntax is given by:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>INTERVAL  ::= [START|+START_OFFSET][%[END|+END_OFFSET]]
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>INTERVALS ::= INTERVAL[,INTERVALS]
+</code></pre></div>
+<p>A few examples follow.</p>
+<ul>
+<li>
+<p>Seek to time 10, read packets until 20 seconds after the found seek point, then seek to position <code>01:30</code> (1 minute and thirty seconds) and read packets until position <code>01:45</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>10%+20,01:30%01:45
+</code></pre></div>
+</li>
+<li>
+<p>Read only 42 packets after seeking to position <code>01:23</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>01:23%+#42
+</code></pre></div>
+</li>
+<li>
+<p>Read only the first 20 seconds from the start:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>%+20
+</code></pre></div>
+</li>
+<li>
+<p>Read from the start until position <code>02:30</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>%02:30
+</code></pre></div>
+</li>
+<li>
+<p><strong><code>-show_private_data, -private</code></strong> Show private data, that is data depending on the format of the particular shown element. This option is enabled by default, but you may need to disable it for specific uses, for example when creating XSD-compliant XML output.</p>
+</li>
+<li>
+<p><strong><code>-show_program_version</code></strong> Show information related to program version.</p>
+</li>
+</ul>
+<p>Version information is printed within a section with name "PROGRAM_VERSION".</p>
+<ul>
+<li><strong><code>-show_library_versions</code></strong> Show information related to library versions.</li>
+</ul>
+<p>Version information for each library is printed within a section with name "LIBRARY_VERSION".</p>
+<ul>
+<li>
+<p><strong><code>-show_versions</code></strong> Show information related to program and library versions. This is the equivalent of setting both <code>-show_program_version</code> and <code>-show_library_versions</code> options.</p>
+</li>
+<li>
+<p><strong><code>-show_pixel_formats</code></strong> Show information about all pixel formats supported by FFmpeg.</p>
+</li>
+</ul>
+<p>Pixel format information for each format is printed within a section with name "PIXEL_FORMAT".</p>
+<ul>
+<li>
+<p><strong><code>-show_optional_fields value</code></strong> Some writers viz. JSON and XML, omit the printing of fields with invalid or non-applicable values, while other writers always print them. This option enables one to control this behaviour. Valid values are <code>always</code>/<code>1</code>, <code>never</code>/<code>0</code> and <code>auto</code>/<code>-1</code>. Default is \&lt;auto&gt;.</p>
+</li>
+<li>
+<p><strong><code>-analyze_frames</code></strong> Analyze frames and/or their side data up to the provided read interval, providing additional information that may be useful at a stream level. Must be paired with the <code>-show_streams</code> option or it will have no effect.</p>
+</li>
+</ul>
+<p>Currently, the additional fields provided by this option when enabled are the <code>closed_captions</code> and <code>film_grain</code> fields.</p>
+<p>For example, to analyze the first 20 seconds and populate these fields:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ffprobe -show_streams -analyze_frames -read_intervals "%+20" INPUT
+</code></pre></div>
+<ul>
+<li>
+<p><strong><code>-bitexact</code></strong> Force bitexact output, useful to produce output which is not dependent on the specific build.</p>
+</li>
+<li>
+<p><strong><code>-i input_url</code></strong> Read \&lt;input_url&gt;.</p>
+</li>
+<li>
+<p><strong><code>-o output_url</code></strong> Write output to \&lt;output_url&gt;. If not specified, the output is sent to stdout.</p>
+</li>
+<li>
+<p><strong><code>-c:media_specifier codec_name</code></strong> Force a specific decoder implementation for the stream identified by \&lt;media_specifier&gt;, which can assume the values <code>a</code> (audio), <code>v</code> (video), <code>s</code> (subtitle), and <code>d</code> (data).</p>
+</li>
+</ul>
+<h1 id="writers">Writers<a class="headerlink" href="#writers" title="Permanent link">&para;</a></h1>
+<p>A writer defines the output format adopted by <code>ffprobe</code>, and will be used for printing all the parts of the output.</p>
+<p>A writer may accept one or more arguments, which specify the options to adopt. The options are specified as a list of \&lt;key&gt;=\&lt;value&gt; pairs, separated by ":".</p>
+<p>All writers support the following options:</p>
+<ul>
+<li><strong><code>string_validation, sv</code></strong> Set string validation mode.</li>
+</ul>
+<p>The following values are accepted.</p>
+<ul>
+<li>
+<p><strong><code>fail</code></strong> The writer will fail immediately in case an invalid string (UTF-8) sequence or code point is found in the input. This is especially useful to validate input metadata.</p>
+</li>
+<li>
+<p><strong><code>ignore</code></strong> Any validation error will be ignored. This will result in possibly broken output, especially with the json or xml writer.</p>
+</li>
+<li>
+<p><strong><code>replace</code></strong> The writer will substitute invalid UTF-8 sequences or code points with the string specified with the <code>string_validation_replacement</code>.</p>
+</li>
+</ul>
+<p>Default value is <code>replace</code>.</p>
+<ul>
+<li><strong><code>string_validation_replacement, svr</code></strong> Set replacement string to use in case <code>string_validation</code> is set to <code>replace</code>.</li>
+</ul>
+<p>In case the option is not specified, the writer will assume the empty string, that is it will remove the invalid sequences from the input strings.</p>
+<p>A description of the currently available writers follows.</p>
+<h2 id="default">default<a class="headerlink" href="#default" title="Permanent link">&para;</a></h2>
+<p>Default format.</p>
+<p>Print each section in the form:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>[SECTION]
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>key1=val1
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>...
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>keyN=valN
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>[/SECTION]
+</code></pre></div>
+<p>Metadata tags are printed as a line in the corresponding FORMAT, STREAM, STREAM_GROUP_STREAM or PROGRAM_STREAM section, and are prefixed by the string "TAG:".</p>
+<p>A description of the accepted options follows.</p>
+<ul>
+<li>
+<p><strong><code>nokey, nk</code></strong> If set to 1 specify not to print the key of each field. Default value is 0.</p>
+</li>
+<li>
+<p><strong><code>noprint_wrappers, nw</code></strong> If set to 1 specify not to print the section header and footer. Default value is 0.</p>
+</li>
+</ul>
+<h2 id="compact-csv">compact, csv<a class="headerlink" href="#compact-csv" title="Permanent link">&para;</a></h2>
+<p>Compact and CSV format.</p>
+<p>The <code>csv</code> writer is equivalent to <code>compact</code>, but supports different defaults.</p>
+<p>Each section is printed on a single line. If no option is specified, the output has the form:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>section|key1=val1| ... |keyN=valN
+</code></pre></div>
+<p>Metadata tags are printed in the corresponding "format" or "stream" section. A metadata tag key, if printed, is prefixed by the string "tag:".</p>
+<p>The description of the accepted options follows.</p>
+<ul>
+<li>
+<p><strong><code>item_sep, s</code></strong> Specify the character to use for separating fields in the output line. It must be a single printable character, it is "|" by default ("," for the <code>csv</code> writer).</p>
+</li>
+<li>
+<p><strong><code>nokey, nk</code></strong> If set to 1 specify not to print the key of each field. Its default value is 0 (1 for the <code>csv</code> writer).</p>
+</li>
+<li>
+<p><strong><code>escape, e</code></strong> Set the escape mode to use, default to "c" ("csv" for the <code>csv</code> writer).</p>
+</li>
+</ul>
+<p>It can assume one of the following values:</p>
+<ul>
+<li>
+<p><strong><code>c</code></strong> Perform C-like escaping. Strings containing a newline (<code>\n</code>), carriage return (<code>\r</code>), a tab (<code>\t</code>), a form feed (<code>\f</code>), the escaping character (<code>\</code>) or the item separator character \&lt;SEP&gt; are escaped using C-like fashioned escaping, so that a newline is converted to the sequence <code>\n</code>, a carriage return to <code>\r</code>, <code>\</code> to <code>\\</code> and the separator \&lt;SEP&gt; is converted to <code>\SEP</code>.</p>
+</li>
+<li>
+<p><strong><code>csv</code></strong> Perform CSV-like escaping, as described in RFC4180. Strings containing a newline (<code>\n</code>), a carriage return (<code>\r</code>), a double quote (<code>"</code>), or \&lt;SEP&gt; are enclosed in double-quotes.</p>
+</li>
+<li>
+<p><strong><code>none</code></strong> Perform no escaping.</p>
+</li>
+<li>
+<p><strong><code>print_section, p</code></strong> Print the section name at the beginning of each line if the value is <code>1</code>, disable it with value set to <code>0</code>. Default value is <code>1</code>.</p>
+</li>
+</ul>
+<h2 id="flat">flat<a class="headerlink" href="#flat" title="Permanent link">&para;</a></h2>
+<p>Flat format.</p>
+<p>A free-form output where each line contains an explicit key=value, such as "streams.stream.3.tags.foo=bar". The output is shell escaped, so it can be directly embedded in sh scripts as long as the separator character is an alphanumeric character or an underscore (see \&lt;sep_char&gt; option).</p>
+<p>The description of the accepted options follows.</p>
+<ul>
+<li><strong><code>sep_char, s</code></strong> Separator character used to separate the chapter, the section name, IDs and potential tags in the printed field key.</li>
+</ul>
+<p>Default value is <code>.</code>.</p>
+<ul>
+<li><strong><code>hierarchical, h</code></strong> Specify if the section name specification should be hierarchical. If set to 1, and if there is more than one section in the current chapter, the section name will be prefixed by the name of the chapter. A value of 0 will disable this behavior.</li>
+</ul>
+<p>Default value is 1.</p>
+<h2 id="ini">ini<a class="headerlink" href="#ini" title="Permanent link">&para;</a></h2>
+<p>INI format output.</p>
+<p>Print output in an INI based format.</p>
+<p>The following conventions are adopted:</p>
+<ul>
+<li>
+<p>all key and values are UTF-8</p>
+</li>
+<li>
+<p><code>.</code> is the subgroup separator</p>
+</li>
+<li>
+<p>newline, <code>\t</code>, <code>\f</code>, <code>\b</code> and the following characters are escaped</p>
+</li>
+<li>
+<p><code>\</code> is the escape character</p>
+</li>
+<li>
+<p><code>#</code> is the comment indicator</p>
+</li>
+<li>
+<p><code>=</code> is the key/value separator</p>
+</li>
+<li>
+<p><code>:</code> is not used but usually parsed as key/value separator</p>
+</li>
+</ul>
+<p>This writer accepts options as a list of \&lt;key&gt;=\&lt;value&gt; pairs, separated by <code>:</code>.</p>
+<p>The description of the accepted options follows.</p>
+<ul>
+<li><strong><code>hierarchical, h</code></strong> Specify if the section name specification should be hierarchical. If set to 1, and if there is more than one section in the current chapter, the section name will be prefixed by the name of the chapter. A value of 0 will disable this behavior.</li>
+</ul>
+<p>Default value is 1.</p>
+<h2 id="json">json<a class="headerlink" href="#json" title="Permanent link">&para;</a></h2>
+<p>JSON based format.</p>
+<p>Each section is printed using JSON notation.</p>
+<p>The description of the accepted options follows.</p>
+<ul>
+<li><strong><code>compact, c</code></strong> If set to 1 enable compact output, that is each section will be printed on a single line. Default value is 0.</li>
+</ul>
+<p>For more information about JSON, see <a href="http://www.json.org/">http://www.json.org/</a>.</p>
+<h2 id="xml">xml<a class="headerlink" href="#xml" title="Permanent link">&para;</a></h2>
+<p>XML based format.</p>
+<p>The XML output is described in the XML schema description file <code>ffprobe.xsd</code> installed in the FFmpeg datadir.</p>
+<p>An updated version of the schema can be retrieved at the url <a href="http://www.ffmpeg.org/schema/ffprobe.xsd">http://www.ffmpeg.org/schema/ffprobe.xsd</a>, which redirects to the latest schema committed into the FFmpeg development source code tree.</p>
+<p>Note that the output issued will be compliant to the <code>ffprobe.xsd</code> schema only when no special global output options (<code>unit</code>, <code>prefix</code>, <code>byte_binary_prefix</code>, <code>sexagesimal</code> etc.) are specified.</p>
+<p>The description of the accepted options follows.</p>
+<ul>
+<li>
+<p><strong><code>fully_qualified, q</code></strong> If set to 1 specify if the output should be fully qualified. Default value is 0. This is required for generating an XML file which can be validated through an XSD file.</p>
+</li>
+<li>
+<p><strong><code>xsd_strict, x</code></strong> If set to 1 perform more checks for ensuring that the output is XSD compliant. Default value is 0. This option automatically sets <code>fully_qualified</code> to 1.</p>
+</li>
+</ul>
+<p>For more information about the XML format, see <a href="https://www.w3.org/XML/">https://www.w3.org/XML/</a>.</p>
+<h1 id="timecode">Timecode<a class="headerlink" href="#timecode" title="Permanent link">&para;</a></h1>
+<p><code>ffprobe</code> supports Timecode extraction:</p>
+<ul>
+<li>
+<p>MPEG1/2 timecode is extracted from the GOP, and is available in the video stream details (<code>-show_streams</code>, see \&lt;timecode&gt;).</p>
+</li>
+<li>
+<p>MOV timecode is extracted from tmcd track, so is available in the tmcd stream metadata (<code>-show_streams</code>, see \&lt;TAG:timecode&gt;).</p>
+</li>
+<li>
+<p>DV, GXF and AVI timecodes are available in format metadata (<code>-show_format</code>, see \&lt;TAG:timecode&gt;).</p>
+</li>
+</ul>
+<h1 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h1>
+<p>ffmpeg(1), ffplay(1), ffmpeg-utils(1), ffmpeg-scaler(1), ffmpeg-resampler(1), ffmpeg-codecs(1), ffmpeg-bitstream-filters(1), ffmpeg-formats(1), ffmpeg-devices(1), ffmpeg-protocols(1), ffmpeg-filters(1)</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      除 wiki 精选页（CC BY-SA 3.0）外，译文基于 FFmpeg 官方文档（LGPL 2.1+）以 LGPL-2.1-or-later 提供 · 译自 n9.0.2
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "content.code.copy", "navigation.instant", "toc.integrate"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

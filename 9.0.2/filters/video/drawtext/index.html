@@ -1,0 +1,2283 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="FFmpeg 官方文档中文翻译版（基线 n9.0.2，跟随上游 release 增量翻译）">
+      
+      
+        <meta name="author" content="ffmpeg-zh-docs 翻译组">
+      
+      
+        <link rel="canonical" href="https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/drawtext/">
+      
+      
+      
+      
+        
+          <link rel="alternate" href="https://ffmpeg.org/documentation.html" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>drawtext - FFmpeg 中文文档</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Noto Sans SC";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#drawtext" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="FFmpeg 中文文档" class="md-header__button md-logo" aria-label="FFmpeg 中文文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FFmpeg 中文文档
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              drawtext
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="https://ffmpeg.org/documentation.html" hreflang="en" class="md-select__link">
+              English (Original)
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jxsword/ffmpeg-zh-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ffmpeg-zh-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../manual/ffmpeg/" class="md-tabs__link">
+          
+  
+  
+  手册
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../components/utils/" class="md-tabs__link">
+          
+  
+  
+  组件
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/" class="md-tabs__link">
+          
+  
+  
+  滤镜
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../libraries/libavutil/" class="md-tabs__link">
+          
+  
+  
+  库
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../general/faq/" class="md-tabs__link">
+          
+  
+  
+  General
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="FFmpeg 中文文档" class="md-nav__button md-logo" aria-label="FFmpeg 中文文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    FFmpeg 中文文档
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jxsword/ffmpeg-zh-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ffmpeg-zh-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    手册
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    手册
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../manual/ffmpeg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffmpeg 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../manual/ffplay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffplay 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../manual/ffprobe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffprobe 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../manual/common-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    公共选项（ffmpeg/ffplay/ffprobe）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    组件
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    组件
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../components/utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具（Utils）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../components/scaler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    缩放器（Scaler）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../components/resampler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    重采样器（Resampler）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../components/codecs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    编解码器（Codecs）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../components/bitstream-filters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    比特流滤镜（Bitstream Filters）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../components/formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    格式（Formats）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../components/protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    协议（Protocols）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../components/devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    设备（Devices）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    滤镜
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    滤镜
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    滤镜总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    视频滤镜（364）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音频滤镜（135）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../multimedia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    多媒体滤镜（37）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    库
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    库
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libraries/libavutil/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavutil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libraries/libavcodec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavcodec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libraries/libavformat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavformat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libraries/libavdevice/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavdevice
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libraries/libavfilter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavfilter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libraries/libswscale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libswscale
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libraries/libswresample/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libswresample
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    General
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/general/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    通用目录（General）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    平台（Platform）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/developer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开发者（Developer）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/git-howto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git 使用（Git Howto）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/fate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FATE 测试
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/authors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作者（Authors）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/mailing-list-faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    邮件列表 FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/nut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NUT 格式
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/community/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    社区（Community）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/drawvg-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    drawvg 参考
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../general/APIchanges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API 变更日志（英文原文）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="drawtext">drawtext<a class="headerlink" href="#drawtext" title="Permanent link">&para;</a></h1>
+<p>Draw a text string or text from a specified file on top of a video, using the libfreetype library.</p>
+<p>To enable compilation of this filter, you need to configure FFmpeg with <code>--enable-libfreetype</code> and <code>--enable-libharfbuzz</code>. To enable default font fallback and the \&lt;font&gt; option you need to configure FFmpeg with <code>--enable-libfontconfig</code>. To enable the \&lt;text_shaping&gt; option, you need to configure FFmpeg with <code>--enable-libfribidi</code>.</p>
+<h2 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link">&para;</a></h2>
+<p>It accepts the following parameters:</p>
+<ul>
+<li>
+<p><strong><code>box</code></strong> Used to draw a box around text using the background color. The value must be either 1 (enable) or 0 (disable). The default value of \&lt;box&gt; is 0.</p>
+</li>
+<li>
+<p><strong><code>boxborderw</code></strong> Set the width of the border to be drawn around the box using \&lt;boxcolor&gt;. The value must be specified using one of the following formats:</p>
+</li>
+<li>
+<p><code>boxborderw=10</code> set the width of all the borders to 10</p>
+</li>
+<li>
+<p><code>boxborderw=10|20</code> set the width of the top and bottom borders to 10 and the width of the left and right borders to 20</p>
+</li>
+<li>
+<p><code>boxborderw=10|20|30</code> set the width of the top border to 10, the width of the bottom border to 30 and the width of the left and right borders to 20</p>
+</li>
+<li>
+<p><code>boxborderw=10|20|30|40</code> set the borders width to 10 (top), 20 (right), 30 (bottom), 40 (left)</p>
+</li>
+</ul>
+<p>The default value of \&lt;boxborderw&gt; is "0".</p>
+<ul>
+<li><strong><code>boxcolor</code></strong> The color to be used for drawing box around text. For the syntax of this option, check the section ""Color" section in the ffmpeg-utils manual" in <code>ffmpeg-utils</code>.</li>
+</ul>
+<p>The default value of \&lt;boxcolor&gt; is "white".</p>
+<ul>
+<li>
+<p><strong><code>line_spacing</code></strong> Set the line spacing in pixels. The default value of \&lt;line_spacing&gt; is 0.</p>
+</li>
+<li>
+<p><strong><code>text_align</code></strong> Set the vertical and horizontal alignment of the text with respect to the box boundaries. The value is combination of flags, one for the vertical alignment (T=top, M=middle, B=bottom) and one for the horizontal alignment (L=left, C=center, R=right). Please note that tab characters are only supported with the left horizontal alignment.</p>
+</li>
+<li>
+<p><strong><code>y_align</code></strong> Specify what the \&lt;y&gt; value is referred to. Possible values are:</p>
+</li>
+<li>
+<p><code>text</code> the top of the highest glyph of the first text line is placed at \&lt;y&gt;</p>
+</li>
+<li>
+<p><code>baseline</code> the baseline of the first text line is placed at \&lt;y&gt;</p>
+</li>
+<li>
+<p><code>font</code> the baseline of the first text line is placed at \&lt;y&gt; plus the ascent (in pixels) defined in the font metrics</p>
+</li>
+</ul>
+<p>The default value of \&lt;y_align&gt; is "text" for backward compatibility.</p>
+<ul>
+<li>
+<p><strong><code>borderw</code></strong> Set the width of the border to be drawn around the text using \&lt;bordercolor&gt;. The default value of \&lt;borderw&gt; is 0.</p>
+</li>
+<li>
+<p><strong><code>bordercolor</code></strong> Set the color to be used for drawing border around text. For the syntax of this option, check the section ""Color" section in the ffmpeg-utils manual" in <code>ffmpeg-utils</code>.</p>
+</li>
+</ul>
+<p>The default value of \&lt;bordercolor&gt; is "black".</p>
+<ul>
+<li>
+<p><strong><code>expansion</code></strong> Select how the \&lt;text&gt; is expanded. Can be either <code>none</code>, <code>strftime</code> (deprecated) or <code>normal</code> (default). See the <a href="../../overview/#syntax">Text expansion</a> section below for details.</p>
+</li>
+<li>
+<p><strong><code>basetime</code></strong> Set a start time for the count. Value is in microseconds. Only applied in the deprecated <code>strftime</code> expansion mode. To emulate in normal expansion mode use the <code>pts</code> function, supplying the start time (in seconds) as the second argument.</p>
+</li>
+<li>
+<p><strong><code>fix_bounds</code></strong> If true, check and fix text coords to avoid clipping.</p>
+</li>
+<li>
+<p><strong><code>fontcolor</code></strong> The color to be used for drawing fonts. For the syntax of this option, check the section ""Color" section in the ffmpeg-utils manual" in <code>ffmpeg-utils</code>.</p>
+</li>
+</ul>
+<p>The default value of \&lt;fontcolor&gt; is "black".</p>
+<ul>
+<li>
+<p><strong><code>fontcolor_expr</code></strong> String which is expanded the same way as \&lt;text&gt; to obtain dynamic \&lt;fontcolor&gt; value. By default this option has empty value and is not processed. When this option is set, it overrides \&lt;fontcolor&gt; option.</p>
+</li>
+<li>
+<p><strong><code>font</code></strong> The font family to be used for drawing text. By default Sans.</p>
+</li>
+<li>
+<p><strong><code>fontfile</code></strong> The font file to be used for drawing text. The path must be included. This parameter is mandatory if the fontconfig support is disabled.</p>
+</li>
+<li>
+<p><strong><code>alpha</code></strong> Draw the text applying alpha blending. The value can be a number between 0.0 and 1.0. The expression accepts the same variables \&lt;x, y&gt; as well. The default value is 1. Please see \&lt;fontcolor_expr&gt;.</p>
+</li>
+<li>
+<p><strong><code>fontsize</code></strong> The font size to be used for drawing text. The default value of \&lt;fontsize&gt; is 16.</p>
+</li>
+<li>
+<p><strong><code>text_shaping</code></strong> If set to 1, attempt to shape the text (for example, reverse the order of right-to-left text and join Arabic characters) before drawing it. Otherwise, just draw the text exactly as given. By default 1 (if supported).</p>
+</li>
+<li>
+<p><strong><code>ft_load_flags</code></strong> The flags to be used for loading the fonts.</p>
+</li>
+</ul>
+<p>The flags map the corresponding flags supported by libfreetype, and are a combination of the following values:</p>
+<ul>
+<li>
+<p><strong>\&lt;default&gt;</strong></p>
+</li>
+<li>
+<p><strong>\&lt;no_scale&gt;</strong></p>
+</li>
+<li>
+<p><strong>\&lt;no_hinting&gt;</strong></p>
+</li>
+<li>
+<p><strong>\&lt;render&gt;</strong></p>
+</li>
+<li>
+<p><strong>\&lt;no_bitmap&gt;</strong></p>
+</li>
+<li>
+<p><strong>\&lt;vertical_layout&gt;</strong></p>
+</li>
+<li>
+<p><strong>\&lt;force_autohint&gt;</strong></p>
+</li>
+<li>
+<p><strong>\&lt;crop_bitmap&gt;</strong></p>
+</li>
+<li>
+<p><strong>\&lt;pedantic&gt;</strong></p>
+</li>
+<li>
+<p><strong>\&lt;ignore_global_advance_width&gt;</strong></p>
+</li>
+<li>
+<p><strong>\&lt;no_recurse&gt;</strong></p>
+</li>
+<li>
+<p><strong>\&lt;ignore_transform&gt;</strong></p>
+</li>
+<li>
+<p><strong>\&lt;monochrome&gt;</strong></p>
+</li>
+<li>
+<p><strong>\&lt;linear_design&gt;</strong></p>
+</li>
+<li>
+<p><strong>\&lt;no_autohint&gt;</strong></p>
+</li>
+</ul>
+<p>Default value is "default".</p>
+<p>For more information consult the documentation for the FT_LOAD_* libfreetype flags.</p>
+<ul>
+<li><strong><code>shadowcolor</code></strong> The color to be used for drawing a shadow behind the drawn text. For the syntax of this option, check the section ""Color" section in the ffmpeg-utils manual" in <code>ffmpeg-utils</code>.</li>
+</ul>
+<p>The default value of \&lt;shadowcolor&gt; is "black".</p>
+<ul>
+<li>
+<p><strong><code>boxw</code></strong> Set the width of the box to be drawn around text. The default value of \&lt;boxw&gt; is computed automatically to match the text width</p>
+</li>
+<li>
+<p><strong><code>boxh</code></strong> Set the height of the box to be drawn around text. The default value of \&lt;boxh&gt; is computed automatically to match the text height</p>
+</li>
+<li>
+<p><strong><code>shadowx</code></strong></p>
+</li>
+<li>
+<p><strong><code>shadowy</code></strong> The x and y offsets for the text shadow position with respect to the position of the text. They can be either positive or negative values. The default value for both is "0".</p>
+</li>
+<li>
+<p><strong><code>start_number</code></strong> The starting frame number for the n/frame_num variable. The default value is "0".</p>
+</li>
+<li>
+<p><strong><code>tabsize</code></strong> The size in number of spaces to use for rendering the tab. Default value is 4.</p>
+</li>
+<li>
+<p><strong><code>timecode</code></strong> Set the initial timecode representation in "hh:mm:ss[:;.]ff" format. It can be used with or without text parameter. \&lt;timecode_rate&gt; option must be specified.</p>
+</li>
+<li>
+<p><strong><code>timecode_rate, rate, r</code></strong> Set the timecode frame rate (timecode only). Value will be rounded to nearest integer. Minimum value is "1". Drop-frame timecode is supported for frame rates 30 &amp; 60.</p>
+</li>
+<li>
+<p><strong><code>tc24hmax</code></strong> If set to 1, the output of the timecode option will wrap around at 24 hours. Default is 0 (disabled).</p>
+</li>
+<li>
+<p><strong><code>text</code></strong> The text string to be drawn. The text must be a sequence of UTF-8 encoded characters. This parameter is mandatory if no file is specified with the parameter \&lt;textfile&gt;.</p>
+</li>
+<li>
+<p><strong><code>textfile</code></strong> A text file containing text to be drawn. The text must be a sequence of UTF-8 encoded characters.</p>
+</li>
+</ul>
+<p>This parameter is mandatory if no text string is specified with the parameter \&lt;text&gt;.</p>
+<p>If both \&lt;text&gt; and \&lt;textfile&gt; are specified, an error is thrown.</p>
+<ul>
+<li><strong><code>text_source</code></strong> Text source should be set as side_data_detection_bboxes if you want to use text data in detection bboxes of side data.</li>
+</ul>
+<p>If text source is set, \&lt;text&gt; and \&lt;textfile&gt; will be ignored and still use text data in detection bboxes of side data. So please do not use this parameter if you are not sure about the text source.</p>
+<ul>
+<li>
+<p><strong><code>reload</code></strong> The \&lt;textfile&gt; will be reloaded at specified frame interval. Be sure to update \&lt;textfile&gt; atomically, or it may be read partially, or even fail. Range is 0 to INT_MAX. Default is 0.</p>
+</li>
+<li>
+<p><strong><code>x</code></strong></p>
+</li>
+<li>
+<p><strong><code>y</code></strong> The expressions which specify the offsets where text will be drawn within the video frame. They are relative to the top/left border of the output image.</p>
+</li>
+</ul>
+<p>The default value of \&lt;x&gt; and \&lt;y&gt; is "0".</p>
+<p>See below for the list of accepted constants and functions.</p>
+<p>The parameters for \&lt;x&gt; and \&lt;y&gt; are expressions containing the following constants and functions:</p>
+<ul>
+<li>
+<p><strong><code>dar</code></strong> input display aspect ratio, it is the same as (\&lt;w&gt; / \&lt;h&gt;) * \&lt;sar&gt;</p>
+</li>
+<li>
+<p><strong><code>hsub</code></strong></p>
+</li>
+<li>
+<p><strong><code>vsub</code></strong> horizontal and vertical chroma subsample values. For example for the pixel format "yuv422p" \&lt;hsub&gt; is 2 and \&lt;vsub&gt; is 1.</p>
+</li>
+<li>
+<p><strong><code>line_h, lh</code></strong> the height of each text line</p>
+</li>
+<li>
+<p><strong><code>main_h, h, H</code></strong> the input height</p>
+</li>
+<li>
+<p><strong><code>main_w, w, W</code></strong> the input width</p>
+</li>
+<li>
+<p><strong><code>max_glyph_a, ascent</code></strong> the maximum distance from the baseline to the highest/upper grid coordinate used to place a glyph outline point, for all the rendered glyphs. It is a positive value, due to the grid's orientation with the Y axis upwards.</p>
+</li>
+<li>
+<p><strong><code>max_glyph_d, descent</code></strong> the maximum distance from the baseline to the lowest grid coordinate used to place a glyph outline point, for all the rendered glyphs. This is a negative value, due to the grid's orientation, with the Y axis upwards.</p>
+</li>
+<li>
+<p><strong><code>max_glyph_h</code></strong> maximum glyph height, that is the maximum height for all the glyphs contained in the rendered text, it is equivalent to \&lt;ascent&gt; - \&lt;descent&gt;.</p>
+</li>
+<li>
+<p><strong><code>max_glyph_w</code></strong> maximum glyph width, that is the maximum width for all the glyphs contained in the rendered text</p>
+</li>
+<li>
+<p><strong><code>font_a</code></strong> the ascent size defined in the font metrics</p>
+</li>
+<li>
+<p><strong><code>font_d</code></strong> the descent size defined in the font metrics</p>
+</li>
+<li>
+<p><strong><code>top_a</code></strong> the maximum ascender of the glyphs of the first text line</p>
+</li>
+<li>
+<p><strong><code>bottom_d</code></strong> the maximum descender of the glyphs of the last text line</p>
+</li>
+<li>
+<p><strong><code>n</code></strong> the number of input frame, starting from 0</p>
+</li>
+<li>
+<p><strong><code>rand(min, max)</code></strong> return a random number included between \&lt;min&gt; and \&lt;max&gt;</p>
+</li>
+<li>
+<p><strong><code>sar</code></strong> The input sample aspect ratio.</p>
+</li>
+<li>
+<p><strong><code>t</code></strong> timestamp expressed in seconds, NAN if the input timestamp is unknown</p>
+</li>
+<li>
+<p><strong><code>text_h, th</code></strong> the height of the rendered text</p>
+</li>
+<li>
+<p><strong><code>text_w, tw</code></strong> the width of the rendered text</p>
+</li>
+<li>
+<p><strong><code>x</code></strong></p>
+</li>
+<li>
+<p><strong><code>y</code></strong> the x and y offset coordinates where the text is drawn.</p>
+</li>
+</ul>
+<p>These parameters allow the \&lt;x&gt; and \&lt;y&gt; expressions to refer to each other, so you can for example specify <code>y=x/dar</code>.</p>
+<ul>
+<li>
+<p><strong><code>pict_type</code></strong> A one character description of the current frame's picture type.</p>
+</li>
+<li>
+<p><strong><code>pkt_pos</code></strong> The current packet's position in the input file or stream (in bytes, from the start of the input). A value of -1 indicates this info is not available.</p>
+</li>
+<li>
+<p><strong><code>duration</code></strong> The current packet's duration, in seconds.</p>
+</li>
+<li>
+<p><strong><code>pkt_size</code></strong> The current packet's size (in bytes).</p>
+</li>
+</ul>
+<h2 id="text-expansion">Text expansion<a class="headerlink" href="#text-expansion" title="Permanent link">&para;</a></h2>
+<p>If <code>expansion</code> is set to <code>strftime</code>, the filter recognizes sequences accepted by the <code>strftime</code> C function in the provided text and expands them accordingly. Check the documentation of <code>strftime</code>. This feature is deprecated in favor of <code>normal</code> expansion with the <code>gmtime</code> or <code>localtime</code> expansion functions.</p>
+<p>If <code>expansion</code> is set to <code>none</code>, the text is printed verbatim.</p>
+<p>If <code>expansion</code> is set to <code>normal</code> (which is the default), the following expansion mechanism is used.</p>
+<p>The backslash character <code>\</code>, followed by any character, always expands to the second character.</p>
+<p>Sequences of the form <code>%{...}</code> are expanded. The text between the braces is a function name, possibly followed by arguments separated by ':'. If the arguments contain special characters or delimiters (':' or '}'), they should be escaped.</p>
+<p>Note that they probably must also be escaped as the value for the <code>text</code> option in the filter argument string and as the filter argument in the filtergraph description, and possibly also for the shell, that makes up to four levels of escaping; using a text file with the <code>textfile</code> option avoids these problems.</p>
+<p>The following functions are available:</p>
+<ul>
+<li><strong><code>expr, e</code></strong> The expression evaluation result.</li>
+</ul>
+<p>It must take one argument specifying the expression to be evaluated, which accepts the same constants and functions as the \&lt;x&gt; and \&lt;y&gt; values. Note that not all constants should be used, for example the text size is not known when evaluating the expression, so the constants \&lt;text_w&gt; and \&lt;text_h&gt; will have an undefined value.</p>
+<ul>
+<li><strong><code>expr_int_format, eif</code></strong> Evaluate the expression's value and output as formatted integer.</li>
+</ul>
+<p>The first argument is the expression to be evaluated, just as for the \&lt;expr&gt; function. The second argument specifies the output format. Allowed values are <code>x</code>, <code>X</code>, <code>d</code> and <code>u</code>. They are treated exactly as in the <code>printf</code> function. The third parameter is optional and sets the number of positions taken by the output. It can be used to add padding with zeros from the left.</p>
+<ul>
+<li>
+<p><strong><code>gmtime</code></strong> The time at which the filter is running, expressed in UTC. It can accept an argument: a <code>strftime</code> C function format string. The format string is extended to support the variable \&lt;%[1-6]N&gt; which prints fractions of the second with optionally specified number of digits.</p>
+</li>
+<li>
+<p><strong><code>localtime</code></strong> The time at which the filter is running, expressed in the local time zone. It can accept an argument: a <code>strftime</code> C function format string. The format string is extended to support the variable \&lt;%[1-6]N&gt; which prints fractions of the second with optionally specified number of digits.</p>
+</li>
+<li>
+<p><strong><code>metadata</code></strong> Frame metadata. Takes one or two arguments.</p>
+</li>
+</ul>
+<p>The first argument is mandatory and specifies the metadata key.</p>
+<p>The second argument is optional and specifies a default value, used when the metadata key is not found or empty.</p>
+<p>Available metadata can be identified by inspecting entries starting with TAG included within each frame section printed by running <code>ffprobe -show_frames</code>.</p>
+<p>String metadata generated in filters leading to the drawtext filter are also available.</p>
+<ul>
+<li>
+<p><strong><code>n, frame_num</code></strong> The frame number, starting from 0.</p>
+</li>
+<li>
+<p><strong><code>pict_type</code></strong> A one character description of the current picture type.</p>
+</li>
+<li>
+<p><strong><code>pts</code></strong> The timestamp of the current frame. It can take up to three arguments.</p>
+</li>
+</ul>
+<p>The first argument is the format of the timestamp; it defaults to <code>flt</code> for seconds as a decimal number with microsecond accuracy; <code>hms</code> stands for a formatted \&lt;[-]HH:MM:SS.mmm&gt; timestamp with millisecond accuracy. <code>gmtime</code> stands for the timestamp of the frame formatted as UTC time; <code>localtime</code> stands for the timestamp of the frame formatted as local time zone time.</p>
+<p>The second argument is an offset added to the timestamp.</p>
+<p>If the format is set to <code>hms</code>, a third argument <code>24HH</code> may be supplied to present the hour part of the formatted timestamp in 24h format (00-23).</p>
+<p>If the format is set to <code>localtime</code> or <code>gmtime</code>, a third argument may be supplied: a <code>strftime</code> C function format string. By default, \&lt;YYYY-MM-DD HH:MM:SS&gt; format will be used.</p>
+<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
+<p>This filter supports altering parameters via commands:</p>
+<ul>
+<li><strong><code>reinit</code></strong> Alter existing filter parameters.</li>
+</ul>
+<p>Syntax for the argument is the same as for filter invocation, e.g.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>fontsize=56:fontcolor=green:text='Hello World'
+</code></pre></div>
+<p>Full filter invocation with sendcmd would look like this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sendcmd=c='56.0 drawtext reinit fontsize=56\:fontcolor=green\:text=Hello\\ World'
+</code></pre></div>
+<p>If the entire argument can't be parsed or applied as valid values then the filter will continue with its existing parameters.</p>
+<p>The following options are also supported as <a href="#commands">commands</a>:</p>
+<ul>
+<li>
+<p>x</p>
+</li>
+<li>
+<p>y</p>
+</li>
+<li>
+<p>alpha</p>
+</li>
+<li>
+<p>fontsize</p>
+</li>
+<li>
+<p>fontcolor</p>
+</li>
+<li>
+<p>boxcolor</p>
+</li>
+<li>
+<p>bordercolor</p>
+</li>
+<li>
+<p>shadowcolor</p>
+</li>
+<li>
+<p>box</p>
+</li>
+<li>
+<p>boxw</p>
+</li>
+<li>
+<p>boxh</p>
+</li>
+<li>
+<p>boxborderw</p>
+</li>
+<li>
+<p>line_spacing</p>
+</li>
+<li>
+<p>text_align</p>
+</li>
+<li>
+<p>shadowx</p>
+</li>
+<li>
+<p>shadowy</p>
+</li>
+<li>
+<p>borderw</p>
+</li>
+</ul>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Draw "Test Text" with font FreeSerif, using the default values for the optional parameters.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>drawtext="fontfile=/usr/share/fonts/truetype/freefont/FreeSerif.ttf: text='Test Text'"
+</code></pre></div>
+<ul>
+<li>Draw 'Test Text' with font FreeSerif of size 24 at position x=100 and y=50 (counting from the top-left corner of the screen), text is yellow with a red box around it. Both the text and the box have an opacity of 20%.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>drawtext="fontfile=/usr/share/fonts/truetype/freefont/FreeSerif.ttf: text='Test Text':\
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>          x=100: y=50: fontsize=24: fontcolor=yellow@0.2: box=1: boxcolor=red@0.2"
+</code></pre></div>
+<p>Note that the double quotes are not necessary if spaces are not used within the parameter list.</p>
+<ul>
+<li>Show the text at the center of the video frame:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>drawtext="fontsize=30:fontfile=FreeSerif.ttf:text='hello world':x=(w-text_w)/2:y=(h-text_h)/2"
+</code></pre></div>
+<ul>
+<li>Show the text at a random position, switching to a new position every 30 seconds:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>drawtext="fontsize=30:fontfile=FreeSerif.ttf:text='hello world':x=if(eq(mod(t\,30)\,0)\,rand(0\,(w-text_w))\,x):y=if(eq(mod(t\,30)\,0)\,rand(0\,(h-text_h))\,y)"
+</code></pre></div>
+<ul>
+<li>Show a text line sliding from right to left in the last row of the video frame. The file <code>LONG_LINE</code> is assumed to contain a single line with no newlines.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>drawtext="fontsize=15:fontfile=FreeSerif.ttf:text=LONG_LINE:y=h-line_h:x=-50*t"
+</code></pre></div>
+<ul>
+<li>Show the content of file <code>CREDITS</code> off the bottom of the frame and scroll up.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>drawtext="fontsize=20:fontfile=FreeSerif.ttf:textfile=CREDITS:y=h-20*t"
+</code></pre></div>
+<ul>
+<li>Draw a single green letter "g", at the center of the input video. The glyph baseline is placed at half screen height.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>drawtext="fontsize=60:fontfile=FreeSerif.ttf:fontcolor=green:text=g:x=(w-max_glyph_w)/2:y=h/2-ascent"
+</code></pre></div>
+<ul>
+<li>Show text for 1 second every 3 seconds:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>drawtext="fontfile=FreeSerif.ttf:fontcolor=white:x=100:y=x/dar:enable=lt(mod(t\,3)\,1):text='blink'"
+</code></pre></div>
+<ul>
+<li>Use fontconfig to set the font. Note that the colons need to be escaped.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>drawtext='fontfile=Linux Libertine O-40\\:style=Semibold:text=FFmpeg'
+</code></pre></div>
+<ul>
+<li>Draw "Test Text" with font size dependent on height of the video.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>drawtext="text='Test Text': fontsize=h/30: x=(w-text_w)/2: y=(h-text_h*2)"
+</code></pre></div>
+<ul>
+<li>Print the date of a real-time encoding (see documentation for the <code>strftime</code> C function):</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>drawtext='fontfile=FreeSans.ttf:text=%{localtime\:%a %b %d %Y}'
+</code></pre></div>
+<ul>
+<li>Show text fading in and out (appearing/disappearing):</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="ch">#!/bin/sh</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nv">DS</span><span class="o">=</span><span class="m">1</span>.0<span class="w"> </span><span class="c1"># display start</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="nv">DE</span><span class="o">=</span><span class="m">10</span>.0<span class="w"> </span><span class="c1"># display end</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="nv">FID</span><span class="o">=</span><span class="m">1</span>.5<span class="w"> </span><span class="c1"># fade in duration</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="nv">FOD</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="c1"># fade out duration</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>ffplay<span class="w"> </span>-f<span class="w"> </span>lavfi<span class="w"> </span><span class="s2">"color,drawtext=text=TEST:fontsize=50:fontfile=FreeSerif.ttf:fontcolor_expr=ff0000%{eif\\\\: clip(255*(1*between(t\\, </span><span class="nv">$DS</span><span class="s2"> + </span><span class="nv">$FID</span><span class="s2">\\, </span><span class="nv">$DE</span><span class="s2"> - </span><span class="nv">$FOD</span><span class="s2">) + ((t - </span><span class="nv">$DS</span><span class="s2">)/</span><span class="nv">$FID</span><span class="s2">)*between(t\\, </span><span class="nv">$DS</span><span class="s2">\\, </span><span class="nv">$DS</span><span class="s2"> + </span><span class="nv">$FID</span><span class="s2">) + (-(t - </span><span class="nv">$DE</span><span class="s2">)/</span><span class="nv">$FOD</span><span class="s2">)*between(t\\, </span><span class="nv">$DE</span><span class="s2"> - </span><span class="nv">$FOD</span><span class="s2">\\, </span><span class="nv">$DE</span><span class="s2">) )\\, 0\\, 255) \\\\: x\\\\: 2 }"</span>
+</code></pre></div>
+<ul>
+<li>Horizontally align multiple separate texts. Note that <code>max_glyph_a</code> and the <code>fontsize</code> value are included in the <code>y</code> offset.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>drawtext=fontfile=FreeSans.ttf:text=DOG:fontsize=24:x=10:y=20+24-max_glyph_a,
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>drawtext=fontfile=FreeSans.ttf:text=cow:fontsize=24:x=80:y=20+24-max_glyph_a
+</code></pre></div>
+<ul>
+<li>Plot special \&lt;lavf.image2dec.source_basename&gt; metadata onto each frame if such metadata exists. Otherwise, plot the string "NA". Note that image2 demuxer must have option <code>-export_path_metadata 1</code> for the special metadata fields to be available for filters.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>drawtext="fontsize=20:fontcolor=white:fontfile=FreeSans.ttf:text='%{metadata\:lavf.image2dec.source_basename\:NA}':x=10:y=10"
+</code></pre></div>
+<p>For more information about libfreetype, check: <a href="http://www.freetype.org/">http://www.freetype.org/</a>.</p>
+<p>For more information about fontconfig, check: <a href="http://freedesktop.org/software/fontconfig/fontconfig-user.html">http://freedesktop.org/software/fontconfig/fontconfig-user.html</a>.</p>
+<p>For more information about libfribidi, check: <a href="http://fribidi.org/">http://fribidi.org/</a>.</p>
+<p>For more information about libharfbuzz, check: <a href="https://github.com/harfbuzz/harfbuzz">https://github.com/harfbuzz/harfbuzz</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      除 wiki 精选页（CC BY-SA 3.0）外，译文基于 FFmpeg 官方文档（LGPL 2.1+）以 LGPL-2.1-or-later 提供 · 译自 n9.0.2
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "content.code.copy", "navigation.instant", "toc.integrate"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

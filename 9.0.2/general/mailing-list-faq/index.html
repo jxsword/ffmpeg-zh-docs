@@ -1,0 +1,2092 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="FFmpeg 官方文档中文翻译版（基线 n9.0.2，跟随上游 release 增量翻译）">
+      
+      
+        <meta name="author" content="ffmpeg-zh-docs 翻译组">
+      
+      
+        <link rel="canonical" href="https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/general/mailing-list-faq/">
+      
+      
+        <link rel="prev" href="../authors/">
+      
+      
+        <link rel="next" href="../nut/">
+      
+      
+        
+          <link rel="alternate" href="https://ffmpeg.org/documentation.html" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>邮件列表 FAQ - FFmpeg 中文文档</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Noto Sans SC";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#general-questions" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="FFmpeg 中文文档" class="md-header__button md-logo" aria-label="FFmpeg 中文文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FFmpeg 中文文档
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              邮件列表 FAQ
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="https://ffmpeg.org/documentation.html" hreflang="en" class="md-select__link">
+              English (Original)
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jxsword/ffmpeg-zh-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ffmpeg-zh-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../manual/ffmpeg/" class="md-tabs__link">
+          
+  
+  
+  手册
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../components/utils/" class="md-tabs__link">
+          
+  
+  
+  组件
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../filters/overview/" class="md-tabs__link">
+          
+  
+  
+  滤镜
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../libraries/libavutil/" class="md-tabs__link">
+          
+  
+  
+  库
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../faq/" class="md-tabs__link">
+          
+  
+  
+  General
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="FFmpeg 中文文档" class="md-nav__button md-logo" aria-label="FFmpeg 中文文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    FFmpeg 中文文档
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jxsword/ffmpeg-zh-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ffmpeg-zh-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    手册
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    手册
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/ffmpeg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffmpeg 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/ffplay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffplay 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/ffprobe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffprobe 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/common-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    公共选项（ffmpeg/ffplay/ffprobe）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    组件
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    组件
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具（Utils）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/scaler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    缩放器（Scaler）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/resampler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    重采样器（Resampler）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/codecs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    编解码器（Codecs）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/bitstream-filters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    比特流滤镜（Bitstream Filters）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    格式（Formats）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    协议（Protocols）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    设备（Devices）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    滤镜
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    滤镜
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    滤镜总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/video/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    视频滤镜（364）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音频滤镜（135）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/multimedia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    多媒体滤镜（37）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    库
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    库
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavutil/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavutil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavcodec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavcodec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavformat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavformat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavdevice/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavdevice
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavfilter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavfilter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libswscale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libswscale
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libswresample/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libswresample
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    General
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../general/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    通用目录（General）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    平台（Platform）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开发者（Developer）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../git-howto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git 使用（Git Howto）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FATE 测试
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../authors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作者（Authors）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    邮件列表 FAQ
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    邮件列表 FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-mailing-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is a mailing list?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-type-of-questions-can-i-ask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What type of questions can I ask?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-do-i-ask-a-question-or-send-a-message-to-a-mailing-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How do I ask a question or send a message to a mailing list?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NUT 格式
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../community/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    社区（Community）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../drawvg-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    drawvg 参考
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../APIchanges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API 变更日志（英文原文）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<div class="admonition warning">
+<p class="admonition-title">翻译占位页</p>
+<p>本页为英文原文占位（翻译进行中，进度见<a href="https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md">翻译看板</a>）。
+术语与示例以英文原文为准。</p>
+</div>
+<h1 id="general-questions">General Questions<a class="headerlink" href="#general-questions" title="Permanent link">&para;</a></h1>
+<h2 id="what-is-a-mailing-list">What is a mailing list?<a class="headerlink" href="#what-is-a-mailing-list" title="Permanent link">&para;</a></h2>
+<p>A mailing list is not much different than emailing someone, but the main difference is that your message is received by everyone who subscribes to the list. It is somewhat like a forum but in email form.</p>
+<p>See the <a href="https://lists.ffmpeg.org/pipermail/ffmpeg-user/">ffmpeg-user archives</a> for examples.</p>
+<h2 id="what-type-of-questions-can-i-ask">What type of questions can I ask?<a class="headerlink" href="#what-type-of-questions-can-i-ask" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><a href="https://lists.ffmpeg.org/mailman/listinfo/ffmpeg-user/">ffmpeg-user</a>: For questions involving unscripted usage or compilation of the FFmpeg command-line tools (<code>ffmpeg</code>, <code>ffprobe</code>, <code>ffplay</code>).</p>
+</li>
+<li>
+<p><a href="https://lists.ffmpeg.org/mailman/listinfo/libav-user/">libav-user</a>: For questions involving the FFmpeg libav* libraries (libavcodec, libavformat, libavfilter, etc).</p>
+</li>
+<li>
+<p><a href="https://lists.ffmpeg.org/mailman/listinfo/ffmpeg-devel/">ffmpeg-devel</a>: For discussions involving the development of FFmpeg and for submitting patches. User questions should be asked at ffmpeg-user or libav-user.</p>
+</li>
+</ul>
+<p>To report a bug see <a href="https://ffmpeg.org/bugreports.html">https://ffmpeg.org/bugreports.html</a>.</p>
+<p>We cannot provide help for scripts and/or third-party tools.</p>
+<h2 id="how-do-i-ask-a-question-or-send-a-message-to-a-mailing-list">How do I ask a question or send a message to a mailing list?<a class="headerlink" href="#how-do-i-ask-a-question-or-send-a-message-to-a-mailing-list" title="Permanent link">&para;</a></h2>
+<p>First you must <a href="./#subscribing-unsubscribing">subscribe</a>. Then all you have to do is send an email:</p>
+<ul>
+<li>
+<p>Email <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#102;&#109;&#112;&#101;&#103;&#45;&#117;&#115;&#101;&#114;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;">&#102;&#102;&#109;&#112;&#101;&#103;&#45;&#117;&#115;&#101;&#114;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;</a> to send a message to the ffmpeg-user mailing list.</p>
+</li>
+<li>
+<p>Email <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#98;&#97;&#118;&#45;&#117;&#115;&#101;&#114;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;">&#108;&#105;&#98;&#97;&#118;&#45;&#117;&#115;&#101;&#114;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;</a> to send a message to the libav-user mailing list.</p>
+</li>
+<li>
+<p>Email <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#102;&#109;&#112;&#101;&#103;&#45;&#100;&#101;&#118;&#101;&#108;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;">&#102;&#102;&#109;&#112;&#101;&#103;&#45;&#100;&#101;&#118;&#101;&#108;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;</a> to send a message to the ffmpeg-devel mailing list.</p>
+</li>
+</ul>
+<h1 id="subscribing-unsubscribing">Subscribing / Unsubscribing<a class="headerlink" href="#subscribing-unsubscribing" title="Permanent link">&para;</a></h1>
+<h2 id="how-do-i-subscribe">How do I subscribe?<a class="headerlink" href="#how-do-i-subscribe" title="Permanent link">&para;</a></h2>
+<p>Email <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#102;&#109;&#112;&#101;&#103;&#45;&#117;&#115;&#101;&#114;&#45;&#114;&#101;&#113;&#117;&#101;&#115;&#116;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;">&#102;&#102;&#109;&#112;&#101;&#103;&#45;&#117;&#115;&#101;&#114;&#45;&#114;&#101;&#113;&#117;&#101;&#115;&#116;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;</a> with the subject <em>subscribe</em>.</p>
+<p>Or visit the <a href="https://lists.ffmpeg.org/mailman/listinfo/ffmpeg-user/">ffmpeg-user mailing list info page</a> and refer to the <em>Subscribing to ffmpeg-user</em> section.</p>
+<p>The process is the same for the other mailing lists.</p>
+<h2 id="how-do-i-unsubscribe">How do I unsubscribe?<a class="headerlink" href="#how-do-i-unsubscribe" title="Permanent link">&para;</a></h2>
+<p>Email <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#102;&#109;&#112;&#101;&#103;&#45;&#117;&#115;&#101;&#114;&#45;&#114;&#101;&#113;&#117;&#101;&#115;&#116;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;">&#102;&#102;&#109;&#112;&#101;&#103;&#45;&#117;&#115;&#101;&#114;&#45;&#114;&#101;&#113;&#117;&#101;&#115;&#116;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;</a> with subject <em>unsubscribe</em>.</p>
+<p>Or visit the <a href="https://lists.ffmpeg.org/mailman/listinfo/ffmpeg-user/">ffmpeg-user mailing list info page</a>, scroll to bottom of page, enter your email address in the box, and click the <em>Unsubscribe or edit options</em> button.</p>
+<p>The process is the same for the other mailing lists.</p>
+<p>Please avoid asking a mailing list admin to unsubscribe you unless you are absolutely unable to do so by yourself. See <a href="./#why-do-i-keep-getting-unsubscribed-from-ffmpeg-devel">Who do I contact if I have a problem with the mailing list?</a></p>
+<p>Note that it is possible to temporarily halt message delivery (vacation mode). See <a href="./#how-do-i-filter-mailing-list-messages">How do I disable mail delivery without unsubscribing?</a></p>
+<h1 id="moderation-queue">Moderation Queue<a class="headerlink" href="#moderation-queue" title="Permanent link">&para;</a></h1>
+<h2 id="why-is-my-message-awaiting-moderator-approval">Why is my message awaiting moderator approval?<a class="headerlink" href="#why-is-my-message-awaiting-moderator-approval" title="Permanent link">&para;</a></h2>
+<p>Some messages are automatically held in the <em>moderation queue</em> and must be manually approved by a mailing list admin:</p>
+<p>These are:</p>
+<ul>
+<li>
+<p>Messages that exceed the <a href="./#what-is-top-posting">message size limit</a>.</p>
+</li>
+<li>
+<p>Messages from users whose accounts have been set with the <em>moderation flag</em> (very rarely occurs, but may if a user repeatedly ignores the rules or is abusive towards others).</p>
+</li>
+</ul>
+<h2 id="how-long-does-it-take-for-my-message-in-the-moderation-queue-to-be-approved">How long does it take for my message in the moderation queue to be approved?<a class="headerlink" href="#how-long-does-it-take-for-my-message-in-the-moderation-queue-to-be-approved" title="Permanent link">&para;</a></h2>
+<p>The queue is not checked on a regular basis. You can ask on the <code>#ffmpeg-devel</code> IRC channel on Libera Chat for someone to approve your message.</p>
+<h2 id="how-do-i-delete-my-message-in-the-moderation-queue">How do I delete my message in the moderation queue?<a class="headerlink" href="#how-do-i-delete-my-message-in-the-moderation-queue" title="Permanent link">&para;</a></h2>
+<p>You should have received an email with the subject <em>Your message to \&lt;mailing list name&gt; awaits moderator approval</em>. A link is in the message that will allow you to delete your message unless a mailing list admin already approved or rejected it.</p>
+<h1 id="archives">Archives<a class="headerlink" href="#archives" title="Permanent link">&para;</a></h1>
+<h2 id="where-are-the-archives">Where are the archives?<a class="headerlink" href="#where-are-the-archives" title="Permanent link">&para;</a></h2>
+<p>See the <em>Archives</em> section on the <a href="https://ffmpeg.org/contact.html">FFmpeg Contact</a> page for links to all FFmpeg mailing list archives.</p>
+<p>Note that the archives are split by month. Discussions that span several months will be split into separate months in the archives.</p>
+<h2 id="how-do-i-reply-to-a-message-in-the-archives">How do I reply to a message in the archives?<a class="headerlink" href="#how-do-i-reply-to-a-message-in-the-archives" title="Permanent link">&para;</a></h2>
+<p>Click the email link at the top of the message just under the subject title. The link will provide the proper headers to keep the message within the thread.</p>
+<p>Note that you must be subscribed to send a message to the ffmpeg-user or libav-user mailing lists.</p>
+<h2 id="how-do-i-search-the-archives">How do I search the archives?<a class="headerlink" href="#how-do-i-search-the-archives" title="Permanent link">&para;</a></h2>
+<p>Perform a site search using your favorite search engine. Example:</p>
+<p><code>site:lists.ffmpeg.org/pipermail/ffmpeg-user/ "search term"</code></p>
+<h1 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h1>
+<h2 id="is-there-an-alternative-to-the-mailing-list">Is there an alternative to the mailing list?<a class="headerlink" href="#is-there-an-alternative-to-the-mailing-list" title="Permanent link">&para;</a></h2>
+<p>You can ask for help in the official <code>#ffmpeg</code> IRC channel on Libera Chat.</p>
+<p>There are also numerous third-party help sites such as <a href="https://superuser.com/tags/ffmpeg">Super User</a> and <a href="https://www.reddit.com/r/ffmpeg/">r/ffmpeg on reddit</a>.</p>
+<h2 id="what-is-top-posting">What is top-posting?<a class="headerlink" href="#what-is-top-posting" title="Permanent link">&para;</a></h2>
+<p>See <a href="https://en.wikipedia.org/wiki/Posting_style#Top-posting">https://en.wikipedia.org/wiki/Posting_style#Top-posting</a>.</p>
+<p>Instead, use trimmed interleaved/inline replies (<a href="https://lists.ffmpeg.org/pipermail/ffmpeg-user/2017-April/035849.html">example</a>).</p>
+<h2 id="what-is-the-message-size-limit">What is the message size limit?<a class="headerlink" href="#what-is-the-message-size-limit" title="Permanent link">&para;</a></h2>
+<p>The message size limit is 1000 kilobytes. Please provide links to larger files instead of attaching them.</p>
+<h2 id="where-can-i-upload-sample-files">Where can I upload sample files?<a class="headerlink" href="#where-can-i-upload-sample-files" title="Permanent link">&para;</a></h2>
+<p>Anywhere that is not too annoying for us to use.</p>
+<p>Google Drive and Dropbox are acceptable if you need a file host, and <a href="https://0x0.st/">0x0.st</a> is good for files under 256 MiB.</p>
+<p>Small, short samples are preferred if possible.</p>
+<h2 id="will-i-receive-spam-if-i-send-andor-subscribe-to-a-mailing-list">Will I receive spam if I send and/or subscribe to a mailing list?<a class="headerlink" href="#will-i-receive-spam-if-i-send-andor-subscribe-to-a-mailing-list" title="Permanent link">&para;</a></h2>
+<p>Highly unlikely.</p>
+<ul>
+<li>
+<p>The list of subscribed users is not public.</p>
+</li>
+<li>
+<p>Email addresses in the archives are obfuscated.</p>
+</li>
+<li>
+<p>Several unique test email accounts were utilized and none have yet received any spam.</p>
+</li>
+</ul>
+<p>However, you may see a spam in the mailing lists on rare occasions:</p>
+<ul>
+<li>
+<p>Spam in the moderation queue may be accidentally approved due to human error.</p>
+</li>
+<li>
+<p>There have been a few messages from subscribed users who had their own email addresses hacked and spam messages from (or appearing to be from) the hacked account were sent to their contacts (a mailing list being a contact in these cases).</p>
+</li>
+<li>
+<p>If you are subscribed to the bug tracker mailing list (ffmpeg-trac) you may see the occasional spam as a false bug report, but we take measures to try to prevent this.</p>
+</li>
+</ul>
+<h2 id="how-do-i-filter-mailing-list-messages">How do I filter mailing list messages?<a class="headerlink" href="#how-do-i-filter-mailing-list-messages" title="Permanent link">&para;</a></h2>
+<p>Use the <em>List-Id</em>. For example, the ffmpeg-user mailing list is <code>ffmpeg-user.ffmpeg.org</code>. You can view the List-Id in the raw message or headers.</p>
+<p>You can then filter the mailing list messages to their own folder.</p>
+<h2 id="how-do-i-disable-mail-delivery-without-unsubscribing">How do I disable mail delivery without unsubscribing?<a class="headerlink" href="#how-do-i-disable-mail-delivery-without-unsubscribing" title="Permanent link">&para;</a></h2>
+<p>Sometimes you may want to temporarily stop receiving all mailing list messages. This "vacation mode" is simple to do:</p>
+<ol>
+<li>
+<p>Go to the <a href="https://lists.ffmpeg.org/mailman/listinfo/ffmpeg-user/">ffmpeg-user mailing list info page</a></p>
+</li>
+<li>
+<p>Enter your email address in the box at very bottom of the page and click the <em>Unsubscribe or edit options</em> box.</p>
+</li>
+<li>
+<p>Enter your password and click the <em>Log in</em> button.</p>
+</li>
+<li>
+<p>Look for the <em>Mail delivery</em> option. Here you can disable/enable mail delivery. If you check <em>Set globally</em> it will apply your choice to all other FFmpeg mailing lists you are subscribed to.</p>
+</li>
+</ol>
+<p>Alternatively, from your subscribed address, send a message to <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#102;&#109;&#112;&#101;&#103;&#45;&#117;&#115;&#101;&#114;&#45;&#114;&#101;&#113;&#117;&#101;&#115;&#116;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;">&#102;&#102;&#109;&#112;&#101;&#103;&#45;&#117;&#115;&#101;&#114;&#45;&#114;&#101;&#113;&#117;&#101;&#115;&#116;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;</a> with the subject <em>set delivery off</em>. To re-enable mail delivery send a message to <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#102;&#109;&#112;&#101;&#103;&#45;&#117;&#115;&#101;&#114;&#45;&#114;&#101;&#113;&#117;&#101;&#115;&#116;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;">&#102;&#102;&#109;&#112;&#101;&#103;&#45;&#117;&#115;&#101;&#114;&#45;&#114;&#101;&#113;&#117;&#101;&#115;&#116;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;</a> with the subject <em>set delivery on</em>.</p>
+<h2 id="why-is-the-mailing-list-munging-my-address">Why is the mailing list munging my address?<a class="headerlink" href="#why-is-the-mailing-list-munging-my-address" title="Permanent link">&para;</a></h2>
+<p>This is due to subscribers that use an email service with a DMARC reject policy which adds difficulties to mailing list operators.</p>
+<p>The mailing list must re-write (munge) the <em>From:</em> header for such users; otherwise their email service will reject and bounce the message resulting in automatic unsubscribing from the mailing list.</p>
+<p>When sending a message these users will see <em>via \&lt;mailing list name&gt;</em> added to their name and the <em>From:</em> address munged to the address of the particular mailing list.</p>
+<p>If you want to avoid this then please use a different email service.</p>
+<p>Note that ffmpeg-devel does not apply any munging as it causes issues with patch authorship. As a result users with an email service with a DMARC reject policy may be automatically unsubscribed due to rejected and bounced messages.</p>
+<h1 id="rules-and-etiquette">Rules and Etiquette<a class="headerlink" href="#rules-and-etiquette" title="Permanent link">&para;</a></h1>
+<h2 id="what-are-the-rules-and-the-proper-etiquette">What are the rules and the proper etiquette?<a class="headerlink" href="#what-are-the-rules-and-the-proper-etiquette" title="Permanent link">&para;</a></h2>
+<p>There may seem to be many things to remember, but we want to help and following these guidelines will allow you to get answers more quickly and help avoid getting ignored.</p>
+<ul>
+<li>
+<p>Always show your actual, unscripted <code>ffmpeg</code> command and the complete, uncut console output from your command.</p>
+</li>
+<li>
+<p>Use the most simple and minimal command that still shows the issue you are encountering.</p>
+</li>
+<li>
+<p>Provide all necessary information so others can attempt to duplicate your issue. This includes the actual command, complete uncut console output, and any inputs that are required to duplicate the issue.</p>
+</li>
+<li>
+<p>Use the latest <code>ffmpeg</code> build you can get. See the <a href="https://ffmpeg.org/download.html">FFmpeg Download</a> page for links to recent builds for Linux, macOS, and Windows. Or compile from the current git master branch.</p>
+</li>
+<li>
+<p>Avoid <a href="https://en.wikipedia.org/wiki/Posting_style#Top-posting">top-posting</a>. Also see <a href="./#is-there-an-alternative-to-the-mailing-list">What is top-posting?</a></p>
+</li>
+<li>
+<p>Avoid hijacking threads. Thread hijacking is replying to a message and changing the subject line to something unrelated to the original thread. Most email clients will still show the renamed message under the original thread. This can be confusing and these types of messages are often ignored.</p>
+</li>
+<li>
+<p>Do not send screenshots. Copy and paste console text instead of making screenshots of the text.</p>
+</li>
+<li>
+<p>Avoid sending email disclaimers and legalese if possible as this is a public list.</p>
+</li>
+<li>
+<p>Avoid using the <code>-loglevel debug</code>, <code>-loglevel quiet</code>, and <code>-hide_banner</code> options unless requested to do so.</p>
+</li>
+<li>
+<p>If you attach files avoid compressing small files. Uncompressed is preferred.</p>
+</li>
+<li>
+<p>Please do not send HTML-only messages. The mailing list will ignore the HTML component of your message. Most mail clients will automatically include a text component: this is what the mailing list will use.</p>
+</li>
+<li>
+<p>Configuring your mail client to break lines after 70 or so characters is recommended.</p>
+</li>
+<li>
+<p>Avoid sending the same message to multiple mailing lists.</p>
+</li>
+<li>
+<p>Please follow our <a href="https://ffmpeg.org/community.html#Code-of-Conduct">Code of Conduct</a>.</p>
+</li>
+</ul>
+<h1 id="help">Help<a class="headerlink" href="#help" title="Permanent link">&para;</a></h1>
+<h2 id="why-am-i-not-receiving-any-messages">Why am I not receiving any messages?<a class="headerlink" href="#why-am-i-not-receiving-any-messages" title="Permanent link">&para;</a></h2>
+<p>Some email providers have blacklists or spam filters that block or mark the mailing list messages as false positives. Unfortunately, the user is often not aware of this and is often out of their control.</p>
+<p>When possible we attempt to notify the provider to be removed from the blacklists or filters.</p>
+<h2 id="why-are-my-sent-messages-not-showing-up">Why are my sent messages not showing up?<a class="headerlink" href="#why-are-my-sent-messages-not-showing-up" title="Permanent link">&para;</a></h2>
+<p>Excluding <a href="./#moderation-queue">messages that are held in the moderation queue</a> there are a few other reasons why your messages may fail to appear:</p>
+<ul>
+<li>
+<p>HTML-only messages are ignored by the mailing lists. Most mail clients automatically include a text component alongside HTML email: this is what the mailing list will use. If it does not then consider your client to be broken, because sending a text component along with the HTML component to form a multi-part message is recommended by email standards.</p>
+</li>
+<li>
+<p>Check your spam folder.</p>
+</li>
+</ul>
+<h2 id="why-do-i-keep-getting-unsubscribed-from-ffmpeg-devel">Why do I keep getting unsubscribed from ffmpeg-devel?<a class="headerlink" href="#why-do-i-keep-getting-unsubscribed-from-ffmpeg-devel" title="Permanent link">&para;</a></h2>
+<p>Users with an email service that has a DMARC reject or quarantine policy may be automatically unsubscribed from the ffmpeg-devel mailing list due to the mailing list messages being continuously rejected and bounced back.</p>
+<p>Consider using a different email service.</p>
+<h2 id="who-do-i-contact-if-i-have-a-problem-with-the-mailing-list">Who do I contact if I have a problem with the mailing list?<a class="headerlink" href="#who-do-i-contact-if-i-have-a-problem-with-the-mailing-list" title="Permanent link">&para;</a></h2>
+<p>Send a message to <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#102;&#109;&#112;&#101;&#103;&#45;&#117;&#115;&#101;&#114;&#45;&#111;&#119;&#110;&#101;&#114;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;">&#102;&#102;&#109;&#112;&#101;&#103;&#45;&#117;&#115;&#101;&#114;&#45;&#111;&#119;&#110;&#101;&#114;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      除 wiki 精选页（CC BY-SA 3.0）外，译文基于 FFmpeg 官方文档（LGPL 2.1+）以 LGPL-2.1-or-later 提供 · 译自 n9.0.2
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "content.code.copy", "navigation.instant", "toc.integrate"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

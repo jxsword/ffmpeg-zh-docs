@@ -1,0 +1,3324 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="FFmpeg 官方文档中文翻译版（基线 n9.0.2，跟随上游 release 增量翻译）">
+      
+      
+        <meta name="author" content="ffmpeg-zh-docs 翻译组">
+      
+      
+        <link rel="canonical" href="https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/components/protocols/">
+      
+      
+        <link rel="prev" href="../formats/">
+      
+      
+        <link rel="next" href="../devices/">
+      
+      
+        
+          <link rel="alternate" href="https://ffmpeg.org/documentation.html" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>协议（Protocols） - FFmpeg 中文文档</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Noto Sans SC";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#description" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="FFmpeg 中文文档" class="md-header__button md-logo" aria-label="FFmpeg 中文文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FFmpeg 中文文档
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              协议（Protocols）
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="https://ffmpeg.org/documentation.html" hreflang="en" class="md-select__link">
+              English (Original)
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jxsword/ffmpeg-zh-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ffmpeg-zh-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../manual/ffmpeg/" class="md-tabs__link">
+          
+  
+  
+  手册
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../utils/" class="md-tabs__link">
+          
+  
+  
+  组件
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../filters/overview/" class="md-tabs__link">
+          
+  
+  
+  滤镜
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../libraries/libavutil/" class="md-tabs__link">
+          
+  
+  
+  库
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../general/faq/" class="md-tabs__link">
+          
+  
+  
+  General
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="FFmpeg 中文文档" class="md-nav__button md-logo" aria-label="FFmpeg 中文文档" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    FFmpeg 中文文档
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jxsword/ffmpeg-zh-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ffmpeg-zh-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    手册
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    手册
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/ffmpeg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffmpeg 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/ffplay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffplay 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/ffprobe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ffprobe 手册
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/common-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    公共选项（ffmpeg/ffplay/ffprobe）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    组件
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    组件
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具（Utils）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scaler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    缩放器（Scaler）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resampler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    重采样器（Resampler）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../codecs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    编解码器（Codecs）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bitstream-filters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    比特流滤镜（Bitstream Filters）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    格式（Formats）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    协议（Protocols）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    设备（Devices）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    滤镜
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    滤镜
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    滤镜总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/video/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    视频滤镜（364）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音频滤镜（135）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filters/multimedia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    多媒体滤镜（37）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    库
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    库
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavutil/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavutil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavcodec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavcodec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavformat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavformat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavdevice/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavdevice
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libavfilter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libavfilter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libswscale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libswscale
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/libswresample/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    libswresample
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    General
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/general/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    通用目录（General）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    平台（Platform）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/developer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开发者（Developer）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/git-howto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git 使用（Git Howto）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/fate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FATE 测试
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/authors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    作者（Authors）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/mailing-list-faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    邮件列表 FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/nut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NUT 格式
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/community/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    社区（Community）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/drawvg-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    drawvg 参考
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general/APIchanges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API 变更日志（英文原文）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<div class="admonition warning">
+<p class="admonition-title">翻译占位页</p>
+<p>本页为英文原文占位（翻译进行中，进度见<a href="https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md">翻译看板</a>）。
+术语与示例以英文原文为准。</p>
+</div>
+<h1 id="description">Description<a class="headerlink" href="#description" title="Permanent link">&para;</a></h1>
+<p>This document describes the input and output protocols provided by the libavformat library.</p>
+<h1 id="protocol-options">Protocol Options<a class="headerlink" href="#protocol-options" title="Permanent link">&para;</a></h1>
+<p>The libavformat library provides some generic global options, which can be set on all the protocols. In addition each protocol may support so-called private options, which are specific for that component.</p>
+<p>Options may be set by specifying -\&lt;option&gt; \&lt;value&gt; in the FFmpeg tools, or by setting the value explicitly in the <code>AVFormatContext</code> options or using the <code>libavutil/opt.h</code> API for programmatic use.</p>
+<p>The list of supported options follows:</p>
+<ul>
+<li><strong><code>protocol_whitelist list (input)</code></strong> Set a ","-separated list of allowed protocols. "ALL" matches all protocols. Protocols prefixed by "-" are disabled. All protocols are allowed by default but protocols used by an another protocol (nested protocols) are restricted to a per protocol subset.</li>
+</ul>
+<h1 id="protocols">Protocols<a class="headerlink" href="#protocols" title="Permanent link">&para;</a></h1>
+<p>Protocols are configured elements in FFmpeg that enable access to resources that require specific protocols.</p>
+<p>When you configure your FFmpeg build, all the supported protocols are enabled by default. You can list all available ones using the configure option "–list-protocols".</p>
+<p>You can disable all the protocols using the configure option "–disable-protocols", and selectively enable a protocol using the option "–enable-protocol=\&lt;PROTOCOL&gt;", or you can disable a particular protocol using the option "–disable-protocol=\&lt;PROTOCOL&gt;".</p>
+<p>The option "-protocols" of the ff* tools will display the list of supported protocols.</p>
+<p>All protocols accept the following options:</p>
+<ul>
+<li><strong><code>rw_timeout</code></strong> Maximum time to wait for (network) read/write operations to complete, in microseconds.</li>
+</ul>
+<p>A description of the currently available protocols follows.</p>
+<h2 id="amqp">amqp<a class="headerlink" href="#amqp" title="Permanent link">&para;</a></h2>
+<p>Advanced Message Queueing Protocol (AMQP) version 0-9-1 is a broker based publish-subscribe communication protocol.</p>
+<p>FFmpeg must be compiled with –enable-librabbitmq to support AMQP. A separate AMQP broker must also be run. An example open-source AMQP broker is RabbitMQ.</p>
+<p>After starting the broker, an FFmpeg client may stream data to the broker using the command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ffmpeg -re -i input -f mpegts amqp://[[user]:[password]@]hostname[:port][/vhost]
+</code></pre></div>
+<p>Where hostname and port (default is 5672) is the address of the broker. The client may also set a user/password for authentication. The default for both fields is "guest". Name of virtual host on broker can be set with vhost. The default value is "/".</p>
+<p>Multiple subscribers may stream from the broker using the command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ffplay amqp://[[user]:[password]@]hostname[:port][/vhost]
+</code></pre></div>
+<p>In RabbitMQ all data published to the broker flows through a specific exchange, and each subscribing client has an assigned queue/buffer. When a packet arrives at an exchange, it may be copied to a client's queue depending on the exchange and routing_key fields.</p>
+<p>The following options are supported:</p>
+<ul>
+<li>
+<p><strong><code>exchange</code></strong> Sets the exchange to use on the broker. RabbitMQ has several predefined exchanges: "amq.direct" is the default exchange, where the publisher and subscriber must have a matching routing_key; "amq.fanout" is the same as a broadcast operation (i.e. the data is forwarded to all queues on the fanout exchange independent of the routing_key); and "amq.topic" is similar to "amq.direct", but allows for more complex pattern matching (refer to the RabbitMQ documentation).</p>
+</li>
+<li>
+<p><strong><code>routing_key</code></strong> Sets the routing key. The default value is "amqp". The routing key is used on the "amq.direct" and "amq.topic" exchanges to decide whether packets are written to the queue of a subscriber.</p>
+</li>
+<li>
+<p><strong><code>pkt_size</code></strong> Maximum size of each packet sent/received to the broker. Default is 131072. Minimum is 4096 and max is any large value (representable by an int). When receiving packets, this sets an internal buffer size in FFmpeg. It should be equal to or greater than the size of the published packets to the broker. Otherwise the received message may be truncated causing decoding errors.</p>
+</li>
+<li>
+<p><strong><code>connection_timeout</code></strong> The timeout in seconds during the initial connection to the broker. The default value is rw_timeout, or 5 seconds if rw_timeout is not set.</p>
+</li>
+<li>
+<p><strong><code>delivery_mode mode</code></strong> Sets the delivery mode of each message sent to broker. The following values are accepted:</p>
+</li>
+<li>
+<p><strong><code>persistent</code></strong> Delivery mode set to "persistent" (2). This is the default value. Messages may be written to the broker's disk depending on its setup.</p>
+</li>
+<li>
+<p><strong><code>non-persistent</code></strong> Delivery mode set to "non-persistent" (1). Messages will stay in broker's memory unless the broker is under memory pressure.</p>
+</li>
+</ul>
+<h2 id="async">async<a class="headerlink" href="#async" title="Permanent link">&para;</a></h2>
+<p>Asynchronous data filling wrapper for input stream.</p>
+<p>Fill data in a background thread, to decouple I/O operation from demux thread.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>async:URL
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>async:http://host/resource
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>async:cache:http://host/resource
+</code></pre></div>
+<h2 id="bluray">bluray<a class="headerlink" href="#bluray" title="Permanent link">&para;</a></h2>
+<p>Read BluRay playlist.</p>
+<p>The accepted options are:</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>angle</code></td>
+<td>BluRay angle</td>
+</tr>
+<tr>
+<td><code>chapter</code></td>
+<td>Start chapter (1...N)</td>
+</tr>
+<tr>
+<td><code>playlist</code></td>
+<td>Playlist to read (BDMV/PLAYLIST/?????.mpls)</td>
+</tr>
+</tbody>
+</table>
+<p>Examples:</p>
+<p>Read longest playlist from BluRay mounted to /mnt/bluray:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>bluray:/mnt/bluray
+</code></pre></div>
+<p>Read angle 2 of playlist 4 from BluRay mounted to /mnt/bluray, start from chapter 2:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>-playlist 4 -angle 2 -chapter 2 bluray:/mnt/bluray
+</code></pre></div>
+<h2 id="cache">cache<a class="headerlink" href="#cache" title="Permanent link">&para;</a></h2>
+<p>Caching wrapper for input stream.</p>
+<p>Cache the input stream to temporary file. It brings seeking capability to live streams.</p>
+<p>The accepted options are:</p>
+<ul>
+<li><strong><code>read_ahead_limit</code></strong> Amount in bytes that may be read ahead when seeking isn't supported. Range is -1 to INT_MAX. -1 for unlimited. Default is 65536.</li>
+</ul>
+<p>URL Syntax is</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>cache:URL
+</code></pre></div>
+<h2 id="concat">concat<a class="headerlink" href="#concat" title="Permanent link">&para;</a></h2>
+<p>Physical concatenation protocol.</p>
+<p>Read and seek from many resources in sequence as if they were a unique resource.</p>
+<p>A URL accepted by this protocol has the syntax:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>concat:URL1|URL2|...|URLN
+</code></pre></div>
+<p>where \&lt;URL1&gt;, \&lt;URL2&gt;, ..., \&lt;URLN&gt; are the urls of the resource to be concatenated, each one possibly specifying a distinct protocol.</p>
+<p>For example to read a sequence of files <code>split1.mpeg</code>, <code>split2.mpeg</code>, <code>split3.mpeg</code> with <code>ffplay</code> use the command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ffplay concat:split1.mpeg\|split2.mpeg\|split3.mpeg
+</code></pre></div>
+<p>Note that you may need to escape the character "|" which is special for many shells.</p>
+<h2 id="concatf">concatf<a class="headerlink" href="#concatf" title="Permanent link">&para;</a></h2>
+<p>Physical concatenation protocol using a line break delimited list of resources.</p>
+<p>Read and seek from many resources in sequence as if they were a unique resource.</p>
+<p>A URL accepted by this protocol has the syntax:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>concatf:URL
+</code></pre></div>
+<p>where \&lt;URL&gt; is the url containing a line break delimited list of resources to be concatenated, each one possibly specifying a distinct protocol. Special characters must be escaped with backslash or single quotes. See section "the "Quoting and escaping" section in the ffmpeg-utils(1) manual" in <code>ffmpeg-utils</code>.</p>
+<p>For example to read a sequence of files <code>split1.mpeg</code>, <code>split2.mpeg</code>, <code>split3.mpeg</code> listed in separate lines within a file <code>split.txt</code> with <code>ffplay</code> use the command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>ffplay concatf:split.txt
+</code></pre></div>
+<p>Where <code>split.txt</code> contains the lines:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>split1.mpeg
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>split2.mpeg
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>split3.mpeg
+</code></pre></div>
+<h2 id="crypto">crypto<a class="headerlink" href="#crypto" title="Permanent link">&para;</a></h2>
+<p>AES-encrypted stream reading protocol.</p>
+<p>The accepted options are:</p>
+<ul>
+<li>
+<p><strong><code>key</code></strong> Set the AES decryption key binary block from given hexadecimal representation.</p>
+</li>
+<li>
+<p><strong><code>iv</code></strong> Set the AES decryption initialization vector binary block from given hexadecimal representation.</p>
+</li>
+</ul>
+<p>Accepted URL formats:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>crypto:URL
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>crypto+URL
+</code></pre></div>
+<h2 id="data">data<a class="headerlink" href="#data" title="Permanent link">&para;</a></h2>
+<p>Data in-line in the URI. See <a href="http://en.wikipedia.org/wiki/Data_URI_scheme">http://en.wikipedia.org/wiki/Data_URI_scheme</a>.</p>
+<p>For example, to convert a GIF file given inline with <code>ffmpeg</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>ffmpeg -i "data:image/gif;base64,R0lGODdhCAAIAMIEAAAAAAAA//8AAP//AP///////////////ywAAAAACAAIAAADF0gEDLojDgdGiJdJqUX02iB4E8Q9jUMkADs=" smiley.png
+</code></pre></div>
+<h2 id="fd">fd<a class="headerlink" href="#fd" title="Permanent link">&para;</a></h2>
+<p>File descriptor access protocol.</p>
+<p>The accepted syntax is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>fd: -fd file_descriptor
+</code></pre></div>
+<p>If <code>fd</code> is not specified, by default the stdout file descriptor will be used for writing, stdin for reading. Unlike the pipe protocol, fd protocol has seek support if it corresponding to a regular file. fd protocol doesn't support pass file descriptor via URL for security.</p>
+<p>This protocol accepts the following options:</p>
+<ul>
+<li>
+<p><strong><code>blocksize</code></strong> Set I/O operation maximum block size, in bytes. Default value is <code>INT_MAX</code>, which results in not limiting the requested block size. Setting this value reasonably low improves user termination request reaction time, which is valuable if data transmission is slow.</p>
+</li>
+<li>
+<p><strong><code>fd</code></strong> Set file descriptor.</p>
+</li>
+</ul>
+<h2 id="file">file<a class="headerlink" href="#file" title="Permanent link">&para;</a></h2>
+<p>File access protocol.</p>
+<p>Read from or write to a file.</p>
+<p>A file URL can have the form:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>file:filename
+</code></pre></div>
+<p>where \&lt;filename&gt; is the path of the file to read.</p>
+<p>An URL that does not have a protocol prefix will be assumed to be a file URL. Depending on the build, an URL that looks like a Windows path with the drive letter at the beginning will also be assumed to be a file URL (usually not the case in builds for unix-like systems).</p>
+<p>For example to read from a file <code>input.mpeg</code> with <code>ffmpeg</code> use the command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>ffmpeg -i file:input.mpeg output.mpeg
+</code></pre></div>
+<p>This protocol accepts the following options:</p>
+<ul>
+<li>
+<p><strong><code>truncate</code></strong> Truncate existing files on write, if set to 1. A value of 0 prevents truncating. Default value is 1.</p>
+</li>
+<li>
+<p><strong><code>blocksize</code></strong> Set I/O operation maximum block size, in bytes. Default value is <code>INT_MAX</code>, which results in not limiting the requested block size. Setting this value reasonably low improves user termination request reaction time, which is valuable for files on slow medium.</p>
+</li>
+<li>
+<p><strong><code>follow</code></strong> If set to 1, the protocol will retry reading at the end of the file, allowing reading files that still are being written. In order for this to terminate, you either need to use the rw_timeout option, or use the interrupt callback (for API users). Setting this option also ignores the file size reported by the file system.</p>
+</li>
+<li>
+<p><strong><code>seekable</code></strong> Controls if seekability is advertised on the file. 0 means non-seekable, -1 means auto (seekable for normal files, non-seekable for named pipes).</p>
+</li>
+</ul>
+<p>Many demuxers handle seekable and non-seekable resources differently, overriding this might speed up opening certain files at the cost of losing some features (e.g. accurate seeking).</p>
+<ul>
+<li><strong><code>pkt_size</code></strong> Set the maximum packet size used for file I/O. A smaller value may reduce memory usage. A higher value may increase throughput especially with networked filesystems.</li>
+</ul>
+<p>For reading, if explicitly set, it overrides the default internal buffer size (32 KB) and limits the maximum amount of data read per operation.</p>
+<p>For writing, this sets the size of each write operation. The default is 256 KB for regular files, 32 KB otherwise.</p>
+<h2 id="ftp">ftp<a class="headerlink" href="#ftp" title="Permanent link">&para;</a></h2>
+<p>FTP (File Transfer Protocol).</p>
+<p>Read from or write to remote resources using FTP protocol.</p>
+<p>Following syntax is required.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>ftp://[user[:password]@]server[:port]/path/to/remote/resource.mpeg
+</code></pre></div>
+<p>This protocol accepts the following options.</p>
+<ul>
+<li>
+<p><strong><code>timeout</code></strong> Set timeout in microseconds of socket I/O operations used by the underlying low level operation. By default it is set to -1, which means that the timeout is not specified.</p>
+</li>
+<li>
+<p><strong><code>ftp-user</code></strong> Set a user to be used for authenticating to the FTP server. This is overridden by the user in the FTP URL.</p>
+</li>
+<li>
+<p><strong><code>ftp-password</code></strong> Set a password to be used for authenticating to the FTP server. This is overridden by the password in the FTP URL, or by <code>ftp-anonymous-password</code> if no user is set.</p>
+</li>
+<li>
+<p><strong><code>ftp-anonymous-password</code></strong> Password used when login as anonymous user. Typically an e-mail address should be used.</p>
+</li>
+<li>
+<p><strong><code>ftp-write-seekable</code></strong> Control seekability of connection during encoding. If set to 1 the resource is supposed to be seekable, if set to 0 it is assumed not to be seekable. Default value is 0.</p>
+</li>
+</ul>
+<p>NOTE: Protocol can be used as output, but it is recommended to not do it, unless special care is taken (tests, customized server configuration etc.). Different FTP servers behave in different way during seek operation. ff* tools may produce incomplete content due to server limitations.</p>
+<h2 id="gopher">gopher<a class="headerlink" href="#gopher" title="Permanent link">&para;</a></h2>
+<p>Gopher protocol.</p>
+<h2 id="gophers">gophers<a class="headerlink" href="#gophers" title="Permanent link">&para;</a></h2>
+<p>Gophers protocol.</p>
+<p>The Gopher protocol with TLS encapsulation.</p>
+<h2 id="http">http<a class="headerlink" href="#http" title="Permanent link">&para;</a></h2>
+<p>HTTP (Hyper Text Transfer Protocol).</p>
+<p>This protocol accepts the following options:</p>
+<ul>
+<li>
+<p><strong><code>seekable</code></strong> Control seekability of connection. If set to 1 the resource is supposed to be seekable, if set to 0 it is assumed not to be seekable, if set to -1 it will try to autodetect if it is seekable. Default value is -1.</p>
+</li>
+<li>
+<p><strong><code>chunked_post</code></strong> If set to 1 use chunked Transfer-Encoding for posts, default is 1.</p>
+</li>
+<li>
+<p><strong><code>http_proxy</code></strong> set HTTP proxy to tunnel through e.g. http://example.com:1234</p>
+</li>
+<li>
+<p><strong><code>headers</code></strong> Set custom HTTP headers, can override built in default headers. The value must be a string encoding the headers.</p>
+</li>
+<li>
+<p><strong><code>content_type</code></strong> Set a specific content type for the POST messages or for listen mode.</p>
+</li>
+<li>
+<p><strong><code>user_agent</code></strong> Override the User-Agent header. If not specified the protocol will use a string describing the libavformat build. ("Lavf/\&lt;version&gt;")</p>
+</li>
+<li>
+<p><strong><code>referer</code></strong> Set the Referer header. Include 'Referer: URL' header in HTTP request.</p>
+</li>
+<li>
+<p><strong><code>multiple_requests</code></strong> Use persistent connections if set to 1, default is 0.</p>
+</li>
+<li>
+<p><strong><code>request_size</code></strong> Limit the size of requests made. This is useful for some pathological servers that throttle unbounded range requests, as well as when expecting to seek frequently. Disabled (set to 0) by default.</p>
+</li>
+</ul>
+<p>Note that if enabling this option, it's strongly recommended to also enable the <code>multiple_requests</code> option, as well as setting <code>short_seek_size</code> to the same value or higher. Doing so allows FFmpeg to reuse a single HTTP connection wherever possible.</p>
+<ul>
+<li><strong><code>initial_request_size</code></strong> Limit the size of initial requests. Similar to <code>request_size</code>, but only used during initial format parsing. Useful for formats like MXF or MOV that require frequent seeks during header parsing. Lasts until the demuxer makes a read request larger than this size (without a seek in between), after which the implementation will continue using requests as usual. Disabled (set to 0) by default.</li>
+</ul>
+<p>Note that if enabling this option, it's strongly recommended to also enable the <code>multiple_requests</code> option, as well as setting <code>short_seek_size</code> to the same value or higher.</p>
+<ul>
+<li>
+<p><strong><code>post_data</code></strong> Set custom HTTP post data.</p>
+</li>
+<li>
+<p><strong><code>mime_type</code></strong> Export the MIME type.</p>
+</li>
+<li>
+<p><strong><code>http_version</code></strong> Exports the HTTP response version number. Usually "1.0" or "1.1".</p>
+</li>
+<li>
+<p><strong><code>cookies</code></strong> Set the cookies to be sent in future requests. The format of each cookie is the same as the value of a Set-Cookie HTTP response field. Multiple cookies can be delimited by a newline character.</p>
+</li>
+<li>
+<p><strong><code>icy</code></strong> If set to 1 request ICY (SHOUTcast) metadata from the server. If the server supports this, the metadata has to be retrieved by the application by reading the <code>icy_metadata_headers</code> and <code>icy_metadata_packet</code> options. The default is 1.</p>
+</li>
+<li>
+<p><strong><code>icy_metadata_headers</code></strong> If the server supports ICY metadata, this contains the ICY-specific HTTP reply headers, separated by newline characters.</p>
+</li>
+<li>
+<p><strong><code>icy_metadata_packet</code></strong> If the server supports ICY metadata, and <code>icy</code> was set to 1, this contains the last non-empty metadata packet sent by the server. It should be polled in regular intervals by applications interested in mid-stream metadata updates.</p>
+</li>
+<li>
+<p><strong><code>metadata</code></strong> Set an exported dictionary containing Icecast metadata from the bitstream, if present. Only useful with the C API.</p>
+</li>
+<li>
+<p><strong><code>auth_type</code></strong> Set HTTP authentication type. No option for Digest, since this method requires getting nonce parameters from the server first and can't be used straight away like Basic.</p>
+</li>
+<li>
+<p><strong><code>none</code></strong> Choose the HTTP authentication type automatically. This is the default.</p>
+</li>
+<li>
+<p><strong><code>basic</code></strong> Choose the HTTP basic authentication.</p>
+<p>Basic authentication sends a Base64-encoded string that contains a user name and password for the client. Base64 is not a form of encryption and should be considered the same as sending the user name and password in clear text (Base64 is a reversible encoding). If a resource needs to be protected, strongly consider using an authentication scheme other than basic authentication. HTTPS/TLS should be used with basic authentication. Without these additional security enhancements, basic authentication should not be used to protect sensitive or valuable information.</p>
+</li>
+<li>
+<p><strong><code>send_expect_100</code></strong> Send an Expect: 100-continue header for POST. If set to 1 it will send, if set to 0 it won't, if set to -1 it will try to send if it is applicable. Default value is -1.</p>
+</li>
+<li>
+<p><strong><code>location</code></strong> An exported dictionary containing the content location. Only useful with the C API.</p>
+</li>
+<li>
+<p><strong><code>offset</code></strong> Set initial byte offset.</p>
+</li>
+<li>
+<p><strong><code>end_offset</code></strong> Try to limit the request to bytes preceding this offset.</p>
+</li>
+<li>
+<p><strong><code>method</code></strong> When used as a client option it sets the HTTP method for the request.</p>
+</li>
+</ul>
+<p>When used as a server option it sets the HTTP method that is going to be expected from the client(s). If the expected and the received HTTP method do not match the client will be given a Bad Request response. When unset the HTTP method is not checked for now. This will be replaced by autodetection in the future.</p>
+<ul>
+<li>
+<p><strong><code>reconnect</code></strong> Reconnect automatically when disconnected before EOF is hit.</p>
+</li>
+<li>
+<p><strong><code>reconnect_at_eof</code></strong> If set then eof is treated like an error and causes reconnection, this is useful for live / endless streams.</p>
+</li>
+<li>
+<p><strong><code>reconnect_on_network_error</code></strong> Reconnect automatically in case of TCP/TLS errors during connect.</p>
+</li>
+<li>
+<p><strong><code>reconnect_on_http_error</code></strong> A comma separated list of HTTP status codes to reconnect on. The list can include specific status codes (e.g. '503') or the strings '4xx' / '5xx'.</p>
+</li>
+<li>
+<p><strong><code>reconnect_streamed</code></strong> If set then even streamed/non seekable streams will be reconnected on errors.</p>
+</li>
+<li>
+<p><strong><code>reconnect_delay_max</code></strong> Set the maximum delay in seconds after which to give up reconnecting.</p>
+</li>
+<li>
+<p><strong><code>reconnect_max_retries</code></strong> Set the maximum number of times to retry a connection. Default unset.</p>
+</li>
+<li>
+<p><strong><code>reconnect_delay_total_max</code></strong> Set the maximum total delay in seconds after which to give up reconnecting.</p>
+</li>
+<li>
+<p><strong><code>respect_retry_after</code></strong> If enabled, and a Retry-After header is encountered, its requested reconnection delay will be honored, rather than using exponential backoff. Useful for 429 and 503 errors. Default enabled.</p>
+</li>
+<li>
+<p><strong><code>listen</code></strong> If set to 1 enables experimental HTTP server. This can be used to send data when used as an output option, or read data from a client with HTTP POST when used as an input option. If set to 2 enables experimental multi-client HTTP server. This is not yet implemented in ffmpeg.c and thus must not be used as a command line option.</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a># Server side (sending):
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>ffmpeg -i somefile.ogg -c copy -listen 1 -f ogg http://server:port
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a># Client side (receiving):
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>ffmpeg -i http://server:port -c copy somefile.ogg
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a># Client can also be done with wget:
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>wget http://server:port -O somefile.ogg
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a># Server side (receiving):
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>ffmpeg -listen 1 -i http://server:port -c copy somefile.ogg
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a># Client side (sending):
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>ffmpeg -i somefile.ogg -chunked_post 0 -c copy -f ogg http://server:port
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a># Client can also be done with wget:
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>wget --post-file=somefile.ogg http://server:port
+</code></pre></div>
+<ul>
+<li>
+<p><strong><code>resource</code></strong> The resource requested by a client, when the experimental HTTP server is in use.</p>
+</li>
+<li>
+<p><strong><code>reply_code</code></strong> The HTTP code returned to the client, when the experimental HTTP server is in use.</p>
+</li>
+<li>
+<p><strong><code>short_seek_size</code></strong> Set the threshold, in bytes, for when a readahead should be preferred over a seek and new HTTP request. This is useful, for example, to make sure the same connection is used for reading large video packets with small audio packets in between.</p>
+</li>
+</ul>
+<h3 id="http-cookies">HTTP Cookies<a class="headerlink" href="#http-cookies" title="Permanent link">&para;</a></h3>
+<p>Some HTTP requests will be denied unless cookie values are passed in with the request. The <code>cookies</code> option allows these cookies to be specified. At the very least, each cookie must specify a value along with a path and domain. HTTP requests that match both the domain and path will automatically include the cookie value in the HTTP Cookie header field. Multiple cookies can be delimited by a newline.</p>
+<p>The required syntax to play a stream specifying a cookie is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>ffplay -cookies "nlqptid=nltid=tsn; path=/; domain=somedomain.com;" http://somedomain.com/somestream.m3u8
+</code></pre></div>
+<h2 id="icecast">Icecast<a class="headerlink" href="#icecast" title="Permanent link">&para;</a></h2>
+<p>Icecast protocol (stream to Icecast servers)</p>
+<p>This protocol accepts the following options:</p>
+<ul>
+<li>
+<p><strong><code>ice_genre</code></strong> Set the stream genre.</p>
+</li>
+<li>
+<p><strong><code>ice_name</code></strong> Set the stream name.</p>
+</li>
+<li>
+<p><strong><code>ice_description</code></strong> Set the stream description.</p>
+</li>
+<li>
+<p><strong><code>ice_url</code></strong> Set the stream website URL.</p>
+</li>
+<li>
+<p><strong><code>ice_public</code></strong> Set if the stream should be public. The default is 0 (not public).</p>
+</li>
+<li>
+<p><strong><code>user_agent</code></strong> Override the User-Agent header. If not specified a string of the form "Lavf/\&lt;version&gt;" will be used.</p>
+</li>
+<li>
+<p><strong><code>password</code></strong> Set the Icecast mountpoint password.</p>
+</li>
+<li>
+<p><strong><code>content_type</code></strong> Set the stream content type. This must be set if it is different from audio/mpeg.</p>
+</li>
+<li>
+<p><strong><code>legacy_icecast</code></strong> This enables support for Icecast versions \&lt; 2.4.0, that do not support the HTTP PUT method but the SOURCE method.</p>
+</li>
+<li>
+<p><strong><code>tls</code></strong> Establish a TLS (HTTPS) connection to Icecast.</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>icecast://[username[:password]@]server:port/mountpoint
+</code></pre></div>
+<h2 id="ipfs">ipfs<a class="headerlink" href="#ipfs" title="Permanent link">&para;</a></h2>
+<p>InterPlanetary File System (IPFS) protocol support. One can access files stored on the IPFS network through so-called gateways. These are http(s) endpoints. This protocol wraps the IPFS native protocols (ipfs:// and ipns://) to be sent to such a gateway. Users can (and should) host their own node which means this protocol will use one's local gateway to access files on the IPFS network.</p>
+<p>This protocol accepts the following options:</p>
+<ul>
+<li><strong><code>gateway</code></strong> Defines the gateway to use. When not set, the protocol will first try locating the local gateway by looking at <code>$IPFS_GATEWAY</code>, <code>$IPFS_PATH</code> and <code>$HOME/.ipfs/</code>, in that order.</li>
+</ul>
+<p>One can use this protocol in 2 ways. Using IPFS:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>ffplay ipfs://&lt;hash&gt;
+</code></pre></div>
+<p>Or the IPNS protocol (IPNS is mutable IPFS):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>ffplay ipns://&lt;hash&gt;
+</code></pre></div>
+<h2 id="mmst">mmst<a class="headerlink" href="#mmst" title="Permanent link">&para;</a></h2>
+<p>MMS (Microsoft Media Server) protocol over TCP.</p>
+<h2 id="mmsh">mmsh<a class="headerlink" href="#mmsh" title="Permanent link">&para;</a></h2>
+<p>MMS (Microsoft Media Server) protocol over HTTP.</p>
+<p>The required syntax is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>mmsh://server[:port][/app][/playpath]
+</code></pre></div>
+<h2 id="md5">md5<a class="headerlink" href="#md5" title="Permanent link">&para;</a></h2>
+<p>MD5 output protocol.</p>
+<p>Computes the MD5 hash of the data to be written, and on close writes this to the designated output or stdout if none is specified. It can be used to test muxers without writing an actual file.</p>
+<p>Some examples follow.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a># Write the MD5 hash of the encoded AVI file to the file output.avi.md5.
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>ffmpeg -i input.flv -f avi -y md5:output.avi.md5
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a># Write the MD5 hash of the encoded AVI file to stdout.
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>ffmpeg -i input.flv -f avi -y md5:
+</code></pre></div>
+<p>Note that some formats (typically MOV) require the output protocol to be seekable, so they will fail with the MD5 output protocol.</p>
+<h2 id="pipe">pipe<a class="headerlink" href="#pipe" title="Permanent link">&para;</a></h2>
+<p>UNIX pipe access protocol.</p>
+<p>Read and write from UNIX pipes.</p>
+<p>The accepted syntax is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>pipe:[number]
+</code></pre></div>
+<p>If <code>fd</code> isn't specified, \&lt;number&gt; is the number corresponding to the file descriptor of the pipe (e.g. 0 for stdin, 1 for stdout, 2 for stderr). If \&lt;number&gt; is not specified, by default the stdout file descriptor will be used for writing, stdin for reading.</p>
+<p>For example to read from stdin with <code>ffmpeg</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>cat test.wav | ffmpeg -i pipe:0
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a># ...this is the same as...
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>cat test.wav | ffmpeg -i pipe:
+</code></pre></div>
+<p>For writing to stdout with <code>ffmpeg</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>ffmpeg -i test.wav -f avi pipe:1 | cat &gt; test.avi
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a># ...this is the same as...
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>ffmpeg -i test.wav -f avi pipe: | cat &gt; test.avi
+</code></pre></div>
+<p>This protocol accepts the following options:</p>
+<ul>
+<li>
+<p><strong><code>blocksize</code></strong> Set I/O operation maximum block size, in bytes. Default value is <code>INT_MAX</code>, which results in not limiting the requested block size. Setting this value reasonably low improves user termination request reaction time, which is valuable if data transmission is slow.</p>
+</li>
+<li>
+<p><strong><code>fd</code></strong> Set file descriptor.</p>
+</li>
+</ul>
+<p>Note that some formats (typically MOV), require the output protocol to be seekable, so they will fail with the pipe output protocol.</p>
+<h2 id="prompeg">prompeg<a class="headerlink" href="#prompeg" title="Permanent link">&para;</a></h2>
+<p>Pro-MPEG Code of Practice #3 Release 2 FEC protocol.</p>
+<p>The Pro-MPEG CoP#3 FEC is a 2D parity-check forward error correction mechanism for MPEG-2 Transport Streams sent over RTP.</p>
+<p>This protocol must be used in conjunction with the <code>rtp_mpegts</code> muxer and the <code>rtp</code> protocol.</p>
+<p>The required syntax is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>-f rtp_mpegts -fec prompeg=option=val... rtp://hostname:port
+</code></pre></div>
+<p>The destination UDP ports are <code>port + 2</code> for the column FEC stream and <code>port + 4</code> for the row FEC stream.</p>
+<p>This protocol accepts the following options:</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>l=n</code></td>
+<td>The number of columns (4-20, LxD \&lt;= 100)</td>
+</tr>
+<tr>
+<td><code>d=n</code></td>
+<td>The number of rows (4-20, LxD \&lt;= 100)</td>
+</tr>
+</tbody>
+</table>
+<p>Example usage:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>-f rtp_mpegts -fec prompeg=l=8:d=4 rtp://hostname:port
+</code></pre></div>
+<h2 id="rist">rist<a class="headerlink" href="#rist" title="Permanent link">&para;</a></h2>
+<p>Reliable Internet Streaming Transport protocol</p>
+<p>The accepted options are:</p>
+<ul>
+<li>
+<p><strong><code>rist_profile</code></strong> Supported values:</p>
+</li>
+<li>
+<p><strong><code>simple</code></strong></p>
+</li>
+<li>
+<p><strong><code>main</code></strong> This one is default.</p>
+</li>
+<li>
+<p><strong><code>advanced</code></strong></p>
+</li>
+<li>
+<p><strong><code>buffer_size</code></strong> Set internal RIST buffer size in milliseconds for retransmission of data. Default value is 0 which means the librist default (1 sec). Maximum value is 30 seconds.</p>
+</li>
+<li>
+<p><strong><code>fifo_size</code></strong> Size of the librist receiver output fifo in number of packets. This must be a power of 2. Defaults to 8192 (vs the librist default of 1024).</p>
+</li>
+<li>
+<p><strong><code>overrun_nonfatal=1|0</code></strong> Survive in case of librist fifo buffer overrun. Default value is 0.</p>
+</li>
+<li>
+<p><strong><code>pkt_size</code></strong> Set maximum packet size for sending data. 1316 by default.</p>
+</li>
+<li>
+<p><strong><code>log_level</code></strong> Set loglevel for RIST logging messages. You only need to set this if you explicitly want to enable debug level messages or packet loss simulation, otherwise the regular loglevel is respected.</p>
+</li>
+<li>
+<p><strong><code>secret</code></strong> Set override of encryption secret, by default is unset.</p>
+</li>
+<li>
+<p><strong><code>encryption</code></strong> Set encryption type, by default is disabled. Acceptable values are 128 and 256.</p>
+</li>
+</ul>
+<h2 id="rtmp">rtmp<a class="headerlink" href="#rtmp" title="Permanent link">&para;</a></h2>
+<p>Real-Time Messaging Protocol.</p>
+<p>The Real-Time Messaging Protocol (RTMP) is used for streaming multimedia content across a TCP/IP network.</p>
+<p>The required syntax is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>rtmp://[username:password@]server[:port][/app][/instance][/playpath]
+</code></pre></div>
+<p>The accepted parameters are:</p>
+<ul>
+<li>
+<p><strong><code>username</code></strong> An optional username (mostly for publishing).</p>
+</li>
+<li>
+<p><strong><code>password</code></strong> An optional password (mostly for publishing).</p>
+</li>
+<li>
+<p><strong><code>server</code></strong> The address of the RTMP server.</p>
+</li>
+<li>
+<p><strong><code>port</code></strong> The number of the TCP port to use (by default is 1935).</p>
+</li>
+<li>
+<p><strong><code>app</code></strong> It is the name of the application to access. It usually corresponds to the path where the application is installed on the RTMP server (e.g. <code>/ondemand/</code>, <code>/flash/live/</code>, etc.). You can override the value parsed from the URI through the <code>rtmp_app</code> option, too.</p>
+</li>
+<li>
+<p><strong><code>playpath</code></strong> It is the path or name of the resource to play with reference to the application specified in \&lt;app&gt;, may be prefixed by "mp4:". You can override the value parsed from the URI through the <code>rtmp_playpath</code> option, too.</p>
+</li>
+<li>
+<p><strong><code>listen</code></strong> Act as a server, listening for an incoming connection.</p>
+</li>
+<li>
+<p><strong><code>timeout</code></strong> Maximum time to wait for the incoming connection. Implies listen.</p>
+</li>
+</ul>
+<p>Additionally, the following parameters can be set via command line options (or in code via <code>AVOption</code>s):</p>
+<ul>
+<li>
+<p><strong><code>rtmp_app</code></strong> Name of application to connect on the RTMP server. This option overrides the parameter specified in the URI.</p>
+</li>
+<li>
+<p><strong><code>rtmp_buffer</code></strong> Set the client buffer time in milliseconds. The default is 3000.</p>
+</li>
+<li>
+<p><strong><code>rtmp_conn</code></strong> Extra arbitrary AMF connection parameters, parsed from a string, e.g. like <code>B:1 S:authMe O:1 NN:code:1.23 NS:flag:ok O:0</code>. Each value is prefixed by a single character denoting the type, B for Boolean, N for number, S for string, O for object, or Z for null, followed by a colon. For Booleans the data must be either 0 or 1 for FALSE or TRUE, respectively. Likewise for Objects the data must be 0 or 1 to end or begin an object, respectively. Data items in subobjects may be named, by prefixing the type with 'N' and specifying the name before the value (i.e. <code>NB:myFlag:1</code>). This option may be used multiple times to construct arbitrary AMF sequences.</p>
+</li>
+<li>
+<p><strong><code>rtmp_enhanced_codecs</code></strong> Specify the list of codecs the client advertises to support in an enhanced RTMP stream. This option should be set to a comma separated list of fourcc values, like <code>hvc1,av01,vp09</code> for multiple codecs or <code>hvc1</code> for only one codec. The specified list will be presented in the "fourCcLive" property of the Connect Command Message.</p>
+</li>
+<li>
+<p><strong><code>rtmp_flashver</code></strong> Version of the Flash plugin used to run the SWF player. The default is LNX 9,0,124,2. (When publishing, the default is FMLE/3.0 (compatible; \&lt;libavformat version&gt;).)</p>
+</li>
+<li>
+<p><strong><code>rtmp_flush_interval</code></strong> Number of packets flushed in the same request (RTMPT only). The default is 10.</p>
+</li>
+<li>
+<p><strong><code>rtmp_live</code></strong> Specify that the media is a live stream. No resuming or seeking in live streams is possible. The default value is <code>any</code>, which means the subscriber first tries to play the live stream specified in the playpath. If a live stream of that name is not found, it plays the recorded stream. The other possible values are <code>live</code> and <code>recorded</code>.</p>
+</li>
+<li>
+<p><strong><code>rtmp_pageurl</code></strong> URL of the web page in which the media was embedded. By default no value will be sent.</p>
+</li>
+<li>
+<p><strong><code>rtmp_playpath</code></strong> Stream identifier to play or to publish. This option overrides the parameter specified in the URI.</p>
+</li>
+<li>
+<p><strong><code>rtmp_subscribe</code></strong> Name of live stream to subscribe to. By default no value will be sent. It is only sent if the option is specified or if rtmp_live is set to live.</p>
+</li>
+<li>
+<p><strong><code>rtmp_swfhash</code></strong> SHA256 hash of the decompressed SWF file (32 bytes).</p>
+</li>
+<li>
+<p><strong><code>rtmp_swfsize</code></strong> Size of the decompressed SWF file, required for SWFVerification.</p>
+</li>
+<li>
+<p><strong><code>rtmp_swfurl</code></strong> URL of the SWF player for the media. By default no value will be sent.</p>
+</li>
+<li>
+<p><strong><code>rtmp_swfverify</code></strong> URL to player swf file, compute hash/size automatically.</p>
+</li>
+<li>
+<p><strong><code>rtmp_tcurl</code></strong> URL of the target stream. Defaults to proto://host[:port]/app.</p>
+</li>
+<li>
+<p><strong><code>tcp_nodelay=1|0</code></strong> Set TCP_NODELAY to disable Nagle's algorithm. Default value is 0.</p>
+</li>
+</ul>
+<p><em>Remark: Writing to the socket is currently not optimized to minimize system calls and reduces the efficiency / effect of TCP_NODELAY.</em></p>
+<ul>
+<li><strong><code>tcp_keepalive=1|0</code></strong> Enable the TCP keepalive mechanism to detect dead peers and help maintain long-lived idle connections. Default value is 0.</li>
+</ul>
+<p>Only the basic keepalive option (SO_KEEPALIVE) can be enabled or disabled. Platform-specific tuning parameters such as TCP_KEEPIDLE, TCP_KEEPINTVL, or TCP_KEEPCNT are not configurable and will use the operating system's default values.</p>
+<p>For example to read with <code>ffplay</code> a multimedia resource named "sample" from the application "vod" from an RTMP server "myserver":</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>ffplay rtmp://myserver/vod/sample
+</code></pre></div>
+<p>To publish to a password protected server, passing the playpath and app names separately:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>ffmpeg -re -i &lt;input&gt; -f flv -rtmp_playpath some/long/path -rtmp_app long/app/name rtmp://username:password@myserver/
+</code></pre></div>
+<h2 id="rtmpe">rtmpe<a class="headerlink" href="#rtmpe" title="Permanent link">&para;</a></h2>
+<p>Encrypted Real-Time Messaging Protocol.</p>
+<p>The Encrypted Real-Time Messaging Protocol (RTMPE) is used for streaming multimedia content within standard cryptographic primitives, consisting of Diffie-Hellman key exchange and HMACSHA256, generating a pair of RC4 keys.</p>
+<h2 id="rtmps">rtmps<a class="headerlink" href="#rtmps" title="Permanent link">&para;</a></h2>
+<p>Real-Time Messaging Protocol over a secure SSL connection.</p>
+<p>The Real-Time Messaging Protocol (RTMPS) is used for streaming multimedia content across an encrypted connection.</p>
+<h2 id="rtmpt">rtmpt<a class="headerlink" href="#rtmpt" title="Permanent link">&para;</a></h2>
+<p>Real-Time Messaging Protocol tunneled through HTTP.</p>
+<p>The Real-Time Messaging Protocol tunneled through HTTP (RTMPT) is used for streaming multimedia content within HTTP requests to traverse firewalls.</p>
+<h2 id="rtmpte">rtmpte<a class="headerlink" href="#rtmpte" title="Permanent link">&para;</a></h2>
+<p>Encrypted Real-Time Messaging Protocol tunneled through HTTP.</p>
+<p>The Encrypted Real-Time Messaging Protocol tunneled through HTTP (RTMPTE) is used for streaming multimedia content within HTTP requests to traverse firewalls.</p>
+<h2 id="rtmpts">rtmpts<a class="headerlink" href="#rtmpts" title="Permanent link">&para;</a></h2>
+<p>Real-Time Messaging Protocol tunneled through HTTPS.</p>
+<p>The Real-Time Messaging Protocol tunneled through HTTPS (RTMPTS) is used for streaming multimedia content within HTTPS requests to traverse firewalls.</p>
+<h2 id="libsmbclient">libsmbclient<a class="headerlink" href="#libsmbclient" title="Permanent link">&para;</a></h2>
+<p>libsmbclient permits one to manipulate CIFS/SMB network resources.</p>
+<p>Following syntax is required.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>smb://[[domain:]user[:password@]]server[/share[/path[/file]]]
+</code></pre></div>
+<p>This protocol accepts the following options.</p>
+<ul>
+<li>
+<p><strong><code>timeout</code></strong> Set timeout in milliseconds of socket I/O operations used by the underlying low level operation. By default it is set to -1, which means that the timeout is not specified.</p>
+</li>
+<li>
+<p><strong><code>truncate</code></strong> Truncate existing files on write, if set to 1. A value of 0 prevents truncating. Default value is 1.</p>
+</li>
+<li>
+<p><strong><code>workgroup</code></strong> Set the workgroup used for making connections. By default workgroup is not specified.</p>
+</li>
+</ul>
+<p>For more information see: <a href="http://www.samba.org/">http://www.samba.org/</a>.</p>
+<h2 id="libssh">libssh<a class="headerlink" href="#libssh" title="Permanent link">&para;</a></h2>
+<p>Secure File Transfer Protocol via libssh</p>
+<p>Read from or write to remote resources using SFTP protocol.</p>
+<p>Following syntax is required.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>sftp://[user[:password]@]server[:port]/path/to/remote/resource.mpeg
+</code></pre></div>
+<p>This protocol accepts the following options.</p>
+<ul>
+<li>
+<p><strong><code>timeout</code></strong> Set timeout of socket I/O operations used by the underlying low level operation. By default it is set to -1, which means that the timeout is not specified.</p>
+</li>
+<li>
+<p><strong><code>truncate</code></strong> Truncate existing files on write, if set to 1. A value of 0 prevents truncating. Default value is 1.</p>
+</li>
+<li>
+<p><strong><code>private_key</code></strong> Specify the path of the file containing private key to use during authorization. By default libssh searches for keys in the <code>~/.ssh/</code> directory.</p>
+</li>
+</ul>
+<p>Example: Play a file stored on remote server.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>ffplay sftp://user:password@server_address:22/home/user/resource.mpeg
+</code></pre></div>
+<h2 id="librtmp-rtmp-rtmpe-rtmps-rtmpt-rtmpte">librtmp rtmp, rtmpe, rtmps, rtmpt, rtmpte<a class="headerlink" href="#librtmp-rtmp-rtmpe-rtmps-rtmpt-rtmpte" title="Permanent link">&para;</a></h2>
+<p>Real-Time Messaging Protocol and its variants supported through librtmp.</p>
+<p>Requires the presence of the librtmp headers and library during configuration. You need to explicitly configure the build with "–enable-librtmp". If enabled this will replace the native RTMP protocol.</p>
+<p>This protocol provides most client functions and a few server functions needed to support RTMP, RTMP tunneled in HTTP (RTMPT), encrypted RTMP (RTMPE), RTMP over SSL/TLS (RTMPS) and tunneled variants of these encrypted types (RTMPTE, RTMPTS).</p>
+<p>The required syntax is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>rtmp_proto://server[:port][/app][/playpath] options
+</code></pre></div>
+<p>where \&lt;rtmp_proto&gt; is one of the strings "rtmp", "rtmpt", "rtmpe", "rtmps", "rtmpte", "rtmpts" corresponding to each RTMP variant, and \&lt;server&gt;, \&lt;port&gt;, \&lt;app&gt; and \&lt;playpath&gt; have the same meaning as specified for the RTMP native protocol. \&lt;options&gt; contains a list of space-separated options of the form \&lt;key&gt;=\&lt;val&gt;.</p>
+<p>See the librtmp manual page (man 3 librtmp) for more information.</p>
+<p>For example, to stream a file in real-time to an RTMP server using <code>ffmpeg</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>ffmpeg -re -i myfile -f flv rtmp://myserver/live/mystream
+</code></pre></div>
+<p>To play the same stream using <code>ffplay</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>ffplay "rtmp://myserver/live/mystream live=1"
+</code></pre></div>
+<h2 id="rtp">rtp<a class="headerlink" href="#rtp" title="Permanent link">&para;</a></h2>
+<p>Real-time Transport Protocol.</p>
+<p>The required syntax for an RTP URL is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>rtp://hostname[:port][?options]
+</code></pre></div>
+<p>\&lt;port&gt; specifies the RTP port to use.</p>
+<p>\&lt;options&gt; contains a list of &amp;-separated options of the form \&lt;key&gt;=\&lt;val&gt;. Standard percent-encoding (and using the plus sign for space) can be used to escape keys and values.</p>
+<p>Options can also can be specified via command line options (or in code via <code>AVOption</code>s).</p>
+<p>The list of supported options follows.</p>
+<ul>
+<li>
+<p><strong><code>ttl=n</code></strong> Set the TTL (Time-To-Live) value (for multicast only).</p>
+</li>
+<li>
+<p><strong><code>rtcpport=n</code></strong> Set the remote RTCP port to \&lt;n&gt;.</p>
+</li>
+<li>
+<p><strong><code>localport, local_rtpport, localrtpport=n</code></strong> Set the local RTP port to \&lt;n&gt;.</p>
+</li>
+</ul>
+<p>Using the localport option name is deprecated and should not be used.</p>
+<ul>
+<li>
+<p><strong><code>local_rtcpport, localrtcpport=n'</code></strong> Set the local RTCP port to \&lt;n&gt;.</p>
+</li>
+<li>
+<p><strong><code>pkt_size=n</code></strong> Set max packet size (in bytes) to \&lt;n&gt;.</p>
+</li>
+<li>
+<p><strong><code>buffer_size=size</code></strong> Set the maximum UDP socket buffer size in bytes.</p>
+</li>
+<li>
+<p><strong><code>connect=0|1</code></strong> Do a <code>connect()</code> on the UDP socket (if set to 1) or not (if set to 0).</p>
+</li>
+<li>
+<p><strong><code>sources=ip[,ip]</code></strong> List allowed source IP addresses.</p>
+</li>
+<li>
+<p><strong><code>block=ip[,ip]</code></strong> List disallowed (blocked) source IP addresses.</p>
+</li>
+<li>
+<p><strong><code>write_to_source=0|1</code></strong> Send packets to the source address of the latest received packet (if set to 1) or to a default remote address (if set to 0).</p>
+</li>
+<li>
+<p><strong><code>localaddr=addr</code></strong> Local IP address of a network interface used for sending packets or joining multicast groups.</p>
+</li>
+<li>
+<p><strong><code>timeout=n</code></strong> Set timeout (in microseconds) of socket I/O operations to \&lt;n&gt;.</p>
+</li>
+</ul>
+<p>Important notes:</p>
+<ol>
+<li>
+<p>If <code>rtcpport</code> is not set the RTCP port will be set to the RTP port value plus 1.</p>
+</li>
+<li>
+<p>If <code>localrtpport</code> (the local RTP port) is not set any available port will be used for the local RTP and RTCP ports.</p>
+</li>
+<li>
+<p>If <code>localrtcpport</code> (the local RTCP port) is not set it will be set to the local RTP port value plus 1.</p>
+</li>
+</ol>
+<h2 id="rtsp">rtsp<a class="headerlink" href="#rtsp" title="Permanent link">&para;</a></h2>
+<p>Real-Time Streaming Protocol.</p>
+<p>RTSP is not technically a protocol handler in libavformat, it is a demuxer and muxer. The demuxer supports both normal RTSP (with data transferred over RTP; this is used by e.g. Apple and Microsoft) and Real-RTSP (with data transferred over RDT).</p>
+<p>The muxer can be used to send a stream using RTSP ANNOUNCE to a server supporting it (currently Darwin Streaming Server and Mischa Spiegelmock's <a href="https://github.com/revmischa/rtsp-server">RTSP server</a>).</p>
+<p>The required syntax for a RTSP url is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>rtsp://hostname[:port]/path
+</code></pre></div>
+<p>Options can be set on the <code>ffmpeg</code>/<code>ffplay</code> command line, or set in code via <code>AVOption</code>s or in <code>avformat_open_input</code>.</p>
+<h3 id="muxer">Muxer<a class="headerlink" href="#muxer" title="Permanent link">&para;</a></h3>
+<p>The following options are supported.</p>
+<ul>
+<li><strong><code>rtsp_transport</code></strong> Set RTSP transport protocols.</li>
+</ul>
+<p>It accepts the following values:</p>
+<ul>
+<li>
+<p><strong><code>udp</code></strong> Use UDP as lower transport protocol.</p>
+</li>
+<li>
+<p><strong><code>tcp</code></strong> Use TCP (interleaving within the RTSP control channel) as lower transport protocol.</p>
+</li>
+</ul>
+<p>Default value is <code>0</code>.</p>
+<ul>
+<li><strong><code>rtsp_flags</code></strong> Set RTSP flags.</li>
+</ul>
+<p>The following values are accepted:</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>latm</code></td>
+<td>Use MP4A-LATM packetization instead of MPEG4-GENERIC for AAC.</td>
+</tr>
+<tr>
+<td><code>rfc2190</code></td>
+<td>Use RFC 2190 packetization instead of RFC 4629 for H.263.</td>
+</tr>
+<tr>
+<td><code>skip_rtcp</code></td>
+<td>Don't send RTCP sender reports.</td>
+</tr>
+<tr>
+<td><code>h264_mode0</code></td>
+<td>Use mode 0 for H.264 in RTP.</td>
+</tr>
+<tr>
+<td><code>send_bye</code></td>
+<td>Send RTCP BYE packets when finishing.</td>
+</tr>
+</tbody>
+</table>
+<p>Default value is <code>0</code>.</p>
+<ul>
+<li>
+<p><strong><code>min_port</code></strong> Set minimum local UDP port. Default value is 5000.</p>
+</li>
+<li>
+<p><strong><code>max_port</code></strong> Set maximum local UDP port. Default value is 65000.</p>
+</li>
+<li>
+<p><strong><code>buffer_size</code></strong> Set the maximum socket buffer size in bytes.</p>
+</li>
+<li>
+<p><strong><code>pkt_size</code></strong> Set max send packet size (in bytes). Default value is 1472.</p>
+</li>
+</ul>
+<h3 id="demuxer">Demuxer<a class="headerlink" href="#demuxer" title="Permanent link">&para;</a></h3>
+<p>The following options are supported.</p>
+<ul>
+<li>
+<p><strong><code>initial_pause</code></strong> Do not start playing the stream immediately if set to 1. Default value is 0.</p>
+</li>
+<li>
+<p><strong><code>rtsp_transport</code></strong> Set RTSP transport protocols.</p>
+</li>
+</ul>
+<p>It accepts the following values:</p>
+<ul>
+<li>
+<p><strong><code>udp</code></strong> Use UDP as lower transport protocol.</p>
+</li>
+<li>
+<p><strong><code>tcp</code></strong> Use TCP (interleaving within the RTSP control channel) as lower transport protocol.</p>
+</li>
+<li>
+<p><strong><code>udp_multicast</code></strong> Use UDP multicast as lower transport protocol.</p>
+</li>
+<li>
+<p><strong><code>http</code></strong> Use HTTP tunneling as lower transport protocol, which is useful for passing proxies.</p>
+</li>
+<li>
+<p><strong><code>https</code></strong> Use HTTPs tunneling as lower transport protocol, which is useful for passing proxies and widely used for security consideration.</p>
+</li>
+</ul>
+<p>Multiple lower transport protocols may be specified, in that case they are tried one at a time (if the setup of one fails, the next one is tried). For the muxer, only the <code>tcp</code> and <code>udp</code> options are supported.</p>
+<ul>
+<li><strong><code>rtsp_flags</code></strong> Set RTSP flags.</li>
+</ul>
+<p>The following values are accepted:</p>
+<ul>
+<li>
+<p><strong><code>filter_src</code></strong> Accept packets only from negotiated peer address and port.</p>
+</li>
+<li>
+<p><strong><code>listen</code></strong> Act as a server, listening for an incoming connection.</p>
+</li>
+<li>
+<p><strong><code>prefer_tcp</code></strong> Try TCP for RTP transport first, if TCP is available as RTSP RTP transport.</p>
+</li>
+<li>
+<p><strong><code>satip_raw</code></strong> Export raw MPEG-TS stream instead of demuxing. The flag will simply write out the raw stream, with the original PAT/PMT/PIDs intact.</p>
+</li>
+</ul>
+<p>Default value is <code>none</code>.</p>
+<ul>
+<li><strong><code>allowed_media_types</code></strong> Set media types to accept from the server.</li>
+</ul>
+<p>The following flags are accepted:</p>
+<ul>
+<li>
+<p><strong><code>video</code></strong></p>
+</li>
+<li>
+<p><strong><code>audio</code></strong></p>
+</li>
+<li>
+<p><strong><code>data</code></strong></p>
+</li>
+<li>
+<p><strong><code>subtitle</code></strong></p>
+</li>
+</ul>
+<p>By default it accepts all media types.</p>
+<ul>
+<li>
+<p><strong><code>min_port</code></strong> Set minimum local UDP port. Default value is 5000.</p>
+</li>
+<li>
+<p><strong><code>max_port</code></strong> Set maximum local UDP port. Default value is 65000.</p>
+</li>
+<li>
+<p><strong><code>listen_timeout</code></strong> Set maximum timeout (in seconds) to establish an initial connection. Setting <code>listen_timeout</code> &gt; 0 sets <code>rtsp_flags</code> to <code>listen</code>. Default is -1 which means an infinite timeout when <code>listen</code> mode is set.</p>
+</li>
+<li>
+<p><strong><code>reorder_queue_size</code></strong> Set number of packets to buffer for handling of reordered packets.</p>
+</li>
+<li>
+<p><strong><code>timeout</code></strong> Set socket TCP I/O timeout in microseconds.</p>
+</li>
+<li>
+<p><strong><code>user_agent</code></strong> Override User-Agent header. If not specified, it defaults to the libavformat identifier string.</p>
+</li>
+<li>
+<p><strong><code>buffer_size</code></strong> Set the maximum socket buffer size in bytes.</p>
+</li>
+</ul>
+<p>When receiving data over UDP, the demuxer tries to reorder received packets (since they may arrive out of order, or packets may get lost totally). This can be disabled by setting the maximum demuxing delay to zero (via the <code>max_delay</code> field of AVFormatContext).</p>
+<p>When watching multi-bitrate Real-RTSP streams with <code>ffplay</code>, the streams to display can be chosen with <code>-vst</code> \&lt;n&gt; and <code>-ast</code> \&lt;n&gt; for video and audio respectively, and can be switched on the fly by pressing <code>v</code> and <code>a</code>.</p>
+<h3 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h3>
+<p>The following examples all make use of the <code>ffplay</code> and <code>ffmpeg</code> tools.</p>
+<ul>
+<li>Watch a stream over UDP, with a max reordering delay of 0.5 seconds:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>ffplay -max_delay 500000 -rtsp_transport udp rtsp://server/video.mp4
+</code></pre></div>
+<ul>
+<li>Watch a stream tunneled over HTTP:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>ffplay -rtsp_transport http rtsp://server/video.mp4
+</code></pre></div>
+<ul>
+<li>Send a stream in realtime to a RTSP server, for others to watch:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>ffmpeg -re -i input -f rtsp -muxdelay 0.1 rtsp://server/live.sdp
+</code></pre></div>
+<ul>
+<li>Receive a stream in realtime:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>ffmpeg -rtsp_flags listen -i rtsp://ownaddress/live.sdp output
+</code></pre></div>
+<h2 id="sap">sap<a class="headerlink" href="#sap" title="Permanent link">&para;</a></h2>
+<p>Session Announcement Protocol (RFC 2974). This is not technically a protocol handler in libavformat, it is a muxer and demuxer. It is used for signalling of RTP streams, by announcing the SDP for the streams regularly on a separate port.</p>
+<h3 id="muxer_1">Muxer<a class="headerlink" href="#muxer_1" title="Permanent link">&para;</a></h3>
+<p>The syntax for a SAP url given to the muxer is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>sap://destination[:port][?options]
+</code></pre></div>
+<p>The RTP packets are sent to \&lt;destination&gt; on port \&lt;port&gt;, or to port 5004 if no port is specified. \&lt;options&gt; is a <code>&amp;</code>-separated list. The following options are supported:</p>
+<ul>
+<li>
+<p><strong><code>announce_addr=address</code></strong> Specify the destination IP address for sending the announcements to. If omitted, the announcements are sent to the commonly used SAP announcement multicast address 224.2.127.254 (sap.mcast.net), or ff0e::2:7ffe if \&lt;destination&gt; is an IPv6 address.</p>
+</li>
+<li>
+<p><strong><code>announce_port=port</code></strong> Specify the port to send the announcements on, defaults to 9875 if not specified.</p>
+</li>
+<li>
+<p><strong><code>ttl=ttl</code></strong> Specify the time to live value for the announcements and RTP packets, defaults to 255.</p>
+</li>
+<li>
+<p><strong><code>same_port=0|1</code></strong> If set to 1, send all RTP streams on the same port pair. If zero (the default), all streams are sent on unique ports, with each stream on a port 2 numbers higher than the previous. VLC/Live555 requires this to be set to 1, to be able to receive the stream. The RTP stack in libavformat for receiving requires all streams to be sent on unique ports.</p>
+</li>
+</ul>
+<p>Example command lines follow.</p>
+<p>To broadcast a stream on the local subnet, for watching in VLC:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>ffmpeg -re -i input -f sap sap://224.0.0.255?same_port=1
+</code></pre></div>
+<p>Similarly, for watching in <code>ffplay</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>ffmpeg -re -i input -f sap sap://224.0.0.255
+</code></pre></div>
+<p>And for watching in <code>ffplay</code>, over IPv6:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>ffmpeg -re -i input -f sap sap://[ff0e::1:2:3:4]
+</code></pre></div>
+<h3 id="demuxer_1">Demuxer<a class="headerlink" href="#demuxer_1" title="Permanent link">&para;</a></h3>
+<p>The syntax for a SAP url given to the demuxer is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>sap://[address][:port]
+</code></pre></div>
+<p>\&lt;address&gt; is the multicast address to listen for announcements on, if omitted, the default 224.2.127.254 (sap.mcast.net) is used. \&lt;port&gt; is the port that is listened on, 9875 if omitted.</p>
+<p>The demuxers listens for announcements on the given address and port. Once an announcement is received, it tries to receive that particular stream.</p>
+<p>Example command lines follow.</p>
+<p>To play back the first stream announced on the normal SAP multicast address:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>ffplay sap://
+</code></pre></div>
+<p>To play back the first stream announced on one the default IPv6 SAP multicast address:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>ffplay sap://[ff0e::2:7ffe]
+</code></pre></div>
+<h2 id="sctp">sctp<a class="headerlink" href="#sctp" title="Permanent link">&para;</a></h2>
+<p>Stream Control Transmission Protocol.</p>
+<p>The accepted URL syntax is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>sctp://host:port[?options]
+</code></pre></div>
+<p>\&lt;options&gt; contains a list of &amp;-separated options of the form \&lt;key&gt;=\&lt;val&gt;. Standard percent-encoding (and using the plus sign for space) can be used to escape keys and values.</p>
+<p>Options can also can be specified via command line options (or in code via <code>AVOption</code>s).</p>
+<p>The list of supported options follows.</p>
+<ul>
+<li>
+<p><strong><code>listen</code></strong> If set to any value, listen for an incoming connection. Outgoing connection is done by default.</p>
+</li>
+<li>
+<p><strong><code>max_streams</code></strong> Set the maximum number of streams. By default no limit is set.</p>
+</li>
+</ul>
+<h2 id="shared">shared<a class="headerlink" href="#shared" title="Permanent link">&para;</a></h2>
+<p>Thread-safe, persistent, cross-process cache wrapper for input streams. Caches the input stream to a file in the specified directory. This is similar to <a href="#cache">cache</a>, but with a persistent cache on disk that may be shared between multiple processes or demuxers, even concurrently.</p>
+<p>The filename of the cache is obtained by hashing the input URL, so there is some risk of collision if the same URL is used for different content (e.g. as a result of extra POST data being used to select the stream ID). To avoid this, make sure to only use this protocol for URLs that uniquely identify the content; otherwise you may get a garbled mix of sources.</p>
+<p>The accepted options are:</p>
+<ul>
+<li>
+<p><strong><code>cache_dir</code></strong> Path to the directory where cache files are stored. This option is required.</p>
+</li>
+<li>
+<p><strong><code>block_shift</code></strong> Shift factor (log2) of the block size used for internal reads/writes. Defaults to 15, i.e. 32KB blocks. If this does not match the value that was specified when an existing cache file was created, the previously specified value will be used instead.</p>
+</li>
+<li>
+<p><strong><code>read_only</code></strong> If true, use the shared cache for reads but don't write any new blocks to it. Default is false. Note that even with this option enabled, the cache file will be initialized if it does not already exist.</p>
+</li>
+<li>
+<p><strong><code>cache_verify</code></strong> If true, verify any data read from the cache against the underlying input stream, and report any mismatches. Note that this will make the cache layer effectively useless. This is purely a debug option.</p>
+</li>
+<li>
+<p><strong><code>cache_timeout</code></strong> If set to a nonzero value, specifies the maximum time (in microseconds) to wait for data to become available, if another process is currently trying to fetch and cache the same block at the same time. If this timeout elapses, it's assumed that the other process may have gotten stuck or died in the meantime.</p>
+</li>
+</ul>
+<p>If set to zero, no waiting is done and all processes will immediately race to try and fetch the same missing blocks themselves. Defaults to 10000 (10 ms).</p>
+<ul>
+<li><strong><code>retry_errors</code></strong> If true (the default), transient read errors from the underlying input stream are ignored and retried again. If false, any blocks that previously failed being read from will be treated as permanently inaccessible.</li>
+</ul>
+<p>URL Syntax is</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>shared:URL
+</code></pre></div>
+<h2 id="srt">srt<a class="headerlink" href="#srt" title="Permanent link">&para;</a></h2>
+<p>Haivision Secure Reliable Transport Protocol via libsrt.</p>
+<p>The supported syntax for a SRT URL is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>srt://hostname:port[?options]
+</code></pre></div>
+<p>\&lt;options&gt; contains a list of &amp;-separated options of the form \&lt;key&gt;=\&lt;val&gt;. Standard percent-encoding (and using the plus sign for space) can be used to escape keys and values.</p>
+<p>Options can also can be specified via command line options (or in code via <code>AVOption</code>s).</p>
+<p>The list of supported options follows.</p>
+<ul>
+<li>
+<p><strong><code>connect_timeout=milliseconds</code></strong> Connection timeout; SRT cannot connect for RTT &gt; 1500 msec (2 handshake exchanges) with the default connect timeout of 3 seconds. This option applies to the caller and rendezvous connection modes. The connect timeout is 10 times the value set for the rendezvous mode (which can be used as a workaround for this connection problem with earlier versions).</p>
+</li>
+<li>
+<p><strong><code>ffs=bytes</code></strong> Flight Flag Size (Window Size), in bytes. FFS is actually an internal parameter and you should set it to not less than <code>recv_buffer_size</code> and <code>mss</code>. The default value is relatively large, therefore unless you set a very large receiver buffer, you do not need to change this option. Default value is 25600.</p>
+</li>
+<li>
+<p><strong><code>inputbw=bytes/seconds</code></strong> Sender nominal input rate, in bytes per seconds. Used along with <code>oheadbw</code>, when <code>maxbw</code> is set to relative (0), to calculate maximum sending rate when recovery packets are sent along with the main media stream: <code>inputbw</code> * (100 + <code>oheadbw</code>) / 100 if <code>inputbw</code> is not set while <code>maxbw</code> is set to relative (0), the actual input rate is evaluated inside the library. Default value is 0.</p>
+</li>
+<li>
+<p><strong><code>iptos=tos</code></strong> IP Type of Service. Applies to sender only. Default value is 0xB8.</p>
+</li>
+<li>
+<p><strong><code>ipttl=ttl</code></strong> IP Time To Live. Applies to sender only. Default value is 64.</p>
+</li>
+<li>
+<p><strong><code>latency=microseconds</code></strong> Timestamp-based Packet Delivery Delay. Used to absorb bursts of missed packet retransmissions. This flag sets both <code>rcvlatency</code> and <code>peerlatency</code> to the same value. Note that prior to version 1.3.0 this is the only flag to set the latency, however this is effectively equivalent to setting <code>peerlatency</code>, when side is sender and <code>rcvlatency</code> when side is receiver, and the bidirectional stream sending is not supported.</p>
+</li>
+<li>
+<p><strong><code>listen_timeout=microseconds</code></strong> Set socket listen timeout.</p>
+</li>
+<li>
+<p><strong><code>maxbw=bytes/seconds</code></strong> Maximum sending bandwidth, in bytes per seconds. -1 infinite (CSRTCC limit is 30mbps) 0 relative to input rate (see <code>inputbw</code>) &gt;0 absolute limit value Default value is 0 (relative)</p>
+</li>
+<li>
+<p><strong><code>mode=caller|listener|rendezvous</code></strong> Connection mode. <code>caller</code> opens client connection. <code>listener</code> starts server to listen for incoming connections. <code>rendezvous</code> use Rendez-Vous connection mode. Default value is caller.</p>
+</li>
+<li>
+<p><strong><code>mss=bytes</code></strong> Maximum Segment Size, in bytes. Used for buffer allocation and rate calculation using a packet counter assuming fully filled packets. The smallest MSS between the peers is used. This is 1500 by default in the overall internet. This is the maximum size of the UDP packet and can be only decreased, unless you have some unusual dedicated network settings. Default value is 1500.</p>
+</li>
+<li>
+<p><strong><code>nakreport=1|0</code></strong> If set to 1, Receiver will send 'UMSG_LOSSREPORT' messages periodically until a lost packet is retransmitted or intentionally dropped. Default value is 1.</p>
+</li>
+<li>
+<p><strong><code>oheadbw=percents</code></strong> Recovery bandwidth overhead above input rate, in percents. See <code>inputbw</code>. Default value is 25%.</p>
+</li>
+<li>
+<p><strong><code>passphrase=string</code></strong> HaiCrypt Encryption/Decryption Passphrase string, length from 10 to 79 characters. The passphrase is the shared secret between the sender and the receiver. It is used to generate the Key Encrypting Key using PBKDF2 (Password-Based Key Derivation Function). It is used only if <code>pbkeylen</code> is non-zero. It is used on the receiver only if the received data is encrypted. The configured passphrase cannot be recovered (write-only).</p>
+</li>
+<li>
+<p><strong><code>enforced_encryption=1|0</code></strong> If true, both connection parties must have the same password set (including empty, that is, with no encryption). If the password doesn't match or only one side is unencrypted, the connection is rejected. Default is true.</p>
+</li>
+<li>
+<p><strong><code>kmrefreshrate=packets</code></strong> The number of packets to be transmitted after which the encryption key is switched to a new key. Default is -1. -1 means auto (0x1000000 in srt library). The range for this option is integers in the 0 - <code>INT_MAX</code>.</p>
+</li>
+<li>
+<p><strong><code>kmpreannounce=packets</code></strong> The interval between when a new encryption key is sent and when switchover occurs. This value also applies to the subsequent interval between when switchover occurs and when the old encryption key is decommissioned. Default is -1. -1 means auto (0x1000 in srt library). The range for this option is integers in the 0 - <code>INT_MAX</code>.</p>
+</li>
+<li>
+<p><strong><code>snddropdelay=microseconds</code></strong> The sender's extra delay before dropping packets. This delay is added to the default drop delay time interval value.</p>
+</li>
+</ul>
+<p>Special value -1: Do not drop packets on the sender at all.</p>
+<ul>
+<li>
+<p><strong><code>payload_size=bytes</code></strong> Sets the maximum declared size of a packet transferred during the single call to the sending function in Live mode. Use 0 if this value isn't used (which is default in file mode). Default is -1 (automatic), which typically means MPEG-TS; if you are going to use SRT to send any different kind of payload, such as, for example, wrapping a live stream in very small frames, then you can use a bigger maximum frame size, though not greater than 1456 bytes.</p>
+</li>
+<li>
+<p><strong><code>pkt_size=bytes</code></strong> Alias for <code>payload_size</code>.</p>
+</li>
+<li>
+<p><strong><code>peerlatency=microseconds</code></strong> The latency value (as described in <code>rcvlatency</code>) that is set by the sender side as a minimum value for the receiver.</p>
+</li>
+<li>
+<p><strong><code>pbkeylen=bytes</code></strong> Sender encryption key length, in bytes. Only can be set to 0, 16, 24 and 32. Enable sender encryption if not 0. Not required on receiver (set to 0), key size obtained from sender in HaiCrypt handshake. Default value is 0.</p>
+</li>
+<li>
+<p><strong><code>rcvlatency=microseconds</code></strong> The time that should elapse since the moment when the packet was sent and the moment when it's delivered to the receiver application in the receiving function. This time should be a buffer time large enough to cover the time spent for sending, unexpectedly extended RTT time, and the time needed to retransmit the lost UDP packet. The effective latency value will be the maximum of this options' value and the value of <code>peerlatency</code> set by the peer side. Before version 1.3.0 this option is only available as <code>latency</code>.</p>
+</li>
+<li>
+<p><strong><code>recv_buffer_size=bytes</code></strong> Set UDP receive buffer size, expressed in bytes.</p>
+</li>
+<li>
+<p><strong><code>send_buffer_size=bytes</code></strong> Set UDP send buffer size, expressed in bytes.</p>
+</li>
+<li>
+<p><strong><code>timeout=microseconds</code></strong> Set raise error timeouts for read, write and connect operations. Note that the SRT library has internal timeouts which can be controlled separately, the value set here is only a cap on those.</p>
+</li>
+<li>
+<p><strong><code>tlpktdrop=1|0</code></strong> Too-late Packet Drop. When enabled on receiver, it skips missing packets that have not been delivered in time and delivers the following packets to the application when their time-to-play has come. It also sends a fake ACK to the sender. When enabled on sender and enabled on the receiving peer, the sender drops the older packets that have no chance of being delivered in time. It was automatically enabled in the sender if the receiver supports it.</p>
+</li>
+<li>
+<p><strong><code>sndbuf=bytes</code></strong> Set send buffer size, expressed in bytes.</p>
+</li>
+<li>
+<p><strong><code>rcvbuf=bytes</code></strong> Set receive buffer size, expressed in bytes.</p>
+</li>
+</ul>
+<p>Receive buffer must not be greater than <code>ffs</code>.</p>
+<ul>
+<li>
+<p><strong><code>lossmaxttl=packets</code></strong> The value up to which the Reorder Tolerance may grow. When Reorder Tolerance is &gt; 0, then packet loss report is delayed until that number of packets come in. Reorder Tolerance increases every time a "belated" packet has come, but it wasn't due to retransmission (that is, when UDP packets tend to come out of order), with the difference between the latest sequence and this packet's sequence, and not more than the value of this option. By default it's 0, which means that this mechanism is turned off, and the loss report is always sent immediately upon experiencing a "gap" in sequences.</p>
+</li>
+<li>
+<p><strong><code>minversion</code></strong> The minimum SRT version that is required from the peer. A connection to a peer that does not satisfy the minimum version requirement will be rejected.</p>
+</li>
+</ul>
+<p>The version format in hex is 0xXXYYZZ for x.y.z in human readable form.</p>
+<ul>
+<li>
+<p><strong><code>streamid=string</code></strong> A string limited to 512 characters that can be set on the socket prior to connecting. This stream ID will be able to be retrieved by the listener side from the socket that is returned from srt_accept and was connected by a socket with that set stream ID. SRT does not enforce any special interpretation of the contents of this string. This option doesn't make sense in Rendezvous connection; the result might be that simply one side will override the value from the other side and it's the matter of luck which one would win</p>
+</li>
+<li>
+<p><strong><code>srt_streamid=string</code></strong> Alias for <code>streamid</code> to avoid conflict with ffmpeg command line option.</p>
+</li>
+<li>
+<p><strong><code>smoother=live|file</code></strong> The type of Smoother used for the transmission for that socket, which is responsible for the transmission and congestion control. The Smoother type must be exactly the same on both connecting parties, otherwise the connection is rejected.</p>
+</li>
+<li>
+<p><strong><code>messageapi=1|0</code></strong> When set, this socket uses the Message API, otherwise it uses Buffer API. Note that in live mode (see <code>transtype</code>) there's only message API available. In File mode you can chose to use one of two modes:</p>
+</li>
+</ul>
+<p>Stream API (default, when this option is false). In this mode you may send as many data as you wish with one sending instruction, or even use dedicated functions that read directly from a file. The internal facility will take care of any speed and congestion control. When receiving, you can also receive as many data as desired, the data not extracted will be waiting for the next call. There is no boundary between data portions in the Stream mode.</p>
+<p>Message API. In this mode your single sending instruction passes exactly one piece of data that has boundaries (a message). Contrary to Live mode, this message may span across multiple UDP packets and the only size limitation is that it shall fit as a whole in the sending buffer. The receiver shall use as large buffer as necessary to receive the message, otherwise the message will not be given up. When the message is not complete (not all packets received or there was a packet loss) it will not be given up.</p>
+<ul>
+<li><strong><code>transtype=live|file</code></strong> Sets the transmission type for the socket, in particular, setting this option sets multiple other parameters to their default values as required for a particular transmission type.</li>
+</ul>
+<p>live: Set options as for live transmission. In this mode, you should send by one sending instruction only so many data that fit in one UDP packet, and limited to the value defined first in <code>payload_size</code> (1316 is default in this mode). There is no speed control in this mode, only the bandwidth control, if configured, in order to not exceed the bandwidth with the overhead transmission (retransmitted and control packets).</p>
+<p>file: Set options as for non-live transmission. See <code>messageapi</code> for further explanations</p>
+<ul>
+<li>
+<p><strong><code>linger=seconds</code></strong> The number of seconds that the socket waits for unsent data when closing. Default is -1. -1 means auto (off with 0 seconds in live mode, on with 180 seconds in file mode). The range for this option is integers in the 0 - <code>INT_MAX</code>.</p>
+</li>
+<li>
+<p><strong><code>tsbpd=1|0</code></strong> When true, use Timestamp-based Packet Delivery mode. The default behavior depends on the transmission type: enabled in live mode, disabled in file mode.</p>
+</li>
+<li>
+<p><strong><code>ipv6only=1|0</code></strong> Accept IPv4 or not while using the IPv6 wildcard address. This should be set when listening on a IPv6 wildcard address.</p>
+</li>
+</ul>
+<p>For more information see: <a href="https://github.com/Haivision/srt">https://github.com/Haivision/srt</a>.</p>
+<h2 id="srtp">srtp<a class="headerlink" href="#srtp" title="Permanent link">&para;</a></h2>
+<p>Secure Real-time Transport Protocol.</p>
+<p>The accepted options are:</p>
+<ul>
+<li>
+<p><strong><code>srtp_in_suite</code></strong></p>
+</li>
+<li>
+<p><strong><code>srtp_out_suite</code></strong> Select input and output encoding suites.</p>
+</li>
+</ul>
+<p>Supported values:</p>
+<ul>
+<li>
+<p><strong><code>AES_CM_128_HMAC_SHA1_80</code></strong></p>
+</li>
+<li>
+<p><strong><code>SRTP_AES128_CM_HMAC_SHA1_80</code></strong></p>
+</li>
+<li>
+<p><strong><code>AES_CM_128_HMAC_SHA1_32</code></strong></p>
+</li>
+<li>
+<p><strong><code>SRTP_AES128_CM_HMAC_SHA1_32</code></strong></p>
+</li>
+<li>
+<p><strong><code>srtp_in_params</code></strong></p>
+</li>
+<li>
+<p><strong><code>srtp_out_params</code></strong> Set input and output encoding parameters, which are expressed by a base64-encoded representation of a binary block. The first 16 bytes of this binary block are used as master key, the following 14 bytes are used as master salt.</p>
+</li>
+</ul>
+<h2 id="subfile">subfile<a class="headerlink" href="#subfile" title="Permanent link">&para;</a></h2>
+<p>Virtually extract a segment of a file or another stream. The underlying stream must be seekable.</p>
+<p>Accepted options:</p>
+<ul>
+<li>
+<p><strong><code>start</code></strong> Start offset of the extracted segment, in bytes.</p>
+</li>
+<li>
+<p><strong><code>end</code></strong> End offset of the extracted segment, in bytes. If set to 0, extract till end of file.</p>
+</li>
+</ul>
+<p>Examples:</p>
+<p>Extract a chapter from a DVD VOB file (start and end sectors obtained externally and multiplied by 2048):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>subfile,,start,153391104,end,268142592,,:/media/dvd/VIDEO_TS/VTS_08_1.VOB
+</code></pre></div>
+<p>Play an AVI file directly from a TAR archive:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>subfile,,start,183241728,end,366490624,,:archive.tar
+</code></pre></div>
+<p>Play a MPEG-TS file from start offset till end:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>subfile,,start,32815239,end,0,,:video.ts
+</code></pre></div>
+<h2 id="tee">tee<a class="headerlink" href="#tee" title="Permanent link">&para;</a></h2>
+<p>Writes the output to multiple protocols. The individual outputs are separated by |</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>tee:file://path/to/local/this.avi|file://path/to/local/that.avi
+</code></pre></div>
+<h2 id="tcp">tcp<a class="headerlink" href="#tcp" title="Permanent link">&para;</a></h2>
+<p>Transmission Control Protocol.</p>
+<p>The required syntax for a TCP url is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>tcp://hostname:port[?options]
+</code></pre></div>
+<p>\&lt;options&gt; contains a list of &amp;-separated options of the form \&lt;key&gt;=\&lt;val&gt;. Standard percent-encoding (and using the plus sign for space) can be used to escape keys and values.</p>
+<p>Options can also can be specified via command line options (or in code via <code>AVOption</code>s).</p>
+<p>The list of supported options follows.</p>
+<ul>
+<li>
+<p><strong><code>listen=2|1|0</code></strong> Listen for an incoming connection. 0 disables listen, 1 enables listen in single client mode, 2 enables listen in multi-client mode. Default value is 0.</p>
+</li>
+<li>
+<p><strong><code>local_addr=addr</code></strong> Local IP address of a network interface used for tcp socket connect.</p>
+</li>
+<li>
+<p><strong><code>local_port=port</code></strong> Local port used for tcp socket connect.</p>
+</li>
+<li>
+<p><strong><code>timeout=microseconds</code></strong> Set raise error timeout, expressed in microseconds.</p>
+</li>
+</ul>
+<p>This option is only relevant in read mode: if no data arrived in more than this time interval, raise error.</p>
+<ul>
+<li>
+<p><strong><code>listen_timeout=milliseconds</code></strong> Set listen timeout, expressed in milliseconds.</p>
+</li>
+<li>
+<p><strong><code>recv_buffer_size=bytes</code></strong> Set receive buffer size, expressed bytes.</p>
+</li>
+<li>
+<p><strong><code>send_buffer_size=bytes</code></strong> Set send buffer size, expressed bytes.</p>
+</li>
+<li>
+<p><strong><code>tcp_nodelay=1|0</code></strong> Set TCP_NODELAY to disable Nagle's algorithm. Default value is 0.</p>
+</li>
+</ul>
+<p><em>Remark: Writing to the socket is currently not optimized to minimize system calls and reduces the efficiency / effect of TCP_NODELAY.</em></p>
+<ul>
+<li><strong><code>tcp_mss=bytes</code></strong> Set maximum segment size for outgoing TCP packets, expressed in bytes.</li>
+</ul>
+<p>The following example shows how to setup a listening TCP connection with <code>ffmpeg</code>, which is then accessed with <code>ffplay</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>ffmpeg -i input -f format tcp://hostname:port?listen
+<a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a>ffplay tcp://hostname:port
+</code></pre></div>
+<h2 id="tls">tls<a class="headerlink" href="#tls" title="Permanent link">&para;</a></h2>
+<p>Transport Layer Security (TLS) / Secure Sockets Layer (SSL)</p>
+<p>The required syntax for a TLS/SSL url is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>tls://hostname:port[?options]
+</code></pre></div>
+<p>\&lt;options&gt; contains a list of &amp;-separated options of the form \&lt;key&gt;=\&lt;val&gt;. Standard percent-encoding (and using the plus sign for space) can be used to escape keys and values.</p>
+<p>Options can also can be specified via command line options (or in code via <code>AVOption</code>s).</p>
+<p>The list of supported options follows.</p>
+<ul>
+<li>
+<p><strong><code>ca_file, cafile=filename</code></strong> A file containing certificate authority (CA) root certificates to treat as trusted. If the linked TLS library contains a default this might not need to be specified for verification to work, but not all libraries and setups have defaults built in. The file must be in OpenSSL PEM format.</p>
+</li>
+<li>
+<p><strong><code>tls_verify, verify=1|0</code></strong> If enabled, try to verify the peer that we are communicating with. Note, if using OpenSSL, this currently only makes sure that the peer certificate is signed by one of the root certificates in the CA database, but it does not validate that the certificate actually matches the host name we are trying to connect to. (With other backends, the host name is validated as well.)</p>
+</li>
+</ul>
+<p>This is enabled by default. Verifying the peer requires a CA database, which in some cases has to be provided by the caller.</p>
+<ul>
+<li>
+<p><strong><code>cert_file, cert=filename</code></strong> A file containing a certificate to use in the handshake with the peer. (When operating as server, in listen mode, this is more often required by the peer, while client certificates only are mandated in certain setups.)</p>
+</li>
+<li>
+<p><strong><code>key_file, key=filename</code></strong> A file containing the private key for the certificate.</p>
+</li>
+<li>
+<p><strong><code>listen=1|0</code></strong> If enabled, listen for connections on the provided port, and assume the server role in the handshake instead of the client role.</p>
+</li>
+<li>
+<p><strong><code>http_proxy</code></strong> The HTTP proxy to tunnel through, e.g. <code>http://example.com:1234</code>. The proxy must support the CONNECT method.</p>
+</li>
+</ul>
+<p>Example command lines:</p>
+<p>To create a TLS/SSL server that serves an input stream.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>ffmpeg -i input -f format tls://hostname:port?listen&amp;cert=server.crt&amp;key=server.key
+</code></pre></div>
+<p>To play back a stream from the TLS/SSL server using <code>ffplay</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>ffplay tls://hostname:port
+</code></pre></div>
+<h2 id="dtls">dtls<a class="headerlink" href="#dtls" title="Permanent link">&para;</a></h2>
+<p>Datagram Transport Layer Security (DTLS)</p>
+<p>The required syntax for a DTLS URL is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>dtls://hostname:port[?options]
+</code></pre></div>
+<p>\&lt;options&gt; contains a list of &amp;-separated options of the form \&lt;key&gt;=\&lt;val&gt;. Standard percent-encoding (and using the plus sign for space) can be used to escape keys and values.</p>
+<p>Options can also can be specified via command line options (or in code via <code>AVOption</code>s).</p>
+<p>DTLS shares most options with TLS, but operates over UDP instead of TCP.</p>
+<p>The list of supported options follows.</p>
+<ul>
+<li>
+<p><strong><code>ca_file, cafile=filename</code></strong> A file containing certificate authority (CA) root certificates to treat as trusted. If the linked TLS library contains a default this might not need to be specified for verification to work, but not all libraries and setups have defaults built in. The file must be in OpenSSL PEM format.</p>
+</li>
+<li>
+<p><strong><code>tls_verify, verify=1|0</code></strong> If enabled, try to verify the peer that we are communicating with. Note, if using OpenSSL, this currently only makes sure that the peer certificate is signed by one of the root certificates in the CA database, but it does not validate that the certificate actually matches the host name we are trying to connect to.</p>
+</li>
+</ul>
+<p>This is enabled by default. Verifying the peer requires a CA database, which in some cases has to be provided by the caller.</p>
+<ul>
+<li>
+<p><strong><code>cert_file, cert=filename</code></strong> A file containing a certificate to use in the handshake with the peer. (When operating as server, in listen mode, this is more often required by the peer, while client certificates only are mandated in certain setups.)</p>
+</li>
+<li>
+<p><strong><code>key_file, key=filename</code></strong> A file containing the private key for the certificate.</p>
+</li>
+<li>
+<p><strong><code>cert_pem=string</code></strong> Certificate PEM string</p>
+</li>
+<li>
+<p><strong><code>key_pem=string</code></strong> Private key PEM string</p>
+</li>
+<li>
+<p><strong><code>listen=1|0</code></strong> If enabled, listen for connections on the provided port, and assume the server role in the handshake instead of the client role.</p>
+</li>
+<li>
+<p><strong><code>mtu=size</code></strong> Set the Maximum Transmission Unit (MTU) for DTLS packets.</p>
+</li>
+<li>
+<p><strong><code>use_srtp=1|0</code></strong> Enable the use_srtp DTLS extension. This is used in WebRTC applications to establish SRTP encryption keys through the DTLS handshake. Default is disabled.</p>
+</li>
+<li>
+<p><strong><code>external_sock=1|0</code></strong> Use an external socket instead of creating a new one. This option only makes sense to pass when interacting with the code via API, enabling this from CLI will cause immediate failure. Default is disabled.</p>
+</li>
+</ul>
+<p>Example command lines:</p>
+<p>To create a DTLS server:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a>ffmpeg -listen 1 -i dtls://hostname:port output
+</code></pre></div>
+<p>To create a DTLS client and send data to server:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>ffmpeg -i input -f format dtls://hostname:port
+</code></pre></div>
+<h2 id="udp">udp<a class="headerlink" href="#udp" title="Permanent link">&para;</a></h2>
+<p>User Datagram Protocol.</p>
+<p>The required syntax for an UDP URL is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>udp://hostname:port[?options]
+</code></pre></div>
+<p>\&lt;options&gt; contains a list of &amp;-separated options of the form \&lt;key&gt;=\&lt;val&gt;. Standard percent-encoding (and using the plus sign for space) can be used to escape keys and values.</p>
+<p>Options can also can be specified via command line options (or in code via <code>AVOption</code>s).</p>
+<p>In case threading is enabled on the system, a circular buffer is used to store the incoming data, which allows one to reduce loss of data due to UDP socket buffer overruns. The \&lt;fifo_size&gt; and \&lt;overrun_nonfatal&gt; options are related to this buffer.</p>
+<p>The list of supported options follows.</p>
+<ul>
+<li>
+<p><strong><code>buffer_size=size</code></strong> Set the UDP maximum socket buffer size in bytes. This is used to set either the receive or send buffer size, depending on what the socket is used for. Default is 32 KB for output, 384 KB for input. See also \&lt;fifo_size&gt;.</p>
+</li>
+<li>
+<p><strong><code>bitrate=bitrate</code></strong> If set to nonzero, the output will have the specified constant bitrate if the input has enough packets to sustain it.</p>
+</li>
+<li>
+<p><strong><code>burst_bits=bits</code></strong> When using \&lt;bitrate&gt; this specifies the maximum number of bits in packet bursts.</p>
+</li>
+<li>
+<p><strong><code>localport=port</code></strong> Override the local UDP port to bind with.</p>
+</li>
+<li>
+<p><strong><code>localaddr=addr</code></strong> Local IP address of a network interface used for sending packets or joining multicast groups.</p>
+</li>
+<li>
+<p><strong><code>pkt_size=size</code></strong> Set the size in bytes of UDP packets.</p>
+</li>
+<li>
+<p><strong><code>reuse=1|0</code></strong> Explicitly allow or disallow reusing UDP sockets.</p>
+</li>
+<li>
+<p><strong><code>ttl=ttl</code></strong> Set the time to live value (for multicast only).</p>
+</li>
+<li>
+<p><strong><code>dscp=dscp</code></strong> Set the 6-bit DSCP field for outgoing packets.</p>
+</li>
+<li>
+<p><strong><code>connect=1|0</code></strong> Initialize the UDP socket with <code>connect()</code>. In this case, the destination address can't be changed with ff_udp_set_remote_url later. If the destination address isn't known at the start, this option can be specified in ff_udp_set_remote_url, too. This allows finding out the source address for the packets with getsockname, and makes writes return with AVERROR(ECONNREFUSED) if "destination unreachable" is received. For receiving, this gives the benefit of only receiving packets from the specified peer address/port.</p>
+</li>
+<li>
+<p><strong><code>sources=address[,address]</code></strong> Only receive packets sent from the specified addresses. In case of multicast, also subscribe to multicast traffic coming from these addresses only.</p>
+</li>
+<li>
+<p><strong><code>block=address[,address]</code></strong> Ignore packets sent from the specified addresses. In case of multicast, also exclude the source addresses in the multicast subscription.</p>
+</li>
+<li>
+<p><strong><code>fifo_size=units</code></strong> Set the UDP receiving circular buffer size, expressed as a number of packets with size of 188 bytes. If not specified defaults to 7*4096.</p>
+</li>
+<li>
+<p><strong><code>overrun_nonfatal=1|0</code></strong> Survive in case of UDP receiving circular buffer overrun. Default value is 0.</p>
+</li>
+<li>
+<p><strong><code>timeout=microseconds</code></strong> Set raise error timeout, expressed in microseconds.</p>
+</li>
+</ul>
+<p>This option is only relevant in read mode: if no data arrived in more than this time interval, raise error.</p>
+<ul>
+<li><strong><code>broadcast=1|0</code></strong> Explicitly allow or disallow UDP broadcasting.</li>
+</ul>
+<p>Note that broadcasting may not work properly on networks having a broadcast storm protection.</p>
+<h3 id="examples_1">Examples<a class="headerlink" href="#examples_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use <code>ffmpeg</code> to stream over UDP to a remote endpoint:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a>ffmpeg -i input -f format udp://hostname:port
+</code></pre></div>
+<ul>
+<li>Use <code>ffmpeg</code> to stream in mpegts format over UDP using 188 sized UDP packets, using a large input buffer:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a>ffmpeg -i input -f mpegts udp://hostname:port?pkt_size=188&amp;buffer_size=65535
+</code></pre></div>
+<ul>
+<li>Use <code>ffmpeg</code> to receive over UDP from a remote endpoint:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a>ffmpeg -i udp://[multicast-address]:port ...
+</code></pre></div>
+<h2 id="unix">unix<a class="headerlink" href="#unix" title="Permanent link">&para;</a></h2>
+<p>Unix local socket</p>
+<p>The required syntax for a Unix socket URL is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a>unix://filepath
+</code></pre></div>
+<p>The following parameters can be set via command line options (or in code via <code>AVOption</code>s):</p>
+<ul>
+<li>
+<p><strong><code>timeout</code></strong> Timeout in ms.</p>
+</li>
+<li>
+<p><strong><code>listen</code></strong> Create the Unix socket in listening mode.</p>
+</li>
+<li>
+<p><strong><code>type</code></strong> Select socket type.</p>
+</li>
+<li>
+<p><strong><code>stream Corresponds to SOCK_STREAM (reliable stream-oriented)</code></strong></p>
+</li>
+<li>
+<p><strong><code>datagram Corresponds to SOCK_DGRAM (unreliable packet-oriented)</code></strong></p>
+</li>
+<li>
+<p><strong><code>seqpacket Corresponds to SOCK_SEQPACKET (reliable packet-oriented)</code></strong></p>
+</li>
+<li>
+<p><strong><code>pkt_size</code></strong> Maximum packet size for packet-oriented sockets (SOCK_DGRAM and SOCK_SEQPACKET). If greater than zero, this value is used as <code>max_packet_size</code>. Ignored for SOCK_STREAM. Default is <code>0</code>.</p>
+</li>
+</ul>
+<h2 id="zmq">zmq<a class="headerlink" href="#zmq" title="Permanent link">&para;</a></h2>
+<p>ZeroMQ asynchronous messaging using the libzmq library.</p>
+<p>This library supports unicast streaming to multiple clients without relying on an external server.</p>
+<p>The required syntax for streaming or connecting to a stream is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a>zmq:tcp://ip-address:port
+</code></pre></div>
+<p>Example: Create a localhost stream on port 5555:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a>ffmpeg -re -i input -f mpegts zmq:tcp://127.0.0.1:5555
+</code></pre></div>
+<p>Multiple clients may connect to the stream using:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a>ffplay zmq:tcp://127.0.0.1:5555
+</code></pre></div>
+<p>Streaming to multiple clients is implemented using a ZeroMQ Pub-Sub pattern. The server side binds to a port and publishes data. Clients connect to the server (via IP address/port) and subscribe to the stream. The order in which the server and client start generally does not matter.</p>
+<p>ffmpeg must be compiled with the –enable-libzmq option to support this protocol.</p>
+<p>Options can be set on the <code>ffmpeg</code>/<code>ffplay</code> command line. The following options are supported:</p>
+<ul>
+<li><strong><code>pkt_size</code></strong> Forces the maximum packet size for sending/receiving data. The default value is 131,072 bytes. On the server side, this sets the maximum size of sent packets via ZeroMQ. On the clients, it sets an internal buffer size for receiving packets. Note that pkt_size on the clients should be equal to or greater than pkt_size on the server. Otherwise the received message may be truncated causing decoding errors.</li>
+</ul>
+<h1 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h1>
+<p>ffmpeg(1), ffplay(1), ffprobe(1), libavformat(3)</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      除 wiki 精选页（CC BY-SA 3.0）外，译文基于 FFmpeg 官方文档（LGPL 2.1+）以 LGPL-2.1-or-later 提供 · 译自 n9.0.2
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "content.code.copy", "navigation.instant", "toc.integrate"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>
