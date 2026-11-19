@@ -1,0 +1,61 @@
+{
+  "title": "FFmpeg Utilities Documentation",
+  "anchors": [
+    {
+      "id": "quoting_005fand_005fescaping",
+      "raw_title": "Syntax",
+      "level": 1
+    },
+    {
+      "id": "date-syntax",
+      "raw_title": "Examples",
+      "level": 3
+    },
+    {
+      "id": "time-duration-syntax",
+      "raw_title": "Date",
+      "level": 2
+    },
+    {
+      "id": "video-size-syntax",
+      "raw_title": "Examples",
+      "level": 3
+    },
+    {
+      "id": "video-rate-syntax",
+      "raw_title": "Video size",
+      "level": 2
+    },
+    {
+      "id": "ratio-syntax",
+      "raw_title": "Video rate",
+      "level": 2
+    },
+    {
+      "id": "color-syntax",
+      "raw_title": "Ratio",
+      "level": 2
+    },
+    {
+      "id": "channel-layout-syntax",
+      "raw_title": "Color",
+      "level": 2
+    }
+  ],
+  "restructure": {
+    "tables": 7,
+    "bullets": 2
+  },
+  "code_languages": {
+    "shell": 0,
+    "c": 1,
+    "text": 10
+  },
+  "docbook_counts": {
+    "headings": 14,
+    "tables": 7,
+    "screens": 11,
+    "lists": 6,
+    "list_items": 109
+  }
+}

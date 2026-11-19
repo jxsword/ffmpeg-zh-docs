@@ -1,0 +1,41 @@
+{
+  "title": "FFmpeg Scaler Documentation",
+  "anchors": [
+    {
+      "id": "scaler_005foptions",
+      "raw_title": "Description",
+      "level": 1
+    },
+    {
+      "id": "scaler",
+      "raw_title": "Scaler Options",
+      "level": 1
+    },
+    {
+      "id": "sws_005fflags",
+      "raw_title": "Scaler Options",
+      "level": 1
+    },
+    {
+      "id": "sws_005fparams",
+      "raw_title": "Scaler Options",
+      "level": 1
+    }
+  ],
+  "restructure": {
+    "tables": 1,
+    "bullets": 5
+  },
+  "code_languages": {
+    "shell": 0,
+    "c": 0,
+    "text": 0
+  },
+  "docbook_counts": {
+    "headings": 3,
+    "tables": 1,
+    "screens": 0,
+    "lists": 5,
+    "list_items": 57
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "title": "FFmpeg Formats Documentation",
+  "anchors": [
+    {
+      "id": "Format-stream-specifiers",
+      "raw_title": "Format Options",
+      "level": 1
+    },
+    {
+      "id": "concat",
+      "raw_title": "asf",
+      "level": 2
+    },
+    {
+      "id": "mccdec",
+      "raw_title": "libopenmpt",
+      "level": 2
+    },
+    {
+      "id": "rcwtdec",
+      "raw_title": "rawvideo",
+      "level": 2
+    },
+    {
+      "id": "wav",
+      "raw_title": "w64",
+      "level": 2
+    },
+    {
+      "id": "raw-muxers",
+      "raw_title": "Muxers",
+      "level": 1
+    },
+    {
+      "id": "a64",
+      "raw_title": "Examples",
+      "level": 3
+    },
+    {
+      "id": "adts",
+      "raw_title": "Options",
+      "level": 3
+    },
+    {
+      "id": "aea",
+      "raw_title": "Options",
+      "level": 3
+    },
+    {
+      "id": "aiff",
+      "raw_title": "aea",
+      "level": 2
+    },
+    {
+      "id": "alp",
+      "raw_title": "Options",
+      "level": 3
+    },
+    {
+      "id": "asf",
+      "raw_title": "Options",
+      "level": 3
+    },
+    {
+      "id": "avi",
+      "raw_title": "au",
+      "level": 2
+    },
+    {
+      "id": "chromaprint",
+      "raw_title": "codec2",
+      "level": 2
+    },
+    {
+      "id": "crc",
+      "raw_title": "Options",
+      "level": 3
+    },
+    {
+      "id": "dash",
+      "raw_title": "Examples",
+      "level": 3
+    },
+    {
+      "id": "fifo",
+      "raw_title": "Example",
+      "level": 3
+    },
+    {
+      "id": "framecrc",
+      "raw_title": "Options",
+      "level": 3
+    },
+    {
+      "id": "framehash",
+      "raw_title": "Examples",
+      "level": 3
+    },
+    {
+      "id": "framemd5",
+      "raw_title": "Examples",
+      "level": 3
+    },
+    {
+      "id": "gif",
+      "raw_title": "Examples",
+      "level": 3
+    },
+    {
+      "id": "hash",
+      "raw_title": "gxf",
+      "level": 2
+    },
+    {
+      "id": "hds",
+      "raw_title": "Examples",
+      "level": 3
+    },
+    {
+      "id": "hls",
+      "raw_title": "Example",
+      "level": 3
+    },
+    {
+      "id": "ico",
+      "raw_title": "iamf",
+      "level": 2
+    },
+    {
+      "id": "image2",
+      "raw_title": "ilbc",
+      "level": 2
+    },
+    {
+      "id": "md5",
+      "raw_title": "Options",
+      "level": 3
+    },
+    {
+      "id": "mccenc",
+      "raw_title": "Examples",
+      "level": 3
+    },
+    {
+      "id": "rcwtenc",
+      "raw_title": "pdv",
+      "level": 2
+    },
+    {
+      "id": "segment",
+      "raw_title": "Examples",
+      "level": 3
+    },
+    {
+      "id": "streamhash",
+      "raw_title": "smoothstreaming",
+      "level": 2
+    },
+    {
+      "id": "tee",
+      "raw_title": "Examples",
+      "level": 3
+    },
+    {
+      "id": "whip",
+      "raw_title": "Example",
+      "level": 3
+    },
+    {
+      "id": "metadata",
+      "raw_title": "Options",
+      "level": 3
+    }
+  ],
+  "restructure": {
+    "tables": 12,
+    "bullets": 93
+  },
+  "code_languages": {
+    "shell": 1,
+    "c": 0,
+    "text": 125
+  },
+  "docbook_counts": {
+    "headings": 188,
+    "tables": 12,
+    "screens": 126,
+    "lists": 115,
+    "list_items": 673
+  }
+}

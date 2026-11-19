@@ -1,0 +1,51 @@
+{
+  "title": "Community",
+  "anchors": [
+    {
+      "id": "General-Assembly",
+      "raw_title": "Organisation",
+      "level": 1
+    },
+    {
+      "id": "Voting",
+      "raw_title": "General Assembly",
+      "level": 1
+    },
+    {
+      "id": "Technical-Committee",
+      "raw_title": "Voting",
+      "level": 1
+    },
+    {
+      "id": "Resolution-Process",
+      "raw_title": "Technical Committee",
+      "level": 1
+    },
+    {
+      "id": "Community-Committee",
+      "raw_title": "Decisions",
+      "level": 3
+    },
+    {
+      "id": "Code-of-Conduct",
+      "raw_title": "Community Committee",
+      "level": 1
+    }
+  ],
+  "restructure": {
+    "tables": 0,
+    "bullets": 0
+  },
+  "code_languages": {
+    "shell": 0,
+    "c": 0,
+    "text": 0
+  },
+  "docbook_counts": {
+    "headings": 12,
+    "tables": 0,
+    "screens": 0,
+    "lists": 0,
+    "list_items": 0
+  }
+}

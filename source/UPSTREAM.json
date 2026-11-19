@@ -1,0 +1,201 @@
+{
+  "tag": "n9.0.2",
+  "tag_date": "2026-09-18 00:40:57 +0000",
+  "commit": "946fcce07b6dcd0331c8cc609192aeff5e1924f8",
+  "repo": "https://github.com/FFmpeg/FFmpeg.git",
+  "channel": "direct",
+  "converted_at": "2026-11-20 02:29:25",
+  "tools": {
+    "makeinfo": "7.2",
+    "pandoc": "3.7.0.2",
+    "doxygen": "1.15.0"
+  },
+  "pages": [
+    {
+      "texi": "ffmpeg.texi",
+      "out": "manual/ffmpeg.md",
+      "mode": "manual",
+      "bytes": 134087
+    },
+    {
+      "texi": "ffplay.texi",
+      "out": "manual/ffplay.md",
+      "mode": "manual",
+      "bytes": 8314
+    },
+    {
+      "texi": "ffprobe.texi",
+      "out": "manual/ffprobe.md",
+      "mode": "manual",
+      "bytes": 18972
+    },
+    {
+      "texi": "ffmpeg-utils.texi",
+      "out": "components/utils.md",
+      "mode": "shell",
+      "bytes": 26722
+    },
+    {
+      "texi": "ffmpeg-scaler.texi",
+      "out": "components/scaler.md",
+      "mode": "shell",
+      "bytes": 5640
+    },
+    {
+      "texi": "ffmpeg-resampler.texi",
+      "out": "components/resampler.md",
+      "mode": "shell",
+      "bytes": 8276
+    },
+    {
+      "texi": "ffmpeg-codecs.texi",
+      "out": "components/codecs.md",
+      "mode": "shell",
+      "bytes": 181491
+    },
+    {
+      "texi": "ffmpeg-bitstream-filters.texi",
+      "out": "components/bitstream-filters.md",
+      "mode": "shell",
+      "bytes": 32167
+    },
+    {
+      "texi": "ffmpeg-formats.texi",
+      "out": "components/formats.md",
+      "mode": "shell",
+      "bytes": 189954
+    },
+    {
+      "texi": "ffmpeg-protocols.texi",
+      "out": "components/protocols.md",
+      "mode": "shell",
+      "bytes": 73263
+    },
+    {
+      "texi": "ffmpeg-devices.texi",
+      "out": "components/devices.md",
+      "mode": "shell",
+      "bytes": 60836
+    },
+    {
+      "texi": "filters.texi",
+      "out": "components/filters.md",
+      "mode": "keep",
+      "bytes": 945473
+    },
+    {
+      "texi": "fftools-common-opts.texi",
+      "out": "manual/common-options.md",
+      "mode": "keep",
+      "bytes": 13890
+    },
+    {
+      "texi": "libavutil.texi",
+      "out": "libraries/libavutil.md",
+      "mode": "keep",
+      "bytes": 1198
+    },
+    {
+      "texi": "libavcodec.texi",
+      "out": "libraries/libavcodec.md",
+      "mode": "keep",
+      "bytes": 881
+    },
+    {
+      "texi": "libavformat.texi",
+      "out": "libraries/libavformat.md",
+      "mode": "keep",
+      "bytes": 815
+    },
+    {
+      "texi": "libavdevice.texi",
+      "out": "libraries/libavdevice.md",
+      "mode": "keep",
+      "bytes": 731
+    },
+    {
+      "texi": "libavfilter.texi",
+      "out": "libraries/libavfilter.md",
+      "mode": "keep",
+      "bytes": 676
+    },
+    {
+      "texi": "libswscale.texi",
+      "out": "libraries/libswscale.md",
+      "mode": "keep",
+      "bytes": 1293
+    },
+    {
+      "texi": "libswresample.texi",
+      "out": "libraries/libswresample.md",
+      "mode": "keep",
+      "bytes": 1639
+    },
+    {
+      "texi": "faq.texi",
+      "out": "general/faq.md",
+      "mode": "keep",
+      "bytes": 24333
+    },
+    {
+      "texi": "general.texi",
+      "out": "general/general.md",
+      "mode": "shell",
+      "bytes": 53972
+    },
+    {
+      "texi": "platform.texi",
+      "out": "general/platform.md",
+      "mode": "keep",
+      "bytes": 10635
+    },
+    {
+      "texi": "developer.texi",
+      "out": "general/developer.md",
+      "mode": "keep",
+      "bytes": 42906
+    },
+    {
+      "texi": "git-howto.texi",
+      "out": "general/git-howto.md",
+      "mode": "keep",
+      "bytes": 12356
+    },
+    {
+      "texi": "fate.texi",
+      "out": "general/fate.md",
+      "mode": "keep",
+      "bytes": 1
+    },
+    {
+      "texi": "authors.texi",
+      "out": "general/authors.md",
+      "mode": "keep",
+      "bytes": 379
+    },
+    {
+      "texi": "mailing-list-faq.texi",
+      "out": "general/mailing-list-faq.md",
+      "mode": "keep",
+      "bytes": 11765
+    },
+    {
+      "texi": "nut.texi",
+      "out": "general/nut.md",
+      "mode": "keep",
+      "bytes": 7040
+    },
+    {
+      "texi": "community.texi",
+      "out": "general/community.md",
+      "mode": "keep",
+      "bytes": 7740
+    },
+    {
+      "texi": "drawvg-reference.texi",
+      "out": "general/drawvg-reference.md",
+      "mode": "keep",
+      "bytes": 68397
+    }
+  ]
+}

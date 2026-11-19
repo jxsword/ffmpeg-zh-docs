@@ -33,7 +33,7 @@ HEADING_RE = re.compile(r'^#{1,6} ')
 LIST_ITEM_RE = re.compile(r'^\s*(?:[-*+] |\d{1,2}\. )')
 TABLE_SEP_RE = re.compile(r'^\|?[\s:|-]+\|[\s:|-]*$')
 CODE_FENCE_RE = re.compile(r'^```')
-INDENT_CODE_RE = re.compile(r'^ {4}\S')
+INDENT_CODE_RE = re.compile(r'^ {4,}\S')
 MANUALS = {'ffmpeg.md', 'ffplay.md', 'ffprobe.md'}
 MANUAL_DOMAINS = {'manual'}
 VFILTER_RE = re.compile(r'(?:^|\s)(?:-vf|-af|-filter(?:_complex)?|-filter:v|-filter:a)\s+(["\']?)(.+?)\1\s*(?:$|\\|\n)')
@@ -42,55 +42,45 @@ VFILTER_RE = re.compile(r'(?:^|\s)(?:-vf|-af|-filter(?:_complex)?|-filter:v|-fil
 # ---------- md 结构计数（口径与 texi2md 后处理一致） ----------
 
 def count_md_structure(text: str) -> dict:
+    """md 结构计数（单遍 + fence 跟踪：代码块内的 #/|/- 行不算结构）。
+
+    代码块已全部 fenced（XML 层 programlisting@language，含列表项内缩进
+    fence）；fence 识别需容忍缩进（lstrip），fence 外不再有缩进代码 run。"""
     lines = text.split('\n')
-    headings = sum(1 for ln in lines if HEADING_RE.match(ln))
-    list_items = sum(1 for ln in lines if LIST_ITEM_RE.match(ln))
-
+    headings = 0
     tables = 0
-    in_table = False
-    for i, ln in enumerate(lines):
-        if ln.startswith('|'):
-            if not in_table:
-                # 分隔行在第二行才确认是表格
-                if i + 1 < len(lines) and TABLE_SEP_RE.match(lines[i + 1]):
-                    tables += 1
-                    in_table = True
-        else:
-            in_table = False
-
+    list_items = 0
     code = 0
     in_fence = False
-    i = 0
-    n = len(lines)
-    while i < n:
-        ln = lines[i]
+    prev_table = False
+    for i, ln in enumerate(lines):
+        if ln.lstrip().startswith('```'):
+            if not in_fence:
+                code += 1
+            in_fence = not in_fence
+            prev_table = False
+            continue
         if in_fence:
-            if CODE_FENCE_RE.match(ln):
-                in_fence = False
-            i += 1
+            prev_table = False
             continue
-        if CODE_FENCE_RE.match(ln):
-            code += 1
-            in_fence = True
-            i += 1
+        if HEADING_RE.match(ln):
+            headings += 1
+            prev_table = False
             continue
-        if INDENT_CODE_RE.match(ln):
-            code += 1
-            while i < n:
-                cur = lines[i]
-                if cur.strip() == '':
-                    nxt = next((l for l in lines[i:i + 3] if l.strip()), None)
-                    if nxt is not None and (INDENT_CODE_RE.match(nxt) or nxt.startswith(' ')):
-                        i += 1
-                        continue
-                    break
-                if INDENT_CODE_RE.match(cur) or cur.startswith('    '):
-                    i += 1
-                else:
-                    break
+        if LIST_ITEM_RE.match(ln):
+            list_items += 1
+            prev_table = False
             continue
-        i += 1
-    return {'headings': headings, 'tables': tables, 'code': code, 'list_items': list_items}
+        if ln.lstrip().startswith('|'):
+            # 表格可在列表项内缩进渲染（GFM 合法），如 codecs 选项值表
+            sep = lines[i + 1].lstrip() if i + 1 < len(lines) else ''
+            if not prev_table and sep.startswith('|') and TABLE_SEP_RE.match(sep):
+                tables += 1
+                prev_table = True
+            continue
+        prev_table = False
+    return {'headings': headings, 'tables': tables, 'code': code,
+            'list_items': list_items}
 
 
 # ---------- 校验器主体 ----------
@@ -99,7 +89,8 @@ def load_corpus_map(source_dir: Path) -> dict:
     """语料映射：相对路径 → meta 路径（source/ 下的 md 与 .meta.json 配对）。"""
     pairs = {}
     for meta_file in sorted(source_dir.rglob('*.meta.json')):
-        md_file = meta_file.with_name(meta_file.name[:-len('.meta.json')] + '.md')
+        # 命名：<page>.md.meta.json → 去尾即得 md 路径
+        md_file = meta_file.with_name(meta_file.name[:-len('.meta.json')])
         if md_file.exists():
             pairs[str(md_file.relative_to(source_dir))] = meta_file
     return pairs
@@ -132,15 +123,17 @@ def check_counts(pairs: dict, source_dir: Path, errors: list) -> int:
 
 def check_anchor_map(pairs: dict, anchor_map_path: Path, errors: list, warnings: list) -> int:
     n = 0
-    amap = {}
+    amap = {'pages': {}}
     if anchor_map_path.exists():
         import yaml
-        amap = yaml.safe_load(anchor_map_path.read_text(encoding='utf-8')) or {}
+        amap = yaml.safe_load(anchor_map_path.read_text(encoding='utf-8')) or {'pages': {}}
+    pages = amap.get('pages') or {}
     for rel, meta_path in sorted(pairs.items()):
+        page_entries = pages.get(rel, {})
         meta = json.loads(meta_path.read_text(encoding='utf-8'))
         for a in meta.get('anchors', []):
             aid = a.get('id')
-            if aid and aid not in amap:
+            if aid and aid not in page_entries:
                 errors.append({'file': rel, 'type': 'anchor_missing_in_map',
                                'anchor': aid})
                 n += 1

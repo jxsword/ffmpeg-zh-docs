@@ -1,0 +1,26 @@
+{
+  "title": "FFmpeg Protocols Documentation",
+  "anchors": [
+    {
+      "id": "cache",
+      "raw_title": "bluray",
+      "level": 2
+    }
+  ],
+  "restructure": {
+    "tables": 3,
+    "bullets": 41
+  },
+  "code_languages": {
+    "shell": 0,
+    "c": 0,
+    "text": 74
+  },
+  "docbook_counts": {
+    "headings": 57,
+    "tables": 3,
+    "screens": 74,
+    "lists": 44,
+    "list_items": 281
+  }
+}

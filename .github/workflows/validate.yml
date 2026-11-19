@@ -1,0 +1,64 @@
+name: Validate
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * *'   # 每日 06:00 UTC 全量校验
+
+permissions:
+  contents: read
+
+jobs:
+  validate-structure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pyyaml pytest
+
+      - name: Run structure validation
+        # 转换层校验（DR-007/009）：计数对比/锚点完备/include 隔离/占位符
+        run: python3 scripts/validate_structure.py --report validate-report.json
+
+      - name: Upload validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validate-report
+          path: validate-report.json
+
+  validate-translation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pyyaml pytest
+
+      - name: Run translation validation
+        # 翻译层校验器 M2 上线；当前为占位（exit 0），上线后移除占位
+        run: |
+          if [ -f scripts/validate_translation.py ]; then
+            python3 scripts/validate_translation.py
+          else
+            echo "translation validator not yet active (M2)"
+          fi

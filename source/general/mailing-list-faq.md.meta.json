@@ -1,0 +1,76 @@
+{
+  "title": "FFmpeg Mailing List FAQ",
+  "anchors": [
+    {
+      "id": "How-do-I-ask-a-question-or-send-a-message-to-a-mailing-list_003f",
+      "raw_title": "What type of questions can I ask?",
+      "level": 2
+    },
+    {
+      "id": "How-do-I-subscribe_003f",
+      "raw_title": "Subscribing / Unsubscribing",
+      "level": 1
+    },
+    {
+      "id": "Why-is-my-message-awaiting-moderator-approval_003f",
+      "raw_title": "Moderation Queue",
+      "level": 1
+    },
+    {
+      "id": "How-do-I-delete-my-message-in-the-moderation-queue_003f",
+      "raw_title": "How long does it take for my message in the moderation queue to be approved?",
+      "level": 2
+    },
+    {
+      "id": "Where-are-the-archives_003f",
+      "raw_title": "Archives",
+      "level": 1
+    },
+    {
+      "id": "What-is-top_002dposting_003f",
+      "raw_title": "Is there an alternative to the mailing list?",
+      "level": 2
+    },
+    {
+      "id": "What-is-the-message-size-limit_003f",
+      "raw_title": "What is top-posting?",
+      "level": 2
+    },
+    {
+      "id": "How-do-I-disable-mail-delivery-without-unsubscribing_003f",
+      "raw_title": "How do I filter mailing list messages?",
+      "level": 2
+    },
+    {
+      "id": "Why-is-the-mailing-list-munging-my-address_003f",
+      "raw_title": "How do I disable mail delivery without unsubscribing?",
+      "level": 2
+    },
+    {
+      "id": "Why-do-I-keep-getting-unsubscribed-from-ffmpeg_002ddevel_003f",
+      "raw_title": "Why are my sent messages not showing up?",
+      "level": 2
+    },
+    {
+      "id": "Who-do-I-contact-if-I-have-a-problem-with-the-mailing-list_003f",
+      "raw_title": "Why do I keep getting unsubscribed from ffmpeg-devel?",
+      "level": 2
+    }
+  ],
+  "restructure": {
+    "tables": 0,
+    "bullets": 0
+  },
+  "code_languages": {
+    "shell": 0,
+    "c": 0,
+    "text": 0
+  },
+  "docbook_counts": {
+    "headings": 31,
+    "tables": 0,
+    "screens": 0,
+    "lists": 8,
+    "list_items": 34
+  }
+}

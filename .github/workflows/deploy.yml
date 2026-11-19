@@ -1,0 +1,66 @@
+name: Deploy Site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'zh/**'
+      - 'source/**'
+      - 'mkdocs.yml'
+      - 'scripts/build_site.py'
+  workflow_dispatch:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0        # mike 版本历史与 git-revision-date 需要
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache site deps
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build site content (filters split + nav + placeholders)
+        run: python3 scripts/build_site.py
+
+      - name: Configure git author
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Deploy to Pages (mike)
+        env:
+          # mike 推 gh-pages 分支；latest alias 指向当前基线
+          MIKE_DEPLOY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdocs build --strict
+          mike deploy --push --update-aliases "$(cat source/UPSTREAM.json | python3 -c "import json,sys;print(json.load(sys.stdin)['tag'][1:])")" latest
+          mike set-default --push latest
+
+      - name: Upload site artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: site/

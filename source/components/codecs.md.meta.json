@@ -1,0 +1,76 @@
+{
+  "title": "FFmpeg Codecs Documentation",
+  "anchors": [
+    {
+      "id": "codec_002doptions",
+      "raw_title": "Description",
+      "level": 1
+    },
+    {
+      "id": "aacenc",
+      "raw_title": "Audio Encoders",
+      "level": 1
+    },
+    {
+      "id": "flac",
+      "raw_title": "Floating-Point-Only AC-3 Encoding Options",
+      "level": 3
+    },
+    {
+      "id": "opusenc",
+      "raw_title": "Options",
+      "level": 3
+    },
+    {
+      "id": "libfdk_002daac_002denc",
+      "raw_title": "Options",
+      "level": 3
+    },
+    {
+      "id": "liblc3_002denc",
+      "raw_title": "Examples",
+      "level": 3
+    },
+    {
+      "id": "libmp3lame",
+      "raw_title": "Options",
+      "level": 3
+    },
+    {
+      "id": "libshine",
+      "raw_title": "Option Mapping",
+      "level": 3
+    },
+    {
+      "id": "mjpegenc",
+      "raw_title": "Options",
+      "level": 3
+    },
+    {
+      "id": "wavpackenc",
+      "raw_title": "Options",
+      "level": 3
+    },
+    {
+      "id": "ffv1",
+      "raw_title": "Options",
+      "level": 3
+    }
+  ],
+  "restructure": {
+    "tables": 45,
+    "bullets": 187
+  },
+  "code_languages": {
+    "shell": 0,
+    "c": 1,
+    "text": 24
+  },
+  "docbook_counts": {
+    "headings": 180,
+    "tables": 45,
+    "screens": 25,
+    "lists": 200,
+    "list_items": 1353
+  }
+}

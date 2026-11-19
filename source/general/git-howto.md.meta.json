@@ -1,0 +1,26 @@
+{
+  "title": "Using Git to develop FFmpeg",
+  "anchors": [
+    {
+      "id": "Updating-the-source-tree-to-the-latest-revision",
+      "raw_title": "Cloning the source tree",
+      "level": 2
+    }
+  ],
+  "restructure": {
+    "tables": 0,
+    "bullets": 0
+  },
+  "code_languages": {
+    "shell": 0,
+    "c": 0,
+    "text": 41
+  },
+  "docbook_counts": {
+    "headings": 25,
+    "tables": 0,
+    "screens": 41,
+    "lists": 1,
+    "list_items": 4
+  }
+}

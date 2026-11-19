@@ -1,0 +1,20 @@
+{
+  "title": "FFmpeg Devices Documentation",
+  "anchors": [],
+  "restructure": {
+    "tables": 9,
+    "bullets": 25
+  },
+  "code_languages": {
+    "shell": 0,
+    "c": 0,
+    "text": 75
+  },
+  "docbook_counts": {
+    "headings": 76,
+    "tables": 9,
+    "screens": 75,
+    "lists": 37,
+    "list_items": 211
+  }
+}

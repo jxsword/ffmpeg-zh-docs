@@ -1,0 +1,132 @@
+site_name: FFmpeg 中文文档
+site_description: "FFmpeg 官方文档中文翻译版（基线 n9.0.2，跟随上游 release 增量翻译）"
+site_author: "ffmpeg-zh-docs 翻译组"
+site_url: "https://jxsword.github.io/ffmpeg-zh-docs/"
+repo_url: "https://github.com/jxsword/ffmpeg-zh-docs"
+repo_name: "ffmpeg-zh-docs"
+edit_uri: "edit/main/zh/"
+# DR-006 站点页脚许可声明
+copyright: "除 wiki 精选页（CC BY-SA 3.0）外，译文基于 FFmpeg 官方文档（LGPL 2.1+）以 LGPL-2.1-or-later 提供 · 译自 n9.0.2"
+
+# 站点内容目录：翻译文档工作区
+docs_dir: zh
+
+theme:
+  name: material
+  language: zh
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: 切换到深色模式
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: 切换到浅色模式
+  font:
+    text: Noto Sans SC
+    code: JetBrains Mono
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - navigation.instant
+    - toc.integrate
+
+plugins:
+  - search:
+      lang:
+        - zh
+        - en
+      separator: '[\s\u200b\-_,:;.!?，。！？、；：]+'
+  - mike:
+      version_selector: true
+      alias_type: symlink
+  - git-revision-date-localized:
+      enabled: !ENV [CI, false]
+      type: date
+      locale: zh
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.details
+  - admonition
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+      toc_depth: 3
+      # 官方 HTML 锚点兼容：保留大小写（"Video size" → #Video-size）
+      slugify: !!python/name:markdown.extensions.toc.slugify_unicode
+
+extra:
+  version:
+    provider: mike
+  generator: false
+  alternate:
+    - name: English (Original)
+      link: https://ffmpeg.org/documentation.html
+      lang: en
+
+# nav 由 scripts/build_site.py 生成（filters 分组动态 nav），见 NAV 标记块
+# === NAV-BEGIN（build_site.py 生成，勿手改） ===
+- 首页: index.md
+- 手册:
+  - ffmpeg 手册: manual/ffmpeg.md
+  - ffplay 手册: manual/ffplay.md
+  - ffprobe 手册: manual/ffprobe.md
+  - 公共选项（ffmpeg/ffplay/ffprobe）: manual/common-options.md
+- 组件:
+  - 工具（Utils）: components/utils.md
+  - 缩放器（Scaler）: components/scaler.md
+  - 重采样器（Resampler）: components/resampler.md
+  - 编解码器（Codecs）: components/codecs.md
+  - 比特流滤镜（Bitstream Filters）: components/bitstream-filters.md
+  - 格式（Formats）: components/formats.md
+  - 协议（Protocols）: components/protocols.md
+  - 设备（Devices）: components/devices.md
+- 滤镜:
+  - 滤镜总览: filters/overview.md
+  - 视频滤镜（364）: filters/video/index.md
+  - 音频滤镜（135）: filters/audio/index.md
+  - 多媒体滤镜（37）: filters/multimedia/index.md
+- 库:
+  - libavutil: libraries/libavutil.md
+  - libavcodec: libraries/libavcodec.md
+  - libavformat: libraries/libavformat.md
+  - libavdevice: libraries/libavdevice.md
+  - libavfilter: libraries/libavfilter.md
+  - libswscale: libraries/libswscale.md
+  - libswresample: libraries/libswresample.md
+- General:
+  - FAQ: general/faq.md
+  - 通用目录（General）: general/general.md
+  - 平台（Platform）: general/platform.md
+  - 开发者（Developer）: general/developer.md
+  - Git 使用（Git Howto）: general/git-howto.md
+  - FATE 测试: general/fate.md
+  - 作者（Authors）: general/authors.md
+  - 邮件列表 FAQ: general/mailing-list-faq.md
+  - NUT 格式: general/nut.md
+  - 社区（Community）: general/community.md
+  - drawvg 参考: general/drawvg-reference.md
+  - API 变更日志（英文原文）: general/APIchanges.md
+
+# === NAV-END ===
+# === NAV-END ===

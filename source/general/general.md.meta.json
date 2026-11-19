@@ -1,0 +1,20 @@
+{
+  "title": "General Documentation",
+  "anchors": [],
+  "restructure": {
+    "tables": 0,
+    "bullets": 0
+  },
+  "code_languages": {
+    "shell": 0,
+    "c": 0,
+    "text": 2
+  },
+  "docbook_counts": {
+    "headings": 48,
+    "tables": 8,
+    "screens": 2,
+    "lists": 0,
+    "list_items": 0
+  }
+}

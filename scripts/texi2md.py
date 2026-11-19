@@ -37,8 +37,13 @@ END_FMT = '%%INCLUDE_END:{}%%'
 
 # ============ ① texi 预处理 ============
 
-def flatten_includes(text: str, srcdir: Path, stack: tuple = ()) -> str:
-    """@include 递归展开为配对标记块（禁止循环 include）。"""
+def flatten_includes(text: str, srcdir: Path, stack: tuple = (),
+                     skip_all: bool = False, skip_names: frozenset = frozenset()) -> str:
+    """@include 递归展开：keep 项配对标记包裹；被裁项（DR-009）整体跳过。
+
+    被裁 include 不展开也不插标记——makeinfo 看不到它们，XML 结构计数与
+    最终 md 自然一致（标记 para 会被 makeinfo 移入 chapter/sect1 内部，
+    XML 层裁剪不可靠，实测教训）。禁止循环 include。"""
     out_lines = []
     for line in text.split('\n'):
         m = INCLUDE_RE.match(line)
@@ -46,6 +51,8 @@ def flatten_includes(text: str, srcdir: Path, stack: tuple = ()) -> str:
             out_lines.append(line)
             continue
         name = m.group(1)
+        if skip_all or name in skip_names:
+            continue
         if name in stack:
             raise RuntimeError('circular @include: ' + ' -> '.join(stack + (name,)))
         inc_path = srcdir / name
@@ -56,8 +63,8 @@ def flatten_includes(text: str, srcdir: Path, stack: tuple = ()) -> str:
         out_lines.append('')
         out_lines.append(START_FMT.format(name))
         out_lines.append('')
-        out_lines.append(flatten_includes(inc_text, srcdir, stack + (name,))
-                         if INCLUDE_RE.search(inc_text) else inc_text)
+        out_lines.append(flatten_includes(inc_text, srcdir, stack + (name,),
+                                          skip_all, skip_names))
         out_lines.append('')
         out_lines.append(END_FMT.format(name))
         out_lines.append('')
@@ -162,7 +169,7 @@ def count_structure(root: ET.Element) -> dict:
     return {
         'headings': count(r'^(chapter|sect\d)$'),
         'tables': count(r'^(informaltable|table)$'),
-        'screens': count(r'^screen$'),
+        'screens': count(r'^(screen|programlisting)$'),
         'lists': count(r'^(itemizedlist|orderedlist|variablelist)$'),
         'list_items': count(r'^listitem$'),
     }
@@ -234,8 +241,12 @@ def restructure_variablelists(root: ET.Element) -> dict:
     def is_table_candidate(terms, li):
         if li is None:
             return False
-        paras = [c for c in li if c.tag == 'para']
-        return (len(terms) == 1 and len(paras) == 1 and len(paras[0]) == 0
+        # 条目必须"恰好只有一段纯文本定义"——含嵌套 variablelist/屏幕/第二段的
+        # 条目走 bullet 路径（tableify 只搬 term+首段，其余子块会丢失，实测教训）
+        children = list(li)
+        paras = [c for c in children if c.tag == 'para']
+        return (len(terms) == 1 and len(children) == 1 and len(paras) == 1
+                and len(paras[0]) == 0
                 and bool((paras[0].text or '').strip())
                 and len((paras[0].text or '').strip()) <= BULLET_TERM_MAXLEN)
 
@@ -344,59 +355,56 @@ def collapse_blank_lines(lines: list) -> list:
     return out
 
 
-def fence_top_level_code(lines: list) -> list:
-    """顶层缩进代码块 → fenced（DR-007 后处理③）。
-
-    仅处理前趋为顶层段落/标题（列 0、非列表标记）的缩进块；
-    列表项内的嵌套缩进代码保持原样（GFM 合法、渲染等价）。"""
-    out = []
-    i = 0
-    n = len(lines)
-    while i < n:
-        ln = lines[i]
-        if not CODE_INDENT_RE.match(ln):
-            out.append(ln)
-            i += 1
-            continue
-        prev = next((l for l in reversed(out) if l.strip()), None)
-        top_level_ctx = prev is None or (not prev.startswith((' ', '\t'))
-                                         and not LIST_MARKER_RE.match(prev))
-        if not top_level_ctx:
-            out.append(ln)
-            i += 1
-            continue
-        block = []
-        while i < n:
-            cur = lines[i]
-            if cur.strip() == '':
-                nxt = next((l for l in lines[i:i + 5] if l.strip()), None)
-                if nxt is not None and CODE_INDENT_RE.match(nxt):
-                    block.append('')
-                    i += 1
-                    continue
-                break
-            if CODE_INDENT_RE.match(cur):
-                block.append(re.sub(r'^ {4}', '', cur))
-                i += 1
-            else:
-                break
-        while block and block[-1] == '':
-            block.pop()
-        out.append('```')
-        out.extend(block)
-        out.append('```')
-        out.append('')
-    return out
-
-
 def postprocess_md(md_text: str, strip_all: bool, strip_names: set) -> str:
     lines = md_text.split('\n')
     lines = strip_include_regions(lines, strip_all, strip_names)
     text = clean_curly_quotes('\n'.join(lines))
     lines = collapse_blank_lines(text.split('\n'))
-    lines = fence_top_level_code(lines)
+    # fenced 代码已在 XML 层经 programlisting@language 解决（tag_screen_language），
+    # 文本层不再做缩进→fenced 转换（与嵌套列表续行文本不可靠区分）
     lines = collapse_blank_lines(lines)
     return '\n'.join(lines).strip() + '\n'
+
+
+def tag_screen_language(root) -> dict:
+    """<screen> → <programlisting language=...>：让 pandoc 直接输出 fenced 代码。
+
+    语境歧义消除：GFM 缩进代码块与嵌套列表续行文本在文本层不可靠区分
+    （实测 codecs/filters 大量 @example 位于列表项内），故在 XML 层解决。
+    语言启发式：#!→shell；含 ; 与 ( →c；其余 text（pymdownx 不高亮 unknown）。"""
+    stats = {'shell': 0, 'c': 0, 'text': 0}
+    parent_map = {c: p for p in root.iter() for c in p}
+
+    def pick_lang(text: str) -> str:
+        t = text.strip()
+        if t.startswith('#!'):
+            return 'shell'
+        if ';' in t and '(' in t:
+            return 'c'
+        return 'text'
+
+    for scr in list(root.iter('screen')):
+        lang = pick_lang(''.join(scr.itertext()))
+        stats[lang] += 1
+        pl = ET.Element('programlisting', {'language': lang})
+        pl.text = scr.text
+        for child in list(scr):
+            pl.append(child)
+        parent = parent_map.get(scr)
+        if parent is not None:
+            idx = list(parent).index(scr)
+            parent.remove(scr)
+            parent.insert(idx, pl)
+    # makeinfo 偶发原生 programlisting（无 language 属性，developer.texi 实测）——
+    # 补标注，否则 pandoc 输出缩进代码，计数口径失衡
+    for pl in list(root.iter('programlisting')):
+        if pl.get('language') is None:
+            lang = pick_lang(''.join(pl.itertext()))
+            pl.set('language', lang)
+            stats[lang] += 1
+    return stats
+
+
 
 
 # ============ ⑤ 主流程 ============
@@ -406,7 +414,9 @@ def convert(texi_text: str, srcdir: Path, strip_all: bool, strip_names: set,
     """单文件全链转换，返回 {"md": ..., "meta": ...}。
 
     srcdir 下的上游文件属不可信数据：只做文本/XML 解析，不执行其中任何脚本。"""
-    flat = flatten_includes(texi_text, srcdir)
+    workdir.mkdir(parents=True, exist_ok=True)
+    flat = flatten_includes(texi_text, srcdir,
+                            skip_all=strip_all, skip_names=frozenset(strip_names))
     title = extract_settitle(flat)
     flat = strip_texi_boilerplate(flat)
 
@@ -421,9 +431,11 @@ def convert(texi_text: str, srcdir: Path, strip_all: bool, strip_names: set,
     meta = {
         'title': title,
         'anchors': collect_anchors(root),
-        'docbook_counts': count_structure(root),
     }
     meta['restructure'] = restructure_variablelists(root)
+    meta['code_languages'] = tag_screen_language(root)
+    # 被裁 include 未展开（flatten 层跳过），结构基准与最终 md 口径自然一致
+    meta['docbook_counts'] = count_structure(root)
 
     xml_path.write_text(ET.tostring(root, encoding='unicode'))
     run_pandoc(xml_path, md_path)

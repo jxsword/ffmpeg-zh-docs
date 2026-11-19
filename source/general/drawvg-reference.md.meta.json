@@ -1,0 +1,426 @@
+{
+  "title": "drawvg - Language Reference",
+  "anchors": [
+    {
+      "id": "implicit-commands",
+      "raw_title": "Single-Letter Aliases",
+      "level": 3
+    },
+    {
+      "id": "Colors",
+      "raw_title": "Variable Names",
+      "level": 3
+    },
+    {
+      "id": "current-point",
+      "raw_title": "Paths",
+      "level": 2
+    },
+    {
+      "id": "fill-rules",
+      "raw_title": "Defining a Shape",
+      "level": 3
+    },
+    {
+      "id": "User-Variables",
+      "raw_title": "Variables",
+      "level": 2
+    },
+    {
+      "id": "current-pattern",
+      "raw_title": "User Variables",
+      "level": 3
+    },
+    {
+      "id": "transformation-matrix",
+      "raw_title": "Variables",
+      "level": 3
+    },
+    {
+      "id": "State-Stack",
+      "raw_title": "Transformations",
+      "level": 2
+    },
+    {
+      "id": "Frame-Metadata",
+      "raw_title": "State Stack",
+      "level": 2
+    },
+    {
+      "id": "comp_002doperators",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "Procedures",
+      "raw_title": "Early Exit",
+      "level": 3
+    },
+    {
+      "id": "func_002drandomg",
+      "raw_title": "Function",
+      "level": 3
+    },
+    {
+      "id": "Command-print",
+      "raw_title": "Function print",
+      "level": 3
+    },
+    {
+      "id": "cmd_005farc",
+      "raw_title": "Commands",
+      "level": 1
+    },
+    {
+      "id": "cmd_005farcn",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fbreak",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fcall",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fcircle",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fclip",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005feoclip",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fZ",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fz",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fclosepath",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fcolorstop",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fC",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fcurveto",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fc",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005frcurveto",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fdefhsla",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fdefrgba",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fellipse",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005ffill",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005feofill",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fgetmetadata",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fH",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fh",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fif",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005flineargrad",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fL",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005flineto",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fl",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005frlineto",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fM",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fmoveto",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fm",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005frmoveto",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fnewpath",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fpreserve",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fprint",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fproc",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fQ",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fq",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fradialgrad",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005frect",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005frepeat",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fresetclip",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fresetdash",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fresetmatrix",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005frestore",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005frotate",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005froundedrect",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fsave",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fscale",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fscalexy",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fsetcolor",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fsetdash",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fsetdashoffset",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fsethsla",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fsetlinecap",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fsetlinejoin",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fsetlinewidth",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fsetrgba",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fsetvar",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fstroke",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fS",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fs",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005ftranslate",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fT",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005ft",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fV",
+      "raw_title": "",
+      "level": 2
+    },
+    {
+      "id": "cmd_005fv",
+      "raw_title": "",
+      "level": 2
+    }
+  ],
+  "restructure": {
+    "tables": 1,
+    "bullets": 1
+  },
+  "code_languages": {
+    "shell": 0,
+    "c": 5,
+    "text": 85
+  },
+  "docbook_counts": {
+    "headings": 95,
+    "tables": 4,
+    "screens": 90,
+    "lists": 33,
+    "list_items": 129
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "title": null,
+  "anchors": [],
+  "restructure": {
+    "tables": 1,
+    "bullets": 13
+  },
+  "code_languages": {
+    "shell": 0,
+    "c": 0,
+    "text": 9
+  },
+  "docbook_counts": {
+    "headings": 3,
+    "tables": 1,
+    "screens": 9,
+    "lists": 13,
+    "list_items": 106
+  }
+}

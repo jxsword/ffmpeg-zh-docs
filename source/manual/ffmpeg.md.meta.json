@@ -1,0 +1,56 @@
+{
+  "title": "ffmpeg Documentation",
+  "anchors": [
+    {
+      "id": "Loopback-decoders",
+      "raw_title": "Complex filtergraphs",
+      "level": 3
+    },
+    {
+      "id": "Stream-selection",
+      "raw_title": "Loopback decoders",
+      "level": 2
+    },
+    {
+      "id": "filter_005foption",
+      "raw_title": "Main options",
+      "level": 2
+    },
+    {
+      "id": "stdin-option",
+      "raw_title": "Main options",
+      "level": 2
+    },
+    {
+      "id": "filter_005fcomplex_005foption",
+      "raw_title": "Advanced options",
+      "level": 2
+    },
+    {
+      "id": "stats_005fenc_005foptions",
+      "raw_title": "Advanced options",
+      "level": 2
+    },
+    {
+      "id": "vstats_005ffile_005fformat",
+      "raw_title": "avpreset files",
+      "level": 3
+    }
+  ],
+  "restructure": {
+    "tables": 12,
+    "bullets": 40
+  },
+  "code_languages": {
+    "shell": 0,
+    "c": 0,
+    "text": 95
+  },
+  "docbook_counts": {
+    "headings": 34,
+    "tables": 12,
+    "screens": 95,
+    "lists": 51,
+    "list_items": 352
+  }
+}

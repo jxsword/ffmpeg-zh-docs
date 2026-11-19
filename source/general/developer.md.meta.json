@@ -1,0 +1,86 @@
+{
+  "title": "Developer Documentation",
+  "anchors": [
+    {
+      "id": "Coding-Rules",
+      "raw_title": "Introduction",
+      "level": 1
+    },
+    {
+      "id": "SIMD_002fDSP",
+      "raw_title": "SIMD/DSP",
+      "level": 3
+    },
+    {
+      "id": "Naming-conventions",
+      "raw_title": "Comments",
+      "level": 2
+    },
+    {
+      "id": "Development-Policy",
+      "raw_title": "Miscellaneous conventions",
+      "level": 2
+    },
+    {
+      "id": "Removing-interfaces",
+      "raw_title": "Adding new interfaces",
+      "level": 3
+    },
+    {
+      "id": "Major-version-bumps",
+      "raw_title": "Removing interfaces",
+      "level": 3
+    },
+    {
+      "id": "Submitting-patches",
+      "raw_title": "Documentation/Other",
+      "level": 2
+    },
+    {
+      "id": "Regression-tests",
+      "raw_title": "Patch review process",
+      "level": 1
+    },
+    {
+      "id": "Maintenance",
+      "raw_title": "Using Valgrind",
+      "level": 2
+    },
+    {
+      "id": "MAINTAINERS",
+      "raw_title": "Maintenance process",
+      "level": 1
+    },
+    {
+      "id": "Becoming-a-maintainer",
+      "raw_title": "MAINTAINERS",
+      "level": 2
+    },
+    {
+      "id": "Release-process",
+      "raw_title": "Becoming a maintainer",
+      "level": 2
+    },
+    {
+      "id": "Criteria-for-Point-Releases",
+      "raw_title": "Release process",
+      "level": 1
+    }
+  ],
+  "restructure": {
+    "tables": 0,
+    "bullets": 0
+  },
+  "code_languages": {
+    "shell": 0,
+    "c": 10,
+    "text": 8
+  },
+  "docbook_counts": {
+    "headings": 35,
+    "tables": 0,
+    "screens": 18,
+    "lists": 16,
+    "list_items": 92
+  }
+}

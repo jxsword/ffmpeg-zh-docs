@@ -1,0 +1,105 @@
+name: Sync Upstream
+
+on:
+  schedule:
+    - cron: '0 2 * * 1'   # 每周一 02:00 UTC（FFmpeg major 约年更 + point 批次维护）
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: '指定上游 tag（如 n9.0.2），留空自动检测最新稳定 tag'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texinfo pandoc
+          makeinfo --version | head -1
+          pandoc --version | head -1
+
+      - name: Lock toolchain versions vs UPSTREAM.json
+        run: |
+          python3 - <<'PY'
+          import json, subprocess, sys
+          expect = json.load(open('source/UPSTREAM.json'))['tools']
+          # 版本漂移会改变转换输出（R3 风险对策）；升级走显式人工变更
+          checks = []
+          mi = subprocess.run(['makeinfo', '--version'], capture_output=True, text=True).stdout
+          got_mi = mi.splitlines()[0].replace('texi2any (GNU texinfo) ', '')
+          checks.append(('makeinfo', got_mi))
+          pd = subprocess.run(['pandoc', '--version'], capture_output=True, text=True).stdout
+          checks.append(('pandoc', pd.splitlines()[0].replace('pandoc ', '')))
+          bad = []
+          for name, got in checks:
+              exp = expect.get(name, '')
+              print(f'{name}: expected={exp} got={got}')
+              if exp and exp != got:
+                  bad.append(f'{name}: expected {exp}, got {got}')
+          if bad:
+              print('::error::toolchain version drift: ' + '; '.join(bad))
+              sys.exit(1)
+          PY
+
+      - name: Run sync
+        id: sync
+        run: |
+          if [ -n "${{ inputs.tag }}" ]; then
+            python3 scripts/sync_docs.py --tag "${{ inputs.tag }}" > sync-result.json
+          else
+            python3 scripts/sync_docs.py --latest > sync-result.json
+          fi
+          cat sync-result.json
+          echo "tag=$(python3 -c "import json;print(json.load(open('sync-result.json'))['tag'])")" >> "$GITHUB_OUTPUT"
+          echo "segments=$(python3 -c "import json;print(json.load(open('sync-result.json')).get('segments', 0))")" >> "$GITHUB_OUTPUT"
+
+      - name: Validate structure
+        run: python3 scripts/validate_structure.py || true
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet source/ .translation-state.json config/anchor_map.yml; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create Sync PR
+        if: steps.diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: sync/${{ steps.sync.outputs.tag }}
+          title: 'sync: upstream ${{ steps.sync.outputs.tag }}'
+          body: |
+            上游同步：${{ steps.sync.outputs.tag }}
+
+            - 段落总数：${{ steps.sync.outputs.segments }}
+            - 变更摘要见 sync-result.json（job artifact）
+
+            合并后触发增量翻译（M3 起 translate-incremental.yml）。
+          commit-message: 'sync: upstream ${{ steps.sync.outputs.tag }}'
+          labels: sync
+
+      - name: Upload sync result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sync-result
+          path: sync-result.json

@@ -1,0 +1,31 @@
+{
+  "title": "Platform Specific Information",
+  "anchors": [
+    {
+      "id": "Darwin",
+      "raw_title": "(Open)Solaris",
+      "level": 2
+    },
+    {
+      "id": "Cross-compilation-for-Windows-with-Linux",
+      "raw_title": "Linking to FFmpeg with Microsoft Visual C++",
+      "level": 3
+    }
+  ],
+  "restructure": {
+    "tables": 0,
+    "bullets": 0
+  },
+  "code_languages": {
+    "shell": 0,
+    "c": 0,
+    "text": 15
+  },
+  "docbook_counts": {
+    "headings": 16,
+    "tables": 0,
+    "screens": 15,
+    "lists": 6,
+    "list_items": 19
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "title": "FFmpeg FAQ",
+  "anchors": [
+    {
+      "id": "How-can-I-concatenate-video-files",
+      "raw_title": "How can I join video files?",
+      "level": 2
+    },
+    {
+      "id": "background-task",
+      "raw_title": "I have a stretched video, why does scaling not fix it?",
+      "level": 2
+    }
+  ],
+  "restructure": {
+    "tables": 1,
+    "bullets": 2
+  },
+  "code_languages": {
+    "shell": 1,
+    "c": 1,
+    "text": 22
+  },
+  "docbook_counts": {
+    "headings": 52,
+    "tables": 1,
+    "screens": 24,
+    "lists": 3,
+    "list_items": 12
+  }
+}

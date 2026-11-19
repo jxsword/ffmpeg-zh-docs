@@ -1,0 +1,20 @@
+{
+  "title": "NUT",
+  "anchors": [],
+  "restructure": {
+    "tables": 0,
+    "bullets": 0
+  },
+  "code_languages": {
+    "shell": 0,
+    "c": 0,
+    "text": 1
+  },
+  "docbook_counts": {
+    "headings": 10,
+    "tables": 5,
+    "screens": 1,
+    "lists": 0,
+    "list_items": 0
+  }
+}
