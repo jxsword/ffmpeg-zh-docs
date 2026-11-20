@@ -216754,7 +216754,7 @@
             "level": 1,
             "title": "Introduction"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -216766,7 +216766,7 @@
           "metadata": {
             "section": "Introduction"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -216778,7 +216778,7 @@
           "metadata": {
             "section": "Introduction"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p2",
@@ -216790,7 +216790,7 @@
           "metadata": {
             "section": "Introduction"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p3",
@@ -216802,7 +216802,7 @@
           "metadata": {
             "section": "Introduction"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p4",
@@ -216814,7 +216814,7 @@
           "metadata": {
             "section": "Introduction"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p5",
@@ -216826,7 +216826,7 @@
           "metadata": {
             "section": "Introduction"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p6",
@@ -216838,7 +216838,7 @@
           "metadata": {
             "section": "Introduction"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p7",
@@ -216850,7 +216850,7 @@
           "metadata": {
             "section": "Introduction"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p8",
@@ -216862,7 +216862,7 @@
           "metadata": {
             "section": "Introduction"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p9",
@@ -216876,7 +216876,7 @@
             "level": 1,
             "title": "Basics Usage"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -216890,7 +216890,7 @@
             "level": 2,
             "title": "Get Git"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -216902,7 +216902,7 @@
           "metadata": {
             "section": "Get Git"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -216916,7 +216916,7 @@
             "level": 2,
             "title": "Cloning the source tree"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -216928,7 +216928,7 @@
           "metadata": {
             "section": "Cloning the source tree"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -216940,7 +216940,7 @@
           "metadata": {
             "section": "Cloning the source tree"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p2",
@@ -216952,7 +216952,7 @@
           "metadata": {
             "section": "Cloning the source tree"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p3",
@@ -216964,7 +216964,7 @@
           "metadata": {
             "section": "Cloning the source tree"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p4",
@@ -216976,7 +216976,7 @@
           "metadata": {
             "section": "Cloning the source tree"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p5",
@@ -216988,7 +216988,7 @@
           "metadata": {
             "section": "Cloning the source tree"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p6",
@@ -217000,7 +217000,7 @@
           "metadata": {
             "section": "Cloning the source tree"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p7",
@@ -217012,7 +217012,7 @@
           "metadata": {
             "section": "Cloning the source tree"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p8",
@@ -217024,7 +217024,7 @@
           "metadata": {
             "section": "Cloning the source tree"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p9",
@@ -217036,7 +217036,7 @@
           "metadata": {
             "section": "Cloning the source tree"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p10",
@@ -217050,7 +217050,7 @@
             "level": 2,
             "title": "Updating the source tree to the latest revision"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -217062,7 +217062,7 @@
           "metadata": {
             "section": "Updating the source tree to the latest revision"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -217074,7 +217074,7 @@
           "metadata": {
             "section": "Updating the source tree to the latest revision"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p2",
@@ -217086,7 +217086,7 @@
           "metadata": {
             "section": "Updating the source tree to the latest revision"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p3",
@@ -217100,7 +217100,7 @@
             "level": 2,
             "title": "Rebasing your local branches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -217112,7 +217112,7 @@
           "metadata": {
             "section": "Rebasing your local branches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -217124,7 +217124,7 @@
           "metadata": {
             "section": "Rebasing your local branches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p2",
@@ -217138,7 +217138,7 @@
             "level": 2,
             "title": "Adding/removing files/directories"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -217150,7 +217150,7 @@
           "metadata": {
             "section": "Adding/removing files/directories"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -217162,7 +217162,7 @@
           "metadata": {
             "section": "Adding/removing files/directories"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p2",
@@ -217176,7 +217176,7 @@
             "level": 2,
             "title": "Showing modifications"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -217188,7 +217188,7 @@
           "metadata": {
             "section": "Showing modifications"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -217200,7 +217200,7 @@
           "metadata": {
             "section": "Showing modifications"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p2",
@@ -217214,7 +217214,7 @@
             "level": 2,
             "title": "Inspecting the changelog"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -217226,7 +217226,7 @@
           "metadata": {
             "section": "Inspecting the changelog"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -217238,7 +217238,7 @@
           "metadata": {
             "section": "Inspecting the changelog"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p2",
@@ -217252,7 +217252,7 @@
             "level": 2,
             "title": "Checking source tree status"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -217264,7 +217264,7 @@
           "metadata": {
             "section": "Checking source tree status"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -217276,7 +217276,7 @@
           "metadata": {
             "section": "Checking source tree status"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p2",
@@ -217290,7 +217290,7 @@
             "level": 2,
             "title": "Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -217302,7 +217302,7 @@
           "metadata": {
             "section": "Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -217314,7 +217314,7 @@
           "metadata": {
             "section": "Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p2",
@@ -217326,7 +217326,7 @@
           "metadata": {
             "section": "Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p3",
@@ -217338,7 +217338,7 @@
           "metadata": {
             "section": "Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p4",
@@ -217350,7 +217350,7 @@
           "metadata": {
             "section": "Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p5",
@@ -217362,7 +217362,7 @@
           "metadata": {
             "section": "Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p6",
@@ -217374,7 +217374,7 @@
           "metadata": {
             "section": "Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p7",
@@ -217386,7 +217386,7 @@
           "metadata": {
             "section": "Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p8",
@@ -217398,7 +217398,7 @@
           "metadata": {
             "section": "Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p9",
@@ -217410,7 +217410,7 @@
           "metadata": {
             "section": "Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p10",
@@ -217422,7 +217422,7 @@
           "metadata": {
             "section": "Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p11",
@@ -217434,7 +217434,7 @@
           "metadata": {
             "section": "Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p12",
@@ -217446,7 +217446,7 @@
           "metadata": {
             "section": "Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p13",
@@ -217458,7 +217458,7 @@
           "metadata": {
             "section": "Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p14",
@@ -217470,7 +217470,7 @@
           "metadata": {
             "section": "Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p15",
@@ -217482,7 +217482,7 @@
           "metadata": {
             "section": "Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p16",
@@ -217494,7 +217494,7 @@
           "metadata": {
             "section": "Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p17",
@@ -217506,7 +217506,7 @@
           "metadata": {
             "section": "Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p18",
@@ -217518,7 +217518,7 @@
           "metadata": {
             "section": "Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p19",
@@ -217530,7 +217530,7 @@
           "metadata": {
             "section": "Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p20",
@@ -217544,7 +217544,7 @@
             "level": 2,
             "title": "Writing a commit message"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -217556,7 +217556,7 @@
           "metadata": {
             "section": "Writing a commit message"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -217568,7 +217568,7 @@
           "metadata": {
             "section": "Writing a commit message"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p2",
@@ -217580,7 +217580,7 @@
           "metadata": {
             "section": "Writing a commit message"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p3",
@@ -217592,7 +217592,7 @@
           "metadata": {
             "section": "Writing a commit message"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p4",
@@ -217604,7 +217604,7 @@
           "metadata": {
             "section": "Writing a commit message"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p5",
@@ -217616,7 +217616,7 @@
           "metadata": {
             "section": "Writing a commit message"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p6",
@@ -217628,7 +217628,7 @@
           "metadata": {
             "section": "Writing a commit message"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p7",
@@ -217640,7 +217640,7 @@
           "metadata": {
             "section": "Writing a commit message"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p8",
@@ -217652,7 +217652,7 @@
           "metadata": {
             "section": "Writing a commit message"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p9",
@@ -217666,7 +217666,7 @@
             "level": 2,
             "title": "Preparing a patchset"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -217678,7 +217678,7 @@
           "metadata": {
             "section": "Preparing a patchset"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -217690,7 +217690,7 @@
           "metadata": {
             "section": "Preparing a patchset"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p2",
@@ -217702,7 +217702,7 @@
           "metadata": {
             "section": "Preparing a patchset"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p3",
@@ -217714,7 +217714,7 @@
           "metadata": {
             "section": "Preparing a patchset"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p4",
@@ -217726,7 +217726,7 @@
           "metadata": {
             "section": "Preparing a patchset"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p5",
@@ -217738,7 +217738,7 @@
           "metadata": {
             "section": "Preparing a patchset"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p6",
@@ -217752,7 +217752,7 @@
             "level": 2,
             "title": "Sending patches for review"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -217764,7 +217764,7 @@
           "metadata": {
             "section": "Sending patches for review"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -217776,7 +217776,7 @@
           "metadata": {
             "section": "Sending patches for review"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p2",
@@ -217790,7 +217790,7 @@
             "level": 2,
             "title": "Renaming/moving/copying files or contents of files"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -217802,7 +217802,7 @@
           "metadata": {
             "section": "Renaming/moving/copying files or contents of files"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -217814,7 +217814,7 @@
           "metadata": {
             "section": "Renaming/moving/copying files or contents of files"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p2",
@@ -217828,7 +217828,7 @@
             "level": 1,
             "title": "Git configuration"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -217840,7 +217840,7 @@
           "metadata": {
             "section": "Git configuration"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -217854,7 +217854,7 @@
             "level": 2,
             "title": "Personal Git installation"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -217866,7 +217866,7 @@
           "metadata": {
             "section": "Personal Git installation"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -217878,7 +217878,7 @@
           "metadata": {
             "section": "Personal Git installation"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p2",
@@ -217892,7 +217892,7 @@
             "level": 2,
             "title": "Repository configuration"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -217904,7 +217904,7 @@
           "metadata": {
             "section": "Repository configuration"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -217916,7 +217916,7 @@
           "metadata": {
             "section": "Repository configuration"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p2",
@@ -217930,7 +217930,7 @@
             "level": 1,
             "title": "FFmpeg specific"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -217944,7 +217944,7 @@
             "level": 2,
             "title": "Reverting broken commits"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -217956,7 +217956,7 @@
           "metadata": {
             "section": "Reverting broken commits"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -217968,7 +217968,7 @@
           "metadata": {
             "section": "Reverting broken commits"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p2",
@@ -217980,7 +217980,7 @@
           "metadata": {
             "section": "Reverting broken commits"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p3",
@@ -217992,7 +217992,7 @@
           "metadata": {
             "section": "Reverting broken commits"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p4",
@@ -218004,7 +218004,7 @@
           "metadata": {
             "section": "Reverting broken commits"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p5",
@@ -218016,7 +218016,7 @@
           "metadata": {
             "section": "Reverting broken commits"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p6",
@@ -218028,7 +218028,7 @@
           "metadata": {
             "section": "Reverting broken commits"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p7",
@@ -218040,7 +218040,7 @@
           "metadata": {
             "section": "Reverting broken commits"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p8",
@@ -218052,7 +218052,7 @@
           "metadata": {
             "section": "Reverting broken commits"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p9",
@@ -218066,7 +218066,7 @@
             "level": 2,
             "title": "Pushing changes to remote trees"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -218078,7 +218078,7 @@
           "metadata": {
             "section": "Pushing changes to remote trees"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -218090,7 +218090,7 @@
           "metadata": {
             "section": "Pushing changes to remote trees"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p2",
@@ -218102,7 +218102,7 @@
           "metadata": {
             "section": "Pushing changes to remote trees"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p3",
@@ -218114,7 +218114,7 @@
           "metadata": {
             "section": "Pushing changes to remote trees"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p4",
@@ -218126,7 +218126,7 @@
           "metadata": {
             "section": "Pushing changes to remote trees"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p5",
@@ -218138,7 +218138,7 @@
           "metadata": {
             "section": "Pushing changes to remote trees"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p6",
@@ -218152,7 +218152,7 @@
             "level": 2,
             "title": "Finding a specific svn revision"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -218164,7 +218164,7 @@
           "metadata": {
             "section": "Finding a specific svn revision"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -218176,7 +218176,7 @@
           "metadata": {
             "section": "Finding a specific svn revision"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p2",
@@ -218188,7 +218188,7 @@
           "metadata": {
             "section": "Finding a specific svn revision"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p3",
@@ -218200,7 +218200,7 @@
           "metadata": {
             "section": "Finding a specific svn revision"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p4",
@@ -218212,7 +218212,7 @@
           "metadata": {
             "section": "Finding a specific svn revision"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p5",
@@ -218224,7 +218224,7 @@
           "metadata": {
             "section": "Finding a specific svn revision"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p6",
@@ -218236,7 +218236,7 @@
           "metadata": {
             "section": "Finding a specific svn revision"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p7",
@@ -218248,7 +218248,7 @@
           "metadata": {
             "section": "Finding a specific svn revision"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p8",
@@ -218262,7 +218262,7 @@
             "level": 1,
             "title": "gpg key generation"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -218274,7 +218274,7 @@
           "metadata": {
             "section": "gpg key generation"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -218286,7 +218286,7 @@
           "metadata": {
             "section": "gpg key generation"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p2",
@@ -218298,7 +218298,7 @@
           "metadata": {
             "section": "gpg key generation"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p3",
@@ -218312,7 +218312,7 @@
             "level": 1,
             "title": "Pre-push checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -218324,7 +218324,7 @@
           "metadata": {
             "section": "Pre-push checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p1",
@@ -218336,7 +218336,7 @@
           "metadata": {
             "section": "Pre-push checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p2",
@@ -218348,7 +218348,7 @@
           "metadata": {
             "section": "Pre-push checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p3",
@@ -218360,7 +218360,7 @@
           "metadata": {
             "section": "Pre-push checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p4",
@@ -218372,7 +218372,7 @@
           "metadata": {
             "section": "Pre-push checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p5",
@@ -218384,7 +218384,7 @@
           "metadata": {
             "section": "Pre-push checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p6",
@@ -218396,7 +218396,7 @@
           "metadata": {
             "section": "Pre-push checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p7",
@@ -218408,7 +218408,7 @@
           "metadata": {
             "section": "Pre-push checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p8",
@@ -218420,7 +218420,7 @@
           "metadata": {
             "section": "Pre-push checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p9",
@@ -218432,7 +218432,7 @@
           "metadata": {
             "section": "Pre-push checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p10",
@@ -218446,7 +218446,7 @@
             "level": 1,
             "title": "Server Issues"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "git-howto.md-p0",
@@ -218458,7 +218458,7 @@
           "metadata": {
             "section": "Server Issues"
           },
-          "status": "pending"
+          "status": "done"
         }
       ]
     },

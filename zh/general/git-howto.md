@@ -1,151 +1,147 @@
-!!! warning "翻译占位页"
-    本页为英文原文占位（翻译进行中，进度见[翻译看板](https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md)）。
-    术语与示例以英文原文为准。
+# 简介
 
-# Introduction
-
-This document aims in giving some quick references on a set of useful Git commands. You should always use the extensive and detailed documentation provided directly by Git:
+本文档旨在提供一组常用 Git 命令的快速参考。您应始终使用 Git 自带的详尽文档：
 
 ``` text
 git --help
 man git
 ```
 
-shows you the available subcommands,
+列出可用的子命令，
 
 ``` text
 git <command> --help
 man git-<command>
 ```
 
-shows information about the subcommand \<command\>.
+显示有关 \<command\> 子命令的信息。
 
-Additional information could be found on the [Git Reference](http://gitref.org) website.
+更多信息可参考 [Git Reference](http://gitref.org) 网站。
 
-For more information about the Git project, visit the [Git website](http://git-scm.com/).
+想进一步了解 Git 项目，请访问 [Git 网站](http://git-scm.com/)。
 
-Consult these resources whenever you have problems, they are quite exhaustive.
+遇到问题时请查阅这些资源，它们相当详尽。
 
-What follows now is a basic introduction to Git and some FFmpeg-specific guidelines to ease the contribution to the project.
+接下来是对 Git 的基础介绍，以及一些便于向本项目贡献的 FFmpeg 专属指南。
 
-# Basics Usage
+# 基本用法
 
-## Get Git
+## 获取 Git
 
-You can get Git from <http://git-scm.com/> Most distribution and operating system provide a package for it.
+您可以从 <http://git-scm.com/> 获取 Git。多数发行版和操作系统都提供相应软件包。
 
-## Cloning the source tree
+## 克隆源码树
 
 ``` text
 git clone https://git.ffmpeg.org/ffmpeg.git <target>
 ```
 
-This will put the FFmpeg sources into the directory \<\<target\>\>.
+这会把 FFmpeg 源码放入 \<\<target\>\> 目录。
 
 ``` text
 git clone git@source.ffmpeg.org:ffmpeg <target>
 ```
 
-This will put the FFmpeg sources into the directory \<\<target\>\> and let you push back your changes to the remote repository.
+这会把 FFmpeg 源码放入 \<\<target\>\> 目录，并允许您将修改推送回远程仓库。
 
 ``` text
 git clone git@ffmpeg.org:ffmpeg-web <target>
 ```
 
-This will put the source of the FFmpeg website into the directory \<\<target\>\> and let you push back your changes to the remote repository.
+这会把 FFmpeg 网站源码放入 \<\<target\>\> 目录，并允许您将修改推送回远程仓库。
 
-If you don't have write-access to the ffmpeg-web repository, you can create patches after making a read-only ffmpeg-web clone:
+如果您对 ffmpeg-web 仓库没有写权限，可以只读克隆 ffmpeg-web 后制作补丁：
 
 ``` text
 git clone git://ffmpeg.org/ffmpeg-web <target>
 ```
 
-Make sure that you do not have Windows line endings in your checkouts, otherwise you may experience spurious compilation failures. One way to achieve this is to run
+请确保您的检出中没有 Windows 换行符，否则可能遇到莫名其妙的编译失败。一种做法是运行
 
 ``` text
 git config --global core.autocrlf false
 ```
 
-## Updating the source tree to the latest revision
+## 将源码树更新到最新版本
 
 ``` text
 git pull (--rebase)
 ```
 
-pulls in the latest changes from the tracked branch. The tracked branch can be remote. By default the master branch tracks the branch master in the remote origin.
+会拉取被跟踪分支的最新变更。被跟踪分支可以是远程分支。默认情况下，master 分支跟踪远程 origin 的 master 分支。
 
-`--rebase` (see below) is recommended.
+推荐 `--rebase`（见下文）。
 
-## Rebasing your local branches
+## 变基本地分支
 
 ``` text
 git pull --rebase
 ```
 
-fetches the changes from the main repository and replays your local commits over it. This is required to keep all your local changes at the top of FFmpeg's master tree. The master tree will reject pushes with merge commits.
+从主仓库拉取变更并把您的本地提交在其上重放。这是让所有本地修改保持在 FFmpeg master 树顶端的必要操作。master 树会拒绝带合并提交的推送。
 
-## Adding/removing files/directories
+## 添加/删除文件/目录
 
 ``` text
 git add [-A] <filename/dirname>
 git rm [-r] <filename/dirname>
 ```
 
-Git needs to get notified of all changes you make to your working directory that makes files appear or disappear. Line moves across files are automatically tracked.
+Git 需要得到通知才能知晓您对工作目录所做的、使文件出现或消失的所有变更。跨文件移动行会被自动跟踪。
 
-## Showing modifications
+## 查看修改
 
 ``` text
 git diff <filename(s)>
 ```
 
-will show all local modifications in your working directory as unified diff.
+会以 unified diff 形式显示工作目录中的所有本地修改。
 
-## Inspecting the changelog
+## 查看变更日志
 
 ``` text
 git log <filename(s)>
 ```
 
-You may also use the graphical tools like `gitview` or `gitk` or the web interface available at <https://git.ffmpeg.org/ffmpeg.git>.
+您也可以使用 `gitview` 或 `gitk` 等图形工具，或访问 <https://git.ffmpeg.org/ffmpeg.git> 的网页界面。
 
-## Checking source tree status
+## 检查源码树状态
 
 ``` text
 git status
 ```
 
-detects all the changes you made and lists what actions will be taken in case of a commit (additions, modifications, deletions, etc.).
+检出所有您所做的变更，并列举一旦提交将采取的动作（新增、修改、删除等）。
 
-## Committing
+## 提交
 
 ``` text
 git diff --check
 ```
 
-to double check your changes before committing them to avoid trouble later on. All experienced developers do this on each and every commit, no matter how small.
+在提交前复查您的修改，避免日后惹上麻烦。所有有经验的开发者在每次提交前都这样做，无论修改多小。
 
-Every one of them has been saved from looking like a fool by this many times. It's very easy for stray debug output or cosmetic modifications to slip in, please avoid problems through this extra level of scrutiny.
+他们每个人都曾多次靠这一步免于闹笑话。杂散的调试输出或外观性修改很容易混进去，请通过这层额外把关避免麻烦。
 
-For cosmetics-only commits you should get (almost) empty output from
+对于纯外观性提交，以下命令的输出应当（几乎）为空：
 
 ``` text
 git diff -w -b <filename(s)>
 ```
 
-Also check the output of
+另请检查
 
 ``` text
 git status
 ```
 
-to make sure you don't have untracked files or deletions.
+的输出，确认没有未跟踪文件或删除项。
 
 ``` text
 git add [-i|-p|-A] <filenames/dirnames>
 ```
 
-Make sure you have told Git your name, email address and GPG key
+确保已告知 Git 您的姓名、邮箱地址和 GPG 密钥
 
 ``` text
 git config --global user.name "My Name"
@@ -153,37 +149,37 @@ git config --global user.email my@email.invalid
 git config --global user.signingkey ABCDEF0123245
 ```
 
-Enable signing all commits or use -S
+启用对所有提交签名，或使用 -S
 
 ``` text
 git config --global commit.gpgsign true
 ```
 
-Use `--global` to set the global configuration for all your Git checkouts.
+使用 `--global` 为您所有的 Git 检出设置全局配置。
 
-Git will select the changes to the files for commit. Optionally you can use the interactive or the patch mode to select hunk by hunk what should be added to the commit.
+Git 会为提交挑选对文件的修改。可选地，您可以用交互模式或补丁模式逐块（hunk）挑选要纳入提交的内容。
 
 ``` text
 git commit
 ```
 
-Git will commit the selected changes to your current local branch.
+Git 会把选中的修改提交到您当前的本地分支。
 
-You will be prompted for a log message in an editor, which is either set in your personal configuration file through
+您将在编辑器中被提示填写日志信息。编辑器既可在个人配置文件中通过
 
 ``` text
 git config --global core.editor
 ```
 
-or set by one of the following environment variables: \<GIT_EDITOR\>, \<VISUAL\> or \<EDITOR\>.
+指定，或由以下环境变量指定：\<GIT_EDITOR\>、\<VISUAL\> 或 \<EDITOR\>。
 
-## Writing a commit message
+## 编写提交信息
 
-Log messages should be concise but descriptive.
+日志信息应简洁而具有描述性。
 
-The first line must contain the context, a colon and a very short summary of what the commit does. Details can be added, if necessary, separated by an empty line. These details should not exceed 60-72 characters per line, except when containing code.
+首行必须包含上下文、冒号和对其所做修改的极简摘要。必要时可在空一行后补充细节，细节部分每行不超过 60-72 字符（含代码时除外）。
 
-Example of a good commit message:
+优秀提交信息示例：
 
 ``` text
 avcodec/cbs: add a helper to read extradata within packet side data
@@ -197,45 +193,45 @@ This helper works around that.
 ptr might be NULL
 ```
 
-If the summary on the first line is not enough, in the body of the message, explain why you made a change, what you did will be obvious from the changes themselves most of the time. Saying just "bug fix" or "10l" is bad. Remember that people of varying skill levels look at and educate themselves while reading through your code. Don't include filenames in log messages except in the context, Git provides that information.
+如果首行摘要不够，在正文中说明您为什么做该修改——您做了什么，多数时候从修改本身就能看出来。只说"缺陷修复"或"10l"是不好的。要记住：不同水平的读者会阅读并学习您的代码。除上下文外不要在日志信息中包含文件名，Git 会提供该信息。
 
-If the commit fixes a registered issue, state it in a separate line of the body: `Fix Trac ticket #42.`
+如果提交修复了已登记的问题，在正文单独一行注明：`Fix Trac ticket #42.`
 
-The first line will be used to name the patch by `git format-patch`.
+首行会被 `git format-patch` 用作补丁名。
 
-Common mistakes for the first line, as seen in `git log --oneline` include: missing context at the beginning; description of what the code did before the patch; line too long or wrapped to the second line.
+`git log --oneline` 中常见的首行错误包括：开头缺上下文；描述的是补丁前的旧行为；首行过长或折到第二行。
 
-## Preparing a patchset
+## 准备补丁集
 
 ``` text
 git format-patch <commit> [-o directory]
 ```
 
-will generate a set of patches for each commit between \<\<commit\>\> and current \<HEAD\>. E.g.
+会为 \<\<commit\>\> 与当前 \<HEAD\> 之间的每个提交生成一组补丁。例如
 
 ``` text
 git format-patch origin/master
 ```
 
-will generate patches for all commits on current branch which are not present in upstream. A useful shortcut is also
+会为当前分支上所有不在上游的提交生成补丁。另一个实用的快捷方式是
 
 ``` text
 git format-patch -n
 ```
 
-which will generate patches from last \<n\> commits. By default the patches are created in the current directory.
+它会为最近 \<n\> 个提交生成补丁。默认情况下，补丁创建在当前目录。
 
-## Sending patches for review
+## 发送补丁供评审
 
 ``` text
 git send-email <commit list|directory>
 ```
 
-will send the patches created by `git format-patch` or directly generates them. All the email fields can be configured in the global/local configuration or overridden by command line. Note that this tool must often be installed separately (e.g. \<git-email\> package on Debian-based distros).
+会发送 `git format-patch` 创建的补丁，或直接生成补丁并发送。所有邮件字段都可在全局/本地配置中设置，或用命令行覆盖。注意该工具通常需要单独安装（如 Debian 系发行版的 \<git-email\> 包）。
 
-## Renaming/moving/copying files or contents of files
+## 重命名/移动/复制文件或文件内容
 
-Git automatically tracks such changes, making those normal commits.
+Git 会自动跟踪此类变更，使其成为普通提交。
 
 ``` text
 mv/cp path/file otherpath/otherfile
@@ -243,119 +239,119 @@ git add [-A] .
 git commit
 ```
 
-# Git configuration
+# Git 配置
 
-In order to simplify a few workflows, it is advisable to configure both your personal Git installation and your local FFmpeg repository.
+为简化若干工作流，建议同时配置您的个人 Git 安装和本地 FFmpeg 仓库。
 
-## Personal Git installation
+## 个人 Git 安装
 
-Add the following to your `~/.gitconfig` to help `git send-email` and `git format-patch` detect renames:
+将以下内容加入您的 `~/.gitconfig`，帮助 `git send-email` 和 `git format-patch` 检测重命名：
 
 ``` text
 [diff]
         renames = copy
 ```
 
-## Repository configuration
+## 仓库配置
 
-In order to have `git send-email` automatically send patches to the ffmpeg-devel mailing list, add the following stanza to `/path/to/ffmpeg/repository/.git/config`:
+为了让 `git send-email` 自动把补丁发到 ffmpeg-devel 邮件列表，向 `/path/to/ffmpeg/repository/.git/config` 添加以下配置段：
 
 ``` text
 [sendemail]
         to = ffmpeg-devel@ffmpeg.org
 ```
 
-# FFmpeg specific
+# FFmpeg 专属内容
 
-## Reverting broken commits
+## 回退损坏的提交
 
 ``` text
 git reset <commit>
 ```
 
-`git reset` will uncommit the changes till \<\<commit\>\> rewriting the current branch history.
+`git reset` 会撤销直至 \<\<commit\>\> 的提交，并重写当前分支的历史。
 
 ``` text
 git commit --amend
 ```
 
-allows one to amend the last commit details quickly.
+可快速修订最后一次提交的详情。
 
 ``` text
 git rebase -i origin/master
 ```
 
-will replay local commits over the main repository allowing to edit, merge or remove some of them in the process.
+会在主仓库之上重放本地提交，过程中允许编辑、合并或移除其中部分提交。
 
-`git reset`, `git commit --amend` and `git rebase` rewrite history, so you should use them ONLY on your local or topic branches. The main repository will reject those changes.
+`git reset`、`git commit --amend` 与 `git rebase` 都会改写历史，因此只应在您的本地分支或主题分支上使用它们。主仓库会拒绝这些修改。
 
 ``` text
 git revert <commit>
 ```
 
-`git revert` will generate a revert commit. This will not make the faulty commit disappear from the history.
+`git revert` 会生成一个回退提交。这不会让问题提交从历史中消失。
 
-## Pushing changes to remote trees
+## 把修改推送到远程树
 
 ``` text
 git push origin master --dry-run
 ```
 
-Will simulate a push of the local master branch to the default remote (\<origin\>). And list which branches and ranges or commits would have been pushed. Git will prevent you from pushing changes if the local and remote trees are out of sync. Refer to [Updating the source tree to the latest revision](#updating-the-source-tree-to-the-latest-revision).
+会模拟把本地 master 分支推送到默认远程（\<origin\>），并列出将被推送的分支、范围或提交。本地与远程树不同步时，Git 会阻止推送。参见[将源码树更新到最新版本](#将源码树更新到最新版本)。
 
 ``` text
 git remote add <name> <url>
 ```
 
-Will add additional remote with a name reference, it is useful if you want to push your local branch for review on a remote host.
+会添加一个带名称引用的额外远程，若您想把本地分支推送到远程主机供评审，这会很有用。
 
 ``` text
 git push <remote> <refspec>
 ```
 
-Will push the changes to the \<\<remote\>\> repository. Omitting \<\<refspec\>\> makes `git push` update all the remote branches matching the local ones.
+会把修改推送到 \<\<remote\>\> 仓库。省略 \<\<refspec\>\> 会让 `git push` 更新所有与本地对应的远程分支。
 
-## Finding a specific svn revision
+## 查找特定的 svn 版本
 
-Since version 1.7.1 Git supports `:/foo` syntax for specifying commits based on a regular expression. see man gitrevisions
+自 1.7.1 版起，Git 支持 `:/foo` 语法按正则表达式指定提交。参见 man gitrevisions
 
 ``` text
 git show :/'as revision 23456'
 ```
 
-will show the svn changeset `r23456`. With older Git versions searching in the `git log` output is the easiest option (especially if a pager with search capabilities is used).
+会显示 svn 变更集 `r23456`。更早的 Git 版本在 `git log` 输出中搜索是最简单的办法（尤其在使用支持搜索的分页器时）。
 
-This commit can be checked out with
+可以用以下命令检出该提交
 
 ``` text
 git checkout -b svn_23456 :/'as revision 23456'
 ```
 
-or for Git \< 1.7.1 with
+或 Git \< 1.7.1 用
 
 ``` text
 git checkout -b svn_23456 $SHA1
 ```
 
-where \<\$SHA1\> is the commit hash from the `git log` output.
+其中 \<\$SHA1\> 是 `git log` 输出中的提交哈希。
 
-# gpg key generation
+# gpg 密钥生成
 
-If you have no gpg key yet, we recommend that you create a ed25519 based key as it is small, fast and secure. Especially it results in small signatures in git.
+如果您还没有 gpg 密钥，我们推荐创建基于 ed25519 的密钥，它小、快、安全，尤其能让 git 中的签名很小。
 
 ``` text
 gpg --default-new-key-algo "ed25519/cert,sign+cv25519/encr" --quick-generate-key "human@server.com"
 ```
 
-When generating a key, make sure the email specified matches the email used in git as some sites like github consider mismatches a reason to declare such commits unverified. After generating a key you can add it to the MAINTAINER file and upload it to a keyserver.
+生成密钥时，请确保所指定的邮箱与 git 中使用的一致——GitHub 等站点会把不匹配视为将提交标记为未验证的理由。生成密钥后，您可以将其加入 MAINTAINER 文件并上传到密钥服务器。
 
-# Pre-push checklist
+# 推送前检查清单
 
-Once you have a set of commits that you feel are ready for pushing, work through the following checklist to doublecheck everything is in proper order. This list tries to be exhaustive. In case you are just pushing a typo in a comment, some of the steps may be unnecessary. Apply your common sense, but if in doubt, err on the side of caution.
+一旦您准备好一组可以推送的提交，请过一遍以下检查清单，确认一切就绪。本清单力求全面。若您只是推一个注释里的错字，其中某些步骤可能不必要。请运用常识，但拿不准时宁可谨慎。
 
-First, make sure that the commits and branches you are going to push match what you want pushed and that nothing is missing, extraneous or wrong. You can see what will be pushed by running the git push command with `--dry-run` first. And then inspecting the commits listed with `git log -p 1234567..987654`. The `git status` command may help in finding local changes that have been forgotten to be added.
+首先，确保将推送的提交和分支与您想推送的内容一致，没有缺漏、多余或错误。可先运行 git push 命令加 `--dry-run` 查看将要推送的内容，然后用 `git log -p 1234567..987654` 查看列出的提交。`git status` 命令有助于发现遗漏添加的本地修改。
 
-Next let the code pass through a full run of our test suite.
+接下来让代码完整跑一遍我们的测试套件。
 
 - `make distclean`
 
@@ -363,14 +359,14 @@ Next let the code pass through a full run of our test suite.
 
 - `make fate`
 
-- if fate fails due to missing samples run `make fate-rsync` and retry
+- 若 fate 因缺少样本而失败，运行 `make fate-rsync` 并重试
 
-Make sure all your changes have been checked before pushing them, the test suite only checks against regressions and that only to some extend. It does obviously not check newly added features/code to be working unless you have added a test for that (which is recommended).
+推送前请确认所有修改都已检查过——测试套件只检查回归，且也只是一定程度上。它显然不会检查新添加的功能/代码是否真的可用，除非您为它加了测试（推荐）。
 
-Also note that every single commit should pass the test suite, not just the result of a series of patches.
+另请注意，系列中的每个提交都应能通过测试套件，而不只是补丁系列的最终结果。
 
-Once everything passed, push the changes to your public ffmpeg clone and post a merge request to ffmpeg-devel. You can also push them directly but this is not recommended.
+一切通过后，把修改推送到您的公开 ffmpeg 克隆，并向 ffmpeg-devel 发合并请求。也可以直接推，但不推荐。
 
-# Server Issues
+# 服务器问题
 
-Contact the project admins at <root@ffmpeg.org> if you have technical problems with the Git server.
+如果 Git 服务器遇到技术问题，请通过 <root@ffmpeg.org> 联系项目管理员。
