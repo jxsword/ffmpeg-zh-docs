@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#description" class="md-skip">
+        <a href="#描述" class="md-skip">
           跳转至
         </a>
       
@@ -1755,76 +1755,71 @@
   
 
 
-<div class="admonition warning">
-<p class="admonition-title">翻译占位页</p>
-<p>本页为英文原文占位（翻译进行中，进度见<a href="https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md">翻译看板</a>）。
-术语与示例以英文原文为准。</p>
-</div>
-<h1 id="description">Description<a class="headerlink" href="#description" title="Permanent link">&para;</a></h1>
-<p>The FFmpeg resampler provides a high-level interface to the libswresample library audio resampling utilities. In particular it allows one to perform audio resampling, audio channel layout rematrixing, and convert audio format and packing layout.</p>
-<h1 id="resampler-options">Resampler Options<a class="headerlink" href="#resampler-options" title="Permanent link">&para;</a></h1>
-<p>The audio resampler supports the following named options.</p>
-<p>Options may be set by specifying -\&lt;option&gt; \&lt;value&gt; in the FFmpeg tools, \&lt;option&gt;=\&lt;value&gt; for the aresample filter, by setting the value explicitly in the <code>SwrContext</code> options or using the <code>libavutil/opt.h</code> API for programmatic use.</p>
+<h1 id="描述">描述<a class="headerlink" href="#描述" title="Permanent link">&para;</a></h1>
+<p>FFmpeg 重采样器为 libswresample 库的音频重采样工具提供高层接口。特别是它可以执行音频重采样、音频声道布局重矩阵化 (rematrixing)，以及转换音频格式与打包布局。</p>
+<h1 id="重采样器选项">重采样器选项<a class="headerlink" href="#重采样器选项" title="Permanent link">&para;</a></h1>
+<p>音频重采样器支持以下命名选项。</p>
+<p>可通过在 FFmpeg 工具中指定 -\&lt;option&gt; \&lt;value&gt;、对 aresample 滤镜指定 \&lt;option&gt;=\&lt;value&gt;、在 <code>SwrContext</code> 选项中显式设值，或以编程方式使用 <code>libavutil/opt.h</code> API 来设置选项。</p>
 <ul>
 <li>
-<p><strong><code>uchl, used_chlayout</code></strong> Set used input channel layout. Default is unset. This option is only used for special remapping.</p>
+<p><strong><code>uchl, used_chlayout</code></strong> 设置使用中的输入声道布局。默认未设置。该选项仅用于特殊重映射。</p>
 </li>
 <li>
-<p><strong><code>isr, in_sample_rate</code></strong> Set the input sample rate. Default value is 0.</p>
+<p><strong><code>isr, in_sample_rate</code></strong> 设置输入采样率。默认值为 0。</p>
 </li>
 <li>
-<p><strong><code>osr, out_sample_rate</code></strong> Set the output sample rate. Default value is 0.</p>
+<p><strong><code>osr, out_sample_rate</code></strong> 设置输出采样率。默认值为 0。</p>
 </li>
 <li>
-<p><strong><code>isf, in_sample_fmt</code></strong> Specify the input sample format. It is set by default to <code>none</code>.</p>
+<p><strong><code>isf, in_sample_fmt</code></strong> 指定输入采样格式。默认设为 <code>none</code>。</p>
 </li>
 <li>
-<p><strong><code>osf, out_sample_fmt</code></strong> Specify the output sample format. It is set by default to <code>none</code>.</p>
+<p><strong><code>osf, out_sample_fmt</code></strong> 指定输出采样格式。默认设为 <code>none</code>。</p>
 </li>
 <li>
-<p><strong><code>tsf, internal_sample_fmt</code></strong> Set the internal sample format. Default value is <code>none</code>. This will automatically be chosen when it is not explicitly set.</p>
+<p><strong><code>tsf, internal_sample_fmt</code></strong> 设置内部采样格式。默认值为 <code>none</code>。未显式设置时会自动选择。</p>
 </li>
 <li>
 <p><strong><code>ichl, in_chlayout</code></strong></p>
 </li>
 <li>
-<p><strong><code>ochl, out_chlayout</code></strong> Set the input/output channel layout.</p>
+<p><strong><code>ochl, out_chlayout</code></strong> 设置输入/输出声道布局。</p>
 </li>
 </ul>
-<p>See section "the Channel Layout section in the ffmpeg-utils(1) manual" in <code>ffmpeg-utils</code> for the required syntax.</p>
+<p>所需语法参见 <code>ffmpeg-utils</code> 中的"the Channel Layout section in the ffmpeg-utils(1) manual"（声道布局）一节。</p>
 <ul>
 <li>
-<p><strong><code>clev, center_mix_level</code></strong> Set the center mix level. It is a value expressed in deciBel, and must be in the interval [-32,32].</p>
+<p><strong><code>clev, center_mix_level</code></strong> 设置中置混音电平。该值以分贝表示，必须处于区间 [-32,32]。</p>
 </li>
 <li>
-<p><strong><code>slev, surround_mix_level</code></strong> Set the surround mix level. It is a value expressed in deciBel, and must be in the interval [-32,32].</p>
+<p><strong><code>slev, surround_mix_level</code></strong> 设置环绕混音电平。该值以分贝表示，必须处于区间 [-32,32]。</p>
 </li>
 <li>
-<p><strong><code>lfe_mix_level</code></strong> Set LFE mix into non LFE level. It is used when there is a LFE input but no LFE output. It is a value expressed in deciBel, and must be in the interval [-32,32].</p>
+<p><strong><code>lfe_mix_level</code></strong> 设置 LFE 混入非 LFE 的电平。存在 LFE 输入而无 LFE 输出时使用。该值以分贝表示，必须处于区间 [-32,32]。</p>
 </li>
 <li>
-<p><strong><code>rmvol, rematrix_volume</code></strong> Set rematrix volume. Default value is 1.0.</p>
+<p><strong><code>rmvol, rematrix_volume</code></strong> 设置重矩阵化音量。默认值为 1.0。</p>
 </li>
 <li>
-<p><strong><code>rematrix_maxval</code></strong> Set maximum output value for rematrixing. This can be used to prevent clipping vs. preventing volume reduction. A value of 1.0 prevents clipping.</p>
+<p><strong><code>rematrix_maxval</code></strong> 设置重矩阵化的最大输出值。它可用于在防止削波与防止音量降低之间权衡。取 1.0 时防止削波。</p>
 </li>
 <li>
-<p><strong><code>flags, swr_flags</code></strong> Set flags used by the converter. Default value is 0.</p>
+<p><strong><code>flags, swr_flags</code></strong> 设置转换器使用的标志。默认值为 0。</p>
 </li>
 </ul>
-<p>It supports the following individual flags:</p>
+<p>它支持以下单独标志：</p>
 <ul>
 <li>
-<p><strong><code>res</code></strong> force resampling, this flag forces resampling to be used even when the input and output sample rates match.</p>
+<p><strong><code>res</code></strong> 强制重采样，即使输入与输出采样率一致也强制使用重采样。</p>
 </li>
 <li>
-<p><strong><code>dither_scale</code></strong> Set the dither scale. Default value is 1.</p>
+<p><strong><code>dither_scale</code></strong> 设置抖动缩放。默认值为 1。</p>
 </li>
 <li>
-<p><strong><code>dither_method</code></strong> Set dither method. Default value is 0.</p>
+<p><strong><code>dither_method</code></strong> 设置抖动方法。默认值为 0。</p>
 </li>
 </ul>
-<p>Supported values:</p>
+<p>支持的值：</p>
 <table>
 <thead>
 <tr>
@@ -1835,101 +1830,101 @@
 <tbody>
 <tr>
 <td><code>rectangular</code></td>
-<td>select rectangular dither</td>
+<td>选择矩形抖动</td>
 </tr>
 <tr>
 <td><code>triangular</code></td>
-<td>select triangular dither</td>
+<td>选择三角抖动</td>
 </tr>
 <tr>
 <td><code>triangular_hp</code></td>
-<td>select triangular dither with high pass</td>
+<td>选择带高通的三角抖动</td>
 </tr>
 <tr>
 <td><code>lipshitz</code></td>
-<td>select Lipshitz noise shaping dither.</td>
+<td>选择 Lipshitz 噪声整形抖动。</td>
 </tr>
 <tr>
 <td><code>shibata</code></td>
-<td>select Shibata noise shaping dither.</td>
+<td>选择 Shibata 噪声整形抖动。</td>
 </tr>
 <tr>
 <td><code>low_shibata</code></td>
-<td>select low Shibata noise shaping dither.</td>
+<td>选择低 Shibata 噪声整形抖动。</td>
 </tr>
 <tr>
 <td><code>high_shibata</code></td>
-<td>select high Shibata noise shaping dither.</td>
+<td>选择高 Shibata 噪声整形抖动。</td>
 </tr>
 <tr>
 <td><code>f_weighted</code></td>
-<td>select f-weighted noise shaping dither</td>
+<td>选择 f 加权噪声整形抖动</td>
 </tr>
 <tr>
 <td><code>modified_e_weighted</code></td>
-<td>select modified-e-weighted noise shaping dither</td>
+<td>选择改良 e 加权噪声整形抖动</td>
 </tr>
 <tr>
 <td><code>improved_e_weighted</code></td>
-<td>select improved-e-weighted noise shaping dither</td>
+<td>选择改进 e 加权噪声整形抖动</td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li><strong><code>resampler</code></strong> Set resampling engine. Default value is swr.</li>
+<li><strong><code>resampler</code></strong> 设置重采样引擎。默认值为 swr。</li>
 </ul>
-<p>Supported values:</p>
+<p>支持的值：</p>
 <ul>
 <li>
-<p><strong><code>swr</code></strong> select the native SW Resampler; filter options precision and cheby are not applicable in this case.</p>
+<p><strong><code>swr</code></strong> 选择原生 SW 重采样器；滤镜选项 precision 与 cheby 在此情况下不适用。</p>
 </li>
 <li>
-<p><strong><code>soxr</code></strong> select the SoX Resampler (where available); compensation, and filter options filter_size, phase_shift, exact_rational, filter_type &amp; kaiser_beta, are not applicable in this case.</p>
+<p><strong><code>soxr</code></strong> 选择 SoX 重采样器（在可用处）；compensation 与滤镜选项 filter_size、phase_shift、exact_rational、filter_type &amp; kaiser_beta 在此情况下不适用。</p>
 </li>
 <li>
-<p><strong><code>filter_size</code></strong> For swr only, set resampling filter size, default value is 32.</p>
+<p><strong><code>filter_size</code></strong> 仅限 swr：设置重采样滤镜大小，默认值为 32。</p>
 </li>
 <li>
-<p><strong><code>phase_shift</code></strong> For swr only, set resampling phase shift, default value is 10, and must be in the interval [0,30].</p>
+<p><strong><code>phase_shift</code></strong> 仅限 swr：设置重采样相移，默认值为 10，必须处于区间 [0,30]。</p>
 </li>
 <li>
-<p><strong><code>linear_interp</code></strong> Use linear interpolation when enabled (the default). Disable it if you want to preserve speed instead of quality when exact_rational fails.</p>
+<p><strong><code>linear_interp</code></strong> 启用（默认）时使用线性插值。当 exact_rational 失败时，若想以速度优先于质量可禁用它。</p>
 </li>
 <li>
-<p><strong><code>exact_rational</code></strong> For swr only, when enabled, try to use exact phase_count based on input and output sample rate. However, if it is larger than <code>1 &lt;&lt; phase_shift</code>, the phase_count will be <code>1 &lt;&lt; phase_shift</code> as fallback. Default is enabled.</p>
+<p><strong><code>exact_rational</code></strong> 仅限 swr：启用时尝试使用基于输入与输出采样率的精确 phase_count。但若它大于 <code>1 &lt;&lt; phase_shift</code>，将以 <code>1 &lt;&lt; phase_shift</code> 作为 phase_count 兜底。默认启用。</p>
 </li>
 <li>
-<p><strong><code>cutoff</code></strong> Set cutoff frequency (swr: 6dB point; soxr: 0dB point) ratio; must be a float value between 0 and 1. Default value is 0.97 with swr, and 0.91 with soxr (which, with a sample-rate of 44100, preserves the entire audio band to 20kHz).</p>
+<p><strong><code>cutoff</code></strong> 设置截止频率比（swr：6dB 点；soxr：0dB 点）；必须是 0 与 1 之间的浮点值。swr 默认值为 0.97，soxr 默认值为 0.91（soxr 在 44100 采样率下可把整个音频频带保留到 20kHz）。</p>
 </li>
 <li>
-<p><strong><code>precision</code></strong> For soxr only, the precision in bits to which the resampled signal will be calculated. The default value of 20 (which, with suitable dithering, is appropriate for a destination bit-depth of 16) gives SoX's 'High Quality'; a value of 28 gives SoX's 'Very High Quality'.</p>
+<p><strong><code>precision</code></strong> 仅限 soxr：重采样信号的计算精度（以比特计）。默认值 20（配合适当抖动，适合目标位深 16）给出 SoX 的'High Quality'；取 28 给出 SoX 的'Very High Quality'。</p>
 </li>
 <li>
-<p><strong><code>cheby</code></strong> For soxr only, selects passband rolloff none (Chebyshev) &amp; higher-precision approximation for 'irrational' ratios. Default value is 0.</p>
+<p><strong><code>cheby</code></strong> 仅限 soxr：选择无通带滚降 (Chebyshev) 与'无理'比例的更高精度近似。默认值为 0。</p>
 </li>
 <li>
-<p><strong><code>async</code></strong> For swr only, simple 1 parameter audio sync to timestamps using stretching, squeezing, filling and trimming. Setting this to 1 will enable filling and trimming, larger values represent the maximum amount in samples that the data may be stretched or squeezed for each second. Default value is 0, thus no compensation is applied to make the samples match the audio timestamps.</p>
+<p><strong><code>async</code></strong> 仅限 swr：单参数音频与时间戳同步，使用拉伸、压缩、填充与修剪。设为 1 将启用填充与修剪，更大的值表示数据每秒可被拉伸或压缩的最大采样量。默认值为 0，即不做任何补偿来使采样匹配音频时间戳。</p>
 </li>
 <li>
-<p><strong><code>first_pts</code></strong> For swr only, assume the first pts should be this value. The time unit is 1 / sample rate. This allows for padding/trimming at the start of stream. By default, no assumption is made about the first frame's expected pts, so no padding or trimming is done. For example, this could be set to 0 to pad the beginning with silence if an audio stream starts after the video stream or to trim any samples with a negative pts due to encoder delay.</p>
+<p><strong><code>first_pts</code></strong> 仅限 swr：假定首个 pts 应为此值。时间单位为 1 / 采样率。这允许在流开始处填充/修剪。默认不对首帧预期 pts 做任何假定，因此不做填充或修剪。例如，音频流晚于视频流开始时可将它设为 0 以静音填充开头，或修剪因编码器延迟而具有负 pts 的采样。</p>
 </li>
 <li>
-<p><strong><code>min_comp</code></strong> For swr only, set the minimum difference between timestamps and audio data (in seconds) to trigger stretching/squeezing/filling or trimming of the data to make it match the timestamps. The default is that stretching/squeezing/filling and trimming is disabled (<code>min_comp</code> = <code>FLT_MAX</code>).</p>
+<p><strong><code>min_comp</code></strong> 仅限 swr：设置触发数据拉伸/压缩/填充或修剪以匹配时间戳的时间戳与音频数据最小差（单位为秒）。默认禁用拉伸/压缩/填充与修剪（<code>min_comp</code> = <code>FLT_MAX</code>）。</p>
 </li>
 <li>
-<p><strong><code>min_hard_comp</code></strong> For swr only, set the minimum difference between timestamps and audio data (in seconds) to trigger adding/dropping samples to make it match the timestamps. This option effectively is a threshold to select between hard (trim/fill) and soft (squeeze/stretch) compensation. Note that all compensation is by default disabled through <code>min_comp</code>. The default is 0.1.</p>
+<p><strong><code>min_hard_comp</code></strong> 仅限 swr：设置触发增删采样以匹配时间戳的时间戳与音频数据最小差（单位为秒）。该选项实际上是在硬补偿（修剪/填充）与软补偿（压缩/拉伸）之间选择的阈值。注意所有补偿默认经 <code>min_comp</code> 禁用。默认值为 0.1。</p>
 </li>
 <li>
-<p><strong><code>comp_duration</code></strong> For swr only, set duration (in seconds) over which data is stretched/squeezed to make it match the timestamps. Must be a non-negative double float value, default value is 1.0.</p>
+<p><strong><code>comp_duration</code></strong> 仅限 swr：设置数据被拉伸/压缩以匹配时间戳的持续时长（单位为秒）。必须是非负双精度浮点值，默认值为 1.0。</p>
 </li>
 <li>
-<p><strong><code>max_soft_comp</code></strong> For swr only, set maximum factor by which data is stretched/squeezed to make it match the timestamps. Must be a non-negative double float value, default value is 0.</p>
+<p><strong><code>max_soft_comp</code></strong> 仅限 swr：设置数据为匹配时间戳而被拉伸/压缩的最大因子。必须是非负双精度浮点值，默认值为 0。</p>
 </li>
 <li>
-<p><strong><code>matrix_encoding</code></strong> Select matrixed stereo encoding.</p>
+<p><strong><code>matrix_encoding</code></strong> 选择矩阵化立体声编码。</p>
 </li>
 </ul>
-<p>It accepts the following values:</p>
+<p>它接受以下取值：</p>
 <table>
 <thead>
 <tr>
@@ -1940,23 +1935,23 @@
 <tbody>
 <tr>
 <td><code>none</code></td>
-<td>select none</td>
+<td>选择 none</td>
 </tr>
 <tr>
 <td><code>dolby</code></td>
-<td>select Dolby</td>
+<td>选择 Dolby</td>
 </tr>
 <tr>
 <td><code>dplii</code></td>
-<td>select Dolby Pro Logic II</td>
+<td>选择 Dolby Pro Logic II</td>
 </tr>
 </tbody>
 </table>
-<p>Default value is <code>none</code>.</p>
+<p>默认值为 <code>none</code>。</p>
 <ul>
-<li><strong><code>filter_type</code></strong> For swr only, select resampling filter type. This only affects resampling operations.</li>
+<li><strong><code>filter_type</code></strong> 仅限 swr：选择重采样滤镜类型。它只影响重采样操作。</li>
 </ul>
-<p>It accepts the following values:</p>
+<p>它接受以下取值：</p>
 <table>
 <thead>
 <tr>
@@ -1967,27 +1962,27 @@
 <tbody>
 <tr>
 <td><code>cubic</code></td>
-<td>select cubic</td>
+<td>选择 cubic</td>
 </tr>
 <tr>
 <td><code>blackman_nuttall</code></td>
-<td>select Blackman Nuttall windowed sinc</td>
+<td>选择 Blackman Nuttall 加窗 sinc</td>
 </tr>
 <tr>
 <td><code>kaiser</code></td>
-<td>select Kaiser windowed sinc</td>
+<td>选择 Kaiser 加窗 sinc</td>
 </tr>
 </tbody>
 </table>
 <ul>
 <li>
-<p><strong><code>kaiser_beta</code></strong> For swr only, set Kaiser window beta value. Must be a double float value in the interval [2,16], default value is 9.</p>
+<p><strong><code>kaiser_beta</code></strong> 仅限 swr：设置 Kaiser 窗 beta 值。必须是 [2,16] 区间内的双精度浮点值，默认值为 9。</p>
 </li>
 <li>
-<p><strong><code>output_sample_bits</code></strong> For swr only, set number of used output sample bits for dithering. Must be an integer in the interval [0,64], default value is 0, which means it's not used.</p>
+<p><strong><code>output_sample_bits</code></strong> 仅限 swr：设置用于抖动的输出采样位数。必须是 [0,64] 区间内的整数，默认值为 0，表示不使用。</p>
 </li>
 </ul>
-<h1 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h1>
+<h1 id="另请参见">另请参见<a class="headerlink" href="#另请参见" title="Permanent link">&para;</a></h1>
 <p>ffmpeg(1), ffplay(1), ffprobe(1), libswresample(3)</p>
 
 

@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#description" class="md-skip">
+        <a href="#描述" class="md-skip">
           跳转至
         </a>
       
@@ -1755,157 +1755,152 @@
   
 
 
-<div class="admonition warning">
-<p class="admonition-title">翻译占位页</p>
-<p>本页为英文原文占位（翻译进行中，进度见<a href="https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md">翻译看板</a>）。
-术语与示例以英文原文为准。</p>
-</div>
-<h1 id="description">Description<a class="headerlink" href="#description" title="Permanent link">&para;</a></h1>
-<p>The FFmpeg rescaler provides a high-level interface to the libswscale library image conversion utilities. In particular it allows one to perform image rescaling and pixel format conversion.</p>
-<h1 id="scaler-options">Scaler Options<a class="headerlink" href="#scaler-options" title="Permanent link">&para;</a></h1>
-<p>The video scaler supports the following named options.</p>
-<p>Options may be set by specifying -\&lt;option&gt; \&lt;value&gt; in the FFmpeg tools, with a few API-only exceptions noted below. For programmatic use, they can be set explicitly in the <code>SwsContext</code> options or through the <code>libavutil/opt.h</code> API.</p>
+<h1 id="描述">描述<a class="headerlink" href="#描述" title="Permanent link">&para;</a></h1>
+<p>FFmpeg 缩放器为 libswscale 库的图像转换工具提供高层接口。特别是它可以执行图像缩放 (rescaling) 与像素格式转换。</p>
+<h1 id="缩放器选项">缩放器选项<a class="headerlink" href="#缩放器选项" title="Permanent link">&para;</a></h1>
+<p>视频缩放器支持以下命名选项。</p>
+<p>可通过在 FFmpeg 工具中指定 -\&lt;option&gt; \&lt;value&gt; 来设置选项，少数仅 API 的例外在下文说明。以编程方式使用时，可在 <code>SwsContext</code> 选项中显式设值，或通过 <code>libavutil/opt.h</code> API。</p>
 <ul>
 <li>
-<p><strong><code>scaler, scaler_sub</code></strong> Choose the scaling algorithm to use. Default value is <code>auto</code> for both. It accepts the following values:</p>
+<p><strong><code>scaler, scaler_sub</code></strong> 选择要使用的缩放算法。两者默认值均为 <code>auto</code>。它接受以下取值：</p>
 </li>
 <li>
-<p><strong><code>auto</code></strong> Aumotic choice. For <code>scaler_sub</code>, this means the same algorithm as <code>scaler</code>. For <code>scaler</code>, this defaults to the scaler flag selected by <code>sws_flags</code>.</p>
+<p><strong><code>auto</code></strong> 自动选择。对 <code>scaler_sub</code>，意味着与 <code>scaler</code> 相同的算法。对 <code>scaler</code>，默认为 <code>sws_flags</code> 所选的缩放标志。</p>
 </li>
 <li>
-<p><strong><code>bilinear</code></strong> Bilinear filter. (AKA triangle filter)</p>
+<p><strong><code>bilinear</code></strong> 双线性滤波器。（又称三角滤波器）</p>
 </li>
 <li>
-<p><strong><code>bicubic</code></strong> 2-tap cubic BC-spline (AKA Mitchell-Netravali spline). The B and C parameters can be configured by setting <code>param0</code> and <code>param1</code>, defaulting to 0.0 and 0.6 respectively.</p>
+<p><strong><code>bicubic</code></strong> 2 抽头三次 BC 样条（又称 Mitchell-Netravali 样条）。B 与 C 参数可通过设置 <code>param0</code> 与 <code>param1</code> 配置，分别默认 0.0 与 0.6。</p>
 </li>
 <li>
-<p><strong><code>point, neighbor</code></strong> Point sampling (AKA nearest neighbor).</p>
+<p><strong><code>point, neighbor</code></strong> 点采样（又称最近邻）。</p>
 </li>
 <li>
-<p><strong><code>area</code></strong> Area averaging. Equivalent to <code>bilinear</code> for upscaling.</p>
+<p><strong><code>area</code></strong> 区域平均。上采样时等价于 <code>bilinear</code>。</p>
 </li>
 <li>
-<p><strong><code>gaussian</code></strong> 2-tap Gaussian filter approximation. The sharpness parameter can be configured by setting <code>param0</code>, defaulting to 3.0.</p>
+<p><strong><code>gaussian</code></strong> 2 抽头高斯滤波器近似。锐度参数可通过设置 <code>param0</code> 配置，默认 3.0。</p>
 </li>
 <li>
-<p><strong><code>sinc</code></strong> Unwindowed sinc filter.</p>
+<p><strong><code>sinc</code></strong> 无窗 sinc 滤波器。</p>
 </li>
 <li>
-<p><strong><code>lanczos</code></strong> Lanczos resampling (sinc windowed sinc). The number of filter taps can be configured by setting <code>param0</code>, defaulting to 3.</p>
+<p><strong><code>lanczos</code></strong> Lanczos 重采样（sinc 加窗 sinc）。滤波器抽头数可通过设置 <code>param0</code> 配置，默认 3。</p>
 </li>
 <li>
-<p><strong><code>spline</code></strong> Unwindowed natural bicubic spline.</p>
+<p><strong><code>spline</code></strong> 无窗自然三次样条。</p>
 </li>
 <li>
-<p><strong><code>sws_flags</code></strong> Set the scaler flags. This is also used to set the scaling algorithm, though this usage is deprecated in favor of setting <code>scaler</code>. Only a single algorithm may be selected. Default value is <code>bicubic</code>.</p>
+<p><strong><code>sws_flags</code></strong> 设置缩放器标志。它也用于设置缩放算法，但这种用法已弃用，建议改设 <code>scaler</code>。只能选择单一算法。默认值为 <code>bicubic</code>。</p>
 </li>
 </ul>
-<p>It accepts the following values:</p>
+<p>它接受以下取值：</p>
 <ul>
 <li>
-<p><strong><code>fast_bilinear</code></strong> Select fast bilinear scaling algorithm. (Deprecated)</p>
+<p><strong><code>fast_bilinear</code></strong> 选择快速双线性缩放算法。（已弃用）</p>
 </li>
 <li>
-<p><strong><code>bilinear</code></strong> Select bilinear scaling algorithm. (Deprecated)</p>
+<p><strong><code>bilinear</code></strong> 选择双线性缩放算法。（已弃用）</p>
 </li>
 <li>
-<p><strong><code>bicubic</code></strong> Select bicubic scaling algorithm. (Deprecated)</p>
+<p><strong><code>bicubic</code></strong> 选择三次缩放算法。（已弃用）</p>
 </li>
 <li>
-<p><strong><code>experimental</code></strong> Select experimental scaling algorithm. (Deprecated)</p>
+<p><strong><code>experimental</code></strong> 选择实验性缩放算法。（已弃用）</p>
 </li>
 <li>
-<p><strong><code>neighbor</code></strong> Select nearest neighbor rescaling algorithm. (Deprecated)</p>
+<p><strong><code>neighbor</code></strong> 选择最近邻重采样算法。（已弃用）</p>
 </li>
 <li>
-<p><strong><code>area</code></strong> Select averaging area rescaling algorithm. (Deprecated)</p>
+<p><strong><code>area</code></strong> 选择平均区域重采样算法。（已弃用）</p>
 </li>
 <li>
-<p><strong><code>bicublin</code></strong> Select bicubic scaling algorithm for the luma component, bilinear for chroma components. (Deprecated)</p>
+<p><strong><code>bicublin</code></strong> 对亮度分量选择三次缩放算法，对色度分量选择双线性。（已弃用）</p>
 </li>
 <li>
-<p><strong><code>gauss</code></strong> Select Gaussian rescaling algorithm. (Deprecated)</p>
+<p><strong><code>gauss</code></strong> 选择高斯重采样算法。（已弃用）</p>
 </li>
 <li>
-<p><strong><code>sinc</code></strong> Select sinc rescaling algorithm. (Deprecated)</p>
+<p><strong><code>sinc</code></strong> 选择 sinc 重采样算法。（已弃用）</p>
 </li>
 <li>
-<p><strong><code>lanczos</code></strong> Select Lanczos rescaling algorithm. The default width (alpha) is 3 and can be changed by setting <code>param0</code>. (Deprecated)</p>
+<p><strong><code>lanczos</code></strong> 选择 Lanczos 重采样算法。默认宽度 (alpha) 为 3，可通过设置 <code>param0</code> 更改。（已弃用）</p>
 </li>
 <li>
-<p><strong><code>spline</code></strong> Select natural bicubic spline rescaling algorithm. (Deprecated)</p>
+<p><strong><code>spline</code></strong> 选择自然三次样条重采样算法。（已弃用）</p>
 </li>
 <li>
-<p><strong><code>print_info</code></strong> Enable printing/debug logging.</p>
+<p><strong><code>print_info</code></strong> 启用打印/调试日志。</p>
 </li>
 <li>
-<p><strong><code>accurate_rnd</code></strong> Enable accurate rounding.</p>
+<p><strong><code>accurate_rnd</code></strong> 启用精确舍入。</p>
 </li>
 <li>
-<p><strong><code>full_chroma_int</code></strong> Enable full chroma interpolation.</p>
+<p><strong><code>full_chroma_int</code></strong> 启用完整色度插值。</p>
 </li>
 <li>
-<p><strong><code>full_chroma_inp</code></strong> Select full chroma input.</p>
+<p><strong><code>full_chroma_inp</code></strong> 选择完整色度输入。</p>
 </li>
 <li>
-<p><strong><code>bitexact</code></strong> Enable bitexact output.</p>
+<p><strong><code>bitexact</code></strong> 启用比特精确输出。</p>
 </li>
 <li>
-<p><strong><code>unstable</code></strong> Allow the use of experimental new code. May subtly affect the output or even produce wrong results. For testing only.</p>
+<p><strong><code>unstable</code></strong> 允许使用实验性新代码。可能轻微影响输出甚至产出错误结果。仅用于测试。</p>
 </li>
 <li>
-<p><strong><code>srcw (API only)</code></strong> Set source width.</p>
+<p><strong><code>srcw (API only)</code></strong> 设置源宽度。</p>
 </li>
 <li>
-<p><strong><code>srch (API only)</code></strong> Set source height.</p>
+<p><strong><code>srch (API only)</code></strong> 设置源高度。</p>
 </li>
 <li>
-<p><strong><code>dstw (API only)</code></strong> Set destination width.</p>
+<p><strong><code>dstw (API only)</code></strong> 设置目标宽度。</p>
 </li>
 <li>
-<p><strong><code>dsth (API only)</code></strong> Set destination height.</p>
+<p><strong><code>dsth (API only)</code></strong> 设置目标高度。</p>
 </li>
 <li>
-<p><strong><code>src_format (API only)</code></strong> Set source pixel format (must be expressed as an integer).</p>
+<p><strong><code>src_format (API only)</code></strong> 设置源像素格式（必须以整数表示）。</p>
 </li>
 <li>
-<p><strong><code>dst_format (API only)</code></strong> Set destination pixel format (must be expressed as an integer).</p>
+<p><strong><code>dst_format (API only)</code></strong> 设置目标像素格式（必须以整数表示）。</p>
 </li>
 <li>
-<p><strong><code>src_range (boolean)</code></strong> If value is set to <code>1</code>, indicates source is full range. Default value is <code>0</code>, which indicates source is limited range.</p>
+<p><strong><code>src_range (boolean)</code></strong> 值设为 <code>1</code> 时表示源为全范围 (full range)。默认值为 <code>0</code>，即源为受限范围 (limited range)。</p>
 </li>
 <li>
-<p><strong><code>dst_range (boolean)</code></strong> If value is set to <code>1</code>, enable full range for destination. Default value is <code>0</code>, which enables limited range.</p>
+<p><strong><code>dst_range (boolean)</code></strong> 值设为 <code>1</code> 时为目标启用全范围。默认值为 <code>0</code>，即目标为受限范围。</p>
 </li>
 <li>
-<p><strong><code>gamma (boolean)</code></strong> If value is set to <code>1</code>, enable gamma correct scaling. Default value is <code>0</code>.</p>
+<p><strong><code>gamma (boolean)</code></strong> 值设为 <code>1</code> 时启用伽马校正缩放。默认值为 <code>0</code>。</p>
 </li>
 <li>
-<p><strong><code>param0, param1</code></strong> Set scaling algorithm parameters. The specified values are specific of some scaling algorithms and ignored by others. The specified values are floating point number values.</p>
+<p><strong><code>param0, param1</code></strong> 设置缩放算法参数。所设值仅对某些缩放算法有意义，其余算法会忽略。所设值为浮点数值。</p>
 </li>
 <li>
-<p><strong><code>sws_dither</code></strong> Set the dithering algorithm. Accepts one of the following values. Default value is <code>auto</code>.</p>
+<p><strong><code>sws_dither</code></strong> 设置抖动算法。接受以下值之一。默认值为 <code>auto</code>。</p>
 </li>
 <li>
-<p><strong><code>auto</code></strong> automatic choice</p>
+<p><strong><code>auto</code></strong> 自动选择</p>
 </li>
 <li>
-<p><strong><code>none</code></strong> no dithering</p>
+<p><strong><code>none</code></strong> 不抖动</p>
 </li>
 <li>
-<p><strong><code>bayer</code></strong> bayer dither</p>
+<p><strong><code>bayer</code></strong> bayer 抖动</p>
 </li>
 <li>
-<p><strong><code>ed</code></strong> error diffusion dither</p>
+<p><strong><code>ed</code></strong> 误差扩散抖动</p>
 </li>
 <li>
-<p><strong><code>a_dither</code></strong> arithmetic dither, based using addition</p>
+<p><strong><code>a_dither</code></strong> 基于加法的算术抖动</p>
 </li>
 <li>
-<p><strong><code>x_dither</code></strong> arithmetic dither, based using xor (more random/less apparent patterning that a_dither).</p>
+<p><strong><code>x_dither</code></strong> 基于异或的算术抖动（比 a_dither 更随机、图案更不明显）。</p>
 </li>
 <li>
-<p><strong><code>alphablend</code></strong> Set the alpha blending to use when the input has alpha but the output does not. Default value is <code>none</code>.</p>
+<p><strong><code>alphablend</code></strong> 设置输入含 alpha 而输出不含时使用的 alpha 混合方式。默认值为 <code>none</code>。</p>
 </li>
 </ul>
 <table>
@@ -1918,54 +1913,54 @@
 <tbody>
 <tr>
 <td><code>uniform_color</code></td>
-<td>Blend onto a uniform background color</td>
+<td>混合到均匀背景色</td>
 </tr>
 <tr>
 <td><code>checkerboard</code></td>
-<td>Blend onto a checkerboard</td>
+<td>混合到棋盘格</td>
 </tr>
 <tr>
 <td><code>none</code></td>
-<td>No blending</td>
+<td>不混合</td>
 </tr>
 </tbody>
 </table>
 <ul>
 <li>
-<p><strong><code>sws_backends</code></strong> Set the allowed swscale backends. This is a flags option, so multiple backends may be combined.</p>
+<p><strong><code>sws_backends</code></strong> 设置允许的 swscale 后端。这是一个标志选项，可组合多个后端。</p>
 </li>
 <li>
-<p><strong><code>auto</code></strong> Automatic selection. Equal to either <code>stable</code> or <code>all</code> depending on whether or not the <code>unstable</code> flag is set. This is the default value.</p>
+<p><strong><code>auto</code></strong> 自动选择。依 <code>unstable</code> 标志是否设置而等价于 <code>stable</code> 或 <code>all</code>。这是默认值。</p>
 </li>
 <li>
-<p><strong><code>stable</code></strong> All stable backends.</p>
+<p><strong><code>stable</code></strong> 所有稳定后端。</p>
 </li>
 <li>
-<p><strong><code>unstable</code></strong> All unstable backends.</p>
+<p><strong><code>unstable</code></strong> 所有不稳定后端。</p>
 </li>
 <li>
-<p><strong><code>all</code></strong> All available backends.</p>
+<p><strong><code>all</code></strong> 所有可用后端。</p>
 </li>
 <li>
-<p><strong><code>legacy</code></strong> Legacy swscale code.</p>
+<p><strong><code>legacy</code></strong> 旧版 swscale 代码。</p>
 </li>
 <li>
-<p><strong><code>c</code></strong> Template-based reference code.</p>
+<p><strong><code>c</code></strong> 基于模板的参考代码。</p>
 </li>
 <li>
-<p><strong><code>memcpy</code></strong> Fast path using libc <code>memcpy</code>.</p>
+<p><strong><code>memcpy</code></strong> 使用 libc <code>memcpy</code> 的快速路径。</p>
 </li>
 <li>
-<p><strong><code>x86</code></strong> x86 SIMD kernels.</p>
+<p><strong><code>x86</code></strong> x86 SIMD 内核。</p>
 </li>
 <li>
-<p><strong><code>aarch64</code></strong> AArch64 NEON kernels.</p>
+<p><strong><code>aarch64</code></strong> AArch64 NEON 内核。</p>
 </li>
 <li>
-<p><strong><code>spirv</code></strong> Vulkan SPIR-V backend.</p>
+<p><strong><code>spirv</code></strong> Vulkan SPIR-V 后端。</p>
 </li>
 </ul>
-<h1 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h1>
+<h1 id="另请参见">另请参见<a class="headerlink" href="#另请参见" title="Permanent link">&para;</a></h1>
 <p>ffmpeg(1), ffplay(1), ffprobe(1), libswscale(3)</p>
 
 
