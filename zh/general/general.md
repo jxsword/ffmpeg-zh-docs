@@ -1,136 +1,132 @@
-!!! warning "翻译占位页"
-    本页为英文原文占位（翻译进行中，进度见[翻译看板](https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md)）。
-    术语与示例以英文原文为准。
+# 外部库
 
-# External libraries
-
-FFmpeg can be hooked up with a number of external libraries to add support for more formats. None of them are used by default, their use has to be explicitly requested by passing the appropriate flags to `./configure`.
+FFmpeg 可以挂接多种外部库以增加对更多格式的支持。它们默认都不会被使用，必须通过向 `./configure` 传入相应的标志来显式请求使用。
 
 ## Alliance for Open Media (AOM)
 
-FFmpeg can make use of the AOM library for AV1 decoding and encoding.
+FFmpeg 可利用 AOM 库进行 AV1 解码与编码。
 
-Go to <http://aomedia.org/> and follow the instructions for installing the library. Then pass `--enable-libaom` to configure to enable it.
+前往 <http://aomedia.org/> 并按说明安装该库。然后向 configure 传入 `--enable-libaom` 以启用它。
 
 ## AMD AMF/VCE
 
-FFmpeg can use the AMD Advanced Media Framework library for accelerated H.264 and HEVC(only windows) encoding on hardware with Video Coding Engine (VCE).
+FFmpeg 可利用 AMD Advanced Media Framework 库，在带 Video Coding Engine (VCE) 的硬件上进行加速 H.264 与 HEVC 编码（仅限 Windows）。
 
-To enable support you must obtain the AMF framework header files(version 1.4.9+) from <https://github.com/GPUOpen-LibrariesAndSDKs/AMF.git>.
+要启用支持，您必须从 <https://github.com/GPUOpen-LibrariesAndSDKs/AMF.git> 获取 AMF 框架头文件（1.4.9+ 版）。
 
-Create an `AMF/` directory in the system include path. Copy the contents of `AMF/amf/public/include/` into that directory. Then configure FFmpeg with `--enable-amf`.
+在系统头文件包含路径中创建一个 `AMF/` 目录，把 `AMF/amf/public/include/` 的内容复制到该目录。然后用 `--enable-amf` 配置 FFmpeg。
 
-Initialization of amf encoder occurs in this order: 1) trying to initialize through dx11(only windows) 2) trying to initialize through dx9(only windows) 3) trying to initialize through vulkan
+amf 编码器的初始化按以下顺序尝试：1) 尝试经 dx11 初始化（仅限 Windows）2) 尝试经 dx9 初始化（仅限 Windows）3) 尝试经 vulkan 初始化
 
-To use h.264(AMD VCE) encoder on linux amdgru-pro version 19.20+ and amf-amdgpu-pro package(amdgru-pro contains, but does not install automatically) are required.
+要在 linux 上使用 h.264（AMD VCE）编码器，需要 amdgru-pro 19.20+ 版以及 amf-amdgpu-pro 包（amdgru-pro 中包含，但不会自动安装）。
 
-This driver can be installed using amdgpu-pro-install script in official amd driver archive.
+该驱动可以用官方 AMD 驱动包中的 amdgpu-pro-install 脚本安装。
 
 ## AviSynth
 
-FFmpeg can read AviSynth scripts as input. To enable support, pass `--enable-avisynth` to configure after installing the headers provided by [AviSynth+](https://github.com/AviSynth/AviSynthPlus). AviSynth+ can be configured to install only the headers by either passing `-DHEADERS_ONLY:bool=on` to the normal CMake-based build system, or by using the supplied `GNUmakefile`.
+FFmpeg 可以读取 AviSynth 脚本作为输入。要启用支持，请在安装 [AviSynth+](https://github.com/AviSynth/AviSynthPlus) 提供的头文件后，向 configure 传入 `--enable-avisynth`。AviSynth+ 可以配置为仅安装头文件：既可在常规的 CMake 构建系统中传入 `-DHEADERS_ONLY:bool=on`，也可使用其提供的 `GNUmakefile`。
 
-For Windows, supported AviSynth variants are [AviSynth 2.6 RC1 or higher](http://avisynth.nl) for 32-bit builds and [AviSynth+ r1718 or higher](http://avisynth.nl/index.php/AviSynth+) for 32-bit and 64-bit builds.
+对 Windows，受支持的 AviSynth 变体是 [AviSynth 2.6 RC1 或更高版本](http://avisynth.nl)（32 位构建）以及 [AviSynth+ r1718 或更高版本](http://avisynth.nl/index.php/AviSynth+)（32 位与 64 位构建）。
 
-For Linux, macOS, and BSD, the only supported AviSynth variant is [AviSynth+](https://github.com/AviSynth/AviSynthPlus), starting with version 3.5.
+对 Linux、macOS 与 BSD，唯一受支持的 AviSynth 变体是 [AviSynth+](https://github.com/AviSynth/AviSynthPlus)，自 3.5 版起。
 
-In 2016, AviSynth+ added support for building with GCC. However, due to the eccentricities of Windows' calling conventions, 32-bit GCC builds of AviSynth+ are not compatible with typical 32-bit builds of FFmpeg.
+2016 年，AviSynth+ 增加了对 GCC 构建的支持。然而，由于 Windows 调用约定的特殊性，AviSynth+ 的 32 位 GCC 构建与典型的 32 位 FFmpeg 构建不兼容。
 
-By default, FFmpeg assumes compatibility with 32-bit MSVC builds of AviSynth+ since that is the most widely-used and entrenched build configuration. Users can override this and enable support for 32-bit GCC builds of AviSynth+ by passing `-DAVSC_WIN32_GCC32` to `--extra-cflags` when configuring FFmpeg.
+默认情况下，FFmpeg 假定与 AviSynth+ 的 32 位 MSVC 构建兼容，因为这是使用最广、根基最深的构建配置。用户可以改变这一点：在配置 FFmpeg 时向 `--extra-cflags` 传入 `-DAVSC_WIN32_GCC32`，以启用对 AviSynth+ 32 位 GCC 构建的支持。
 
-64-bit builds of FFmpeg are not affected, and can use either MSVC or GCC builds of AviSynth+ without any special flags.
+64 位构建的 FFmpeg 不受影响，无需任何特殊标志即可使用 MSVC 或 GCC 构建的 AviSynth+。
 
-AviSynth(+) is loaded dynamically. Distributors can build FFmpeg with `--enable-avisynth`, and the binaries will work regardless of the end user having AviSynth installed. If/when an end user would like to use AviSynth scripts, then they can install AviSynth(+) and FFmpeg will be able to find and use it to open scripts.
+AviSynth(+) 是动态加载的。发行打包者可以让 FFmpeg 以 `--enable-avisynth` 构建，此时即便最终用户没有安装 AviSynth，二进制文件也能正常工作。当最终用户想使用 AviSynth 脚本时，安装 AviSynth(+) 后 FFmpeg 即可找到并使用它来打开脚本。
 
 ## Chromaprint
 
-FFmpeg can make use of the Chromaprint library for generating audio fingerprints. Pass `--enable-chromaprint` to configure to enable it. See <https://acoustid.org/chromaprint>.
+FFmpeg 可利用 Chromaprint 库生成音频指纹。向 configure 传入 `--enable-chromaprint` 以启用它。参见 <https://acoustid.org/chromaprint>。
 
 ## codec2
 
-FFmpeg can make use of the codec2 library for codec2 decoding and encoding. There is currently no native decoder, so libcodec2 must be used for decoding.
+FFmpeg 可利用 codec2 库进行 codec2 解码与编码。目前尚无原生解码器，因此解码必须使用 libcodec2。
 
-Go to <http://freedv.org/>, download "Codec 2 source archive". Build and install using CMake. Debian users can install the libcodec2-dev package instead. Once libcodec2 is installed you can pass `--enable-libcodec2` to configure to enable it.
+前往 <http://freedv.org/>，下载 "Codec 2 source archive"。使用 CMake 构建并安装。Debian 用户也可以改为安装 libcodec2-dev 包。libcodec2 安装好后，向 configure 传入 `--enable-libcodec2` 以启用它。
 
-The easiest way to use codec2 is with .c2 files, since they contain the mode information required for decoding. To encode such a file, use a .c2 file extension and give the libcodec2 encoder the -mode option: `ffmpeg -i input.wav -mode 700C output.c2`. Playback is as simple as `ffplay output.c2`. For a list of supported modes, run `ffmpeg -h encoder=libcodec2`. Raw codec2 files are also supported. To make sense of them the mode in use needs to be specified as a format option: `ffmpeg -f codec2raw -mode 1300 -i input.raw output.wav`.
+使用 codec2 最简单的方式是通过 .c2 文件，其中含有解码所需的模式信息。要编码此类文件，请使用 .c2 扩展名并给 libcodec2 编码器 -mode 选项：`ffmpeg -i input.wav -mode 700C output.c2`。播放很简单：`ffplay output.c2`。要查看支持的模式列表，请运行 `ffmpeg -h encoder=libcodec2`。裸 codec2 文件也受支持；要正确解析它们，需要以格式选项的形式指定所用模式：`ffmpeg -f codec2raw -mode 1300 -i input.raw output.wav`。
 
 ## dav1d
 
-FFmpeg can make use of the dav1d library for AV1 video decoding.
+FFmpeg 可利用 dav1d 库进行 AV1 视频解码。
 
-Go to <https://code.videolan.org/videolan/dav1d> and follow the instructions for installing the library. Then pass `--enable-libdav1d` to configure to enable it.
+前往 <https://code.videolan.org/videolan/dav1d> 并按说明安装该库。然后向 configure 传入 `--enable-libdav1d` 以启用它。
 
 ## davs2
 
-FFmpeg can make use of the davs2 library for AVS2-P2/IEEE1857.4 video decoding.
+FFmpeg 可利用 davs2 库进行 AVS2-P2/IEEE1857.4 视频解码。
 
-Go to <https://github.com/pkuvcl/davs2> and follow the instructions for installing the library. Then pass `--enable-libdavs2` to configure to enable it.
+前往 <https://github.com/pkuvcl/davs2> 并按说明安装该库。然后向 configure 传入 `--enable-libdavs2` 以启用它。
 
-libdavs2 is under the GNU Public License Version 2 or later (see <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html> for details), you must upgrade FFmpeg's license to GPL in order to use it.
+libdavs2 采用 GNU 通用公共许可证第 2 版或更高版本（详情参见 <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>），使用它必须把 FFmpeg 的许可升级为 GPL。
 
 ## uavs3d
 
-FFmpeg can make use of the uavs3d library for AVS3-P2/IEEE1857.10 video decoding.
+FFmpeg 可利用 uavs3d 库进行 AVS3-P2/IEEE1857.10 视频解码。
 
-Go to <https://github.com/uavs3/uavs3d> and follow the instructions for installing the library. Then pass `--enable-libuavs3d` to configure to enable it.
+前往 <https://github.com/uavs3/uavs3d> 并按说明安装该库。然后向 configure 传入 `--enable-libuavs3d` 以启用它。
 
 ## Game Music Emu
 
-FFmpeg can make use of the Game Music Emu library to read audio from supported video game music file formats. Pass `--enable-libgme` to configure to enable it. See <https://bitbucket.org/mpyne/game-music-emu/overview>.
+FFmpeg 可利用 Game Music Emu 库读取受支持的游戏音乐文件格式中的音频。向 configure 传入 `--enable-libgme` 以启用它。参见 <https://bitbucket.org/mpyne/game-music-emu/overview>。
 
 ## Intel QuickSync Video
 
-FFmpeg can use Intel QuickSync Video (QSV) for accelerated decoding and encoding of multiple codecs. To use QSV, FFmpeg must be linked against the `libmfx` dispatcher, which loads the actual decoding libraries.
+FFmpeg 可利用 Intel QuickSync Video (QSV) 对多种编解码器进行加速解码与编码。要使用 QSV，FFmpeg 必须链接 `libmfx` 分发器（dispatcher），由它加载实际的解码库。
 
-The dispatcher is open source and can be downloaded from <https://github.com/lu-zero/mfx_dispatch.git>. FFmpeg needs to be configured with the `--enable-libmfx` option and `pkg-config` needs to be able to locate the dispatcher's `.pc` files.
+该分发器是开源的，可从 <https://github.com/lu-zero/mfx_dispatch.git> 下载。FFmpeg 需要以 `--enable-libmfx` 选项配置，且 `pkg-config` 需要能定位分发器的 `.pc` 文件。
 
 ## Kvazaar
 
-FFmpeg can make use of the Kvazaar library for HEVC encoding.
+FFmpeg 可利用 Kvazaar 库进行 HEVC 编码。
 
-Go to <https://github.com/ultravideo/kvazaar> and follow the instructions for installing the library. Then pass `--enable-libkvazaar` to configure to enable it.
+前往 <https://github.com/ultravideo/kvazaar> 并按说明安装该库。然后向 configure 传入 `--enable-libkvazaar` 以启用它。
 
 ## LAME
 
-FFmpeg can make use of the LAME library for MP3 encoding.
+FFmpeg 可利用 LAME 库进行 MP3 编码。
 
-Go to <http://lame.sourceforge.net/> and follow the instructions for installing the library. Then pass `--enable-libmp3lame` to configure to enable it.
+前往 <http://lame.sourceforge.net/> 并按说明安装该库。然后向 configure 传入 `--enable-libmp3lame` 以启用它。
 
 ## LCEVCdec
 
-FFmpeg can make use of the liblcevc_dec library for LCEVC enhancement layer decoding on supported bitstreams.
+FFmpeg 可利用 liblcevc_dec 库在受支持的比特流上解码 LCEVC 增强层。
 
-Go to <https://github.com/v-novaltd/LCEVCdec> and follow the instructions for installing the library. Then pass `--enable-liblcevc-dec` to configure to enable it.
+前往 <https://github.com/v-novaltd/LCEVCdec> 并按说明安装该库。然后向 configure 传入 `--enable-liblcevc-dec` 以启用它。
 
-LCEVCdec is under the BSD-3-Clause-Clear License.
+LCEVCdec 采用 BSD-3-Clause-Clear 许可证。
 
 ## libilbc
 
-iLBC is a narrowband speech codec that has been made freely available by Google as part of the WebRTC project. libilbc is a packaging friendly copy of the iLBC codec. FFmpeg can make use of the libilbc library for iLBC decoding and encoding.
+iLBC 是 Google 作为 WebRTC 项目的一部分而自由开放的一款窄带语音编解码器。libilbc 是对 iLBC 编解码器的一种便于打包的副本。FFmpeg 可利用 libilbc 库进行 iLBC 解码与编码。
 
-Go to <https://github.com/TimothyGu/libilbc> and follow the instructions for installing the library. Then pass `--enable-libilbc` to configure to enable it.
+前往 <https://github.com/TimothyGu/libilbc> 并按说明安装该库。然后向 configure 传入 `--enable-libilbc` 以启用它。
 
 ## libjxl
 
-JPEG XL is an image format intended to fully replace legacy JPEG for an extended period of life. See <https://jpegxl.info/> for more information, and see <https://github.com/libjxl/libjxl> for the library source. You can pass `--enable-libjxl` to configure in order enable the libjxl wrapper.
+JPEG XL 是一种意在长期内完全取代传统 JPEG 的图像格式。更多信息参见 <https://jpegxl.info/>，库源码参见 <https://github.com/libjxl/libjxl>。您可以向 configure 传入 `--enable-libjxl` 以启用 libjxl 封装器。
 
 ## libvpx
 
-FFmpeg can make use of the libvpx library for VP8/VP9 decoding and encoding.
+FFmpeg 可利用 libvpx 库进行 VP8/VP9 解码与编码。
 
-Go to <http://www.webmproject.org/> and follow the instructions for installing the library. Then pass `--enable-libvpx` to configure to enable it.
+前往 <http://www.webmproject.org/> 并按说明安装该库。然后向 configure 传入 `--enable-libvpx` 以启用它。
 
 ## ModPlug
 
-FFmpeg can make use of this library, originating in Modplug-XMMS, to read from MOD-like music files. See <https://github.com/Konstanty/libmodplug>. Pass `--enable-libmodplug` to configure to enable it.
+FFmpeg 可利用这款源自 Modplug-XMMS 的库读取 MOD 类音乐文件。参见 <https://github.com/Konstanty/libmodplug>。向 configure 传入 `--enable-libmodplug` 以启用它。
 
 ## ONNX Runtime
 
-FFmpeg can make use of the ONNX Runtime library as a backend for DNN based filters.
+FFmpeg 可利用 ONNX Runtime 库作为基于 DNN 的滤镜的后端。
 
-Go to <https://onnxruntime.ai/> and follow the instructions for installing the library. Pre-built packages are available for various platforms.
+前往 <https://onnxruntime.ai/> 并按说明安装该库。针对各种平台都有预构建包可用。
 
-Configure FFmpeg with ONNX Runtime support:
+配置 FFmpeg 以支持 ONNX Runtime：
 
 ``` text
 ./configure \
@@ -139,7 +135,7 @@ Configure FFmpeg with ONNX Runtime support:
     --extra-ldflags="-L/path/to/onnxruntime/lib"
 ```
 
-On ELF-based systems (Linux, BSD) you may also want to embed the library search path so that the installed `ffmpeg` binary finds the shared library at run time without setting `LD_LIBRARY_PATH`:
+在基于 ELF 的系统（Linux、BSD）上，您可能还想嵌入库搜索路径，使安装的 `ffmpeg` 二进制文件在运行时无需设置 `LD_LIBRARY_PATH` 即可找到共享库：
 
 ``` text
 ./configure \
@@ -148,289 +144,289 @@ On ELF-based systems (Linux, BSD) you may also want to embed the library search 
     --extra-ldflags="-L/path/to/onnxruntime/lib -Wl,-rpath,/path/to/onnxruntime/lib"
 ```
 
-The `-Wl,-rpath` flag is ELF-specific and should be omitted on other platforms (Windows, macOS).
+`-Wl,-rpath` 标志是 ELF 特有的，在其他平台（Windows、macOS）上应省略。
 
-For MinGW GCC builds, add the `-D_stdcall=__stdcall` flag for compatibility with ONNX Runtime headers.
+对 MinGW GCC 构建，为兼容 ONNX Runtime 头文件，请添加 `-D_stdcall=__stdcall` 标志。
 
-## OpenCORE, VisualOn, and Fraunhofer libraries
+## OpenCORE、VisualOn 与 Fraunhofer 库
 
-Spun off Google Android sources, OpenCore, VisualOn and Fraunhofer libraries provide encoders for a number of audio codecs.
+这些库从 Google Android 源码分离而来，为多种音频编解码器提供编码器。
 
-OpenCORE and VisualOn libraries are under the Apache License 2.0 (see <http://www.apache.org/licenses/LICENSE-2.0> for details), which is incompatible to the LGPL version 2.1 and GPL version 2. You have to upgrade FFmpeg's license to LGPL version 3 (or if you have enabled GPL components, GPL version 3) by passing `--enable-version3` to configure in order to use it.
+OpenCORE 与 VisualOn 库采用 Apache 许可证 2.0（详情参见 <http://www.apache.org/licenses/LICENSE-2.0>），与 LGPL 2.1 和 GPL 2 不兼容。您必须通过向 configure 传入 `--enable-version3` 把 FFmpeg 的许可升级为 LGPL 第 3 版（若已启用 GPL 组件则为 GPL 第 3 版）才能使用它。
 
-The license of the Fraunhofer AAC library is incompatible with the GPL. Therefore, for GPL builds, you have to pass `--enable-nonfree` to configure in order to use it. To the best of our knowledge, it is compatible with the LGPL.
+Fraunhofer AAC 库的许可证与 GPL 不兼容。因此，对 GPL 构建，您必须向 configure 传入 `--enable-nonfree` 才能使用它。据我们所知，它与 LGPL 兼容。
 
 ### OpenCORE AMR
 
-FFmpeg can make use of the OpenCORE libraries for AMR-NB decoding/encoding and AMR-WB decoding.
+FFmpeg 可利用 OpenCORE 库进行 AMR-NB 解码/编码与 AMR-WB 解码。
 
-Go to <http://sourceforge.net/projects/opencore-amr/> and follow the instructions for installing the libraries. Then pass `--enable-libopencore-amrnb` and/or `--enable-libopencore-amrwb` to configure to enable them.
+前往 <http://sourceforge.net/projects/opencore-amr/> 并按说明安装这些库。然后向 configure 传入 `--enable-libopencore-amrnb` 和/或 `--enable-libopencore-amrwb` 以启用它们。
 
-### VisualOn AMR-WB encoder library
+### VisualOn AMR-WB 编码器库
 
-FFmpeg can make use of the VisualOn AMR-WBenc library for AMR-WB encoding.
+FFmpeg 可利用 VisualOn AMR-WBenc 库进行 AMR-WB 编码。
 
-Go to <http://sourceforge.net/projects/opencore-amr/> and follow the instructions for installing the library. Then pass `--enable-libvo-amrwbenc` to configure to enable it.
+前往 <http://sourceforge.net/projects/opencore-amr/> 并按说明安装该库。然后向 configure 传入 `--enable-libvo-amrwbenc` 以启用它。
 
-### Fraunhofer AAC library
+### Fraunhofer AAC 库
 
-FFmpeg can make use of the Fraunhofer AAC library for AAC decoding & encoding.
+FFmpeg 可利用 Fraunhofer AAC 库进行 AAC 解码与编码。
 
-Go to <http://sourceforge.net/projects/opencore-amr/> and follow the instructions for installing the library. Then pass `--enable-libfdk-aac` to configure to enable it.
+前往 <http://sourceforge.net/projects/opencore-amr/> 并按说明安装该库。然后向 configure 传入 `--enable-libfdk-aac` 以启用它。
 
-### Fraunhofer MPEG-H 3D Audio decoder library
+### Fraunhofer MPEG-H 3D Audio 解码器库
 
-FFmpeg can make use of the Fraunhofer MPEG-H decoder library for MPEG-H 3DA decoding.
+FFmpeg 可利用 Fraunhofer MPEG-H 解码器库进行 MPEG-H 3DA 解码。
 
-Go to <https://github.com/Fraunhofer-IIS/mpeghdec> and follow the instructions for installing the library. Then pass `--enable-libmpeghdec --enable-nonfree` to configure to enable it.
+前往 <https://github.com/Fraunhofer-IIS/mpeghdec> 并按说明安装该库。然后向 configure 传入 `--enable-libmpeghdec --enable-nonfree` 以启用它。
 
-### LC3 library
+### LC3 库
 
-FFmpeg can make use of the Google LC3 library for LC3 decoding & encoding.
+FFmpeg 可利用 Google LC3 库进行 LC3 解码与编码。
 
-Go to <https://github.com/google/liblc3/> and follow the instructions for installing the library. Then pass `--enable-liblc3` to configure to enable it.
+前往 <https://github.com/google/liblc3/> 并按说明安装该库。然后向 configure 传入 `--enable-liblc3` 以启用它。
 
 ## OpenH264
 
-FFmpeg can make use of the OpenH264 library for H.264 decoding and encoding.
+FFmpeg 可利用 OpenH264 库进行 H.264 解码与编码。
 
-Go to <http://www.openh264.org/> and follow the instructions for installing the library. Then pass `--enable-libopenh264` to configure to enable it.
+前往 <http://www.openh264.org/> 并按说明安装该库。然后向 configure 传入 `--enable-libopenh264` 以启用它。
 
-For decoding, this library is much more limited than the built-in decoder in libavcodec; currently, this library lacks support for decoding B-frames and some other main/high profile features. (It currently only supports constrained baseline profile and CABAC.) Using it is mostly useful for testing and for taking advantage of Cisco's patent portfolio license (<http://www.openh264.org/BINARY_LICENSE.txt>).
+在解码方面，该库比 libavcodec 内置的解码器受限得多；目前它不支持解码 B 帧 (B-frames) 及其他一些 main/high profile 特性。（目前它仅支持 constrained baseline profile 与 CABAC。）使用它主要用于测试，以及利用 Cisco 的专利池许可 (<http://www.openh264.org/BINARY_LICENSE.txt>)。
 
 ## OpenJPEG
 
-FFmpeg can use the OpenJPEG libraries for decoding/encoding J2K videos. Go to <http://www.openjpeg.org/> to get the libraries and follow the installation instructions. To enable using OpenJPEG in FFmpeg, pass `--enable-libopenjpeg` to `./configure`.
+FFmpeg 可利用 OpenJPEG 库进行 J2K 视频的解码/编码。前往 <http://www.openjpeg.org/> 获取这些库并按说明安装。要在 FFmpeg 中启用 OpenJPEG，向 `./configure` 传入 `--enable-libopenjpeg`。
 
 ## rav1e
 
-FFmpeg can make use of rav1e (Rust AV1 Encoder) via its C bindings to encode videos. Go to <https://github.com/xiph/rav1e/> and follow the instructions to build the C library. To enable using rav1e in FFmpeg, pass `--enable-librav1e` to `./configure`.
+FFmpeg 可经其 C 绑定利用 rav1e（Rust AV1 编码器）编码视频。前往 <https://github.com/xiph/rav1e/> 并按说明构建 C 库。要在 FFmpeg 中启用 rav1e，向 `./configure` 传入 `--enable-librav1e`。
 
 ## SVT-AV1
 
-FFmpeg can make use of the Scalable Video Technology for AV1 library for AV1 encoding.
+FFmpeg 可利用 Scalable Video Technology for AV1 库进行 AV1 编码。
 
-Go to <https://gitlab.com/AOMediaCodec/SVT-AV1/> and follow the instructions for installing the library. Then pass `--enable-libsvtav1` to configure to enable it.
+前往 <https://gitlab.com/AOMediaCodec/SVT-AV1/> 并按说明安装该库。然后向 configure 传入 `--enable-libsvtav1` 以启用它。
 
 ## SVT-JPEG-XS
 
-FFmpeg can make use of the Scalable Video Technology for JPEG-XS library for JPEG-XS decoding and encoding.
+FFmpeg 可利用 Scalable Video Technology for JPEG-XS 库进行 JPEG-XS 解码与编码。
 
-Go to <https://github.com/OpenVisualCloud/SVT-JPEG-XS> and follow the instructions for installing the library. Then pass `--enable-libsvtjpegxs` to configure to enable it.
+前往 <https://github.com/OpenVisualCloud/SVT-JPEG-XS> 并按说明安装该库。然后向 configure 传入 `--enable-libsvtjpegxs` 以启用它。
 
 ## TwoLAME
 
-FFmpeg can make use of the TwoLAME library for MP2 encoding.
+FFmpeg 可利用 TwoLAME 库进行 MP2 编码。
 
-Go to <http://www.twolame.org/> and follow the instructions for installing the library. Then pass `--enable-libtwolame` to configure to enable it.
+前往 <http://www.twolame.org/> 并按说明安装该库。然后向 configure 传入 `--enable-libtwolame` 以启用它。
 
 ## VapourSynth
 
-FFmpeg can read VapourSynth scripts as input. To enable support, pass `--enable-vapoursynth` to configure. Vapoursynth is detected via `pkg-config`. Versions 42 or greater supported. See <http://www.vapoursynth.com/>.
+FFmpeg 可以读取 VapourSynth 脚本作为输入。要启用支持，向 configure 传入 `--enable-vapoursynth`。VapourSynth 经 `pkg-config` 检测。支持 42 或更高版本。参见 <http://www.vapoursynth.com/>。
 
-Due to security concerns, Vapoursynth scripts will not be autodetected so the input format has to be forced. For ff\* CLI tools, add `-f vapoursynth` before the input `-i yourscript.vpy`.
+出于安全考虑，VapourSynth 脚本不会被自动检测，因此必须强制指定输入格式。对 ff* CLI 工具，在输入 `-i yourscript.vpy` 之前添加 `-f vapoursynth`。
 
 ## x264
 
-FFmpeg can make use of the x264 library for H.264 encoding.
+FFmpeg 可利用 x264 库进行 H.264 编码。
 
-Go to <http://www.videolan.org/developers/x264.html> and follow the instructions for installing the library. Then pass `--enable-libx264` to configure to enable it.
+前往 <http://www.videolan.org/developers/x264.html> 并按说明安装该库。然后向 configure 传入 `--enable-libx264` 以启用它。
 
-x264 is under the GNU Public License Version 2 or later (see <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html> for details), you must upgrade FFmpeg's license to GPL in order to use it.
+x264 采用 GNU 通用公共许可证第 2 版或更高版本（详情参见 <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>），使用它必须把 FFmpeg 的许可升级为 GPL。
 
 ## x265
 
-FFmpeg can make use of the x265 library for HEVC encoding.
+FFmpeg 可利用 x265 库进行 HEVC 编码。
 
-Go to <http://x265.org/developers.html> and follow the instructions for installing the library. Then pass `--enable-libx265` to configure to enable it.
+前往 <http://x265.org/developers.html> 并按说明安装该库。然后向 configure 传入 `--enable-libx265` 以启用它。
 
-x265 is under the GNU Public License Version 2 or later (see <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html> for details), you must upgrade FFmpeg's license to GPL in order to use it.
+x265 采用 GNU 通用公共许可证第 2 版或更高版本（详情参见 <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>），使用它必须把 FFmpeg 的许可升级为 GPL。
 
 ## xavs
 
-FFmpeg can make use of the xavs library for AVS encoding.
+FFmpeg 可利用 xavs 库进行 AVS 编码。
 
-Go to <http://xavs.sf.net/> and follow the instructions for installing the library. Then pass `--enable-libxavs` to configure to enable it.
+前往 <http://xavs.sf.net/> 并按说明安装该库。然后向 configure 传入 `--enable-libxavs` 以启用它。
 
 ## xavs2
 
-FFmpeg can make use of the xavs2 library for AVS2-P2/IEEE1857.4 video encoding.
+FFmpeg 可利用 xavs2 库进行 AVS2-P2/IEEE1857.4 视频编码。
 
-Go to <https://github.com/pkuvcl/xavs2> and follow the instructions for installing the library. Then pass `--enable-libxavs2` to configure to enable it.
+前往 <https://github.com/pkuvcl/xavs2> 并按说明安装该库。然后向 configure 传入 `--enable-libxavs2` 以启用它。
 
-libxavs2 is under the GNU Public License Version 2 or later (see <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html> for details), you must upgrade FFmpeg's license to GPL in order to use it.
+libxavs2 采用 GNU 通用公共许可证第 2 版或更高版本（详情参见 <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>），使用它必须把 FFmpeg 的许可升级为 GPL。
 
 ## eXtra-fast Essential Video Encoder (XEVE)
 
-FFmpeg can make use of the XEVE library for EVC video encoding.
+FFmpeg 可利用 XEVE 库进行 EVC 视频编码。
 
-Go to <https://github.com/mpeg5/xeve> and follow the instructions for installing the XEVE library. Then pass `--enable-libxeve` to configure to enable it.
+前往 <https://github.com/mpeg5/xeve> 并按说明安装 XEVE 库。然后向 configure 传入 `--enable-libxeve` 以启用它。
 
 ## eXtra-fast Essential Video Decoder (XEVD)
 
-FFmpeg can make use of the XEVD library for EVC video decoding.
+FFmpeg 可利用 XEVD 库进行 EVC 视频解码。
 
-Go to <https://github.com/mpeg5/xevd> and follow the instructions for installing the XEVD library. Then pass `--enable-libxevd` to configure to enable it.
+前往 <https://github.com/mpeg5/xevd> 并按说明安装 XEVD 库。然后向 configure 传入 `--enable-libxevd` 以启用它。
 
 ## ZVBI
 
-ZVBI is a VBI decoding library which can be used by FFmpeg to decode DVB teletext pages and DVB teletext subtitles.
+ZVBI 是一款 VBI 解码库，FFmpeg 可用它解码 DVB 图文电视页面和 DVB 图文电视字幕。
 
-Go to <http://sourceforge.net/projects/zapping/> and follow the instructions for installing the library. Then pass `--enable-libzvbi` to configure to enable it.
+前往 <http://sourceforge.net/projects/zapping/> 并按说明安装该库。然后向 configure 传入 `--enable-libzvbi` 以启用它。
 
-# Supported File Formats, Codecs or Features
+# 支持的文件格式、编解码器或特性
 
-You can use the `-formats` and `-codecs` options to have an exhaustive list.
+您可以使用 `-formats` 与 `-codecs` 选项获取完整列表。
 
-## File Formats
+## 文件格式
 
-FFmpeg supports the following file formats through the `libavformat` library:
+FFmpeg 经由 `libavformat` 库支持以下文件格式：
 
 |  |  |  |  |
 |----|----|----|----|
 | Name | Encoding | Decoding | Comments |
 | 3dostr |  | X |  |
-| 4xm |  | X | 4X Technologies format, used in some games. |
+| 4xm |  | X | 4X Technologies 格式，用于某些游戏。 |
 | 8088flex TMV |  | X |  |
-| AAX |  | X | Audible Enhanced Audio format, used in audiobooks. |
-| AA |  | X | Audible Format 2, 3, and 4, used in audiobooks. |
-| ACT Voice |  | X | contains G.729 audio |
+| AAX |  | X | Audible Enhanced Audio 格式，用于有声书。 |
+| AA |  | X | Audible Format 2、3 与 4，用于有声书。 |
+| ACT Voice |  | X | 含 G.729 音频 |
 | Adobe Filmstrip | X | X |  |
 | Audio IFF (AIFF) | X | X |  |
-| American Laser Games MM |  | X | Multimedia format used in games like Mad Dog McCree. |
+| American Laser Games MM |  | X | 用于 Mad Dog McCree 等游戏的多媒体格式。 |
 | 3GPP AMR | X | X |  |
-| Amazing Studio Packed Animation File |  | X | Multimedia format used in game Heart Of Darkness. |
+| Amazing Studio Packed Animation File |  | X | 用于游戏 Heart Of Darkness 的多媒体格式。 |
 | Apple HTTP Live Streaming |  | X |  |
 | Artworx Data Format |  | X |  |
-| Interplay ACM |  | X | Audio only format used in some Interplay games. |
-| ADP |  | X | Audio format used on the Nintendo Gamecube. |
-| AFC |  | X | Audio format used on the Nintendo Gamecube. |
-| ADS/SS2 |  | X | Audio format used on the PS2. |
+| Interplay ACM |  | X | 部分 Interplay 游戏使用的纯音频格式。 |
+| ADP |  | X | Nintendo Gamecube 上使用的音频格式。 |
+| AFC |  | X | Nintendo Gamecube 上使用的音频格式。 |
+| ADS/SS2 |  | X | PS2 上使用的音频格式。 |
 | APNG | X | X |  |
-| ASF | X | X | Advanced / Active Streaming Format. |
-| AST | X | X | Audio format used on the Nintendo Wii. |
+| ASF | X | X | Advanced / Active Streaming Format。 |
+| AST | X | X | Nintendo Wii 上使用的音频格式。 |
 | AVI | X | X |  |
 | AviSynth |  | X |  |
-| AVR |  | X | Audio format used on Mac. |
-| AVS |  | X | Multimedia format used by the Creature Shock game. |
-| Beam Software SIFF |  | X | Audio and video format used in some games by Beam Software. |
-| Bethesda Softworks VID |  | X | Used in some games from Bethesda Softworks. |
+| AVR |  | X | Mac 上使用的音频格式。 |
+| AVS |  | X | Creature Shock 游戏使用的多媒体格式。 |
+| Beam Software SIFF |  | X | Beam Software 部分游戏使用的音视频格式。 |
+| Bethesda Softworks VID |  | X | 用于 Bethesda Softworks 的部分游戏。 |
 | Binary text |  | X |  |
-| Bink |  | X | Multimedia format used by many games. |
-| Bink Audio |  | X | Audio only multimedia format used by some games. |
-| Bitmap Brothers JV |  | X | Used in Z and Z95 games. |
-| BRP |  | X | Argonaut Games format. |
-| Brute Force & Ignorance |  | X | Used in the game Flash Traffic: City of Angels. |
-| BFSTM |  | X | Audio format used on the Nintendo WiiU (based on BRSTM). |
-| BRSTM |  | X | Audio format used on the Nintendo Wii. |
-| BW64 |  | X | Broadcast Wave 64bit. |
+| Bink |  | X | 许多游戏使用的多媒体格式。 |
+| Bink Audio |  | X | 部分游戏使用的纯音频多媒体格式。 |
+| Bitmap Brothers JV |  | X | 用于 Z 与 Z95 游戏。 |
+| BRP |  | X | Argonaut Games 格式。 |
+| Brute Force & Ignorance |  | X | 用于游戏 Flash Traffic: City of Angels。 |
+| BFSTM |  | X | Nintendo WiiU 上使用的音频格式（基于 BRSTM）。 |
+| BRSTM |  | X | Nintendo Wii 上使用的音频格式。 |
+| BW64 |  | X | Broadcast Wave 64bit。 |
 | BWF | X | X |  |
-| codec2 (raw) | X | X | Must be given -mode format option to decode correctly. |
-| codec2 (.c2 files) | X | X | Contains header with version and mode info, simplifying playback. |
-| CRI ADX | X | X | Audio-only format used in console video games. |
+| codec2 (raw) | X | X | 必须给定 -mode 格式选项才能正确解码。 |
+| codec2 (.c2 files) | X | X | 含有版本与模式信息的头，简化播放。 |
+| CRI ADX | X | X | 主机游戏使用的纯音频格式。 |
 | CRI AIX |  | X |  |
-| CRI HCA |  | X | Audio-only format used in console video games. |
+| CRI HCA |  | X | 主机游戏使用的纯音频格式。 |
 | Discworld II BMV |  | X |  |
-| Interplay C93 |  | X | Used in the game Cyberia from Interplay. |
-| Delphine Software International CIN |  | X | Multimedia format used by Delphine Software games. |
+| Interplay C93 |  | X | 用于 Interplay 的游戏 Cyberia。 |
+| Delphine Software International CIN |  | X | Delphine Software 游戏使用的多媒体格式。 |
 | Digital Speech Standard (DSS) |  | X |  |
-| CD+G |  | X | Video format used by CD+G karaoke disks |
+| CD+G |  | X | CD+G 卡拉 OK 光盘使用的视频格式 |
 | Phantom Cine |  | X |  |
-| Commodore CDXL |  | X | Amiga CD video format |
+| Commodore CDXL |  | X | Amiga CD 视频格式 |
 | Core Audio Format | X | X | Apple Core Audio Format |
 | CRC testing format | X |  |  |
-| Creative Voice | X | X | Created for the Sound Blaster Pro. |
-| CRYO APC |  | X | Audio format used in some games by CRYO Interactive Entertainment. |
+| Creative Voice | X | X | 为 Sound Blaster Pro 而设计。 |
+| CRYO APC |  | X | CRYO Interactive Entertainment 部分游戏使用的音频格式。 |
 | D-Cinema audio | X | X |  |
 | Deluxe Paint Animation |  | X |  |
 | DCSTR |  | X |  |
-| DFA |  | X | This format is used in Chronomaster game |
+| DFA |  | X | 该格式用于 Chronomaster 游戏 |
 | DirectDraw Surface |  | X |  |
 | DSD Stream File (DSF) |  | X |  |
 | DV video | X | X |  |
-| DXA |  | X | This format is used in the non-Windows version of the Feeble Files game and different game cutscenes repacked for use with ScummVM. |
+| DXA |  | X | 该格式用于 Feeble Files 游戏的非 Windows 版本，以及为配合 ScummVM 重新打包的不同游戏过场动画。 |
 | Electronic Arts cdata |  | X |  |
-| Electronic Arts Multimedia |  | X | Used in various EA games; files have extensions like WVE and UV2. |
+| Electronic Arts Multimedia |  | X | 用于多款 EA 游戏；文件扩展名如 WVE 和 UV2。 |
 | Ensoniq Paris Audio File |  | X |  |
 | FFM (FFserver live feed) | X | X |  |
 | Flash (SWF) | X | X |  |
-| Flash 9 (AVM2) | X | X | Only embedded audio is decoded. |
-| FLI/FLC/FLX animation |  | X | .fli/.flc files |
-| Flash Video (FLV) | X | X | Macromedia Flash video files |
+| Flash 9 (AVM2) | X | X | 仅解码内嵌音频。 |
+| FLI/FLC/FLX animation |  | X | .fli/.flc 文件 |
+| Flash Video (FLV) | X | X | Macromedia Flash 视频文件 |
 | framecrc testing format | X |  |  |
-| FunCom ISS |  | X | Audio format used in various games from FunCom like The Longest Journey. |
+| FunCom ISS |  | X | FunCom 的 The Longest Journey 等游戏使用的音频格式。 |
 | G.723.1 | X | X |  |
-| G.726 |  | X | Both left- and right-justified. |
+| G.726 |  | X | 左对齐与右对齐均可。 |
 | G.729 BIT | X | X |  |
 | G.729 raw |  | X |  |
-| GENH |  | X | Audio format for various games. |
+| GENH |  | X | 供各类游戏使用的音频格式。 |
 | GIF Animation | X | X |  |
-| GXF | X | X | General eXchange Format SMPTE 360M, used by Thomson Grass Valley playout servers. |
-| HNM |  | X | Only version 4 supported, used in some games from Cryo Interactive |
+| GXF | X | X | 通用交换格式 SMPTE 360M，用于 Thomson Grass Valley 播出服务器。 |
+| HNM |  | X | 仅支持第 4 版，用于 Cryo Interactive 的部分游戏 |
 | iCEDraw File |  | X |  |
 | ICO | X | X | Microsoft Windows ICO |
 | id Quake II CIN video |  | X |  |
-| id RoQ | X | X | Used in Quake III, Jedi Knight 2 and other computer games. |
+| id RoQ | X | X | 用于 Quake III、Jedi Knight 2 及其他电脑游戏。 |
 | IEC61937 encapsulation | X | X |  |
 | IFF |  | X | Interchange File Format |
-| IFV |  | X | A format used by some old CCTV DVRs. |
+| IFV |  | X | 一些老式 CCTV DVR 使用的格式。 |
 | iLBC | X | X |  |
-| Interplay MVE |  | X | Format used in various Interplay computer games. |
-| Iterated Systems ClearVideo |  | X | I-frames only |
-| IV8 |  | X | A format generated by IndigoVision 8000 video server. |
-| IVF (On2) | X | X | A format used by libvpx |
+| Interplay MVE |  | X | 多款 Interplay 电脑游戏使用的格式。 |
+| Iterated Systems ClearVideo |  | X | 仅 I 帧 (I-frames) |
+| IV8 |  | X | IndigoVision 8000 视频服务器生成的格式。 |
+| IVF (On2) | X | X | libvpx 使用的格式 |
 | Internet Video Recording |  | X |  |
 | IRCAM | X | X |  |
 | LAF |  | X | Limitless Audio Format |
 | LATM | X | X |  |
-| LMLM4 |  | X | Used by Linux Media Labs MPEG-4 PCI boards |
-| LOAS |  | X | contains LATM multiplexed AAC audio |
+| LMLM4 |  | X | 用于 Linux Media Labs MPEG-4 PCI 板卡 |
+| LOAS |  | X | 含经 LATM 复用的 AAC 音频 |
 | LRC | X | X |  |
 | LVF |  | X |  |
-| LXF |  | X | VR native stream format, used by Leitch/Harris' video servers. |
+| LXF |  | X | VR 原生流格式，用于 Leitch/Harris 的视频服务器。 |
 | Magic Lantern Video (MLV) |  | X |  |
 | Matroska | X | X |  |
 | Matroska audio | X |  |  |
-| FFmpeg metadata | X | X | Metadata in text format. |
-| MAXIS XA |  | X | Used in Sim City 3000; file extension .xa. |
-| MCA |  | X | Used in some games from Capcom; file extension .mca. |
+| FFmpeg metadata | X | X | 文本格式的元数据。 |
+| MAXIS XA |  | X | 用于 Sim City 3000；文件扩展名 .xa。 |
+| MCA |  | X | 用于 Capcom 的部分游戏；文件扩展名 .mca。 |
 | MD Studio |  | X |  |
 | Metal Gear Solid: The Twin Snakes |  | X |  |
-| Megalux Frame |  | X | Used by Megalux Ultimate Paint |
+| Megalux Frame |  | X | Megalux Ultimate Paint 所用 |
 | MobiClip MODS |  | X |  |
 | MobiClip MOFLEX |  | X |  |
 | Mobotix .mxg |  | X |  |
 | Monkey's Audio |  | X |  |
 | Motion Pixels MVI |  | X |  |
-| MOV/QuickTime/MP4 | X | X | 3GP, 3GP2, PSP, iPod variants supported |
+| MOV/QuickTime/MP4 | X | X | 支持 3GP、3GP2、PSP、iPod 变体 |
 | MP2 | X | X |  |
 | MP3 | X | X |  |
-| MPEG-1 System | X | X | muxed audio and video, VCD format supported |
-| MPEG-PS (program stream) | X | X | also known as `VOB` file, SVCD and DVD format supported |
-| MPEG-TS (transport stream) | X | X | also known as DVB Transport Stream |
-| MPEG-4 | X | X | MPEG-4 is a variant of QuickTime. |
-| MSF |  | X | Audio format used on the PS3. |
-| Mirillis FIC video |  | X | No cursor rendering. |
+| MPEG-1 System | X | X | 音视频复用流，支持 VCD 格式 |
+| MPEG-PS (program stream) | X | X | 亦称 `VOB` 文件，支持 SVCD 与 DVD 格式 |
+| MPEG-TS (transport stream) | X | X | 亦称 DVB Transport Stream |
+| MPEG-4 | X | X | MPEG-4 是 QuickTime 的一个变体。 |
+| MSF |  | X | PS3 上使用的音频格式。 |
+| Mirillis FIC video |  | X | 不渲染光标。 |
 | MIDI Sample Dump Standard |  | X |  |
 | MIME multipart JPEG | X |  |  |
-| MSN TCP webcam |  | X | Used by MSN Messenger webcam streams. |
+| MSN TCP webcam |  | X | MSN Messenger 网络摄像头流使用。 |
 | MTV |  | X |  |
 | Musepack |  | X |  |
 | Musepack SV8 |  | X |  |
-| Material eXchange Format (MXF) | X | X | SMPTE 377M, used by D-Cinema, broadcast industry. |
-| Material eXchange Format (MXF), D-10 Mapping | X | X | SMPTE 386M, D-10/IMX Mapping. |
-| NC camera feed |  | X | NC (AVIP NC4600) camera streams |
+| Material eXchange Format (MXF) | X | X | SMPTE 377M，用于数字影院与广播行业。 |
+| Material eXchange Format (MXF), D-10 Mapping | X | X | SMPTE 386M，D-10/IMX 映射。 |
+| NC camera feed |  | X | NC (AVIP NC4600) 摄像机流 |
 | NIST SPeech HEader REsources |  | X |  |
 | Computerized Speech Lab NSP |  | X |  |
-| NTT TwinVQ (VQF) |  | X | Nippon Telegraph and Telephone Corporation TwinVQ. |
+| NTT TwinVQ (VQF) |  | X | Nippon Telegraph and Telephone Corporation 的 TwinVQ。 |
 | Nullsoft Streaming Video |  | X |  |
 | NuppelVideo |  | X |  |
-| NUT | X | X | NUT Open Container Format |
+| NUT | X | X | NUT 开放容器格式 |
 | Ogg | X | X |  |
 | Playstation Portable PMP |  | X |  |
 | Portable Voice Format |  | X |  |
 | RK Audio (RKA) |  | X |  |
-| TechnoTrend PVA |  | X | Used by TechnoTrend DVB PCI boards. |
+| TechnoTrend PVA |  | X | 用于 TechnoTrend DVB PCI 板卡。 |
 | QCP |  | X |  |
 | raw ADTS (AAC) | X | X |  |
 | raw AC-3 | X | X |  |
@@ -499,18 +495,18 @@ FFmpeg supports the following file formats through the `libavformat` library:
 | raw PCM floating-point 64 bit big-endian | X | X |  |
 | raw PCM floating-point 64 bit little-endian | X | X |  |
 | RDT |  | X |  |
-| REDCODE R3D |  | X | File format used by RED Digital cameras, contains JPEG 2000 frames and PCM audio. |
+| REDCODE R3D |  | X | RED Digital 摄像机使用的文件格式，含 JPEG 2000 帧与 PCM 音频。 |
 | RealMedia | X | X |  |
 | Redirector |  | X |  |
 | RedSpark |  | X |  |
 | Renderware TeXture Dictionary |  | X |  |
-| Resolume DXV | X | X | Encoding is only supported for the DXT1 (Normal Quality, No Alpha) texture format. |
+| Resolume DXV | X | X | 仅 DXT1（普通质量，无透明通道）纹理格式支持编码。 |
 | RF64 |  | X |  |
-| RL2 |  | X | Audio and video format used in some games by Entertainment Software Partners. |
+| RL2 |  | X | Entertainment Software Partners 部分游戏使用的音视频格式。 |
 | RPL/ARMovie |  | X |  |
 | Lego Mindstorms RSO | X | X |  |
 | RSD |  | X |  |
-| RTMP | X | X | Output is performed by publishing stream to RTMP server |
+| RTMP | X | X | 输出通过向 RTMP 服务器发布流实现 |
 | RTP | X | X |  |
 | RTSP | X | X |  |
 | Sample Dump eXchange |  | X |  |
@@ -520,121 +516,121 @@ FFmpeg supports the following file formats through the `libavformat` library:
 | SDP |  | X |  |
 | SER |  | X |  |
 | Digital Pictures SGA |  | X |  |
-| Sega FILM/CPK | X | X | Used in many Sega Saturn console games. |
+| Sega FILM/CPK | X | X | 用于多款 Sega Saturn 主机游戏。 |
 | Silicon Graphics Movie |  | X |  |
-| Sierra SOL |  | X | .sol files used in Sierra Online games. |
-| Sierra VMD |  | X | Used in Sierra CD-ROM games. |
-| Smacker |  | X | Multimedia format used by many games. |
-| SMJPEG | X | X | Used in certain Loki game ports. |
+| Sierra SOL |  | X | Sierra Online 游戏使用的 .sol 文件。 |
+| Sierra VMD |  | X | 用于 Sierra CD-ROM 游戏。 |
+| Smacker |  | X | 许多游戏使用的多媒体格式。 |
+| SMJPEG | X | X | 用于某些 Loki 游戏移植版。 |
 | SMPTE 337M encapsulation |  | X |  |
-| Smush |  | X | Multimedia format used in some LucasArts games. |
-| Sony OpenMG (OMA) | X | X | Audio format used in Sony Sonic Stage and Sony Vegas. |
+| Smush |  | X | 部分 LucasArts 游戏使用的多媒体格式。 |
+| Sony OpenMG (OMA) | X | X | Sony Sonic Stage 与 Sony Vegas 使用的音频格式。 |
 | Sony PlayStation STR |  | X |  |
 | Sony Wave64 (W64) | X | X |  |
 | SoX native format | X | X |  |
 | SUN AU format | X | X |  |
 | SUP raw PGS subtitles | X | X |  |
-| SVAG |  | X | Audio format used in Konami PS2 games. |
+| SVAG |  | X | Konami PS2 游戏使用的音频格式。 |
 | TDSC |  | X |  |
 | Text files |  | X |  |
-| THP |  | X | Used on the Nintendo GameCube. |
-| Tiertex Limited SEQ |  | X | Tiertex .seq files used in the DOS CD-ROM version of the game Flashback. |
+| THP |  | X | 用于 Nintendo GameCube。 |
+| Tiertex Limited SEQ |  | X | DOS CD-ROM 版游戏 Flashback 使用的 Tiertex .seq 文件。 |
 | True Audio | X | X |  |
-| VAG |  | X | Audio format used in many Sony PS2 games. |
+| VAG |  | X | 多款 Sony PS2 游戏使用的音频格式。 |
 | VC-1 test bitstream | X | X |  |
 | Vidvox Hap | X | X |  |
 | Vivo |  | X |  |
-| VPK |  | X | Audio format used in Sony PS games. |
+| VPK |  | X | Sony PS 游戏使用的音频格式。 |
 | Marble WADY |  | X |  |
 | WAV | X | X |  |
 | Waveform Archiver |  | X |  |
 | WavPack | X | X |  |
 | WebM | X | X |  |
 | Windows Televison (WTV) | X | X |  |
-| Wing Commander III movie |  | X | Multimedia format used in Origin's Wing Commander III computer game. |
-| Westwood Studios audio | X | X | Multimedia format used in Westwood Studios games. |
-| Westwood Studios VQA |  | X | Multimedia format used in Westwood Studios games. |
+| Wing Commander III movie |  | X | Origin 的 Wing Commander III 电脑游戏使用的多媒体格式。 |
+| Westwood Studios audio | X | X | Westwood Studios 游戏使用的多媒体格式。 |
+| Westwood Studios VQA |  | X | Westwood Studios 游戏使用的多媒体格式。 |
 | Wideband Single-bit Data (WSD) |  | X |  |
 | WVE |  | X |  |
 | Konami XMD |  | X |  |
-| XMV |  | X | Microsoft video container used in Xbox games. |
-| XVAG |  | X | Audio format used on the PS3. |
-| xWMA |  | X | Microsoft audio container used by XAudio 2. |
+| XMV |  | X | Xbox 游戏使用的 Microsoft 视频容器。 |
+| XVAG |  | X | PS3 上使用的音频格式。 |
+| xWMA |  | X | XAudio 2 使用的 Microsoft 音频容器。 |
 | eXtended BINary text (XBIN) |  | X |  |
 | YUV4MPEG pipe | X | X |  |
 | Psygnosis YOP |  | X |  |
 
-`X` means that the feature in that column (encoding / decoding) is supported.
+`X` 表示该列（编码 / 解码）所对应的特性受支持。
 
-## Image Formats
+## 图像格式
 
-FFmpeg can read and write images for each frame of a video sequence. The following image formats are supported:
+FFmpeg 可读取和写入视频序列每一帧的图像。支持以下图像格式：
 
 |  |  |  |  |
 |----|----|----|----|
 | Name | Encoding | Decoding | Comments |
-| .Y.U.V | X | X | one raw file per component |
-| Alias PIX | X | X | Alias/Wavefront PIX image format |
+| .Y.U.V | X | X | 每分量一个裸文件 |
+| Alias PIX | X | X | Alias/Wavefront PIX 图像格式 |
 | animated GIF | X | X |  |
-| APNG | X | X | Animated Portable Network Graphics |
-| BMP | X | X | Microsoft BMP image |
-| BRender PIX |  | X | Argonaut BRender 3D engine image format. |
+| APNG | X | X | 动画便携式网络图形 (APNG) |
+| BMP | X | X | Microsoft BMP 图像 |
+| BRender PIX |  | X | Argonaut BRender 3D 引擎图像格式。 |
 | CRI |  | X | Cintel RAW |
 | DPX | X | X | Digital Picture Exchange |
 | EXR |  | X | OpenEXR |
-| FITS | X | X | Flexible Image Transport System |
-| HDR | X | X | Radiance HDR RGBE Image format |
-| IMG |  | X | GEM Raster image |
-| JPEG | X | X | Progressive JPEG is not supported. |
+| FITS | X | X | 灵活图像传输系统 (FITS) |
+| HDR | X | X | Radiance HDR RGBE 图像格式 |
+| IMG |  | X | GEM 光栅图像 |
+| JPEG | X | X | 不支持渐进式 JPEG。 |
 | JPEG 2000 | X | X |  |
 | JPEG-LS | X | X |  |
-| JPEG-XS | E | E | Supported through external library libsvtjpegxs |
-| LJPEG | X |  | Lossless JPEG |
+| JPEG-XS | E | E | 经外部库 libsvtjpegxs 支持 |
+| LJPEG | X |  | 无损 JPEG |
 | Media 100 |  | X |  |
-| MSP |  | X | Microsoft Paint image |
-| PAM | X | X | PAM is a PNM extension with alpha support. |
-| PBM | X | X | Portable BitMap image |
+| MSP |  | X | Microsoft 画图图像 |
+| PAM | X | X | PAM 是带透明支持的 PNM 扩展。 |
+| PBM | X | X | 便携位图 (Portable BitMap) 图像 |
 | PCD |  | X | PhotoCD |
 | PCX | X | X | PC Paintbrush |
-| PFM | X | X | Portable FloatMap image |
-| PGM | X | X | Portable GrayMap image |
-| PGMYUV | X | X | PGM with U and V components in YUV 4:2:0 |
-| PGX |  | X | PGX file decoder |
-| PHM | X | X | Portable HalfFloatMap image |
+| PFM | X | X | 便携浮点图 (Portable FloatMap) 图像 |
+| PGM | X | X | 便携灰度图 (Portable GrayMap) 图像 |
+| PGMYUV | X | X | YUV 4:2:0 中带 U 与 V 分量的 PGM |
+| PGX |  | X | PGX 文件解码器 |
+| PHM | X | X | 便携半浮点图 (Portable HalfFloatMap) 图像 |
 | PIC |  | X | Pictor/PC Paint |
-| PNG | X | X | Portable Network Graphics image |
-| PPM | X | X | Portable PixelMap image |
+| PNG | X | X | 便携式网络图形 (PNG) 图像 |
+| PPM | X | X | 便携像素图 (Portable PixelMap) 图像 |
 | PSD |  | X | Photoshop |
-| PTX |  | X | V.Flash PTX format |
-| QOI | X | X | Quite OK Image format |
-| SGI | X | X | SGI RGB image format |
-| Sun Rasterfile | X | X | Sun RAS image format |
-| TIFF | X | X | YUV, JPEG and some extension is not supported yet. |
-| Truevision Targa | X | X | Targa (.TGA) image format |
-| VBN | X | X | Vizrt Binary Image format |
-| WBMP | X | X | Wireless Application Protocol Bitmap image format |
-| WebP | E | X | WebP image format, encoding supported through external library libwebp |
-| XBM | X | X | X BitMap image format |
-| XFace | X | X | X-Face image format |
-| XPM |  | X | X PixMap image format |
-| XWD | X | X | X Window Dump image format |
+| PTX |  | X | V.Flash PTX 格式 |
+| QOI | X | X | Quite OK Image 格式 |
+| SGI | X | X | SGI RGB 图像格式 |
+| Sun Rasterfile | X | X | Sun RAS 图像格式 |
+| TIFF | X | X | 尚不支持 YUV、JPEG 及部分扩展。 |
+| Truevision Targa | X | X | Targa (.TGA) 图像格式 |
+| VBN | X | X | Vizrt 二进制图像格式 |
+| WBMP | X | X | 无线应用协议位图图像格式 |
+| WebP | E | X | WebP 图像格式，编码经外部库 libwebp 支持 |
+| XBM | X | X | X 位图 (X BitMap) 图像格式 |
+| XFace | X | X | X-Face 图像格式 |
+| XPM |  | X | X 像素图 (X PixMap) 图像格式 |
+| XWD | X | X | X Window 转储图像格式 |
 
-`X` means that the feature in that column (encoding / decoding) is supported.
+`X` 表示该列（编码 / 解码）所对应的特性受支持。
 
-`E` means that support is provided through an external library.
+`E` 表示该支持经由外部库提供。
 
-## Video Codecs
+## 视频编解码器
 
 |  |  |  |  |
 |----|----|----|----|
 | Name | Encoding | Decoding | Comments |
-| 4X Movie |  | X | Used in certain computer games. |
+| 4X Movie |  | X | 用于某些电脑游戏。 |
 | 8088flex TMV |  | X |  |
-| A64 multicolor | X |  | Creates video suitable to be played on a commodore 64 (multicolor mode). |
+| A64 multicolor | X |  | 生成适合在 commodore 64 上播放的视频（多色模式）。 |
 | Amazing Studio PAF Video |  | X |  |
-| American Laser Games MM |  | X | Used in games like Mad Dog McCree. |
+| American Laser Games MM |  | X | 用于 Mad Dog McCree 等游戏。 |
 | Amuse Graphics Movie |  | X |  |
-| AMV Video | X | X | Used in Chinese MP3 players. |
+| AMV Video | X | X | 用于中国的 MP3 播放器。 |
 | ANSI/ASCII art |  | X |  |
 | Apple Intermediate Codec |  | X |  |
 | Apple MJPEG-B |  | X |  |
@@ -642,7 +638,7 @@ FFmpeg can read and write images for each frame of a video sequence. The followi
 | Apple ProRes | X | X | fourcc: apch,apcn,apcs,apco,ap4h,ap4x |
 | Apple QuickDraw |  | X | fourcc: qdrw |
 | APV |  | X |  |
-| Argonaut Video |  | X | Used in some Argonaut games. |
+| Argonaut Video |  | X | 用于部分 Argonaut 游戏。 |
 | Asus v1 | X | X | fourcc: ASV1 |
 | Asus v2 | X | X | fourcc: ASV2 |
 | ATI VCR1 |  | X | fourcc: VCR1 |
@@ -651,59 +647,59 @@ FFmpeg can read and write images for each frame of a video sequence. The followi
 | Auravision Aura 2 |  | X |  |
 | Autodesk Animator Flic video |  | X |  |
 | Autodesk RLE |  | X | fourcc: AASC |
-| AV1 | E | E | Supported through external libraries libaom, libdav1d, librav1e and libsvtav1 |
+| AV1 | E | E | 经外部库 libaom、libdav1d、librav1e 与 libsvtav1 支持 |
 | Avid 1:1 10-bit RGB Packer | X | X | fourcc: AVrp |
-| AVS (Audio Video Standard) video |  | X | Video encoding used by the Creature Shock game. |
-| AVS2-P2/IEEE1857.4 | E | E | Supported through external libraries libxavs2 and libdavs2 |
-| AVS3-P2/IEEE1857.10 |  | E | Supported through external library libuavs3d |
-| AYUV | X | X | Microsoft uncompressed packed 4:4:4:4 |
+| AVS (Audio Video Standard) video |  | X | Creature Shock 游戏使用的视频编码。 |
+| AVS2-P2/IEEE1857.4 | E | E | 经外部库 libxavs2 与 libdavs2 支持 |
+| AVS3-P2/IEEE1857.10 |  | E | 经外部库 libuavs3d 支持 |
+| AYUV | X | X | Microsoft 无压缩打包 4:4:4:4 |
 | Beam Software VB |  | X |  |
-| Bethesda VID video |  | X | Used in some games from Bethesda Softworks. |
+| Bethesda VID video |  | X | 用于 Bethesda Softworks 的部分游戏。 |
 | Bink Video |  | X |  |
 | BitJazz SheerVideo |  | X |  |
 | Bitmap Brothers JV video |  | X |  |
 | y41p Brooktree uncompressed 4:1:1 12-bit | X | X |  |
 | Brooktree ProSumer Video |  | X | fourcc: BT20 |
-| Brute Force & Ignorance |  | X | Used in the game Flash Traffic: City of Angels. |
-| C93 video |  | X | Codec used in Cyberia game. |
+| Brute Force & Ignorance |  | X | 用于游戏 Flash Traffic: City of Angels。 |
+| C93 video |  | X | Cyberia 游戏使用的编解码器。 |
 | CamStudio |  | X | fourcc: CSCD |
-| CD+G |  | X | Video codec for CD+G karaoke disks |
-| CDXL |  | X | Amiga CD video codec |
-| Chinese AVS video | E | X | AVS1-P2, JiZhun profile, encoding through external library libxavs |
-| Delphine Software International CIN video |  | X | Codec used in Delphine Software International games. |
+| CD+G |  | X | CD+G 卡拉 OK 光盘使用的视频编解码器 |
+| CDXL |  | X | Amiga CD 视频编解码器 |
+| Chinese AVS video | E | X | AVS1-P2，JiZhun 配置档，编码经外部库 libxavs |
+| Delphine Software International CIN video |  | X | Delphine Software International 游戏使用的编解码器。 |
 | Discworld II BMV Video |  | X |  |
 | CineForm HD | X | X |  |
 | Canopus HQ |  | X |  |
 | Canopus HQA |  | X |  |
 | Canopus HQX |  | X |  |
 | Canopus Lossless Codec |  | X |  |
-| CDToons |  | X | Codec used in various Broderbund games. |
+| CDToons |  | X | 多款 Broderbund 游戏使用的编解码器。 |
 | Cinepak |  | X |  |
 | Cirrus Logic AccuPak | X | X | fourcc: CLJR |
 | CPiA Video Format |  | X |  |
 | Creative YUV (CYUV) |  | X |  |
-| DFA |  | X | Codec used in Chronomaster game. |
-| Dirac | E | X | supported though the native vc2 (Dirac Pro) encoder |
+| DFA |  | X | Chronomaster 游戏使用的编解码器。 |
+| Dirac | E | X | 经原生 vc2 (Dirac Pro) 编码器支持 |
 | Deluxe Paint Animation |  | X |  |
-| DNxHD | X | X | aka SMPTE VC3 |
+| DNxHD | X | X | 又称 SMPTE VC3 |
 | Duck TrueMotion 1.0 |  | X | fourcc: DUCK |
 | Duck TrueMotion 2.0 |  | X | fourcc: TM20 |
 | Duck TrueMotion 2.0 RT |  | X | fourcc: TR20 |
 | DV (Digital Video) | X | X |  |
 | Dxtory capture format |  | X |  |
-| Feeble Files/ScummVM DXA |  | X | Codec originally used in Feeble Files game. |
-| Electronic Arts CMV video |  | X | Used in NHL 95 game. |
+| Feeble Files/ScummVM DXA |  | X | 最初用于 Feeble Files 游戏的编解码器。 |
+| Electronic Arts CMV video |  | X | 用于游戏 NHL 95。 |
 | Electronic Arts Madcow video |  | X |  |
 | Electronic Arts TGV video |  | X |  |
 | Electronic Arts TGQ video |  | X |  |
 | Electronic Arts TQI video |  | X |  |
 | Escape 124 |  | X |  |
 | Escape 130 |  | X |  |
-| EVC / MPEG-5 Part 1 | E | E | encoding and decoding supported through external libraries libxeve and libxevd |
-| FFmpeg video codec \#1 | X | X | lossless codec (fourcc: FFV1) |
+| EVC / MPEG-5 Part 1 | E | E | 编码与解码经外部库 libxeve 与 libxevd 支持 |
+| FFmpeg video codec \#1 | X | X | 无损编解码器（fourcc: FFV1） |
 | Flash Screen Video v1 | X | X | fourcc: FSV1 |
 | Flash Screen Video v2 | X | X |  |
-| Flash Video (FLV) | X | X | Sorenson H.263 used in Flash |
+| Flash Video (FLV) | X | X | Flash 中使用的 Sorenson H.263 |
 | FM Screen Capture Codec |  | X |  |
 | Forward Uncompressed |  | X |  |
 | Fraps |  | X |  |
@@ -713,65 +709,65 @@ FFmpeg can read and write images for each frame of a video sequence. The followi
 | H.261 | X | X |  |
 | H.263 / H.263-1996 | X | X |  |
 | H.263+ / H.263-1998 / H.263 version 2 | X | X |  |
-| H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 | E | X | encoding supported through external library libx264 and OpenH264 |
-| HEVC | X | X | encoding supported through external library libx265 and libkvazaar |
+| H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 | E | X | 编码经外部库 libx264 与 OpenH264 支持 |
+| HEVC | X | X | 编码经外部库 libx265 与 libkvazaar 支持 |
 | HNM version 4 |  | X |  |
 | HuffYUV | X | X |  |
 | HuffYUV FFmpeg variant | X | X |  |
 | IBM Ultimotion |  | X | fourcc: ULTI |
-| id Cinematic video |  | X | Used in Quake II. |
-| id RoQ video | X | X | Used in Quake III, Jedi Knight 2, other computer games. |
-| IFF ILBM |  | X | IFF interleaved bitmap |
-| IFF ByteRun1 |  | X | IFF run length encoded bitmap |
+| id Cinematic video |  | X | 用于 Quake II。 |
+| id RoQ video | X | X | 用于 Quake III、Jedi Knight 2 及其他电脑游戏。 |
+| IFF ILBM |  | X | IFF 交错位图 |
+| IFF ByteRun1 |  | X | IFF 行程编码位图 |
 | Infinity IMM4 |  | X |  |
 | Intel H.263 |  | X |  |
 | Intel Indeo 2 |  | X |  |
 | Intel Indeo 3 |  | X |  |
 | Intel Indeo 4 |  | X |  |
 | Intel Indeo 5 |  | X |  |
-| Interplay C93 |  | X | Used in the game Cyberia from Interplay. |
-| Interplay MVE video |  | X | Used in Interplay .MVE files. |
+| Interplay C93 |  | X | 用于 Interplay 的游戏 Cyberia。 |
+| Interplay MVE video |  | X | 用于 Interplay .MVE 文件。 |
 | J2K | X | X |  |
-| Karl Morton's video codec |  | X | Codec used in Worms games. |
-| Kega Game Video (KGV1) |  | X | Kega emulator screen capture codec. |
+| Karl Morton's video codec |  | X | Worms 游戏使用的编解码器。 |
+| Kega Game Video (KGV1) |  | X | Kega 模拟器屏幕抓取编解码器。 |
 | Lagarith |  | X |  |
-| LCEVC / MPEG-5 LCEVC / MPEG-5 Part 2 |  | E | decoding supported through external library liblcevc-dec |
+| LCEVC / MPEG-5 LCEVC / MPEG-5 Part 2 |  | E | 解码经外部库 liblcevc-dec 支持 |
 | LCL (LossLess Codec Library) MSZH |  | X |  |
 | LCL (LossLess Codec Library) ZLIB | E | E |  |
 | LEAD MCMP |  | X |  |
 | LOCO |  | X |  |
-| LucasArts SANM/Smush |  | X | Used in LucasArts games / SMUSH animations. |
+| LucasArts SANM/Smush |  | X | 用于 LucasArts 游戏 / SMUSH 动画。 |
 | lossless MJPEG | X | X |  |
 | MagicYUV Video | X | X |  |
 | Mandsoft Screen Capture Codec |  | X |  |
-| Microsoft ATC Screen |  | X | Also known as Microsoft Screen 3. |
-| Microsoft Expression Encoder Screen |  | X | Also known as Microsoft Titanium Screen 2. |
+| Microsoft ATC Screen |  | X | 亦称 Microsoft Screen 3。 |
+| Microsoft Expression Encoder Screen |  | X | 亦称 Microsoft Titanium Screen 2。 |
 | Microsoft RLE | X | X |  |
-| Microsoft Screen 1 |  | X | Also known as Windows Media Video V7 Screen. |
-| Microsoft Screen 2 |  | X | Also known as Windows Media Video V9 Screen. |
+| Microsoft Screen 1 |  | X | 亦称 Windows Media Video V7 Screen。 |
+| Microsoft Screen 2 |  | X | 亦称 Windows Media Video V9 Screen。 |
 | Microsoft Video 1 |  | X |  |
-| Mimic |  | X | Used in MSN Messenger Webcam streams. |
+| Mimic |  | X | 用于 MSN Messenger 网络摄像头流。 |
 | Miro VideoXL |  | X | fourcc: VIXL |
 | MJPEG (Motion JPEG) | X | X |  |
 | Mobotix MxPEG video |  | X |  |
 | Motion Pixels video |  | X |  |
 | MPEG-1 video | X | X |  |
 | MPEG-2 video | X | X |  |
-| MPEG-4 part 2 | X | X | libxvidcore can be used alternatively for encoding. |
+| MPEG-4 part 2 | X | X | 编码亦可改用 libxvidcore。 |
 | MPEG-4 part 2 Microsoft variant version 1 |  | X |  |
 | MPEG-4 part 2 Microsoft variant version 2 | X | X |  |
 | MPEG-4 part 2 Microsoft variant version 3 | X | X |  |
 | Newtek SpeedHQ | X | X |  |
 | Nintendo Gamecube THP video |  | X |  |
 | NotchLC |  | X |  |
-| NuppelVideo/RTjpeg |  | X | Video encoding used in NuppelVideo files. |
-| On2 VP3 |  | X | still experimental |
+| NuppelVideo/RTjpeg |  | X | NuppelVideo 文件使用的视频编码。 |
+| On2 VP3 |  | X | 仍为实验性 |
 | On2 VP4 |  | X | fourcc: VP40 |
 | On2 VP5 |  | X | fourcc: VP50 |
 | On2 VP6 |  | X | fourcc: VP60,VP61,VP62 |
 | On2 VP7 |  | X | fourcc: VP70,VP71 |
-| VP8 | E | X | fourcc: VP80, encoding supported through external library libvpx |
-| VP9 | E | X | encoding supported through external library libvpx |
+| VP8 | E | X | fourcc: VP80，编码经外部库 libvpx 支持 |
+| VP9 | E | X | 编码经外部库 libvpx 支持 |
 | Pinnacle TARGA CineWave YUV16 |  | X | fourcc: Y216 |
 | Q-team QPEG |  | X | fourccs: QPEG, Q1.0, Q1.1 |
 | QuickTime 8BPS video |  | X |  |
@@ -783,30 +779,30 @@ FFmpeg can read and write images for each frame of a video sequence. The followi
 | Raw Video | X | X |  |
 | RealVideo 1.0 | X | X |  |
 | RealVideo 2.0 | X | X |  |
-| RealVideo 3.0 |  | X | still far from ideal |
+| RealVideo 3.0 |  | X | 距离理想还很远 |
 | RealVideo 4.0 |  | X |  |
 | RealVideo 6.0 |  | X |  |
-| Renderware TXD (TeXture Dictionary) |  | X | Texture dictionaries used by the Renderware Engine. |
+| Renderware TXD (TeXture Dictionary) |  | X | Renderware 引擎使用的纹理字典。 |
 | RivaTuner Video |  | X | fourcc: 'RTV1' |
-| RL2 video |  | X | used in some games by Entertainment Software Partners |
+| RL2 video |  | X | 用于 Entertainment Software Partners 的部分游戏 |
 | ScreenPressor |  | X |  |
 | Screenpresso |  | X |  |
 | Screen Recorder Gold Codec |  | X |  |
-| Sierra VMD video |  | X | Used in Sierra VMD files. |
+| Sierra VMD video |  | X | 用于 Sierra VMD 文件。 |
 | Silicon Graphics Motion Video Compressor 1 (MVC1) |  | X |  |
 | Silicon Graphics Motion Video Compressor 2 (MVC2) |  | X |  |
 | Silicon Graphics RLE 8-bit video |  | X |  |
-| Smacker video |  | X | Video encoding used in Smacker. |
+| Smacker video |  | X | Smacker 使用的视频编码。 |
 | SMPTE VC-1 |  | X |  |
-| Snow | X | X | experimental wavelet codec (fourcc: SNOW) |
+| Snow | X | X | 实验性小波编解码器（fourcc: SNOW） |
 | Sony PlayStation MDEC (Motion DECoder) |  | X |  |
 | Sorenson Vector Quantizer 1 | X | X | fourcc: SVQ1 |
 | Sorenson Vector Quantizer 3 |  | X | fourcc: SVQ3 |
 | Sunplus JPEG (SP5X) |  | X | fourcc: SP5X |
 | TechSmith Screen Capture Codec |  | X | fourcc: TSCC |
 | TechSmith Screen Capture Codec 2 |  | X | fourcc: TSC2 |
-| Theora | E | X | encoding supported through external library libtheora |
-| Tiertex Limited SEQ video |  | X | Codec used in DOS CD-ROM FlashBack game. |
+| Theora | E | X | 编码经外部库 libtheora 支持 |
+| Tiertex Limited SEQ video |  | X | DOS CD-ROM 版游戏 FlashBack 使用的编解码器。 |
 | Ut Video | X | X |  |
 | v210 QuickTime uncompressed 4:2:2 10-bit | X | X |  |
 | v308 QuickTime uncompressed 4:4:4 | X | X |  |
@@ -814,36 +810,36 @@ FFmpeg can read and write images for each frame of a video sequence. The followi
 | v410 QuickTime uncompressed 4:4:4 10-bit | X | X |  |
 | VBLE Lossless Codec |  | X |  |
 | vMix Video |  | X | fourcc: 'VMX1' |
-| VMware Screen Codec / VMware Video |  | X | Codec used in videos captured by VMware. |
+| VMware Screen Codec / VMware Video |  | X | VMware 录制视频所用的编解码器。 |
 | Westwood Studios VQA (Vector Quantized Animation) video |  | X |  |
 | Windows Media Image |  | X |  |
 | Windows Media Video 7 | X | X |  |
 | Windows Media Video 8 | X | X |  |
-| Windows Media Video 9 |  | X | not completely working |
-| Wing Commander III / Xan |  | X | Used in Wing Commander III .MVE files. |
-| Wing Commander IV / Xan |  | X | Used in Wing Commander IV. |
+| Windows Media Video 9 |  | X | 尚未完全可用 |
+| Wing Commander III / Xan |  | X | 用于 Wing Commander III .MVE 文件。 |
+| Wing Commander IV / Xan |  | X | 用于 Wing Commander IV。 |
 | Winnov WNV1 |  | X |  |
 | WMV7 | X | X |  |
 | YAMAHA SMAF | X | X |  |
 | Psygnosis YOP Video |  | X |  |
-| yuv4 | X | X | libquicktime uncompressed packed 4:2:0 |
+| yuv4 | X | X | libquicktime 无压缩打包 4:2:0 |
 | ZeroCodec Lossless Video |  | X |  |
-| ZLIB | X | X | part of LCL, encoder experimental |
-| Zip Motion Blocks Video | X | X | Encoder works only in PAL8. |
+| ZLIB | X | X | LCL 的一部分，编码器为实验性 |
+| Zip Motion Blocks Video | X | X | 编码器仅在 PAL8 下工作。 |
 
-`X` means that the feature in that column (encoding / decoding) is supported.
+`X` 表示该列（编码 / 解码）所对应的特性受支持。
 
-`E` means that support is provided through an external library.
+`E` 表示该支持经由外部库提供。
 
-## Audio Codecs
+## 音频编解码器
 
 |  |  |  |  |
 |----|----|----|----|
 | Name | Encoding | Decoding | Comments |
 | 8SVX exponential |  | X |  |
 | 8SVX fibonacci |  | X |  |
-| AAC | EX | X | encoding supported through internal encoder and external library libfdk-aac |
-| AAC+ | E | IX | encoding supported through external library libfdk-aac |
+| AAC | EX | X | 编码经内部编码器与外部库 libfdk-aac 支持 |
+| AAC+ | E | IX | 编码经外部库 libfdk-aac 支持 |
 | AC-3 | IX | IX |  |
 | ACELP.KELVIN |  | X |  |
 | ADPCM 4X Movie |  | X |  |
@@ -852,8 +848,8 @@ FFmpeg can read and write images for each frame of a video sequence. The followi
 | ADPCM Argonaut Games | X | X |  |
 | ADPCM CDROM XA |  | X |  |
 | ADPCM Creative Technology |  | X | 16 -\> 4, 8 -\> 4, 8 -\> 3, 8 -\> 2 |
-| ADPCM Electronic Arts |  | X | Used in various EA titles. |
-| ADPCM Electronic Arts Maxis CDROM XS |  | X | Used in Sim City 3000. |
+| ADPCM Electronic Arts |  | X | 用于多款 EA 作品。 |
+| ADPCM Electronic Arts Maxis CDROM XS |  | X | 用于 Sim City 3000。 |
 | ADPCM Electronic Arts R1 |  | X |  |
 | ADPCM Electronic Arts R2 |  | X |  |
 | ADPCM Electronic Arts R3 |  | X |  |
@@ -861,7 +857,7 @@ FFmpeg can read and write images for each frame of a video sequence. The followi
 | ADPCM G.722 | X | X |  |
 | ADPCM G.726 | X | X |  |
 | ADPCM IMA Acorn Replay |  | X |  |
-| ADPCM IMA AMV | X | X | Used in AMV files |
+| ADPCM IMA AMV | X | X | 用于 AMV 文件 |
 | ADPCM IMA Cunning Developments |  | X |  |
 | ADPCM IMA Electronic Arts EACS |  | X |  |
 | ADPCM IMA Electronic Arts SEAD |  | X |  |
@@ -874,10 +870,10 @@ FFmpeg can read and write images for each frame of a video sequence. The followi
 | ADPCM IMA Loki SDL MJPEG |  | X |  |
 | ADPCM IMA WAV | X | X |  |
 | ADPCM IMA Westwood |  | X |  |
-| ADPCM ISS IMA |  | X | Used in FunCom games. |
+| ADPCM ISS IMA |  | X | 用于 FunCom 游戏。 |
 | ADPCM IMA Dialogic |  | X |  |
-| ADPCM IMA Duck DK3 |  | X | Used in some Sega Saturn console games. |
-| ADPCM IMA Duck DK4 |  | X | Used in some Sega Saturn console games. |
+| ADPCM IMA Duck DK3 |  | X | 用于部分 Sega Saturn 主机游戏。 |
+| ADPCM IMA Duck DK4 |  | X | 用于部分 Sega Saturn 主机游戏。 |
 | ADPCM IMA Radical |  | X |  |
 | ADPCM IMA Xbox |  | X |  |
 | ADPCM Microsoft | X | X |  |
@@ -888,46 +884,46 @@ FFmpeg can read and write images for each frame of a video sequence. The followi
 | ADPCM Playstation |  | X |  |
 | ADPCM QT IMA | X | X |  |
 | ADPCM Sanyo |  | X |  |
-| ADPCM SEGA CRI ADX | X | X | Used in Sega Dreamcast games. |
+| ADPCM SEGA CRI ADX | X | X | 用于 Sega Dreamcast 游戏。 |
 | ADPCM Shockwave Flash | X | X |  |
 | ADPCM Sound Blaster Pro 2-bit |  | X |  |
 | ADPCM Sound Blaster Pro 2.6-bit |  | X |  |
 | ADPCM Sound Blaster Pro 4-bit |  | X |  |
-| ADPCM VIMA |  | X | Used in LucasArts SMUSH animations. |
+| ADPCM VIMA |  | X | 用于 LucasArts SMUSH 动画。 |
 | ADPCM Konami XMD |  | X |  |
-| ADPCM Westwood Studios IMA | X | X | Used in Westwood Studios games like Command and Conquer. |
+| ADPCM Westwood Studios IMA | X | X | 用于 Command and Conquer 等 Westwood Studios 游戏。 |
 | ADPCM Yamaha | X | X |  |
 | ADPCM Zork |  | X |  |
-| AMR-NB | E | X | encoding supported through external library libopencore-amrnb |
-| AMR-WB | E | X | encoding supported through external library libvo-amrwbenc |
+| AMR-NB | E | X | 编码经外部库 libopencore-amrnb 支持 |
+| AMR-WB | E | X | 编码经外部库 libvo-amrwbenc 支持 |
 | Amazing Studio PAF Audio |  | X |  |
 | Apple lossless audio | X | X | QuickTime fourcc 'alac' |
-| aptX | X | X | Used in Bluetooth A2DP |
-| aptX HD | X | X | Used in Bluetooth A2DP |
+| aptX | X | X | 用于蓝牙 A2DP |
+| aptX HD | X | X | 用于蓝牙 A2DP |
 | ATRAC1 |  | X |  |
 | ATRAC3 |  | X |  |
 | ATRAC3+ |  | X |  |
 | ATRAC9 |  | X |  |
-| Bink Audio |  | X | Used in Bink and Smacker files in many games. |
+| Bink Audio |  | X | 用于许多游戏的 Bink 与 Smacker 文件。 |
 | Bonk audio |  | X |  |
-| codec2 | E | E | en/decoding supported through external library libcodec2 |
+| codec2 | E | E | 编码/解码经外部库 libcodec2 支持 |
 | CRI HCA |  | X |  |
-| Delphine Software International CIN audio |  | X | Codec used in Delphine Software International games. |
+| Delphine Software International CIN audio |  | X | Delphine Software International 游戏使用的编解码器。 |
 | DFPWM | X | X |  |
 | Digital Speech Standard - Standard Play mode (DSS SP) |  | X |  |
 | Discworld II BMV Audio |  | X |  |
-| COOK |  | X | All versions except 5.1 are supported. |
-| DCA (DTS Coherent Acoustics) | X | X | supported extensions: XCh, XXCH, X96, XBR, XLL, LBR (partially) |
+| COOK |  | X | 除 5.1 外的所有版本均受支持。 |
+| DCA (DTS Coherent Acoustics) | X | X | 受支持的扩展：XCh、XXCH、X96、XBR、XLL、LBR（部分） |
 | Dolby E |  | X |  |
-| DPCM Cuberoot-Delta-Exact |  | X | Used in few games. |
+| DPCM Cuberoot-Delta-Exact |  | X | 用于少数游戏。 |
 | DPCM Gremlin |  | X |  |
-| DPCM id RoQ | X | X | Used in Quake III, Jedi Knight 2 and other computer games. |
+| DPCM id RoQ | X | X | 用于 Quake III、Jedi Knight 2 及其他电脑游戏。 |
 | DPCM Marble WADY |  | X |  |
-| DPCM Interplay |  | X | Used in various Interplay computer games. |
-| DPCM Squareroot-Delta-Exact |  | X | Used in various games. |
-| DPCM Sierra Online |  | X | Used in Sierra Online game audio files. |
+| DPCM Interplay |  | X | 用于多款 Interplay 电脑游戏。 |
+| DPCM Squareroot-Delta-Exact |  | X | 用于多款游戏。 |
+| DPCM Sierra Online |  | X | 用于 Sierra Online 游戏音频文件。 |
 | DPCM Sol |  | X |  |
-| DPCM Xan |  | X | Used in Origin's Wing Commander IV AVI files. |
+| DPCM Xan |  | X | 用于 Origin 的 Wing Commander IV AVI 文件。 |
 | DPCM Xilam DERF |  | X |  |
 | DSD (Direct Stream Digital), least significant bit first |  | X |  |
 | DSD (Direct Stream Digital), most significant bit first |  | X |  |
@@ -943,29 +939,29 @@ FFmpeg can read and write images for each frame of a video sequence. The followi
 | G.723.1 | X | X |  |
 | G.728 |  | X |  |
 | G.729 |  | X |  |
-| GSM | E | X | encoding supported through external library libgsm |
-| GSM Microsoft variant | E | X | encoding supported through external library libgsm |
+| GSM | E | X | 编码经外部库 libgsm 支持 |
+| GSM Microsoft variant | E | X | 编码经外部库 libgsm 支持 |
 | IAC (Indeo Audio Coder) |  | X |  |
-| iLBC (Internet Low Bitrate Codec) | E | EX | encoding and decoding supported through external library libilbc |
+| iLBC (Internet Low Bitrate Codec) | E | EX | 编码与解码经外部库 libilbc 支持 |
 | IMC (Intel Music Coder) |  | X |  |
 | Interplay ACM |  | X |  |
-| LC3 | E | E | supported through external library liblc3 |
+| LC3 | E | E | 经外部库 liblc3 支持 |
 | MACE (Macintosh Audio Compression/Expansion) 6:1 |  | X |  |
 | Marian's A-pac audio |  | X |  |
 | MI-SC4 (Micronas SC-4 Audio) |  | X |  |
-| MLP (Meridian Lossless Packing) | X | X | Used in DVD-Audio discs. |
+| MLP (Meridian Lossless Packing) | X | X | 用于 DVD-Audio 光盘。 |
 | Monkey's Audio |  | X |  |
 | MP1 (MPEG audio layer 1) |  | IX |  |
-| MP2 (MPEG audio layer 2) | IX | IX | encoding supported also through external library TwoLAME |
-| MP3 (MPEG audio layer 3) | E | IX | encoding supported through external library LAME, ADU MP3 and MP3onMP4 also supported |
+| MP2 (MPEG audio layer 2) | IX | IX | 编码亦可经外部库 TwoLAME 支持 |
+| MP3 (MPEG audio layer 3) | E | IX | 编码经外部库 LAME 支持，ADU MP3 与 MP3onMP4 亦受支持 |
 | MPEG-4 Audio Lossless Coding (ALS) |  | X |  |
-| MPEG-H 3D Audio |  | E | decoding supported through external library libmpeghdec |
+| MPEG-H 3D Audio |  | E | 解码经外部库 libmpeghdec 支持 |
 | MobiClip FastAudio |  | X |  |
 | Musepack SV7 |  | X |  |
 | Musepack SV8 |  | X |  |
 | Nellymoser Asao | X | X |  |
 | On2 AVC (Audio for Video Codec) |  | X |  |
-| Opus | E | X | encoding supported through external library libopus |
+| Opus | E | X | 编码经外部库 libopus 支持 |
 | OSQ (Original Sound Quality) |  | X |  |
 | PCM A-law | X | X |  |
 | PCM mu-law | X | X |  |
@@ -998,28 +994,28 @@ FFmpeg can read and write images for each frame of a video sequence. The followi
 | PCM SGA |  | X |  |
 | QCELP / PureVoice |  | X |  |
 | QDesign Music Codec 1 |  | X |  |
-| QDesign Music Codec 2 |  | X | There are still some distortions. |
-| RealAudio 1.0 (14.4K) | X | X | Real 14400 bit/s codec |
-| RealAudio 2.0 (28.8K) |  | X | Real 28800 bit/s codec |
-| RealAudio 3.0 (dnet) | IX | X | Real low bitrate AC-3 codec |
+| QDesign Music Codec 2 |  | X | 仍存在一些失真。 |
+| RealAudio 1.0 (14.4K) | X | X | Real 14400 bit/s 编解码器 |
+| RealAudio 2.0 (28.8K) |  | X | Real 28800 bit/s 编解码器 |
+| RealAudio 3.0 (dnet) | IX | X | Real 低码率 AC-3 编解码器 |
 | RealAudio Lossless |  | X |  |
 | RealAudio SIPR / ACELP.NET |  | X |  |
 | RK Audio (RKA) |  | X |  |
-| SBC (low-complexity subband codec) | X | X | Used in Bluetooth A2DP |
+| SBC (low-complexity subband codec) | X | X | 用于蓝牙 A2DP |
 | Shorten |  | X |  |
-| Sierra VMD audio |  | X | Used in Sierra VMD files. |
+| Sierra VMD audio |  | X | 用于 Sierra VMD 文件。 |
 | Smacker audio |  | X |  |
 | SMPTE 302M AES3 audio | X | X |  |
-| Sonic | X | X | experimental codec |
-| Sonic lossless | X | X | experimental codec |
-| Speex | E | EX | supported through external library libspeex |
+| Sonic | X | X | 实验性编解码器 |
+| Sonic lossless | X | X | 实验性编解码器 |
+| Speex | E | EX | 经外部库 libspeex 支持 |
 | TAK (Tom's lossless Audio Kompressor) |  | X |  |
 | True Audio (TTA) | X | X |  |
-| TrueHD | X | X | Used in HD-DVD and Blu-Ray discs. |
+| TrueHD | X | X | 用于 HD-DVD 与 Blu-Ray 光盘。 |
 | TwinVQ (VQF flavor) |  | X |  |
-| VIMA |  | X | Used in LucasArts SMUSH animations. |
+| VIMA |  | X | 用于 LucasArts SMUSH 动画。 |
 | ViewQuest VQC |  | X |  |
-| Vorbis | E | X | A native but very primitive encoder exists. |
+| Vorbis | E | X | 已有一个原生但非常简陋的编码器。 |
 | Voxware MetaSound |  | X |  |
 | Waveform Archiver |  | X |  |
 | WavPack | X | X |  |
@@ -1032,13 +1028,13 @@ FFmpeg can read and write images for each frame of a video sequence. The followi
 | Xbox Media Audio 1 |  | X |  |
 | Xbox Media Audio 2 |  | X |  |
 
-`X` means that the feature in that column (encoding / decoding) is supported.
+`X` 表示该列（编码 / 解码）所对应的特性受支持。
 
-`E` means that support is provided through an external library.
+`E` 表示该支持经由外部库提供。
 
-`I` means that an integer-only version is available, too (ensures high performance on systems without hardware floating point support).
+`I` 表示也存在仅整数版本（确保在没有硬件浮点支持的系统上获得高性能）。
 
-## Subtitle Formats
+## 字幕格式
 
 |                     |        |          |          |          |
 |---------------------|--------|----------|----------|----------|
@@ -1068,11 +1064,11 @@ FFmpeg can read and write images for each frame of a video sequence. The followi
 | WebVTT              | X      | X        | X        | X        |
 | XSUB                |        |          | X        | X        |
 
-`X` means that the feature is supported.
+`X` 表示该特性受支持。
 
-`E` means that support is provided through an external library.
+`E` 表示该支持经由外部库提供。
 
-## Network Protocols
+## 网络协议
 
 |              |         |
 |--------------|---------|
@@ -1105,11 +1101,11 @@ FFmpeg can read and write images for each frame of a video sequence. The followi
 | UDP          | X       |
 | ZMQ          | E       |
 
-`X` means that the protocol is supported.
+`X` 表示该协议受支持。
 
-`E` means that support is provided through an external library.
+`E` 表示该支持经由外部库提供。
 
-## Input/Output Devices
+## 输入/输出设备
 
 |                      |       |        |
 |----------------------|-------|--------|
@@ -1133,9 +1129,9 @@ FFmpeg can read and write images for each frame of a video sequence. The followi
 | X11 grabbing         | X     |        |
 | Win32 grabbing       | X     |        |
 
-`X` means that input/output is supported.
+`X` 表示支持该输入/输出。
 
-## Timecode
+## 时间码
 
 |              |      |       |
 |--------------|------|-------|
