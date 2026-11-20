@@ -34,9 +34,9 @@
 | general/fate.md | 78 | 0 | 0 | P0（B8 已完成 2026-11-21；看板原记 0 段系 M1 fate 修复前的陈旧快照，B8 按 state 权威口径补译） |
 | general/authors.md | 4 | 0 | 0 | P0（B8 已完成 2026-11-21） |
 | general/mailing-list-faq.md | 114 | 0 | 0 | P2（B8 已完成 2026-11-21） |
-| general/nut.md | 28 | 28 | 0 | P2 |
-| general/community.md | 73 | 73 | 0 | P2 |
-| general/drawvg-reference.md | 929 | 929 | 0 | P2 |
+| general/nut.md | 28 | 0 | 0 | P2（B9 已完成 2026-11-21） |
+| general/community.md | 73 | 0 | 0 | P2（B9 已完成 2026-11-21） |
+| general/drawvg-reference.md | 929 | 0 | 0 | P2（B9 已完成 2026-11-21） |
 | general/APIchanges.md | 4 | 0 | 4 | 豁免（英文占位页，fmt DR-014） |
 
 ## 批次（正文 B 系列，按优先级排序）
@@ -51,7 +51,7 @@
 | B6 | components/devices.md | 570 | 已完成（2026-11-21，一笔提交，段级组装+校验全绿；随行=glossary 补录 11 条至 205） |
 | B7 | libraries/libavutil.md + libraries/libavcodec.md + libraries/libavformat.md + libraries/libavdevice.md + libraries/libavfilter.md + libraries/libswscale.md + libraries/libswresample.md + general/faq.md + general/general.md + general/platform.md | 531 | 已完成（2026-11-21，四笔提交 d3c1f5b/d7e75fa/a9c7861/051e91e，段级组装+校验全绿；随行=无需 heading-bridge 登记（faq 页内锚点 tr 内中文 slug 改写、无跨页入链）/glossary 补录 12 条至 217） |
 | B8 | general/developer.md + general/git-howto.md + general/fate.md + general/authors.md + general/mailing-list-faq.md | 622 | 已完成（2026-11-21，五笔提交 485f2a5/ac5f61a/7ef3530/690e537/7664fe1 + 校验器修复 743ecb6，段级组装+校验全绿；随行=fate.md 按 state 权威口径补译 78 段（看板原记 0 段系 M1 陈旧快照）/glossary 补录 19 条至 236/validate_translation HTML 栈检查放行邮箱自动链接） |
-| B9 | general/nut.md + general/community.md + general/drawvg-reference.md | 1030 | 未开始 |
+| B9 | general/nut.md + general/community.md + general/drawvg-reference.md | 1030 | 已完成（2026-11-21，三笔提交 6fe7ddf/6033312/fb89fda + nut 术语对齐修复一笔，段级组装+校验全绿；随行=glossary 补录 33 条至 269/drawvg 359 处页内锚点经映射表改写为译后标题 slug（占位页 #section 死链 INFO 消解，INFO 560→559）/三页均无需 heading-bridge 登记） |
 
 ## 批次（filters 卷 F 系列，按章节分组，DR-008）
 
