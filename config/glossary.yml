@@ -4,6 +4,8 @@
 # 冻结点：M2 批次 B1 完成后冻结 v1（PLAN §9）；基线 12 条见 R3 修订
 # v1 已冻结：2026-11-20（B1 批完成，随批补录 15 条并评审为 approved；
 # v2 解冻条件=出现跨批译法冲突或上游 n10 术语变更，届时走 DR 流程）
+# B2 批随批补录 4 条（writer/master clock/show mode/side data，
+# 2026-11-20 随批评审 approved；沿用 B1"术语表是活文档"约定）
 # 原则：muxer=复用器 / demuxer=解复用器（社区主流技术译法，R3 明确）
 
 terms:
@@ -870,4 +872,29 @@ terms:
     zh: "extradata"
     status: "approved"
     context: "manuals/API（编解码器额外数据，不译）"
+    aliases: []
+
+  # ===== B2 批补录（ffprobe/ffplay/common-options/utils，2026-11-20 随批评审 approved） =====
+  - en: "writer"
+    zh: "写入器"
+    status: "approved"
+    context: "manual/ffprobe（ffprobe 输出格式器；首次出现括注 writer）"
+    aliases: []
+
+  - en: "master clock"
+    zh: "主时钟"
+    status: "approved"
+    context: "manual/ffplay（音视频同步基准）"
+    aliases: []
+
+  - en: "show mode"
+    zh: "显示模式"
+    status: "approved"
+    context: "manual/ffplay（-showmode 取值）"
+    aliases: []
+
+  - en: "side data"
+    zh: "side data"
+    status: "approved"
+    context: "manuals/API（帧/包附加数据，与 extradata 同口径不译）"
     aliases: []

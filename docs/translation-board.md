@@ -8,10 +8,10 @@
 | 文件 | 段落 | 待译 | 豁免 | 优先级 |
 |---|---|---|---|---|
 | manual/ffmpeg.md | 805 | 0 | 0 | P0（B1 已完成 2026-11-20） |
-| manual/ffplay.md | 80 | 80 | 0 | P0 |
-| manual/ffprobe.md | 183 | 183 | 0 | P0 |
-| manual/common-options.md | 146 | 146 | 0 | P0 |
-| components/utils.md | 203 | 203 | 0 | P0 |
+| manual/ffplay.md | 80 | 0 | 0 | P0（B2 已完成 2026-11-20） |
+| manual/ffprobe.md | 183 | 0 | 0 | P0（B2 已完成 2026-11-20） |
+| manual/common-options.md | 146 | 0 | 0 | P0（B2 已完成 2026-11-20） |
+| components/utils.md | 203 | 0 | 0 | P0（B2 已完成 2026-11-20） |
 | components/scaler.md | 66 | 66 | 0 | P0 |
 | components/resampler.md | 54 | 54 | 0 | P0 |
 | components/codecs.md | 1983 | 1983 | 0 | P0 |
@@ -44,7 +44,7 @@
 | 批次 | 范围 | 段数 | 状态 |
 |---|---|---|---|
 | B1 | manual/ffmpeg.md | 805 | 已完成（2026-11-20，段级组装 + 校验全绿；随行=glossary v1 冻结/validate_translation.py 落地/DR-010） |
-| B2 | manual/ffplay.md + manual/ffprobe.md + manual/common-options.md + components/utils.md | 612 | 未开始 |
+| B2 | manual/ffplay.md + manual/ffprobe.md + manual/common-options.md + components/utils.md | 612 | 已完成（2026-11-20，段级组装+校验全绿；随行=DR-011 标题桥接/校验器自动链接放行/glossary 补录 4 条） |
 | B3 | components/scaler.md + components/resampler.md + components/codecs.md | 2103 | 未开始 |
 | B4 | components/bitstream-filters.md + components/formats.md | 1929 | 未开始 |
 | B5 | components/protocols.md | 677 | 未开始 |
