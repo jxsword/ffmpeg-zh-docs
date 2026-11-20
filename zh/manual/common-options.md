@@ -1,189 +1,185 @@
-!!! warning "翻译占位页"
-    本页为英文原文占位（翻译进行中，进度见[翻译看板](https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md)）。
-    术语与示例以英文原文为准。
+## 流说明符
 
-## Stream specifiers
+有些选项按流生效，例如码率或编解码器。流说明符用于精确指定某个选项属于哪条（些）流。
 
-Some options are applied per-stream, e.g. bitrate or codec. Stream specifiers are used to precisely specify which stream(s) a given option belongs to.
+流说明符是一个字符串，通常附加在选项名之后、以冒号与之分隔。例如 `-codec:a:1 ac3` 包含流说明符 `a:1`，匹配第二条音频流，因此会为第二条音频流选择 ac3 编解码器。
 
-A stream specifier is a string generally appended to the option name and separated from it by a colon. E.g. `-codec:a:1 ac3` contains the `a:1` stream specifier, which matches the second audio stream. Therefore, it would select the ac3 codec for the second audio stream.
+流说明符可以匹配多条流，从而该选项会应用于所有匹配的流。例如 `-b:a 128k` 中的流说明符匹配所有音频流。
 
-A stream specifier can match several streams, so that the option is applied to all of them. E.g. the stream specifier in `-b:a 128k` matches all audio streams.
+空的流说明符匹配所有流。例如 `-codec copy` 或 `-codec: copy` 将不重编码地复制所有流。
 
-An empty stream specifier matches all streams. For example, `-codec copy` or `-codec: copy` would copy all the streams without reencoding.
+流说明符的可能形式有：
 
-Possible forms of stream specifiers are:
+- **`stream_index`** 匹配具有此索引的流。例如 `-threads:1 4` 会把第二条流的线程数设为 4。若 \<stream_index\> 作为附加流说明符使用（见下文），则从匹配的流中选取第 \<stream_index\> 条流。流编号基于 libavformat 检测到流的顺序；但同时指定了流组说明符或节目 ID 时，基于该组或该节目内流的顺序。
 
-- **`stream_index`** Matches the stream with this index. E.g. `-threads:1 4` would set the thread count for the second stream to 4. If \<stream_index\> is used as an additional stream specifier (see below), then it selects stream number \<stream_index\> from the matching streams. Stream numbering is based on the order of the streams as detected by libavformat except when a stream group specifier or program ID is also specified. In this case it is based on the ordering of the streams in the group or program.
+- **`stream_type[:additional_stream_specifier]`** \<stream_type\> 为以下之一：'v' 或 'V' 表示视频，'a' 表示音频，'s' 表示字幕，'d' 表示数据，'t' 表示附件。'v' 匹配所有视频流，'V' 只匹配非附加图片、视频缩略图或封面的视频流。若使用 \<additional_stream_specifier\>，则匹配既属于该类型又匹配 \<additional_stream_specifier\> 的流；否则，匹配该类型的所有流。
 
-- **`stream_type[:additional_stream_specifier]`** \<stream_type\> is one of following: 'v' or 'V' for video, 'a' for audio, 's' for subtitle, 'd' for data, and 't' for attachments. 'v' matches all video streams, 'V' only matches video streams which are not attached pictures, video thumbnails or cover arts. If \<additional_stream_specifier\> is used, then it matches streams which both have this type and match the \<additional_stream_specifier\>. Otherwise, it matches all streams of the specified type.
+- **`g:group_specifier[:additional_stream_specifier]`** 匹配属于说明符 \<group_specifier\> 所指组的流。若使用 \<additional_stream_specifier\>，则匹配既属于该组又匹配 \<additional_stream_specifier\> 的流。\<group_specifier\> 可为以下之一：
 
-- **`g:group_specifier[:additional_stream_specifier]`** Matches streams which are in the group with the specifier \<group_specifier\>. if \<additional_stream_specifier\> is used, then it matches streams which both are part of the group and match the \<additional_stream_specifier\>. \<group_specifier\> may be one of the following:
+  | Term | Description |
+  |----|----|
+  | `group_index` | 匹配具有该组索引的流。 |
+  | `#group_id or i:group_id` | 匹配具有该组 id 的流。 |
 
-  | Term                      | Description                             |
-  |---------------------------|-----------------------------------------|
-  | `group_index`             | Match the stream with this group index. |
-  | `#group_id or i:group_id` | Match the stream with this group id.    |
+- **`p:program_id[:additional_stream_specifier]`** 匹配属于 id 为 \<program_id\> 的节目的流。若使用 \<additional_stream_specifier\>，则匹配既属于该节目又匹配 \<additional_stream_specifier\> 的流。
 
-- **`p:program_id[:additional_stream_specifier]`** Matches streams which are in the program with the id \<program_id\>. If \<additional_stream_specifier\> is used, then it matches streams which both are part of the program and match the \<additional_stream_specifier\>.
+- **`#stream_id or i:stream_id`** 按流 id 匹配流（例如 MPEG-TS 容器中的 PID）。
 
-- **`#stream_id or i:stream_id`** Match the stream by stream id (e.g. PID in MPEG-TS container).
+- **`m:key[:value]`** 匹配元数据标签 \<key\> 具有指定值的流。未给出 \<value\> 时，匹配包含该标签（任意值）的流。\<key\> 或 \<value\> 中的冒号字符 ':' 需要反斜杠转义。
 
-- **`m:key[:value]`** Matches streams with the metadata tag \<key\> having the specified value. If \<value\> is not given, matches streams that contain the given tag with any value. The colon character ':' in \<key\> or \<value\> needs to be backslash-escaped.
+- **`disp:dispositions[:additional_stream_specifier]`** 匹配具有给定 disposition 标志的流。\<dispositions\> 是一个或多个 disposition（由 `-dispositions` 选项打印的那些）以 '+' 连接的列表。
 
-- **`disp:dispositions[:additional_stream_specifier]`** Matches streams with the given disposition(s). \<dispositions\> is a list of one or more dispositions (as printed by the `-dispositions` option) joined with '+'.
+- **`u`** 匹配配置可用的流：编解码器必须已定义，且视频尺寸或音频采样率等关键信息必须存在。
 
-- **`u`** Matches streams with usable configuration, the codec must be defined and the essential information such as video dimension or audio sample rate must be present.
+  注意在 `ffmpeg` 中，按元数据匹配只对输入文件正常工作。
 
-  Note that in `ffmpeg`, matching by metadata will only work properly for input files.
+## 通用选项
 
-## Generic options
+这些选项为 ff\* 系列工具共用。
 
-These options are shared amongst the ff\* tools.
+- **`-L, -license`** 显示许可。
 
-- **`-L, -license`** Show license.
+- **`-h, -?, -help, --help [arg]`** 显示帮助。可指定可选参数以打印关于特定项的帮助。未指定参数时，仅显示基本（非高级）工具选项。
 
-- **`-h, -?, -help, --help [arg]`** Show help. An optional parameter may be specified to print help about a specific item. If no argument is specified, only basic (non advanced) tool options are shown.
+  \<arg\> 的可能取值如下：
 
-  Possible values of \<arg\> are:
+  - **`long`** 除基本工具选项外还打印高级工具选项。
 
-  - **`long`** Print advanced tool options in addition to the basic tool options.
+  - **`full`** 打印完整选项列表，包括编码器、解码器、解复用器、复用器、滤镜等的共享选项和私有选项。
 
-  - **`full`** Print complete list of options, including shared and private options for encoders, decoders, demuxers, muxers, filters, etc.
+  - **`decoder=decoder_name`** 打印名为 \<decoder_name\> 的解码器的详细信息。使用 `-decoders` 选项获取所有解码器列表。
 
-  - **`decoder=decoder_name`** Print detailed information about the decoder named \<decoder_name\>. Use the `-decoders` option to get a list of all decoders.
+  - **`encoder=encoder_name`** 打印名为 \<encoder_name\> 的编码器的详细信息。使用 `-encoders` 选项获取所有编码器列表。
 
-  - **`encoder=encoder_name`** Print detailed information about the encoder named \<encoder_name\>. Use the `-encoders` option to get a list of all encoders.
+  - **`demuxer=demuxer_name`** 打印名为 \<demuxer_name\> 的解复用器的详细信息。使用 `-formats` 选项获取所有解复用器和复用器列表。
 
-  - **`demuxer=demuxer_name`** Print detailed information about the demuxer named \<demuxer_name\>. Use the `-formats` option to get a list of all demuxers and muxers.
+  - **`muxer=muxer_name`** 打印名为 \<muxer_name\> 的复用器的详细信息。使用 `-formats` 选项获取所有复用器和解复用器列表。
 
-  - **`muxer=muxer_name`** Print detailed information about the muxer named \<muxer_name\>. Use the `-formats` option to get a list of all muxers and demuxers.
+  - **`filter=filter_name`** 打印名为 \<filter_name\> 的滤镜的详细信息。使用 `-filters` 选项获取所有滤镜列表。
 
-  - **`filter=filter_name`** Print detailed information about the filter named \<filter_name\>. Use the `-filters` option to get a list of all filters.
+  - **`bsf=bitstream_filter_name`** 打印名为 \<bitstream_filter_name\> 的比特流滤镜的详细信息。使用 `-bsfs` 选项获取所有比特流滤镜列表。
 
-  - **`bsf=bitstream_filter_name`** Print detailed information about the bitstream filter named \<bitstream_filter_name\>. Use the `-bsfs` option to get a list of all bitstream filters.
+  - **`protocol=protocol_name`** 打印名为 \<protocol_name\> 的协议的详细信息。使用 `-protocols` 选项获取所有协议列表。
 
-  - **`protocol=protocol_name`** Print detailed information about the protocol named \<protocol_name\>. Use the `-protocols` option to get a list of all protocols.
+- **`-version`** 显示版本。
 
-- **`-version`** Show version.
+- **`-buildconf`** 显示构建配置，每行一个选项。
 
-- **`-buildconf`** Show the build configuration, one option per line.
+- **`-formats`** 显示可用格式（包括设备）。
 
-- **`-formats`** Show available formats (including devices).
+- **`-demuxers`** 显示可用解复用器。
 
-- **`-demuxers`** Show available demuxers.
+- **`-muxers`** 显示可用复用器。
 
-- **`-muxers`** Show available muxers.
+- **`-devices`** 显示可用设备。
 
-- **`-devices`** Show available devices.
+- **`-codecs`** 显示 libavcodec 已知的所有编解码器。
 
-- **`-codecs`** Show all codecs known to libavcodec.
+  注意，本档通篇将 'codec' 一词用作简称，其更准确的说法是媒体比特流格式。
 
-  Note that the term 'codec' is used throughout this documentation as a shortcut for what is more correctly called a media bitstream format.
+- **`-decoders`** 显示可用解码器。
 
-- **`-decoders`** Show available decoders.
+- **`-encoders`** 显示所有可用编码器。
 
-- **`-encoders`** Show all available encoders.
+- **`-bsfs`** 显示可用比特流滤镜。
 
-- **`-bsfs`** Show available bitstream filters.
+- **`-protocols`** 显示可用协议。
 
-- **`-protocols`** Show available protocols.
+- **`-filters`** 显示 libavfilter 可用滤镜。
 
-- **`-filters`** Show available libavfilter filters.
+- **`-pix_fmts`** 显示可用像素格式。
 
-- **`-pix_fmts`** Show available pixel formats.
+- **`-sample_fmts`** 显示可用采样格式。
 
-- **`-sample_fmts`** Show available sample formats.
+- **`-layouts`** 显示声道名称和标准声道布局。
 
-- **`-layouts`** Show channel names and standard channel layouts.
+- **`-dispositions`** 显示流的 disposition 标志。
 
-- **`-dispositions`** Show stream dispositions.
+- **`-colors`** 显示已识别的颜色名称。
 
-- **`-colors`** Show recognized color names.
-
-- **`-sources device[,opt1=val1[,opt2=val2]...]`** Show autodetected sources of the input device. Some devices may provide system-dependent source names that cannot be autodetected. The returned list cannot be assumed to be always complete.
+- **`-sources device[,opt1=val1[,opt2=val2]...]`** 显示输入设备的自动探测源。某些设备可能提供无法自动探测的、依赖系统的源名称。返回的列表不能假定总是完整。
 
   ``` text
   ffmpeg -sources pulse,server=192.168.0.4
   ```
 
-- **`-sinks device[,opt1=val1[,opt2=val2]...]`** Show autodetected sinks of the output device. Some devices may provide system-dependent sink names that cannot be autodetected. The returned list cannot be assumed to be always complete.
+- **`-sinks device[,opt1=val1[,opt2=val2]...]`** 显示输出设备的自动探测汇。某些设备可能提供无法自动探测的、依赖系统的汇名称。返回的列表不能假定总是完整。
 
   ``` text
   ffmpeg -sinks pulse,server=192.168.0.4
   ```
 
-- **`-loglevel [flags+]loglevel | -v [flags+]loglevel`** Set logging level and flags used by the library.
+- **`-loglevel [flags+]loglevel | -v [flags+]loglevel`** 设置库使用的日志级别和标志。
 
-  The optional \<flags\> prefix can consist of the following values:
+  可选的 \<flags\> 前缀可由以下值组成：
 
-  - **`repeat`** Indicates that repeated log output should not be compressed to the first line and the "Last message repeated n times" line will be omitted.
+  - **`repeat`** 表示重复的日志输出不压缩至第一行，并且省略 "Last message repeated n times" 一行。
 
-  - **`level`** Indicates that log output should add a `[level]` prefix to each message line. This can be used as an alternative to log coloring, e.g. when dumping the log to file.
+  - **`level`** 表示日志输出为每条消息行添加 `[level]` 前缀。可用作日志着色的替代，例如把日志转储到文件时。
 
-  - **`time`** Indicates that log lines should be prefixed with time information.
+  - **`time`** 表示日志行加时间信息前缀。
 
-  - **`datetime`** Indicates that log lines should be prefixed with date and time information.
+  - **`datetime`** 表示日志行加日期和时间信息前缀。
 
-  Flags can also be used alone by adding a '+'/'-' prefix to set/reset a single flag without affecting other \<flags\> or changing \<loglevel\>. When setting both \<flags\> and \<loglevel\>, a '+' separator is expected between the last \<flags\> value and before \<loglevel\>.
+  标志也可以单独使用：加 '+'/'-' 前缀设置/重置单个标志，不影响其他 \<flags\>，也不改变 \<loglevel\>。同时设置 \<flags\> 和 \<loglevel\> 时，最后一个 \<flags\> 值与 \<loglevel\> 之间应有一个 '+' 分隔符。
 
-  \<loglevel\> is a string or a number containing one of the following values:
+  \<loglevel\> 是包含以下取值之一的字符串或数字：
 
-  - **`quiet, -8`** Show nothing at all; be silent.
+  - **`quiet, -8`** 什么都不显示；保持静默。
 
-  - **`panic, 0`** Only show fatal errors which could lead the process to crash, such as an assertion failure. This is not currently used for anything.
+  - **`panic, 0`** 只显示可能导致进程崩溃的致命错误，例如断言失败。目前不用于任何用途。
 
-  - **`fatal, 8`** Only show fatal errors. These are errors after which the process absolutely cannot continue.
+  - **`fatal, 8`** 只显示致命错误。这些是进程绝对无法再继续的错误。
 
-  - **`error, 16`** Show all errors, including ones which can be recovered from.
+  - **`error, 16`** 显示所有错误，包括可从中恢复的错误。
 
-  - **`warning, 24`** Show all warnings and errors. Any message related to possibly incorrect or unexpected events will be shown.
+  - **`warning, 24`** 显示所有警告和错误。任何与可能不正确或意外事件相关的消息都会显示。
 
-  - **`info, 32`** Show informative messages during processing. This is in addition to warnings and errors. This is the default value.
+  - **`info, 32`** 显示处理过程中的提示信息。这是警告和错误之外的补充。这是默认值。
 
-  - **`verbose, 40`** Same as `info`, except more verbose.
+  - **`verbose, 40`** 与 `info` 相同，但更详细。
 
-  - **`debug, 48`** Show everything, including debugging information.
+  - **`debug, 48`** 显示一切，包括调试信息。
 
   - **`trace, 56`**
 
-  For example to enable repeated log output, add the `level` prefix, and set \<loglevel\> to `verbose`:
+  例如：启用重复日志输出、添加 `level` 前缀，并将 \<loglevel\> 设为 `verbose`：
 
   ``` text
   ffmpeg -loglevel repeat+level+verbose -i input output
   ```
 
-  Another example that enables repeated log output without affecting current state of `level` prefix flag or \<loglevel\>:
+  另一个示例：启用重复日志输出，但不影响 `level` 前缀标志的当前状态或 \<loglevel\>：
 
   ``` text
   ffmpeg [...] -loglevel +repeat
   ```
 
-  By default the program logs to stderr. If coloring is supported by the terminal, colors are used to mark errors and warnings. Log coloring can be disabled setting the environment variable `AV_LOG_FORCE_NOCOLOR`, or can be forced setting the environment variable `AV_LOG_FORCE_COLOR`.
+  默认情况下程序将日志记录到 stderr。若终端支持着色，会用颜色标记错误和警告。可通过设置环境变量 `AV_LOG_FORCE_NOCOLOR` 禁用日志着色，或设置环境变量 `AV_LOG_FORCE_COLOR` 强制启用。
 
-- **`-report`** Dump full command line and log output to a file named `program-YYYYMMDD-HHMMSS.log` in the current directory. This file can be useful for bug reports. It also implies `-loglevel debug`.
+- **`-report`** 把完整命令行和日志输出转储到当前目录下名为 `program-YYYYMMDD-HHMMSS.log` 的文件。该文件对缺陷报告很有用。它还意味着 `-loglevel debug`。
 
-  Setting the environment variable `FFREPORT` to any value has the same effect. If the value is a ':'-separated key=value sequence, these options will affect the report; option values must be escaped if they contain special characters or the options delimiter ':' (see the "Quoting and escaping" section in the ffmpeg-utils manual).
+  把环境变量 `FFREPORT` 设为任意值有同样效果。若值为以 ':' 分隔的 key=value 序列，这些选项会影响报告；选项值含特殊字符或选项分隔符 ':' 时必须转义（参见 ffmpeg-utils 手册中的 "Quoting and escaping"（引号引用与转义）一节）。
 
-  The following options are recognized:
+  可识别以下选项：
 
-  - **`file`** set the file name to use for the report; `%p` is expanded to the name of the program, `%t` is expanded to a timestamp, `%%` is expanded to a plain `%`
+  - **`file`** 设置报告所用文件名；`%p` 展开为程序名，`%t` 展开为时间戳，`%%` 展开为普通 `%`
 
-  - **`level`** set the log verbosity level using a numerical value (see `-loglevel`).
+  - **`level`** 用数值设置日志详细程度（参见 `-loglevel`）。
 
-  For example, to output a report to a file named `ffreport.log` using a log level of `32` (alias for log level `info`):
+  例如，把报告输出到名为 `ffreport.log` 的文件，日志级别用 `32`（日志级别 `info` 的别名）：
 
   ``` text
   FFREPORT=file=ffreport.log:level=32 ffmpeg -i input output
   ```
 
-  Errors in parsing the environment variable are not fatal, and will not appear in the report.
+  解析环境变量出错不是致命的，也不会出现在报告中。
 
-- **`-hide_banner`** Suppress printing banner.
+- **`-hide_banner`** 不打印横幅。
 
-  All FFmpeg tools will normally show a copyright notice, build options and library versions. This option can be used to suppress printing this information.
+  FFmpeg 各工具通常会显示版权声明、构建选项和库版本。该选项可用于不打印这些信息。
 
-- **`-cpuflags flags (global)`** Allows setting and clearing cpu flags. This option is intended for testing. Do not use it unless you know what you're doing.
+- **`-cpuflags flags (global)`** 允许设置和清除 CPU 标志。该选项用于测试。不了解其后果请勿使用。
 
   ``` text
   ffmpeg -cpuflags -sse+mmx ...
@@ -191,128 +187,128 @@ These options are shared amongst the ff\* tools.
   ffmpeg -cpuflags 0 ...
   ```
 
-  Possible flags for this option are:
+  该选项可用的标志如下：
 
-  - **`x86`**
+- **`x86`**
 
-    - **`mmx`**
+  - **`mmx`**
 
-    - **`mmxext`**
+  - **`mmxext`**
 
-    - **`sse`**
+  - **`sse`**
 
-    - **`sse2`**
+  - **`sse2`**
 
-    - **`sse2slow`**
+  - **`sse2slow`**
 
-    - **`sse3`**
+  - **`sse3`**
 
-    - **`sse3slow`**
+  - **`sse3slow`**
 
-    - **`ssse3`**
+  - **`ssse3`**
 
-    - **`atom`**
+  - **`atom`**
 
-    - **`sse4.1`**
+  - **`sse4.1`**
 
-    - **`sse4.2`**
+  - **`sse4.2`**
 
-    - **`avx`**
+  - **`avx`**
 
-    - **`avx2`**
+  - **`avx2`**
 
-    - **`xop`**
+  - **`xop`**
 
-    - **`fma3`**
+  - **`fma3`**
 
-    - **`fma4`**
+  - **`fma4`**
 
-    - **`3dnow`**
+  - **`3dnow`**
 
-    - **`3dnowext`**
+  - **`3dnowext`**
 
-    - **`bmi1`**
+  - **`bmi1`**
 
-    - **`bmi2`**
+  - **`bmi2`**
 
-    - **`cmov`**
+  - **`cmov`**
 
-  - **`ARM`**
+- **`ARM`**
 
-    - **`armv5te`**
+  - **`armv5te`**
 
-    - **`armv6`**
+  - **`armv6`**
 
-    - **`armv6t2`**
+  - **`armv6t2`**
 
-    - **`vfp`**
+  - **`vfp`**
 
-    - **`vfpv3`**
+  - **`vfpv3`**
 
-    - **`neon`**
+  - **`neon`**
 
-    - **`setend`**
+  - **`setend`**
 
-  - **`AArch64`**
+- **`AArch64`**
 
-    - **`armv8`**
+  - **`armv8`**
 
-    - **`vfp`**
+  - **`vfp`**
 
-    - **`neon`**
+  - **`neon`**
 
-  - **`PowerPC`**
+- **`PowerPC`**
 
-    - **`altivec`**
+  - **`altivec`**
 
-  - **`Specific Processors`**
+- **`Specific Processors`**
 
-    - **`pentium2`**
+  - **`pentium2`**
 
-    - **`pentium3`**
+  - **`pentium3`**
 
-    - **`pentium4`**
+  - **`pentium4`**
 
-    - **`k6`**
+  - **`k6`**
 
-    - **`k62`**
+  - **`k62`**
 
-    - **`athlon`**
+  - **`athlon`**
 
-    - **`athlonxp`**
+  - **`athlonxp`**
 
-    - **`k8`**
+  - **`k8`**
 
-- **`-cpucount count (global)`** Override detection of CPU count. This option is intended for testing. Do not use it unless you know what you're doing.
+- **`-cpucount count (global)`** 覆盖 CPU 数量探测。该选项用于测试。不了解其后果请勿使用。
 
   ``` text
   ffmpeg -cpucount 2
   ```
 
-- **`-max_alloc bytes`** Set the maximum size limit for allocating a block on the heap by ffmpeg's family of malloc functions. Exercise **extreme caution** when using this option. Don't use if you do not understand the full consequence of doing so. Default is INT_MAX.
+- **`-max_alloc bytes`** 设置 ffmpeg 的 malloc 函数族在堆上分配内存块的大小上限。使用该选项时务必**极其谨慎**。若不了解其全部后果请勿使用。默认值为 INT_MAX。
 
 ## AVOptions
 
-These options are provided directly by the libavformat, libavdevice and libavcodec libraries. To see the list of available AVOptions, use the `-help` option. They are separated into two categories:
+这些选项由 libavformat、libavdevice 和 libavcodec 库直接提供。要查看可用 AVOptions 列表，使用 `-help` 选项。它们分为两类：
 
-- **`generic`** These options can be set for any container, codec or device. Generic options are listed under AVFormatContext options for containers/devices and under AVCodecContext options for codecs.
+- **`generic`** 这些选项可设置于任何容器、编解码器或设备。通用选项在容器/设备下列于 AVFormatContext 选项，在编解码器下列于 AVCodecContext 选项。
 
-- **`private`** These options are specific to the given container, device or codec. Private options are listed under their corresponding containers/devices/codecs.
+- **`private`** 这些选项特定于给定容器、设备或编解码器。私有选项列于对应的容器/设备/编解码器之下。
 
-For example to write an ID3v2.3 header instead of a default ID3v2.4 to an MP3 file, use the `id3v2_version` private option of the MP3 muxer:
+例如，向 MP3 文件写入 ID3v2.3 头而非默认的 ID3v2.4，使用 MP3 复用器的 `id3v2_version` 私有选项：
 
 ``` text
 ffmpeg -i input.flac -id3v2_version 3 out.mp3
 ```
 
-All codec AVOptions are per-stream, and thus a stream specifier should be attached to them:
+所有编解码器 AVOptions 均按流生效，因此应附加流说明符：
 
 ``` text
 ffmpeg -i multichannel.mxf -map 0:v:0 -map 0:a:0 -map 0:a:0 -c:a:0 ac3 -b:a:0 640k -ac:a:1 2 -c:a:1 aac -b:2 128k out.mp4
 ```
 
-In the above example, a multichannel audio stream is mapped twice for output. The first instance is encoded with codec ac3 and bitrate 640k. The second instance is downmixed to 2 channels and encoded with codec aac. A bitrate of 128k is specified for it using absolute index of the output stream.
+上例中，一条多声道音频流被映射两次用于输出。第一个实例用 ac3 编解码器以 640k 码率编码。第二个实例被下混到 2 声道并用 aac 编解码器编码。其码率 128k 通过输出流的绝对索引指定。
 
-Note: the `-nooption` syntax cannot be used for boolean AVOptions, use `-option 0`/`-option 1`.
+注意：`-nooption` 语法不能用于布尔 AVOptions，请使用 `-option 0`/`-option 1`。
 
-Note: the old undocumented way of specifying per-stream AVOptions by prepending v/a/s to the options name is now obsolete and will be removed soon.
+注意：通过在选项名前加 v/a/s 前缀来指定逐流 AVOptions 的旧式做法（未成文档）现已废弃，即将移除。
