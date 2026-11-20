@@ -1,100 +1,96 @@
-!!! warning "翻译占位页"
-    本页为英文原文占位（翻译进行中，进度见[翻译看板](https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md)）。
-    术语与示例以英文原文为准。
-
-# Synopsis
+# 概要
 
 ffprobe \[\<options\>\] `input_url`
 
-# Description
+# 描述
 
-ffprobe gathers information from multimedia streams and prints it in human- and machine-readable fashion.
+ffprobe 从多媒体流中收集信息，并以人类和机器均可读的方式打印出来。
 
-For example it can be used to check the format of the container used by a multimedia stream and the format and type of each media stream contained in it.
+例如，可以用它检查多媒体流所用容器的格式，以及其中每条媒体流的格式和类型。
 
-If a url is specified in input, ffprobe will try to open and probe the url content. If the url cannot be opened or recognized as a multimedia file, a positive exit code is returned.
+如果在输入中指定了 url，ffprobe 会尝试打开并探测该 url 的内容。若 url 无法打开或无法识别为多媒体文件，则返回正的退出码。
 
-If no output is specified as output with `o` ffprobe will write to stdout.
+如果没有通过 `o` 指定输出，ffprobe 将写入 stdout。
 
-ffprobe may be employed both as a standalone application or in combination with a textual filter, which may perform more sophisticated processing, e.g. statistical processing or plotting.
+ffprobe 既可作为独立应用使用，也可与文本滤镜结合使用，由后者执行更复杂的处理，例如统计处理或绘图。
 
-Options are used to list some of the formats supported by ffprobe or for specifying which information to display, and for setting how ffprobe will show it.
+选项用于列出 ffprobe 支持的部分格式、指定显示哪些信息，以及设置 ffprobe 将如何显示这些信息。
 
-ffprobe output is designed to be easily parsable by a textual filter, and consists of one or more sections of a form defined by the selected writer, which is specified by the `output_format` option.
+ffprobe 的输出设计为易于被文本滤镜解析，由一个或多个小节组成，其形式由所选的写入器 (writer) 定义，写入器通过 `output_format` 选项指定。
 
-Sections may contain other nested sections, and are identified by a name (which may be shared by other sections), and an unique name. See the output of `sections`.
+小节可以包含其他嵌套的小节，每个小节由一个名称（可与其他小节共享）和一个唯一名称标识。参见 `sections` 的输出。
 
-Metadata tags stored in the container or in the streams are recognized and printed in the corresponding "FORMAT", "STREAM", "STREAM_GROUP_STREAM" or "PROGRAM_STREAM" section.
+存储在容器或流中的元数据标签会被识别，并打印在对应的 "FORMAT"、"STREAM"、"STREAM_GROUP_STREAM" 或 "PROGRAM_STREAM" 小节中。
 
-# Options
+# 选项
 
-## Main options
+## 主要选项
 
-- **`-f format`** Force format to use.
+- **`-f format`** 强制使用的格式。
 
-- **`-unit`** Show the unit of the displayed values.
+- **`-unit`** 为显示的值显示单位。
 
-- **`-prefix`** Use SI prefixes for the displayed values. Unless the "-byte_binary_prefix" option is used all the prefixes are decimal.
+- **`-prefix`** 对显示的值使用 SI 前缀。除非使用 "-byte_binary_prefix" 选项，所有前缀均为十进制。
 
-- **`-byte_binary_prefix`** Force the use of binary prefixes for byte values.
+- **`-byte_binary_prefix`** 对字节值强制使用二进制前缀。
 
-- **`-sexagesimal`** Use sexagesimal format HH:MM:SS.MICROSECONDS for time values.
+- **`-sexagesimal`** 时间值使用六十进制格式 HH:MM:SS.MICROSECONDS。
 
-- **`-pretty`** Prettify the format of the displayed values, it corresponds to the options "-unit -prefix -byte_binary_prefix -sexagesimal".
+- **`-pretty`** 美化所显示值的格式，相当于同时使用 "-unit -prefix -byte_binary_prefix -sexagesimal" 选项。
 
-- **`-output_format, -of, -print_format writer_name[=writer_options]`** Set the output printing format.
+- **`-output_format, -of, -print_format writer_name[=writer_options]`** 设置输出打印格式。
 
-  \<writer_name\> specifies the name of the writer, and \<writer_options\> specifies the options to be passed to the writer.
+  \<writer_name\> 指定写入器的名称，\<writer_options\> 指定传给写入器的选项。
 
-  For example for printing the output in JSON format, specify:
+  例如要以 JSON 格式打印输出，可指定：
 
   ``` text
   -output_format json
   ```
 
-  For more details on the available output printing formats, see the Writers section below.
+  有关可用输出打印格式的更多细节，参见下文的写入器一节。
 
-- **`-sections`** Print sections structure and section information, and exit. The output is not meant to be parsed by a machine.
+- **`-sections`** 打印小节结构和小节信息后退出。其输出并非供机器解析。
 
-- **`-select_streams stream_specifier`** Select only the streams specified by \<stream_specifier\>. This option affects only the options related to streams (e.g. `show_streams`, `show_packets`, etc.).
+- **`-select_streams stream_specifier`** 只选择由 \<stream_specifier\> 指定的流。该选项只影响与流相关的选项（例如 `show_streams`、`show_packets` 等）。
 
-  For example to show only audio streams, you can use the command:
+  例如只显示音频流，可使用命令：
 
   ``` text
   ffprobe -show_streams -select_streams a INPUT
   ```
 
-  To show only video packets belonging to the video stream with index 1:
+  只显示属于索引为 1 的视频流的视频包：
 
   ``` text
   ffprobe -show_packets -select_streams v:1 INPUT
   ```
 
-- **`-show_data`** Show payload data, as a hexadecimal and ASCII dump (other formats can be selected using `-data_dump_format`). Coupled with `-show_packets`, it will dump the packets' data. Coupled with `-show_streams`, it will dump the codec extradata.
+- **`-show_data`** 显示载荷数据，以十六进制和 ASCII 转储的形式呈现（可用 `-data_dump_format` 选择其他格式）。与 `-show_packets` 搭配时，转储包数据；与 `-show_streams` 搭配时，转储编解码器 extradata。
 
-  The dump is printed as the "data" field. It may contain newlines.
+  转储内容打印为 "data" 字段，其中可能包含换行。
 
-- **`-show_data_hash algorithm`** Show a hash of payload data, for packets with `-show_packets` and for codec extradata with `-show_streams`.
+- **`-show_data_hash algorithm`** 显示载荷数据的哈希：配合 `-show_packets` 用于包，配合 `-show_streams` 用于编解码器 extradata。
 
-- **`-data_dump_format format`** Select a format used for the data dumps enabled with the `-show_data` option. The default is `xxd` which is a hexdump format compatible with the well-known `xxd` program. `base64` is also supported.
+- **`-data_dump_format format`** 选择 `-show_data` 选项所启用数据转储使用的格式。默认为 `xxd`，一种与知名程序 `xxd` 兼容的十六进制转储格式。也支持 `base64`。
 
-- **`-show_error`** Show information about the error found when trying to probe the input.
+- **`-show_error`** 显示探测输入时发现的错误信息。
 
-  The error information is printed within a section with name "ERROR".
+  错误信息打印在名为 "ERROR" 的小节中。
 
-- **`-show_format`** Show information about the container format of the input multimedia stream.
+- **`-show_format`** 显示输入多媒体流容器格式的信息。
 
-  All the container format information is printed within a section with name "FORMAT".
+  所有容器格式信息打印在名为 "FORMAT" 的小节中。
 
-- **`-show_entries section_entries`** Set list of entries to show.
+- **`-show_entries section_entries`** 设置要显示的条目列表。
 
-  Entries are specified according to the following syntax. \<section_entries\> contains a list of section entries separated by `:`. Each section entry is composed by a section name (or unique name), optionally followed by a list of entries local to that section, separated by `,`.
+  条目按以下语法指定。\<section_entries\> 包含以 `:` 分隔的小节条目列表。每个小节条目由一个小节名称（或唯一名称）组成，其后可跟以 `,` 分隔的该小节局部条目列表。
 
-  If section name is specified but is followed by no `=`, all entries are printed to output, together with all the contained sections. Otherwise only the entries specified in the local section entries list are printed. In particular, if `=` is specified but the list of local entries is empty, then no entries will be shown for that section.
+  如果指定了小节名称但后面没有 `=`，则打印该小节的所有条目及其包含的所有小节。否则只打印局部条目列表中指定的条目。特别地，如果指定了 `=` 但局部条目列表为空，则该小节不显示任何条目。
 
-  Note that the order of specification of the local section entries is not honored in the output, and the usual display order will be retained.
+  注意，局部小节条目的指定顺序在输出中不会生效，将保持常规显示顺序。
 
-  The formal syntax is given by:
+  形式化语法如下：
 
   ``` text
   LOCAL_SECTION_ENTRIES ::= SECTION_ENTRY_NAME[,LOCAL_SECTION_ENTRIES]
@@ -102,172 +98,172 @@ Metadata tags stored in the container or in the streams are recognized and print
   SECTION_ENTRIES       ::= SECTION_ENTRY[:SECTION_ENTRIES]
   ```
 
-  For example, to show only the index and type of each stream, and the PTS time, duration time, and stream index of the packets, you can specify the argument:
+  例如，只显示每条流的 index（索引）和 type（类型），以及包的 PTS 时间、时长和流索引，可指定参数：
 
   ``` text
   packet=pts_time,duration_time,stream_index : stream=index,codec_type
   ```
 
-  To show all the entries in the section "format", but only the codec type in the section "stream", specify the argument:
+  显示 "format" 小节的所有条目，但 "stream" 小节只显示编解码器类型，可指定参数：
 
   ``` text
   format : stream=codec_type
   ```
 
-  To show all the tags in the stream and format sections:
+  显示 stream 和 format 小节中的所有标签：
 
   ``` text
   stream_tags : format_tags
   ```
 
-  To show only the `title` tag (if available) in the stream sections:
+  只显示 stream 小节中的 `title` 标签（如可用）：
 
   ``` text
   stream_tags=title
   ```
 
-- **`-show_packets`** Show information about each packet contained in the input multimedia stream.
+- **`-show_packets`** 显示输入多媒体流中每个包的信息。
 
-  The information for each single packet is printed within a dedicated section with name "PACKET".
+  每个包的信息打印在名为 "PACKET" 的专用小节中。
 
-- **`-show_frames`** Show information about each frame and subtitle contained in the input multimedia stream.
+- **`-show_frames`** 显示输入多媒体流中每帧和每条字幕的信息。
 
-  The information for each single frame is printed within a dedicated section with name "FRAME" or "SUBTITLE".
+  每帧的信息打印在名为 "FRAME" 或 "SUBTITLE" 的专用小节中。
 
-- **`-show_log loglevel`** Show logging information from the decoder about each frame according to the value set in \<loglevel\>, (see `-loglevel`). This option requires `-show_frames`.
+- **`-show_log loglevel`** 按 \<loglevel\> 设置的值显示解码器针对每帧输出的日志信息（参见 `-loglevel`）。该选项要求同时使用 `-show_frames`。
 
-  The information for each log message is printed within a dedicated section with name "LOG".
+  每条日志消息打印在名为 "LOG" 的专用小节中。
 
-- **`-show_streams`** Show information about each media stream contained in the input multimedia stream.
+- **`-show_streams`** 显示输入多媒体流中每条媒体流的信息。
 
-  Each media stream information is printed within a dedicated section with name "STREAM".
+  每条媒体流的信息打印在名为 "STREAM" 的专用小节中。
 
-- **`-show_programs`** Show information about programs and their streams contained in the input multimedia stream.
+- **`-show_programs`** 显示输入多媒体流中节目及其流的信息。
 
-  Each media stream information is printed within a dedicated section with name "PROGRAM_STREAM".
+  每条媒体流的信息打印在名为 "PROGRAM_STREAM" 的小节中。
 
-- **`-show_stream_groups`** Show information about stream groups and their streams contained in the input multimedia stream.
+- **`-show_stream_groups`** 显示输入多媒体流中流组及其流的信息。
 
-  Each media stream information is printed within a dedicated section with name "STREAM_GROUP_STREAM".
+  每条媒体流的信息打印在名为 "STREAM_GROUP_STREAM" 的小节中。
 
-- **`-show_chapters`** Show information about chapters stored in the format.
+- **`-show_chapters`** 显示格式中存储的章节信息。
 
-  Each chapter is printed within a dedicated section with name "CHAPTER".
+  每个章节打印在名为 "CHAPTER" 的专用小节中。
 
-- **`-count_frames`** Count the number of frames per stream and report it in the corresponding stream section.
+- **`-count_frames`** 统计每条流的帧数并在对应的流小节中报告。
 
-- **`-count_packets`** Count the number of packets per stream and report it in the corresponding stream section.
+- **`-count_packets`** 统计每条流的包数并在对应的流小节中报告。
 
-- **`-read_intervals read_intervals`** Read only the specified intervals. \<read_intervals\> must be a sequence of interval specifications separated by ",". `ffprobe` will seek to the interval starting point, and will continue reading from that.
+- **`-read_intervals read_intervals`** 只读取指定的区间。\<read_intervals\> 必须是以 "," 分隔的区间描述序列。`ffprobe` 会定位到区间起点，并从那里继续读取。
 
-  Each interval is specified by two optional parts, separated by "%".
+  每个区间由以 "%" 分隔的两个可选部分指定。
 
-  The first part specifies the interval start position. It is interpreted as an absolute position, or as a relative offset from the current position if it is preceded by the "+" character. If this first part is not specified, no seeking will be performed when reading this interval.
+  第一部分指定区间起始位置。它按绝对位置解释；若以 "+" 字符开头，则按相对当前位置的偏移解释。若未指定第一部分，读取该区间时不进行定位。
 
-  The second part specifies the interval end position. It is interpreted as an absolute position, or as a relative offset from the current position if it is preceded by the "+" character. If the offset specification starts with "#", it is interpreted as the number of packets to read (not including the flushing packets) from the interval start. If no second part is specified, the program will read until the end of the input.
+  第二部分指定区间结束位置。它按绝对位置解释；若以 "+" 字符开头，则按相对当前位置的偏移解释。若偏移描述以 "#" 开头，则解释为从区间起点开始读取的包数（不包括冲刷包）。若未指定第二部分，程序将读到输入末尾。
 
-  Note that seeking is not accurate, thus the actual interval start point may be different from the specified position. Also, when an interval duration is specified, the absolute end time will be computed by adding the duration to the interval start point found by seeking the file, rather than to the specified start value.
+  注意定位并不精确，因此实际区间起点可能与指定位置不同。此外，当指定了区间时长时，绝对结束时间按定位文件找到的区间起点加时长计算，而不是加在指定的起始值上。
 
-  The formal syntax is given by:
+  形式化语法如下：
 
   ``` text
   INTERVAL  ::= [START|+START_OFFSET][%[END|+END_OFFSET]]
   INTERVALS ::= INTERVAL[,INTERVALS]
   ```
 
-  A few examples follow.
+  下面给出几个示例。
 
-  - Seek to time 10, read packets until 20 seconds after the found seek point, then seek to position `01:30` (1 minute and thirty seconds) and read packets until position `01:45`.
+  - 定位到时间 10，读取包直到定位点之后 20 秒，然后定位到 `01:30`（1 分 30 秒）处并读取包直到 `01:45` 处。
 
     ``` text
     10%+20,01:30%01:45
     ```
 
-  - Read only 42 packets after seeking to position `01:23`:
+  - 定位到 `01:23` 处后只读取 42 个包：
 
     ``` text
     01:23%+#42
     ```
 
-  - Read only the first 20 seconds from the start:
+  - 只读取开头前 20 秒：
 
     ``` text
     %+20
     ```
 
-  - Read from the start until position `02:30`:
+  - 从开头读取到 `02:30` 处：
 
     ``` text
     %02:30
     ```
 
-- **`-show_private_data, -private`** Show private data, that is data depending on the format of the particular shown element. This option is enabled by default, but you may need to disable it for specific uses, for example when creating XSD-compliant XML output.
+- **`-show_private_data, -private`** 显示私有数据，即依赖于所显示元素具体格式的数据。该选项默认启用，但特定用途下可能需要禁用，例如生成符合 XSD 的 XML 输出时。
 
-- **`-show_program_version`** Show information related to program version.
+- **`-show_program_version`** 显示与程序版本相关的信息。
 
-  Version information is printed within a section with name "PROGRAM_VERSION".
+  版本信息打印在名为 "PROGRAM_VERSION" 的小节中。
 
-- **`-show_library_versions`** Show information related to library versions.
+- **`-show_library_versions`** 显示与库版本相关的信息。
 
-  Version information for each library is printed within a section with name "LIBRARY_VERSION".
+  每个库的版本信息打印在名为 "LIBRARY_VERSION" 的小节中。
 
-- **`-show_versions`** Show information related to program and library versions. This is the equivalent of setting both `-show_program_version` and `-show_library_versions` options.
+- **`-show_versions`** 显示与程序和库版本相关的信息。相当于同时设置 `-show_program_version` 和 `-show_library_versions` 选项。
 
-- **`-show_pixel_formats`** Show information about all pixel formats supported by FFmpeg.
+- **`-show_pixel_formats`** 显示 FFmpeg 支持的所有像素格式的信息。
 
-  Pixel format information for each format is printed within a section with name "PIXEL_FORMAT".
+  每个格式的像素格式信息打印在名为 "PIXEL_FORMAT" 的小节中。
 
-- **`-show_optional_fields value`** Some writers viz. JSON and XML, omit the printing of fields with invalid or non-applicable values, while other writers always print them. This option enables one to control this behaviour. Valid values are `always`/`1`, `never`/`0` and `auto`/`-1`. Default is \<auto\>.
+- **`-show_optional_fields value`** 某些写入器（即 JSON 和 XML）会省略对无效或不适用值的字段的打印，而其他写入器总是打印它们。该选项可控制这一行为。有效值为 `always`/`1`、`never`/`0` 和 `auto`/`-1`。默认为 \<auto\>。
 
-- **`-analyze_frames`** Analyze frames and/or their side data up to the provided read interval, providing additional information that may be useful at a stream level. Must be paired with the `-show_streams` option or it will have no effect.
+- **`-analyze_frames`** 分析帧和/或其 side data 直到给定的读取区间为止，提供可能在流层面有用的附加信息。必须与 `-show_streams` 选项搭配，否则无效果。
 
-  Currently, the additional fields provided by this option when enabled are the `closed_captions` and `film_grain` fields.
+  目前，启用该选项后提供的附加字段是 `closed_captions` 和 `film_grain` 字段。
 
-  For example, to analyze the first 20 seconds and populate these fields:
+  例如，分析前 20 秒并填充这些字段：
 
   ``` text
   ffprobe -show_streams -analyze_frames -read_intervals "%+20" INPUT
   ```
 
-- **`-bitexact`** Force bitexact output, useful to produce output which is not dependent on the specific build.
+- **`-bitexact`** 强制比特精确输出，可用于产生不依赖具体构建的输出。
 
-- **`-i input_url`** Read \<input_url\>.
+- **`-i input_url`** 读取 \<input_url\>。
 
-- **`-o output_url`** Write output to \<output_url\>. If not specified, the output is sent to stdout.
+- **`-o output_url`** 将输出写入 \<output_url\>。未指定时，输出发送到 stdout。
 
-- **`-c:media_specifier codec_name`** Force a specific decoder implementation for the stream identified by \<media_specifier\>, which can assume the values `a` (audio), `v` (video), `s` (subtitle), and `d` (data).
+- **`-c:media_specifier codec_name`** 为 \<media_specifier\> 标识的流强制指定特定的解码器实现，\<media_specifier\> 可取值 `a`（音频）、`v`（视频）、`s`（字幕）和 `d`（数据）。
 
-# Writers
+# 写入器
 
-A writer defines the output format adopted by `ffprobe`, and will be used for printing all the parts of the output.
+写入器 (writer) 定义 `ffprobe` 采用的输出格式，输出的所有部分都由它打印。
 
-A writer may accept one or more arguments, which specify the options to adopt. The options are specified as a list of \<key\>=\<value\> pairs, separated by ":".
+写入器可接受一个或多个参数，用于指定采用的选项。选项以 \<key\>=\<value\> 对列表的形式指定，以 ":" 分隔。
 
-All writers support the following options:
+所有写入器都支持以下选项：
 
-- **`string_validation, sv`** Set string validation mode.
+- **`string_validation, sv`** 设置字符串校验模式。
 
-  The following values are accepted.
+  接受以下取值。
 
-  - **`fail`** The writer will fail immediately in case an invalid string (UTF-8) sequence or code point is found in the input. This is especially useful to validate input metadata.
+  - **`fail`** 一旦在输入中发现无效的字符串 (UTF-8) 序列或码点，写入器立即失败。这对校验输入元数据特别有用。
 
-  - **`ignore`** Any validation error will be ignored. This will result in possibly broken output, especially with the json or xml writer.
+  - **`ignore`** 忽略任何校验错误。这会导致输出可能损坏，尤其是在 json 或 xml 写入器下。
 
-  - **`replace`** The writer will substitute invalid UTF-8 sequences or code points with the string specified with the `string_validation_replacement`.
+  - **`replace`** 写入器会用 `string_validation_replacement` 指定的字符串替换无效的 UTF-8 序列或码点。
 
-  Default value is `replace`.
+  默认值为 `replace`。
 
-- **`string_validation_replacement, svr`** Set replacement string to use in case `string_validation` is set to `replace`.
+- **`string_validation_replacement, svr`** 设置 `string_validation` 为 `replace` 时使用的替换字符串。
 
-  In case the option is not specified, the writer will assume the empty string, that is it will remove the invalid sequences from the input strings.
+  未指定该选项时，写入器将视为空字符串，即从输入字符串中删除无效序列。
 
-A description of the currently available writers follows.
+下面描述当前可用的写入器。
 
 ## default
 
-Default format.
+默认格式。
 
-Print each section in the form:
+以如下形式打印每个小节：
 
 ``` text
 [SECTION]
@@ -277,132 +273,132 @@ keyN=valN
 [/SECTION]
 ```
 
-Metadata tags are printed as a line in the corresponding FORMAT, STREAM, STREAM_GROUP_STREAM or PROGRAM_STREAM section, and are prefixed by the string "TAG:".
+元数据标签作为一行打印在对应的 FORMAT、STREAM、STREAM_GROUP_STREAM 或 PROGRAM_STREAM 小节中，并以字符串 "TAG:" 为前缀。
 
-A description of the accepted options follows.
+可接受选项的描述如下。
 
-- **`nokey, nk`** If set to 1 specify not to print the key of each field. Default value is 0.
+- **`nokey, nk`** 设为 1 时表示不打印每个字段的键。默认值为 0。
 
-- **`noprint_wrappers, nw`** If set to 1 specify not to print the section header and footer. Default value is 0.
+- **`noprint_wrappers, nw`** 设为 1 时表示不打印小节头和小节尾。默认值为 0。
 
 ## compact, csv
 
-Compact and CSV format.
+紧凑格式和 CSV 格式。
 
-The `csv` writer is equivalent to `compact`, but supports different defaults.
+`csv` 写入器等同于 `compact`，但支持不同的默认值。
 
-Each section is printed on a single line. If no option is specified, the output has the form:
+每个小节打印为单行。未指定任何选项时，输出形如：
 
 ``` text
 section|key1=val1| ... |keyN=valN
 ```
 
-Metadata tags are printed in the corresponding "format" or "stream" section. A metadata tag key, if printed, is prefixed by the string "tag:".
+元数据标签打印在对应的 "format" 或 "stream" 小节中。元数据标签的键（如打印）以字符串 "tag:" 为前缀。
 
-The description of the accepted options follows.
+可接受选项的描述如下。
 
-- **`item_sep, s`** Specify the character to use for separating fields in the output line. It must be a single printable character, it is "\|" by default ("," for the `csv` writer).
+- **`item_sep, s`** 指定输出行中分隔字段所用字符。必须是单个可打印字符，默认为 "\|"（`csv` 写入器为 ","）。
 
-- **`nokey, nk`** If set to 1 specify not to print the key of each field. Its default value is 0 (1 for the `csv` writer).
+- **`nokey, nk`** 设为 1 时表示不打印每个字段的键。默认值为 0（`csv` 写入器为 1）。
 
-- **`escape, e`** Set the escape mode to use, default to "c" ("csv" for the `csv` writer).
+- **`escape, e`** 设置使用的转义模式，默认为 "c"（`csv` 写入器为 "csv"）。
 
-  It can assume one of the following values:
+  可取以下值之一：
 
-  - **`c`** Perform C-like escaping. Strings containing a newline (`\n`), carriage return (`\r`), a tab (`\t`), a form feed (`\f`), the escaping character (`\`) or the item separator character \<SEP\> are escaped using C-like fashioned escaping, so that a newline is converted to the sequence `\n`, a carriage return to `\r`, `\` to `\\` and the separator \<SEP\> is converted to `\SEP`.
+  - **`c`** 执行类 C 转义。包含换行（`\n`）、回车（`\r`）、制表符（`\t`）、换页符（`\f`）、转义字符（`\`）或字段分隔符 \<SEP\> 的字符串按类 C 方式转义：换行转换为序列 `\n`，回车转换为 `\r`，`\` 转换为 `\\`，分隔符 \<SEP\> 转换为 `\SEP`。
 
-  - **`csv`** Perform CSV-like escaping, as described in RFC4180. Strings containing a newline (`\n`), a carriage return (`\r`), a double quote (`"`), or \<SEP\> are enclosed in double-quotes.
+  - **`csv`** 执行类 CSV 转义，如 RFC4180 所述。包含换行（`\n`）、回车（`\r`）、双引号（`"`）或 \<SEP\> 的字符串用双引号括起。
 
-  - **`none`** Perform no escaping.
+  - **`none`** 不执行转义。
 
-- **`print_section, p`** Print the section name at the beginning of each line if the value is `1`, disable it with value set to `0`. Default value is `1`.
+- **`print_section, p`** 值为 `1` 时在每行开头打印小节名称，设为 `0` 禁用。默认值为 `1`。
 
 ## flat
 
-Flat format.
+扁平格式。
 
-A free-form output where each line contains an explicit key=value, such as "streams.stream.3.tags.foo=bar". The output is shell escaped, so it can be directly embedded in sh scripts as long as the separator character is an alphanumeric character or an underscore (see \<sep_char\> option).
+自由格式输出，每行包含显式的 key=value，例如 "streams.stream.3.tags.foo=bar"。输出经过 shell 转义，因此只要分隔符是字母数字字符或下划线（参见 \<sep_char\> 选项），就可以直接嵌入 sh 脚本。
 
-The description of the accepted options follows.
+可接受选项的描述如下。
 
-- **`sep_char, s`** Separator character used to separate the chapter, the section name, IDs and potential tags in the printed field key.
+- **`sep_char, s`** 在打印的字段键中分隔章节、小节名称、ID 和可能的标签所用分隔符。
 
-  Default value is `.`.
+  默认值为 `.`。
 
-- **`hierarchical, h`** Specify if the section name specification should be hierarchical. If set to 1, and if there is more than one section in the current chapter, the section name will be prefixed by the name of the chapter. A value of 0 will disable this behavior.
+- **`hierarchical, h`** 指定小节名称是否按层级给出。设为 1 且当前章节中有多个小节时，小节名称将加上章节名称前缀。值为 0 时禁用该行为。
 
-  Default value is 1.
+  默认值为 1。
 
 ## ini
 
-INI format output.
+INI 格式输出。
 
-Print output in an INI based format.
+以基于 INI 的格式打印输出。
 
-The following conventions are adopted:
+采用以下约定：
 
-- all key and values are UTF-8
+- 所有键和值均为 UTF-8
 
-- `.` is the subgroup separator
+- `.` 是子组分隔符
 
-- newline, `\t`, `\f`, `\b` and the following characters are escaped
+- 换行、`\t`、`\f`、`\b` 和以下字符会被转义
 
-- `\` is the escape character
+- `\` 是转义字符
 
-- `#` is the comment indicator
+- `#` 是注释指示符
 
-- `=` is the key/value separator
+- `=` 是键/值分隔符
 
-- `:` is not used but usually parsed as key/value separator
+- `:` 不使用，但通常被解析为键/值分隔符
 
-This writer accepts options as a list of \<key\>=\<value\> pairs, separated by `:`.
+该写入器以 \<key\>=\<value\> 对列表的形式接受选项，以 `:` 分隔。
 
-The description of the accepted options follows.
+可接受选项的描述如下。
 
-- **`hierarchical, h`** Specify if the section name specification should be hierarchical. If set to 1, and if there is more than one section in the current chapter, the section name will be prefixed by the name of the chapter. A value of 0 will disable this behavior.
+- **`hierarchical, h`** 指定小节名称是否按层级给出。设为 1 且当前章节中有多个小节时，小节名称将加上章节名称前缀。值为 0 时禁用该行为。
 
-  Default value is 1.
+  默认值为 1。
 
 ## json
 
-JSON based format.
+基于 JSON 的格式。
 
-Each section is printed using JSON notation.
+每个小节以 JSON 记法打印。
 
-The description of the accepted options follows.
+可接受选项的描述如下。
 
-- **`compact, c`** If set to 1 enable compact output, that is each section will be printed on a single line. Default value is 0.
+- **`compact, c`** 设为 1 时启用紧凑输出，即每个小节打印为单行。默认值为 0。
 
-For more information about JSON, see <http://www.json.org/>.
+有关 JSON 的更多信息，参见 <http://www.json.org/>。
 
 ## xml
 
-XML based format.
+基于 XML 的格式。
 
-The XML output is described in the XML schema description file `ffprobe.xsd` installed in the FFmpeg datadir.
+XML 输出由随 FFmpeg datadir 安装的 XML schema 描述文件 `ffprobe.xsd` 描述。
 
-An updated version of the schema can be retrieved at the url <http://www.ffmpeg.org/schema/ffprobe.xsd>, which redirects to the latest schema committed into the FFmpeg development source code tree.
+更新版本的 schema 可从 url <http://www.ffmpeg.org/schema/ffprobe.xsd> 获取，该 url 重定向到提交进 FFmpeg 开发源码树的最新 schema。
 
-Note that the output issued will be compliant to the `ffprobe.xsd` schema only when no special global output options (`unit`, `prefix`, `byte_binary_prefix`, `sexagesimal` etc.) are specified.
+注意，只有在未指定特殊全局输出选项（`unit`、`prefix`、`byte_binary_prefix`、`sexagesimal` 等）时，发出的输出才会符合 `ffprobe.xsd` schema。
 
-The description of the accepted options follows.
+可接受选项的描述如下。
 
-- **`fully_qualified, q`** If set to 1 specify if the output should be fully qualified. Default value is 0. This is required for generating an XML file which can be validated through an XSD file.
+- **`fully_qualified, q`** 设为 1 时指定输出应为完全限定 (fully qualified)。默认值为 0。生成可通过 XSD 文件校验的 XML 文件时需要此项。
 
-- **`xsd_strict, x`** If set to 1 perform more checks for ensuring that the output is XSD compliant. Default value is 0. This option automatically sets `fully_qualified` to 1.
+- **`xsd_strict, x`** 设为 1 时执行更多检查以确保输出符合 XSD。默认值为 0。该选项会自动将 `fully_qualified` 设为 1。
 
-For more information about the XML format, see <https://www.w3.org/XML/>.
+有关 XML 格式的更多信息，参见 <https://www.w3.org/XML/>。
 
-# Timecode
+# 时间码
 
-`ffprobe` supports Timecode extraction:
+`ffprobe` 支持时间码提取：
 
-- MPEG1/2 timecode is extracted from the GOP, and is available in the video stream details (`-show_streams`, see \<timecode\>).
+- MPEG1/2 时间码从 GOP 中提取，可在视频流详情（`-show_streams`，参见 \<timecode\>）中获得。
 
-- MOV timecode is extracted from tmcd track, so is available in the tmcd stream metadata (`-show_streams`, see \<TAG:timecode\>).
+- MOV 时间码从 tmcd 轨道中提取，因此可在 tmcd 流的元数据（`-show_streams`，参见 \<TAG:timecode\>）中获得。
 
-- DV, GXF and AVI timecodes are available in format metadata (`-show_format`, see \<TAG:timecode\>).
+- DV、GXF 和 AVI 时间码可在格式元数据（`-show_format`，参见 \<TAG:timecode\>）中获得。
 
-# See Also
+# 另请参见
 
 ffmpeg(1), ffplay(1), ffmpeg-utils(1), ffmpeg-scaler(1), ffmpeg-resampler(1), ffmpeg-codecs(1), ffmpeg-bitstream-filters(1), ffmpeg-formats(1), ffmpeg-devices(1), ffmpeg-protocols(1), ffmpeg-filters(1)
