@@ -6,6 +6,9 @@
 # v2 解冻条件=出现跨批译法冲突或上游 n10 术语变更，届时走 DR 流程）
 # B2 批随批补录 4 条（writer/master clock/show mode/side data，
 # 2026-11-20 随批评审 approved；沿用 B1"术语表是活文档"约定）
+# B3 批随批补录 19 条（宏块/运动矢量/运动估计/运动补偿/码率控制/量化器/
+# 量化参数/GOP/操作点/胶片颗粒/错误隐藏/抖动/亮度/色度/帧内刷新/重矩阵化/
+# 熵编码/小片/去块，2026-11-21 随批评审 approved）
 # 原则：muxer=复用器 / demuxer=解复用器（社区主流技术译法，R3 明确）
 
 terms:
@@ -898,3 +901,118 @@ terms:
     status: "approved"
     context: "manuals/API（帧/包附加数据，与 extradata 同口径不译）"
     aliases: []
+
+  # ===== B3 批补录（components/codecs/scaler/resampler，2026-11-21 随批评审 approved） =====
+  - en: "macroblock"
+    zh: "宏块"
+    status: "approved"
+    context: "components/codecs.md"
+    aliases: ["MB"]
+
+  - en: "motion vector"
+    zh: "运动矢量"
+    status: "approved"
+    context: "components/codecs.md"
+    aliases: ["MV"]
+
+  - en: "motion estimation"
+    zh: "运动估计"
+    status: "approved"
+    context: "components/codecs.md"
+    aliases: ["ME"]
+
+  - en: "motion compensation"
+    zh: "运动补偿"
+    status: "approved"
+    context: "components/codecs.md"
+    aliases: []
+
+  - en: "rate control"
+    zh: "码率控制"
+    status: "approved"
+    context: "components/codecs.md"
+    aliases: ["ratecontrol"]
+
+  - en: "quantizer"
+    zh: "量化器"
+    status: "approved"
+    context: "components/codecs.md"
+    aliases: ["quantiser"]
+
+  - en: "quantization parameter"
+    zh: "量化参数"
+    status: "approved"
+    context: "components/codecs.md（缩写 QP 不译）"
+    aliases: ["QP"]
+
+  - en: "GOP"
+    zh: "图像组 (GOP)"
+    status: "approved"
+    context: "components/codecs.md（GOP 缩写保留）"
+    aliases: ["group of pictures"]
+
+  - en: "operating point"
+    zh: "操作点"
+    status: "approved"
+    context: "components/codecs.md（AV1/SVT-AV1 可分级比特流）"
+    aliases: []
+
+  - en: "film grain"
+    zh: "胶片颗粒"
+    status: "approved"
+    context: "components/codecs.md"
+    aliases: []
+
+  - en: "error concealment"
+    zh: "错误隐藏"
+    status: "approved"
+    context: "components/codecs.md"
+    aliases: []
+
+  - en: "dither"
+    zh: "抖动"
+    status: "approved"
+    context: "components/scaler.md（滤镜名/选项名不译）"
+    aliases: ["dithering"]
+
+  - en: "luma"
+    zh: "亮度"
+    status: "approved"
+    context: "components/codecs.md/scaler.md"
+    aliases: ["luma component"]
+
+  - en: "chroma"
+    zh: "色度"
+    status: "approved"
+    context: "components/codecs.md/scaler.md"
+    aliases: ["chroma component"]
+
+  - en: "intra refresh"
+    zh: "帧内刷新"
+    status: "approved"
+    context: "components/codecs.md"
+    aliases: []
+
+  - en: "rematrixing"
+    zh: "重矩阵化"
+    status: "approved"
+    context: "components/resampler.md"
+    aliases: ["rematrix"]
+
+  - en: "entropy coding"
+    zh: "熵编码"
+    status: "approved"
+    context: "components/codecs.md（CAVLC/CABAC 名不译）"
+    aliases: []
+
+  - en: "slice"
+    zh: "小片"
+    status: "approved"
+    context: "components/codecs.md（编解码器语境；滤镜语境另行裁定）"
+    aliases: []
+
+  - en: "deblocking"
+    zh: "去块"
+    status: "approved"
+    context: "components/codecs.md"
+    aliases: ["deblock"]
