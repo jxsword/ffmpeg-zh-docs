@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#unix-like" class="md-skip">
+        <a href="#类-unix-系统" class="md-skip">
           跳转至
         </a>
       
@@ -1505,10 +1505,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#advanced-linking-configuration" class="md-nav__link">
+  <a href="#高级链接配置" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Advanced linking configuration
+        高级链接配置
       
     </span>
   </a>
@@ -1836,78 +1836,73 @@
   
 
 
-<div class="admonition warning">
-<p class="admonition-title">翻译占位页</p>
-<p>本页为英文原文占位（翻译进行中，进度见<a href="https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md">翻译看板</a>）。
-术语与示例以英文原文为准。</p>
-</div>
-<h1 id="unix-like">Unix-like<a class="headerlink" href="#unix-like" title="Permanent link">&para;</a></h1>
-<p>Some parts of FFmpeg cannot be built with version 2.15 of the GNU assembler which is still provided by a few AMD64 distributions. To make sure your compiler really uses the required version of gas after a binutils upgrade, run:</p>
+<h1 id="类-unix-系统">类 Unix 系统<a class="headerlink" href="#类-unix-系统" title="Permanent link">&para;</a></h1>
+<p>FFmpeg 的某些部分无法用部分 AMD64 发行版仍在提供的 GNU 汇编器 2.15 版构建。为确保 binutils 升级后您的编译器确实使用所需版本的 gas，请运行：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$(gcc -print-prog-name=as) --version
 </code></pre></div>
-<p>If not, then you should install a different compiler that has no hard-coded path to gas. In the worst case pass <code>--disable-asm</code> to configure.</p>
-<h2 id="advanced-linking-configuration">Advanced linking configuration<a class="headerlink" href="#advanced-linking-configuration" title="Permanent link">&para;</a></h2>
-<p>If you compiled FFmpeg libraries statically and you want to use them to build your own shared library, you may need to force PIC support (with <code>--enable-pic</code> during FFmpeg configure) and add the following option to your project LDFLAGS:</p>
+<p>如果不是，则您应当安装一个没有硬编码 gas 路径的其他编译器。最坏情况下，向 configure 传入 <code>--disable-asm</code>。</p>
+<h2 id="高级链接配置">高级链接配置<a class="headerlink" href="#高级链接配置" title="Permanent link">&para;</a></h2>
+<p>如果您静态编译了 FFmpeg 库并想用它们来构建自己的共享库，您可能需要强制 PIC 支持（在 FFmpeg configure 时加 <code>--enable-pic</code>），并在项目的 LDFLAGS 中加入以下选项：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>-Wl,-Bsymbolic
 </code></pre></div>
-<p>If your target platform requires position independent binaries, you should pass the correct linking flag (e.g. <code>-pie</code>) to <code>--extra-ldexeflags</code>.</p>
+<p>如果您的目标平台要求位置无关二进制文件，您应当把正确的链接标志（如 <code>-pie</code>）传给 <code>--extra-ldexeflags</code>。</p>
 <h2 id="bsd">BSD<a class="headerlink" href="#bsd" title="Permanent link">&para;</a></h2>
-<p>BSD make will not build FFmpeg, you need to install and use GNU Make (<code>gmake</code>).</p>
+<p>BSD make 无法构建 FFmpeg，您需要安装并使用 GNU Make（<code>gmake</code>）。</p>
 <h2 id="opensolaris">(Open)Solaris<a class="headerlink" href="#opensolaris" title="Permanent link">&para;</a></h2>
-<p>GNU Make is required to build FFmpeg, so you have to invoke (<code>gmake</code>), standard Solaris Make will not work. When building with a non-c99 front-end (gcc, generic suncc) add either <code>--extra-libs=/usr/lib/values-xpg6.o</code> or <code>--extra-libs=/usr/lib/64/values-xpg6.o</code> to the configure options since the libc is not c99-compliant by default. The probes performed by configure may raise an exception leading to the death of configure itself due to a bug in the system shell. Simply invoke a different shell such as bash directly to work around this:</p>
+<p>构建 FFmpeg 需要 GNU Make，因此您必须调用 <code>gmake</code>，标准的 Solaris Make 无法工作。使用非 c99 前端（gcc、generic suncc）构建时，向 configure 选项添加 <code>--extra-libs=/usr/lib/values-xpg6.o</code> 或 <code>--extra-libs=/usr/lib/64/values-xpg6.o</code>，因为 libc 默认不符合 c99。configure 执行的探测可能因系统 shell 的一个缺陷而抛出异常，导致 configure 自身终止；直接改用 bash 等 shell 即可绕开：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>bash ./configure
 </code></pre></div>
 <h2 id="darwin-mac-os-x-iphone">Darwin (Mac OS X, iPhone)<a class="headerlink" href="#darwin-mac-os-x-iphone" title="Permanent link">&para;</a></h2>
-<p>The toolchain provided with Xcode is sufficient to build the basic unaccelerated code.</p>
-<p>Mac OS X on PowerPC or ARM (iPhone) requires a preprocessor from <a href="https://github.com/FFmpeg/gas-preprocessor">https://github.com/FFmpeg/gas-preprocessor</a> or <a href="https://github.com/yuvi/gas-preprocessor">https://github.com/yuvi/gas-preprocessor</a>(currently outdated) to build the optimized assembly functions. Put the Perl script somewhere in your PATH, FFmpeg's configure will pick it up automatically.</p>
-<p>Mac OS X on amd64 and x86 requires <code>nasm</code> to build most of the optimized assembly functions. <a href="http://www.finkproject.org/">Fink</a>, <a href="https://wiki.gentoo.org/wiki/Project:Prefix">Gentoo Prefix</a>, <a href="https://mxcl.github.com/homebrew/">Homebrew</a> or <a href="http://www.macports.org">MacPorts</a> can easily provide it.</p>
+<p>Xcode 提供的工具链足以构建基础的未加速代码。</p>
+<p>PowerPC 或 ARM (iPhone) 平台的 Mac OS X 需要 <a href="https://github.com/FFmpeg/gas-preprocessor">https://github.com/FFmpeg/gas-preprocessor</a> 或 <a href="https://github.com/yuvi/gas-preprocessor">https://github.com/yuvi/gas-preprocessor</a>（现已过时）提供的预处理器来构建优化汇编函数。把该 Perl 脚本放到 PATH 中的某个位置，FFmpeg 的 configure 会自动拾取它。</p>
+<p>amd64 与 x86 平台的 Mac OS X 需要 <code>nasm</code> 来构建大多数优化汇编函数。<a href="http://www.finkproject.org/">Fink</a>、<a href="https://wiki.gentoo.org/wiki/Project:Prefix">Gentoo Prefix</a>、<a href="https://mxcl.github.com/homebrew/">Homebrew</a> 或 <a href="http://www.macports.org">MacPorts</a> 都能轻松提供它。</p>
 <h1 id="dos">DOS<a class="headerlink" href="#dos" title="Permanent link">&para;</a></h1>
-<p>Using a cross-compiler is preferred for various reasons. <a href="http://www.delorie.com/howto/djgpp/linux-x-djgpp.html">http://www.delorie.com/howto/djgpp/linux-x-djgpp.html</a></p>
+<p>出于多种原因，优先使用交叉编译器。<a href="http://www.delorie.com/howto/djgpp/linux-x-djgpp.html">http://www.delorie.com/howto/djgpp/linux-x-djgpp.html</a></p>
 <h1 id="os2">OS/2<a class="headerlink" href="#os2" title="Permanent link">&para;</a></h1>
-<p>For information about compiling FFmpeg on OS/2 see <a href="http://www.edm2.com/index.php/FFmpeg">http://www.edm2.com/index.php/FFmpeg</a>.</p>
+<p>关于在 OS/2 上编译 FFmpeg 的信息，参见 <a href="http://www.edm2.com/index.php/FFmpeg">http://www.edm2.com/index.php/FFmpeg</a>。</p>
 <h1 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h1>
-<h2 id="native-windows-compilation-using-mingw-or-mingw-w64">Native Windows compilation using MinGW or MinGW-w64<a class="headerlink" href="#native-windows-compilation-using-mingw-or-mingw-w64" title="Permanent link">&para;</a></h2>
-<p>FFmpeg can be built to run natively on Windows using the MinGW-w64 toolchain. Install the latest versions of MSYS2 and MinGW-w64 from <a href="http://msys2.github.io/">http://msys2.github.io/</a> and/or <a href="http://mingw-w64.sourceforge.net/">http://mingw-w64.sourceforge.net/</a>. You can find detailed installation instructions in the download section and the FAQ.</p>
-<p>Notes:</p>
+<h2 id="使用-mingw-或-mingw-w64-的-windows-原生编译">使用 MinGW 或 MinGW-w64 的 Windows 原生编译<a class="headerlink" href="#使用-mingw-或-mingw-w64-的-windows-原生编译" title="Permanent link">&para;</a></h2>
+<p>可以用 MinGW-w64 工具链把 FFmpeg 构建为原生运行于 Windows 的程序。请从 <a href="http://msys2.github.io/">http://msys2.github.io/</a> 和/或 <a href="http://mingw-w64.sourceforge.net/">http://mingw-w64.sourceforge.net/</a> 安装最新版本的 MSYS2 与 MinGW-w64。您可以在下载区和 FAQ 中找到详细的安装说明。</p>
+<p>注意：</p>
 <ul>
 <li>
-<p>Building for the MSYS environment is discouraged, MSYS2 provides a full MinGW-w64 environment through <code>mingw64_shell.bat</code> or <code>mingw32_shell.bat</code> that should be used instead of the environment provided by <code>msys2_shell.bat</code>.</p>
+<p>不建议为 MSYS 环境构建；MSYS2 通过 <code>mingw64_shell.bat</code> 或 <code>mingw32_shell.bat</code> 提供完整的 MinGW-w64 环境，应当使用它而不是 <code>msys2_shell.bat</code> 提供的环境。</p>
 </li>
 <li>
-<p>Building using MSYS2 can be sped up by disabling implicit rules in the Makefile by calling <code>make -r</code> instead of plain <code>make</code>. This speed up is close to non-existent for normal one-off builds and is only noticeable when running make for a second time (for example during <code>make install</code>).</p>
+<p>用 MSYS2 构建可以通过禁用 Makefile 的隐式规则来提速：调用 <code>make -r</code> 而非单纯的 <code>make</code>。这一提速对普通的一次性构建几乎不存在，只在第二次运行 make 时（例如 <code>make install</code> 期间）才能察觉。</p>
 </li>
 <li>
-<p>In order to compile FFplay, you must have the MinGW development library of <a href="http://www.libsdl.org/">SDL</a> and <code>pkg-config</code> installed.</p>
+<p>要编译 FFplay，您必须已安装 <a href="http://www.libsdl.org/">SDL</a> 的 MinGW 开发库和 <code>pkg-config</code>。</p>
 </li>
 <li>
-<p>By using <code>./configure --enable-shared</code> when configuring FFmpeg, you can build the FFmpeg libraries (e.g. libavutil, libavcodec, libavformat) as DLLs.</p>
+<p>在配置 FFmpeg 时使用 <code>./configure --enable-shared</code>，您可以把 FFmpeg 库（如 libavutil、libavcodec、libavformat）构建为 DLL。</p>
 </li>
 </ul>
-<h3 id="native-windows-compilation-using-msys2">Native Windows compilation using MSYS2<a class="headerlink" href="#native-windows-compilation-using-msys2" title="Permanent link">&para;</a></h3>
-<p>The MSYS2 MinGW-w64 environment provides ready to use toolchains and dependencies through <code>pacman</code>.</p>
-<p>Make sure to use <code>mingw64_shell.bat</code> or <code>mingw32_shell.bat</code> to have the correct MinGW-w64 environment. The default install provides shortcuts to them under <code>MinGW-w64 Win64 Shell</code> and <code>MinGW-w64 Win32 Shell</code>.</p>
+<h3 id="使用-msys2-的-windows-原生编译">使用 MSYS2 的 Windows 原生编译<a class="headerlink" href="#使用-msys2-的-windows-原生编译" title="Permanent link">&para;</a></h3>
+<p>MSYS2 MinGW-w64 环境通过 <code>pacman</code> 提供开箱即用的工具链与依赖。</p>
+<p>请确保使用 <code>mingw64_shell.bat</code> 或 <code>mingw32_shell.bat</code> 以获得正确的 MinGW-w64 环境。默认安装会在 <code>MinGW-w64 Win64 Shell</code> 与 <code>MinGW-w64 Win32 Shell</code> 下提供它们的快捷方式。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a># normal msys2 packages
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>pacman -S make pkgconf diffutils
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a># mingw-w64 packages and toolchains
 <a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>pacman -S mingw-w64-x86_64-nasm mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2
 </code></pre></div>
-<p>To target 32 bits replace <code>x86_64</code> with <code>i686</code> in the command above.</p>
-<h2 id="microsoft-visual-c-or-intel-c-compiler-for-windows">Microsoft Visual C++ or Intel C++ Compiler for Windows<a class="headerlink" href="#microsoft-visual-c-or-intel-c-compiler-for-windows" title="Permanent link">&para;</a></h2>
-<p>FFmpeg can be built with MSVC 2013 or later.</p>
-<p>You will need the following prerequisites:</p>
+<p>若目标是 32 位，把上述命令中的 <code>x86_64</code> 替换为 <code>i686</code>。</p>
+<h2 id="microsoft-visual-c-或-intel-c-编译器windows">Microsoft Visual C++ 或 Intel C++ 编译器（Windows）<a class="headerlink" href="#microsoft-visual-c-或-intel-c-编译器windows" title="Permanent link">&para;</a></h2>
+<p>FFmpeg 可以用 MSVC 2013 或更高版本构建。</p>
+<p>您需要以下前提条件：</p>
 <ul>
 <li>
 <p><a href="http://msys2.github.io/">MSYS2</a></p>
 </li>
 <li>
-<p><a href="http://www.nasm.us/">NASM</a> (Also available via MSYS2's package manager.)</p>
+<p><a href="http://www.nasm.us/">NASM</a>（也可经 MSYS2 的包管理器获取。）</p>
 </li>
 </ul>
-<p>To set up a proper environment in MSYS2, you need to run <code>msys_shell.bat</code> from the Visual Studio or Intel Compiler command prompt.</p>
-<p>Place <code>nasm.exe</code> somewhere in your <code>PATH</code>.</p>
-<p>Next, make sure any other headers and libs you want to use, such as zlib, are located in a spot that the compiler can see. Do so by modifying the <code>LIB</code> and <code>INCLUDE</code> environment variables to include the <strong>Windows-style</strong> paths to these directories. Alternatively, you can try to use the <code>--extra-cflags</code>/<code>--extra-ldflags</code> configure options.</p>
-<p>Finally, run:</p>
+<p>要在 MSYS2 中设置妥当的环境，您需要从 Visual Studio 或 Intel 编译器命令提示符运行 <code>msys_shell.bat</code>。</p>
+<p>把 <code>nasm.exe</code> 放到 <code>PATH</code> 中的某个位置。</p>
+<p>接下来，确保您想用的其他头文件和库（如 zlib）位于编译器可见的位置。做法是修改 <code>LIB</code> 与 <code>INCLUDE</code> 环境变量，把这些目录的 <strong>Windows 风格</strong> 路径加进去。或者，您也可以尝试 <code>--extra-cflags</code>/<code>--extra-ldflags</code> configure 选项。</p>
+<p>最后，运行：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>For MSVC:
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>./configure --toolchain=msvc
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
@@ -1917,32 +1912,32 @@
 <a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>make
 <a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>make install
 </code></pre></div>
-<p>If you wish to compile shared libraries, add <code>--enable-shared</code> to your configure options. Note that due to the way MSVC and ICL handle DLL imports and exports, you cannot compile static and shared libraries at the same time, and enabling shared libraries will automatically disable the static ones.</p>
-<p>Notes:</p>
+<p>如果您想编译共享库，请在 configure 选项中加入 <code>--enable-shared</code>。注意，由于 MSVC 与 ICL 处理 DLL 导入/导出的方式，您无法同时编译静态库与共享库；启用共享库会自动禁用静态库。</p>
+<p>注意：</p>
 <ul>
 <li>
-<p>If you wish to build with zlib support, you will have to grab a compatible zlib binary from somewhere, with an MSVC import lib, or if you wish to link statically, you can follow the instructions below to build a compatible <code>zlib.lib</code> with MSVC. Regardless of which method you use, you must still follow step 3, or compilation will fail.</p>
+<p>如果您想构建带 zlib 支持的版本，您需要从某处获取带 MSVC 导入库的兼容 zlib 二进制文件；或者，如果想静态链接，可按下面的步骤用 MSVC 构建兼容的 <code>zlib.lib</code>。无论采用哪种方法，都必须遵循第 3 步，否则编译将失败。</p>
 </li>
 <li>
-<p>Grab the <a href="http://zlib.net/">zlib sources</a>.</p>
+<p>获取 <a href="http://zlib.net/">zlib 源码</a>。</p>
 </li>
 <li>
-<p>Edit <code>win32/Makefile.msc</code> so that it uses -MT instead of -MD, since this is how FFmpeg is built as well.</p>
+<p>编辑 <code>win32/Makefile.msc</code>，使其使用 -MT 而非 -MD，因为 FFmpeg 也是这样构建的。</p>
 </li>
 <li>
-<p>Edit <code>zconf.h</code> and remove its inclusion of <code>unistd.h</code>. This gets erroneously included when building FFmpeg.</p>
+<p>编辑 <code>zconf.h</code>，移除它对 <code>unistd.h</code> 的包含。构建 FFmpeg 时该头会被错误地包含进来。</p>
 </li>
 <li>
-<p>Run <code>nmake -f win32/Makefile.msc</code>.</p>
+<p>运行 <code>nmake -f win32/Makefile.msc</code>。</p>
 </li>
 <li>
-<p>Move <code>zlib.lib</code>, <code>zconf.h</code>, and <code>zlib.h</code> to somewhere MSVC can see.</p>
+<p>把 <code>zlib.lib</code>、<code>zconf.h</code> 与 <code>zlib.h</code> 移到 MSVC 可见的位置。</p>
 </li>
 <li>
-<p>FFmpeg has been tested with the following on i686 and x86_64:</p>
+<p>FFmpeg 已在 i686 与 x86_64 上用下列组合测试过：</p>
 </li>
 <li>
-<p>Visual Studio 2013 Pro and Express</p>
+<p>Visual Studio 2013 Pro 与 Express 版</p>
 </li>
 <li>
 <p>Intel Composer XE 2013</p>
@@ -1951,69 +1946,69 @@
 <p>Intel Composer XE 2013 SP1</p>
 </li>
 </ul>
-<p>Anything else is not officially supported.</p>
-<h3 id="linking-to-ffmpeg-with-microsoft-visual-c">Linking to FFmpeg with Microsoft Visual C++<a class="headerlink" href="#linking-to-ffmpeg-with-microsoft-visual-c" title="Permanent link">&para;</a></h3>
-<p>If you plan to link with MSVC-built static libraries, you will need to make sure you have <code>Runtime Library</code> set to <code>Multi-threaded (/MT)</code> in your project's settings.</p>
-<p>You will need to define <code>inline</code> to something MSVC understands:</p>
+<p>其他组合均不受官方支持。</p>
+<h3 id="使用-microsoft-visual-c-链接-ffmpeg">使用 Microsoft Visual C++ 链接 FFmpeg<a class="headerlink" href="#使用-microsoft-visual-c-链接-ffmpeg" title="Permanent link">&para;</a></h3>
+<p>如果您计划链接 MSVC 构建的静态库，需要确保项目设置中 <code>Runtime Library</code> 已设为 <code>Multi-threaded (/MT)</code>。</p>
+<p>您需要把 <code>inline</code> 定义为 MSVC 能理解的形式：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>#define inline __inline
 </code></pre></div>
-<p>Also note, that as stated in <strong>Microsoft Visual C++</strong>, you will need an MSVC-compatible <a href="http://code.google.com/p/msinttypes/">inttypes.h</a>.</p>
-<p>If you plan on using import libraries created by dlltool, you must set <code>References</code> to <code>No (/OPT:NOREF)</code> under the linker optimization settings, otherwise the resulting binaries will fail during runtime. This is not required when using import libraries generated by <code>lib.exe</code>. This issue is reported upstream at <a href="http://sourceware.org/bugzilla/show_bug.cgi?id=12633">http://sourceware.org/bugzilla/show_bug.cgi?id=12633</a>.</p>
-<p>To create import libraries that work with the <code>/OPT:REF</code> option (which is enabled by default in Release mode), follow these steps:</p>
+<p>另请注意，如 <strong>Microsoft Visual C++</strong> 一节所述，您需要一个与 MSVC 兼容的 <a href="http://code.google.com/p/msinttypes/">inttypes.h</a>。</p>
+<p>如果您打算使用 dlltool 创建的导入库，必须在链接器优化设置中把 <code>References</code> 设为 <code>No (/OPT:NOREF)</code>，否则得到的二进制文件在运行时会失败。使用 <code>lib.exe</code> 生成的导入库则无此要求。该问题已上报上游：<a href="http://sourceware.org/bugzilla/show_bug.cgi?id=12633">http://sourceware.org/bugzilla/show_bug.cgi?id=12633</a>。</p>
+<p>要创建与 <code>/OPT:REF</code> 选项（Release 模式默认启用）兼容工作的导入库，请遵循以下步骤：</p>
 <ol>
 <li>
-<p>Open the <em>Visual Studio Command Prompt</em>.</p>
-<p>Alternatively, in a normal command line prompt, call <code>vcvars32.bat</code> which sets up the environment variables for the Visual C++ tools (the standard location for this file is something like <code>C:\Program Files (x86_\Microsoft Visual Studio 10.0\VC\bin\vcvars32.bat</code>).</p>
+<p>打开 <em>Visual Studio Command Prompt</em>。</p>
+<p>或者，在普通命令行提示符中调用 <code>vcvars32.bat</code>，它为 Visual C++ 工具设置环境变量（该文件的标准位置类似 <code>C:\Program Files (x86_\Microsoft Visual Studio 10.0\VC\bin\vcvars32.bat</code>）。</p>
 </li>
 <li>
-<p>Enter the <code>bin</code> directory where the created LIB and DLL files are stored.</p>
+<p>进入存放所生成 LIB 与 DLL 文件的 <code>bin</code> 目录。</p>
 </li>
 <li>
-<p>Generate new import libraries with <code>lib.exe</code>:</p>
+<p>用 <code>lib.exe</code> 生成新的导入库：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>lib /machine:i386 /def:..\lib\foo-version.def  /out:foo.lib
 </code></pre></div>
-<p>Replace <code>foo-version</code> and <code>foo</code> with the respective library names.</p>
+<p>把 <code>foo-version</code> 与 <code>foo</code> 替换为相应的库名。</p>
 </li>
 </ol>
-<h2 id="cross-compilation-for-windows-with-linux">Cross compilation for Windows with Linux<a class="headerlink" href="#cross-compilation-for-windows-with-linux" title="Permanent link">&para;</a></h2>
-<p>You must use the MinGW cross compilation tools available at <a href="http://www.mingw.org/">http://www.mingw.org/</a>.</p>
-<p>Then configure FFmpeg with the following options:</p>
+<h2 id="使用-linux-交叉编译-windows-版本">使用 Linux 交叉编译 Windows 版本<a class="headerlink" href="#使用-linux-交叉编译-windows-版本" title="Permanent link">&para;</a></h2>
+<p>您必须使用 <a href="http://www.mingw.org/">http://www.mingw.org/</a> 提供的 MinGW 交叉编译工具。</p>
+<p>然后用以下选项配置 FFmpeg：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>./configure --target-os=mingw32 --cross-prefix=i386-mingw32msvc-
 </code></pre></div>
-<p>(you can change the cross-prefix according to the prefix chosen for the MinGW tools).</p>
-<p>Then you can easily test FFmpeg with <a href="http://www.winehq.com/">Wine</a>.</p>
-<h2 id="compilation-under-cygwin">Compilation under Cygwin<a class="headerlink" href="#compilation-under-cygwin" title="Permanent link">&para;</a></h2>
-<p>Please use Cygwin 1.7.x as the obsolete 1.5.x Cygwin versions lack llrint() in its C library.</p>
-<p>Install your Cygwin with all the "Base" packages, plus the following "Devel" ones:</p>
+<p>（您可以按为 MinGW 工具选择的前缀更改 cross-prefix。）</p>
+<p>然后您可以轻松地用 <a href="http://www.winehq.com/">Wine</a> 测试 FFmpeg。</p>
+<h2 id="在-cygwin-下编译">在 Cygwin 下编译<a class="headerlink" href="#在-cygwin-下编译" title="Permanent link">&para;</a></h2>
+<p>请使用 Cygwin 1.7.x，因为已过时的 Cygwin 1.5.x 的 C 库缺少 llrint()。</p>
+<p>安装 Cygwin 时请带上全部 "Base" 包，再加上以下 "Devel" 包：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>binutils, gcc4-core, make, git, mingw-runtime, texinfo
 </code></pre></div>
-<p>In order to run FATE you will also need the following "Utils" packages:</p>
+<p>为了运行 FATE，您还需要以下 "Utils" 包：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>diffutils
 </code></pre></div>
-<p>If you want to build FFmpeg with additional libraries, download Cygwin "Devel" packages for Ogg and Vorbis from any Cygwin packages repository:</p>
+<p>如果您想构建带额外库的 FFmpeg，请从任意 Cygwin 软件包仓库下载 Ogg 与 Vorbis 的 Cygwin "Devel" 包：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>libogg-devel, libvorbis-devel
 </code></pre></div>
-<p>These library packages are only available from <a href="http://sourceware.org/cygwinports/">Cygwin Ports</a>:</p>
+<p>这些库包只能从 <a href="http://sourceware.org/cygwinports/">Cygwin Ports</a> 获取：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>libSDL-devel, libgsm-devel, libmp3lame-devel,
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>speex-devel, libtheora-devel, libxvidcore-devel
 </code></pre></div>
-<p>The recommendation for x264 is to build it from source, as it evolves too quickly for Cygwin Ports to be up to date.</p>
-<h2 id="crosscompilation-for-windows-under-cygwin">Crosscompilation for Windows under Cygwin<a class="headerlink" href="#crosscompilation-for-windows-under-cygwin" title="Permanent link">&para;</a></h2>
-<p>With Cygwin you can create Windows binaries that do not need the cygwin1.dll.</p>
-<p>Just install your Cygwin as explained before, plus these additional "Devel" packages:</p>
+<p>对 x264 的建议是从源码构建，因为其演进速度太快，Cygwin Ports 来不及更新。</p>
+<h2 id="在-cygwin-下为-windows-交叉编译">在 Cygwin 下为 Windows 交叉编译<a class="headerlink" href="#在-cygwin-下为-windows-交叉编译" title="Permanent link">&para;</a></h2>
+<p>使用 Cygwin，您可以创建不需要 cygwin1.dll 的 Windows 二进制文件。</p>
+<p>只需按前文所述安装 Cygwin，再加上这些额外的 "Devel" 包：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>gcc-mingw-core, mingw-runtime, mingw-zlib
 </code></pre></div>
-<p>and add some special flags to your configure invocation.</p>
-<p>For a static build run</p>
+<p>并向 configure 调用添加一些特殊标志。</p>
+<p>静态构建运行</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>./configure --target-os=mingw32 --extra-cflags=-mno-cygwin --extra-libs=-mno-cygwin
 </code></pre></div>
-<p>and for a build with shared libraries</p>
+<p>若要构建共享库版本则运行</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>./configure --target-os=mingw32 --enable-shared --disable-static --extra-cflags=-mno-cygwin --extra-libs=-mno-cygwin
 </code></pre></div>
 <h2 id="arm64ec">ARM64EC<a class="headerlink" href="#arm64ec" title="Permanent link">&para;</a></h2>
-<p>FFmpeg does not intend to support the Windows ARM64EC build configuration; patches for changing the individual libraries for the purposes of ARM64EC will not be accepted.</p>
-<p>It may still be possible to build FFmpeg in this build configuration; such a build may seem to work to some extent. Such a build may have some amounts of ABI inconsistencies though - which we are not willing to fix.</p>
-<p>(Changing aarch64 assembly code to strictly support ARM64EC would require ifdeffing/changing essentially all such assembly code, and would be a huge maintenance burden. Additionally, changing the library ABI surfaces to fix ABI inconsistencies could require extensive and intrusive changes.)</p>
+<p>FFmpeg 无意支持 Windows 的 ARM64EC 构建配置；为 ARM64EC 改动各个库的补丁将不被接受。</p>
+<p>在此构建配置下仍有可能构建出 FFmpeg；这样的构建可能在某种程度上看似可用，但可能存在一定程度的 ABI 不一致——我们不愿修复它。</p>
+<p>（将 aarch64 汇编代码改为严格支持 ARM64EC 需要对几乎所有此类汇编代码进行 ifdeffing/改动，将是巨大的维护负担。此外，修改库的 ABI 表面来修复 ABI 不一致可能需要大量侵入式更改。）</p>
 
 
 

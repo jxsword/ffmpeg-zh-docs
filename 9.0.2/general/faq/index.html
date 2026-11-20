@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#general-questions" class="md-skip">
+        <a href="#常见问题" class="md-skip">
           跳转至
         </a>
       
@@ -1449,10 +1449,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-doesnt-ffmpeg-support-feature-xyz" class="md-nav__link">
+  <a href="#为什么-ffmpeg-不支持功能-xyz" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why doesn't FFmpeg support feature [xyz]?
+        为什么 FFmpeg 不支持功能 [xyz]？
       
     </span>
   </a>
@@ -1460,10 +1460,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ffmpeg-does-not-support-codec-xxx-can-you-include-a-windows-dll-loader-to-support-it" class="md-nav__link">
+  <a href="#ffmpeg-不支持编解码器-xxx能否加入-windows-dll-加载器来支持它" class="md-nav__link">
     <span class="md-ellipsis">
       
-        FFmpeg does not support codec XXX. Can you include a Windows DLL loader to support it?
+        FFmpeg 不支持编解码器 XXX。能否加入 Windows DLL 加载器来支持它？
       
     </span>
   </a>
@@ -1471,10 +1471,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#i-cannot-read-this-file-although-this-format-seems-to-be-supported-by-ffmpeg" class="md-nav__link">
+  <a href="#虽然该格式似乎受-ffmpeg-支持我仍无法读取这个文件" class="md-nav__link">
     <span class="md-ellipsis">
       
-        I cannot read this file although this format seems to be supported by ffmpeg.
+        虽然该格式似乎受 ffmpeg 支持，我仍无法读取这个文件。
       
     </span>
   </a>
@@ -1482,10 +1482,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#which-codecs-are-supported-by-windows" class="md-nav__link">
+  <a href="#windows-支持哪些编解码器" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Which codecs are supported by Windows?
+        Windows 支持哪些编解码器？
       
     </span>
   </a>
@@ -1836,21 +1836,16 @@
   
 
 
-<div class="admonition warning">
-<p class="admonition-title">翻译占位页</p>
-<p>本页为英文原文占位（翻译进行中，进度见<a href="https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md">翻译看板</a>）。
-术语与示例以英文原文为准。</p>
-</div>
-<h1 id="general-questions">General Questions<a class="headerlink" href="#general-questions" title="Permanent link">&para;</a></h1>
-<h2 id="why-doesnt-ffmpeg-support-feature-xyz">Why doesn't FFmpeg support feature [xyz]?<a class="headerlink" href="#why-doesnt-ffmpeg-support-feature-xyz" title="Permanent link">&para;</a></h2>
-<p>Because no one has taken on that task yet. FFmpeg development is driven by the tasks that are important to the individual developers. If there is a feature that is important to you, the best way to get it implemented is to undertake the task yourself or sponsor a developer.</p>
-<h2 id="ffmpeg-does-not-support-codec-xxx-can-you-include-a-windows-dll-loader-to-support-it">FFmpeg does not support codec XXX. Can you include a Windows DLL loader to support it?<a class="headerlink" href="#ffmpeg-does-not-support-codec-xxx-can-you-include-a-windows-dll-loader-to-support-it" title="Permanent link">&para;</a></h2>
-<p>No. Windows DLLs are not portable, bloated and often slow. Moreover FFmpeg strives to support all codecs natively. A DLL loader is not conducive to that goal.</p>
-<h2 id="i-cannot-read-this-file-although-this-format-seems-to-be-supported-by-ffmpeg">I cannot read this file although this format seems to be supported by ffmpeg.<a class="headerlink" href="#i-cannot-read-this-file-although-this-format-seems-to-be-supported-by-ffmpeg" title="Permanent link">&para;</a></h2>
-<p>Even if ffmpeg can read the container format, it may not support all its codecs. Please consult the supported codec list in the ffmpeg documentation.</p>
-<h2 id="which-codecs-are-supported-by-windows">Which codecs are supported by Windows?<a class="headerlink" href="#which-codecs-are-supported-by-windows" title="Permanent link">&para;</a></h2>
-<p>Windows does not support standard formats like MPEG very well, unless you install some additional codecs.</p>
-<p>The following list of video codecs should work on most Windows systems:</p>
+<h1 id="常见问题">常见问题<a class="headerlink" href="#常见问题" title="Permanent link">&para;</a></h1>
+<h2 id="为什么-ffmpeg-不支持功能-xyz">为什么 FFmpeg 不支持功能 [xyz]？<a class="headerlink" href="#为什么-ffmpeg-不支持功能-xyz" title="Permanent link">&para;</a></h2>
+<p>因为还没有人承担这项任务。FFmpeg 的开发由各个开发者认为重要的任务驱动。如果某项功能对您很重要，实现它的最佳方式是自己承担这项任务，或资助一位开发者。</p>
+<h2 id="ffmpeg-不支持编解码器-xxx能否加入-windows-dll-加载器来支持它">FFmpeg 不支持编解码器 XXX。能否加入 Windows DLL 加载器来支持它？<a class="headerlink" href="#ffmpeg-不支持编解码器-xxx能否加入-windows-dll-加载器来支持它" title="Permanent link">&para;</a></h2>
+<p>不。Windows DLL 不可移植、臃肿且往往缓慢。此外 FFmpeg 力求原生支持所有编解码器，DLL 加载器无助于这一目标。</p>
+<h2 id="虽然该格式似乎受-ffmpeg-支持我仍无法读取这个文件">虽然该格式似乎受 ffmpeg 支持，我仍无法读取这个文件。<a class="headerlink" href="#虽然该格式似乎受-ffmpeg-支持我仍无法读取这个文件" title="Permanent link">&para;</a></h2>
+<p>即便 ffmpeg 能读取该容器格式，也可能不支持其中的所有编解码器。请查阅 ffmpeg 文档中受支持的编解码器列表。</p>
+<h2 id="windows-支持哪些编解码器">Windows 支持哪些编解码器？<a class="headerlink" href="#windows-支持哪些编解码器" title="Permanent link">&para;</a></h2>
+<p>Windows 对 MPEG 等标准格式支持不佳，除非您安装了一些额外的编解码器。</p>
+<p>下列视频编解码器在多数 Windows 系统上应当可用：</p>
 <table>
 <thead>
 <tr>
@@ -1865,28 +1860,28 @@
 </tr>
 <tr>
 <td><code>msmpeg4</code></td>
-<td>.asf only</td>
+<td>仅 .asf</td>
 </tr>
 <tr>
 <td><code>wmv1</code></td>
-<td>.asf only</td>
+<td>仅 .asf</td>
 </tr>
 <tr>
 <td><code>wmv2</code></td>
-<td>.asf only</td>
+<td>仅 .asf</td>
 </tr>
 <tr>
 <td><code>mpeg4</code></td>
-<td>Only if you have some MPEG-4 codec like ffdshow or Xvid installed.</td>
+<td>仅在安装了 ffdshow 或 Xvid 之类的 MPEG-4 编解码器时。</td>
 </tr>
 <tr>
 <td><code>mpeg1video</code></td>
-<td>.mpg only</td>
+<td>仅 .mpg</td>
 </tr>
 </tbody>
 </table>
-<p>Note, ASF files often have .wmv or .wma extensions in Windows. It should also be mentioned that Microsoft claims a patent on the ASF format, and may sue or threaten users who create ASF files with non-Microsoft software. It is strongly advised to avoid ASF where possible.</p>
-<p>The following list of audio codecs should work on most Windows systems:</p>
+<p>注意，ASF 文件在 Windows 上常带 .wmv 或 .wma 扩展名。还应指出，Microsoft 声称对 ASF 格式持有专利，并可能起诉或威胁起诉使用非 Microsoft 软件创建 ASF 文件的用户。强烈建议尽可能避免 ASF。</p>
+<p>下列音频编解码器在多数 Windows 系统上应当可用：</p>
 <ul>
 <li>
 <p><strong><code>adpcm_ima_wav</code></strong></p>
@@ -1895,68 +1890,68 @@
 <p><strong><code>adpcm_ms</code></strong></p>
 </li>
 <li>
-<p><strong><code>pcm_s16le</code></strong> always</p>
+<p><strong><code>pcm_s16le</code></strong> 始终可用</p>
 </li>
 <li>
-<p><strong><code>libmp3lame</code></strong> If some MP3 codec like LAME is installed.</p>
+<p><strong><code>libmp3lame</code></strong> 若安装了 LAME 之类的 MP3 编解码器则可用。</p>
 </li>
 </ul>
-<h1 id="compilation">Compilation<a class="headerlink" href="#compilation" title="Permanent link">&para;</a></h1>
+<h1 id="编译">编译<a class="headerlink" href="#编译" title="Permanent link">&para;</a></h1>
 <h2 id="error-cant-find-a-register-in-class-general_regs-while-reloading-asm"><code>error: can't find a register in class 'GENERAL_REGS' while reloading 'asm'</code><a class="headerlink" href="#error-cant-find-a-register-in-class-general_regs-while-reloading-asm" title="Permanent link">&para;</a></h2>
-<p>This is a bug in gcc. Do not report it to us. Instead, please report it to the gcc developers. Note that we will not add workarounds for gcc bugs.</p>
-<p>Also note that (some of) the gcc developers believe this is not a bug or not a bug they should fix: <a href="https://gcc.gnu.org/bugzilla/show_bug.cgi?id=11203">https://gcc.gnu.org/bugzilla/show_bug.cgi?id=11203</a>. Then again, some of them do not know the difference between an undecidable problem and an NP-hard problem...</p>
-<h2 id="i-have-installed-this-library-with-my-distros-package-manager-why-does-configure-not-see-it">I have installed this library with my distro's package manager. Why does <code>configure</code> not see it?<a class="headerlink" href="#i-have-installed-this-library-with-my-distros-package-manager-why-does-configure-not-see-it" title="Permanent link">&para;</a></h2>
-<p>Distributions usually split libraries in several packages. The main package contains the files necessary to run programs using the library. The development package contains the files necessary to build programs using the library. Sometimes, docs and/or data are in a separate package too.</p>
-<p>To build FFmpeg, you need to install the development package. It is usually called <code>libfoo-dev</code> or <code>libfoo-devel</code>. You can remove it after the build is finished, but be sure to keep the main package.</p>
-<h2 id="how-do-i-make-pkg-config-find-my-libraries">How do I make <code>pkg-config</code> find my libraries?<a class="headerlink" href="#how-do-i-make-pkg-config-find-my-libraries" title="Permanent link">&para;</a></h2>
-<p>Somewhere along with your libraries, there is a <code>.pc</code> file (or several) in a <code>pkgconfig</code> directory. You need to set environment variables to point <code>pkg-config</code> to these files.</p>
-<p>If you need to <em>add</em> directories to <code>pkg-config</code>s search list (typical use case: library installed separately), add it to <code>$PKG_CONFIG_PATH</code>:</p>
+<p>这是 gcc 的缺陷，请勿向我们报告，而应报告给 gcc 开发者。注意我们不会为 gcc 的缺陷添加变通方案。</p>
+<p>另请注意，部分 gcc 开发者认为这不是缺陷，或不是他们应当修复的缺陷：<a href="https://gcc.gnu.org/bugzilla/show_bug.cgi?id=11203">https://gcc.gnu.org/bugzilla/show_bug.cgi?id=11203</a>。话说回来，他们中有些人也分不清不可判定问题与 NP 难问题……</p>
+<h2 id="我已用发行版的包管理器安装了该库为什么-configure-找不到它">我已用发行版的包管理器安装了该库，为什么 <code>configure</code> 找不到它？<a class="headerlink" href="#我已用发行版的包管理器安装了该库为什么-configure-找不到它" title="Permanent link">&para;</a></h2>
+<p>发行版通常把库拆分为多个包。主包包含运行使用该库的程序所需的文件；开发包包含构建使用该库的程序所需的文件；有时文档和/或数据也会放在单独的包中。</p>
+<p>要构建 FFmpeg，您需要安装开发包，它通常名为 <code>libfoo-dev</code> 或 <code>libfoo-devel</code>。构建完成后可以移除它，但请务必保留主包。</p>
+<h2 id="如何让-pkg-config-找到我的库">如何让 <code>pkg-config</code> 找到我的库？<a class="headerlink" href="#如何让-pkg-config-找到我的库" title="Permanent link">&para;</a></h2>
+<p>在您的库文件所在位置的某处，有一个（或几个）位于 <code>pkgconfig</code> 目录中的 <code>.pc</code> 文件。您需要设置环境变量，让 <code>pkg-config</code> 指向这些文件。</p>
+<p>如果您需要<em>添加</em>目录到 <code>pkg-config</code> 的搜索列表（典型场景：库被单独安装），将其加入 <code>$PKG_CONFIG_PATH</code>：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>export PKG_CONFIG_PATH=/opt/x264/lib/pkgconfig:/opt/opus/lib/pkgconfig
 </code></pre></div>
-<p>If you need to <em>replace</em> <code>pkg-config</code>s search list (typical use case: cross-compiling), set it in <code>$PKG_CONFIG_LIBDIR</code>:</p>
+<p>如果您需要<em>替换</em> <code>pkg-config</code> 的搜索列表（典型场景：交叉编译），改在 <code>$PKG_CONFIG_LIBDIR</code> 中设置：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>export PKG_CONFIG_LIBDIR=/home/me/cross/usr/lib/pkgconfig:/home/me/cross/usr/local/lib/pkgconfig
 </code></pre></div>
-<p>If you need to know the library's internal dependencies (typical use: static linking), add the <code>--static</code> option to <code>pkg-config</code>:</p>
+<p>如果您需要了解库的内部依赖（典型用途：静态链接），给 <code>pkg-config</code> 加上 <code>--static</code> 选项：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>./configure --pkg-config-flags=--static
 </code></pre></div>
-<h2 id="how-do-i-use-pkg-config-when-cross-compiling">How do I use <code>pkg-config</code> when cross-compiling?<a class="headerlink" href="#how-do-i-use-pkg-config-when-cross-compiling" title="Permanent link">&para;</a></h2>
-<p>The best way is to install <code>pkg-config</code> in your cross-compilation environment. It will automatically use the cross-compilation libraries.</p>
-<p>You can also use <code>pkg-config</code> from the host environment by specifying explicitly <code>--pkg-config=pkg-config</code> to <code>configure</code>. In that case, you must point <code>pkg-config</code> to the correct directories using the <code>PKG_CONFIG_LIBDIR</code>, as explained in the previous entry.</p>
-<p>As an intermediate solution, you can place in your cross-compilation environment a script that calls the host <code>pkg-config</code> with <code>PKG_CONFIG_LIBDIR</code> set. That script can look like that:</p>
+<h2 id="交叉编译时如何使用-pkg-config">交叉编译时如何使用 <code>pkg-config</code>？<a class="headerlink" href="#交叉编译时如何使用-pkg-config" title="Permanent link">&para;</a></h2>
+<p>最佳做法是在您的交叉编译环境中安装 <code>pkg-config</code>，它会自动使用交叉编译的库。</p>
+<p>您也可以显式向 <code>configure</code> 指定 <code>--pkg-config=pkg-config</code>，从而使用宿主环境的 <code>pkg-config</code>。这种情况下，您必须按上一条的说明用 <code>PKG_CONFIG_LIBDIR</code> 把 <code>pkg-config</code> 指向正确的目录。</p>
+<p>作为折中方案，您可以在交叉编译环境中放置一个调用宿主 <code>pkg-config</code>（已设置 <code>PKG_CONFIG_LIBDIR</code>）的脚本。该脚本可以长这样：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="ch">#!/bin/sh</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">PKG_CONFIG_LIBDIR</span><span class="o">=</span>/path/to/cross/lib/pkgconfig
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nb">export</span><span class="w"> </span>PKG_CONFIG_LIBDIR
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nb">exec</span><span class="w"> </span>/usr/bin/pkg-config<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
 </code></pre></div>
-<h1 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h1>
-<h2 id="ffmpeg-does-not-work-what-is-wrong">ffmpeg does not work; what is wrong?<a class="headerlink" href="#ffmpeg-does-not-work-what-is-wrong" title="Permanent link">&para;</a></h2>
-<p>Try a <code>make distclean</code> in the ffmpeg source directory before the build. If this does not help see (<a href="https://ffmpeg.org/bugreports.html">https://ffmpeg.org/bugreports.html</a>).</p>
-<h2 id="how-do-i-encode-single-pictures-into-movies">How do I encode single pictures into movies?<a class="headerlink" href="#how-do-i-encode-single-pictures-into-movies" title="Permanent link">&para;</a></h2>
-<p>First, rename your pictures to follow a numerical sequence. For example, img1.jpg, img2.jpg, img3.jpg,... Then you may run:</p>
+<h1 id="用法">用法<a class="headerlink" href="#用法" title="Permanent link">&para;</a></h1>
+<h2 id="ffmpeg-无法工作哪里出了问题">ffmpeg 无法工作，哪里出了问题？<a class="headerlink" href="#ffmpeg-无法工作哪里出了问题" title="Permanent link">&para;</a></h2>
+<p>在构建之前，先在 ffmpeg 源码目录中尝试 <code>make distclean</code>。如果无效，参见 (<a href="https://ffmpeg.org/bugreports.html">https://ffmpeg.org/bugreports.html</a>)。</p>
+<h2 id="如何把单张图片编码成影片">如何把单张图片编码成影片？<a class="headerlink" href="#如何把单张图片编码成影片" title="Permanent link">&para;</a></h2>
+<p>首先，将您的图片按数字顺序重命名，例如 img1.jpg、img2.jpg、img3.jpg……然后运行：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ffmpeg -f image2 -i img%d.jpg /tmp/a.mpg
 </code></pre></div>
-<p>Notice that <code>%d</code> is replaced by the image number.</p>
-<p><code>img%03d.jpg</code> means the sequence <code>img001.jpg</code>, <code>img002.jpg</code>, etc.</p>
-<p>Use the <code>-start_number</code> option to declare a starting number for the sequence. This is useful if your sequence does not start with <code>img001.jpg</code> but is still in a numerical order. The following example will start with <code>img100.jpg</code>:</p>
+<p>注意 <code>%d</code> 会被替换为图片编号。</p>
+<p><code>img%03d.jpg</code> 表示序列 <code>img001.jpg</code>、<code>img002.jpg</code> 等。</p>
+<p>使用 <code>-start_number</code> 选项声明序列的起始编号。如果您的序列不是从 <code>img001.jpg</code> 开始但仍按数字顺序排列，这会很有用。下面的示例将从 <code>img100.jpg</code> 开始：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ffmpeg -f image2 -start_number 100 -i img%d.jpg /tmp/a.mpg
 </code></pre></div>
-<p>If you have large number of pictures to rename, you can use the following command to ease the burden. The command, using the bourne shell syntax, symbolically links all files in the current directory that match <code>*jpg</code> to the <code>/tmp</code> directory in the sequence of <code>img001.jpg</code>, <code>img002.jpg</code> and so on.</p>
+<p>如果您有大量图片需要重命名，可以用以下命令减轻负担。该命令使用 bourne shell 语法，把当前目录中所有匹配 <code>*jpg</code> 的文件符号链接到 <code>/tmp</code> 目录，按 <code>img001.jpg</code>、<code>img002.jpg</code> 等顺序命名。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="o">*</span><span class="n">jpg</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="n">counter</span><span class="o">=</span><span class="n">$</span><span class="p">(</span><span class="n">printf</span><span class="w"> </span><span class="o">%</span><span class="mo">03</span><span class="n">d</span><span class="w"> </span><span class="n">$x</span><span class="p">);</span><span class="w"> </span><span class="n">ln</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="s">"$i"</span><span class="w"> </span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">img</span><span class="s">"$counter"</span><span class="p">.</span><span class="n">jpg</span><span class="p">;</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="n">$</span><span class="p">((</span><span class="n">$x</span><span class="o">+</span><span class="mi">1</span><span class="p">));</span><span class="w"> </span><span class="n">done</span>
 </code></pre></div>
-<p>If you want to sequence them by oldest modified first, substitute <code>$(ls -r -t *jpg)</code> in place of <code>*jpg</code>.</p>
-<p>Then run:</p>
+<p>如果您想按最旧修改时间优先排序，把 <code>$(ls -r -t *jpg)</code> 替换 <code>*jpg</code> 的位置即可。</p>
+<p>然后运行：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ffmpeg -f image2 -i /tmp/img%03d.jpg /tmp/a.mpg
 </code></pre></div>
-<p>The same logic is used for any image format that ffmpeg reads.</p>
-<p>You can also use <code>cat</code> to pipe images to ffmpeg:</p>
+<p>同样的逻辑适用于 ffmpeg 读取的任何图像格式。</p>
+<p>您也可以用 <code>cat</code> 把图片通过管道送入 ffmpeg：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>cat *.jpg | ffmpeg -f image2pipe -c:v mjpeg -i - output.mpg
 </code></pre></div>
-<h2 id="how-do-i-encode-movie-to-single-pictures">How do I encode movie to single pictures?<a class="headerlink" href="#how-do-i-encode-movie-to-single-pictures" title="Permanent link">&para;</a></h2>
-<p>Use:</p>
+<h2 id="如何把影片编码为单张图片">如何把影片编码为单张图片？<a class="headerlink" href="#如何把影片编码为单张图片" title="Permanent link">&para;</a></h2>
+<p>使用：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>ffmpeg -i movie.mpg movie%d.jpg
 </code></pre></div>
-<p>The <code>movie.mpg</code> used as input will be converted to <code>movie1.jpg</code>, <code>movie2.jpg</code>, etc...</p>
-<p>Instead of relying on file format self-recognition, you may also use</p>
+<p>作为输入的 <code>movie.mpg</code> 将被转换为 <code>movie1.jpg</code>、<code>movie2.jpg</code> 等。</p>
+<p>除了依赖文件格式自动识别之外，您也可以使用</p>
 <ul>
 <li>
 <p><strong><code>-c:v ppm</code></strong></p>
@@ -1968,78 +1963,78 @@
 <p><strong><code>-c:v mjpeg</code></strong></p>
 </li>
 </ul>
-<p>to force the encoding.</p>
-<p>Applying that to the previous example:</p>
+<p>来强制指定编码器。</p>
+<p>把该方案应用于上一个示例：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ffmpeg -i movie.mpg -f image2 -c:v mjpeg menu%d.jpg
 </code></pre></div>
-<p>Beware that there is no "jpeg" codec. Use "mjpeg" instead.</p>
-<h2 id="why-do-i-see-a-slight-quality-degradation-with-multithreaded-mpeg-encoding">Why do I see a slight quality degradation with multithreaded MPEG* encoding?<a class="headerlink" href="#why-do-i-see-a-slight-quality-degradation-with-multithreaded-mpeg-encoding" title="Permanent link">&para;</a></h2>
-<p>For multithreaded MPEG* encoding, the encoded slices must be independent, otherwise thread n would practically have to wait for n-1 to finish, so it's quite logical that there is a small reduction of quality. This is not a bug.</p>
-<h2 id="how-can-i-read-from-the-standard-input-or-write-to-the-standard-output">How can I read from the standard input or write to the standard output?<a class="headerlink" href="#how-can-i-read-from-the-standard-input-or-write-to-the-standard-output" title="Permanent link">&para;</a></h2>
-<p>Use <code>-</code> as file name.</p>
-<h2 id="f-jpeg-doesnt-work">-f jpeg doesn't work.<a class="headerlink" href="#f-jpeg-doesnt-work" title="Permanent link">&para;</a></h2>
-<p>Try '-f image2 test%d.jpg'.</p>
-<h2 id="why-can-i-not-change-the-frame-rate">Why can I not change the frame rate?<a class="headerlink" href="#why-can-i-not-change-the-frame-rate" title="Permanent link">&para;</a></h2>
-<p>Some codecs, like MPEG-1/2, only allow a small number of fixed frame rates. Choose a different codec with the -c:v command line option.</p>
-<h2 id="how-do-i-encode-xvid-or-divx-video-with-ffmpeg">How do I encode Xvid or DivX video with ffmpeg?<a class="headerlink" href="#how-do-i-encode-xvid-or-divx-video-with-ffmpeg" title="Permanent link">&para;</a></h2>
-<p>Both Xvid and DivX (version 4+) are implementations of the ISO MPEG-4 standard (note that there are many other coding formats that use this same standard). Thus, use '-c:v mpeg4' to encode in these formats. The default fourcc stored in an MPEG-4-coded file will be 'FMP4'. If you want a different fourcc, use the '-vtag' option. E.g., '-vtag xvid' will force the fourcc 'xvid' to be stored as the video fourcc rather than the default.</p>
-<h2 id="which-are-good-parameters-for-encoding-high-quality-mpeg-4">Which are good parameters for encoding high quality MPEG-4?<a class="headerlink" href="#which-are-good-parameters-for-encoding-high-quality-mpeg-4" title="Permanent link">&para;</a></h2>
-<p>'-mbd rd -flags +mv4+aic -trellis 2 -cmp 2 -subcmp 2 -g 300 -pass 1/2', things to try: '-bf 2', '-mpv_flags qp_rd', '-mpv_flags mv0', '-mpv_flags skip_rd'.</p>
-<h2 id="which-are-good-parameters-for-encoding-high-quality-mpeg-1mpeg-2">Which are good parameters for encoding high quality MPEG-1/MPEG-2?<a class="headerlink" href="#which-are-good-parameters-for-encoding-high-quality-mpeg-1mpeg-2" title="Permanent link">&para;</a></h2>
-<p>'-mbd rd -trellis 2 -cmp 2 -subcmp 2 -g 100 -pass 1/2' but beware the '-g 100' might cause problems with some decoders. Things to try: '-bf 2', '-mpv_flags qp_rd', '-mpv_flags mv0', '-mpv_flags skip_rd'.</p>
-<h2 id="interlaced-video-looks-very-bad-when-encoded-with-ffmpeg-what-is-wrong">Interlaced video looks very bad when encoded with ffmpeg, what is wrong?<a class="headerlink" href="#interlaced-video-looks-very-bad-when-encoded-with-ffmpeg-what-is-wrong" title="Permanent link">&para;</a></h2>
-<p>You should use '-flags +ilme+ildct' and maybe '-flags +alt' for interlaced material, and try '-top 0/1' if the result looks really messed-up.</p>
-<h2 id="how-can-i-read-directshow-files">How can I read DirectShow files?<a class="headerlink" href="#how-can-i-read-directshow-files" title="Permanent link">&para;</a></h2>
-<p>If you have built FFmpeg with <code>./configure --enable-avisynth</code> (only possible on MinGW/Cygwin platforms), then you may use any file that DirectShow can read as input.</p>
-<p>Just create an "input.avs" text file with this single line ...</p>
+<p>注意并不存在 "jpeg" 编解码器，请改用 "mjpeg"。</p>
+<h2 id="为什么多线程-mpeg-编码会出现轻微画质下降">为什么多线程 MPEG* 编码会出现轻微画质下降？<a class="headerlink" href="#为什么多线程-mpeg-编码会出现轻微画质下降" title="Permanent link">&para;</a></h2>
+<p>对于多线程 MPEG* 编码，已编码的小片（slice）必须相互独立，否则线程 n 实际上必须等待线程 n-1 完成，因此出现少量质量下降是合理的。这不是缺陷。</p>
+<h2 id="如何从标准输入读取或写入标准输出">如何从标准输入读取或写入标准输出？<a class="headerlink" href="#如何从标准输入读取或写入标准输出" title="Permanent link">&para;</a></h2>
+<p>用 <code>-</code> 作为文件名。</p>
+<h2 id="f-jpeg-不起作用">-f jpeg 不起作用。<a class="headerlink" href="#f-jpeg-不起作用" title="Permanent link">&para;</a></h2>
+<p>试试 '-f image2 test%d.jpg'。</p>
+<h2 id="为什么无法更改帧率">为什么无法更改帧率？<a class="headerlink" href="#为什么无法更改帧率" title="Permanent link">&para;</a></h2>
+<p>某些编解码器（如 MPEG-1/2）只允许少量固定的帧率。请用 -c:v 命令行选项选择其他编解码器。</p>
+<h2 id="如何用-ffmpeg-编码-xvid-或-divx-视频">如何用 ffmpeg 编码 Xvid 或 DivX 视频？<a class="headerlink" href="#如何用-ffmpeg-编码-xvid-或-divx-视频" title="Permanent link">&para;</a></h2>
+<p>Xvid 与 DivX（4+ 版）都是 ISO MPEG-4 标准的实现（注意还有许多其他使用同一标准的编码格式）。因此，请用 '-c:v mpeg4' 编码这些格式。编码到 MPEG-4 文件时默认存储的 fourcc 为 'FMP4'。如果想要不同的 fourcc，请使用 '-vtag' 选项。例如，'-vtag xvid' 会强制把 fourcc 'xvid' 存储为视频 fourcc，而非默认值。</p>
+<h2 id="编码高质量-mpeg-4-有哪些好的参数">编码高质量 MPEG-4 有哪些好的参数？<a class="headerlink" href="#编码高质量-mpeg-4-有哪些好的参数" title="Permanent link">&para;</a></h2>
+<p>'-mbd rd -flags +mv4+aic -trellis 2 -cmp 2 -subcmp 2 -g 300 -pass 1/2'，可以尝试的还有：'-bf 2'、'-mpv_flags qp_rd'、'-mpv_flags mv0'、'-mpv_flags skip_rd'。</p>
+<h2 id="编码高质量-mpeg-1mpeg-2-有哪些好的参数">编码高质量 MPEG-1/MPEG-2 有哪些好的参数？<a class="headerlink" href="#编码高质量-mpeg-1mpeg-2-有哪些好的参数" title="Permanent link">&para;</a></h2>
+<p>'-mbd rd -trellis 2 -cmp 2 -subcmp 2 -g 100 -pass 1/2'，但注意 '-g 100' 可能会给某些解码器带来问题。可以尝试的还有：'-bf 2'、'-mpv_flags qp_rd'、'-mpv_flags mv0'、'-mpv_flags skip_rd'。</p>
+<h2 id="隔行视频经-ffmpeg-编码后效果很差问题出在哪里">隔行视频经 ffmpeg 编码后效果很差，问题出在哪里？<a class="headerlink" href="#隔行视频经-ffmpeg-编码后效果很差问题出在哪里" title="Permanent link">&para;</a></h2>
+<p>对隔行素材应使用 '-flags +ilme+ildct'，或许还可加 '-flags +alt'；如果结果实在一团糟，再试试 '-top 0/1'。</p>
+<h2 id="如何读取-directshow-文件">如何读取 DirectShow 文件？<a class="headerlink" href="#如何读取-directshow-文件" title="Permanent link">&para;</a></h2>
+<p>如果您在构建 FFmpeg 时带了 <code>./configure --enable-avisynth</code>（仅在 MinGW/Cygwin 平台上可行），那么 DirectShow 能读取的任何文件都可以作为输入。</p>
+<p>只需创建一个只含下面这一行的 "input.avs" 文本文件……</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>DirectShowSource("C:\path to your file\yourfile.asf")
 </code></pre></div>
-<p>... and then feed that text file to ffmpeg:</p>
+<p>……然后把该文本文件喂给 ffmpeg：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>ffmpeg -i input.avs
 </code></pre></div>
-<p>For ANY other help on AviSynth, please visit the <a href="http://www.avisynth.org/">AviSynth homepage</a>.</p>
-<h2 id="how-can-i-join-video-files">How can I join video files?<a class="headerlink" href="#how-can-i-join-video-files" title="Permanent link">&para;</a></h2>
-<p>To "join" video files is quite ambiguous. The following list explains the different kinds of "joining" and points out how those are addressed in FFmpeg. To join video files may mean:</p>
+<p>有关 AviSynth 的其他任何帮助，请访问 <a href="http://www.avisynth.org/">AviSynth 主页</a>。</p>
+<h2 id="如何合并视频文件">如何合并视频文件？<a class="headerlink" href="#如何合并视频文件" title="Permanent link">&para;</a></h2>
+<p>"合并"视频文件的含义相当模糊。下面列出各种"合并"的类型及其在 FFmpeg 中的处理方式。合并视频文件可能是指：</p>
 <ul>
 <li>
-<p>To put them one after the other: this is called to <em>concatenate</em> them (in short: concat) and is addressed <a href="#how-can-i-concatenate-video-files">in this very faq</a>.</p>
+<p>把它们首尾相接放在一起：这称为<em>拼接</em>（concatenate，简称 concat），<a href="#如何拼接视频文件">本 FAQ 中</a>对此有专门说明。</p>
 </li>
 <li>
-<p>To put them together in the same file, to let the user choose between the different versions (example: different audio languages): this is called to <em>multiplex</em> them together (in short: mux), and is done by simply invoking ffmpeg with several <code>-i</code> options.</p>
+<p>把它们放进同一个文件，让用户可以在不同版本之间选择（示例：不同语言的音频）：这称为把它们<em>复用</em>在一起（multiplex，简称 mux），只需在调用 ffmpeg 时给出多个 <code>-i</code> 选项即可完成。</p>
 </li>
 <li>
-<p>For audio, to put all channels together in a single stream (example: two mono streams into one stereo stream): this is sometimes called to <em>merge</em> them, and can be done using the <a href="../../filters/overview/#amerge"><code>amerge</code></a> filter.</p>
+<p>对于音频，把所有声道合到一条流中（示例：两条单声道流合成一条立体声流）：这有时称为<em>合并</em>（merge），可以用 <a href="../../filters/overview/#amerge"><code>amerge</code></a> 滤镜完成。</p>
 </li>
 <li>
-<p>For audio, to play one on top of the other: this is called to <em>mix</em> them, and can be done by first merging them into a single stream and then using the <a href="../../filters/overview/#pan"><code>pan</code></a> filter to mix the channels at will.</p>
+<p>对于音频，让它们叠在一起播放：这称为<em>混音</em>（mix），可以先合并成单条流，再用 <a href="../../filters/overview/#pan"><code>pan</code></a> 滤镜按需混合各声道。</p>
 </li>
 <li>
-<p>For video, to display both together, side by side or one on top of a part of the other; it can be done using the <a href="../../filters/overview/#overlay"><code>overlay</code></a> video filter.</p>
+<p>对于视频，把两者一起显示，或并排，或叠放于另一画面之上；可以用 <a href="../../filters/overview/#overlay"><code>overlay</code></a> 视频滤镜完成。</p>
 </li>
 </ul>
-<h2 id="how-can-i-concatenate-video-files">How can I concatenate video files?<a class="headerlink" href="#how-can-i-concatenate-video-files" title="Permanent link">&para;</a></h2>
-<p>There are several solutions, depending on the exact circumstances.</p>
-<h3 id="concatenating-using-the-concat-filter">Concatenating using the concat <em>filter</em><a class="headerlink" href="#concatenating-using-the-concat-filter" title="Permanent link">&para;</a></h3>
-<p>FFmpeg has a <a href="../../filters/overview/#concat"><code>concat</code></a> filter designed specifically for that, with examples in the documentation. This operation is recommended if you need to re-encode.</p>
-<h3 id="concatenating-using-the-concat-demuxer">Concatenating using the concat <em>demuxer</em><a class="headerlink" href="#concatenating-using-the-concat-demuxer" title="Permanent link">&para;</a></h3>
-<p>FFmpeg has a <a href="../../components/formats/#concat"><code>concat</code></a> demuxer which you can use when you want to avoid a re-encode and your format doesn't support file level concatenation.</p>
-<h3 id="concatenating-using-the-concat-protocol-file-level">Concatenating using the concat <em>protocol</em> (file level)<a class="headerlink" href="#concatenating-using-the-concat-protocol-file-level" title="Permanent link">&para;</a></h3>
-<p>FFmpeg has a <a href="../../components/protocols/#concat"><code>concat</code></a> protocol designed specifically for that, with examples in the documentation.</p>
-<p>A few multimedia containers (MPEG-1, MPEG-2 PS, DV) allow one to concatenate video by merely concatenating the files containing them.</p>
-<p>Hence you may concatenate your multimedia files by first transcoding them to these privileged formats, then using the humble <code>cat</code> command (or the equally humble <code>copy</code> under Windows), and finally transcoding back to your format of choice.</p>
+<h2 id="如何拼接视频文件">如何拼接视频文件？<a class="headerlink" href="#如何拼接视频文件" title="Permanent link">&para;</a></h2>
+<p>有多种解决方案，取决于具体情况。</p>
+<h3 id="使用-concat-滤镜-拼接">使用 concat <em>滤镜</em> 拼接<a class="headerlink" href="#使用-concat-滤镜-拼接" title="Permanent link">&para;</a></h3>
+<p>FFmpeg 有一个专为该用途设计的 <a href="../../filters/overview/#concat"><code>concat</code></a> 滤镜，文档中附有示例。如果您需要重新编码，推荐此操作。</p>
+<h3 id="使用-concat-解复用器-拼接">使用 concat <em>解复用器</em> 拼接<a class="headerlink" href="#使用-concat-解复用器-拼接" title="Permanent link">&para;</a></h3>
+<p>FFmpeg 有一个 <a href="../../components/formats/#concat"><code>concat</code></a> 解复用器，当您想避免重新编码、且所用格式不支持文件级拼接时可以使用它。</p>
+<h3 id="使用-concat-协议-拼接文件级">使用 concat <em>协议</em> 拼接（文件级）<a class="headerlink" href="#使用-concat-协议-拼接文件级" title="Permanent link">&para;</a></h3>
+<p>FFmpeg 有一个专为该用途设计的 <a href="../../components/protocols/#concat"><code>concat</code></a> 协议，文档中附有示例。</p>
+<p>少数多媒体容器（MPEG-1、MPEG-2 PS、DV）允许仅通过拼接文件本身来拼接视频。</p>
+<p>因此，您可以先把多媒体文件转码到这些特权格式，然后用朴素的 <code>cat</code> 命令（或 Windows 下同样朴素的 <code>copy</code>）把它们拼在一起，最后再转码回您选定的格式。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ffmpeg -i input1.avi -qscale:v 1 intermediate1.mpg
 <a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>ffmpeg -i input2.avi -qscale:v 1 intermediate2.mpg
 <a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>cat intermediate1.mpg intermediate2.mpg &gt; intermediate_all.mpg
 <a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>ffmpeg -i intermediate_all.mpg -qscale:v 2 output.avi
 </code></pre></div>
-<p>Additionally, you can use the <code>concat</code> protocol instead of <code>cat</code> or <code>copy</code> which will avoid creation of a potentially huge intermediate file.</p>
+<p>此外，您可以改用 <code>concat</code> 协议替代 <code>cat</code> 或 <code>copy</code>，从而避免生成可能非常庞大的中间文件。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ffmpeg -i input1.avi -qscale:v 1 intermediate1.mpg
 <a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>ffmpeg -i input2.avi -qscale:v 1 intermediate2.mpg
 <a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>ffmpeg -i concat:"intermediate1.mpg|intermediate2.mpg" -c copy intermediate_all.mpg
 <a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>ffmpeg -i intermediate_all.mpg -qscale:v 2 output.avi
 </code></pre></div>
-<p>Note that you may need to escape the character "|" which is special for many shells.</p>
-<p>Another option is usage of named pipes, should your platform support it:</p>
+<p>注意，您可能需要转义字符 "|"，它对许多 shell 而言是特殊字符。</p>
+<p>另一个选择是使用命名管道（named pipe），如果您的平台支持的话：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>mkfifo intermediate1.mpg
 <a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>mkfifo intermediate2.mpg
 <a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>ffmpeg -i input1.avi -qscale:v 1 -y intermediate1.mpg &lt; /dev/null &amp;
@@ -2047,9 +2042,9 @@
 <a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>cat intermediate1.mpg intermediate2.mpg |\
 <a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>ffmpeg -f mpeg -i - -c:v mpeg4 -c:a libmp3lame output.avi
 </code></pre></div>
-<h3 id="concatenating-using-raw-audio-and-video">Concatenating using raw audio and video<a class="headerlink" href="#concatenating-using-raw-audio-and-video" title="Permanent link">&para;</a></h3>
-<p>Similarly, the yuv4mpegpipe format, and the raw video, raw audio codecs also allow concatenation, and the transcoding step is almost lossless. When using multiple yuv4mpegpipe(s), the first line needs to be discarded from all but the first stream. This can be accomplished by piping through <code>tail</code> as seen below. Note that when piping through <code>tail</code> you must use command grouping, <code>{ ;}</code>, to background properly.</p>
-<p>For example, let's say we want to concatenate two FLV files into an output.flv file:</p>
+<h3 id="使用裸音频与裸视频拼接">使用裸音频与裸视频拼接<a class="headerlink" href="#使用裸音频与裸视频拼接" title="Permanent link">&para;</a></h3>
+<p>类似地，yuv4mpegpipe 格式与裸视频、裸音频编解码器也支持拼接，且转码步骤几乎无损。使用多条 yuv4mpegpipe 时，除第一条流外，其余每条流都需要丢弃首行。这可以像下文那样通过 <code>tail</code> 管道完成。注意，通过 <code>tail</code> 管道时必须使用命令分组 <code>{ ;}</code>，才能正确转入后台。</p>
+<p>例如，假设我们要把两个 FLV 文件拼接成一个 output.flv 文件：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>mkfifo temp1.a
 <a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>mkfifo temp1.v
 <a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>mkfifo temp2.a
@@ -2067,94 +2062,94 @@
 <a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>       -y output.flv
 <a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>rm temp[12].[av] all.[av]
 </code></pre></div>
-<h2 id="using-f-lavfi-audio-becomes-mono-for-no-apparent-reason">Using <code>-f lavfi</code>, audio becomes mono for no apparent reason.<a class="headerlink" href="#using-f-lavfi-audio-becomes-mono-for-no-apparent-reason" title="Permanent link">&para;</a></h2>
-<p>Use <code>-dumpgraph -</code> to find out exactly where the channel layout is lost.</p>
-<p>Most likely, it is through <code>auto-inserted aresample</code>. Try to understand why the converting filter was needed at that place.</p>
-<p>Just before the output is a likely place, as <code>-f lavfi</code> currently only support packed S16.</p>
-<p>Then insert the correct <code>aformat</code> explicitly in the filtergraph, specifying the exact format.</p>
+<h2 id="使用-f-lavfi-时音频无缘无故变成单声道">使用 <code>-f lavfi</code> 时音频无缘无故变成单声道。<a class="headerlink" href="#使用-f-lavfi-时音频无缘无故变成单声道" title="Permanent link">&para;</a></h2>
+<p>使用 <code>-dumpgraph -</code> 找出声道布局到底在哪里丢失。</p>
+<p>最可能是在 <code>auto-inserted aresample</code> 处。请设法弄清楚为什么在那个位置需要这个转换滤镜。</p>
+<p>输出之前是最可能的位置，因为 <code>-f lavfi</code> 目前只支持打包 S16。</p>
+<p>然后在滤镜链图中显式插入正确的 <code>aformat</code>，指明确切的格式。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>aformat=sample_fmts=s16:channel_layouts=stereo
 </code></pre></div>
-<h2 id="why-does-ffmpeg-not-see-the-subtitles-in-my-vob-file">Why does FFmpeg not see the subtitles in my VOB file?<a class="headerlink" href="#why-does-ffmpeg-not-see-the-subtitles-in-my-vob-file" title="Permanent link">&para;</a></h2>
-<p>VOB and a few other formats do not have a global header that describes everything present in the file. Instead, applications are supposed to scan the file to see what it contains. Since VOB files are frequently large, only the beginning is scanned. If the subtitles happen only later in the file, they will not be initially detected.</p>
-<p>Some applications, including the <code>ffmpeg</code> command-line tool, can only work with streams that were detected during the initial scan; streams that are detected later are ignored.</p>
-<p>The size of the initial scan is controlled by two options: <code>probesize</code> (default ~5 Mo) and <code>analyzeduration</code> (default 5,000,000 µs = 5 s). For the subtitle stream to be detected, both values must be large enough.</p>
-<h2 id="why-was-the-ffmpeg-sameq-option-removed-what-to-use-instead">Why was the <code>ffmpeg</code> <code>-sameq</code> option removed? What to use instead?<a class="headerlink" href="#why-was-the-ffmpeg-sameq-option-removed-what-to-use-instead" title="Permanent link">&para;</a></h2>
-<p>The <code>-sameq</code> option meant "same quantizer", and made sense only in a very limited set of cases. Unfortunately, a lot of people mistook it for "same quality" and used it in places where it did not make sense: it had roughly the expected visible effect, but achieved it in a very inefficient way.</p>
-<p>Each encoder has its own set of options to set the quality-vs-size balance, use the options for the encoder you are using to set the quality level to a point acceptable for your tastes. The most common options to do that are <code>-qscale</code> and <code>-qmax</code>, but you should peruse the documentation of the encoder you chose.</p>
-<h2 id="i-have-a-stretched-video-why-does-scaling-not-fix-it">I have a stretched video, why does scaling not fix it?<a class="headerlink" href="#i-have-a-stretched-video-why-does-scaling-not-fix-it" title="Permanent link">&para;</a></h2>
-<p>A lot of video codecs and formats can store the <em>aspect ratio</em> of the video: this is the ratio between the width and the height of either the full image (DAR, display aspect ratio) or individual pixels (SAR, sample aspect ratio). For example, EGA screens at resolution 640×350 had 4:3 DAR and 35:48 SAR.</p>
-<p>Most still image processing work with square pixels, i.e. 1:1 SAR, but a lot of video standards, especially from the analogic-numeric transition era, use non-square pixels.</p>
-<p>Most processing filters in FFmpeg handle the aspect ratio to avoid stretching the image: cropping adjusts the DAR to keep the SAR constant, scaling adjusts the SAR to keep the DAR constant.</p>
-<p>If you want to stretch, or "unstretch", the image, you need to override the information with the <a href="../../filters/overview/#setdar_002c-setsar"><code>setdar or setsar filters</code></a>.</p>
-<p>Do not forget to examine carefully the original video to check whether the stretching comes from the image or from the aspect ratio information.</p>
-<p>For example, to fix a badly encoded EGA capture, use the following commands, either the first one to upscale to square pixels or the second one to set the correct aspect ratio or the third one to avoid transcoding (may not work depending on the format / codec / player / phase of the moon):</p>
+<h2 id="为什么-ffmpeg-看不到我的-vob-文件中的字幕">为什么 FFmpeg 看不到我的 VOB 文件中的字幕？<a class="headerlink" href="#为什么-ffmpeg-看不到我的-vob-文件中的字幕" title="Permanent link">&para;</a></h2>
+<p>VOB 与其他少数格式没有描述文件全部内容的全局头。应用程序应当扫描文件以查明其中有什么。由于 VOB 文件通常很大，只扫描开头部分。如果字幕恰好出现在文件靠后位置，就不会被初始扫描检测到。</p>
+<p>包括 <code>ffmpeg</code> 命令行工具在内的一些应用程序只能处理初始扫描期间检测到的流；较晚检测到的流会被忽略。</p>
+<p>初始扫描的大小由两个选项控制：<code>probesize</code>（默认约 5 Mo）和 <code>analyzeduration</code>（默认 5,000,000 µs = 5 秒）。要检测到字幕流，两个值都必须足够大。</p>
+<h2 id="为什么移除了-ffmpeg-的-sameq-选项应该用什么替代">为什么移除了 <code>ffmpeg</code> 的 <code>-sameq</code> 选项？应该用什么替代？<a class="headerlink" href="#为什么移除了-ffmpeg-的-sameq-选项应该用什么替代" title="Permanent link">&para;</a></h2>
+<p><code>-sameq</code> 选项意为"同一量化器"（same quantizer），只在非常有限的场景下才有意义。遗憾的是，很多人误以为它是"同质量"（same quality），在不适用的场合使用它：它产生的可见效果大致符合预期，但实现方式非常低效。</p>
+<p>每个编码器都有自己的一组选项来设定质量与体积的平衡，请使用您所用编码器的选项，把质量调到符合您口味的水平。最常见的选项是 <code>-qscale</code> 与 <code>-qmax</code>，但您应当细读所选编码器的文档。</p>
+<h2 id="我有一个被拉伸的视频为什么缩放修不好它">我有一个被拉伸的视频，为什么缩放修不好它？<a class="headerlink" href="#我有一个被拉伸的视频为什么缩放修不好它" title="Permanent link">&para;</a></h2>
+<p>大量视频编解码器和格式都能存储视频的<em>宽高比</em>：即整幅图像（DAR，显示宽高比）或单个像素（SAR，采样宽高比）的宽高之比。例如，640×350 分辨率的 EGA 屏幕具有 4:3 的 DAR 和 35:48 的 SAR。</p>
+<p>多数静态图像处理都基于方形像素，即 1:1 SAR，但许多视频标准（尤其是模拟-数字过渡时代的标准）使用非方形像素。</p>
+<p>FFmpeg 中多数处理滤镜都会处理宽高比，以避免拉伸图像：裁剪调整 DAR 以保持 SAR 不变，缩放调整 SAR 以保持 DAR 不变。</p>
+<p>如果您想拉伸（或"反向拉伸"）图像，需要用 <a href="../../filters/overview/#setdar_002c-setsar"><code>setdar or setsar filters</code></a>覆盖该信息。</p>
+<p>不要忘记仔细检查原始视频，确认拉伸究竟是来自图像本身，还是来自宽高比信息。</p>
+<p>例如，要修复一段编码不良的 EGA 采集，可使用以下命令：第一条把分辨率放大到方形像素，第二条设置正确的宽高比，第三条避免转码（能否奏效视格式/编解码器/播放器/月相而定）。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>ffmpeg -i ega_screen.nut -vf scale=640:480,setsar=1 ega_screen_scaled.nut
 <a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>ffmpeg -i ega_screen.nut -vf setdar=4/3 ega_screen_anamorphic.nut
 <a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>ffmpeg -i ega_screen.nut -aspect 4/3 -c copy ega_screen_overridden.nut
 </code></pre></div>
-<h2 id="how-do-i-run-ffmpeg-as-a-background-task">How do I run ffmpeg as a background task?<a class="headerlink" href="#how-do-i-run-ffmpeg-as-a-background-task" title="Permanent link">&para;</a></h2>
-<p>ffmpeg normally checks the console input, for entries like "q" to stop and "?" to give help, while performing operations. ffmpeg does not have a way of detecting when it is running as a background task. When it checks the console input, that can cause the process running ffmpeg in the background to suspend.</p>
-<p>To prevent those input checks, allowing ffmpeg to run as a background task, use the <a href="../../manual/ffmpeg/#stdin-option"><code>-nostdin</code> option</a> in the ffmpeg invocation. This is effective whether you run ffmpeg in a shell or invoke ffmpeg in its own process via an operating system API.</p>
-<p>As an alternative, when you are running ffmpeg in a shell, you can redirect standard input to <code>/dev/null</code> (on Linux and macOS) or <code>NUL</code> (on Windows). You can do this redirect either on the ffmpeg invocation, or from a shell script which calls ffmpeg.</p>
-<p>For example:</p>
+<h2 id="如何将-ffmpeg-作为后台任务运行">如何将 ffmpeg 作为后台任务运行？<a class="headerlink" href="#如何将-ffmpeg-作为后台任务运行" title="Permanent link">&para;</a></h2>
+<p>ffmpeg 在执行操作时通常会检查控制台输入，例如检查是否有 "q"（停止）与 "?"（求助）等输入。ffmpeg 无法检测自己是否在作为后台任务运行。当它检查控制台输入时，可能导致后台运行 ffmpeg 的进程被挂起。</p>
+<p>要阻止这些输入检查、让 ffmpeg 得以作为后台任务运行，请在调用 ffmpeg 时使用 <a href="../../manual/ffmpeg/#stdin-option"><code>-nostdin</code> 选项</a>。无论您是在 shell 中运行 ffmpeg，还是经操作系统 API 在独立进程中调用 ffmpeg，这都有效。</p>
+<p>或者，当您在 shell 中运行 ffmpeg 时，可以把标准输入重定向到 <code>/dev/null</code>（Linux 与 macOS）或 <code>NUL</code>（Windows）。重定向既可以放在 ffmpeg 调用上，也可以放在调用 ffmpeg 的 shell 脚本中。</p>
+<p>例如：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>ffmpeg -nostdin -i INPUT OUTPUT
 </code></pre></div>
-<p>or (on Linux, macOS, and other UNIX-like shells):</p>
+<p>或（在 Linux、macOS 及其他类 UNIX shell 中）：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>ffmpeg -i INPUT OUTPUT &lt;/dev/null
 </code></pre></div>
-<p>or (on Windows):</p>
+<p>或（在 Windows 上）：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>ffmpeg -i INPUT OUTPUT &lt;NUL
 </code></pre></div>
-<h2 id="how-do-i-prevent-ffmpeg-from-suspending-with-a-message-like-suspended-tty-output">How do I prevent ffmpeg from suspending with a message like <em>suspended (tty output)</em>?<a class="headerlink" href="#how-do-i-prevent-ffmpeg-from-suspending-with-a-message-like-suspended-tty-output" title="Permanent link">&para;</a></h2>
-<p>If you run ffmpeg in the background, you may find that its process suspends. There may be a message like <em>suspended (tty output)</em>. The question is how to prevent the process from being suspended.</p>
-<p>For example:</p>
+<h2 id="如何避免-ffmpeg-因-suspended-tty-output-消息而挂起">如何避免 ffmpeg 因 <em>suspended (tty output)</em> 消息而挂起？<a class="headerlink" href="#如何避免-ffmpeg-因-suspended-tty-output-消息而挂起" title="Permanent link">&para;</a></h2>
+<p>如果您在后台运行 ffmpeg，可能会发现其进程被挂起，并可能出现 <em>suspended (tty output)</em> 之类的消息。问题在于如何防止进程被挂起。</p>
+<p>例如：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>% ffmpeg -i INPUT OUTPUT &amp;&gt; ~/tmp/log.txt &amp;
 <a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>[1] 93352
 <a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>%
 <a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>[1]  + suspended (tty output)  ffmpeg -i INPUT OUTPUT &amp;&gt;
 </code></pre></div>
-<p>The message "tty output" notwithstanding, the problem here is that ffmpeg normally checks the console input when it runs. The operating system detects this, and suspends the process until you can bring it to the foreground and attend to it.</p>
-<p>The solution is to use the right techniques to tell ffmpeg not to consult console input. You can use the <a href="../../manual/ffmpeg/#stdin-option"><code>-nostdin</code> option</a>, or redirect standard input with <code>&lt; /dev/null</code>. See FAQ <a href="./#i-have-a-stretched-video-why-does-scaling-not-fix-it"><em>How do I run ffmpeg as a background task?</em></a> for details.</p>
-<h1 id="development">Development<a class="headerlink" href="#development" title="Permanent link">&para;</a></h1>
-<h2 id="are-there-examples-illustrating-how-to-use-the-ffmpeg-libraries-particularly-libavcodec-and-libavformat">Are there examples illustrating how to use the FFmpeg libraries, particularly libavcodec and libavformat?<a class="headerlink" href="#are-there-examples-illustrating-how-to-use-the-ffmpeg-libraries-particularly-libavcodec-and-libavformat" title="Permanent link">&para;</a></h2>
-<p>Yes. Check the <code>doc/examples</code> directory in the source repository, also available online at: <a href="https://github.com/FFmpeg/FFmpeg/tree/master/doc/examples">https://github.com/FFmpeg/FFmpeg/tree/master/doc/examples</a>.</p>
-<p>Examples are also installed by default, usually in <code>$PREFIX/share/ffmpeg/examples</code>.</p>
-<p>Also you may read the Developers Guide of the FFmpeg documentation. Alternatively, examine the source code for one of the many open source projects that already incorporate FFmpeg at (<a href="https://ffmpeg.org/projects.html">projects.html</a>).</p>
-<h2 id="can-you-support-my-c-compiler-xxx">Can you support my C compiler XXX?<a class="headerlink" href="#can-you-support-my-c-compiler-xxx" title="Permanent link">&para;</a></h2>
-<p>It depends. If your compiler is C99-compliant, then patches to support it are likely to be welcome if they do not pollute the source code with <code>#ifdef</code>s related to the compiler.</p>
-<h2 id="is-microsoft-visual-c-supported">Is Microsoft Visual C++ supported?<a class="headerlink" href="#is-microsoft-visual-c-supported" title="Permanent link">&para;</a></h2>
-<p>Yes. Please see the <a href="../platform/">Microsoft Visual C++</a> section in the FFmpeg documentation.</p>
-<h2 id="can-you-add-automake-libtool-or-autoconf-support">Can you add automake, libtool or autoconf support?<a class="headerlink" href="#can-you-add-automake-libtool-or-autoconf-support" title="Permanent link">&para;</a></h2>
-<p>No. These tools are too bloated and they complicate the build.</p>
-<h2 id="why-not-rewrite-ffmpeg-in-object-oriented-c">Why not rewrite FFmpeg in object-oriented C++?<a class="headerlink" href="#why-not-rewrite-ffmpeg-in-object-oriented-c" title="Permanent link">&para;</a></h2>
-<p>FFmpeg is already organized in a highly modular manner and does not need to be rewritten in a formal object language. Further, many of the developers favor straight C; it works for them. For more arguments on this matter, read <a href="https://web.archive.org/web/20111004021423/http://kernel.org/pub/linux/docs/lkml/#s15">"Programming Religion"</a>.</p>
-<h2 id="why-are-the-ffmpeg-programs-devoid-of-debugging-symbols">Why are the ffmpeg programs devoid of debugging symbols?<a class="headerlink" href="#why-are-the-ffmpeg-programs-devoid-of-debugging-symbols" title="Permanent link">&para;</a></h2>
-<p>The build process creates <code>ffmpeg_g</code>, <code>ffplay_g</code>, etc. which contain full debug information. Those binaries are stripped to create <code>ffmpeg</code>, <code>ffplay</code>, etc. If you need the debug information, use the *_g versions.</p>
-<h2 id="i-do-not-like-the-lgpl-can-i-contribute-code-under-the-gpl-instead">I do not like the LGPL, can I contribute code under the GPL instead?<a class="headerlink" href="#i-do-not-like-the-lgpl-can-i-contribute-code-under-the-gpl-instead" title="Permanent link">&para;</a></h2>
-<p>Yes, as long as the code is optional and can easily and cleanly be placed under #if CONFIG_GPL without breaking anything. So, for example, a new codec or filter would be OK under GPL while a bug fix to LGPL code would not.</p>
-<h2 id="im-using-ffmpeg-from-within-my-c-application-but-the-linker-complains-about-missing-symbols-from-the-libraries-themselves">I'm using FFmpeg from within my C application but the linker complains about missing symbols from the libraries themselves.<a class="headerlink" href="#im-using-ffmpeg-from-within-my-c-application-but-the-linker-complains-about-missing-symbols-from-the-libraries-themselves" title="Permanent link">&para;</a></h2>
-<p>FFmpeg builds static libraries by default. In static libraries, dependencies are not handled. That has two consequences. First, you must specify the libraries in dependency order: <code>-lavdevice</code> must come before <code>-lavformat</code>, <code>-lavutil</code> must come after everything else, etc. Second, external libraries that are used in FFmpeg have to be specified too.</p>
-<p>An easy way to get the full list of required libraries in dependency order is to use <code>pkg-config</code>.</p>
+<p>尽管消息写着 "tty output"，这里真正的问题在于 ffmpeg 运行时通常会检查控制台输入。操作系统检测到这一点后，会挂起进程，直到您把它带到前台处理。</p>
+<p>解决办法是用正确的手法告诉 ffmpeg 不要读取控制台输入。您可以使用 <a href="../../manual/ffmpeg/#stdin-option"><code>-nostdin</code> 选项</a>，或用 <code>&lt; /dev/null</code> 重定向标准输入。详情参见 FAQ <a href="#如何将-ffmpeg-作为后台任务运行"><em>如何将 ffmpeg 作为后台任务运行？</em></a>。</p>
+<h1 id="开发">开发<a class="headerlink" href="#开发" title="Permanent link">&para;</a></h1>
+<h2 id="有没有展示如何使用-ffmpeg-库尤其是-libavcodec-和-libavformat的示例">有没有展示如何使用 FFmpeg 库（尤其是 libavcodec 和 libavformat）的示例？<a class="headerlink" href="#有没有展示如何使用-ffmpeg-库尤其是-libavcodec-和-libavformat的示例" title="Permanent link">&para;</a></h2>
+<p>有。请查看源码仓库中的 <code>doc/examples</code> 目录，线上也可访问：<a href="https://github.com/FFmpeg/FFmpeg/tree/master/doc/examples">https://github.com/FFmpeg/FFmpeg/tree/master/doc/examples</a>。</p>
+<p>示例也会随默认安装装入，通常位于 <code>$PREFIX/share/ffmpeg/examples</code>。</p>
+<p>您也可以阅读 FFmpeg 文档中的《开发者指南》。或者，研究众多已集成 FFmpeg 的开源项目之一的源码（列表见 <a href="https://ffmpeg.org/projects.html">projects.html</a>）。</p>
+<h2 id="你们能支持我的-c-编译器-xxx-吗">你们能支持我的 C 编译器 XXX 吗？<a class="headerlink" href="#你们能支持我的-c-编译器-xxx-吗" title="Permanent link">&para;</a></h2>
+<p>视情况而定。如果您的编译器符合 C99，那么支持它的补丁很可能会受到欢迎，前提是它们不会用与该编译器相关的 <code>#ifdef</code> 污染源码。</p>
+<h2 id="支持-microsoft-visual-c-吗">支持 Microsoft Visual C++ 吗？<a class="headerlink" href="#支持-microsoft-visual-c-吗" title="Permanent link">&para;</a></h2>
+<p>有。请参见 FFmpeg 文档的 <a href="../platform/">Microsoft Visual C++</a> 小节。</p>
+<h2 id="能否添加-automakelibtool-或-autoconf-支持">能否添加 automake、libtool 或 autoconf 支持？<a class="headerlink" href="#能否添加-automakelibtool-或-autoconf-支持" title="Permanent link">&para;</a></h2>
+<p>不。这些工具过于臃肿，只会让构建复杂化。</p>
+<h2 id="为什么不用面向对象的-c-重写-ffmpeg">为什么不用面向对象的 C++ 重写 FFmpeg？<a class="headerlink" href="#为什么不用面向对象的-c-重写-ffmpeg" title="Permanent link">&para;</a></h2>
+<p>FFmpeg 已经以高度模块化的方式组织，无需用正式的对象语言重写。此外，许多开发者偏爱纯 C，它对他们很有效。关于此话题的更多论点，请读 <a href="https://web.archive.org/web/20111004021423/http://kernel.org/pub/linux/docs/lkml/#s15">"Programming Religion"</a>。</p>
+<h2 id="为什么-ffmpeg-可执行程序不带调试符号">为什么 ffmpeg 可执行程序不带调试符号？<a class="headerlink" href="#为什么-ffmpeg-可执行程序不带调试符号" title="Permanent link">&para;</a></h2>
+<p>构建过程会生成 <code>ffmpeg_g</code>、<code>ffplay_g</code> 等，它们包含完整的调试信息。这些二进制文件随后会被剥离（strip）以生成 <code>ffmpeg</code>、<code>ffplay</code> 等。如果需要调试信息，请使用 *_g 版本。</p>
+<h2 id="我不喜欢-lgpl可以改以-gpl-贡献代码吗">我不喜欢 LGPL，可以改以 GPL 贡献代码吗？<a class="headerlink" href="#我不喜欢-lgpl可以改以-gpl-贡献代码吗" title="Permanent link">&para;</a></h2>
+<p>可以，只要这些代码是可选的，并且能够干净利落地放进 #if CONFIG_GPL 而不破坏任何东西。例如，新的编解码器或滤镜以 GPL 发布没有问题，而对 LGPL 代码的缺陷修复则不行。</p>
+<h2 id="我在-c-应用程序中使用-ffmpeg但链接器报错缺少库本身的符号">我在 C 应用程序中使用 FFmpeg，但链接器报错缺少库本身的符号。<a class="headerlink" href="#我在-c-应用程序中使用-ffmpeg但链接器报错缺少库本身的符号" title="Permanent link">&para;</a></h2>
+<p>FFmpeg 默认构建静态库。静态库不处理依赖关系。这带来两个后果。第一，必须按依赖顺序指定库：<code>-lavdevice</code> 必须排在 <code>-lavformat</code> 之前，<code>-lavutil</code> 必须排在所有其他库之后，等等。第二，FFmpeg 用到的外部库也必须一并列出。</p>
+<p>获取按依赖顺序排列的所需库完整列表的简易方法是使用 <code>pkg-config</code>。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>c99 -o program program.c $(pkg-config --cflags --libs libavformat libavcodec)
 </code></pre></div>
-<p>See <code>doc/example/Makefile</code> and <code>doc/example/pc-uninstalled</code> for more details.</p>
-<h2 id="im-using-ffmpeg-from-within-my-c-application-but-the-linker-complains-about-missing-symbols-which-seem-to-be-available">I'm using FFmpeg from within my C++ application but the linker complains about missing symbols which seem to be available.<a class="headerlink" href="#im-using-ffmpeg-from-within-my-c-application-but-the-linker-complains-about-missing-symbols-which-seem-to-be-available" title="Permanent link">&para;</a></h2>
-<p>FFmpeg is a pure C project, so to use the libraries within your C++ application you need to explicitly state that you are using a C library. You can do this by encompassing your FFmpeg includes using <code>extern "C"</code>.</p>
-<p>See <a href="http://www.parashift.com/c++-faq-lite/mixing-c-and-cpp.html#faq-32.3">http://www.parashift.com/c++-faq-lite/mixing-c-and-cpp.html#faq-32.3</a></p>
-<h2 id="im-using-libavutil-from-within-my-c-application-but-the-compiler-complains-about-uint64_c-was-not-declared-in-this-scope">I'm using libavutil from within my C++ application but the compiler complains about 'UINT64_C' was not declared in this scope<a class="headerlink" href="#im-using-libavutil-from-within-my-c-application-but-the-compiler-complains-about-uint64_c-was-not-declared-in-this-scope" title="Permanent link">&para;</a></h2>
-<p>FFmpeg is a pure C project using C99 math features, in order to enable C++ to use them you have to append -D__STDC_CONSTANT_MACROS to your CXXFLAGS</p>
-<h2 id="i-have-a-file-in-memory-a-api-different-from-openread-libc-how-do-i-use-it-with-libavformat">I have a file in memory / a API different from *open/*read/ libc how do I use it with libavformat?<a class="headerlink" href="#i-have-a-file-in-memory-a-api-different-from-openread-libc-how-do-i-use-it-with-libavformat" title="Permanent link">&para;</a></h2>
-<p>You have to create a custom AVIOContext using <code>avio_alloc_context</code>, see <code>libavformat/aviobuf.c</code> in FFmpeg and <code>libmpdemux/demux_lavf.c</code> in MPlayer or MPlayer2 sources.</p>
-<h2 id="where-is-the-documentation-about-ffv1-msmpeg4-asv1-4xm">Where is the documentation about ffv1, msmpeg4, asv1, 4xm?<a class="headerlink" href="#where-is-the-documentation-about-ffv1-msmpeg4-asv1-4xm" title="Permanent link">&para;</a></h2>
-<p>see <a href="https://www.ffmpeg.org/~michael/">https://www.ffmpeg.org/~michael/</a></p>
-<h2 id="how-do-i-feed-h263-rtp-and-other-codecs-in-rtp-to-libavcodec">How do I feed H.263-RTP (and other codecs in RTP) to libavcodec?<a class="headerlink" href="#how-do-i-feed-h263-rtp-and-other-codecs-in-rtp-to-libavcodec" title="Permanent link">&para;</a></h2>
-<p>Even if peculiar since it is network oriented, RTP is a container like any other. You have to <em>demux</em> RTP before feeding the payload to libavcodec. In this specific case please look at RFC 4629 to see how it should be done.</p>
-<h2 id="avstreamr_frame_rate-is-wrong-it-is-much-larger-than-the-frame-rate">AVStream.r_frame_rate is wrong, it is much larger than the frame rate.<a class="headerlink" href="#avstreamr_frame_rate-is-wrong-it-is-much-larger-than-the-frame-rate" title="Permanent link">&para;</a></h2>
-<p><code>r_frame_rate</code> is NOT the average frame rate, it is the smallest frame rate that can accurately represent all timestamps. So no, it is not wrong if it is larger than the average! For example, if you have mixed 25 and 30 fps content, then <code>r_frame_rate</code> will be 150 (it is the least common multiple). If you are looking for the average frame rate, see <code>AVStream.avg_frame_rate</code>.</p>
-<h2 id="why-is-make-fate-not-running-all-tests">Why is <code>make fate</code> not running all tests?<a class="headerlink" href="#why-is-make-fate-not-running-all-tests" title="Permanent link">&para;</a></h2>
-<p>Make sure you have the fate-suite samples and the <code>SAMPLES</code> Make variable or <code>FATE_SAMPLES</code> environment variable or the <code>--samples</code> <code>configure</code> option is set to the right path.</p>
-<h2 id="why-is-make-fate-not-finding-the-samples">Why is <code>make fate</code> not finding the samples?<a class="headerlink" href="#why-is-make-fate-not-finding-the-samples" title="Permanent link">&para;</a></h2>
-<p>Do you happen to have a <code>~</code> character in the samples path to indicate a home directory? The value is used in ways where the shell cannot expand it, causing FATE to not find files. Just replace <code>~</code> by the full path.</p>
+<p>更多细节参见 <code>doc/example/Makefile</code> 与 <code>doc/example/pc-uninstalled</code>。</p>
+<h2 id="我在-c-应用程序中使用-ffmpeg但链接器报错缺少看似明明可用的符号">我在 C++ 应用程序中使用 FFmpeg，但链接器报错缺少看似明明可用的符号。<a class="headerlink" href="#我在-c-应用程序中使用-ffmpeg但链接器报错缺少看似明明可用的符号" title="Permanent link">&para;</a></h2>
+<p>FFmpeg 是纯 C 项目，因此要在 C++ 应用程序中使用这些库，您需要显式声明自己使用的是 C 库。做法是用 <code>extern "C"</code> 包住对 FFmpeg 头文件的包含。</p>
+<p>参见 <a href="http://www.parashift.com/c++-faq-lite/mixing-c-and-cpp.html#faq-32.3">http://www.parashift.com/c++-faq-lite/mixing-c-and-cpp.html#faq-32.3</a></p>
+<h2 id="我在-c-应用程序中使用-libavutil但编译器报错-uint64_c-was-not-declared-in-this-scope">我在 C++ 应用程序中使用 libavutil，但编译器报错 'UINT64_C' was not declared in this scope<a class="headerlink" href="#我在-c-应用程序中使用-libavutil但编译器报错-uint64_c-was-not-declared-in-this-scope" title="Permanent link">&para;</a></h2>
+<p>FFmpeg 是使用 C99 数学特性的纯 C 项目，要让 C++ 使用这些特性，您必须在 CXXFLAGS 中追加 -D__STDC_CONSTANT_MACROS。</p>
+<h2 id="我的文件在内存中或-api-不同于-openreadlibc如何在-libavformat-中使用它">我的文件在内存中或 API 不同于 *open/*read/libc，如何在 libavformat 中使用它？<a class="headerlink" href="#我的文件在内存中或-api-不同于-openreadlibc如何在-libavformat-中使用它" title="Permanent link">&para;</a></h2>
+<p>您需要用 <code>avio_alloc_context</code> 创建自定义 AVIOContext，参见 FFmpeg 中的 <code>libavformat/aviobuf.c</code>，以及 MPlayer 或 MPlayer2 源码中的 <code>libmpdemux/demux_lavf.c</code>。</p>
+<h2 id="关于-ffv1msmpeg4asv14xm-的文档在哪里">关于 ffv1、msmpeg4、asv1、4xm 的文档在哪里？<a class="headerlink" href="#关于-ffv1msmpeg4asv14xm-的文档在哪里" title="Permanent link">&para;</a></h2>
+<p>参见 <a href="https://www.ffmpeg.org/~michael/">https://www.ffmpeg.org/~michael/</a></p>
+<h2 id="如何将-h263-rtp及其他-rtp-中的编解码器送入-libavcodec">如何将 H.263-RTP（及其他 RTP 中的编解码器）送入 libavcodec？<a class="headerlink" href="#如何将-h263-rtp及其他-rtp-中的编解码器送入-libavcodec" title="Permanent link">&para;</a></h2>
+<p>虽然它因面向网络而显得特殊，RTP 其实与其他任何容器一样。您必须先<em>解复用</em> RTP，再把载荷送入 libavcodec。这个具体案例请查阅 RFC 4629 了解应当怎么做。</p>
+<h2 id="avstreamr_frame_rate-不对它比帧率大得多">AVStream.r_frame_rate 不对，它比帧率大得多。<a class="headerlink" href="#avstreamr_frame_rate-不对它比帧率大得多" title="Permanent link">&para;</a></h2>
+<p><code>r_frame_rate</code> 不是平均帧率，而是能够精确表示所有时间戳的最小帧率。所以不，它大于平均值并没有错！例如，若内容混合了 25 和 30 fps，则 <code>r_frame_rate</code> 将为 150（最小公倍数）。如果您要找的是平均帧率，参见 <code>AVStream.avg_frame_rate</code>。</p>
+<h2 id="为什么-make-fate-没有运行全部测试">为什么 <code>make fate</code> 没有运行全部测试？<a class="headerlink" href="#为什么-make-fate-没有运行全部测试" title="Permanent link">&para;</a></h2>
+<p>请确认您已备好 fate-suite 样本，且 <code>SAMPLES</code> Make 变量、<code>FATE_SAMPLES</code> 环境变量或 <code>--samples</code> <code>configure</code> 选项已设置为正确路径。</p>
+<h2 id="为什么-make-fate-找不到测试样本">为什么 <code>make fate</code> 找不到测试样本？<a class="headerlink" href="#为什么-make-fate-找不到测试样本" title="Permanent link">&para;</a></h2>
+<p>您是不是在样本路径中用了 <code>~</code> 字符表示家目录？该值会在 shell 无法展开它的场景中使用，导致 FATE 找不到文件。把 <code>~</code> 换成完整路径即可。</p>
 
 
 
