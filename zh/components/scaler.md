@@ -1,139 +1,135 @@
-!!! warning "翻译占位页"
-    本页为英文原文占位（翻译进行中，进度见[翻译看板](https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md)）。
-    术语与示例以英文原文为准。
+# 描述
 
-# Description
+FFmpeg 缩放器为 libswscale 库的图像转换工具提供高层接口。特别是它可以执行图像缩放 (rescaling) 与像素格式转换。
 
-The FFmpeg rescaler provides a high-level interface to the libswscale library image conversion utilities. In particular it allows one to perform image rescaling and pixel format conversion.
+# 缩放器选项
 
-# Scaler Options
+视频缩放器支持以下命名选项。
 
-The video scaler supports the following named options.
+可通过在 FFmpeg 工具中指定 -\<option\> \<value\> 来设置选项，少数仅 API 的例外在下文说明。以编程方式使用时，可在 `SwsContext` 选项中显式设值，或通过 `libavutil/opt.h` API。
 
-Options may be set by specifying -\<option\> \<value\> in the FFmpeg tools, with a few API-only exceptions noted below. For programmatic use, they can be set explicitly in the `SwsContext` options or through the `libavutil/opt.h` API.
+- **`scaler, scaler_sub`** 选择要使用的缩放算法。两者默认值均为 `auto`。它接受以下取值：
 
-- **`scaler, scaler_sub`** Choose the scaling algorithm to use. Default value is `auto` for both. It accepts the following values:
+  - **`auto`** 自动选择。对 `scaler_sub`，意味着与 `scaler` 相同的算法。对 `scaler`，默认为 `sws_flags` 所选的缩放标志。
 
-  - **`auto`** Aumotic choice. For `scaler_sub`, this means the same algorithm as `scaler`. For `scaler`, this defaults to the scaler flag selected by `sws_flags`.
+  - **`bilinear`** 双线性滤波器。（又称三角滤波器）
 
-  - **`bilinear`** Bilinear filter. (AKA triangle filter)
+  - **`bicubic`** 2 抽头三次 BC 样条（又称 Mitchell-Netravali 样条）。B 与 C 参数可通过设置 `param0` 与 `param1` 配置，分别默认 0.0 与 0.6。
 
-  - **`bicubic`** 2-tap cubic BC-spline (AKA Mitchell-Netravali spline). The B and C parameters can be configured by setting `param0` and `param1`, defaulting to 0.0 and 0.6 respectively.
+  - **`point, neighbor`** 点采样（又称最近邻）。
 
-  - **`point, neighbor`** Point sampling (AKA nearest neighbor).
+  - **`area`** 区域平均。上采样时等价于 `bilinear`。
 
-  - **`area`** Area averaging. Equivalent to `bilinear` for upscaling.
+  - **`gaussian`** 2 抽头高斯滤波器近似。锐度参数可通过设置 `param0` 配置，默认 3.0。
 
-  - **`gaussian`** 2-tap Gaussian filter approximation. The sharpness parameter can be configured by setting `param0`, defaulting to 3.0.
+  - **`sinc`** 无窗 sinc 滤波器。
 
-  - **`sinc`** Unwindowed sinc filter.
+  - **`lanczos`** Lanczos 重采样（sinc 加窗 sinc）。滤波器抽头数可通过设置 `param0` 配置，默认 3。
 
-  - **`lanczos`** Lanczos resampling (sinc windowed sinc). The number of filter taps can be configured by setting `param0`, defaulting to 3.
+  - **`spline`** 无窗自然三次样条。
 
-  - **`spline`** Unwindowed natural bicubic spline.
+- **`sws_flags`** 设置缩放器标志。它也用于设置缩放算法，但这种用法已弃用，建议改设 `scaler`。只能选择单一算法。默认值为 `bicubic`。
 
-- **`sws_flags`** Set the scaler flags. This is also used to set the scaling algorithm, though this usage is deprecated in favor of setting `scaler`. Only a single algorithm may be selected. Default value is `bicubic`.
+  它接受以下取值：
 
-  It accepts the following values:
+  - **`fast_bilinear`** 选择快速双线性缩放算法。（已弃用）
 
-  - **`fast_bilinear`** Select fast bilinear scaling algorithm. (Deprecated)
+  - **`bilinear`** 选择双线性缩放算法。（已弃用）
 
-  - **`bilinear`** Select bilinear scaling algorithm. (Deprecated)
+  - **`bicubic`** 选择三次缩放算法。（已弃用）
 
-  - **`bicubic`** Select bicubic scaling algorithm. (Deprecated)
+  - **`experimental`** 选择实验性缩放算法。（已弃用）
 
-  - **`experimental`** Select experimental scaling algorithm. (Deprecated)
+  - **`neighbor`** 选择最近邻重采样算法。（已弃用）
 
-  - **`neighbor`** Select nearest neighbor rescaling algorithm. (Deprecated)
+  - **`area`** 选择平均区域重采样算法。（已弃用）
 
-  - **`area`** Select averaging area rescaling algorithm. (Deprecated)
+  - **`bicublin`** 对亮度分量选择三次缩放算法，对色度分量选择双线性。（已弃用）
 
-  - **`bicublin`** Select bicubic scaling algorithm for the luma component, bilinear for chroma components. (Deprecated)
+  - **`gauss`** 选择高斯重采样算法。（已弃用）
 
-  - **`gauss`** Select Gaussian rescaling algorithm. (Deprecated)
+  - **`sinc`** 选择 sinc 重采样算法。（已弃用）
 
-  - **`sinc`** Select sinc rescaling algorithm. (Deprecated)
+  - **`lanczos`** 选择 Lanczos 重采样算法。默认宽度 (alpha) 为 3，可通过设置 `param0` 更改。（已弃用）
 
-  - **`lanczos`** Select Lanczos rescaling algorithm. The default width (alpha) is 3 and can be changed by setting `param0`. (Deprecated)
+  - **`spline`** 选择自然三次样条重采样算法。（已弃用）
 
-  - **`spline`** Select natural bicubic spline rescaling algorithm. (Deprecated)
+  - **`print_info`** 启用打印/调试日志。
 
-  - **`print_info`** Enable printing/debug logging.
+  - **`accurate_rnd`** 启用精确舍入。
 
-  - **`accurate_rnd`** Enable accurate rounding.
+  - **`full_chroma_int`** 启用完整色度插值。
 
-  - **`full_chroma_int`** Enable full chroma interpolation.
+  - **`full_chroma_inp`** 选择完整色度输入。
 
-  - **`full_chroma_inp`** Select full chroma input.
+  - **`bitexact`** 启用比特精确输出。
 
-  - **`bitexact`** Enable bitexact output.
+  - **`unstable`** 允许使用实验性新代码。可能轻微影响输出甚至产出错误结果。仅用于测试。
 
-  - **`unstable`** Allow the use of experimental new code. May subtly affect the output or even produce wrong results. For testing only.
+- **`srcw (API only)`** 设置源宽度。
 
-- **`srcw (API only)`** Set source width.
+- **`srch (API only)`** 设置源高度。
 
-- **`srch (API only)`** Set source height.
+- **`dstw (API only)`** 设置目标宽度。
 
-- **`dstw (API only)`** Set destination width.
+- **`dsth (API only)`** 设置目标高度。
 
-- **`dsth (API only)`** Set destination height.
+- **`src_format (API only)`** 设置源像素格式（必须以整数表示）。
 
-- **`src_format (API only)`** Set source pixel format (must be expressed as an integer).
+- **`dst_format (API only)`** 设置目标像素格式（必须以整数表示）。
 
-- **`dst_format (API only)`** Set destination pixel format (must be expressed as an integer).
+- **`src_range (boolean)`** 值设为 `1` 时表示源为全范围 (full range)。默认值为 `0`，即源为受限范围 (limited range)。
 
-- **`src_range (boolean)`** If value is set to `1`, indicates source is full range. Default value is `0`, which indicates source is limited range.
+- **`dst_range (boolean)`** 值设为 `1` 时为目标启用全范围。默认值为 `0`，即目标为受限范围。
 
-- **`dst_range (boolean)`** If value is set to `1`, enable full range for destination. Default value is `0`, which enables limited range.
+- **`gamma (boolean)`** 值设为 `1` 时启用伽马校正缩放。默认值为 `0`。
 
-- **`gamma (boolean)`** If value is set to `1`, enable gamma correct scaling. Default value is `0`.
+- **`param0, param1`** 设置缩放算法参数。所设值仅对某些缩放算法有意义，其余算法会忽略。所设值为浮点数值。
 
-- **`param0, param1`** Set scaling algorithm parameters. The specified values are specific of some scaling algorithms and ignored by others. The specified values are floating point number values.
+- **`sws_dither`** 设置抖动算法。接受以下值之一。默认值为 `auto`。
 
-- **`sws_dither`** Set the dithering algorithm. Accepts one of the following values. Default value is `auto`.
+  - **`auto`** 自动选择
 
-  - **`auto`** automatic choice
+  - **`none`** 不抖动
 
-  - **`none`** no dithering
+  - **`bayer`** bayer 抖动
 
-  - **`bayer`** bayer dither
+  - **`ed`** 误差扩散抖动
 
-  - **`ed`** error diffusion dither
+  - **`a_dither`** 基于加法的算术抖动
 
-  - **`a_dither`** arithmetic dither, based using addition
+  - **`x_dither`** 基于异或的算术抖动（比 a_dither 更随机、图案更不明显）。
 
-  - **`x_dither`** arithmetic dither, based using xor (more random/less apparent patterning that a_dither).
-
-- **`alphablend`** Set the alpha blending to use when the input has alpha but the output does not. Default value is `none`.
+- **`alphablend`** 设置输入含 alpha 而输出不含时使用的 alpha 混合方式。默认值为 `none`。
 
   | Term              | Description                           |
   |-------------------|---------------------------------------|
-  | `uniform_color` | Blend onto a uniform background color |
-  | `checkerboard`  | Blend onto a checkerboard             |
-  | `none`          | No blending                           |
+  | `uniform_color` | 混合到均匀背景色 |
+  | `checkerboard`  | 混合到棋盘格             |
+  | `none`          | 不混合                           |
 
-- **`sws_backends`** Set the allowed swscale backends. This is a flags option, so multiple backends may be combined.
+- **`sws_backends`** 设置允许的 swscale 后端。这是一个标志选项，可组合多个后端。
 
-  - **`auto`** Automatic selection. Equal to either `stable` or `all` depending on whether or not the `unstable` flag is set. This is the default value.
+  - **`auto`** 自动选择。依 `unstable` 标志是否设置而等价于 `stable` 或 `all`。这是默认值。
 
-  - **`stable`** All stable backends.
+  - **`stable`** 所有稳定后端。
 
-  - **`unstable`** All unstable backends.
+  - **`unstable`** 所有不稳定后端。
 
-  - **`all`** All available backends.
+  - **`all`** 所有可用后端。
 
-  - **`legacy`** Legacy swscale code.
+  - **`legacy`** 旧版 swscale 代码。
 
-  - **`c`** Template-based reference code.
+  - **`c`** 基于模板的参考代码。
 
-  - **`memcpy`** Fast path using libc `memcpy`.
+  - **`memcpy`** 使用 libc `memcpy` 的快速路径。
 
-  - **`x86`** x86 SIMD kernels.
+  - **`x86`** x86 SIMD 内核。
 
-  - **`aarch64`** AArch64 NEON kernels.
+  - **`aarch64`** AArch64 NEON 内核。
 
-  - **`spirv`** Vulkan SPIR-V backend.
+  - **`spirv`** Vulkan SPIR-V 后端。
 
-# See Also
+# 另请参见
 
 ffmpeg(1), ffplay(1), ffprobe(1), libswscale(3)
