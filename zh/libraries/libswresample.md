@@ -1,29 +1,25 @@
-!!! warning "翻译占位页"
-    本页为英文原文占位（翻译进行中，进度见[翻译看板](https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md)）。
-    术语与示例以英文原文为准。
+# 描述
 
-# Description
+libswresample 库执行高度优化的音频重采样、重矩阵化与采样格式转换操作。
 
-The libswresample library performs highly optimized audio resampling, rematrixing and sample format conversion operations.
+具体而言，该库执行以下转换：
 
-Specifically, this library performs the following conversions:
+- *重采样*：改变音频速率的过程，例如从 44100Hz 的高采样率到 8000Hz。从高采样率到低采样率的音频转换是一个有损过程。有多种重采样选项和算法可用。
 
-- *Resampling*: is the process of changing the audio rate, for example from a high sample rate of 44100Hz to 8000Hz. Audio conversion from high to low sample rate is a lossy process. Several resampling options and algorithms are available.
+- *格式转换*：转换采样类型的过程，例如从 16 位有符号采样到无符号 8 位或浮点采样。它还处理打包转换，即从打包布局（属于不同声道的所有采样交错存放在同一缓冲区中）转换到平面布局（属于同一声道的所有采样存储在专用缓冲区或 "plane" 中）。
 
-- *Format conversion*: is the process of converting the type of samples, for example from 16-bit signed samples to unsigned 8-bit or float samples. It also handles packing conversion, when passing from packed layout (all samples belonging to distinct channels interleaved in the same buffer), to planar layout (all samples belonging to the same channel stored in a dedicated buffer or "plane").
+- *重矩阵化*：改变声道布局的过程，例如从立体声到单声道。当输入声道无法映射到输出流时，该过程是有损的，因为它涉及不同的增益因子与混音。
 
-- *Rematrixing*: is the process of changing the channel layout, for example from stereo to mono. When the input channels cannot be mapped to the output streams, the process is lossy, since it involves different gain factors and mixing.
+其他各种音频转换（如拉伸与填充）通过专用选项启用。
 
-Various other audio conversions (e.g. stretching and padding) are enabled through dedicated options.
-
-# See Also
+# 另请参见
 
 ffmpeg(1), ffplay(1), ffprobe(1), ffmpeg-resampler(1), libavutil(3)
 
-# Authors
+# 作者
 
-The FFmpeg developers.
+FFmpeg 开发者。
 
-For details about the authorship, see the Git history of the project (https://git.ffmpeg.org/ffmpeg), e.g. by typing the command `git log` in the FFmpeg source directory, or browsing the online repository at <https://git.ffmpeg.org/ffmpeg>.
+有关作者身份的详情，请参阅项目的 Git 历史 (https://git.ffmpeg.org/ffmpeg)，例如在 FFmpeg 源码目录中键入 `git log` 命令，或浏览 <https://git.ffmpeg.org/ffmpeg> 上的在线仓库。
 
-Maintainers for the specific components are listed in the file `MAINTAINERS` in the source code tree.
+各具体组件的维护者列表见源码树中的 `MAINTAINERS` 文件。

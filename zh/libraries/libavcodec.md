@@ -1,21 +1,17 @@
-!!! warning "翻译占位页"
-    本页为英文原文占位（翻译进行中，进度见[翻译看板](https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md)）。
-    术语与示例以英文原文为准。
+# 描述
 
-# Description
+libavcodec 库提供通用的编码/解码框架，包含面向音频、视频和字幕流的多个解码器与编码器，以及若干比特流滤镜。
 
-The libavcodec library provides a generic encoding/decoding framework and contains multiple decoders and encoders for audio, video and subtitle streams, and several bitstream filters.
+这一共享架构提供从比特流 I/O 到 DSP 优化的各类服务，使其既适合实现健壮而快速的编解码器，也适合进行实验。
 
-The shared architecture provides various services ranging from bit stream I/O to DSP optimizations, and makes it suitable for implementing robust and fast codecs as well as for experimentation.
-
-# See Also
+# 另请参见
 
 ffmpeg(1), ffplay(1), ffprobe(1), ffmpeg-codecs(1), ffmpeg-bitstream-filters(1), libavutil(3)
 
-# Authors
+# 作者
 
-The FFmpeg developers.
+FFmpeg 开发者。
 
-For details about the authorship, see the Git history of the project (https://git.ffmpeg.org/ffmpeg), e.g. by typing the command `git log` in the FFmpeg source directory, or browsing the online repository at <https://git.ffmpeg.org/ffmpeg>.
+有关作者身份的详情，请参阅项目的 Git 历史 (https://git.ffmpeg.org/ffmpeg)，例如在 FFmpeg 源码目录中键入 `git log` 命令，或浏览 <https://git.ffmpeg.org/ffmpeg> 上的在线仓库。
 
-Maintainers for the specific components are listed in the file `MAINTAINERS` in the source code tree.
+各具体组件的维护者列表见源码树中的 `MAINTAINERS` 文件。

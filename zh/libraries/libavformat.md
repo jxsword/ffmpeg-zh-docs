@@ -1,21 +1,17 @@
-!!! warning "翻译占位页"
-    本页为英文原文占位（翻译进行中，进度见[翻译看板](https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md)）。
-    术语与示例以英文原文为准。
+# 描述
 
-# Description
+libavformat 库提供用于对音频、视频和字幕流进行复用与解复用（muxing 与 demuxing）的通用框架。它涵盖面向多媒体容器格式的多种复用器和解复用器。
 
-The libavformat library provides a generic framework for multiplexing and demultiplexing (muxing and demuxing) audio, video and subtitle streams. It encompasses multiple muxers and demuxers for multimedia container formats.
+它还支持多种输入和输出协议以访问媒体资源。
 
-It also supports several input and output protocols to access a media resource.
-
-# See Also
+# 另请参见
 
 ffmpeg(1), ffplay(1), ffprobe(1), ffmpeg-formats(1), ffmpeg-protocols(1), libavutil(3), libavcodec(3)
 
-# Authors
+# 作者
 
-The FFmpeg developers.
+FFmpeg 开发者。
 
-For details about the authorship, see the Git history of the project (https://git.ffmpeg.org/ffmpeg), e.g. by typing the command `git log` in the FFmpeg source directory, or browsing the online repository at <https://git.ffmpeg.org/ffmpeg>.
+有关作者身份的详情，请参阅项目的 Git 历史 (https://git.ffmpeg.org/ffmpeg)，例如在 FFmpeg 源码目录中键入 `git log` 命令，或浏览 <https://git.ffmpeg.org/ffmpeg> 上的在线仓库。
 
-Maintainers for the specific components are listed in the file `MAINTAINERS` in the source code tree.
+各具体组件的维护者列表见源码树中的 `MAINTAINERS` 文件。

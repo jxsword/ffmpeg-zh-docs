@@ -1,27 +1,23 @@
-!!! warning "翻译占位页"
-    本页为英文原文占位（翻译进行中，进度见[翻译看板](https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md)）。
-    术语与示例以英文原文为准。
+# 描述
 
-# Description
+libswscale 库执行高度优化的图像缩放以及色彩空间与像素格式转换操作。
 
-The libswscale library performs highly optimized image scaling and colorspace and pixel format conversion operations.
+具体而言，该库执行以下转换：
 
-Specifically, this library performs the following conversions:
+- *重新缩放*：改变视频尺寸的过程。有多种重新缩放选项和算法可用。这通常是一个有损过程。
 
-- *Rescaling*: is the process of changing the video size. Several rescaling options and algorithms are available. This is usually a lossy process.
+- *像素格式转换*：转换图像的图像格式与色彩空间的过程，例如从平面 YUV420P 到打包 RGB24。它还处理打包转换，即从打包布局（属于不同平面的所有像素交错存放在同一缓冲区中）转换到平面布局（属于同一平面的所有采样存储在专用缓冲区或 "plane" 中）。
 
-- *Pixel format conversion*: is the process of converting the image format and colorspace of the image, for example from planar YUV420P to RGB24 packed. It also handles packing conversion, that is converts from packed layout (all pixels belonging to distinct planes interleaved in the same buffer), to planar layout (all samples belonging to the same plane stored in a dedicated buffer or "plane").
+  当源色彩空间与目标色彩空间不同时，这通常是一个有损过程。
 
-  This is usually a lossy process in case the source and destination colorspaces differ.
-
-# See Also
+# 另请参见
 
 ffmpeg(1), ffplay(1), ffprobe(1), ffmpeg-scaler(1), libavutil(3)
 
-# Authors
+# 作者
 
-The FFmpeg developers.
+FFmpeg 开发者。
 
-For details about the authorship, see the Git history of the project (https://git.ffmpeg.org/ffmpeg), e.g. by typing the command `git log` in the FFmpeg source directory, or browsing the online repository at <https://git.ffmpeg.org/ffmpeg>.
+有关作者身份的详情，请参阅项目的 Git 历史 (https://git.ffmpeg.org/ffmpeg)，例如在 FFmpeg 源码目录中键入 `git log` 命令，或浏览 <https://git.ffmpeg.org/ffmpeg> 上的在线仓库。
 
-Maintainers for the specific components are listed in the file `MAINTAINERS` in the source code tree.
+各具体组件的维护者列表见源码树中的 `MAINTAINERS` 文件。

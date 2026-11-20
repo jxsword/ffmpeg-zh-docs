@@ -1,29 +1,25 @@
-!!! warning "翻译占位页"
-    本页为英文原文占位（翻译进行中，进度见[翻译看板](https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md)）。
-    术语与示例以英文原文为准。
+# 描述
 
-# Description
+libavutil 库是一个帮助可移植多媒体编程的实用工具库。它包含安全可移植的字符串函数、随机数生成器、数据结构、附加数学函数、密码学以及多媒体相关功能（如像素格式与采样格式的枚举）。它并不是用来存放 libavcodec 与 libavformat 共同所需代码的库。
 
-The libavutil library is a utility library to aid portable multimedia programming. It contains safe portable string functions, random number generators, data structures, additional mathematics functions, cryptography and multimedia related functionality (like enumerations for pixel and sample formats). It is not a library for code needed by both libavcodec and libavformat.
+本库的目标是：
 
-The goals for this library is to be:
+- ****模块化**** 各部分之间应尽量少互相依赖，并且可以在 `./configure` 期间禁用单个部分。
 
-- ****Modular**** It should have few interdependencies and the possibility of disabling individual parts during `./configure`.
+- ****小巧**** 源码与目标文件都应当小巧。
 
-- ****Small**** Both sources and objects should be small.
+- ****高效**** 它应具有较低的 CPU 与内存占用。
 
-- ****Efficient**** It should have low CPU and memory usage.
+- ****实用**** 它应避免提供几乎无人需要的无用特性。
 
-- ****Useful**** It should avoid useless features that almost no one needs.
-
-# See Also
+# 另请参见
 
 ffmpeg(1), ffplay(1), ffprobe(1), ffmpeg-utils(1)
 
-# Authors
+# 作者
 
-The FFmpeg developers.
+FFmpeg 开发者。
 
-For details about the authorship, see the Git history of the project (https://git.ffmpeg.org/ffmpeg), e.g. by typing the command `git log` in the FFmpeg source directory, or browsing the online repository at <https://git.ffmpeg.org/ffmpeg>.
+有关作者身份的详情，请参阅项目的 Git 历史 (https://git.ffmpeg.org/ffmpeg)，例如在 FFmpeg 源码目录中键入 `git log` 命令，或浏览 <https://git.ffmpeg.org/ffmpeg> 上的在线仓库。
 
-Maintainers for the specific components are listed in the file `MAINTAINERS` in the source code tree.
+各具体组件的维护者列表见源码树中的 `MAINTAINERS` 文件。
