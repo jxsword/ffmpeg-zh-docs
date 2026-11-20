@@ -9,6 +9,8 @@
 # B3 批随批补录 19 条（宏块/运动矢量/运动估计/运动补偿/码率控制/量化器/
 # 量化参数/GOP/操作点/胶片颗粒/错误隐藏/抖动/亮度/色度/帧内刷新/重矩阵化/
 # 熵编码/小片/去块，2026-11-21 随批评审 approved）
+# B4 批随批补录 12 条（适配集/分片/分段器/入点/出点/变体流/隐藏式字幕/
+# 轨道/chunk/一致性窗口/节目流/传输流，2026-11-21 随批评审 approved）
 # 原则：muxer=复用器 / demuxer=解复用器（社区主流技术译法，R3 明确）
 
 terms:
@@ -1016,3 +1018,76 @@ terms:
     status: "approved"
     context: "components/codecs.md"
     aliases: ["deblock"]
+
+  # ===== B4 批补录（components/bitstream-filters/formats，2026-11-21 随批评审 approved） =====
+  - en: "adaptation set"
+    zh: "适配集"
+    status: "approved"
+    context: "components/formats.md（DASH）"
+    aliases: ["adaptation sets"]
+
+  - en: "fragment"
+    zh: "分片"
+    status: "approved"
+    context: "components/formats.md（MOV/DASH 分片化；fragmentation=分片化）"
+    aliases: ["fragmentation"]
+
+  - en: "segmenter"
+    zh: "分段器"
+    status: "approved"
+    context: "components/formats.md（segment/stream_segment 复用器；分段名 segment 不译）"
+    aliases: []
+
+  - en: "in point"
+    zh: "入点"
+    status: "approved"
+    context: "components/formats.md（concat；outpoint 对应出点）"
+    aliases: ["out point"]
+
+  - en: "variant stream"
+    zh: "变体流"
+    status: "approved"
+    context: "components/formats.md（HLS）"
+    aliases: []
+
+  - en: "closed captions"
+    zh: "隐藏式字幕"
+    status: "approved"
+    context: "全局（CC；EIA-608/CEA-708 名不译）"
+    aliases: ["CC"]
+
+  - en: "track"
+    zh: "轨道"
+    status: "approved"
+    context: "components/formats.md（MOV/Matroska track；音频音轨用音轨）"
+    aliases: []
+
+  - en: "chunk"
+    zh: "chunk"
+    status: "approved"
+    context: "components/formats.md（DASH/WebM 语境不译；Live Chunk 首现括注分块）"
+    aliases: []
+
+  - en: "conformance window"
+    zh: "一致性窗口"
+    status: "approved"
+    context: "components/formats.md（HEVC 裁剪）"
+    aliases: []
+
+  - en: "program stream"
+    zh: "节目流"
+    status: "approved"
+    context: "components/formats.md（MPEG-PS）"
+    aliases: []
+
+  - en: "transport stream"
+    zh: "传输流"
+    status: "approved"
+    context: "components/formats.md（MPEG-TS）"
+    aliases: []
+
+  - en: "edit list"
+    zh: "edit list"
+    status: "approved"
+    context: "components/formats.md（MOV 编辑列表，与 atom/box 同口径不译）"
+    aliases: []

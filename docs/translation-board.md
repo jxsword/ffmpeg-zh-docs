@@ -15,8 +15,8 @@
 | components/scaler.md | 66 | 0 | 0 | P0（B3 已完成 2026-11-21） |
 | components/resampler.md | 54 | 0 | 0 | P0（B3 已完成 2026-11-21） |
 | components/codecs.md | 1983 | 0 | 0 | P0（B3 已完成 2026-11-21） |
-| components/bitstream-filters.md | 356 | 356 | 0 | P0 |
-| components/formats.md | 1573 | 1573 | 0 | P0 |
+| components/bitstream-filters.md | 356 | 0 | 0 | P0（B4 已完成 2026-11-21） |
+| components/formats.md | 1573 | 0 | 0 | P0（B4 已完成 2026-11-21） |
 | components/protocols.md | 677 | 677 | 0 | P0 |
 | components/devices.md | 570 | 570 | 0 | P0 |
 | libraries/libavutil.md | 13 | 13 | 0 | P0 |
@@ -46,7 +46,7 @@
 | B1 | manual/ffmpeg.md | 805 | 已完成（2026-11-20，段级组装 + 校验全绿；随行=glossary v1 冻结/validate_translation.py 落地/DR-010） |
 | B2 | manual/ffplay.md + manual/ffprobe.md + manual/common-options.md + components/utils.md | 612 | 已完成（2026-11-20，段级组装+校验全绿；随行=DR-011 标题桥接/校验器自动链接放行/glossary 补录 4 条） |
 | B3 | components/scaler.md + components/resampler.md + components/codecs.md | 2103 | 已完成（2026-11-21，三笔提交 65ea494/f1b4e90/cf48d88，段级组装+校验全绿；随行=heading-bridge 登记 codec_002doptions 修复 anchor_map 数据缺陷/glossary 补录 19 条至 166） |
-| B4 | components/bitstream-filters.md + components/formats.md | 1929 | 未开始 |
+| B4 | components/bitstream-filters.md + components/formats.md | 1929 | 已完成（2026-11-21，两笔提交 5a03894/2fdad4d，段级组装+校验全绿；随行=heading-bridge 登记 Format-stream-specifiers/segment 修复 anchor_map 错位/glossary 补录 12 条至 178） |
 | B5 | components/protocols.md | 677 | 未开始 |
 | B6 | components/devices.md | 570 | 未开始 |
 | B7 | libraries/libavutil.md + libraries/libavcodec.md + libraries/libavformat.md + libraries/libavdevice.md + libraries/libavfilter.md + libraries/libswscale.md + libraries/libswresample.md + general/faq.md + general/general.md + general/platform.md | 531 | 未开始 |
