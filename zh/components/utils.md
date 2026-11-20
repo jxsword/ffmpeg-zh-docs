@@ -1,116 +1,112 @@
-!!! warning "翻译占位页"
-    本页为英文原文占位（翻译进行中，进度见[翻译看板](https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md)）。
-    术语与示例以英文原文为准。
+# 描述
 
-# Description
+本文描述 libavutil 库提供的一些通用功能与实用工具。
 
-This document describes some generic features and utilities provided by the libavutil library.
+# 语法
 
-# Syntax
+本节记录 FFmpeg 库和工具采用的语法与格式。
 
-This section documents the syntax and formats employed by the FFmpeg libraries and tools.
+## 引号引用与转义
 
-## Quoting and escaping
+除非明确指定，FFmpeg 采用以下引号引用与转义机制。应用以下规则：
 
-FFmpeg adopts the following quoting and escaping mechanism, unless explicitly specified. The following rules are applied:
+- `'` 和 `\` 是特殊字符（分别用于引号引用和转义）。除此之外，视引号引用与转义所用的具体语法而定，可能还有其他特殊字符。
 
-- `'` and `\` are special characters (respectively used for quoting and escaping). In addition to them, there might be other special characters depending on the specific syntax where the escaping and quoting are employed.
+- 特殊字符通过在其前面加 `\` 来转义。
 
-- A special character is escaped by prefixing it with a `\`.
+- `''` 之间括起的所有字符都按字面包含在解析后的字符串中。引号字符 `'` 本身不能被引号引用，因此可能需要先闭合引号再对其进行转义。
 
-- All characters enclosed between `''` are included literally in the parsed string. The quote character `'` itself cannot be quoted, so you may need to close the quote and escape it.
+- 前导和尾随空白字符（除非被转义或被引号括起）会从解析后的字符串中移除。
 
-- Leading and trailing whitespaces, unless escaped or quoted, are removed from the parsed string.
+注意，在命令行或脚本中使用时可能需要再加一层转义，这取决于所用 shell 语言的语法。
 
-Note that you may need to add a second level of escaping when using the command line or a script, which depends on the syntax of the adopted shell language.
+定义在 `libavutil/avstring.h` 中的函数 `av_get_token` 可用于解析按上述规则做了引号引用或转义的 token。
 
-The function `av_get_token` defined in `libavutil/avstring.h` can be used to parse a token quoted or escaped according to the rules defined above.
+FFmpeg 源码树中的工具 `tools/ffescape` 可用于在脚本中自动对字符串做引号引用或转义。
 
-The tool `tools/ffescape` in the FFmpeg source tree can be used to automatically quote or escape a string in a script.
+### 示例
 
-### Examples
-
-- Escape the string `Crime d'Amour` containing the `'` special character:
+- 转义包含 `'` 特殊字符的字符串 `Crime d'Amour`：
 
   ``` text
   Crime d\'Amour
   ```
 
-- The string above contains a quote, so the `'` needs to be escaped when quoting it:
+- 上面的字符串包含一个引号，因此对它做引号引用时需要转义 `'`：
 
   ``` text
   'Crime d'\''Amour'
   ```
 
-- Include leading or trailing whitespaces using quoting:
+- 使用引号引用来包含前导或尾随空白字符：
 
   ``` text
   '  this string starts and ends with whitespaces  '
   ```
 
-- Escaping and quoting can be mixed together:
+- 转义与引号引用可以混用：
 
   ``` text
   ' The string '\'string\'' is a string '
   ```
 
-- To include a literal `\` you can use either escaping or quoting:
+- 要包含字面 `\`，既可以用转义也可以用引号引用：
 
   ``` text
   'c:\foo' can be written as c:\\foo
   ```
 
-## Date
+## 日期
 
-The accepted syntax is:
+可接受的语法为：
 
 ``` text
 [(YYYY-MM-DD|YYYYMMDD)[T|t| ]]((HH:MM:SS[.m...]]])|(HHMMSS[.m...]]]))[Z]
 now
 ```
 
-If the value is "now" it takes the current time.
+若值为 "now"，则取当前时间。
 
-Time is local time unless Z is appended, in which case it is interpreted as UTC. If the year-month-day part is not specified it takes the current year-month-day.
+除非附加 Z（此时按 UTC 解释），时间为本地时间。若未指定年-月-日部分，则取当前年-月-日。
 
-## Time duration
+## 时长
 
-There are two accepted syntaxes for expressing time duration.
+表达时长有两种可接受的语法。
 
 ``` text
 [-][HH:]MM:SS[.m...]
 ```
 
-\<HH\> expresses the number of hours, \<MM\> the number of minutes for a maximum of 2 digits, and \<SS\> the number of seconds for a maximum of 2 digits. The \<m\> at the end expresses decimal value for \<SS\>.
+\<HH\> 表示小时数，\<MM\> 表示分钟数（最多 2 位数字），\<SS\> 表示秒数（最多 2 位数字）。末尾的 \<m\> 表示 \<SS\> 的小数部分。
 
-*or*
+*或*
 
 ``` text
 [-]S+[.m...][s|ms|us]
 ```
 
-\<S\> expresses the number of seconds, with the optional decimal part \<m\>. The optional literal suffixes `s`, `ms` or `us` indicate to interpret the value as seconds, milliseconds or microseconds, respectively.
+\<S\> 表示秒数，带可选的小数部分 \<m\>。可选的字面后缀 `s`、`ms` 或 `us` 分别指示把该值解释为秒、毫秒或微秒。
 
-In both expressions, the optional `-` indicates negative duration.
+两种表达式中，可选的 `-` 表示负时长。
 
-### Examples
+### 示例
 
-The following examples are all valid time duration:
+以下均为有效的时长：
 
 | Term         | Description                         |
 |--------------|-------------------------------------|
-| `55`       | 55 seconds                          |
-| `0.2`      | 0.2 seconds                         |
-| `200ms`    | 200 milliseconds, that's 0.2s       |
-| `200000us` | 200000 microseconds, that's 0.2s    |
-| `12:03:45` | 12 hours, 03 minutes and 45 seconds |
-| `23.189`   | 23.189 seconds                      |
+| `55`       | 55 秒                          |
+| `0.2`      | 0.2 秒                         |
+| `200ms`    | 200 毫秒，即 0.2 秒       |
+| `200000us` | 200000 微秒，即 0.2 秒    |
+| `12:03:45` | 12 小时，03 分 45 秒 |
+| `23.189`   | 23.189 秒                      |
 
-## Video size
+## 视频尺寸
 
-Specify the size of the sourced video, it may be a string of the form \<width\>x\<height\>, or the name of a size abbreviation.
+指定源视频的尺寸，可以是 \<width\>x\<height\> 形式的字符串，或尺寸缩写名称。
 
-The following abbreviations are recognized:
+可识别以下缩写：
 
 | Term          | Description |
 |---------------|-------------|
@@ -168,11 +164,11 @@ The following abbreviations are recognized:
 | `uhd2160`   | 3840x2160   |
 | `uhd4320`   | 7680x4320   |
 
-## Video rate
+## 视频帧率
 
-Specify the frame rate of a video, expressed as the number of frames generated per second. It has to be a string in the format \<frame_rate_num\>/\<frame_rate_den\>, an integer number, a float number or a valid video frame rate abbreviation.
+指定视频的帧率，表示每秒生成的帧数。必须是 \<frame_rate_num\>/\<frame_rate_den\> 格式的字符串、整数、浮点数或有效的视频帧率缩写。
 
-The following abbreviations are recognized:
+可识别以下缩写：
 
 | Term          | Description |
 |---------------|-------------|
@@ -185,23 +181,23 @@ The following abbreviations are recognized:
 | `film`      | 24/1        |
 | `ntsc-film` | 24000/1001  |
 
-## Ratio
+## 比率
 
-A ratio can be expressed as an expression, or in the form \<numerator\>:\<denominator\>.
+比率可以用表达式表达，或用 \<numerator\>:\<denominator\> 的形式表达。
 
-Note that a ratio with infinite (1/0) or negative value is considered valid, so you should check on the returned value if you want to exclude those values.
+注意，无穷 (1/0) 或负值的比率被视为有效，因此若想排除这些值，应检查返回值。
 
-The undefined value can be expressed using the "0:0" string.
+未定义值可用字符串 "0:0" 表达。
 
-## Color
+## 颜色
 
-It can be the name of a color as defined below (case insensitive match) or a `[0x|#]RRGGBB[AA]` sequence, possibly followed by @ and a string representing the alpha component.
+可以是下文定义的颜色名称（匹配时不区分大小写），或 `[0x|#]RRGGBB[AA]` 序列，其后可跟 @ 和表示 alpha 分量的字符串。
 
-The alpha component may be a string composed by "0x" followed by an hexadecimal number or a decimal number between 0.0 and 1.0, which represents the opacity value (`0x00` or `0.0` means completely transparent, `0xff` or `1.0` completely opaque). If the alpha component is not specified then `0xff` is assumed.
+alpha 分量可以是由 "0x" 后接十六进制数组成的字符串，或 0.0 到 1.0 之间的十进制数，表示不透明度（`0x00` 或 `0.0` 表示完全透明，`0xff` 或 `1.0` 表示完全不透明）。未指定 alpha 分量时假定为 `0xff`。
 
-The string `random` will result in a random color.
+字符串 `random` 将产生随机颜色。
 
-The following names of colors are recognized:
+可识别以下颜色名称：
 
 | Term                     | Description |
 |--------------------------|-------------|
@@ -346,41 +342,41 @@ The following names of colors are recognized:
 | `Yellow`               | 0xFFFF00    |
 | `YellowGreen`          | 0x9ACD32    |
 
-## Channel Layout
+## 声道布局
 
-A channel layout specifies the spatial disposition of the channels in a multi-channel audio stream. To specify a channel layout, FFmpeg makes use of a special syntax.
+声道布局指定多声道音频流中各声道的空间分布。指定声道布局时，FFmpeg 使用一种特殊语法。
 
-Individual channels are identified by an id, as given by the table below:
+单个声道由 id 标识，如下表所示：
 
 | Term     | Description           |
 |----------|-----------------------|
-| `FL`   | front left            |
-| `FR`   | front right           |
-| `FC`   | front center          |
-| `LFE`  | low frequency         |
-| `BL`   | back left             |
-| `BR`   | back right            |
-| `FLC`  | front left-of-center  |
-| `FRC`  | front right-of-center |
-| `BC`   | back center           |
-| `SL`   | side left             |
-| `SR`   | side right            |
-| `TC`   | top center            |
-| `TFL`  | top front left        |
-| `TFC`  | top front center      |
-| `TFR`  | top front right       |
-| `TBL`  | top back left         |
-| `TBC`  | top back center       |
-| `TBR`  | top back right        |
-| `DL`   | downmix left          |
-| `DR`   | downmix right         |
-| `WL`   | wide left             |
-| `WR`   | wide right            |
-| `SDL`  | surround direct left  |
-| `SDR`  | surround direct right |
-| `LFE2` | low frequency 2       |
+| `FL`   | 左前 |
+| `FR`   | 右前 |
+| `FC`   | 前中 |
+| `LFE`  | 低频 |
+| `BL`   | 左后 |
+| `BR`   | 右后 |
+| `FLC`  | 前中偏左  |
+| `FRC`  | 前中偏右 |
+| `BC`   | 后中           |
+| `SL`   | 左侧             |
+| `SR`   | 右侧             |
+| `TC`   | 顶中             |
+| `TFL`  | 顶前左        |
+| `TFC`  | 顶前中      |
+| `TFR`  | 顶前右       |
+| `TBL`  | 顶后左         |
+| `TBC`  | 顶后中       |
+| `TBR`  | 顶后右        |
+| `DL`   | 下混左          |
+| `DR`   | 下混右         |
+| `WL`   | 宽左             |
+| `WR`   | 宽右            |
+| `SDL`  | 环绕直接左  |
+| `SDR`  | 环绕直接右 |
+| `LFE2` | 低频 2       |
 
-Standard channel layout compositions can be specified by using the following identifiers:
+标准声道布局组合可用以下标识符指定：
 
 - **`mono`** FC
 
@@ -460,211 +456,211 @@ Standard channel layout compositions can be specified by using the following ide
 
 - **`22.2`** FL+FR+FC+LFE+BL+BR+FLC+FRC+BC+SL+SR+TC+TFL+TFC+TFR+TBL+TBC+TBR+LFE2+TSL+TSR+BFC+BFL+BFR
 
-A custom channel layout can be specified as a sequence of terms, separated by '+'. Each term can be:
+自定义声道布局可以用以 '+' 分隔的一系列项指定。每个项可以是：
 
-- the name of a single channel (e.g. `FL`, `FR`, `FC`, `LFE`, etc.), each optionally containing a custom name after a '@', (e.g. `FL@Left`, `FR@Right`, `FC@Center`, `LFE@Low_Frequency`, etc.)
+- 单个声道的名称（例如 `FL`、`FR`、`FC`、`LFE` 等），每个名称可选地在 '@' 后跟一个自定义名称（例如 `FL@Left`、`FR@Right`、`FC@Center`、`LFE@Low_Frequency` 等）
 
-A standard channel layout can be specified by the following:
+标准声道布局可由以下方式指定：
 
-- the name of a single channel (e.g. `FL`, `FR`, `FC`, `LFE`, etc.)
+- 单个声道的名称（例如 `FL`、`FR`、`FC`、`LFE` 等）
 
-- the name of a standard channel layout (e.g. `mono`, `stereo`, `4.0`, `quad`, `5.0`, etc.)
+- 标准声道布局的名称（例如 `mono`、`stereo`、`4.0`、`quad`、`5.0` 等）
 
-- a number of channels, in decimal, followed by 'c', yielding the default channel layout for that number of channels (see the function `av_channel_layout_default`). Note that not all channel counts have a default layout.
+- 十进制声道数后跟 'c'，产生该声道数的默认声道布局（参见函数 `av_channel_layout_default`）。注意并非所有声道数都有默认布局。
 
-- a number of channels, in decimal, followed by 'C', yielding an unknown channel layout with the specified number of channels. Note that not all channel layout specification strings support unknown channel layouts.
+- 十进制声道数后跟 'C'，产生具有指定声道数的未知声道布局。注意并非所有声道布局描述字符串都支持未知声道布局。
 
-- a channel layout mask, in hexadecimal starting with "0x" (see the `AV_CH_*` macros in `libavutil/channel_layout.h`.
+- 以 "0x" 开头的十六进制声道布局掩码（参见 `libavutil/channel_layout.h` 中的 `AV_CH_*` 宏。
 
-Before libavutil version 53 the trailing character "c" to specify a number of channels was optional, but now it is required, while a channel layout mask can also be specified as a decimal number (if and only if not followed by "c" or "C").
+在 libavutil 53 版之前，指定声道数的尾部字符 "c" 是可选的，现在则是必需的；而声道布局掩码也可用十进制数指定（当且仅当其后不跟 "c" 或 "C" 时）。
 
-See also the function `av_channel_layout_from_string` defined in `libavutil/channel_layout.h`.
+另请参见定义在 `libavutil/channel_layout.h` 中的函数 `av_channel_layout_from_string`。
 
-# Expression Evaluation
+# 表达式求值
 
-When evaluating an arithmetic expression, FFmpeg uses an internal formula evaluator, implemented through the `libavutil/eval.h` interface.
+对算术表达式求值时，FFmpeg 使用内部公式求值器，通过 `libavutil/eval.h` 接口实现。
 
-An expression may contain unary, binary operators, constants, and functions.
+表达式可包含一元和二元运算符、常量以及函数。
 
-Two expressions \<expr1\> and \<expr2\> can be combined to form another expression "\<expr1\>;\<expr2\>". \<expr1\> and \<expr2\> are evaluated in turn, and the new expression evaluates to the value of \<expr2\>.
+两个表达式 \<expr1\> 和 \<expr2\> 可组合成另一表达式 "\<expr1\>;\<expr2\>"。\<expr1\> 和 \<expr2\> 依次求值，新表达式的值为 \<expr2\> 的值。
 
-The following binary operators are available: `+`, `-`, `*`, `/`, `^`.
+可用的二元运算符有：`+`、`-`、`*`、`/`、`^`。
 
-The following unary operators are available: `+`, `-`.
+可用的一元运算符有：`+`、`-`。
 
-Some internal variables can be used to store and load intermediary results. They can be accessed using the `ld` and `st` functions with an index argument varying from 0 to 9 to specify which internal variable to access.
+某些内部变量可用于存储和加载中间结果。可使用 `ld` 和 `st` 函数并带一个 0 到 9 的索引参数来访问它们，以指定访问哪个内部变量。
 
-The following functions are available:
+可用函数如下：
 
-- **`abs(x)`** Compute absolute value of \<x\>.
+- **`abs(x)`** 计算 \<x\> 的绝对值。
 
-- **`acos(x)`** Compute arccosine of \<x\>.
+- **`acos(x)`** 计算 \<x\> 的反余弦。
 
-- **`asin(x)`** Compute arcsine of \<x\>.
+- **`asin(x)`** 计算 \<x\> 的反正弦。
 
-- **`atan(x)`** Compute arctangent of \<x\>.
+- **`atan(x)`** 计算 \<x\> 的反正切。
 
-- **`atan2(y, x)`** Compute principal value of the arc tangent of \<y\>/\<x\>.
+- **`atan2(y, x)`** 计算 \<y\>/\<x\> 的反正切主值。
 
-- **`between(x, min, max)`** Return 1 if \<x\> is greater than or equal to \<min\> and lesser than or equal to \<max\>, 0 otherwise.
+- **`between(x, min, max)`** 若 \<x\> 大于等于 \<min\> 且小于等于 \<max\>，返回 1，否则返回 0。
 
 - **`bitand(x, y)`**
 
-- **`bitor(x, y)`** Compute bitwise and/or operation on \<x\> and \<y\>.
+- **`bitor(x, y)`** 对 \<x\> 和 \<y\> 执行按位与/或运算。
 
-  The results of the evaluation of \<x\> and \<y\> are converted to integers before executing the bitwise operation.
+  在执行按位运算前，\<x\> 和 \<y\> 的求值结果会先转换为整数。
 
-  Note that both the conversion to integer and the conversion back to floating point can lose precision. Beware of unexpected results for large numbers (usually 2^53 and larger).
+  注意，转换为整数以及转换回浮点数都可能损失精度。对大数（通常为 2^53 及以上）要当心意外结果。
 
-- **`ceil(expr)`** Round the value of expression \<expr\> upwards to the nearest integer. For example, "ceil(1.5)" is "2.0".
+- **`ceil(expr)`** 把表达式 \<expr\> 的值向上取整到最近的整数。例如，"ceil(1.5)" 为 "2.0"。
 
-- **`clip(x, min, max)`** Return the value of \<x\> clipped between \<min\> and \<max\>.
+- **`clip(x, min, max)`** 返回 \<x\> 被限制在 \<min\> 和 \<max\> 之间后的值。
 
-- **`cos(x)`** Compute cosine of \<x\>.
+- **`cos(x)`** 计算 \<x\> 的余弦。
 
-- **`cosh(x)`** Compute hyperbolic cosine of \<x\>.
+- **`cosh(x)`** 计算 \<x\> 的双曲余弦。
 
-- **`eq(x, y)`** Return 1 if \<x\> and \<y\> are equivalent, 0 otherwise.
+- **`eq(x, y)`** 若 \<x\> 和 \<y\> 等价返回 1，否则返回 0。
 
-- **`exp(x)`** Compute exponential of \<x\> (with base `e`, the Euler's number).
+- **`exp(x)`** 计算 \<x\> 的指数（以 `e` 为底，即欧拉数）。
 
-- **`floor(expr)`** Round the value of expression \<expr\> downwards to the nearest integer. For example, "floor(-1.5)" is "-2.0".
+- **`floor(expr)`** 把表达式 \<expr\> 的值向下取整到最近的整数。例如，"floor(-1.5)" 为 "-2.0"。
 
-- **`gauss(x)`** Compute Gauss function of \<x\>, corresponding to `exp(-x*x/2) / sqrt(2*PI)`.
+- **`gauss(x)`** 计算 \<x\> 的高斯函数，对应 `exp(-x*x/2) / sqrt(2*PI)`。
 
-- **`gcd(x, y)`** Return the greatest common divisor of \<x\> and \<y\>. If both \<x\> and \<y\> are 0 or either or both are less than zero then behavior is undefined.
+- **`gcd(x, y)`** 返回 \<x\> 和 \<y\> 的最大公约数。若 \<x\> 和 \<y\> 均为 0，或任一/两者小于零，则行为未定义。
 
-- **`gt(x, y)`** Return 1 if \<x\> is greater than \<y\>, 0 otherwise.
+- **`gt(x, y)`** 若 \<x\> 大于 \<y\> 返回 1，否则返回 0。
 
-- **`gte(x, y)`** Return 1 if \<x\> is greater than or equal to \<y\>, 0 otherwise.
+- **`gte(x, y)`** 若 \<x\> 大于等于 \<y\> 返回 1，否则返回 0。
 
-- **`hypot(x, y)`** This function is similar to the C function with the same name; it returns "sqrt(\<x\>\*\<x\> + \<y\>\*\<y\>)", the length of the hypotenuse of a right triangle with sides of length \<x\> and \<y\>, or the distance of the point (\<x\>, \<y\>) from the origin.
+- **`hypot(x, y)`** 该函数与同名 C 函数类似；返回 "sqrt(\<x\>\*\<x\> + \<y\>\*\<y\>)"，即边长为 \<x\> 和 \<y\> 的直角三角形的斜边长度，或点 (\<x\>, \<y\>) 到原点的距离。
 
-- **`if(x, y)`** Evaluate \<x\>, and if the result is non-zero return the result of the evaluation of \<y\>, return 0 otherwise.
+- **`if(x, y)`** 对 \<x\> 求值，若结果非零则返回 \<y\> 的求值结果，否则返回 0。
 
-- **`if(x, y, z)`** Evaluate \<x\>, and if the result is non-zero return the evaluation result of \<y\>, otherwise the evaluation result of \<z\>.
+- **`if(x, y, z)`** 对 \<x\> 求值，若结果非零则返回 \<y\> 的求值结果，否则返回 \<z\> 的求值结果。
 
-- **`ifnot(x, y)`** Evaluate \<x\>, and if the result is zero return the result of the evaluation of \<y\>, return 0 otherwise.
+- **`ifnot(x, y)`** 对 \<x\> 求值，若结果为零则返回 \<y\> 的求值结果，否则返回 0。
 
-- **`ifnot(x, y, z)`** Evaluate \<x\>, and if the result is zero return the evaluation result of \<y\>, otherwise the evaluation result of \<z\>.
+- **`ifnot(x, y, z)`** 对 \<x\> 求值，若结果为零则返回 \<y\> 的求值结果，否则返回 \<z\> 的求值结果。
 
-- **`isinf(x)`** Return 1.0 if \<x\> is +/-INFINITY, 0.0 otherwise.
+- **`isinf(x)`** 若 \<x\> 为 +/-INFINITY 返回 1.0，否则返回 0.0。
 
-- **`isnan(x)`** Return 1.0 if \<x\> is NAN, 0.0 otherwise.
+- **`isnan(x)`** 若 \<x\> 为 NAN 返回 1.0，否则返回 0.0。
 
-- **`ld(idx)`** Load the value of the internal variable with index \<idx\>, which was previously stored with st(\<idx\>, \<expr\>). The function returns the loaded value.
+- **`ld(idx)`** 加载索引为 \<idx\> 的内部变量的值，该值此前用 st(\<idx\>, \<expr\>) 存入。该函数返回加载的值。
 
-- **`lerp(x, y, z)`** Return linear interpolation between \<x\> and \<y\> by amount of \<z\>.
+- **`lerp(x, y, z)`** 返回 \<x\> 和 \<y\> 之间按数量 \<z\> 的线性插值。
 
-- **`log(x)`** Compute natural logarithm of \<x\>.
+- **`log(x)`** 计算 \<x\> 的自然对数。
 
-- **`lt(x, y)`** Return 1 if \<x\> is lesser than \<y\>, 0 otherwise.
+- **`lt(x, y)`** 若 \<x\> 小于 \<y\> 返回 1，否则返回 0。
 
-- **`lte(x, y)`** Return 1 if \<x\> is lesser than or equal to \<y\>, 0 otherwise.
+- **`lte(x, y)`** 若 \<x\> 小于等于 \<y\> 返回 1，否则返回 0。
 
-- **`max(x, y)`** Return the maximum between \<x\> and \<y\>.
+- **`max(x, y)`** 返回 \<x\> 和 \<y\> 中的最大值。
 
-- **`min(x, y)`** Return the minimum between \<x\> and \<y\>.
+- **`min(x, y)`** 返回 \<x\> 和 \<y\> 中的最小值。
 
-- **`mod(x, y)`** Compute the remainder of division of \<x\> by \<y\>.
+- **`mod(x, y)`** 计算 \<x\> 除以 \<y\> 的余数。
 
-- **`not(expr)`** Return 1.0 if \<expr\> is zero, 0.0 otherwise.
+- **`not(expr)`** 若 \<expr\> 为零返回 1.0，否则返回 0.0。
 
-- **`pow(x, y)`** Compute the power of \<x\> elevated \<y\>, it is equivalent to "(\<x\>)^(\<y\>)".
+- **`pow(x, y)`** 计算 \<x\> 的 \<y\> 次幂，相当于 "(\<x\>)^(\<y\>)"。
 
 - **`print(t)`**
 
-- **`print(t, l)`** Print the value of expression \<t\> with loglevel \<l\>. If \<l\> is not specified then a default log level is used. Return the value of the expression printed.
+- **`print(t, l)`** 以日志级别 \<l\> 打印表达式 \<t\> 的值。未指定 \<l\> 时使用默认日志级别。返回所打印表达式的值。
 
-- **`random(idx)`** Return a pseudo random value between 0.0 and 1.0. \<idx\> is the index of the internal variable used to save the seed/state, which can be previously stored with `st(idx)`.
+- **`random(idx)`** 返回 0.0 到 1.0 之间的伪随机值。\<idx\> 是用于保存种子/状态的内部变量的索引，该种子/状态可预先用 `st(idx)` 存入。
 
-  To initialize the seed, you need to store the seed value as a 64-bit unsigned integer in the internal variable with index \<idx\>.
+  要初始化种子，需要把种子值作为 64 位无符号整数存入索引为 \<idx\> 的内部变量。
 
-  For example, to store the seed with value `42` in the internal variable with index `0` and print a few random values:
+  例如，把值 `42` 作为种子存入索引为 `0` 的内部变量，并打印几个随机值：
 
   ``` c
   st(0,42); print(random(0)); print(random(0)); print(random(0))
   ```
 
-- **`randomi(idx, min, max)`** Return a pseudo random value in the interval between \<min\> and \<max\>. \<idx\> is the index of the internal variable which will be used to save the seed/state, which can be previously stored with `st(idx)`.
+- **`randomi(idx, min, max)`** 返回 \<min\> 和 \<max\> 区间内的伪随机值。\<idx\> 是将用于保存种子/状态的内部变量的索引，该种子/状态可预先用 `st(idx)` 存入。
 
-  To initialize the seed, you need to store the seed value as a 64-bit unsigned integer in the internal variable with index \<idx\>.
+  要初始化种子，需要把种子值作为 64 位无符号整数存入索引为 \<idx\> 的内部变量。
 
-- **`root(expr, max)`** Find an input value for which the function represented by \<expr\> with argument \<ld(0)\> is 0 in the interval 0..\<max\>.
+- **`root(expr, max)`** 在 0..\<max\> 区间内求一个输入值，使由 \<expr\> 表示、以 \<ld(0)\> 为参数的函数值为 0。
 
-  The expression in \<expr\> must denote a continuous function or the result is undefined.
+  \<expr\> 中的表达式必须表示连续函数，否则结果未定义。
 
-  \<ld(0)\> is used to represent the function input value, which means that the given expression will be evaluated multiple times with various input values that the expression can access through `ld(0)`. When the expression evaluates to 0 then the corresponding input value will be returned.
+  \<ld(0)\> 用于表示函数输入值，即给定的表达式会被以各种输入值多次求值，表达式可通过 `ld(0)` 访问这些输入值。当表达式求值为 0 时，返回对应的输入值。
 
-- **`round(expr)`** Round the value of expression \<expr\> to the nearest integer. For example, "round(1.5)" is "2.0".
+- **`round(expr)`** 把表达式 \<expr\> 的值取整到最近的整数。例如，"round(1.5)" 为 "2.0"。
 
-- **`sgn(x)`** Compute sign of \<x\>.
+- **`sgn(x)`** 计算 \<x\> 的符号。
 
-- **`sin(x)`** Compute sine of \<x\>.
+- **`sin(x)`** 计算 \<x\> 的正弦。
 
-- **`sinh(x)`** Compute hyperbolic sine of \<x\>.
+- **`sinh(x)`** 计算 \<x\> 的双曲正弦。
 
-- **`sqrt(expr)`** Compute the square root of \<expr\>. This is equivalent to "(\<expr\>)^.5".
+- **`sqrt(expr)`** 计算 \<expr\> 的平方根。相当于 "(\<expr\>)^.5"。
 
-- **`squish(x)`** Compute expression `1/(1 + exp(4*x))`.
+- **`squish(x)`** 计算表达式 `1/(1 + exp(4*x))`。
 
-- **`st(idx, expr)`** Store the value of the expression \<expr\> in an internal variable. \<idx\> specifies the index of the variable where to store the value, and it is a value ranging from 0 to 9. The function returns the value stored in the internal variable.
+- **`st(idx, expr)`** 把表达式 \<expr\> 的值存入内部变量。\<idx\> 指定存储位置的变量索引，取值范围 0 到 9。该函数返回存入内部变量的值。
 
-  The stored value can be retrieved with `ld(var)`.
+  存入的值可用 `ld(var)` 取回。
 
-  Note: variables are currently not shared between expressions.
+  注意：变量目前不在多个表达式之间共享。
 
-- **`tan(x)`** Compute tangent of \<x\>.
+- **`tan(x)`** 计算 \<x\> 的正切。
 
-- **`tanh(x)`** Compute hyperbolic tangent of \<x\>.
+- **`tanh(x)`** 计算 \<x\> 的双曲正切。
 
 - **`taylor(expr, x)`**
 
-- **`taylor(expr, x, idx)`** Evaluate a Taylor series at \<x\>, given an expression representing the `ld(idx)`-th derivative of a function at 0.
+- **`taylor(expr, x, idx)`** 给定表示函数在 0 处的 `ld(idx)` 阶导数的表达式，在 \<x\> 处对泰勒级数求值。
 
-  When the series does not converge the result is undefined.
+  级数不收敛时结果未定义。
 
-  \<ld(idx)\> is used to represent the derivative order in \<expr\>, which means that the given expression will be evaluated multiple times with various input values that the expression can access through `ld(idx)`. If \<idx\> is not specified then 0 is assumed.
+  \<ld(idx)\> 在 \<expr\> 中表示导数阶数，即给定的表达式会被以各种输入值多次求值，表达式可通过 `ld(idx)` 访问这些输入值。未指定 \<idx\> 时假定为 0。
 
-  Note, when you have the derivatives at y instead of 0, `taylor(expr, x-y)` can be used.
+  注意，当你拥有的是在 y 处而非 0 处的导数时，可使用 `taylor(expr, x-y)`。
 
-- **`time(0)`** Return the current (wallclock) time in seconds.
+- **`time(0)`** 返回当前（墙上时钟）时间，以秒为单位。
 
-- **`trunc(expr)`** Round the value of expression \<expr\> towards zero to the nearest integer. For example, "trunc(-1.5)" is "-1.0".
+- **`trunc(expr)`** 把表达式 \<expr\> 的值朝零取整到最近的整数。例如，"trunc(-1.5)" 为 "-1.0"。
 
-- **`while(cond, expr)`** Evaluate expression \<expr\> while the expression \<cond\> is non-zero, and returns the value of the last \<expr\> evaluation, or NAN if \<cond\> was always false.
+- **`while(cond, expr)`** 在表达式 \<cond\> 非零期间反复对表达式 \<expr\> 求值，返回最后一次 \<expr\> 求值的值；若 \<cond\> 始终为假，返回 NAN。
 
-The following constants are available:
+可用常量如下：
 
 | Term  | Description                                     |
 |-------|-------------------------------------------------|
-| `PI`  | area of the unit disc, approximately 3.14       |
-| `E`   | exp(1) (Euler's number), approximately 2.718    |
-| `PHI` | golden ratio (1+sqrt(5))/2, approximately 1.618 |
+| `PI`  | 单位圆盘的面积，约 3.14       |
+| `E`   | exp(1)（欧拉数），约 2.718    |
+| `PHI` | 黄金比率 (1+sqrt(5))/2，约 1.618 |
 
-Assuming that an expression is considered "true" if it has a non-zero value, note that:
+假定表达式值非零即为"真"，注意：
 
-`*` works like AND
+`*` 的作用如同 AND
 
-`+` works like OR
+`+` 的作用如同 OR
 
-For example the construct:
+例如以下构造：
 
 ``` text
 if (A AND B) then C
 ```
 
-is equivalent to:
+等价于：
 
 ``` text
 if(A*B, C)
 ```
 
-In your C code, you can extend the list of unary and binary functions, and define recognized constants, so that they are available for your expressions.
+在你的 C 代码中，可以扩展一元和二元函数列表，并定义可识别的常量，使它们可用于你的表达式。
 
-The evaluator also recognizes the International System unit prefixes. If 'i' is appended after the prefix, binary prefixes are used, which are based on powers of 1024 instead of powers of 1000. The 'B' postfix multiplies the value by 8, and can be appended after a unit prefix or used alone. This allows using for example 'KB', 'MiB', 'G' and 'B' as number postfix.
+求值器还能识别国际单位制词头。若在前缀后附加 'i'，则使用二进制词头（基于 1024 的幂而非 1000 的幂）。'B' 后缀把值乘以 8，可附加在单位词头之后或单独使用。因此可以用 'KB'、'MiB'、'G' 和 'B' 等作为数字后缀。
 
-The list of available International System prefixes follows, with indication of the corresponding powers of 10 and of 2.
+可用国际单位制词头列表如下，同时标出对应的 10 的幂和 2 的幂。
 
 | Term | Description    |
 |------|----------------|
@@ -689,6 +685,6 @@ The list of available International System prefixes follows, with indication of 
 | `Z`  | 10^21 / 2^70   |
 | `Y`  | 10^24 / 2^80   |
 
-# See Also
+# 另请参见
 
 ffmpeg(1), ffplay(1), ffprobe(1), libavutil(3)
