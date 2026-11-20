@@ -1,80 +1,76 @@
-!!! warning "翻译占位页"
-    本页为英文原文占位（翻译进行中，进度见[翻译看板](https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md)）。
-    术语与示例以英文原文为准。
+# 描述
 
-# Description
+本文档描述 libavformat 库提供的输入和输出协议。
 
-This document describes the input and output protocols provided by the libavformat library.
+# 协议选项
 
-# Protocol Options
+libavformat 库提供一些通用全局选项，可以在所有协议上设置。此外，每个协议还可以支持所谓的私有选项，即特定于该组件的选项。
 
-The libavformat library provides some generic global options, which can be set on all the protocols. In addition each protocol may support so-called private options, which are specific for that component.
+选项可以通过在 FFmpeg 工具中指定 -\<option\> \<value\> 来设置，或通过在 `AVFormatContext` 选项中显式设置值，或使用 `libavutil/opt.h` API 以编程方式设置。
 
-Options may be set by specifying -\<option\> \<value\> in the FFmpeg tools, or by setting the value explicitly in the `AVFormatContext` options or using the `libavutil/opt.h` API for programmatic use.
+支持的选项列表如下：
 
-The list of supported options follows:
+- **`protocol_whitelist list (input)`** 设置一个以 "," 分隔的允许协议列表。"ALL" 匹配所有协议。前缀为 "-" 的协议被禁用。默认允许所有协议，但被另一个协议使用的协议（嵌套协议）会被限制为每协议子集。
 
-- **`protocol_whitelist list (input)`** Set a ","-separated list of allowed protocols. "ALL" matches all protocols. Protocols prefixed by "-" are disabled. All protocols are allowed by default but protocols used by an another protocol (nested protocols) are restricted to a per protocol subset.
+# 协议
 
-# Protocols
+协议是 FFmpeg 中的可配置元素，用于启用对需要特定协议的资源的访问。
 
-Protocols are configured elements in FFmpeg that enable access to resources that require specific protocols.
+配置 FFmpeg 构建时，所有支持的协议默认启用。可以使用 configure 选项 "–list-protocols" 列出所有可用的协议。
 
-When you configure your FFmpeg build, all the supported protocols are enabled by default. You can list all available ones using the configure option "–list-protocols".
+可以使用 configure 选项 "–disable-protocols" 禁用所有协议，使用选项 "–enable-protocol=\<PROTOCOL\>" 选择性启用某个协议，或者使用选项 "–disable-protocol=\<PROTOCOL\>" 禁用特定协议。
 
-You can disable all the protocols using the configure option "–disable-protocols", and selectively enable a protocol using the option "–enable-protocol=\<PROTOCOL\>", or you can disable a particular protocol using the option "–disable-protocol=\<PROTOCOL\>".
+ff\* 工具的选项 "-protocols" 将显示支持的协议列表。
 
-The option "-protocols" of the ff\* tools will display the list of supported protocols.
+所有协议都接受以下选项：
 
-All protocols accept the following options:
+- **`rw_timeout`** 等待（网络）读写操作完成的最长时间，单位为微秒。
 
-- **`rw_timeout`** Maximum time to wait for (network) read/write operations to complete, in microseconds.
-
-A description of the currently available protocols follows.
+以下是对当前可用协议的描述。
 
 ## amqp
 
-Advanced Message Queueing Protocol (AMQP) version 0-9-1 is a broker based publish-subscribe communication protocol.
+高级消息队列协议 (Advanced Message Queueing Protocol, AMQP) 0-9-1 版是一种基于代理 (broker) 的发布-订阅通信协议。
 
-FFmpeg must be compiled with –enable-librabbitmq to support AMQP. A separate AMQP broker must also be run. An example open-source AMQP broker is RabbitMQ.
+FFmpeg 必须以 –enable-librabbitmq 编译才能支持 AMQP。还必须运行一个单独的 AMQP 代理。RabbitMQ 是一个开源 AMQP 代理的例子。
 
-After starting the broker, an FFmpeg client may stream data to the broker using the command:
+启动代理后，FFmpeg 客户端可以使用以下命令向代理推流：
 
 ``` text
 ffmpeg -re -i input -f mpegts amqp://[[user]:[password]@]hostname[:port][/vhost]
 ```
 
-Where hostname and port (default is 5672) is the address of the broker. The client may also set a user/password for authentication. The default for both fields is "guest". Name of virtual host on broker can be set with vhost. The default value is "/".
+其中 hostname 和 port（默认为 5672）是代理的地址。客户端还可以设置用户/密码进行身份验证。这两个字段的默认值均为 "guest"。可以使用 vhost 设置代理上虚拟主机的名称。默认值为 "/"。
 
-Multiple subscribers may stream from the broker using the command:
+多个订阅者可以使用以下命令从代理拉流：
 
 ``` text
 ffplay amqp://[[user]:[password]@]hostname[:port][/vhost]
 ```
 
-In RabbitMQ all data published to the broker flows through a specific exchange, and each subscribing client has an assigned queue/buffer. When a packet arrives at an exchange, it may be copied to a client's queue depending on the exchange and routing_key fields.
+在 RabbitMQ 中，所有发布到代理的数据都流经一个特定的交换机 (exchange)，每个订阅客户端都有一个分配的队列/缓冲区。当数据包到达交换机时，可能根据 exchange 和 routing_key 字段将其复制到客户端的队列。
 
-The following options are supported:
+支持以下选项：
 
-- **`exchange`** Sets the exchange to use on the broker. RabbitMQ has several predefined exchanges: "amq.direct" is the default exchange, where the publisher and subscriber must have a matching routing_key; "amq.fanout" is the same as a broadcast operation (i.e. the data is forwarded to all queues on the fanout exchange independent of the routing_key); and "amq.topic" is similar to "amq.direct", but allows for more complex pattern matching (refer to the RabbitMQ documentation).
+- **`exchange`** 设置要在代理上使用的交换机。RabbitMQ 有几个预定义的交换机："amq.direct" 是默认交换机，发布者和订阅者必须具有匹配的 routing_key；"amq.fanout" 等同于广播操作（即数据被转发到 fanout 交换机上的所有队列，与 routing_key 无关）；"amq.topic" 与 "amq.direct" 类似，但允许更复杂的模式匹配（参见 RabbitMQ 文档）。
 
-- **`routing_key`** Sets the routing key. The default value is "amqp". The routing key is used on the "amq.direct" and "amq.topic" exchanges to decide whether packets are written to the queue of a subscriber.
+- **`routing_key`** 设置路由键。默认值为 "amqp"。该路由键在 "amq.direct" 和 "amq.topic" 交换机上用于决定是否将数据包写入订阅者的队列。
 
-- **`pkt_size`** Maximum size of each packet sent/received to the broker. Default is 131072. Minimum is 4096 and max is any large value (representable by an int). When receiving packets, this sets an internal buffer size in FFmpeg. It should be equal to or greater than the size of the published packets to the broker. Otherwise the received message may be truncated causing decoding errors.
+- **`pkt_size`** 向代理发送/从代理接收的每个数据包的最大大小。默认值为 131072。最小值为 4096，最大值为任意大的值（int 可表示的值）。接收数据包时，此选项设置 FFmpeg 中的内部缓冲区大小。它应当等于或大于发布到代理的数据包的大小，否则接收到的消息可能被截断从而导致解码错误。
 
-- **`connection_timeout`** The timeout in seconds during the initial connection to the broker. The default value is rw_timeout, or 5 seconds if rw_timeout is not set.
+- **`connection_timeout`** 与代理建立初始连接期间的超时（秒）。默认值为 rw_timeout，若未设置 rw_timeout 则为 5 秒。
 
-- **`delivery_mode mode`** Sets the delivery mode of each message sent to broker. The following values are accepted:
+- **`delivery_mode mode`** 设置发送到代理的每条消息的投递模式。接受以下值：
 
-  - **`persistent`** Delivery mode set to "persistent" (2). This is the default value. Messages may be written to the broker's disk depending on its setup.
+  - **`persistent`** 投递模式设为 "persistent" (2)。这是默认值。根据代理的配置，消息可能会写入代理的磁盘。
 
-  - **`non-persistent`** Delivery mode set to "non-persistent" (1). Messages will stay in broker's memory unless the broker is under memory pressure.
+  - **`non-persistent`** 投递模式设为 "non-persistent" (1)。除非代理内存吃紧，否则消息将保留在代理的内存中。
 
 ## async
 
-Asynchronous data filling wrapper for input stream.
+输入流的异步数据填充包装器。
 
-Fill data in a background thread, to decouple I/O operation from demux thread.
+在后台线程中填充数据，使 I/O 操作与解复用线程解耦。
 
 ``` text
 async:URL
@@ -84,25 +80,25 @@ async:cache:http://host/resource
 
 ## bluray
 
-Read BluRay playlist.
+读取 BluRay 播放列表。
 
-The accepted options are:
+可接受的选项有：
 
 | Term       | Description                                 |
 |------------|---------------------------------------------|
-| `angle`    | BluRay angle                                |
-| `chapter`  | Start chapter (1...N)                       |
-| `playlist` | Playlist to read (BDMV/PLAYLIST/?????.mpls) |
+| `angle`    | BluRay 角度                                  |
+| `chapter`  | 起始章节 (1...N)                             |
+| `playlist` | 要读取的播放列表 (BDMV/PLAYLIST/?????.mpls) |
 
-Examples:
+示例：
 
-Read longest playlist from BluRay mounted to /mnt/bluray:
+从挂载到 /mnt/bluray 的 BluRay 读取最长的播放列表：
 
 ``` text
 bluray:/mnt/bluray
 ```
 
-Read angle 2 of playlist 4 from BluRay mounted to /mnt/bluray, start from chapter 2:
+从挂载到 /mnt/bluray 的 BluRay 读取播放列表 4 的角度 2，从章节 2 开始：
 
 ``` text
 -playlist 4 -angle 2 -chapter 2 bluray:/mnt/bluray
@@ -110,15 +106,15 @@ Read angle 2 of playlist 4 from BluRay mounted to /mnt/bluray, start from chapte
 
 ## cache
 
-Caching wrapper for input stream.
+输入流的缓存包装器。
 
-Cache the input stream to temporary file. It brings seeking capability to live streams.
+将输入流缓存到临时文件。它为直播流带来了定位 (seek) 能力。
 
-The accepted options are:
+可接受的选项有：
 
-- **`read_ahead_limit`** Amount in bytes that may be read ahead when seeking isn't supported. Range is -1 to INT_MAX. -1 for unlimited. Default is 65536.
+- **`read_ahead_limit`** 在不支持定位时可以预读的字节数。范围为 -1 到 INT_MAX。-1 表示无限制。默认值为 65536。
 
-URL Syntax is
+URL 语法为
 
 ``` text
 cache:URL
@@ -126,47 +122,47 @@ cache:URL
 
 ## concat
 
-Physical concatenation protocol.
+物理拼接协议。
 
-Read and seek from many resources in sequence as if they were a unique resource.
+按顺序从多个资源读取和定位，就像它们是单一资源一样。
 
-A URL accepted by this protocol has the syntax:
+此协议接受的 URL 具有如下语法：
 
 ``` text
 concat:URL1|URL2|...|URLN
 ```
 
-where \<URL1\>, \<URL2\>, ..., \<URLN\> are the urls of the resource to be concatenated, each one possibly specifying a distinct protocol.
+其中 \<URL1\>、\<URL2\>、...、\<URLN\> 是要拼接的资源的 url，每个资源都可以指定不同的协议。
 
-For example to read a sequence of files `split1.mpeg`, `split2.mpeg`, `split3.mpeg` with `ffplay` use the command:
+例如要用 `ffplay` 读取文件序列 `split1.mpeg`、`split2.mpeg`、`split3.mpeg`，可使用命令：
 
 ``` text
 ffplay concat:split1.mpeg\|split2.mpeg\|split3.mpeg
 ```
 
-Note that you may need to escape the character "\|" which is special for many shells.
+注意，可能需要转义字符 "\|"，该字符对许多 shell 而言是特殊字符。
 
 ## concatf
 
-Physical concatenation protocol using a line break delimited list of resources.
+使用以换行符分隔的资源列表的物理拼接协议。
 
-Read and seek from many resources in sequence as if they were a unique resource.
+按顺序从多个资源读取和定位，就像它们是单一资源一样。
 
-A URL accepted by this protocol has the syntax:
+此协议接受的 URL 具有如下语法：
 
 ``` text
 concatf:URL
 ```
 
-where \<URL\> is the url containing a line break delimited list of resources to be concatenated, each one possibly specifying a distinct protocol. Special characters must be escaped with backslash or single quotes. See section "the "Quoting and escaping" section in the ffmpeg-utils(1) manual" in `ffmpeg-utils`.
+其中 \<URL\> 是包含以换行符分隔的待拼接资源列表的 url，每个资源都可以指定不同的协议。特殊字符必须用反斜杠或单引号转义。参见 `ffmpeg-utils` 手册中的 "Quoting and escaping"（引用与转义）章节。
 
-For example to read a sequence of files `split1.mpeg`, `split2.mpeg`, `split3.mpeg` listed in separate lines within a file `split.txt` with `ffplay` use the command:
+例如要读取在文件 `split.txt` 中以单独行列出的文件序列 `split1.mpeg`、`split2.mpeg`、`split3.mpeg`，用 `ffplay` 可使用命令：
 
 ``` text
 ffplay concatf:split.txt
 ```
 
-Where `split.txt` contains the lines:
+其中 `split.txt` 包含以下行：
 
 ``` text
 split1.mpeg
@@ -176,15 +172,15 @@ split3.mpeg
 
 ## crypto
 
-AES-encrypted stream reading protocol.
+AES 加密流读取协议。
 
-The accepted options are:
+可接受的选项有：
 
-- **`key`** Set the AES decryption key binary block from given hexadecimal representation.
+- **`key`** 根据给定的十六进制表示设置 AES 解密密钥二进制块。
 
-- **`iv`** Set the AES decryption initialization vector binary block from given hexadecimal representation.
+- **`iv`** 根据给定的十六进制表示设置 AES 解密初始化向量二进制块。
 
-Accepted URL formats:
+可接受的 URL 格式：
 
 ``` text
 crypto:URL
@@ -193,9 +189,9 @@ crypto+URL
 
 ## data
 
-Data in-line in the URI. See <http://en.wikipedia.org/wiki/Data_URI_scheme>.
+URI 内嵌数据。参见 <http://en.wikipedia.org/wiki/Data_URI_scheme>。
 
-For example, to convert a GIF file given inline with `ffmpeg`:
+例如，要用 `ffmpeg` 转换以内嵌形式给出的 GIF 文件：
 
 ``` text
 ffmpeg -i "data:image/gif;base64,R0lGODdhCAAIAMIEAAAAAAAA//8AAP//AP///////////////ywAAAAACAAIAAADF0gEDLojDgdGiJdJqUX02iB4E8Q9jUMkADs=" smiley.png
@@ -203,183 +199,183 @@ ffmpeg -i "data:image/gif;base64,R0lGODdhCAAIAMIEAAAAAAAA//8AAP//AP/////////////
 
 ## fd
 
-File descriptor access protocol.
+文件描述符访问协议。
 
-The accepted syntax is:
+可接受的语法为：
 
 ``` text
 fd: -fd file_descriptor
 ```
 
-If `fd` is not specified, by default the stdout file descriptor will be used for writing, stdin for reading. Unlike the pipe protocol, fd protocol has seek support if it corresponding to a regular file. fd protocol doesn't support pass file descriptor via URL for security.
+如果未指定 `fd`，默认情况下写入时使用 stdout 文件描述符，读取时使用 stdin。与 pipe 协议不同，若 fd 协议对应常规文件则支持定位。出于安全考虑，fd 协议不支持通过 URL 传递文件描述符。
 
-This protocol accepts the following options:
+此协议接受以下选项：
 
-- **`blocksize`** Set I/O operation maximum block size, in bytes. Default value is `INT_MAX`, which results in not limiting the requested block size. Setting this value reasonably low improves user termination request reaction time, which is valuable if data transmission is slow.
+- **`blocksize`** 设置 I/O 操作的最大块大小（字节）。默认值为 `INT_MAX`，即不限制请求的块大小。将该值设置得足够低可以改善用户终止请求的响应时间，这在数据传输缓慢时很有价值。
 
-- **`fd`** Set file descriptor.
+- **`fd`** 设置文件描述符。
 
 ## file
 
-File access protocol.
+文件访问协议。
 
-Read from or write to a file.
+从文件读取或写入文件。
 
-A file URL can have the form:
+文件 URL 可以具有如下形式：
 
 ``` text
 file:filename
 ```
 
-where \<filename\> is the path of the file to read.
+其中 \<filename\> 是要读取的文件的路径。
 
-An URL that does not have a protocol prefix will be assumed to be a file URL. Depending on the build, an URL that looks like a Windows path with the drive letter at the beginning will also be assumed to be a file URL (usually not the case in builds for unix-like systems).
+没有协议前缀的 URL 将被视为文件 URL。根据构建配置，开头带有盘符、形如 Windows 路径的 URL 也会被视为文件 URL（在类 unix 系统的构建中通常不是这种情况）。
 
-For example to read from a file `input.mpeg` with `ffmpeg` use the command:
+例如要用 `ffmpeg` 从文件 `input.mpeg` 读取，可使用命令：
 
 ``` text
 ffmpeg -i file:input.mpeg output.mpeg
 ```
 
-This protocol accepts the following options:
+此协议接受以下选项：
 
-- **`truncate`** Truncate existing files on write, if set to 1. A value of 0 prevents truncating. Default value is 1.
+- **`truncate`** 若设为 1，写入时截断已有文件。值为 0 时禁止截断。默认值为 1。
 
-- **`blocksize`** Set I/O operation maximum block size, in bytes. Default value is `INT_MAX`, which results in not limiting the requested block size. Setting this value reasonably low improves user termination request reaction time, which is valuable for files on slow medium.
+- **`blocksize`** 设置 I/O 操作的最大块大小（字节）。默认值为 `INT_MAX`，即不限制请求的块大小。将该值设置得足够低可以改善用户终止请求的响应时间，这对慢速介质上的文件很有价值。
 
-- **`follow`** If set to 1, the protocol will retry reading at the end of the file, allowing reading files that still are being written. In order for this to terminate, you either need to use the rw_timeout option, or use the interrupt callback (for API users). Setting this option also ignores the file size reported by the file system.
+- **`follow`** 若设为 1，协议将在文件末尾重试读取，从而允许读取仍在写入中的文件。为使其能够终止，需使用 rw_timeout 选项，或使用中断回调（针对 API 用户）。设置此选项还会忽略文件系统报告的文件大小。
 
-- **`seekable`** Controls if seekability is advertised on the file. 0 means non-seekable, -1 means auto (seekable for normal files, non-seekable for named pipes).
+- **`seekable`** 控制是否在文件上声明可定位性。0 表示不可定位，-1 表示自动（常规文件可定位，命名管道不可定位）。
 
-  Many demuxers handle seekable and non-seekable resources differently, overriding this might speed up opening certain files at the cost of losing some features (e.g. accurate seeking).
+  许多解复用器对可定位与不可定位资源的处理方式不同，覆盖此设置可能会加快某些文件的打开速度，但会损失一些特性（例如精确定位）。
 
-- **`pkt_size`** Set the maximum packet size used for file I/O. A smaller value may reduce memory usage. A higher value may increase throughput especially with networked filesystems.
+- **`pkt_size`** 设置用于文件 I/O 的最大数据包大小。较小的值可以减少内存占用。较大的值可以提高吞吐量，对网络文件系统尤其如此。
 
-  For reading, if explicitly set, it overrides the default internal buffer size (32 KB) and limits the maximum amount of data read per operation.
+  对于读取，如果显式设置，它将覆盖默认的内部缓冲区大小 (32 KB)，并限制每次操作读取的最大数据量。
 
-  For writing, this sets the size of each write operation. The default is 256 KB for regular files, 32 KB otherwise.
+  对于写入，此选项设置每次写入操作的大小。常规文件默认为 256 KB，其他情况为 32 KB。
 
 ## ftp
 
-FTP (File Transfer Protocol).
+FTP（文件传输协议）。
 
-Read from or write to remote resources using FTP protocol.
+使用 FTP 协议从远程资源读取或向其写入。
 
-Following syntax is required.
+所需语法如下。
 
 ``` text
 ftp://[user[:password]@]server[:port]/path/to/remote/resource.mpeg
 ```
 
-This protocol accepts the following options.
+此协议接受以下选项。
 
-- **`timeout`** Set timeout in microseconds of socket I/O operations used by the underlying low level operation. By default it is set to -1, which means that the timeout is not specified.
+- **`timeout`** 设置底层低层操作所用套接字 I/O 操作的超时（微秒）。默认设置为 -1，表示未指定超时。
 
-- **`ftp-user`** Set a user to be used for authenticating to the FTP server. This is overridden by the user in the FTP URL.
+- **`ftp-user`** 设置用于向 FTP 服务器进行身份验证的用户。FTP URL 中的用户会覆盖此设置。
 
-- **`ftp-password`** Set a password to be used for authenticating to the FTP server. This is overridden by the password in the FTP URL, or by `ftp-anonymous-password` if no user is set.
+- **`ftp-password`** 设置用于向 FTP 服务器进行身份验证的密码。FTP URL 中的密码会覆盖此设置；若未设置用户，则由 `ftp-anonymous-password` 覆盖。
 
-- **`ftp-anonymous-password`** Password used when login as anonymous user. Typically an e-mail address should be used.
+- **`ftp-anonymous-password`** 以匿名用户登录时使用的密码。通常应使用电子邮件地址。
 
-- **`ftp-write-seekable`** Control seekability of connection during encoding. If set to 1 the resource is supposed to be seekable, if set to 0 it is assumed not to be seekable. Default value is 0.
+- **`ftp-write-seekable`** 控制编码期间连接的可定位性。若设为 1，则假定资源可定位；若设为 0，则假定不可定位。默认值为 0。
 
-NOTE: Protocol can be used as output, but it is recommended to not do it, unless special care is taken (tests, customized server configuration etc.). Different FTP servers behave in different way during seek operation. ff\* tools may produce incomplete content due to server limitations.
+注意：该协议可以用作输出，但不建议这样做，除非采取特殊的预防措施（测试、自定义服务器配置等）。不同的 FTP 服务器在定位操作期间表现不同。受服务器限制，ff\* 工具可能产生不完整的内容。
 
 ## gopher
 
-Gopher protocol.
+Gopher 协议。
 
 ## gophers
 
-Gophers protocol.
+Gophers 协议。
 
-The Gopher protocol with TLS encapsulation.
+带 TLS 封装的 Gopher 协议。
 
 ## http
 
-HTTP (Hyper Text Transfer Protocol).
+HTTP（超文本传输协议）。
 
-This protocol accepts the following options:
+此协议接受以下选项：
 
-- **`seekable`** Control seekability of connection. If set to 1 the resource is supposed to be seekable, if set to 0 it is assumed not to be seekable, if set to -1 it will try to autodetect if it is seekable. Default value is -1.
+- **`seekable`** 控制连接的可定位性。若设为 1，则假定资源可定位；若设为 0，则假定不可定位；若设为 -1，将尝试自动检测其是否可定位。默认值为 -1。
 
-- **`chunked_post`** If set to 1 use chunked Transfer-Encoding for posts, default is 1.
+- **`chunked_post`** 若设为 1，对 POST 使用分块传输编码 (chunked Transfer-Encoding)，默认值为 1。
 
-- **`http_proxy`** set HTTP proxy to tunnel through e.g. http://example.com:1234
+- **`http_proxy`** 设置要穿隧道使用的 HTTP 代理，例如 http://example.com:1234
 
-- **`headers`** Set custom HTTP headers, can override built in default headers. The value must be a string encoding the headers.
+- **`headers`** 设置自定义 HTTP 头，可以覆盖内建的默认头。该值必须是编码这些头的字符串。
 
-- **`content_type`** Set a specific content type for the POST messages or for listen mode.
+- **`content_type`** 为 POST 消息或监听模式设置特定的内容类型。
 
-- **`user_agent`** Override the User-Agent header. If not specified the protocol will use a string describing the libavformat build. ("Lavf/\<version\>")
+- **`user_agent`** 覆盖 User-Agent 头。若未指定，协议将使用一个描述 libavformat 构建的字符串（"Lavf/\<version\>"）。
 
-- **`referer`** Set the Referer header. Include 'Referer: URL' header in HTTP request.
+- **`referer`** 设置 Referer 头。在 HTTP 请求中包含 'Referer: URL' 头。
 
-- **`multiple_requests`** Use persistent connections if set to 1, default is 0.
+- **`multiple_requests`** 若设为 1 则使用持久连接，默认值为 0。
 
-- **`request_size`** Limit the size of requests made. This is useful for some pathological servers that throttle unbounded range requests, as well as when expecting to seek frequently. Disabled (set to 0) by default.
+- **`request_size`** 限制所发起请求的大小。这对某些对无边界范围请求限流的病态服务器很有用，也适用于预期频繁定位的情况。默认禁用（设为 0）。
 
-  Note that if enabling this option, it's strongly recommended to also enable the `multiple_requests` option, as well as setting `short_seek_size` to the same value or higher. Doing so allows FFmpeg to reuse a single HTTP connection wherever possible.
+  注意，如果启用此选项，强烈建议同时启用 `multiple_requests` 选项，并将 `short_seek_size` 设置为相同或更大的值。这样做可以让 FFmpeg 尽可能复用单个 HTTP 连接。
 
-- **`initial_request_size`** Limit the size of initial requests. Similar to `request_size`, but only used during initial format parsing. Useful for formats like MXF or MOV that require frequent seeks during header parsing. Lasts until the demuxer makes a read request larger than this size (without a seek in between), after which the implementation will continue using requests as usual. Disabled (set to 0) by default.
+- **`initial_request_size`** 限制初始请求的大小。与 `request_size` 类似，但仅用于初始格式解析期间。对 MXF 或 MOV 这类在头部解析期间需要频繁定位的格式很有用。在解复用器发出大于此大小的读取请求（中间没有定位）之后，实现将继续照常使用请求。默认禁用（设为 0）。
 
-  Note that if enabling this option, it's strongly recommended to also enable the `multiple_requests` option, as well as setting `short_seek_size` to the same value or higher.
+  注意，如果启用此选项，强烈建议同时启用 `multiple_requests` 选项，并将 `short_seek_size` 设置为相同或更大的值。
 
-- **`post_data`** Set custom HTTP post data.
+- **`post_data`** 设置自定义 HTTP POST 数据。
 
-- **`mime_type`** Export the MIME type.
+- **`mime_type`** 导出 MIME 类型。
 
-- **`http_version`** Exports the HTTP response version number. Usually "1.0" or "1.1".
+- **`http_version`** 导出 HTTP 响应版本号。通常为 "1.0" 或 "1.1"。
 
-- **`cookies`** Set the cookies to be sent in future requests. The format of each cookie is the same as the value of a Set-Cookie HTTP response field. Multiple cookies can be delimited by a newline character.
+- **`cookies`** 设置要在后续请求中发送的 cookie。每个 cookie 的格式与 Set-Cookie HTTP 响应字段的值相同。多个 cookie 可以用换行符分隔。
 
-- **`icy`** If set to 1 request ICY (SHOUTcast) metadata from the server. If the server supports this, the metadata has to be retrieved by the application by reading the `icy_metadata_headers` and `icy_metadata_packet` options. The default is 1.
+- **`icy`** 若设为 1，向服务器请求 ICY (SHOUTcast) 元数据。如果服务器支持，应用程序必须通过读取 `icy_metadata_headers` 和 `icy_metadata_packet` 选项来获取元数据。默认值为 1。
 
-- **`icy_metadata_headers`** If the server supports ICY metadata, this contains the ICY-specific HTTP reply headers, separated by newline characters.
+- **`icy_metadata_headers`** 如果服务器支持 ICY 元数据，此选项包含 ICY 特有的 HTTP 应答头，以换行符分隔。
 
-- **`icy_metadata_packet`** If the server supports ICY metadata, and `icy` was set to 1, this contains the last non-empty metadata packet sent by the server. It should be polled in regular intervals by applications interested in mid-stream metadata updates.
+- **`icy_metadata_packet`** 如果服务器支持 ICY 元数据且 `icy` 被设为 1，此选项包含服务器发送的最后一个非空元数据包。对流中元数据更新感兴趣的应用程序应以固定间隔轮询它。
 
-- **`metadata`** Set an exported dictionary containing Icecast metadata from the bitstream, if present. Only useful with the C API.
+- **`metadata`** 设置一个导出的字典，包含来自比特流的 Icecast 元数据（如果存在）。仅对 C API 有用。
 
-- **`auth_type`** Set HTTP authentication type. No option for Digest, since this method requires getting nonce parameters from the server first and can't be used straight away like Basic.
+- **`auth_type`** 设置 HTTP 身份验证类型。没有针对 Digest 的选项，因为该方法需要先从服务器获取 nonce 参数，无法像 Basic 那样直接使用。
 
-  - **`none`** Choose the HTTP authentication type automatically. This is the default.
+  - **`none`** 自动选择 HTTP 身份验证类型。这是默认值。
 
-  - **`basic`** Choose the HTTP basic authentication.
+  - **`basic`** 选择 HTTP basic 身份验证。
 
-    Basic authentication sends a Base64-encoded string that contains a user name and password for the client. Base64 is not a form of encryption and should be considered the same as sending the user name and password in clear text (Base64 is a reversible encoding). If a resource needs to be protected, strongly consider using an authentication scheme other than basic authentication. HTTPS/TLS should be used with basic authentication. Without these additional security enhancements, basic authentication should not be used to protect sensitive or valuable information.
+    Basic 身份验证发送一个包含用户名和密码的 Base64 编码字符串。Base64 不是一种加密形式，应视为与明文发送用户名和密码相同（Base64 是一种可逆编码）。如果资源需要保护，强烈建议考虑使用 basic 身份验证以外的身份验证方案。HTTPS/TLS 应与 basic 身份验证配合使用。若没有这些额外的安全增强措施，不应使用 basic 身份验证来保护敏感或有价值的信息。
 
-- **`send_expect_100`** Send an Expect: 100-continue header for POST. If set to 1 it will send, if set to 0 it won't, if set to -1 it will try to send if it is applicable. Default value is -1.
+- **`send_expect_100`** 为 POST 发送 Expect: 100-continue 头。若设为 1 则发送，若设为 0 则不发送，若设为 -1 则在适用时尝试发送。默认值为 -1。
 
-- **`location`** An exported dictionary containing the content location. Only useful with the C API.
+- **`location`** 包含内容位置的导出字典。仅对 C API 有用。
 
-- **`offset`** Set initial byte offset.
+- **`offset`** 设置初始字节偏移量。
 
-- **`end_offset`** Try to limit the request to bytes preceding this offset.
+- **`end_offset`** 尝试将请求限制在此偏移量之前的字节范围内。
 
-- **`method`** When used as a client option it sets the HTTP method for the request.
+- **`method`** 用作客户端选项时，它设置请求的 HTTP 方法。
 
-  When used as a server option it sets the HTTP method that is going to be expected from the client(s). If the expected and the received HTTP method do not match the client will be given a Bad Request response. When unset the HTTP method is not checked for now. This will be replaced by autodetection in the future.
+  用作服务器选项时，它设置预期来自客户端的 HTTP 方法。如果预期的与收到的 HTTP 方法不匹配，客户端将收到 Bad Request 响应。目前未设置时不检查 HTTP 方法。将来会被自动检测取代。
 
-- **`reconnect`** Reconnect automatically when disconnected before EOF is hit.
+- **`reconnect`** 在到达 EOF 之前断开连接时自动重连。
 
-- **`reconnect_at_eof`** If set then eof is treated like an error and causes reconnection, this is useful for live / endless streams.
+- **`reconnect_at_eof`** 如果设置了此选项，eof 将被视为错误并触发重连，这对直播/无尽流很有用。
 
-- **`reconnect_on_network_error`** Reconnect automatically in case of TCP/TLS errors during connect.
+- **`reconnect_on_network_error`** 在连接期间发生 TCP/TLS 错误时自动重连。
 
-- **`reconnect_on_http_error`** A comma separated list of HTTP status codes to reconnect on. The list can include specific status codes (e.g. '503') or the strings '4xx' / '5xx'.
+- **`reconnect_on_http_error`** 触发重连的 HTTP 状态码列表（以逗号分隔）。列表可以包含具体的状态码（例如 '503'）或字符串 '4xx' / '5xx'。
 
-- **`reconnect_streamed`** If set then even streamed/non seekable streams will be reconnected on errors.
+- **`reconnect_streamed`** 如果设置了此选项，即使是流式/不可定位的流也会在出错时重连。
 
-- **`reconnect_delay_max`** Set the maximum delay in seconds after which to give up reconnecting.
+- **`reconnect_delay_max`** 设置放弃重连前的最大延迟（秒）。
 
-- **`reconnect_max_retries`** Set the maximum number of times to retry a connection. Default unset.
+- **`reconnect_max_retries`** 设置重试连接的最大次数。默认未设置。
 
-- **`reconnect_delay_total_max`** Set the maximum total delay in seconds after which to give up reconnecting.
+- **`reconnect_delay_total_max`** 设置放弃重连前的最大总延迟（秒）。
 
-- **`respect_retry_after`** If enabled, and a Retry-After header is encountered, its requested reconnection delay will be honored, rather than using exponential backoff. Useful for 429 and 503 errors. Default enabled.
+- **`respect_retry_after`** 如果启用此选项，并且在遇到 Retry-After 头时，将遵循其请求的重连延迟，而不是使用指数退避。对 429 和 503 错误有用。默认启用。
 
-- **`listen`** If set to 1 enables experimental HTTP server. This can be used to send data when used as an output option, or read data from a client with HTTP POST when used as an input option. If set to 2 enables experimental multi-client HTTP server. This is not yet implemented in ffmpeg.c and thus must not be used as a command line option.
+- **`listen`** 若设为 1，启用实验性 HTTP 服务器。用作输出选项时可用于发送数据；用作输入选项时，可通过 HTTP POST 从客户端读取数据。若设为 2，启用实验性多客户端 HTTP 服务器。此功能尚未在 ffmpeg.c 中实现，因此不得用作命令行选项。
 
   ``` text
   # Server side (sending):
@@ -401,17 +397,17 @@ This protocol accepts the following options:
   wget --post-file=somefile.ogg http://server:port
   ```
 
-- **`resource`** The resource requested by a client, when the experimental HTTP server is in use.
+- **`resource`** 使用实验性 HTTP 服务器时，客户端请求的资源。
 
-- **`reply_code`** The HTTP code returned to the client, when the experimental HTTP server is in use.
+- **`reply_code`** 使用实验性 HTTP 服务器时，返回给客户端的 HTTP 代码。
 
-- **`short_seek_size`** Set the threshold, in bytes, for when a readahead should be preferred over a seek and new HTTP request. This is useful, for example, to make sure the same connection is used for reading large video packets with small audio packets in between.
+- **`short_seek_size`** 设置预读优先于定位并发起新 HTTP 请求的字节阈值。例如，这有助于确保在读取大视频数据包、其间夹杂小音频数据包时使用同一连接。
 
-### HTTP Cookies
+### HTTP Cookie
 
-Some HTTP requests will be denied unless cookie values are passed in with the request. The `cookies` option allows these cookies to be specified. At the very least, each cookie must specify a value along with a path and domain. HTTP requests that match both the domain and path will automatically include the cookie value in the HTTP Cookie header field. Multiple cookies can be delimited by a newline.
+某些 HTTP 请求如果不随请求传入 cookie 值，将会被拒绝。`cookies` 选项允许指定这些 cookie。每个 cookie 至少必须指定一个值以及路径和域。同时匹配域和路径的 HTTP 请求将自动在 HTTP Cookie 头字段中包含该 cookie 值。多个 cookie 可以用换行符分隔。
 
-The required syntax to play a stream specifying a cookie is:
+播放流时指定 cookie 所需的语法为：
 
 ``` text
 ffplay -cookies "nlqptid=nltid=tsn; path=/; domain=somedomain.com;" http://somedomain.com/somestream.m3u8
@@ -419,29 +415,29 @@ ffplay -cookies "nlqptid=nltid=tsn; path=/; domain=somedomain.com;" http://somed
 
 ## Icecast
 
-Icecast protocol (stream to Icecast servers)
+Icecast 协议（向 Icecast 服务器推流）
 
-This protocol accepts the following options:
+此协议接受以下选项：
 
-- **`ice_genre`** Set the stream genre.
+- **`ice_genre`** 设置流的流派 (genre)。
 
-- **`ice_name`** Set the stream name.
+- **`ice_name`** 设置流的名称。
 
-- **`ice_description`** Set the stream description.
+- **`ice_description`** 设置流的描述。
 
-- **`ice_url`** Set the stream website URL.
+- **`ice_url`** 设置流的网站 URL。
 
-- **`ice_public`** Set if the stream should be public. The default is 0 (not public).
+- **`ice_public`** 设置流是否应为公开的。默认值为 0（不公开）。
 
-- **`user_agent`** Override the User-Agent header. If not specified a string of the form "Lavf/\<version\>" will be used.
+- **`user_agent`** 覆盖 User-Agent 头。若未指定，将使用形如 "Lavf/\<version\>" 的字符串。
 
-- **`password`** Set the Icecast mountpoint password.
+- **`password`** 设置 Icecast 挂载点 (mountpoint) 密码。
 
-- **`content_type`** Set the stream content type. This must be set if it is different from audio/mpeg.
+- **`content_type`** 设置流的内容类型。如果与 audio/mpeg 不同，则必须设置此项。
 
-- **`legacy_icecast`** This enables support for Icecast versions \< 2.4.0, that do not support the HTTP PUT method but the SOURCE method.
+- **`legacy_icecast`** 此选项启用对 Icecast 版本 \< 2.4.0 的支持，这些版本不支持 HTTP PUT 方法，而使用 SOURCE 方法。
 
-- **`tls`** Establish a TLS (HTTPS) connection to Icecast.
+- **`tls`** 建立到 Icecast 的 TLS (HTTPS) 连接。
 
 ``` text
 icecast://[username[:password]@]server:port/mountpoint
@@ -449,19 +445,19 @@ icecast://[username[:password]@]server:port/mountpoint
 
 ## ipfs
 
-InterPlanetary File System (IPFS) protocol support. One can access files stored on the IPFS network through so-called gateways. These are http(s) endpoints. This protocol wraps the IPFS native protocols (ipfs:// and ipns://) to be sent to such a gateway. Users can (and should) host their own node which means this protocol will use one's local gateway to access files on the IPFS network.
+行星际文件系统 (InterPlanetary File System, IPFS) 协议支持。可以通过所谓的网关 (gateway) 访问存储在 IPFS 网络上的文件。这些是 http(s) 端点。此协议包装 IPFS 原生协议（ipfs:// 和 ipns://）以发送到此类网关。用户可以（并且应该）托管自己的节点，这意味着此协议将使用本地网关访问 IPFS 网络上的文件。
 
-This protocol accepts the following options:
+此协议接受以下选项：
 
-- **`gateway`** Defines the gateway to use. When not set, the protocol will first try locating the local gateway by looking at `$IPFS_GATEWAY`, `$IPFS_PATH` and `$HOME/.ipfs/`, in that order.
+- **`gateway`** 定义要使用的网关。未设置时，协议将首先按顺序查看 `$IPFS_GATEWAY`、`$IPFS_PATH` 和 `$HOME/.ipfs/` 来尝试定位本地网关。
 
-One can use this protocol in 2 ways. Using IPFS:
+此协议有两种使用方式。使用 IPFS：
 
 ``` text
 ffplay ipfs://<hash>
 ```
 
-Or the IPNS protocol (IPNS is mutable IPFS):
+或使用 IPNS 协议（IPNS 是可变的 IPFS）：
 
 ``` text
 ffplay ipns://<hash>
@@ -469,13 +465,13 @@ ffplay ipns://<hash>
 
 ## mmst
 
-MMS (Microsoft Media Server) protocol over TCP.
+TCP 上的 MMS (Microsoft Media Server) 协议。
 
 ## mmsh
 
-MMS (Microsoft Media Server) protocol over HTTP.
+HTTP 上的 MMS (Microsoft Media Server) 协议。
 
-The required syntax is:
+必需的语法为：
 
 ``` text
 mmsh://server[:port][/app][/playpath]
@@ -483,11 +479,11 @@ mmsh://server[:port][/app][/playpath]
 
 ## md5
 
-MD5 output protocol.
+MD5 输出协议。
 
-Computes the MD5 hash of the data to be written, and on close writes this to the designated output or stdout if none is specified. It can be used to test muxers without writing an actual file.
+计算要写入数据的 MD5 哈希，并在关闭时将其写入指定的输出；若未指定输出，则写入 stdout。它可用于在不写入实际文件的情况下测试复用器。
 
-Some examples follow.
+下面给出一些示例。
 
 ``` text
 # Write the MD5 hash of the encoded AVI file to the file output.avi.md5.
@@ -497,23 +493,23 @@ ffmpeg -i input.flv -f avi -y md5:output.avi.md5
 ffmpeg -i input.flv -f avi -y md5:
 ```
 
-Note that some formats (typically MOV) require the output protocol to be seekable, so they will fail with the MD5 output protocol.
+注意，某些格式（典型如 MOV）要求输出协议可定位，因此它们在 MD5 输出协议上会失败。
 
 ## pipe
 
-UNIX pipe access protocol.
+UNIX 管道访问协议。
 
-Read and write from UNIX pipes.
+从 UNIX 管道读取和写入。
 
-The accepted syntax is:
+可接受的语法为：
 
 ``` text
 pipe:[number]
 ```
 
-If `fd` isn't specified, \<number\> is the number corresponding to the file descriptor of the pipe (e.g. 0 for stdin, 1 for stdout, 2 for stderr). If \<number\> is not specified, by default the stdout file descriptor will be used for writing, stdin for reading.
+如果未指定 `fd`，\<number\> 是与管道的文件描述符对应的编号（例如 stdin 为 0，stdout 为 1，stderr 为 2）。如果未指定 \<number\>，默认情况下写入时使用 stdout 文件描述符，读取时使用 stdin。
 
-For example to read from stdin with `ffmpeg`:
+例如要用 `ffmpeg` 从 stdin 读取：
 
 ``` text
 cat test.wav | ffmpeg -i pipe:0
@@ -521,7 +517,7 @@ cat test.wav | ffmpeg -i pipe:0
 cat test.wav | ffmpeg -i pipe:
 ```
 
-For writing to stdout with `ffmpeg`:
+例如要用 `ffmpeg` 写入 stdout：
 
 ``` text
 ffmpeg -i test.wav -f avi pipe:1 | cat > test.avi
@@ -529,38 +525,38 @@ ffmpeg -i test.wav -f avi pipe:1 | cat > test.avi
 ffmpeg -i test.wav -f avi pipe: | cat > test.avi
 ```
 
-This protocol accepts the following options:
+此协议接受以下选项：
 
-- **`blocksize`** Set I/O operation maximum block size, in bytes. Default value is `INT_MAX`, which results in not limiting the requested block size. Setting this value reasonably low improves user termination request reaction time, which is valuable if data transmission is slow.
+- **`blocksize`** 设置 I/O 操作的最大块大小（字节）。默认值为 `INT_MAX`，即不限制请求的块大小。将该值设置得足够低可以改善用户终止请求的响应时间，这在数据传输缓慢时很有价值。
 
-- **`fd`** Set file descriptor.
+- **`fd`** 设置文件描述符。
 
-Note that some formats (typically MOV), require the output protocol to be seekable, so they will fail with the pipe output protocol.
+注意，某些格式（典型如 MOV）要求输出协议可定位，因此它们在 pipe 输出协议上会失败。
 
 ## prompeg
 
-Pro-MPEG Code of Practice \#3 Release 2 FEC protocol.
+Pro-MPEG 实践准则 (Code of Practice) \#3 第 2 版 FEC 协议。
 
-The Pro-MPEG CoP#3 FEC is a 2D parity-check forward error correction mechanism for MPEG-2 Transport Streams sent over RTP.
+Pro-MPEG CoP#3 FEC 是一种针对经 RTP 发送的 MPEG-2 传输流的二维奇偶校验前向纠错机制。
 
-This protocol must be used in conjunction with the `rtp_mpegts` muxer and the `rtp` protocol.
+此协议必须与 `rtp_mpegts` 复用器和 `rtp` 协议配合使用。
 
-The required syntax is:
+必需的语法为：
 
 ``` text
 -f rtp_mpegts -fec prompeg=option=val... rtp://hostname:port
 ```
 
-The destination UDP ports are `port + 2` for the column FEC stream and `port + 4` for the row FEC stream.
+列 FEC 流的目的 UDP 端口为 `port + 2`，行 FEC 流为 `port + 4`。
 
-This protocol accepts the following options:
+此协议接受以下选项：
 
 | Term  | Description                               |
 |-------|-------------------------------------------|
-| `l=n` | The number of columns (4-20, LxD \<= 100) |
-| `d=n` | The number of rows (4-20, LxD \<= 100)    |
+| `l=n` | 列数 (4-20, LxD \<= 100) |
+| `d=n` | 行数 (4-20, LxD \<= 100)    |
 
-Example usage:
+用法示例：
 
 ``` text
 -f rtp_mpegts -fec prompeg=l=8:d=4 rtp://hostname:port
@@ -568,109 +564,109 @@ Example usage:
 
 ## rist
 
-Reliable Internet Streaming Transport protocol
+可靠互联网流传输协议 (Reliable Internet Streaming Transport)
 
-The accepted options are:
+可接受的选项有：
 
-- **`rist_profile`** Supported values:
+- **`rist_profile`** 支持的值：
 
   - **`simple`**
 
-  - **`main`** This one is default.
+  - **`main`** 此值为默认值。
 
   - **`advanced`**
 
-- **`buffer_size`** Set internal RIST buffer size in milliseconds for retransmission of data. Default value is 0 which means the librist default (1 sec). Maximum value is 30 seconds.
+- **`buffer_size`** 设置用于数据重传的内部 RIST 缓冲区大小（毫秒）。默认值为 0，表示使用 librist 默认值（1 秒）。最大值为 30 秒。
 
-- **`fifo_size`** Size of the librist receiver output fifo in number of packets. This must be a power of 2. Defaults to 8192 (vs the librist default of 1024).
+- **`fifo_size`** librist 接收器输出 fifo 的大小（以数据包数计）。必须是 2 的幂。默认值为 8192（librist 默认值为 1024）。
 
-- **`overrun_nonfatal=1|0`** Survive in case of librist fifo buffer overrun. Default value is 0.
+- **`overrun_nonfatal=1|0`** 在 librist fifo 缓冲区溢出时继续存活。默认值为 0。
 
-- **`pkt_size`** Set maximum packet size for sending data. 1316 by default.
+- **`pkt_size`** 设置发送数据的最大数据包大小。默认为 1316。
 
-- **`log_level`** Set loglevel for RIST logging messages. You only need to set this if you explicitly want to enable debug level messages or packet loss simulation, otherwise the regular loglevel is respected.
+- **`log_level`** 设置 RIST 日志消息的日志级别。只有当您明确希望启用调试级别消息或丢包模拟时才需要设置此项，否则将遵循常规日志级别。
 
-- **`secret`** Set override of encryption secret, by default is unset.
+- **`secret`** 设置加密密钥的覆盖值，默认未设置。
 
-- **`encryption`** Set encryption type, by default is disabled. Acceptable values are 128 and 256.
+- **`encryption`** 设置加密类型，默认禁用。可接受的值为 128 和 256。
 
 ## rtmp
 
-Real-Time Messaging Protocol.
+实时消息协议 (Real-Time Messaging Protocol)。
 
-The Real-Time Messaging Protocol (RTMP) is used for streaming multimedia content across a TCP/IP network.
+实时消息协议 (RTMP) 用于跨 TCP/IP 网络传输流媒体内容。
 
-The required syntax is:
+必需的语法为：
 
 ``` text
 rtmp://[username:password@]server[:port][/app][/instance][/playpath]
 ```
 
-The accepted parameters are:
+可接受的参数有：
 
-- **`username`** An optional username (mostly for publishing).
+- **`username`** 可选的用户名（主要用于发布）。
 
-- **`password`** An optional password (mostly for publishing).
+- **`password`** 可选的密码（主要用于发布）。
 
-- **`server`** The address of the RTMP server.
+- **`server`** RTMP 服务器的地址。
 
-- **`port`** The number of the TCP port to use (by default is 1935).
+- **`port`** 要使用的 TCP 端口号（默认为 1935）。
 
-- **`app`** It is the name of the application to access. It usually corresponds to the path where the application is installed on the RTMP server (e.g. `/ondemand/`, `/flash/live/`, etc.). You can override the value parsed from the URI through the `rtmp_app` option, too.
+- **`app`** 要访问的应用程序的名称。它通常对应于应用程序在 RTMP 服务器上的安装路径（例如 `/ondemand/`、`/flash/live/` 等）。也可以通过 `rtmp_app` 选项覆盖从 URI 解析出的值。
 
-- **`playpath`** It is the path or name of the resource to play with reference to the application specified in \<app\>, may be prefixed by "mp4:". You can override the value parsed from the URI through the `rtmp_playpath` option, too.
+- **`playpath`** 相对于 \<app\> 中指定的应用程序，要播放的资源的路径或名称，可以以 "mp4:" 为前缀。也可以通过 `rtmp_playpath` 选项覆盖从 URI 解析出的值。
 
-- **`listen`** Act as a server, listening for an incoming connection.
+- **`listen`** 充当服务器，监听传入连接。
 
-- **`timeout`** Maximum time to wait for the incoming connection. Implies listen.
+- **`timeout`** 等待传入连接的最长时间。隐含 listen。
 
-Additionally, the following parameters can be set via command line options (or in code via `AVOption`s):
+此外，以下参数可以通过命令行选项设置（或在代码中通过 `AVOption` 设置）：
 
-- **`rtmp_app`** Name of application to connect on the RTMP server. This option overrides the parameter specified in the URI.
+- **`rtmp_app`** 要在 RTMP 服务器上连接的应用程序的名称。此选项覆盖 URI 中指定的参数。
 
-- **`rtmp_buffer`** Set the client buffer time in milliseconds. The default is 3000.
+- **`rtmp_buffer`** 设置客户端缓冲时间（毫秒）。默认值为 3000。
 
-- **`rtmp_conn`** Extra arbitrary AMF connection parameters, parsed from a string, e.g. like `B:1 S:authMe O:1 NN:code:1.23 NS:flag:ok O:0`. Each value is prefixed by a single character denoting the type, B for Boolean, N for number, S for string, O for object, or Z for null, followed by a colon. For Booleans the data must be either 0 or 1 for FALSE or TRUE, respectively. Likewise for Objects the data must be 0 or 1 to end or begin an object, respectively. Data items in subobjects may be named, by prefixing the type with 'N' and specifying the name before the value (i.e. `NB:myFlag:1`). This option may be used multiple times to construct arbitrary AMF sequences.
+- **`rtmp_conn`** 额外的任意 AMF 连接参数，从字符串解析，例如 `B:1 S:authMe O:1 NN:code:1.23 NS:flag:ok O:0`。每个值都以单个字符为前缀表示类型：B 表示布尔值，N 表示数字，S 表示字符串，O 表示对象，Z 表示 null，后跟冒号。对于布尔值，数据必须分别为 0 或 1（对应 FALSE 或 TRUE）。同样，对于对象，数据必须分别为 0 或 1（对应结束或开始一个对象）。子对象中的数据项可以命名，方法是在类型前加 'N' 并在值之前指定名称（即 `NB:myFlag:1`）。此选项可以多次使用以构造任意 AMF 序列。
 
-- **`rtmp_enhanced_codecs`** Specify the list of codecs the client advertises to support in an enhanced RTMP stream. This option should be set to a comma separated list of fourcc values, like `hvc1,av01,vp09` for multiple codecs or `hvc1` for only one codec. The specified list will be presented in the "fourCcLive" property of the Connect Command Message.
+- **`rtmp_enhanced_codecs`** 指定客户端在增强 RTMP 流中声明支持的编解码器列表。此选项应设置为以逗号分隔的 fourcc 值列表，例如多编解码器时为 `hvc1,av01,vp09`，单个编解码器时为 `hvc1`。指定的列表将显示在 Connect 命令消息的 "fourCcLive" 属性中。
 
-- **`rtmp_flashver`** Version of the Flash plugin used to run the SWF player. The default is LNX 9,0,124,2. (When publishing, the default is FMLE/3.0 (compatible; \<libavformat version\>).)
+- **`rtmp_flashver`** 用于运行 SWF 播放器的 Flash 插件版本。默认值为 LNX 9,0,124,2。（发布时，默认值为 FMLE/3.0 (compatible; \<libavformat version\>)。）
 
-- **`rtmp_flush_interval`** Number of packets flushed in the same request (RTMPT only). The default is 10.
+- **`rtmp_flush_interval`** 同一请求中刷新的数据包数量（仅限 RTMPT）。默认值为 10。
 
-- **`rtmp_live`** Specify that the media is a live stream. No resuming or seeking in live streams is possible. The default value is `any`, which means the subscriber first tries to play the live stream specified in the playpath. If a live stream of that name is not found, it plays the recorded stream. The other possible values are `live` and `recorded`.
+- **`rtmp_live`** 指定媒体为直播流。直播流无法恢复播放或定位。默认值为 `any`，表示订阅者首先尝试播放 playpath 中指定的直播流；如果未找到该名称的直播流，则播放录制的流。其他可能的值为 `live` 和 `recorded`。
 
-- **`rtmp_pageurl`** URL of the web page in which the media was embedded. By default no value will be sent.
+- **`rtmp_pageurl`** 嵌入媒体的网页的 URL。默认不发送任何值。
 
-- **`rtmp_playpath`** Stream identifier to play or to publish. This option overrides the parameter specified in the URI.
+- **`rtmp_playpath`** 要播放或发布的流标识符。此选项覆盖 URI 中指定的参数。
 
-- **`rtmp_subscribe`** Name of live stream to subscribe to. By default no value will be sent. It is only sent if the option is specified or if rtmp_live is set to live.
+- **`rtmp_subscribe`** 要订阅的直播流的名称。默认不发送任何值。仅当指定了此选项或 rtmp_live 被设为 live 时才会发送。
 
-- **`rtmp_swfhash`** SHA256 hash of the decompressed SWF file (32 bytes).
+- **`rtmp_swfhash`** 解压缩后的 SWF 文件的 SHA256 哈希值（32 字节）。
 
-- **`rtmp_swfsize`** Size of the decompressed SWF file, required for SWFVerification.
+- **`rtmp_swfsize`** 解压缩后的 SWF 文件的大小，SWFVerification 所需。
 
-- **`rtmp_swfurl`** URL of the SWF player for the media. By default no value will be sent.
+- **`rtmp_swfurl`** 媒体的 SWF 播放器的 URL。默认不发送任何值。
 
-- **`rtmp_swfverify`** URL to player swf file, compute hash/size automatically.
+- **`rtmp_swfverify`** 播放器 swf 文件的 URL，自动计算哈希/大小。
 
-- **`rtmp_tcurl`** URL of the target stream. Defaults to proto://host\[:port\]/app.
+- **`rtmp_tcurl`** 目标流的 URL。默认值为 proto://host\[:port\]/app。
 
-- **`tcp_nodelay=1|0`** Set TCP_NODELAY to disable Nagle's algorithm. Default value is 0.
+- **`tcp_nodelay=1|0`** 设置 TCP_NODELAY 以禁用 Nagle 算法。默认值为 0。
 
-  *Remark: Writing to the socket is currently not optimized to minimize system calls and reduces the efficiency / effect of TCP_NODELAY.*
+  *注：目前对套接字的写入未针对最小化系统调用进行优化，这会降低 TCP_NODELAY 的效率/效果。*
 
-- **`tcp_keepalive=1|0`** Enable the TCP keepalive mechanism to detect dead peers and help maintain long-lived idle connections. Default value is 0.
+- **`tcp_keepalive=1|0`** 启用 TCP keepalive 机制以检测失效的对等端，并帮助维持长期空闲的连接。默认值为 0。
 
-  Only the basic keepalive option (SO_KEEPALIVE) can be enabled or disabled. Platform-specific tuning parameters such as TCP_KEEPIDLE, TCP_KEEPINTVL, or TCP_KEEPCNT are not configurable and will use the operating system's default values.
+  只有基本的 keepalive 选项 (SO_KEEPALIVE) 可以启用或禁用。平台特定的调优参数（如 TCP_KEEPIDLE、TCP_KEEPINTVL 或 TCP_KEEPCNT）不可配置，将使用操作系统的默认值。
 
-For example to read with `ffplay` a multimedia resource named "sample" from the application "vod" from an RTMP server "myserver":
+例如要用 `ffplay` 从 RTMP 服务器 "myserver" 上的应用程序 "vod" 读取名为 "sample" 的多媒体资源：
 
 ``` text
 ffplay rtmp://myserver/vod/sample
 ```
 
-To publish to a password protected server, passing the playpath and app names separately:
+要发布到受密码保护的服务器，并分别传递 playpath 和 app 名称：
 
 ``` text
 ffmpeg -re -i <input> -f flv -rtmp_playpath some/long/path -rtmp_app long/app/name rtmp://username:password@myserver/
@@ -678,75 +674,75 @@ ffmpeg -re -i <input> -f flv -rtmp_playpath some/long/path -rtmp_app long/app/na
 
 ## rtmpe
 
-Encrypted Real-Time Messaging Protocol.
+加密实时消息协议。
 
-The Encrypted Real-Time Messaging Protocol (RTMPE) is used for streaming multimedia content within standard cryptographic primitives, consisting of Diffie-Hellman key exchange and HMACSHA256, generating a pair of RC4 keys.
+加密实时消息协议 (RTMPE) 用于在标准密码学原语（由 Diffie-Hellman 密钥交换和 HMACSHA256 组成，生成一对 RC4 密钥）内传输流媒体内容。
 
 ## rtmps
 
-Real-Time Messaging Protocol over a secure SSL connection.
+经安全 SSL 连接的实时消息协议。
 
-The Real-Time Messaging Protocol (RTMPS) is used for streaming multimedia content across an encrypted connection.
+实时消息协议 (RTMPS) 用于跨加密连接传输流媒体内容。
 
 ## rtmpt
 
-Real-Time Messaging Protocol tunneled through HTTP.
+经 HTTP 隧道的实时消息协议。
 
-The Real-Time Messaging Protocol tunneled through HTTP (RTMPT) is used for streaming multimedia content within HTTP requests to traverse firewalls.
+经 HTTP 隧道的实时消息协议 (RTMPT) 用于在 HTTP 请求内传输流媒体内容以穿越防火墙。
 
 ## rtmpte
 
-Encrypted Real-Time Messaging Protocol tunneled through HTTP.
+经 HTTP 隧道的加密实时消息协议。
 
-The Encrypted Real-Time Messaging Protocol tunneled through HTTP (RTMPTE) is used for streaming multimedia content within HTTP requests to traverse firewalls.
+经 HTTP 隧道的加密实时消息协议 (RTMPTE) 用于在 HTTP 请求内传输流媒体内容以穿越防火墙。
 
 ## rtmpts
 
-Real-Time Messaging Protocol tunneled through HTTPS.
+经 HTTPS 隧道的实时消息协议。
 
-The Real-Time Messaging Protocol tunneled through HTTPS (RTMPTS) is used for streaming multimedia content within HTTPS requests to traverse firewalls.
+经 HTTPS 隧道的实时消息协议 (RTMPTS) 用于在 HTTPS 请求内传输流媒体内容以穿越防火墙。
 
 ## libsmbclient
 
-libsmbclient permits one to manipulate CIFS/SMB network resources.
+libsmbclient 允许操纵 CIFS/SMB 网络资源。
 
-Following syntax is required.
+所需语法如下。
 
 ``` text
 smb://[[domain:]user[:password@]]server[/share[/path[/file]]]
 ```
 
-This protocol accepts the following options.
+此协议接受以下选项。
 
-- **`timeout`** Set timeout in milliseconds of socket I/O operations used by the underlying low level operation. By default it is set to -1, which means that the timeout is not specified.
+- **`timeout`** 设置底层低层操作所用套接字 I/O 操作的超时（毫秒）。默认设置为 -1，表示未指定超时。
 
-- **`truncate`** Truncate existing files on write, if set to 1. A value of 0 prevents truncating. Default value is 1.
+- **`truncate`** 若设为 1，写入时截断已有文件。值为 0 时禁止截断。默认值为 1。
 
-- **`workgroup`** Set the workgroup used for making connections. By default workgroup is not specified.
+- **`workgroup`** 设置用于建立连接的工作组。默认不指定工作组。
 
-For more information see: <http://www.samba.org/>.
+更多信息参见：<http://www.samba.org/>。
 
 ## libssh
 
-Secure File Transfer Protocol via libssh
+经 libssh 的安全文件传输协议
 
-Read from or write to remote resources using SFTP protocol.
+使用 SFTP 协议从远程资源读取或向其写入。
 
-Following syntax is required.
+所需语法如下。
 
 ``` text
 sftp://[user[:password]@]server[:port]/path/to/remote/resource.mpeg
 ```
 
-This protocol accepts the following options.
+此协议接受以下选项。
 
-- **`timeout`** Set timeout of socket I/O operations used by the underlying low level operation. By default it is set to -1, which means that the timeout is not specified.
+- **`timeout`** 设置底层低层操作所用套接字 I/O 操作的超时。默认设置为 -1，表示未指定超时。
 
-- **`truncate`** Truncate existing files on write, if set to 1. A value of 0 prevents truncating. Default value is 1.
+- **`truncate`** 若设为 1，写入时截断已有文件。值为 0 时禁止截断。默认值为 1。
 
-- **`private_key`** Specify the path of the file containing private key to use during authorization. By default libssh searches for keys in the `~/.ssh/` directory.
+- **`private_key`** 指定授权期间使用的私钥文件的路径。默认情况下，libssh 在 `~/.ssh/` 目录中搜索密钥。
 
-Example: Play a file stored on remote server.
+示例：播放存储在远程服务器上的文件。
 
 ``` text
 ffplay sftp://user:password@server_address:22/home/user/resource.mpeg
@@ -754,29 +750,29 @@ ffplay sftp://user:password@server_address:22/home/user/resource.mpeg
 
 ## librtmp rtmp, rtmpe, rtmps, rtmpt, rtmpte
 
-Real-Time Messaging Protocol and its variants supported through librtmp.
+通过 librtmp 支持的实时消息协议及其变体。
 
-Requires the presence of the librtmp headers and library during configuration. You need to explicitly configure the build with "–enable-librtmp". If enabled this will replace the native RTMP protocol.
+在配置期间需要 librtmp 头文件和库。需要通过 "–enable-librtmp" 显式配置构建。启用后，它将替换原生 RTMP 协议。
 
-This protocol provides most client functions and a few server functions needed to support RTMP, RTMP tunneled in HTTP (RTMPT), encrypted RTMP (RTMPE), RTMP over SSL/TLS (RTMPS) and tunneled variants of these encrypted types (RTMPTE, RTMPTS).
+此协议提供支持 RTMP、HTTP 内隧道 RTMP (RTMPT)、加密 RTMP (RTMPE)、SSL/TLS 上的 RTMP (RTMPS) 以及这些加密类型的隧道变体 (RTMPTE、RTMPTS) 所需的大多数客户端函数和少量服务器函数。
 
-The required syntax is:
+必需的语法为：
 
 ``` text
 rtmp_proto://server[:port][/app][/playpath] options
 ```
 
-where \<rtmp_proto\> is one of the strings "rtmp", "rtmpt", "rtmpe", "rtmps", "rtmpte", "rtmpts" corresponding to each RTMP variant, and \<server\>, \<port\>, \<app\> and \<playpath\> have the same meaning as specified for the RTMP native protocol. \<options\> contains a list of space-separated options of the form \<key\>=\<val\>.
+其中 \<rtmp_proto\> 是字符串 "rtmp"、"rtmpt"、"rtmpe"、"rtmps"、"rtmpte"、"rtmpts" 之一，对应各个 RTMP 变体；\<server\>、\<port\>、\<app\> 和 \<playpath\> 的含义与 RTMP 原生协议中指定的相同。\<options\> 包含一个以空格分隔的选项列表，选项形如 \<key\>=\<val\>。
 
-See the librtmp manual page (man 3 librtmp) for more information.
+更多信息参见 librtmp 手册页 (man 3 librtmp)。
 
-For example, to stream a file in real-time to an RTMP server using `ffmpeg`:
+例如，要用 `ffmpeg` 将文件实时推流到 RTMP 服务器：
 
 ``` text
 ffmpeg -re -i myfile -f flv rtmp://myserver/live/mystream
 ```
 
-To play the same stream using `ffplay`:
+要用 `ffplay` 播放同一流：
 
 ``` text
 ffplay "rtmp://myserver/live/mystream live=1"
@@ -784,147 +780,147 @@ ffplay "rtmp://myserver/live/mystream live=1"
 
 ## rtp
 
-Real-time Transport Protocol.
+实时传输协议 (Real-time Transport Protocol)。
 
-The required syntax for an RTP URL is:
+RTP URL 的必需语法为：
 
 ``` text
 rtp://hostname[:port][?options]
 ```
 
-\<port\> specifies the RTP port to use.
+\<port\> 指定要使用的 RTP 端口。
 
-\<options\> contains a list of &-separated options of the form \<key\>=\<val\>. Standard percent-encoding (and using the plus sign for space) can be used to escape keys and values.
+\<options\> 包含一个以 & 分隔的选项列表，选项形如 \<key\>=\<val\>。可使用标准百分号编码（以及用加号表示空格）来转义键和值。
 
-Options can also can be specified via command line options (or in code via `AVOption`s).
+选项也可以通过命令行选项指定（或在代码中通过 `AVOption` 指定）。
 
-The list of supported options follows.
+支持的选项列表如下。
 
-- **`ttl=n`** Set the TTL (Time-To-Live) value (for multicast only).
+- **`ttl=n`** 设置 TTL (Time-To-Live) 值（仅限组播）。
 
-- **`rtcpport=n`** Set the remote RTCP port to \<n\>.
+- **`rtcpport=n`** 将远端 RTCP 端口设置为 \<n\>。
 
-- **`localport, local_rtpport, localrtpport=n`** Set the local RTP port to \<n\>.
+- **`localport, local_rtpport, localrtpport=n`** 将本地 RTP 端口设置为 \<n\>。
 
-  Using the localport option name is deprecated and should not be used.
+  使用 localport 这一选项名已弃用，不应再使用。
 
-- **`local_rtcpport, localrtcpport=n'`** Set the local RTCP port to \<n\>.
+- **`local_rtcpport, localrtcpport=n'`** 将本地 RTCP 端口设置为 \<n\>。
 
-- **`pkt_size=n`** Set max packet size (in bytes) to \<n\>.
+- **`pkt_size=n`** 将最大数据包大小（字节）设置为 \<n\>。
 
-- **`buffer_size=size`** Set the maximum UDP socket buffer size in bytes.
+- **`buffer_size=size`** 设置最大 UDP 套接字缓冲区大小（字节）。
 
-- **`connect=0|1`** Do a `connect()` on the UDP socket (if set to 1) or not (if set to 0).
+- **`connect=0|1`** 在 UDP 套接字上执行（设为 1 时）或不执行（设为 0 时）`connect()`。
 
-- **`sources=ip[,ip]`** List allowed source IP addresses.
+- **`sources=ip[,ip]`** 列出允许的源 IP 地址。
 
-- **`block=ip[,ip]`** List disallowed (blocked) source IP addresses.
+- **`block=ip[,ip]`** 列出禁止（阻止）的源 IP 地址。
 
-- **`write_to_source=0|1`** Send packets to the source address of the latest received packet (if set to 1) or to a default remote address (if set to 0).
+- **`write_to_source=0|1`** 将数据包发送到最近收到的数据包的源地址（设为 1 时）或发送到默认远端地址（设为 0 时）。
 
-- **`localaddr=addr`** Local IP address of a network interface used for sending packets or joining multicast groups.
+- **`localaddr=addr`** 用于发送数据包或加入组播组的网络接口的本地 IP 地址。
 
-- **`timeout=n`** Set timeout (in microseconds) of socket I/O operations to \<n\>.
+- **`timeout=n`** 将套接字 I/O 操作的超时（微秒）设置为 \<n\>。
 
-Important notes:
+重要说明：
 
-1.  If `rtcpport` is not set the RTCP port will be set to the RTP port value plus 1.
+1.  如果未设置 `rtcpport`，RTCP 端口将设置为 RTP 端口的值加 1。
 
-2.  If `localrtpport` (the local RTP port) is not set any available port will be used for the local RTP and RTCP ports.
+2.  如果未设置 `localrtpport`（本地 RTP 端口），本地 RTP 和 RTCP 端口将使用任意可用端口。
 
-3.  If `localrtcpport` (the local RTCP port) is not set it will be set to the local RTP port value plus 1.
+3.  如果未设置 `localrtcpport`（本地 RTCP 端口），它将设置为本地 RTP 端口的值加 1。
 
 ## rtsp
 
-Real-Time Streaming Protocol.
+实时流协议 (Real-Time Streaming Protocol)。
 
-RTSP is not technically a protocol handler in libavformat, it is a demuxer and muxer. The demuxer supports both normal RTSP (with data transferred over RTP; this is used by e.g. Apple and Microsoft) and Real-RTSP (with data transferred over RDT).
+从技术上讲，RTSP 不是 libavformat 中的协议处理器，而是一个解复用器和复用器。该解复用器同时支持常规 RTSP（数据经 RTP 传输；Apple 和 Microsoft 等使用此方式）和 Real-RTSP（数据经 RDT 传输）。
 
-The muxer can be used to send a stream using RTSP ANNOUNCE to a server supporting it (currently Darwin Streaming Server and Mischa Spiegelmock's [RTSP server](https://github.com/revmischa/rtsp-server)).
+该复用器可用于使用 RTSP ANNOUNCE 向支持它的服务器发送流（当前支持 Darwin Streaming Server 和 Mischa Spiegelmock 的 [RTSP server](https://github.com/revmischa/rtsp-server)）。
 
-The required syntax for a RTSP url is:
+RTSP url 的必需语法为：
 
 ``` text
 rtsp://hostname[:port]/path
 ```
 
-Options can be set on the `ffmpeg`/`ffplay` command line, or set in code via `AVOption`s or in `avformat_open_input`.
+选项可以在 `ffmpeg`/`ffplay` 命令行上设置，或在代码中通过 `AVOption` 设置，或在 `avformat_open_input` 中设置。
 
-### Muxer
+### 复用器
 
-The following options are supported.
+支持以下选项。
 
-- **`rtsp_transport`** Set RTSP transport protocols.
+- **`rtsp_transport`** 设置 RTSP 传输协议。
 
-  It accepts the following values:
+  它接受以下值：
 
-  - **`udp`** Use UDP as lower transport protocol.
+  - **`udp`** 使用 UDP 作为底层传输协议。
 
-  - **`tcp`** Use TCP (interleaving within the RTSP control channel) as lower transport protocol.
+  - **`tcp`** 使用 TCP（在 RTSP 控制信道内交错传输）作为底层传输协议。
 
-  Default value is `0`.
+  默认值为 `0`。
 
-- **`rtsp_flags`** Set RTSP flags.
+- **`rtsp_flags`** 设置 RTSP 标志。
 
-  The following values are accepted:
+  接受以下值：
 
   | Term | Description |
   |----|----|
-  | `latm` | Use MP4A-LATM packetization instead of MPEG4-GENERIC for AAC. |
-  | `rfc2190` | Use RFC 2190 packetization instead of RFC 4629 for H.263. |
-  | `skip_rtcp` | Don't send RTCP sender reports. |
-  | `h264_mode0` | Use mode 0 for H.264 in RTP. |
-  | `send_bye` | Send RTCP BYE packets when finishing. |
+  | `latm` | 对 AAC 使用 MP4A-LATM 打包方式而不是 MPEG4-GENERIC。 |
+  | `rfc2190` | 对 H.263 使用 RFC 2190 打包方式而不是 RFC 4629。 |
+  | `skip_rtcp` | 不发送 RTCP 发送方报告。 |
+  | `h264_mode0` | 在 RTP 中对 H.264 使用 mode 0。 |
+  | `send_bye` | 结束时发送 RTCP BYE 数据包。 |
 
-  Default value is `0`.
+  默认值为 `0`。
 
-- **`min_port`** Set minimum local UDP port. Default value is 5000.
+- **`min_port`** 设置最小本地 UDP 端口。默认值为 5000。
 
-- **`max_port`** Set maximum local UDP port. Default value is 65000.
+- **`max_port`** 设置最大本地 UDP 端口。默认值为 65000。
 
-- **`buffer_size`** Set the maximum socket buffer size in bytes.
+- **`buffer_size`** 设置最大套接字缓冲区大小（字节）。
 
-- **`pkt_size`** Set max send packet size (in bytes). Default value is 1472.
+- **`pkt_size`** 设置最大发送数据包大小（字节）。默认值为 1472。
 
-### Demuxer
+### 解复用器
 
-The following options are supported.
+支持以下选项。
 
-- **`initial_pause`** Do not start playing the stream immediately if set to 1. Default value is 0.
+- **`initial_pause`** 若设为 1，则不立即开始播放流。默认值为 0。
 
-- **`rtsp_transport`** Set RTSP transport protocols.
+- **`rtsp_transport`** 设置 RTSP 传输协议。
 
-  It accepts the following values:
+  它接受以下值：
 
-  - **`udp`** Use UDP as lower transport protocol.
+  - **`udp`** 使用 UDP 作为底层传输协议。
 
-  - **`tcp`** Use TCP (interleaving within the RTSP control channel) as lower transport protocol.
+  - **`tcp`** 使用 TCP（在 RTSP 控制信道内交错传输）作为底层传输协议。
 
-  - **`udp_multicast`** Use UDP multicast as lower transport protocol.
+  - **`udp_multicast`** 使用 UDP 组播作为底层传输协议。
 
-  - **`http`** Use HTTP tunneling as lower transport protocol, which is useful for passing proxies.
+  - **`http`** 使用 HTTP 隧道作为底层传输协议，这有助于穿越代理。
 
-  - **`https`** Use HTTPs tunneling as lower transport protocol, which is useful for passing proxies and widely used for security consideration.
+  - **`https`** 使用 HTTPs 隧道作为底层传输协议，这有助于穿越代理，且出于安全考虑被广泛使用。
 
-  Multiple lower transport protocols may be specified, in that case they are tried one at a time (if the setup of one fails, the next one is tried). For the muxer, only the `tcp` and `udp` options are supported.
+  可以指定多个底层传输协议，此时将逐个尝试（如果其中一个设置失败，则尝试下一个）。对于复用器，仅支持 `tcp` 和 `udp` 选项。
 
-- **`rtsp_flags`** Set RTSP flags.
+- **`rtsp_flags`** 设置 RTSP 标志。
 
-  The following values are accepted:
+  接受以下值：
 
-  - **`filter_src`** Accept packets only from negotiated peer address and port.
+  - **`filter_src`** 仅接受来自协商的对等端地址和端口的数据包。
 
-  - **`listen`** Act as a server, listening for an incoming connection.
+  - **`listen`** 充当服务器，监听传入连接。
 
-  - **`prefer_tcp`** Try TCP for RTP transport first, if TCP is available as RTSP RTP transport.
+  - **`prefer_tcp`** 若 TCP 可用作 RTSP RTP 传输，则优先尝试以 TCP 进行 RTP 传输。
 
-  - **`satip_raw`** Export raw MPEG-TS stream instead of demuxing. The flag will simply write out the raw stream, with the original PAT/PMT/PIDs intact.
+  - **`satip_raw`** 导出原始 MPEG-TS 流而不是进行解复用。该标志将直接写出原始流，保持原始的 PAT/PMT/PID 不变。
 
-  Default value is `none`.
+  默认值为 `none`。
 
-- **`allowed_media_types`** Set media types to accept from the server.
+- **`allowed_media_types`** 设置从服务器接受的媒体类型。
 
-  The following flags are accepted:
+  接受以下标志：
 
   - **`video`**
 
@@ -934,49 +930,49 @@ The following options are supported.
 
   - **`subtitle`**
 
-  By default it accepts all media types.
+  默认接受所有媒体类型。
 
-- **`min_port`** Set minimum local UDP port. Default value is 5000.
+- **`min_port`** 设置最小本地 UDP 端口。默认值为 5000。
 
-- **`max_port`** Set maximum local UDP port. Default value is 65000.
+- **`max_port`** 设置最大本地 UDP 端口。默认值为 65000。
 
-- **`listen_timeout`** Set maximum timeout (in seconds) to establish an initial connection. Setting `listen_timeout` \> 0 sets `rtsp_flags` to `listen`. Default is -1 which means an infinite timeout when `listen` mode is set.
+- **`listen_timeout`** 设置建立初始连接的最大超时（秒）。将 `listen_timeout` 设置为 \> 0 会将 `rtsp_flags` 设为 `listen`。默认值为 -1，表示在设置了 `listen` 模式时超时为无限。
 
-- **`reorder_queue_size`** Set number of packets to buffer for handling of reordered packets.
+- **`reorder_queue_size`** 设置为处理乱序数据包而缓冲的数据包数量。
 
-- **`timeout`** Set socket TCP I/O timeout in microseconds.
+- **`timeout`** 设置套接字 TCP I/O 超时（微秒）。
 
-- **`user_agent`** Override User-Agent header. If not specified, it defaults to the libavformat identifier string.
+- **`user_agent`** 覆盖 User-Agent 头。若未指定，默认为 libavformat 标识字符串。
 
-- **`buffer_size`** Set the maximum socket buffer size in bytes.
+- **`buffer_size`** 设置最大套接字缓冲区大小（字节）。
 
-When receiving data over UDP, the demuxer tries to reorder received packets (since they may arrive out of order, or packets may get lost totally). This can be disabled by setting the maximum demuxing delay to zero (via the `max_delay` field of AVFormatContext).
+通过 UDP 接收数据时，解复用器会尝试对接收到的数据包重新排序（因为它们可能乱序到达，或者可能完全丢失）。可以通过将最大解复用延迟设为零（通过 AVFormatContext 的 `max_delay` 字段）来禁用此行为。
 
-When watching multi-bitrate Real-RTSP streams with `ffplay`, the streams to display can be chosen with `-vst` \<n\> and `-ast` \<n\> for video and audio respectively, and can be switched on the fly by pressing `v` and `a`.
+使用 `ffplay` 观看多码率 Real-RTSP 流时，可以用 `-vst` \<n\> 和 `-ast` \<n\> 分别选择要显示的视频和音频流，并可以通过按 `v` 和 `a` 实时切换。
 
-### Examples
+### 示例
 
-The following examples all make use of the `ffplay` and `ffmpeg` tools.
+以下示例均使用 `ffplay` 和 `ffmpeg` 工具。
 
-- Watch a stream over UDP, with a max reordering delay of 0.5 seconds:
+- 观看 UDP 上的流，最大重排序延迟为 0.5 秒：
 
   ``` text
   ffplay -max_delay 500000 -rtsp_transport udp rtsp://server/video.mp4
   ```
 
-- Watch a stream tunneled over HTTP:
+- 观看经 HTTP 隧道传输的流：
 
   ``` text
   ffplay -rtsp_transport http rtsp://server/video.mp4
   ```
 
-- Send a stream in realtime to a RTSP server, for others to watch:
+- 向 RTSP 服务器实时发送流，供其他人观看：
 
   ``` text
   ffmpeg -re -i input -f rtsp -muxdelay 0.1 rtsp://server/live.sdp
   ```
 
-- Receive a stream in realtime:
+- 实时接收流：
 
   ``` text
   ffmpeg -rtsp_flags listen -i rtsp://ownaddress/live.sdp output
@@ -984,67 +980,67 @@ The following examples all make use of the `ffplay` and `ffmpeg` tools.
 
 ## sap
 
-Session Announcement Protocol (RFC 2974). This is not technically a protocol handler in libavformat, it is a muxer and demuxer. It is used for signalling of RTP streams, by announcing the SDP for the streams regularly on a separate port.
+会话通告协议 (Session Announcement Protocol, RFC 2974)。从技术上讲，它不是 libavformat 中的协议处理器，而是一个复用器和解复用器。它用于 RTP 流的信令，通过在单独的端口上定期通告这些流的 SDP。
 
-### Muxer
+### 复用器
 
-The syntax for a SAP url given to the muxer is:
+提供给复用器的 SAP url 的语法为：
 
 ``` text
 sap://destination[:port][?options]
 ```
 
-The RTP packets are sent to \<destination\> on port \<port\>, or to port 5004 if no port is specified. \<options\> is a `&`-separated list. The following options are supported:
+RTP 数据包被发送到端口 \<port\> 上的 \<destination\>；若未指定端口，则发送到端口 5004。\<options\> 是一个以 `&` 分隔的列表。支持以下选项：
 
-- **`announce_addr=address`** Specify the destination IP address for sending the announcements to. If omitted, the announcements are sent to the commonly used SAP announcement multicast address 224.2.127.254 (sap.mcast.net), or ff0e::2:7ffe if \<destination\> is an IPv6 address.
+- **`announce_addr=address`** 指定发送通告的目的 IP 地址。若省略，通告将发送到常用的 SAP 通告组播地址 224.2.127.254 (sap.mcast.net)；若 \<destination\> 是 IPv6 地址，则发送到 ff0e::2:7ffe。
 
-- **`announce_port=port`** Specify the port to send the announcements on, defaults to 9875 if not specified.
+- **`announce_port=port`** 指定发送通告的端口，若未指定，默认为 9875。
 
-- **`ttl=ttl`** Specify the time to live value for the announcements and RTP packets, defaults to 255.
+- **`ttl=ttl`** 指定通告和 RTP 数据包的生存时间 (time to live) 值，默认为 255。
 
-- **`same_port=0|1`** If set to 1, send all RTP streams on the same port pair. If zero (the default), all streams are sent on unique ports, with each stream on a port 2 numbers higher than the previous. VLC/Live555 requires this to be set to 1, to be able to receive the stream. The RTP stack in libavformat for receiving requires all streams to be sent on unique ports.
+- **`same_port=0|1`** 若设为 1，则在同一端口对上发送所有 RTP 流。若为零（默认值），所有流都发送到唯一的端口，每个流的端口比前一个高 2 个数字。VLC/Live555 要求将此设置为 1 才能接收流。libavformat 中用于接收的 RTP 协议栈要求所有流都发送到唯一的端口。
 
-Example command lines follow.
+下面给出一些示例命令行。
 
-To broadcast a stream on the local subnet, for watching in VLC:
+要在本地子网上广播流以供 VLC 观看：
 
 ``` text
 ffmpeg -re -i input -f sap sap://224.0.0.255?same_port=1
 ```
 
-Similarly, for watching in `ffplay`:
+类似地，要用 `ffplay` 观看：
 
 ``` text
 ffmpeg -re -i input -f sap sap://224.0.0.255
 ```
 
-And for watching in `ffplay`, over IPv6:
+要用 `ffplay` 经 IPv6 观看：
 
 ``` text
 ffmpeg -re -i input -f sap sap://[ff0e::1:2:3:4]
 ```
 
-### Demuxer
+### 解复用器
 
-The syntax for a SAP url given to the demuxer is:
+提供给解复用器的 SAP url 的语法为：
 
 ``` text
 sap://[address][:port]
 ```
 
-\<address\> is the multicast address to listen for announcements on, if omitted, the default 224.2.127.254 (sap.mcast.net) is used. \<port\> is the port that is listened on, 9875 if omitted.
+\<address\> 是监听通告的组播地址；若省略，则使用默认值 224.2.127.254 (sap.mcast.net)。\<port\> 是监听的端口；若省略，则为 9875。
 
-The demuxers listens for announcements on the given address and port. Once an announcement is received, it tries to receive that particular stream.
+解复用器在给定的地址和端口上监听通告。收到通告后，它会尝试接收该特定流。
 
-Example command lines follow.
+下面给出一些示例命令行。
 
-To play back the first stream announced on the normal SAP multicast address:
+要播放从常规 SAP 组播地址通告的第一个流：
 
 ``` text
 ffplay sap://
 ```
 
-To play back the first stream announced on one the default IPv6 SAP multicast address:
+要播放从默认 IPv6 SAP 组播地址通告的第一个流：
 
 ``` text
 ffplay sap://[ff0e::2:7ffe]
@@ -1052,47 +1048,47 @@ ffplay sap://[ff0e::2:7ffe]
 
 ## sctp
 
-Stream Control Transmission Protocol.
+流控制传输协议 (Stream Control Transmission Protocol)。
 
-The accepted URL syntax is:
+可接受的 URL 语法为：
 
 ``` text
 sctp://host:port[?options]
 ```
 
-\<options\> contains a list of &-separated options of the form \<key\>=\<val\>. Standard percent-encoding (and using the plus sign for space) can be used to escape keys and values.
+\<options\> 包含一个以 & 分隔的选项列表，选项形如 \<key\>=\<val\>。可使用标准百分号编码（以及用加号表示空格）来转义键和值。
 
-Options can also can be specified via command line options (or in code via `AVOption`s).
+选项也可以通过命令行选项指定（或在代码中通过 `AVOption` 指定）。
 
-The list of supported options follows.
+支持的选项列表如下。
 
-- **`listen`** If set to any value, listen for an incoming connection. Outgoing connection is done by default.
+- **`listen`** 若设为任意值，则监听传入连接。默认执行向外连接。
 
-- **`max_streams`** Set the maximum number of streams. By default no limit is set.
+- **`max_streams`** 设置最大流数量。默认不设限制。
 
 ## shared
 
-Thread-safe, persistent, cross-process cache wrapper for input streams. Caches the input stream to a file in the specified directory. This is similar to [cache](#cache), but with a persistent cache on disk that may be shared between multiple processes or demuxers, even concurrently.
+线程安全、持久化、跨进程的输入流缓存包装器。将输入流缓存到指定目录中的文件。这与 [cache](#cache) 类似，但使用磁盘上的持久缓存，可以在多个进程或解复用器之间共享，甚至可以并发共享。
 
-The filename of the cache is obtained by hashing the input URL, so there is some risk of collision if the same URL is used for different content (e.g. as a result of extra POST data being used to select the stream ID). To avoid this, make sure to only use this protocol for URLs that uniquely identify the content; otherwise you may get a garbled mix of sources.
+缓存文件名通过对输入 URL 进行哈希得到，因此如果同一 URL 被用于不同内容（例如由于使用额外的 POST 数据来选择流 ID），则存在冲突风险。为避免这种情况，请确保仅将此协议用于能唯一标识内容的 URL；否则可能会得到来源混杂的乱码内容。
 
-The accepted options are:
+可接受的选项有：
 
-- **`cache_dir`** Path to the directory where cache files are stored. This option is required.
+- **`cache_dir`** 存储缓存文件的目录路径。此选项是必需的。
 
-- **`block_shift`** Shift factor (log2) of the block size used for internal reads/writes. Defaults to 15, i.e. 32KB blocks. If this does not match the value that was specified when an existing cache file was created, the previously specified value will be used instead.
+- **`block_shift`** 内部读/写所用块大小的移位因子 (log2)。默认值为 15，即 32KB 块。如果与创建现有缓存文件时指定的值不匹配，将改用先前指定的值。
 
-- **`read_only`** If true, use the shared cache for reads but don't write any new blocks to it. Default is false. Note that even with this option enabled, the cache file will be initialized if it does not already exist.
+- **`read_only`** 若为 true，则将共享缓存用于读取，但不向其写入任何新块。默认值为 false。请注意，即使启用了此选项，缓存文件在不存在时仍会被初始化。
 
-- **`cache_verify`** If true, verify any data read from the cache against the underlying input stream, and report any mismatches. Note that this will make the cache layer effectively useless. This is purely a debug option.
+- **`cache_verify`** 若为 true，将从缓存读取的任何数据与底层输入流进行核对，并报告任何不匹配。请注意，这会使缓存层实际上失去作用。这纯粹是一个调试选项。
 
-- **`cache_timeout`** If set to a nonzero value, specifies the maximum time (in microseconds) to wait for data to become available, if another process is currently trying to fetch and cache the same block at the same time. If this timeout elapses, it's assumed that the other process may have gotten stuck or died in the meantime.
+- **`cache_timeout`** 若设为非零值，则指定等待数据变为可用的最长时间（微秒），适用于另一个进程当前正试图同时获取并缓存同一块的情况。如果此超时已过，则假定另一个进程可能已卡住或在此期间已终止。
 
-  If set to zero, no waiting is done and all processes will immediately race to try and fetch the same missing blocks themselves. Defaults to 10000 (10 ms).
+  如果设为零，则不进行任何等待，所有进程将立即竞争自行获取相同的缺失块。默认值为 10000 (10 ms)。
 
-- **`retry_errors`** If true (the default), transient read errors from the underlying input stream are ignored and retried again. If false, any blocks that previously failed being read from will be treated as permanently inaccessible.
+- **`retry_errors`** 若为 true（默认值），则忽略来自底层输入流的瞬时读取错误并再次重试。若为 false，则先前读取失败的任何块都将被视为永久不可访问。
 
-URL Syntax is
+URL 语法为
 
 ``` text
 shared:URL
@@ -1100,123 +1096,123 @@ shared:URL
 
 ## srt
 
-Haivision Secure Reliable Transport Protocol via libsrt.
+经 libsrt 的 Haivision 安全可靠传输协议。
 
-The supported syntax for a SRT URL is:
+SRT URL 支持的语法为：
 
 ``` text
 srt://hostname:port[?options]
 ```
 
-\<options\> contains a list of &-separated options of the form \<key\>=\<val\>. Standard percent-encoding (and using the plus sign for space) can be used to escape keys and values.
+\<options\> 包含一个以 & 分隔的选项列表，选项形如 \<key\>=\<val\>。可使用标准百分号编码（以及用加号表示空格）来转义键和值。
 
-Options can also can be specified via command line options (or in code via `AVOption`s).
+选项也可以通过命令行选项指定（或在代码中通过 `AVOption` 指定）。
 
-The list of supported options follows.
+支持的选项列表如下。
 
-- **`connect_timeout=milliseconds`** Connection timeout; SRT cannot connect for RTT \> 1500 msec (2 handshake exchanges) with the default connect timeout of 3 seconds. This option applies to the caller and rendezvous connection modes. The connect timeout is 10 times the value set for the rendezvous mode (which can be used as a workaround for this connection problem with earlier versions).
+- **`connect_timeout=milliseconds`** 连接超时；在默认连接超时为 3 秒的情况下，RTT \> 1500 毫秒（2 次握手交互）时 SRT 无法连接。此选项适用于 caller 和 rendezvous 连接模式。rendezvous 模式的连接超时是所设值的 10 倍（对于使用早期版本时的这一连接问题，可用作变通方法）。
 
-- **`ffs=bytes`** Flight Flag Size (Window Size), in bytes. FFS is actually an internal parameter and you should set it to not less than `recv_buffer_size` and `mss`. The default value is relatively large, therefore unless you set a very large receiver buffer, you do not need to change this option. Default value is 25600.
+- **`ffs=bytes`** 飞行标志大小 (Flight Flag Size，窗口大小)，以字节为单位。FFS 实际上是一个内部参数，应将其设置为不小于 `recv_buffer_size` 和 `mss`。默认值相对较大，因此除非设置了非常大的接收缓冲区，否则无需更改此选项。默认值为 25600。
 
-- **`inputbw=bytes/seconds`** Sender nominal input rate, in bytes per seconds. Used along with `oheadbw`, when `maxbw` is set to relative (0), to calculate maximum sending rate when recovery packets are sent along with the main media stream: `inputbw` \* (100 + `oheadbw`) / 100 if `inputbw` is not set while `maxbw` is set to relative (0), the actual input rate is evaluated inside the library. Default value is 0.
+- **`inputbw=bytes/seconds`** 发送方的标称输入速率，以字节/秒为单位。当 `maxbw` 设为相对值 (0) 时，与 `oheadbw` 一起使用，用于计算在随主媒体流一起发送恢复数据包时的最大发送速率：若未设置 `inputbw` 而 `maxbw` 设为相对值 (0)，则发送速率为 `inputbw` \* (100 + `oheadbw`) / 100，实际输入速率将在库内部估算。默认值为 0。
 
-- **`iptos=tos`** IP Type of Service. Applies to sender only. Default value is 0xB8.
+- **`iptos=tos`** IP 服务类型 (Type of Service)。仅适用于发送方。默认值为 0xB8。
 
-- **`ipttl=ttl`** IP Time To Live. Applies to sender only. Default value is 64.
+- **`ipttl=ttl`** IP 生存时间 (Time To Live)。仅适用于发送方。默认值为 64。
 
-- **`latency=microseconds`** Timestamp-based Packet Delivery Delay. Used to absorb bursts of missed packet retransmissions. This flag sets both `rcvlatency` and `peerlatency` to the same value. Note that prior to version 1.3.0 this is the only flag to set the latency, however this is effectively equivalent to setting `peerlatency`, when side is sender and `rcvlatency` when side is receiver, and the bidirectional stream sending is not supported.
+- **`latency=microseconds`** 基于时间戳的数据包交付延迟。用于吸收丢失数据包重传的突发。此标志将 `rcvlatency` 和 `peerlatency` 设置为相同的值。请注意，在 1.3.0 版本之前，这是设置延迟的唯一标志，但其实际效果等价于：发送方设置 `peerlatency`、接收方设置 `rcvlatency`，且不支持双向流发送。
 
-- **`listen_timeout=microseconds`** Set socket listen timeout.
+- **`listen_timeout=microseconds`** 设置套接字监听超时。
 
-- **`maxbw=bytes/seconds`** Maximum sending bandwidth, in bytes per seconds. -1 infinite (CSRTCC limit is 30mbps) 0 relative to input rate (see `inputbw`) \>0 absolute limit value Default value is 0 (relative)
+- **`maxbw=bytes/seconds`** 最大发送带宽，以字节/秒为单位。-1 表示无限（CSRTCC 限制为 30mbps），0 表示相对于输入速率（参见 `inputbw`），\>0 表示绝对限制值。默认值为 0（相对）。
 
-- **`mode=caller|listener|rendezvous`** Connection mode. `caller` opens client connection. `listener` starts server to listen for incoming connections. `rendezvous` use Rendez-Vous connection mode. Default value is caller.
+- **`mode=caller|listener|rendezvous`** 连接模式。`caller` 打开客户端连接。`listener` 启动服务器以监听传入连接。`rendezvous` 使用 Rendez-Vous 连接模式。默认值为 caller。
 
-- **`mss=bytes`** Maximum Segment Size, in bytes. Used for buffer allocation and rate calculation using a packet counter assuming fully filled packets. The smallest MSS between the peers is used. This is 1500 by default in the overall internet. This is the maximum size of the UDP packet and can be only decreased, unless you have some unusual dedicated network settings. Default value is 1500.
+- **`mss=bytes`** 最大分段大小 (Maximum Segment Size)，以字节为单位。用于缓冲区分配，并使用假定数据包被完全填充的数据包计数器进行速率计算。使用对等端之间较小的 MSS。在整个互联网上默认为 1500。这是 UDP 数据包的最大大小，只能调低，除非您有一些不常用的专用网络设置。默认值为 1500。
 
-- **`nakreport=1|0`** If set to 1, Receiver will send 'UMSG_LOSSREPORT' messages periodically until a lost packet is retransmitted or intentionally dropped. Default value is 1.
+- **`nakreport=1|0`** 若设为 1，接收方将定期发送 'UMSG_LOSSREPORT' 消息，直到丢失的数据包被重传或被有意丢弃。默认值为 1。
 
-- **`oheadbw=percents`** Recovery bandwidth overhead above input rate, in percents. See `inputbw`. Default value is 25%.
+- **`oheadbw=percents`** 输入速率之上的恢复带宽开销，以百分比表示。参见 `inputbw`。默认值为 25%。
 
-- **`passphrase=string`** HaiCrypt Encryption/Decryption Passphrase string, length from 10 to 79 characters. The passphrase is the shared secret between the sender and the receiver. It is used to generate the Key Encrypting Key using PBKDF2 (Password-Based Key Derivation Function). It is used only if `pbkeylen` is non-zero. It is used on the receiver only if the received data is encrypted. The configured passphrase cannot be recovered (write-only).
+- **`passphrase=string`** HaiCrypt 加密/解密口令字符串，长度为 10 到 79 个字符。该口令是发送方和接收方之间的共享密钥。它用于通过 PBKDF2 (Password-Based Key Derivation Function) 生成密钥加密密钥 (Key Encrypting Key)。仅在 `pbkeylen` 非零时使用。仅在接收到的数据已加密时才在接收方使用。所配置的口令无法恢复（只写）。
 
-- **`enforced_encryption=1|0`** If true, both connection parties must have the same password set (including empty, that is, with no encryption). If the password doesn't match or only one side is unencrypted, the connection is rejected. Default is true.
+- **`enforced_encryption=1|0`** 若为 true，则连接双方必须设置相同的密码（包括空密码，即不加密）。如果密码不匹配或只有一方未加密，连接将被拒绝。默认值为 true。
 
-- **`kmrefreshrate=packets`** The number of packets to be transmitted after which the encryption key is switched to a new key. Default is -1. -1 means auto (0x1000000 in srt library). The range for this option is integers in the 0 - `INT_MAX`.
+- **`kmrefreshrate=packets`** 在传输这么多数据包之后，加密密钥切换为新密钥。默认值为 -1。-1 表示自动（srt 库中为 0x1000000）。此选项的范围为 0 - `INT_MAX` 内的整数。
 
-- **`kmpreannounce=packets`** The interval between when a new encryption key is sent and when switchover occurs. This value also applies to the subsequent interval between when switchover occurs and when the old encryption key is decommissioned. Default is -1. -1 means auto (0x1000 in srt library). The range for this option is integers in the 0 - `INT_MAX`.
+- **`kmpreannounce=packets`** 从发送新加密密钥到发生切换之间的间隔。此值也适用于从发生切换到旧加密密钥退役之间的后续间隔。默认值为 -1。-1 表示自动（srt 库中为 0x1000）。此选项的范围为 0 - `INT_MAX` 内的整数。
 
-- **`snddropdelay=microseconds`** The sender's extra delay before dropping packets. This delay is added to the default drop delay time interval value.
+- **`snddropdelay=microseconds`** 发送方在丢弃数据包之前的额外延迟。此延迟会加到默认的丢弃延迟时间间隔值上。
 
-  Special value -1: Do not drop packets on the sender at all.
+  特殊值 -1：发送方完全不丢弃数据包。
 
-- **`payload_size=bytes`** Sets the maximum declared size of a packet transferred during the single call to the sending function in Live mode. Use 0 if this value isn't used (which is default in file mode). Default is -1 (automatic), which typically means MPEG-TS; if you are going to use SRT to send any different kind of payload, such as, for example, wrapping a live stream in very small frames, then you can use a bigger maximum frame size, though not greater than 1456 bytes.
+- **`payload_size=bytes`** 设置在 Live 模式下单次调用发送函数时传输的数据包的最大声明大小。如果不使用该值，则设为 0（这是文件模式下的默认值）。默认值为 -1（自动），通常表示 MPEG-TS；如果要使用 SRT 发送任何其他类型的载荷，例如将直播流包装在非常小的帧中，则可以使用更大的最大帧大小，但不得超过 1456 字节。
 
-- **`pkt_size=bytes`** Alias for `payload_size`.
+- **`pkt_size=bytes`** `payload_size` 的别名。
 
-- **`peerlatency=microseconds`** The latency value (as described in `rcvlatency`) that is set by the sender side as a minimum value for the receiver.
+- **`peerlatency=microseconds`** 由发送方设置为接收方最小值的延迟值（如 `rcvlatency` 中所述）。
 
-- **`pbkeylen=bytes`** Sender encryption key length, in bytes. Only can be set to 0, 16, 24 and 32. Enable sender encryption if not 0. Not required on receiver (set to 0), key size obtained from sender in HaiCrypt handshake. Default value is 0.
+- **`pbkeylen=bytes`** 发送方加密密钥长度，以字节为单位。只能设置为 0、16、24 和 32。若不为 0 则启用发送方加密。接收方不需要（设为 0），密钥大小在 HaiCrypt 握手期间从发送方获取。默认值为 0。
 
-- **`rcvlatency=microseconds`** The time that should elapse since the moment when the packet was sent and the moment when it's delivered to the receiver application in the receiving function. This time should be a buffer time large enough to cover the time spent for sending, unexpectedly extended RTT time, and the time needed to retransmit the lost UDP packet. The effective latency value will be the maximum of this options' value and the value of `peerlatency` set by the peer side. Before version 1.3.0 this option is only available as `latency`.
+- **`rcvlatency=microseconds`** 从数据包被发送的时刻到接收函数将其交付给接收方应用程序的时刻之间应经过的时间。该时间应当是足够大的缓冲时间，以覆盖发送所花的时间、意外延长的 RTT 时间以及重传丢失 UDP 数据包所需的时间。有效延迟值将是此选项值与对等端设置的 `peerlatency` 值中的最大者。在 1.3.0 版本之前，此选项仅以 `latency` 形式提供。
 
-- **`recv_buffer_size=bytes`** Set UDP receive buffer size, expressed in bytes.
+- **`recv_buffer_size=bytes`** 设置 UDP 接收缓冲区大小，以字节表示。
 
-- **`send_buffer_size=bytes`** Set UDP send buffer size, expressed in bytes.
+- **`send_buffer_size=bytes`** 设置 UDP 发送缓冲区大小，以字节表示。
 
-- **`timeout=microseconds`** Set raise error timeouts for read, write and connect operations. Note that the SRT library has internal timeouts which can be controlled separately, the value set here is only a cap on those.
+- **`timeout=microseconds`** 设置读、写和连接操作引发错误的超时。请注意，SRT 库具有可单独控制的内部超时，此处设置的值只是这些内部超时的上限。
 
-- **`tlpktdrop=1|0`** Too-late Packet Drop. When enabled on receiver, it skips missing packets that have not been delivered in time and delivers the following packets to the application when their time-to-play has come. It also sends a fake ACK to the sender. When enabled on sender and enabled on the receiving peer, the sender drops the older packets that have no chance of being delivered in time. It was automatically enabled in the sender if the receiver supports it.
+- **`tlpktdrop=1|0`** 过迟数据包丢弃 (Too-late Packet Drop)。在接收方启用时，它会跳过未能及时交付的缺失数据包，并在后续数据包的播放时间到达时将其交付给应用程序。它还会向发送方发送虚假 ACK。在发送方及其接收对等端都启用时，发送方会丢弃已无机会按时交付的较旧数据包。如果接收方支持，它会在发送方自动启用。
 
-- **`sndbuf=bytes`** Set send buffer size, expressed in bytes.
+- **`sndbuf=bytes`** 设置发送缓冲区大小，以字节表示。
 
-- **`rcvbuf=bytes`** Set receive buffer size, expressed in bytes.
+- **`rcvbuf=bytes`** 设置接收缓冲区大小，以字节表示。
 
-  Receive buffer must not be greater than `ffs`.
+  接收缓冲区不得大于 `ffs`。
 
-- **`lossmaxttl=packets`** The value up to which the Reorder Tolerance may grow. When Reorder Tolerance is \> 0, then packet loss report is delayed until that number of packets come in. Reorder Tolerance increases every time a "belated" packet has come, but it wasn't due to retransmission (that is, when UDP packets tend to come out of order), with the difference between the latest sequence and this packet's sequence, and not more than the value of this option. By default it's 0, which means that this mechanism is turned off, and the loss report is always sent immediately upon experiencing a "gap" in sequences.
+- **`lossmaxttl=packets`** 重排序容忍度 (Reorder Tolerance) 可以增长到的值。当重排序容忍度 \> 0 时，丢包报告将延迟到该数量的数据包到达为止。每当一个"迟到"的数据包到达且并非由重传所致（即 UDP 数据包往往乱序到达的情况）时，重排序容忍度都会以最新序列号与此数据包序列号之差增加，但不超过此选项的值。默认值为 0，表示此机制关闭，遇到序列"间隙"时总是立即发送丢包报告。
 
-- **`minversion`** The minimum SRT version that is required from the peer. A connection to a peer that does not satisfy the minimum version requirement will be rejected.
+- **`minversion`** 对等端所需的最低 SRT 版本。与不满足最低版本要求的对等端的连接将被拒绝。
 
-  The version format in hex is 0xXXYYZZ for x.y.z in human readable form.
+  十六进制版本格式为 0xXXYYZZ，对应人类可读形式 x.y.z。
 
-- **`streamid=string`** A string limited to 512 characters that can be set on the socket prior to connecting. This stream ID will be able to be retrieved by the listener side from the socket that is returned from srt_accept and was connected by a socket with that set stream ID. SRT does not enforce any special interpretation of the contents of this string. This option doesn't make sense in Rendezvous connection; the result might be that simply one side will override the value from the other side and it's the matter of luck which one would win
+- **`streamid=string`** 一个限制为 512 个字符的字符串，可以在连接之前在套接字上设置。监听方将能够从 srt_accept 返回的套接字中检索此流 ID，该套接字由设置了此流 ID 的套接字连接。SRT 不强制对此字符串的内容做任何特殊解释。此选项在 Rendezvous 连接中没有意义；结果可能只是一方覆盖另一方的值，至于哪一方获胜则纯属运气。
 
-- **`srt_streamid=string`** Alias for `streamid` to avoid conflict with ffmpeg command line option.
+- **`srt_streamid=string`** `streamid` 的别名，用于避免与 ffmpeg 命令行选项冲突。
 
-- **`smoother=live|file`** The type of Smoother used for the transmission for that socket, which is responsible for the transmission and congestion control. The Smoother type must be exactly the same on both connecting parties, otherwise the connection is rejected.
+- **`smoother=live|file`** 用于该套接字传输的 Smoother 类型，负责传输和拥塞控制。连接双方的 Smoother 类型必须完全相同，否则连接将被拒绝。
 
-- **`messageapi=1|0`** When set, this socket uses the Message API, otherwise it uses Buffer API. Note that in live mode (see `transtype`) there's only message API available. In File mode you can chose to use one of two modes:
+- **`messageapi=1|0`** 设置后，此套接字使用消息 API (Message API)，否则使用缓冲 API (Buffer API)。请注意，在 live 模式（参见 `transtype`）下只有消息 API 可用。在文件模式下，可以选择以下两种模式之一：
 
-  Stream API (default, when this option is false). In this mode you may send as many data as you wish with one sending instruction, or even use dedicated functions that read directly from a file. The internal facility will take care of any speed and congestion control. When receiving, you can also receive as many data as desired, the data not extracted will be waiting for the next call. There is no boundary between data portions in the Stream mode.
+  流 API（默认，此选项为 false 时）。在此模式下，您可以在一次发送指令中发送任意多的数据，甚至可以使用直接从文件读取的专用函数。内部机制将处理速度和拥塞控制。接收时，您也可以按需接收任意多的数据，未提取的数据将等待下一次调用。流模式下数据部分之间没有边界。
 
-  Message API. In this mode your single sending instruction passes exactly one piece of data that has boundaries (a message). Contrary to Live mode, this message may span across multiple UDP packets and the only size limitation is that it shall fit as a whole in the sending buffer. The receiver shall use as large buffer as necessary to receive the message, otherwise the message will not be given up. When the message is not complete (not all packets received or there was a packet loss) it will not be given up.
+  消息 API。在此模式下，您的单次发送指令恰好传递一条有边界（一个消息）的数据。与 Live 模式相反，此消息可以跨越多个 UDP 数据包，唯一的大小限制是它必须整体适合发送缓冲区。接收方应使用足够大的缓冲区来接收消息，否则消息不会被放弃。当消息不完整（未收到所有数据包或有数据包丢失）时，它不会被放弃。
 
-- **`transtype=live|file`** Sets the transmission type for the socket, in particular, setting this option sets multiple other parameters to their default values as required for a particular transmission type.
+- **`transtype=live|file`** 设置套接字的传输类型；特别是，设置此选项会将多个其他参数设置为特定传输类型所需的默认值。
 
-  live: Set options as for live transmission. In this mode, you should send by one sending instruction only so many data that fit in one UDP packet, and limited to the value defined first in `payload_size` (1316 is default in this mode). There is no speed control in this mode, only the bandwidth control, if configured, in order to not exceed the bandwidth with the overhead transmission (retransmitted and control packets).
+  live：按直播传输设置选项。在此模式下，单次发送指令只应发送适合一个 UDP 数据包的数据，并受 `payload_size` 首先定义的值限制（此模式下默认为 1316）。此模式下没有速度控制，只有带宽控制（如果已配置），以免传输开销（重传和控制数据包）超出带宽。
 
-  file: Set options as for non-live transmission. See `messageapi` for further explanations
+  file：按非直播传输设置选项。进一步说明参见 `messageapi`。
 
-- **`linger=seconds`** The number of seconds that the socket waits for unsent data when closing. Default is -1. -1 means auto (off with 0 seconds in live mode, on with 180 seconds in file mode). The range for this option is integers in the 0 - `INT_MAX`.
+- **`linger=seconds`** 关闭时套接字等待未发送数据的秒数。默认值为 -1。-1 表示自动（live 模式下关闭，为 0 秒；文件模式下开启，为 180 秒）。此选项的范围为 0 - `INT_MAX` 内的整数。
 
-- **`tsbpd=1|0`** When true, use Timestamp-based Packet Delivery mode. The default behavior depends on the transmission type: enabled in live mode, disabled in file mode.
+- **`tsbpd=1|0`** 若为 true，则使用基于时间戳的数据包交付 (Timestamp-based Packet Delivery) 模式。默认行为取决于传输类型：live 模式下启用，文件模式下禁用。
 
-- **`ipv6only=1|0`** Accept IPv4 or not while using the IPv6 wildcard address. This should be set when listening on a IPv6 wildcard address.
+- **`ipv6only=1|0`** 使用 IPv6 通配地址时是否接受 IPv4。在 IPv6 通配地址上监听时应设置此项。
 
-For more information see: <https://github.com/Haivision/srt>.
+更多信息参见：<https://github.com/Haivision/srt>。
 
 ## srtp
 
-Secure Real-time Transport Protocol.
+安全实时传输协议 (Secure Real-time Transport Protocol)。
 
-The accepted options are:
+可接受的选项有：
 
 - **`srtp_in_suite`**
 
-- **`srtp_out_suite`** Select input and output encoding suites.
+- **`srtp_out_suite`** 选择输入和输出加密套件。
 
-  Supported values:
+  支持的值：
 
   - **`AES_CM_128_HMAC_SHA1_80`**
 
@@ -1228,33 +1224,33 @@ The accepted options are:
 
 - **`srtp_in_params`**
 
-- **`srtp_out_params`** Set input and output encoding parameters, which are expressed by a base64-encoded representation of a binary block. The first 16 bytes of this binary block are used as master key, the following 14 bytes are used as master salt.
+- **`srtp_out_params`** 设置输入和输出加密参数，以二进制块的 base64 编码表示形式表达。该二进制块的前 16 字节用作主密钥 (master key)，随后的 14 字节用作主盐值 (master salt)。
 
 ## subfile
 
-Virtually extract a segment of a file or another stream. The underlying stream must be seekable.
+从文件或另一个流中虚拟提取一段。底层流必须可定位。
 
-Accepted options:
+可接受的选项：
 
-- **`start`** Start offset of the extracted segment, in bytes.
+- **`start`** 所提取段的起始偏移量，以字节为单位。
 
-- **`end`** End offset of the extracted segment, in bytes. If set to 0, extract till end of file.
+- **`end`** 所提取段的结束偏移量，以字节为单位。若设为 0，则提取到文件末尾。
 
-Examples:
+示例：
 
-Extract a chapter from a DVD VOB file (start and end sectors obtained externally and multiplied by 2048):
+从 DVD VOB 文件中提取一个章节（起始和结束扇区从外部获取并乘以 2048）：
 
 ``` text
 subfile,,start,153391104,end,268142592,,:/media/dvd/VIDEO_TS/VTS_08_1.VOB
 ```
 
-Play an AVI file directly from a TAR archive:
+直接从 TAR 归档播放 AVI 文件：
 
 ``` text
 subfile,,start,183241728,end,366490624,,:archive.tar
 ```
 
-Play a MPEG-TS file from start offset till end:
+从起始偏移量播放 MPEG-TS 文件直至结尾：
 
 ``` text
 subfile,,start,32815239,end,0,,:video.ts
@@ -1262,7 +1258,7 @@ subfile,,start,32815239,end,0,,:video.ts
 
 ## tee
 
-Writes the output to multiple protocols. The individual outputs are separated by \|
+将输出写入多个协议。各个输出以 \| 分隔
 
 ``` text
 tee:file://path/to/local/this.avi|file://path/to/local/that.avi
@@ -1270,43 +1266,43 @@ tee:file://path/to/local/this.avi|file://path/to/local/that.avi
 
 ## tcp
 
-Transmission Control Protocol.
+传输控制协议 (Transmission Control Protocol)。
 
-The required syntax for a TCP url is:
+TCP url 的必需语法为：
 
 ``` text
 tcp://hostname:port[?options]
 ```
 
-\<options\> contains a list of &-separated options of the form \<key\>=\<val\>. Standard percent-encoding (and using the plus sign for space) can be used to escape keys and values.
+\<options\> 包含一个以 & 分隔的选项列表，选项形如 \<key\>=\<val\>。可使用标准百分号编码（以及用加号表示空格）来转义键和值。
 
-Options can also can be specified via command line options (or in code via `AVOption`s).
+选项也可以通过命令行选项指定（或在代码中通过 `AVOption` 指定）。
 
-The list of supported options follows.
+支持的选项列表如下。
 
-- **`listen=2|1|0`** Listen for an incoming connection. 0 disables listen, 1 enables listen in single client mode, 2 enables listen in multi-client mode. Default value is 0.
+- **`listen=2|1|0`** 监听传入连接。0 禁用监听，1 启用单客户端模式监听，2 启用多客户端模式监听。默认值为 0。
 
-- **`local_addr=addr`** Local IP address of a network interface used for tcp socket connect.
+- **`local_addr=addr`** 用于 tcp 套接字连接的网络接口的本地 IP 地址。
 
-- **`local_port=port`** Local port used for tcp socket connect.
+- **`local_port=port`** 用于 tcp 套接字连接的本地端口。
 
-- **`timeout=microseconds`** Set raise error timeout, expressed in microseconds.
+- **`timeout=microseconds`** 设置引发错误的超时，以微秒表示。
 
-  This option is only relevant in read mode: if no data arrived in more than this time interval, raise error.
+  此选项仅在读取模式下相关：如果在此时间间隔内没有数据到达，则引发错误。
 
-- **`listen_timeout=milliseconds`** Set listen timeout, expressed in milliseconds.
+- **`listen_timeout=milliseconds`** 设置监听超时，以毫秒表示。
 
-- **`recv_buffer_size=bytes`** Set receive buffer size, expressed bytes.
+- **`recv_buffer_size=bytes`** 设置接收缓冲区大小，以字节表示。
 
-- **`send_buffer_size=bytes`** Set send buffer size, expressed bytes.
+- **`send_buffer_size=bytes`** 设置发送缓冲区大小，以字节表示。
 
-- **`tcp_nodelay=1|0`** Set TCP_NODELAY to disable Nagle's algorithm. Default value is 0.
+- **`tcp_nodelay=1|0`** 设置 TCP_NODELAY 以禁用 Nagle 算法。默认值为 0。
 
-  *Remark: Writing to the socket is currently not optimized to minimize system calls and reduces the efficiency / effect of TCP_NODELAY.*
+  *注：目前对套接字的写入未针对最小化系统调用进行优化，这会降低 TCP_NODELAY 的效率/效果。*
 
-- **`tcp_mss=bytes`** Set maximum segment size for outgoing TCP packets, expressed in bytes.
+- **`tcp_mss=bytes`** 设置传出 TCP 数据包的最大分段大小，以字节表示。
 
-The following example shows how to setup a listening TCP connection with `ffmpeg`, which is then accessed with `ffplay`:
+以下示例展示如何用 `ffmpeg` 建立监听中的 TCP 连接，然后用 `ffplay` 访问它：
 
 ``` text
 ffmpeg -i input -f format tcp://hostname:port?listen
@@ -1315,43 +1311,43 @@ ffplay tcp://hostname:port
 
 ## tls
 
-Transport Layer Security (TLS) / Secure Sockets Layer (SSL)
+传输层安全 (Transport Layer Security, TLS) / 安全套接字层 (Secure Sockets Layer, SSL)
 
-The required syntax for a TLS/SSL url is:
+TLS/SSL url 的必需语法为：
 
 ``` text
 tls://hostname:port[?options]
 ```
 
-\<options\> contains a list of &-separated options of the form \<key\>=\<val\>. Standard percent-encoding (and using the plus sign for space) can be used to escape keys and values.
+\<options\> 包含一个以 & 分隔的选项列表，选项形如 \<key\>=\<val\>。可使用标准百分号编码（以及用加号表示空格）来转义键和值。
 
-Options can also can be specified via command line options (or in code via `AVOption`s).
+选项也可以通过命令行选项指定（或在代码中通过 `AVOption` 指定）。
 
-The list of supported options follows.
+支持的选项列表如下。
 
-- **`ca_file, cafile=filename`** A file containing certificate authority (CA) root certificates to treat as trusted. If the linked TLS library contains a default this might not need to be specified for verification to work, but not all libraries and setups have defaults built in. The file must be in OpenSSL PEM format.
+- **`ca_file, cafile=filename`** 包含视为受信任的证书颁发机构 (CA) 根证书的文件。如果所链接的 TLS 库包含默认值，则验证可能无需指定此项，但并非所有库和设置都内建了默认值。该文件必须为 OpenSSL PEM 格式。
 
-- **`tls_verify, verify=1|0`** If enabled, try to verify the peer that we are communicating with. Note, if using OpenSSL, this currently only makes sure that the peer certificate is signed by one of the root certificates in the CA database, but it does not validate that the certificate actually matches the host name we are trying to connect to. (With other backends, the host name is validated as well.)
+- **`tls_verify, verify=1|0`** 如果启用，尝试验证我们正在与之通信的对等端。注意，如果使用 OpenSSL，目前这只确保对等端证书由 CA 数据库中的根证书之一签名，但不会验证该证书是否确实与我们尝试连接的主机名匹配。（使用其他后端时，主机名也会被验证。）
 
-  This is enabled by default. Verifying the peer requires a CA database, which in some cases has to be provided by the caller.
+  默认启用此项。验证对等端需要 CA 数据库，某些情况下必须由调用方提供。
 
-- **`cert_file, cert=filename`** A file containing a certificate to use in the handshake with the peer. (When operating as server, in listen mode, this is more often required by the peer, while client certificates only are mandated in certain setups.)
+- **`cert_file, cert=filename`** 包含要在与对等端握手时使用的证书的文件。（作为服务器在监听模式下运行时，对等端通常更常要求此项，而客户端证书只在某些设置下才强制要求。）
 
-- **`key_file, key=filename`** A file containing the private key for the certificate.
+- **`key_file, key=filename`** 包含证书私钥的文件。
 
-- **`listen=1|0`** If enabled, listen for connections on the provided port, and assume the server role in the handshake instead of the client role.
+- **`listen=1|0`** 如果启用，在提供的端口上监听连接，并在握手中假定服务器角色而不是客户端角色。
 
-- **`http_proxy`** The HTTP proxy to tunnel through, e.g. `http://example.com:1234`. The proxy must support the CONNECT method.
+- **`http_proxy`** 要穿隧道使用的 HTTP 代理，例如 `http://example.com:1234`。该代理必须支持 CONNECT 方法。
 
-Example command lines:
+示例命令行：
 
-To create a TLS/SSL server that serves an input stream.
+创建一个提供输入流服务的 TLS/SSL 服务器。
 
 ``` text
 ffmpeg -i input -f format tls://hostname:port?listen&cert=server.crt&key=server.key
 ```
 
-To play back a stream from the TLS/SSL server using `ffplay`:
+使用 `ffplay` 从 TLS/SSL 服务器播放流：
 
 ``` text
 ffplay tls://hostname:port
@@ -1359,53 +1355,53 @@ ffplay tls://hostname:port
 
 ## dtls
 
-Datagram Transport Layer Security (DTLS)
+数据报传输层安全 (Datagram Transport Layer Security, DTLS)
 
-The required syntax for a DTLS URL is:
+DTLS URL 的必需语法为：
 
 ``` text
 dtls://hostname:port[?options]
 ```
 
-\<options\> contains a list of &-separated options of the form \<key\>=\<val\>. Standard percent-encoding (and using the plus sign for space) can be used to escape keys and values.
+\<options\> 包含一个以 & 分隔的选项列表，选项形如 \<key\>=\<val\>。可使用标准百分号编码（以及用加号表示空格）来转义键和值。
 
-Options can also can be specified via command line options (or in code via `AVOption`s).
+选项也可以通过命令行选项指定（或在代码中通过 `AVOption` 指定）。
 
-DTLS shares most options with TLS, but operates over UDP instead of TCP.
+DTLS 与 TLS 共享大多数选项，但通过 UDP 而不是 TCP 运行。
 
-The list of supported options follows.
+支持的选项列表如下。
 
-- **`ca_file, cafile=filename`** A file containing certificate authority (CA) root certificates to treat as trusted. If the linked TLS library contains a default this might not need to be specified for verification to work, but not all libraries and setups have defaults built in. The file must be in OpenSSL PEM format.
+- **`ca_file, cafile=filename`** 包含视为受信任的证书颁发机构 (CA) 根证书的文件。如果所链接的 TLS 库包含默认值，则验证可能无需指定此项，但并非所有库和设置都内建了默认值。该文件必须为 OpenSSL PEM 格式。
 
-- **`tls_verify, verify=1|0`** If enabled, try to verify the peer that we are communicating with. Note, if using OpenSSL, this currently only makes sure that the peer certificate is signed by one of the root certificates in the CA database, but it does not validate that the certificate actually matches the host name we are trying to connect to.
+- **`tls_verify, verify=1|0`** 如果启用，尝试验证我们正在与之通信的对等端。注意，如果使用 OpenSSL，目前这只确保对等端证书由 CA 数据库中的根证书之一签名，但不会验证该证书是否确实与我们尝试连接的主机名匹配。
 
-  This is enabled by default. Verifying the peer requires a CA database, which in some cases has to be provided by the caller.
+  默认启用此项。验证对等端需要 CA 数据库，某些情况下必须由调用方提供。
 
-- **`cert_file, cert=filename`** A file containing a certificate to use in the handshake with the peer. (When operating as server, in listen mode, this is more often required by the peer, while client certificates only are mandated in certain setups.)
+- **`cert_file, cert=filename`** 包含要在与对等端握手时使用的证书的文件。（作为服务器在监听模式下运行时，对等端通常更常要求此项，而客户端证书只在某些设置下才强制要求。）
 
-- **`key_file, key=filename`** A file containing the private key for the certificate.
+- **`key_file, key=filename`** 包含证书私钥的文件。
 
-- **`cert_pem=string`** Certificate PEM string
+- **`cert_pem=string`** 证书 PEM 字符串
 
-- **`key_pem=string`** Private key PEM string
+- **`key_pem=string`** 私钥 PEM 字符串
 
-- **`listen=1|0`** If enabled, listen for connections on the provided port, and assume the server role in the handshake instead of the client role.
+- **`listen=1|0`** 如果启用，在提供的端口上监听连接，并在握手中假定服务器角色而不是客户端角色。
 
-- **`mtu=size`** Set the Maximum Transmission Unit (MTU) for DTLS packets.
+- **`mtu=size`** 设置 DTLS 数据包的最大传输单元 (MTU)。
 
-- **`use_srtp=1|0`** Enable the use_srtp DTLS extension. This is used in WebRTC applications to establish SRTP encryption keys through the DTLS handshake. Default is disabled.
+- **`use_srtp=1|0`** 启用 use_srtp DTLS 扩展。这在 WebRTC 应用程序中用于通过 DTLS 握手建立 SRTP 加密密钥。默认禁用。
 
-- **`external_sock=1|0`** Use an external socket instead of creating a new one. This option only makes sense to pass when interacting with the code via API, enabling this from CLI will cause immediate failure. Default is disabled.
+- **`external_sock=1|0`** 使用外部套接字而不是创建新的套接字。仅在与代码通过 API 交互时传递此选项才有意义，从 CLI 启用将导致立即失败。默认禁用。
 
-Example command lines:
+示例命令行：
 
-To create a DTLS server:
+创建一个 DTLS 服务器：
 
 ``` text
 ffmpeg -listen 1 -i dtls://hostname:port output
 ```
 
-To create a DTLS client and send data to server:
+创建一个 DTLS 客户端并向服务器发送数据：
 
 ``` text
 ffmpeg -i input -f format dtls://hostname:port
@@ -1413,73 +1409,73 @@ ffmpeg -i input -f format dtls://hostname:port
 
 ## udp
 
-User Datagram Protocol.
+用户数据报协议 (User Datagram Protocol)。
 
-The required syntax for an UDP URL is:
+UDP URL 的必需语法为：
 
 ``` text
 udp://hostname:port[?options]
 ```
 
-\<options\> contains a list of &-separated options of the form \<key\>=\<val\>. Standard percent-encoding (and using the plus sign for space) can be used to escape keys and values.
+\<options\> 包含一个以 & 分隔的选项列表，选项形如 \<key\>=\<val\>。可使用标准百分号编码（以及用加号表示空格）来转义键和值。
 
-Options can also can be specified via command line options (or in code via `AVOption`s).
+选项也可以通过命令行选项指定（或在代码中通过 `AVOption` 指定）。
 
-In case threading is enabled on the system, a circular buffer is used to store the incoming data, which allows one to reduce loss of data due to UDP socket buffer overruns. The \<fifo_size\> and \<overrun_nonfatal\> options are related to this buffer.
+在系统上启用线程的情况下，将使用循环缓冲区存储传入数据，这可以减少因 UDP 套接字缓冲区溢出导致的数据丢失。\<fifo_size\> 和 \<overrun_nonfatal\> 选项与此缓冲区相关。
 
-The list of supported options follows.
+支持的选项列表如下。
 
-- **`buffer_size=size`** Set the UDP maximum socket buffer size in bytes. This is used to set either the receive or send buffer size, depending on what the socket is used for. Default is 32 KB for output, 384 KB for input. See also \<fifo_size\>.
+- **`buffer_size=size`** 设置 UDP 最大套接字缓冲区大小（字节）。这用于设置接收或发送缓冲区大小，具体取决于套接字的用途。输出默认为 32 KB，输入默认为 384 KB。另请参见 \<fifo_size\>。
 
-- **`bitrate=bitrate`** If set to nonzero, the output will have the specified constant bitrate if the input has enough packets to sustain it.
+- **`bitrate=bitrate`** 若设为非零值，且输入有足够的数据包来维持，则输出将具有指定的恒定码率。
 
-- **`burst_bits=bits`** When using \<bitrate\> this specifies the maximum number of bits in packet bursts.
+- **`burst_bits=bits`** 使用 \<bitrate\> 时，此选项指定数据包突发中的最大位数。
 
-- **`localport=port`** Override the local UDP port to bind with.
+- **`localport=port`** 覆盖要绑定的本地 UDP 端口。
 
-- **`localaddr=addr`** Local IP address of a network interface used for sending packets or joining multicast groups.
+- **`localaddr=addr`** 用于发送数据包或加入组播组的网络接口的本地 IP 地址。
 
-- **`pkt_size=size`** Set the size in bytes of UDP packets.
+- **`pkt_size=size`** 设置 UDP 数据包的大小（字节）。
 
-- **`reuse=1|0`** Explicitly allow or disallow reusing UDP sockets.
+- **`reuse=1|0`** 显式允许或禁止重用 UDP 套接字。
 
-- **`ttl=ttl`** Set the time to live value (for multicast only).
+- **`ttl=ttl`** 设置生存时间 (time to live) 值（仅限组播）。
 
-- **`dscp=dscp`** Set the 6-bit DSCP field for outgoing packets.
+- **`dscp=dscp`** 为传出数据包设置 6 位 DSCP 字段。
 
-- **`connect=1|0`** Initialize the UDP socket with `connect()`. In this case, the destination address can't be changed with ff_udp_set_remote_url later. If the destination address isn't known at the start, this option can be specified in ff_udp_set_remote_url, too. This allows finding out the source address for the packets with getsockname, and makes writes return with AVERROR(ECONNREFUSED) if "destination unreachable" is received. For receiving, this gives the benefit of only receiving packets from the specified peer address/port.
+- **`connect=1|0`** 用 `connect()` 初始化 UDP 套接字。在这种情况下，之后无法使用 ff_udp_set_remote_url 更改目标地址。如果开始时不知道目标地址，也可以在 ff_udp_set_remote_url 中指定此选项。这允许通过 getsockname 获取数据包的源地址，并且在收到"目标不可达"时使写入返回 AVERROR(ECONNREFUSED)。对于接收，这带来仅接收来自指定对等端地址/端口的数据包的好处。
 
-- **`sources=address[,address]`** Only receive packets sent from the specified addresses. In case of multicast, also subscribe to multicast traffic coming from these addresses only.
+- **`sources=address[,address]`** 仅接收从指定地址发送的数据包。对于组播，也仅订阅来自这些地址的组播流量。
 
-- **`block=address[,address]`** Ignore packets sent from the specified addresses. In case of multicast, also exclude the source addresses in the multicast subscription.
+- **`block=address[,address]`** 忽略从指定地址发送的数据包。对于组播，也在组播订阅中排除这些源地址。
 
-- **`fifo_size=units`** Set the UDP receiving circular buffer size, expressed as a number of packets with size of 188 bytes. If not specified defaults to 7\*4096.
+- **`fifo_size=units`** 设置 UDP 接收循环缓冲区的大小，表示为大小为 188 字节的数据包数量。若未指定，默认为 7\*4096。
 
-- **`overrun_nonfatal=1|0`** Survive in case of UDP receiving circular buffer overrun. Default value is 0.
+- **`overrun_nonfatal=1|0`** 在 UDP 接收循环缓冲区溢出时继续存活。默认值为 0。
 
-- **`timeout=microseconds`** Set raise error timeout, expressed in microseconds.
+- **`timeout=microseconds`** 设置引发错误的超时，以微秒表示。
 
-  This option is only relevant in read mode: if no data arrived in more than this time interval, raise error.
+  此选项仅在读取模式下相关：如果在此时间间隔内没有数据到达，则引发错误。
 
-- **`broadcast=1|0`** Explicitly allow or disallow UDP broadcasting.
+- **`broadcast=1|0`** 显式允许或禁止 UDP 广播。
 
-  Note that broadcasting may not work properly on networks having a broadcast storm protection.
+  请注意，在具有广播风暴防护的网络上，广播可能无法正常工作。
 
-### Examples
+### 示例
 
-- Use `ffmpeg` to stream over UDP to a remote endpoint:
+- 使用 `ffmpeg` 通过 UDP 向远端端点推流：
 
   ``` text
   ffmpeg -i input -f format udp://hostname:port
   ```
 
-- Use `ffmpeg` to stream in mpegts format over UDP using 188 sized UDP packets, using a large input buffer:
+- 使用 `ffmpeg` 通过 UDP 以 mpegts 格式推流，使用 188 字节大小的 UDP 数据包，并使用较大的输入缓冲区：
 
   ``` text
   ffmpeg -i input -f mpegts udp://hostname:port?pkt_size=188&buffer_size=65535
   ```
 
-- Use `ffmpeg` to receive over UDP from a remote endpoint:
+- 使用 `ffmpeg` 从远端端点通过 UDP 接收：
 
   ``` text
   ffmpeg -i udp://[multicast-address]:port ...
@@ -1487,21 +1483,21 @@ The list of supported options follows.
 
 ## unix
 
-Unix local socket
+Unix 本地套接字
 
-The required syntax for a Unix socket URL is:
+Unix 套接字 URL 的必需语法为：
 
 ``` text
 unix://filepath
 ```
 
-The following parameters can be set via command line options (or in code via `AVOption`s):
+以下参数可以通过命令行选项设置（或在代码中通过 `AVOption` 设置）：
 
-- **`timeout`** Timeout in ms.
+- **`timeout`** 超时（毫秒）。
 
-- **`listen`** Create the Unix socket in listening mode.
+- **`listen`** 以监听模式创建 Unix 套接字。
 
-- **`type`** Select socket type.
+- **`type`** 选择套接字类型。
 
   - **`stream Corresponds to SOCK_STREAM (reliable stream-oriented)`**
 
@@ -1509,40 +1505,40 @@ The following parameters can be set via command line options (or in code via `AV
 
   - **`seqpacket Corresponds to SOCK_SEQPACKET (reliable packet-oriented)`**
 
-- **`pkt_size`** Maximum packet size for packet-oriented sockets (SOCK_DGRAM and SOCK_SEQPACKET). If greater than zero, this value is used as `max_packet_size`. Ignored for SOCK_STREAM. Default is `0`.
+- **`pkt_size`** 面向数据包的套接字 (SOCK_DGRAM 和 SOCK_SEQPACKET) 的最大数据包大小。若大于零，此值将用作 `max_packet_size`。对 SOCK_STREAM 忽略。默认值为 `0`。
 
 ## zmq
 
-ZeroMQ asynchronous messaging using the libzmq library.
+使用 libzmq 库的 ZeroMQ 异步消息传递。
 
-This library supports unicast streaming to multiple clients without relying on an external server.
+此库支持不依赖外部服务器向多个客户端进行单播推流。
 
-The required syntax for streaming or connecting to a stream is:
+推流或连接到流的必需语法为：
 
 ``` text
 zmq:tcp://ip-address:port
 ```
 
-Example: Create a localhost stream on port 5555:
+示例：在端口 5555 上创建 localhost 流：
 
 ``` text
 ffmpeg -re -i input -f mpegts zmq:tcp://127.0.0.1:5555
 ```
 
-Multiple clients may connect to the stream using:
+多个客户端可以使用以下命令连接到该流：
 
 ``` text
 ffplay zmq:tcp://127.0.0.1:5555
 ```
 
-Streaming to multiple clients is implemented using a ZeroMQ Pub-Sub pattern. The server side binds to a port and publishes data. Clients connect to the server (via IP address/port) and subscribe to the stream. The order in which the server and client start generally does not matter.
+向多个客户端推流通过 ZeroMQ 发布-订阅 (Pub-Sub) 模式实现。服务器端绑定到一个端口并发布数据。客户端连接到服务器（通过 IP 地址/端口）并订阅该流。服务器和客户端启动的先后顺序通常无关紧要。
 
-ffmpeg must be compiled with the –enable-libzmq option to support this protocol.
+ffmpeg 必须以 –enable-libzmq 选项编译才能支持此协议。
 
-Options can be set on the `ffmpeg`/`ffplay` command line. The following options are supported:
+选项可以在 `ffmpeg`/`ffplay` 命令行上设置。支持以下选项：
 
-- **`pkt_size`** Forces the maximum packet size for sending/receiving data. The default value is 131,072 bytes. On the server side, this sets the maximum size of sent packets via ZeroMQ. On the clients, it sets an internal buffer size for receiving packets. Note that pkt_size on the clients should be equal to or greater than pkt_size on the server. Otherwise the received message may be truncated causing decoding errors.
+- **`pkt_size`** 强制发送/接收数据的最大数据包大小。默认值为 131,072 字节。在服务器端，它设置通过 ZeroMQ 发送的数据包的最大大小。在客户端，它设置接收数据包的内部缓冲区大小。注意，客户端上的 pkt_size 应当等于或大于服务器上的 pkt_size，否则接收到的消息可能被截断从而导致解码错误。
 
-# See Also
+# 另请参见
 
 ffmpeg(1), ffplay(1), ffprobe(1), libavformat(3)
