@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#description" class="md-skip">
+        <a href="#描述" class="md-skip">
           跳转至
         </a>
       
@@ -1755,17 +1755,12 @@
   
 
 
-<div class="admonition warning">
-<p class="admonition-title">翻译占位页</p>
-<p>本页为英文原文占位（翻译进行中，进度见<a href="https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md">翻译看板</a>）。
-术语与示例以英文原文为准。</p>
-</div>
-<h1 id="description">Description<a class="headerlink" href="#description" title="Permanent link">&para;</a></h1>
-<p>NUT is a low overhead generic container format. It stores audio, video, subtitle and user-defined streams in a simple, yet efficient, way.</p>
-<p>It was created by a group of FFmpeg and MPlayer developers in 2003 and was finalized in 2008.</p>
-<p>The official nut specification is at https://git.ffmpeg.org/gitweb/nut.git/blob/refs/heads/master:/docs/nut.txt In case of any differences between this text and the official specification, the official specification shall prevail.</p>
-<h1 id="modes">Modes<a class="headerlink" href="#modes" title="Permanent link">&para;</a></h1>
-<p>NUT has some variants signaled by using the flags field in its main header.</p>
+<h1 id="描述">描述<a class="headerlink" href="#描述" title="Permanent link">&para;</a></h1>
+<p>NUT 是一种低开销的通用容器格式。它以一种简单而高效的方式存储音频、视频、字幕和用户自定义的流。</p>
+<p>它由一群 FFmpeg 和 MPlayer 开发者于 2003 年创建，并于 2008 年定稿。</p>
+<p>NUT 的官方规范见 <a href="https://git.ffmpeg.org/gitweb/nut.git/blob/refs/heads/master:/docs/nut.txt">官方 nut 规范</a>。若本文与官方规范之间存在任何差异，以官方规范为准。</p>
+<h1 id="模式">模式<a class="headerlink" href="#模式" title="Permanent link">&para;</a></h1>
+<p>NUT 通过在其主头（main header）中使用 flags 字段来标记若干变体。</p>
 <table>
 <thead>
 <tr>
@@ -1776,26 +1771,26 @@
 <tbody>
 <tr>
 <td>BROADCAST</td>
-<td>Extend the syncpoint to report the sender wallclock</td>
+<td>扩展同步点（syncpoint）以报告发送方的墙钟</td>
 </tr>
 <tr>
 <td>PIPE</td>
-<td>Omit completely the syncpoint</td>
+<td>完全省略同步点（syncpoint）</td>
 </tr>
 </tbody>
 </table>
 <h2 id="broadcast">BROADCAST<a class="headerlink" href="#broadcast" title="Permanent link">&para;</a></h2>
-<p>The BROADCAST variant provides a secondary time reference to facilitate detecting endpoint latency and network delays. It assumes all the endpoint clocks are synchronized. To be used in real-time scenarios.</p>
+<p>BROADCAST 变体提供第二时间基准，便于检测端点延迟与网络时延。它假定所有端点的时钟均已同步。适用于实时场景。</p>
 <h2 id="pipe">PIPE<a class="headerlink" href="#pipe" title="Permanent link">&para;</a></h2>
-<p>The PIPE variant assumes NUT is used as non-seekable intermediate container, by not using syncpoint removes unneeded overhead and reduces the overall memory usage.</p>
-<h1 id="container-specific-codec-tags">Container-specific codec tags<a class="headerlink" href="#container-specific-codec-tags" title="Permanent link">&para;</a></h1>
-<h2 id="generic-raw-yuva-formats">Generic raw YUVA formats<a class="headerlink" href="#generic-raw-yuva-formats" title="Permanent link">&para;</a></h2>
-<p>Since many exotic planar YUVA pixel formats are not considered by the AVI/QuickTime FourCC lists, the following scheme is adopted for representing them.</p>
-<p>The first two bytes can contain the values: Y1 = only Y Y2 = Y+A Y3 = YUV Y4 = YUVA</p>
-<p>The third byte represents the width and height chroma subsampling values for the UV planes, that is the amount to shift the luma width/height right to find the chroma width/height.</p>
-<p>The fourth byte is the number of bits used (8, 16, ...).</p>
-<p>If the order of bytes is inverted, that means that each component has to be read big-endian.</p>
-<h2 id="raw-audio">Raw Audio<a class="headerlink" href="#raw-audio" title="Permanent link">&para;</a></h2>
+<p>PIPE 变体假定 NUT 被用作不可定位的中间容器，通过不使用同步点来去除不必要的开销，并降低整体内存占用。</p>
+<h1 id="容器特定的编解码器标签">容器特定的编解码器标签<a class="headerlink" href="#容器特定的编解码器标签" title="Permanent link">&para;</a></h1>
+<h2 id="通用原始-yuva-格式">通用原始 YUVA 格式<a class="headerlink" href="#通用原始-yuva-格式" title="Permanent link">&para;</a></h2>
+<p>由于许多特殊的平面（planar）YUVA 像素格式未被 AVI/QuickTime 的 FourCC 列表收录，因此采用以下方案来表示它们。</p>
+<p>前两个字节可以包含以下值：Y1 = 仅 Y，Y2 = Y+A，Y3 = YUV，Y4 = YUVA。</p>
+<p>第三个字节表示 UV 平面宽度和高度方向的色度二次采样（chroma subsampling）值，即为了求得色度宽度/高度而需要将亮度宽度/高度右移的量。</p>
+<p>第四个字节是所使用的位数（8、16……）。</p>
+<p>如果字节顺序颠倒，则表示每个分量都必须按大端序读取。</p>
+<h2 id="原始音频">原始音频<a class="headerlink" href="#原始音频" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -1814,18 +1809,18 @@
 </tr>
 <tr>
 <td>P\&lt;type&gt;\&lt;interleaving&gt;\&lt;bits&gt;</td>
-<td>little-endian PCM</td>
+<td>小端序 PCM</td>
 </tr>
 <tr>
 <td>\&lt;bits&gt;\&lt;interleaving&gt;\&lt;type&gt;P</td>
-<td>big-endian PCM</td>
+<td>大端序 PCM</td>
 </tr>
 </tbody>
 </table>
-<p>\&lt;type&gt; is S for signed integer, U for unsigned integer, F for IEEE float \&lt;interleaving&gt; is D for default, P is for planar. \&lt;bits&gt; is 8/16/24/32</p>
+<p>\&lt;type&gt; 为 S 表示有符号整数，U 表示无符号整数，F 表示 IEEE 浮点数。\&lt;interleaving&gt; 为 D 表示默认，P 表示平面。\&lt;bits&gt; 为 8/16/24/32</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>PFD[32]   would for example be signed 32 bit little-endian IEEE float
 </code></pre></div>
-<h2 id="subtitles">Subtitles<a class="headerlink" href="#subtitles" title="Permanent link">&para;</a></h2>
+<h2 id="字幕">字幕<a class="headerlink" href="#字幕" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -1836,7 +1831,7 @@
 <tbody>
 <tr>
 <td>UTF8</td>
-<td>Raw UTF-8</td>
+<td>原始 UTF-8</td>
 </tr>
 <tr>
 <td>SSA[0]</td>
@@ -1844,15 +1839,15 @@
 </tr>
 <tr>
 <td>DVDS</td>
-<td>DVD subtitles</td>
+<td>DVD 字幕</td>
 </tr>
 <tr>
 <td>DVBS</td>
-<td>DVB subtitles</td>
+<td>DVB 字幕</td>
 </tr>
 </tbody>
 </table>
-<h2 id="raw-data">Raw Data<a class="headerlink" href="#raw-data" title="Permanent link">&para;</a></h2>
+<h2 id="原始数据">原始数据<a class="headerlink" href="#原始数据" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -1863,11 +1858,11 @@
 <tbody>
 <tr>
 <td>UTF8</td>
-<td>Raw UTF-8</td>
+<td>原始 UTF-8</td>
 </tr>
 </tbody>
 </table>
-<h2 id="codecs">Codecs<a class="headerlink" href="#codecs" title="Permanent link">&para;</a></h2>
+<h2 id="编解码器">编解码器<a class="headerlink" href="#编解码器" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -1878,7 +1873,7 @@
 <tbody>
 <tr>
 <td>3IV1</td>
-<td>non-compliant MPEG-4 generated by old 3ivx</td>
+<td>由旧版 3ivx 生成的非合规 MPEG-4</td>
 </tr>
 <tr>
 <td>ASV1</td>
@@ -1898,7 +1893,7 @@
 </tr>
 <tr>
 <td>DIVX</td>
-<td>non-compliant MPEG-4 generated by old DivX</td>
+<td>由旧版 DivX 生成的非合规 MPEG-4</td>
 </tr>
 <tr>
 <td>DUCK</td>
@@ -1950,7 +1945,7 @@
 </tr>
 <tr>
 <td>LJPG</td>
-<td>ITU JPEG (lossless)</td>
+<td>ITU JPEG（无损）</td>
 </tr>
 <tr>
 <td>MJLS</td>
@@ -1962,7 +1957,7 @@
 </tr>
 <tr>
 <td>MPG4</td>
-<td>MS MPEG-4v1 (not ISO MPEG-4)</td>
+<td>MS MPEG-4v1（非 ISO MPEG-4）</td>
 </tr>
 <tr>
 <td>MP42</td>
@@ -1974,15 +1969,15 @@
 </tr>
 <tr>
 <td>MP4V</td>
-<td>ISO MPEG-4 Part 2 Video (from old encoders)</td>
+<td>ISO MPEG-4 第 2 部分视频（来自旧编码器）</td>
 </tr>
 <tr>
 <td>mpg1</td>
-<td>ISO MPEG-1 Video</td>
+<td>ISO MPEG-1 视频</td>
 </tr>
 <tr>
 <td>mpg2</td>
-<td>ISO MPEG-2 Video</td>
+<td>ISO MPEG-2 视频</td>
 </tr>
 <tr>
 <td>MRLE</td>
@@ -2034,7 +2029,7 @@
 </tr>
 <tr>
 <td>UMP4</td>
-<td>non-compliant MPEG-4 generated by UB Video MPEG-4</td>
+<td>由 UB Video MPEG-4 生成的非合规 MPEG-4</td>
 </tr>
 <tr>
 <td>VCR1</td>
@@ -2082,7 +2077,7 @@
 </tr>
 <tr>
 <td>WV1F</td>
-<td>non-compliant MPEG-4 generated by ?</td>
+<td>由 ? 生成的非合规 MPEG-4</td>
 </tr>
 <tr>
 <td>WVC1</td>
@@ -2090,11 +2085,11 @@
 </tr>
 <tr>
 <td>XVID</td>
-<td>non-compliant MPEG-4 generated by old Xvid</td>
+<td>由旧版 Xvid 生成的非合规 MPEG-4</td>
 </tr>
 <tr>
 <td>XVIX</td>
-<td>non-compliant MPEG-4 generated by old Xvid with interlacing bug</td>
+<td>由带隔行缺陷的旧版 Xvid 生成的非合规 MPEG-4</td>
 </tr>
 </tbody>
 </table>

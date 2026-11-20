@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#introduction" class="md-skip">
+        <a href="#引言" class="md-skip">
           跳转至
         </a>
       
@@ -1755,14 +1755,9 @@
   
 
 
-<div class="admonition warning">
-<p class="admonition-title">翻译占位页</p>
-<p>本页为英文原文占位（翻译进行中，进度见<a href="https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md">翻译看板</a>）。
-术语与示例以英文原文为准。</p>
-</div>
-<h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h1>
-<p>drawvg (<em>draw vector graphics</em>) is a language to draw two-dimensional graphics on top of video frames. It is not intended to be used as a general-purpose language. Since its scope is limited, it prioritizes being concise and easy to use.</p>
-<p>For example, using the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API">Canvas API</a> we can render a triangle running this code in a Web browser:</p>
+<h1 id="引言">引言<a class="headerlink" href="#引言" title="Permanent link">&para;</a></h1>
+<p>drawvg（draw vector graphics，绘制矢量图形）是一种在视频帧之上绘制二维图形的语言。它并非作为通用语言而设计。由于其作用范围有限，它优先追求简洁与易用。</p>
+<p>例如，使用 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API">Canvas API</a>，我们可以在 Web 浏览器中运行以下代码来渲染一个三角形：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">const</span><span class="w"> </span><span class="n">canvas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">document</span><span class="p">.</span><span class="n">getElementById</span><span class="p">(</span><span class="s">"canvas"</span><span class="p">);</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">const</span><span class="w"> </span><span class="n">ctx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">canvas</span><span class="p">.</span><span class="n">getContext</span><span class="p">(</span><span class="s">"2d"</span><span class="p">);</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
@@ -1773,190 +1768,190 @@
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">ctx</span><span class="p">.</span><span class="n">closePath</span><span class="p">();</span>
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">ctx</span><span class="p">.</span><span class="n">stroke</span><span class="p">();</span>
 </code></pre></div>
-<p>The same triangle can be written with this drawvg script:</p>
+<p>同样的三角形也可以用下面这个 drawvg 脚本来绘制：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>moveto 125 50
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>lineto 100 100 150 100
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>closepath
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>stroke
 </code></pre></div>
-<p>It can be shortened using the aliases for <a href="./#section"><code>moveto</code></a>, <a href="./#section"><code>lineto</code></a>, and <a href="./#section"><code>closepath</code></a>:</p>
+<p>可以利用 <a href="#m-moveto"><code>moveto</code></a>、<a href="#l-lineto"><code>lineto</code></a> 和 <a href="#z-z-closepath"><code>closepath</code></a> 的别名将其缩短：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>M 125 50
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>L 100 100 150 100
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Z
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>stroke
 </code></pre></div>
-<p>Both newlines (<code>U+000A</code>) and spaces (<code>U+0020</code>) can be used interchangeably as delimiters, so multiple commands can appear on the same line:</p>
+<p>换行符（<code>U+000A</code>）和空格（<code>U+0020</code>）可以互换使用作为分隔符，因此多条命令可以出现在同一行上：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>M 125 50 L 100 100 150 100 Z
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>stroke
 </code></pre></div>
-<p>Finally, drawvg can use section "FFmpeg expressions" in <code>ffmpeg-utils</code> and frame metadata in command arguments. In this example, we are using the variables \&lt;w&gt; (frame width) and \&lt;h&gt; (frame height) to create a circle in the middle of the frame.</p>
+<p>最后，drawvg 可以使用 <code>ffmpeg-utils</code> 中"FFmpeg 表达式"小节的内容，以及在命令参数中使用帧元数据。在本例中，我们使用变量 \&lt;w&gt;（帧宽度）和 \&lt;h&gt;（帧高度）在帧中央创建一个圆。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>circle (w / 2) (h / 2) (w / 3)
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>stroke
 </code></pre></div>
-<p>Many commands are a direct equivalent to a function in the <a href="https://www.cairographics.org/">Cairo graphics library</a>. For such commands, the reference below provides a link to the related Cairo documentation.</p>
-<h1 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link">&para;</a></h1>
-<p>The syntax is heavily inspired by languages like <a href="https://imagemagick.org/script/magick-vector-graphics.php">Magick Vector Graphics</a>, or <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG's <code>&lt;path&gt;</code></a>. Many command names are taken from <a href="https://en.wikipedia.org/wiki/PostScript">PostScript</a>.</p>
-<h2 id="structure">Structure<a class="headerlink" href="#structure" title="Permanent link">&para;</a></h2>
-<p>A drawvg script consists of a series of commands to describe 2D graphics.</p>
-<p>A command is an identifier (like <a href="./#section"><code>setcolor</code></a> or <a href="./#section"><code>lineto</code></a>) followed by its arguments. Each item in the code (command name, arguments, etc.) is separated by any of the following characters:</p>
+<p>许多命令与 <a href="https://www.cairographics.org/">Cairo 图形库</a>中的函数直接等价。对于这类命令，下方的参考提供了指向相关 Cairo 文档的链接。</p>
+<h1 id="语法">语法<a class="headerlink" href="#语法" title="Permanent link">&para;</a></h1>
+<p>该语法的灵感大量来自 <a href="https://imagemagick.org/script/magick-vector-graphics.php">Magick Vector Graphics</a> 和 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG 的 <code>&lt;path&gt;</code></a> 等语言。许多命令名取自 <a href="https://en.wikipedia.org/wiki/PostScript">PostScript</a>。</p>
+<h2 id="结构">结构<a class="headerlink" href="#结构" title="Permanent link">&para;</a></h2>
+<p>drawvg 脚本由一系列描述 2D 图形的命令组成。</p>
+<p>命令是一个标识符（如 <a href="#setcolor"><code>setcolor</code></a> 或 <a href="#l-lineto"><code>lineto</code></a>），后跟其参数。代码中的每个项（命令名、参数等）由以下任一字符分隔：</p>
 <ul>
 <li>
-<p>Space (<code>' '</code>)</p>
+<p>空格（<code>' '</code>）</p>
 </li>
 <li>
-<p>Comma (<code>','</code>)</p>
+<p>逗号（<code>','</code>）</p>
 </li>
 <li>
-<p>Newline (<code>'\n'</code>)</p>
+<p>换行符（<code>'\n'</code>）</p>
 </li>
 <li>
-<p>Tabs (<code>'\t'</code>)</p>
+<p>制表符（<code>'\t'</code>）</p>
 </li>
 <li>
-<p>Return (<code>'\r'</code>)</p>
+<p>回车符（<code>'\r'</code>）</p>
 </li>
 </ul>
-<p>The beginning of the item indicates how it will be interpreted:</p>
+<p>项的开头字符决定它将如何被解释：</p>
 <table>
 <thead>
 <tr>
-<th>Term</th>
-<th>Description</th>
+<th>项</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>//</code></td>
-<td>Comment</td>
+<td>注释</td>
 </tr>
 <tr>
 <td><code>0</code>, …, <code>9</code>, <code>+</code>, <code>-</code></td>
-<td>Number literal</td>
+<td>数字字面量</td>
 </tr>
 <tr>
 <td><code>(</code></td>
-<td>Expression</td>
+<td>表达式</td>
 </tr>
 <tr>
 <td><code>{</code>, <code>}</code></td>
-<td>Block delimiters</td>
+<td>块分隔符</td>
 </tr>
 <tr>
-<td>Anything else</td>
-<td>Name of a command, a color, etc.</td>
+<td>其他</td>
+<td>命令名、颜色名等</td>
 </tr>
 </tbody>
 </table>
-<h2 id="comments">Comments<a class="headerlink" href="#comments" title="Permanent link">&para;</a></h2>
-<p>Comments start with two slashes (<code>//</code>), and stop at the end of the line (either a <code>\n</code>, or the end of the script).</p>
+<h2 id="注释">注释<a class="headerlink" href="#注释" title="Permanent link">&para;</a></h2>
+<p>注释以两个斜杠（<code>//</code>）开始，并在行尾结束（<code>\n</code> 或脚本结尾）。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>circle 100 100 50 // this is ignored
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>fill
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
 <a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>// this is also ignored
 </code></pre></div>
-<p><code>//</code> must appear after a space, or at the beginning of the line. If <code>//</code> is preceded by any non-blank character, the parser will consider <code>//</code> as part of the previous item.</p>
-<p>For example, in this script:</p>
+<p><code>//</code> 必须出现在空格之后或行首。如果 <code>//</code> 前面有任何非空白字符，解析器会把 <code>//</code> 视为前一项的一部分。</p>
+<p>例如，在这个脚本中：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>circle 10 10 50// something
 </code></pre></div>
-<p>The parser throws an error because it tries to parse <code>50//</code> as a number literal.</p>
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<p>The way commands are parsed is inspired by <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG's <code>&lt;path&gt;</code></a>:</p>
+<p>解析器抛出错误，因为它试图把 <code>50//</code> 解析为数字字面量。</p>
+<h2 id="命令">命令<a class="headerlink" href="#命令" title="Permanent link">&para;</a></h2>
+<p>命令的解析方式灵感来自 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG 的 <code>&lt;path&gt;</code></a>：</p>
 <ul>
 <li>
-<p>Every command in the script starts with its name, and it is followed by zero or more arguments.</p>
+<p>脚本中的每条命令都以其名称开始，后跟零个或多个参数。</p>
 </li>
 <li>
-<p>There are no explicit delimiters between commands or arguments.</p>
+<p>命令之间或参数之间没有显式分隔符。</p>
 </li>
 </ul>
-<p>Most programming languages expect characters like parenthesis, commas, or semicolons, to separate items. For example:</p>
+<p>大多数编程语言期望用括号、逗号或分号等字符来分隔各项。例如：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">moveto</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w"> </span><span class="n">lineto</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">);</span>
 </code></pre></div>
-<p>The equivalent in drawvg is:</p>
+<p>drawvg 中的等价写法是：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>moveto 10 10 lineto 20 30
 </code></pre></div>
 <ul>
-<li>If the command has no arguments (like <a href="./#section"><code>closepath</code></a> or <a href="./#section"><code>stroke</code></a>), the next command starts at the next item.</li>
+<li>如果命令没有参数（如 <a href="#z-z-closepath"><code>closepath</code></a> 或 <a href="#stroke"><code>stroke</code></a>），下一条命令将从下一项开始。</li>
 </ul>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In the next script there are 4 different commands:
+在下一个脚本中有 4 条不同的命令：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>newpath rect 10 20 30 40 setcolor teal fill
 </code></pre></div>
 
-1.  [`newpath`](drawvg-reference.md#section) requires no arguments.
+1.  [`newpath`](#newpath) 不需要参数。
 
-2.  [`rect`](drawvg-reference.md#section) requires 4 arguments, so it takes the next 4 numbers.
+2.  [`rect`](#rect) 需要 4 个参数，因此它取接下来的 4 个数字。
 
-3.  [`setcolor`](drawvg-reference.md#section) requires 1 argument, so it takes the word `teal`.
+3.  [`setcolor`](#setcolor) 需要 1 个参数，因此它取单词 `teal`。
 
-4.  [`fill`](drawvg-reference.md#section) requires no arguments.
+4.  [`fill`](#fill-eofill) 不需要参数。
 
 </div>
 
-<h3 id="single-letter-aliases">Single-Letter Aliases<a class="headerlink" href="#single-letter-aliases" title="Permanent link">&para;</a></h3>
-<p>Most commands in <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG's <code>&lt;path&gt;</code></a> are also present in drawvg. For some of them, there is an alias to a longer name:</p>
+<h3 id="单字母别名">单字母别名<a class="headerlink" href="#单字母别名" title="Permanent link">&para;</a></h3>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG 的 <code>&lt;path&gt;</code></a> 中的大多数命令在 drawvg 中也存在。对于其中一部分命令，存在指向更长名称的别名：</p>
 <ul>
 <li>
-<p><a href="./#section"><code>curveto</code></a> for <a href="./#section"><code>C</code></a>.</p>
+<p><a href="#c-curveto"><code>curveto</code></a> 对应 <a href="#c-curveto"><code>C</code></a>。</p>
 </li>
 <li>
-<p><a href="./#section"><code>rcurveto</code></a> for <a href="./#section"><code>c</code></a>.</p>
+<p><a href="#c-rcurveto"><code>rcurveto</code></a> 对应 <a href="#c-rcurveto"><code>c</code></a>。</p>
 </li>
 <li>
-<p><a href="./#section"><code>lineto</code></a> for <a href="./#section"><code>L</code></a>.</p>
+<p><a href="#l-lineto"><code>lineto</code></a> 对应 <a href="#l-lineto"><code>L</code></a>。</p>
 </li>
 <li>
-<p><a href="./#section"><code>rlineto</code></a> for <a href="./#section"><code>l</code></a>.</p>
+<p><a href="#l-rlineto"><code>rlineto</code></a> 对应 <a href="#l-rlineto"><code>l</code></a>。</p>
 </li>
 <li>
-<p><a href="./#section"><code>moveto</code></a> for <a href="./#section"><code>M</code></a>.</p>
+<p><a href="#m-moveto"><code>moveto</code></a> 对应 <a href="#m-moveto"><code>M</code></a>。</p>
 </li>
 <li>
-<p><a href="./#section"><code>rmoveto</code></a> for <a href="./#section"><code>m</code></a>.</p>
+<p><a href="#m-rmoveto"><code>rmoveto</code></a> 对应 <a href="#m-rmoveto"><code>m</code></a>。</p>
 </li>
 <li>
-<p><a href="./#section"><code>closepath</code></a> for <a href="./#section"><code>Z</code></a>, <a href="./#section"><code>z</code></a>.</p>
+<p><a href="#z-z-closepath"><code>closepath</code></a> 对应 <a href="#z-z-closepath"><code>Z</code></a>、<a href="#z-z-closepath"><code>z</code></a>。</p>
 </li>
 </ul>
-<p>Other commands only exist in a single-letter form:</p>
+<p>其他命令只以单字母形式存在：</p>
 <ul>
 <li>
-<p><a href="./#section"><code>H</code></a>, <a href="./#section"><code>h</code></a></p>
+<p><a href="#h-h"><code>H</code></a>, <a href="#h-h"><code>h</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>Q</code></a>, <a href="./#section"><code>q</code></a></p>
+<p><a href="#q"><code>Q</code></a>, <a href="#q"><code>q</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>S</code></a>, <a href="./#section"><code>s</code></a></p>
+<p><a href="#s-s"><code>S</code></a>, <a href="#s-s"><code>s</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>V</code></a>, <a href="./#section"><code>v</code></a></p>
+<p><a href="#v-v"><code>V</code></a>, <a href="#v-v"><code>v</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>T</code></a>, <a href="./#section"><code>t</code></a></p>
+<p><a href="#t-t"><code>T</code></a>, <a href="#t-t"><code>t</code></a></p>
 </li>
 </ul>
-<p>This makes it possible to use a path in SVG to create the same shape in a drawvg script.</p>
-<h3 id="implicit-commands">Implicit Commands<a class="headerlink" href="#implicit-commands" title="Permanent link">&para;</a></h3>
-<p>For many commands, the name can be omitted when it is used multiple times in successive calls.</p>
-<p>In the reference below, these commands has a <em>Can be Implicit</em> note in their signature.</p>
+<p>这使得可以用 SVG 的路径在 drawvg 脚本中创建相同的形状。</p>
+<h3 id="隐式命令">隐式命令<a class="headerlink" href="#隐式命令" title="Permanent link">&para;</a></h3>
+<p>对于许多命令，在连续调用中多次使用时可以省略其名称。</p>
+<p>在下文的命令参考中，这类命令的签名处标有 <em>可为隐式</em> 注记。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-For example, in this script:
+例如，在这个脚本中：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>M 50 50
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>l 10 10
@@ -1967,7 +1962,7 @@ For example, in this script:
 <a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>stroke
 </code></pre></div>
 
-After the first call to [`l`](drawvg-reference.md#section) (alias to [`rlineto`](drawvg-reference.md#section)), the command can be executed without the name, so it can be written as:
+在第一次调用 [`l`](#l-rlineto)（[`rlineto`](#l-rlineto) 的别名）之后，该命令可以不带名称执行，因此可以写作：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>M 50 50
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>l 10 10 10 -10 10 10 10 -10 10 10
@@ -1976,60 +1971,60 @@ After the first call to [`l`](drawvg-reference.md#section) (alias to [`rlineto`]
 
 </div>
 
-<p>To reuse the same command (<a href="./#section"><code>l</code></a>, in the previous example), the parser checks if the item after the last argument is a numeric value, like a number literal or a FFmpeg expression.</p>
+<p>要复用同一条命令（上例中的 <a href="#l-rlineto"><code>l</code></a>），解析器会检查最后一个参数之后的项是否为数值，比如数字字面量或 FFmpeg 表达式。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example:
+在这个例子中：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>l 10 20 30 40 stroke
 </code></pre></div>
 
-[`l`](drawvg-reference.md#section) requires 2 arguments, and can be implicit, so the parser performs this operation:
+[`l`](#l-rlineto) 需要 2 个参数，并且可为隐式，因此解析器执行以下操作：
 
-1.  Takes the two next items (`10` and `20`) and emits the first instruction.
+1.  取接下来的两项（`10` 和 `20`）并发出第一条指令。
 
-2.  Checks if the item after `20` is a numeric value. Since it is `30`, it takes `30` and `40` and emits the second instruction (`l 30 40`).
+2.  检查 `20` 之后的项是否为数值。由于它是 `30`，于是取 `30` 和 `40` 并发出第二条指令（`l 30 40`）。
 
-3.  Checks if the next item after `40` is a numeric value, but it is a command ([`stroke`](drawvg-reference.md#section)), so it stops reusing [`l`](drawvg-reference.md#section).
+3.  检查 `40` 之后的下一项是否为数值，但它是一条命令（[`stroke`](#stroke)），因此停止复用 [`l`](#l-rlineto)。
 
 </div>
 
-<p>This is another feature taken from <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG's <code>&lt;path&gt;</code></a>. An important difference with SVG is that the separator between items is always required. In SVG, it can be omitted in some cases. For example, the expression <code>m1-2</code> is equivalent to <code>m 1 -2</code> in SVG, but a syntax error in drawvg.</p>
-<h2 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h2>
-<p>Most commands expect numeric arguments, like number literals, variable names, or expressions.</p>
-<p><a href="./#section"><code>setcolor</code></a> and <a href="./#section"><code>colorstop</code></a> expect a color.</p>
-<p><a href="./#section"><code>setlinecap</code></a> and <a href="./#section"><code>setlinejoin</code></a> expect a constant value.</p>
-<h3 id="number-literals">Number Literals<a class="headerlink" href="#number-literals" title="Permanent link">&para;</a></h3>
-<p>A number literal is an item in the script that represents a constant value. Any item that starts with a decimal digit (between <code>0</code> and <code>9</code>), a <code>-</code> or a <code>+</code>, is interpreted as a number literal.</p>
-<p>The value is parsed with <a href="https://ffmpeg.org/doxygen/trunk/eval_8c.html#a7d21905c92ee5af0bb529d2daf8cb7c3"><code>av_strtod</code></a>. It supports the prefix <code>0x</code> to write a value with hexadecimal digits, and <a href="https://ffmpeg.org/ffmpeg-utils.html#:~:text=The%20evaluator%20also%20recognizes%20the%20International%20System%20unit%20prefixes">many units</a> (like <code>K</code> or <code>GiB</code>).</p>
-<p>In the next example, all literals represent the same value:</p>
+<p>这是另一个取自 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG 的 <code>&lt;path&gt;</code></a> 的特性。与 SVG 的一个重要区别是：各项之间的分隔符始终是必需的。在 SVG 中，某些情况下可以省略它。例如，表达式 <code>m1-2</code> 在 SVG 中等价于 <code>m 1 -2</code>，但在 drawvg 中是语法错误。</p>
+<h2 id="参数">参数<a class="headerlink" href="#参数" title="Permanent link">&para;</a></h2>
+<p>大多数命令接受数字参数，比如数字字面量、变量名或表达式。</p>
+<p><a href="#setcolor"><code>setcolor</code></a> 和 <a href="#colorstop"><code>colorstop</code></a> 接受一个颜色。</p>
+<p><a href="#setlinecap"><code>setlinecap</code></a> 和 <a href="#setlinejoin"><code>setlinejoin</code></a> 接受一个常量值。</p>
+<h3 id="数字字面量">数字字面量<a class="headerlink" href="#数字字面量" title="Permanent link">&para;</a></h3>
+<p>数字字面量是脚本中表示常量值的项。任何以十进制数字（<code>0</code> 到 <code>9</code> 之间）、<code>-</code> 或 <code>+</code> 开头的项都会被解释为数字字面量。</p>
+<p>该值用 <a href="https://ffmpeg.org/doxygen/trunk/eval_8c.html#a7d21905c92ee5af0bb529d2daf8cb7c3"><code>av_strtod</code></a> 解析。它支持 <code>0x</code> 前缀来书写十六进制值，并支持<a href="https://ffmpeg.org/ffmpeg-utils.html#:~:text=The%20evaluator%20also%20recognizes%20the%20International%20System%20unit%20prefixes">许多单位</a>（如 <code>K</code> 或 <code>GiB</code>）。</p>
+<p>在下一个例子中，所有字面量都表示同一个值：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>10000
 <a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>1e4
 <a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>10K
 <a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>0x2710
 </code></pre></div>
-<h3 id="expressions">Expressions<a class="headerlink" href="#expressions" title="Permanent link">&para;</a></h3>
-<p>section "FFmpeg expressions" in <code>ffmpeg-utils</code> can be used as arguments for any command that expects a numeric argument. The expression must be enclosed in parenthesis.</p>
+<h3 id="表达式">表达式<a class="headerlink" href="#表达式" title="Permanent link">&para;</a></h3>
+<p><code>ffmpeg-utils</code> 中"FFmpeg 表达式"小节的内容可用作任何接受数字参数的命令的参数。表达式必须用括号括起。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-The variables \<w\> and \<h\> represent the width and height of the frame. We can compute the center of the frame by dividing them by `2`:
+变量 \<w\> 和 \<h\> 表示帧的宽度和高度。我们可以把它们除以 `2` 来计算帧的中心：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>M (w / 2) (h / 2)
 </code></pre></div>
 
-They can also contain parenthesis (to group operations, to call functions, etc):
+它们还可以包含括号（用于分组运算、调用函数等）：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>moveto
 <a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    ((w + 10) / 2)      // x
@@ -2038,16 +2033,16 @@ They can also contain parenthesis (to group operations, to call functions, etc):
 
 </div>
 
-<p>The variables \&lt;n&gt; and \&lt;t&gt; can be used to compute a value that changes over time.</p>
+<p>变量 \&lt;n&gt; 和 \&lt;t&gt; 可用于计算随时间变化的值。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-To draw a circle oscillating from left to right, we can use an expression based on `sin(t)` for the `x` coordinate:
+要绘制一个从左向右振荡的圆，我们可以对 `x` 坐标使用基于 `sin(t)` 的表达式：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>circle
 <a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>    (w / 2 + sin(2 * t) * w / 4)  // x
@@ -2059,22 +2054,22 @@ To draw a circle oscillating from left to right, we can use an expression based 
 
 </div>
 
-<p>Expressions can be split in multiple lines, but they can't contain comments within them.</p>
+<p>表达式可以分写成多行，但其内部不能包含注释。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>moveto   // This is a comment.
 <a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>    (w   // This is part of the expression, not a comment.
 <a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>     + h)
 </code></pre></div>
-<h3 id="variable-names">Variable Names<a class="headerlink" href="#variable-names" title="Permanent link">&para;</a></h3>
-<p>When an expression is only a reference to a variable, the parenthesis can be omitted, and the item is just the variable name.</p>
+<h3 id="变量名">变量名<a class="headerlink" href="#变量名" title="Permanent link">&para;</a></h3>
+<p>当表达式只是对变量的引用时，括号可以省略，此时该项就是变量名。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-The next 3 expressions are equivalent: in all cases, they create a rectangle covering the whole frame.
+接下来的 3 个表达式是等价的：在所有情况下，它们都会创建一个覆盖整帧的矩形。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>rect (0) (0) (w) (h)
 <a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
@@ -2085,23 +2080,23 @@ The next 3 expressions are equivalent: in all cases, they create a rectangle cov
 
 </div>
 
-<p>It is possible to create a variable with the same name of a command, and then use it as an argument. In the previous example, the item \&lt;h&gt; is a reference to a variable (frame height), but in other contexts it may be a command (<a href="./#section"><code>h</code></a>).</p>
-<p>For <a href="#implicit-commands">implicit commands</a>, the parser prioritizes commands over variable names when it has to determine if the command is reused.</p>
+<p>可以创建与命令同名的变量，然后将其用作参数。在上一个例子中，项 \&lt;h&gt; 是对变量（帧高度）的引用，但在其他上下文中它可能是一条命令（<a href="#h-h"><code>h</code></a>）。</p>
+<p>对于<a href="#隐式命令">隐式命令</a>，当解析器需要判断命令是否被复用时，命令优先于变量名。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, the variable \<c\> is used as the first argument in two calls to [`l`](drawvg-reference.md#section). However, only the first one is valid, because in the second call the parser recognizes [`c`](drawvg-reference.md#section) as a command.
+在这个例子中，变量 \<c\> 在两次调用 [`l`](#l-rlineto) 时被用作第一个参数。然而只有第一次是有效的，因为在第二次调用中解析器将 [`c`](#c-rcurveto) 识别为命令。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>setvar c 5
 <a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>l c 10 c 15
 </code></pre></div>
 
-This issue can be fixed by surrounding the start of the second call with parenthesis:
+这个问题可以通过给第二次调用的开头加上括号来解决：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>setvar c 5
 <a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>l c 10 (c) 15
@@ -2109,17 +2104,17 @@ This issue can be fixed by surrounding the start of the second call with parenth
 
 </div>
 
-<h3 id="colors">Colors<a class="headerlink" href="#colors" title="Permanent link">&para;</a></h3>
-<p>The color to stroke and to fill paths can be set with <a href="./#section"><code>setcolor</code></a>. Its argument has the same syntax for colors in FFmpeg:</p>
+<h3 id="颜色">颜色<a class="headerlink" href="#颜色" title="Permanent link">&para;</a></h3>
+<p>描边和填充路径所用的颜色可以用 <a href="#setcolor"><code>setcolor</code></a> 设置。其参数与 FFmpeg 中的颜色语法相同：</p>
 <ul>
 <li>
-<p>A section "predefined color name" in <code>ffmpeg-utils</code>.</p>
+<p><code>ffmpeg-utils</code> 中"预定义颜色名"小节中的名称。</p>
 </li>
 <li>
-<p>In <code>#RRGGBB</code> format.</p>
+<p><code>#RRGGBB</code> 格式。</p>
 </li>
 <li>
-<p>Optionally, an <code>@a</code> suffix can be added to set the alpha value, where <code>a</code> is a number between <code>0</code> and <code>1</code>.</p>
+<p>可以添加 <code>@a</code> 后缀来设置 alpha 值（可选），其中 <code>a</code> 是 <code>0</code> 到 <code>1</code> 之间的数字。</p>
 </li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>circle 70 70 60
@@ -2130,7 +2125,7 @@ This issue can be fixed by surrounding the start of the second call with parenth
 <a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>setcolor blue@0.5
 <a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>fill
 </code></pre></div>
-<p>The color can be a variable name. In that case, it must be assigned with <a href="./#section"><code>defrgba</code></a>, <a href="./#section"><code>defhsla</code></a>, or <a href="./#section"><code>setvar</code></a> and a color.</p>
+<p>颜色可以是变量名。在这种情况下，必须先用 <a href="#defrgba"><code>defrgba</code></a>、<a href="#defhsla"><code>defhsla</code></a> 或 <a href="#setvar"><code>setvar</code></a> 配合一个颜色为其赋值。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>circle 70 70 60
 <a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>setvar CustomGreen #22FF44
 <a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>setcolor CustomGreen
@@ -2141,30 +2136,30 @@ This issue can be fixed by surrounding the start of the second call with parenth
 <a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>setcolor CustomBlue
 <a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>fill
 </code></pre></div>
-<p>The commands <a href="./#section"><code>setrgba</code></a> and <a href="./#section"><code>sethsla</code></a> allow setting colors using expressions. Similar to <a href="./#section"><code>defrgba</code></a> and <a href="./#section"><code>defhsla</code></a>, but with no intermediate variable.</p>
-<h3 id="constants">Constants<a class="headerlink" href="#constants" title="Permanent link">&para;</a></h3>
-<p>The argument for <a href="./#section"><code>setlinecap</code></a> and <a href="./#section"><code>setlinejoin</code></a> is an identifier referring to a constant value.</p>
+<p>命令 <a href="#setrgba"><code>setrgba</code></a> 和 <a href="#sethsla"><code>sethsla</code></a> 允许用表达式设置颜色。它们类似于 <a href="#defrgba"><code>defrgba</code></a> 和 <a href="#defhsla"><code>defhsla</code></a>，但没有中间变量。</p>
+<h3 id="常量">常量<a class="headerlink" href="#常量" title="Permanent link">&para;</a></h3>
+<p><a href="#setlinecap"><code>setlinecap</code></a> 和 <a href="#setlinejoin"><code>setlinejoin</code></a> 的参数是引用常量值的标识符。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>setlinecap round
 </code></pre></div>
-<h1 id="guide">Guide<a class="headerlink" href="#guide" title="Permanent link">&para;</a></h1>
-<h2 id="paths">Paths<a class="headerlink" href="#paths" title="Permanent link">&para;</a></h2>
-<p>A path is a complex shape, composed by lines and curves, that can be used to fill a region, to stroke an outline, or to establish a clip region.</p>
-<p>In order to draw anything on top of a video frame, first we have to define a path, and then use <a href="./#section"><code>stroke</code></a> or <a href="./#section"><code>fill</code></a>.</p>
-<p>The <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths">tutorial on paths in MDN</a> is a good introduction to the topic. It is focused on <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG's <code>&lt;path&gt;</code></a>, but the same concepts can be applied in drawvg.</p>
-<h3 id="current-point">Current Point<a class="headerlink" href="#current-point" title="Permanent link">&para;</a></h3>
-<p>Some commands require a <em>current point</em>. Initially, the <em>current point</em> is set to <a href="https://en.wikipedia.org/wiki/NaN"><code>NaN</code></a>. It is initialized with <a href="./#section"><code>M</code></a> or <a href="./#section"><code>moveto</code></a>. Other commands, like <a href="./#section"><code>lineto</code></a> or <a href="./#section"><code>curveto</code></a>, updates the <em>current point</em> to the new end of the shape.</p>
-<p>The <em>current point</em> can be cleared with <a href="./#section"><code>newpath</code></a>. Commands that clear the path, like <a href="./#section"><code>stroke</code></a> or <a href="./#section"><code>fill</code></a>, also clear the <em>current point</em>.</p>
+<h1 id="指南">指南<a class="headerlink" href="#指南" title="Permanent link">&para;</a></h1>
+<h2 id="路径">路径<a class="headerlink" href="#路径" title="Permanent link">&para;</a></h2>
+<p>路径是一种复杂形状，由直线和曲线组成，可用于填充区域、描边轮廓或建立裁剪区域。</p>
+<p>要在视频帧之上绘制任何内容，首先必须定义一个路径，然后使用 <a href="#stroke"><code>stroke</code></a> 或 <a href="#fill-eofill"><code>fill</code></a>。</p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths">MDN 上的路径教程</a>是该主题很好的入门材料。它聚焦于 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG 的 <code>&lt;path&gt;</code></a>，但相同的概念也适用于 drawvg。</p>
+<h3 id="当前点">当前点<a class="headerlink" href="#当前点" title="Permanent link">&para;</a></h3>
+<p>一些命令需要<em>当前点</em>。初始时，<em>当前点</em>被设为 <a href="https://en.wikipedia.org/wiki/NaN"><code>NaN</code></a>。它由 <a href="#m-moveto"><code>M</code></a> 或 <a href="#m-moveto"><code>moveto</code></a> 初始化。其他命令（如 <a href="#l-lineto"><code>lineto</code></a> 或 <a href="#c-curveto"><code>curveto</code></a>）会把<em>当前点</em>更新为形状的新终点。</p>
+<p><em>当前点</em>可以用 <a href="#newpath"><code>newpath</code></a> 清除。清除路径的命令（如 <a href="#stroke"><code>stroke</code></a> 或 <a href="#fill-eofill"><code>fill</code></a>）也会清除<em>当前点</em>。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-[`rlineto`](drawvg-reference.md#section) uses coordinates relative to the *current point*.
+[`rlineto`](#l-rlineto) 使用相对于*当前点*的坐标。
 
-Given this script:
+给定这个脚本：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>moveto 20 100
 <a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>rlineto 150 -90
@@ -2173,106 +2168,106 @@ Given this script:
 <a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>stroke
 </code></pre></div>
 
-These are the coordinates of the *current point* after executing each command:
+这些是执行每条命令后*当前点*的坐标：
 
-| Command           | Current Point |
+| 命令              | 当前点        |
 |-------------------|---------------|
 | `moveto 20 100`   | `20, 100`     |
 | `rlineto 150 -90` | `170, 10`     |
 | `rlineto -10 50`  | `140, 210`    |
 | `closepath`       | `20, 100`     |
 
-The same script can be written with single-letter aliases:
+同一脚本也可以用单字母别名书写：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>M 20 100 l 150 -90 -50 200 z stroke
 </code></pre></div>
 
 </div>
 
-<h3 id="defining-a-shape">Defining a Shape<a class="headerlink" href="#defining-a-shape" title="Permanent link">&para;</a></h3>
-<p>A path is defined by adding lines, curves, or basic shapes.</p>
+<h3 id="定义形状">定义形状<a class="headerlink" href="#定义形状" title="Permanent link">&para;</a></h3>
+<p>路径通过添加直线、曲线或基本形状来定义。</p>
 <ul>
 <li>
-<p>Basic shapes</p>
+<p>基本形状</p>
 </li>
 <li>
-<p><a href="./#section"><code>circle</code></a></p>
+<p><a href="#circle"><code>circle</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>ellipse</code></a></p>
+<p><a href="#ellipse"><code>ellipse</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>rect</code></a></p>
+<p><a href="#rect"><code>rect</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>roundedrect</code></a></p>
+<p><a href="#roundedrect"><code>roundedrect</code></a></p>
 </li>
 <li>
-<p>Lines</p>
+<p>直线</p>
 </li>
 <li>
-<p><a href="./#section"><code>M</code></a>, <a href="./#section"><code>moveto</code></a></p>
+<p><a href="#m-moveto"><code>M</code></a>, <a href="#m-moveto"><code>moveto</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>m</code></a>, <a href="./#section"><code>rmoveto</code></a></p>
+<p><a href="#m-rmoveto"><code>m</code></a>, <a href="#m-rmoveto"><code>rmoveto</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>H</code></a>, <a href="./#section"><code>h</code></a></p>
+<p><a href="#h-h"><code>H</code></a>, <a href="#h-h"><code>h</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>V</code></a>, <a href="./#section"><code>v</code></a></p>
+<p><a href="#v-v"><code>V</code></a>, <a href="#v-v"><code>v</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>L</code></a>, <a href="./#section"><code>lineto</code></a></p>
+<p><a href="#l-lineto"><code>L</code></a>, <a href="#l-lineto"><code>lineto</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>l</code></a>, <a href="./#section"><code>rlineto</code></a></p>
+<p><a href="#l-rlineto"><code>l</code></a>, <a href="#l-rlineto"><code>rlineto</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>Z</code></a>, <a href="./#section"><code>z</code></a>, <a href="./#section"><code>closepath</code></a></p>
+<p><a href="#z-z-closepath"><code>Z</code></a>, <a href="#z-z-closepath"><code>z</code></a>, <a href="#z-z-closepath"><code>closepath</code></a></p>
 </li>
 <li>
-<p>Curves</p>
+<p>曲线</p>
 </li>
 <li>
-<p><a href="./#commands"><code>arc</code></a>, <a href="./#section"><code>arcn</code></a></p>
+<p><a href="#arc"><code>arc</code></a>, <a href="#arcn"><code>arcn</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>C</code></a>, <a href="./#section"><code>curveto</code></a>,</p>
+<p><a href="#c-curveto"><code>C</code></a>, <a href="#c-curveto"><code>curveto</code></a>,</p>
 </li>
 <li>
-<p><a href="./#section"><code>c</code></a>, <a href="./#section"><code>rcurveto</code></a></p>
+<p><a href="#c-rcurveto"><code>c</code></a>, <a href="#c-rcurveto"><code>rcurveto</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>Q</code></a>, <a href="./#section"><code>q</code></a></p>
+<p><a href="#q"><code>Q</code></a>, <a href="#q"><code>q</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>S</code></a>, <a href="./#section"><code>s</code></a></p>
+<p><a href="#s-s"><code>S</code></a>, <a href="#s-s"><code>s</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>T</code></a>, <a href="./#section"><code>t</code></a></p>
+<p><a href="#t-t"><code>T</code></a>, <a href="#t-t"><code>t</code></a></p>
 </li>
 </ul>
-<p>Single-letter commands are taken from <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG's <code>&lt;path&gt;</code></a>.</p>
-<h3 id="fill">Fill<a class="headerlink" href="#fill" title="Permanent link">&para;</a></h3>
-<p>The region within the shape defined by a path can be filled with <a href="./#section"><code>fill</code></a> or <a href="./#section"><code>eofill</code></a>. Each command uses a different <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-fill-rule-t">fill rule</a>:</p>
+<p>单字母命令取自 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG 的 <code>&lt;path&gt;</code></a>。</p>
+<h3 id="填充">填充<a class="headerlink" href="#填充" title="Permanent link">&para;</a></h3>
+<p>由路径定义的形状内部区域可以用 <a href="#fill-eofill"><code>fill</code></a> 或 <a href="#fill-eofill"><code>eofill</code></a> 填充。每条命令使用不同的<a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-fill-rule-t">填充规则</a>：</p>
 <ul>
 <li>
-<p><a href="./#section"><code>fill</code></a> uses the <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-WINDING:CAPS">winding rule</a>, also known as <a href="https://en.wikipedia.org/wiki/Nonzero-rule">nonzero rule</a>.</p>
+<p><a href="#fill-eofill"><code>fill</code></a> 使用<a href="https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-WINDING:CAPS">环绕规则</a>（亦称<a href="https://en.wikipedia.org/wiki/Nonzero-rule">非零规则</a>）。</p>
 </li>
 <li>
-<p><a href="./#section"><code>eofill</code></a> uses the <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-EVEN-ODD:CAPS">even–odd rule</a>.</p>
+<p><a href="#fill-eofill"><code>eofill</code></a> 使用<a href="https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-EVEN-ODD:CAPS">奇偶规则</a>。</p>
 </li>
 </ul>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-This script shows the difference between the [winding](https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-WINDING:CAPS) and [even–odd](https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-EVEN-ODD:CAPS) rules:
+这个脚本展示了[环绕规则](https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-WINDING:CAPS)与[奇偶规则](https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-EVEN-ODD:CAPS)之间的区别：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>rect 50 10 100 60
 <a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>circle 150 70 40
@@ -2287,37 +2282,37 @@ This script shows the difference between the [winding](https://www.cairographics
 
 </div>
 
-<h3 id="stroke">Stroke<a class="headerlink" href="#stroke" title="Permanent link">&para;</a></h3>
-<p><a href="./#section"><code>stroke</code></a> draws a line around the shape defined by the path. The stroke can be configured with different commands:</p>
+<h3 id="描边">描边<a class="headerlink" href="#描边" title="Permanent link">&para;</a></h3>
+<p><a href="#stroke"><code>stroke</code></a> 沿路径定义的形状周围绘制线条。描边可以用以下命令配置：</p>
 <ul>
 <li>
-<p><a href="./#section"><code>setdash</code></a></p>
+<p><a href="#setdash"><code>setdash</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>setdashoffset</code></a></p>
+<p><a href="#setdashoffset"><code>setdashoffset</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>setlinecap</code></a></p>
+<p><a href="#setlinecap"><code>setlinecap</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>setlinejoin</code></a></p>
+<p><a href="#setlinejoin"><code>setlinejoin</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>setlinewidth</code></a></p>
+<p><a href="#setlinewidth"><code>setlinewidth</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>resetdash</code></a></p>
+<p><a href="#resetdash"><code>resetdash</code></a></p>
 </li>
 </ul>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-This example use [`setdashoffset`](drawvg-reference.md#section) to animate the stroke:
+这个例子使用 [`setdashoffset`](#setdashoffset) 来制作描边动画：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>moveto 0 0
 <a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>lineto w h
@@ -2333,15 +2328,15 @@ This example use [`setdashoffset`](drawvg-reference.md#section) to animate the s
 
 </div>
 
-<h3 id="clip">Clip<a class="headerlink" href="#clip" title="Permanent link">&para;</a></h3>
-<p>A <a href="https://en.wikipedia.org/wiki/Clipping_(computer_graphics)">clip region</a> can be established with <a href="./#section"><code>clip</code></a> and <a href="./#section"><code>eoclip</code></a>.</p>
-<p>If there is an active clip region, the new clip region will be the intersection between the existing one and the path. <a href="./#section"><code>resetclip</code></a> reset the clip region to the whole frame.</p>
-<p><a href="./#section"><code>eoclip</code></a> uses the <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-EVEN-ODD:CAPS">even–odd rule</a> to compute the clip region.</p>
+<h3 id="裁剪">裁剪<a class="headerlink" href="#裁剪" title="Permanent link">&para;</a></h3>
+<p>可以用 <a href="#clip-eoclip"><code>clip</code></a> 和 <a href="#clip-eoclip"><code>eoclip</code></a> 建立<a href="https://en.wikipedia.org/wiki/Clipping_(computer_graphics)">裁剪区域</a>。</p>
+<p>如果已存在活动的裁剪区域，新的裁剪区域将是现有区域与路径的交集。<a href="#resetclip"><code>resetclip</code></a> 将裁剪区域重置为整帧。</p>
+<p><a href="#clip-eoclip"><code>eoclip</code></a> 使用<a href="https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-EVEN-ODD:CAPS">奇偶规则</a>来计算裁剪区域。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -2362,17 +2357,17 @@ Example
 
 </div>
 
-<h3 id="preserving-paths">Preserving Paths<a class="headerlink" href="#preserving-paths" title="Permanent link">&para;</a></h3>
-<p>The path is cleared after any operation on it, like <a href="./#section"><code>fill</code></a> or <a href="./#section"><code>stroke</code></a>. To reuse the same path in multiple operations, <a href="./#section"><code>preserve</code></a> must be called before them.</p>
+<h3 id="保留路径">保留路径<a class="headerlink" href="#保留路径" title="Permanent link">&para;</a></h3>
+<p>路径在任何作用于它的操作（如 <a href="#fill-eofill"><code>fill</code></a> 或 <a href="#stroke"><code>stroke</code></a>）之后都会被清除。要在多个操作中复用同一路径，必须在这些操作之前调用 <a href="#preserve"><code>preserve</code></a>。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, each path is used twice.
+在这个例子中，每个路径被使用了两次。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>circle 120 120 50
 <a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>setcolor seagreen
@@ -2388,61 +2383,61 @@ In this example, each path is used twice.
 
 </div>
 
-<h2 id="variables">Variables<a class="headerlink" href="#variables" title="Permanent link">&para;</a></h2>
-<p>A drawvg can use some variables, provided by the interpreter, to compute values in section "FFmpeg expressions" in <code>ffmpeg-utils</code>:</p>
+<h2 id="变量">变量<a class="headerlink" href="#变量" title="Permanent link">&para;</a></h2>
+<p>drawvg 可以使用解释器提供的一些变量，在 <code>ffmpeg-utils</code> 中"FFmpeg 表达式"小节的语法中计算值：</p>
 <ul>
 <li>
-<p><strong>\&lt;cx&gt;</strong> X coordinate of the <a href="#current-point">current point</a>.</p>
+<p><strong>\&lt;cx&gt;</strong> <a href="#当前点">当前点</a> 的 X 坐标。</p>
 </li>
 <li>
-<p><strong>\&lt;cy&gt;</strong> Y coordinate of the <a href="#current-point">current point</a>.</p>
+<p><strong>\&lt;cy&gt;</strong> <a href="#当前点">当前点</a> 的 Y 坐标。</p>
 </li>
 <li>
-<p><strong>\&lt;w&gt;</strong> Width, in pixels, of the frame.</p>
+<p><strong>\&lt;w&gt;</strong> 帧的宽度（像素）。</p>
 </li>
 <li>
-<p><strong>\&lt;h&gt;</strong> Height, in pixels, of the frame.</p>
+<p><strong>\&lt;h&gt;</strong> 帧的高度（像素）。</p>
 </li>
 <li>
-<p><strong>\&lt;i&gt;</strong> The loop counter in repeat blocks.</p>
+<p><strong>\&lt;i&gt;</strong> repeat 块中的循环计数器。</p>
 </li>
 <li>
-<p><strong>\&lt;n&gt;</strong> Frame number.</p>
+<p><strong>\&lt;n&gt;</strong> 帧序号。</p>
 </li>
 <li>
-<p><strong>\&lt;t&gt;</strong> Timestamp, in seconds.</p>
+<p><strong>\&lt;t&gt;</strong> 时间戳（秒）。</p>
 </li>
 <li>
-<p><strong>\&lt;ts&gt;</strong> Timestamp, in seconds, of the first frame.</p>
+<p><strong>\&lt;ts&gt;</strong> 第一帧的时间戳（秒）。</p>
 </li>
 <li>
-<p><strong>\&lt;duration&gt;</strong> Duration, in seconds, of the frame.</p>
+<p><strong>\&lt;duration&gt;</strong> 帧的时长（秒）。</p>
 </li>
 </ul>
-<h3 id="user-variables">User Variables<a class="headerlink" href="#user-variables" title="Permanent link">&para;</a></h3>
-<p>New variables can be created with the <a href="./#section"><code>setvar</code></a> command. It associates a name with a numeric value.</p>
-<p>The name must follow these rules:</p>
+<h3 id="用户变量">用户变量<a class="headerlink" href="#用户变量" title="Permanent link">&para;</a></h3>
+<p>可以用 <a href="#setvar"><code>setvar</code></a> 命令创建新变量。它将一个名称与一个数值关联起来。</p>
+<p>名称必须遵循以下规则：</p>
 <ul>
 <li>
-<p>It must start with an ASCII letter or an underscore (<code>_</code>).</p>
+<p>必须以 ASCII 字母或下划线（<code>_</code>）开头。</p>
 </li>
 <li>
-<p>It can contain only ASCII letters, underscores, and digits.</p>
+<p>只能包含 ASCII 字母、下划线和数字。</p>
 </li>
 <li>
-<p>It must not match the name of a variable provided by the interpreter (like \&lt;w&gt; or \&lt;t&gt;).</p>
+<p>不得与解释器提供的变量名（如 \&lt;w&gt; 或 \&lt;t&gt;）同名。</p>
 </li>
 </ul>
-<p>The same variable can be assigned multiple times.</p>
+<p>同一个变量可以被多次赋值。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, the result of an expression is stored in a variable with the name \<progress\>. Then, it is used for the \<x\> and \<width\> arguments of [`rect`](drawvg-reference.md#section).
+在这个例子中，一个表达式的结果被存储在名为 \<progress\> 的变量中。然后它被用作 [`rect`](#rect) 的 \<x\> 和 \<width\> 参数。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>setvar progress (w * (pow(mod(t / 2 + 0.5, 1), 2.5)))
 <a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>
@@ -2454,44 +2449,44 @@ In this example, the result of an expression is stored in a variable with the na
 
 </div>
 
-<p>Currently, a script can contain only 20 different variable names, but this limit can be modified in the future.</p>
-<h2 id="patterns">Patterns<a class="headerlink" href="#patterns" title="Permanent link">&para;</a></h2>
-<p>The pattern for fill and stroke operations can be either a solid color, or a gradient.</p>
+<p>目前，一个脚本最多只能包含 20 个不同的变量名，但这一限制将来可能会修改。</p>
+<h2 id="图案">图案<a class="headerlink" href="#图案" title="Permanent link">&para;</a></h2>
+<p>填充和描边操作所用的图案可以是纯色，也可以是渐变。</p>
 <ul>
 <li>
-<p>Solid colors.</p>
+<p>纯色。</p>
 </li>
 <li>
-<p><a href="./#section"><code>setcolor</code></a></p>
+<p><a href="#setcolor"><code>setcolor</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>sethsla</code></a></p>
+<p><a href="#sethsla"><code>sethsla</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>setrgba</code></a></p>
+<p><a href="#setrgba"><code>setrgba</code></a></p>
 </li>
 <li>
-<p>Gradients.</p>
+<p>渐变。</p>
 </li>
 <li>
-<p><a href="./#section"><code>lineargrad</code></a></p>
+<p><a href="#lineargrad"><code>lineargrad</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>radialgrad</code></a></p>
+<p><a href="#radialgrad"><code>radialgrad</code></a></p>
 </li>
 </ul>
-<p>The pattern is not cleared after being used in a fill or stroke operation, but it is replaced by any command that sets a new pattern.</p>
-<h3 id="gradients">Gradients<a class="headerlink" href="#gradients" title="Permanent link">&para;</a></h3>
-<p>To configure a gradient, first call to <a href="./#section"><code>lineargrad</code></a> or <a href="./#section"><code>radialgrad</code></a>, and then add color stops by calling <a href="./#section"><code>colorstop</code></a> for each stop.</p>
+<p>图案在填充或描边操作中使用后不会被清除，但会被任何设置新图案的命令替换。</p>
+<h3 id="渐变">渐变<a class="headerlink" href="#渐变" title="Permanent link">&para;</a></h3>
+<p>要配置渐变，首先调用 <a href="#lineargrad"><code>lineargrad</code></a> 或 <a href="#radialgrad"><code>radialgrad</code></a>，然后为每个停靠点调用 <a href="#colorstop"><code>colorstop</code></a> 添加色标（color stop）。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, the whole frame is filled with a linear gradient:
+在这个例子中，整个帧被一个线性渐变填充：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>lineargrad 0 0 w h
 <a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>colorstop 0 skyblue
@@ -2501,7 +2496,7 @@ In this example, the whole frame is filled with a linear gradient:
 <a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>fill
 </code></pre></div>
 
-In this example, a radial gradient is used to simulate a sphere:
+在这个例子中，一个径向渐变被用来模拟一个球体：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>radialgrad 90 90 5 120 120 100
 <a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>colorstop 0.0 #90DDFF
@@ -2514,13 +2509,13 @@ In this example, a radial gradient is used to simulate a sphere:
 
 </div>
 
-<h3 id="variables_1">Variables<a class="headerlink" href="#variables_1" title="Permanent link">&para;</a></h3>
-<p><a href="./#section"><code>setcolor</code></a> and <a href="./#section"><code>colorstop</code></a> accept a variable name as the argument. The variable must be assigned with <a href="./#section"><code>defrgba</code></a>, <a href="./#section"><code>defhsla</code></a>, or <a href="./#section"><code>setvar</code></a> and a color.</p>
+<h3 id="变量_1">变量<a class="headerlink" href="#变量_1" title="Permanent link">&para;</a></h3>
+<p><a href="#setcolor"><code>setcolor</code></a> 和 <a href="#colorstop"><code>colorstop</code></a> 接受变量名作为参数。该变量必须先用 <a href="#defrgba"><code>defrgba</code></a>、<a href="#defhsla"><code>defhsla</code></a> 或 <a href="#setvar"><code>setvar</code></a> 配合一个颜色赋值。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -2538,12 +2533,12 @@ Example
 
 </div>
 
-<p>If a variable has the same name of a section "known color" in <code>ffmpeg-utils</code>, the variable has preference, and will be used instead of the predefined color.</p>
+<p>如果变量与 <code>ffmpeg-utils</code> 中"已知颜色"小节中的名称相同，则变量优先，将使用该变量而非预定义颜色。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -2559,21 +2554,21 @@ Example
 
 </div>
 
-<p><a href="./#section"><code>defrgba</code></a> and <a href="./#section"><code>defhsla</code></a> assign a color to a variable, by providing an expression for each color component:</p>
+<p><a href="#defrgba"><code>defrgba</code></a> 和 <a href="#defhsla"><code>defhsla</code></a> 通过为每个颜色分量提供一个表达式，将颜色赋给变量：</p>
 <ul>
 <li>
-<p>For <a href="./#section"><code>defrgba</code></a>: <em>red</em>, <em>green</em>, <em>blue</em>, and <em>alpha</em>.</p>
+<p>对于 <a href="#defrgba"><code>defrgba</code></a>：<em>红</em>、<em>绿</em>、<em>蓝</em>和 <em>alpha</em>。</p>
 </li>
 <li>
-<p>For <a href="./#section"><code>defhsla</code></a>: <em>hue</em>, <em>saturation</em>, <em>lightness</em>, and <em>alpha</em>.</p>
+<p>对于 <a href="#defhsla"><code>defhsla</code></a>：<em>色相</em>、<em>饱和度</em>、<em>亮度</em>和 <em>alpha</em>。</p>
 </li>
 </ul>
-<p>Each color component must be in range <code>0</code> to <code>1</code>, except <em>hue</em>, which is <code>0</code> to <code>360</code>.</p>
+<p>每个颜色分量必须在 <code>0</code> 到 <code>1</code> 之间，<em>色相</em>除外，它为 <code>0</code> 到 <code>360</code>。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -2591,30 +2586,30 @@ Example
 
 </div>
 
-<h2 id="transformations">Transformations<a class="headerlink" href="#transformations" title="Permanent link">&para;</a></h2>
-<p>The coordinates for each command can be scaled, rotated, and translated, by using the following commands:</p>
+<h2 id="变换">变换<a class="headerlink" href="#变换" title="Permanent link">&para;</a></h2>
+<p>每条命令的坐标可以通过以下命令进行缩放、旋转和平移：</p>
 <ul>
 <li>
-<p><a href="./#section"><code>rotate</code></a></p>
+<p><a href="#rotate"><code>rotate</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>scale</code></a></p>
+<p><a href="#scale"><code>scale</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>scalexy</code></a></p>
+<p><a href="#scalexy"><code>scalexy</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>translate</code></a></p>
+<p><a href="#translate"><code>translate</code></a></p>
 </li>
 </ul>
-<p>The transformations are applied when the command is executed. They have no effect on the existing path, only on the new segments added to it.</p>
-<p>They are done by updating the <a href="https://www.cairographics.org/manual/cairo-Transformations.html">current transformation matrix</a> in the Cairo context. To reset the matrix to its original state, before any transformation, use <a href="./#section"><code>resetmatrix</code></a>.</p>
-<p>The transform origin for scale and rotation is initially at <code>0, 0</code>, but it can be adjusted with <a href="./#section"><code>translate</code></a>.</p>
+<p>变换在命令执行时生效。它们对现有路径没有影响，只影响添加到其中的新线段。</p>
+<p>它们通过更新 Cairo 上下文中的<a href="https://www.cairographics.org/manual/cairo-Transformations.html">当前变换矩阵</a>来完成。要将矩阵重置为进行任何变换之前的原始状态，请使用 <a href="#resetmatrix"><code>resetmatrix</code></a>。</p>
+<p>缩放和旋转的变换原点初始位于 <code>0, 0</code>，但可以用 <a href="#translate"><code>translate</code></a> 调整。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -2641,86 +2636,86 @@ Example
 
 </div>
 
-<h2 id="state-stack">State Stack<a class="headerlink" href="#state-stack" title="Permanent link">&para;</a></h2>
-<p>The state of a drawvg script contains all parameters used for drawing operations, like the current color, the transformation matrix, the stroke configuration, etc.</p>
-<p>The <a href="./#section"><code>save</code></a> command pushes a snapshot of the state to an internal stack. Later, <a href="./#section"><code>restore</code></a> pops the latest snapshot from the stack, and uses it as the new state.</p>
-<p>The parameters that can be saved and restored are:</p>
+<h2 id="状态栈">状态栈<a class="headerlink" href="#状态栈" title="Permanent link">&para;</a></h2>
+<p>drawvg 脚本的状态包含绘制操作所用的所有参数，如当前颜色、变换矩阵、描边配置等。</p>
+<p><a href="#save"><code>save</code></a> 命令将状态快照压入内部栈。之后，<a href="#restore"><code>restore</code></a> 从栈中弹出最近的快照，并将其用作新的状态。</p>
+<p>可以保存和恢复的参数有：</p>
 <ul>
 <li>
-<p>Pattern for stroke and fill operations.</p>
+<p>描边和填充操作的图案。</p>
 </li>
 <li>
-<p><a href="./#section"><code>lineargrad</code></a></p>
+<p><a href="#lineargrad"><code>lineargrad</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>radialgrad</code></a></p>
+<p><a href="#radialgrad"><code>radialgrad</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>setrgba</code></a></p>
+<p><a href="#setrgba"><code>setrgba</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>setcolor</code></a></p>
+<p><a href="#setcolor"><code>setcolor</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>sethsla</code></a></p>
+<p><a href="#sethsla"><code>sethsla</code></a></p>
 </li>
 <li>
-<p>Transformation matrix.</p>
+<p>变换矩阵。</p>
 </li>
 <li>
-<p><a href="./#section"><code>resetmatrix</code></a></p>
+<p><a href="#resetmatrix"><code>resetmatrix</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>rotate</code></a></p>
+<p><a href="#rotate"><code>rotate</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>scale</code></a></p>
+<p><a href="#scale"><code>scale</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>scalexy</code></a></p>
+<p><a href="#scalexy"><code>scalexy</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>translate</code></a></p>
+<p><a href="#translate"><code>translate</code></a></p>
 </li>
 <li>
-<p>Stroke configuration.</p>
+<p>描边配置。</p>
 </li>
 <li>
-<p><a href="./#section"><code>setdash</code></a></p>
+<p><a href="#setdash"><code>setdash</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>setdashoffset</code></a></p>
+<p><a href="#setdashoffset"><code>setdashoffset</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>setlinecap</code></a></p>
+<p><a href="#setlinecap"><code>setlinecap</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>setlinejoin</code></a></p>
+<p><a href="#setlinejoin"><code>setlinejoin</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>setlinewidth</code></a></p>
+<p><a href="#setlinewidth"><code>setlinewidth</code></a></p>
 </li>
 <li>
-<p>Clip region</p>
+<p>裁剪区域</p>
 </li>
 <li>
-<p><a href="./#section"><code>clip</code></a></p>
+<p><a href="#clip-eoclip"><code>clip</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>resetclip</code></a></p>
+<p><a href="#resetclip"><code>resetclip</code></a></p>
 </li>
 </ul>
-<h2 id="frame-metadata">Frame Metadata<a class="headerlink" href="#frame-metadata" title="Permanent link">&para;</a></h2>
-<p>Some FFmpeg filters add metadata to frames. The command <a href="./#section"><code>getmetadata</code></a> can read metadata items containing a numeric value, and store it in a variable that can be used for command arguments.</p>
+<h2 id="帧元数据">帧元数据<a class="headerlink" href="#帧元数据" title="Permanent link">&para;</a></h2>
+<p>一些 FFmpeg 滤镜会向帧添加元数据。命令 <a href="#getmetadata"><code>getmetadata</code></a> 可以读取包含数值的元数据项，并将其存储到可用于命令参数的变量中。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-The `cropdetect` filter computes the parameters to remove empty regions around the video. These parameters are accessible in the `lavfi.cropdetect` keys of the frame metadata.
+`cropdetect` 滤镜计算用于去除视频四周空白区域的参数。这些参数可以通过帧元数据的 `lavfi.cropdetect` 键访问。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>// Get metadata from cropdetect filter and store it
 <a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>// in `cd*` variables.
@@ -2735,16 +2730,16 @@ The `cropdetect` filter computes the parameters to remove empty regions around t
 <a id="__codelineno-37-11" name="__codelineno-37-11" href="#__codelineno-37-11"></a>stroke
 </code></pre></div>
 
-To test the script, copy it to a `drawcropdetect.vgs` file, and then execute a command like this:
+要测试该脚本，请将其复制到一个 `drawcropdetect.vgs` 文件，然后执行如下命令：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>ffplay -i example-video.webm -vf 'cropdetect, drawvg=file=drawcropdetect.vgs'
 </code></pre></div>
 
 </div>
 
-<h2 id="if-repeat-statements"><code>if</code> / <code>repeat</code> Statements<a class="headerlink" href="#if-repeat-statements" title="Permanent link">&para;</a></h2>
-<p>There is limited support for control flow statements: only <a href="./#section"><code>if</code></a> and <a href="./#section"><code>repeat</code></a>.</p>
-<p>Both commands receive two arguments: an expression and a block.</p>
+<h2 id="if-repeat-语句"><code>if</code> / <code>repeat</code> 语句<a class="headerlink" href="#if-repeat-语句" title="Permanent link">&para;</a></h2>
+<p>对控制流语句的支持有限：只有 <a href="#if"><code>if</code></a> 和 <a href="#repeat"><code>repeat</code></a>。</p>
+<p>两条命令都接受两个参数：一个表达式和一个块。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>if (condition) {
 <a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>    // commands
 <a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>}
@@ -2753,16 +2748,16 @@ To test the script, copy it to a `drawcropdetect.vgs` file, and then execute a c
 <a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a>    // commands
 <a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a>}
 </code></pre></div>
-<p><a href="./#section"><code>if</code></a> executes its block if the result of <code>(condition)</code> is not zero.</p>
-<p><a href="./#section"><code>repeat</code></a> executes its block the number of times specified by <code>(count)</code>. In each iteration, the variable \&lt;i&gt; is used as a <a href="https://en.wikipedia.org/wiki/For_loop#Loop_counters">loop counter</a>.</p>
-<p>If the result of the expression is not a finite number (like <a href="https://en.wikipedia.org/wiki/NaN"><code>NaN</code></a>) the block is not executed.</p>
-<h3 id="comparison-and-logical-operators">Comparison and Logical Operators<a class="headerlink" href="#comparison-and-logical-operators" title="Permanent link">&para;</a></h3>
-<p>section "FFmpeg expressions" in <code>ffmpeg-utils</code> only supports arithmetic operators (like <code>+</code> for addition). Comparison operators (like <code>!=</code>) are supported via functions, while logical operators (like <code>&amp;&amp;</code> for <code>AND</code>) can be emulated with arithmetic operations.</p>
+<p><a href="#if"><code>if</code></a> 在 <code>(condition)</code> 的结果非零时执行其块。</p>
+<p><a href="#repeat"><code>repeat</code></a> 按 <code>(count)</code> 指定的次数执行其块。在每次迭代中，变量 \&lt;i&gt; 被用作<a href="https://en.wikipedia.org/wiki/For_loop#Loop_counters">循环计数器</a>。</p>
+<p>如果表达式的结果不是有限数（如 <a href="https://en.wikipedia.org/wiki/NaN"><code>NaN</code></a>），则不会执行该块。</p>
+<h3 id="比较与逻辑运算符">比较与逻辑运算符<a class="headerlink" href="#比较与逻辑运算符" title="Permanent link">&para;</a></h3>
+<p><code>ffmpeg-utils</code> 中"FFmpeg 表达式"小节只支持算术运算符（如表示加法的 <code>+</code>）。比较运算符（如 <code>!=</code>）通过函数支持，而逻辑运算符（如表示 <code>AND</code> 的 <code>&amp;&amp;</code>）可以用算术运算模拟。</p>
 <table>
 <thead>
 <tr>
-<th>Expression</th>
-<th>FFmpeg Equivalent</th>
+<th>表达式</th>
+<th>FFmpeg 等价写法</th>
 </tr>
 </thead>
 <tbody>
@@ -2792,12 +2787,12 @@ To test the script, copy it to a `drawcropdetect.vgs` file, and then execute a c
 </tr>
 </tbody>
 </table>
-<p>Logical operators can be emulated with multiplication (for <code>AND</code>), or addition (for <code>OR</code>):</p>
+<p>逻辑运算符可以用乘法（对应 <code>AND</code>）或加法（对应 <code>OR</code>）来模拟：</p>
 <table>
 <thead>
 <tr>
-<th>Expression</th>
-<th>FFmpeg Equivalent</th>
+<th>表达式</th>
+<th>FFmpeg 等价写法</th>
 </tr>
 </thead>
 <tbody>
@@ -2815,18 +2810,18 @@ To test the script, copy it to a `drawcropdetect.vgs` file, and then execute a c
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In other programming languages, a code like this:
+在其他编程语言中，如下代码：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>if (x &gt; y &amp;&amp; z != 1) {
 <a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>    // …
 <a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>}
 </code></pre></div>
 
-Can be written for drawvg like this:
+在 drawvg 中可以这样写：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>if (gt(x, y) * not(eq(z, 1))) {
 <a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>    // …
@@ -2835,20 +2830,20 @@ Can be written for drawvg like this:
 
 </div>
 
-<h3 id="early-exit">Early Exit<a class="headerlink" href="#early-exit" title="Permanent link">&para;</a></h3>
-<p><a href="./#section"><code>break</code></a> causes a <a href="./#section"><code>repeat</code></a> loop to be terminated immediately.</p>
-<p>If it is executed outside a <a href="./#section"><code>repeat</code></a> block, it terminates the whole script, or the current procedure.</p>
+<h3 id="提前退出">提前退出<a class="headerlink" href="#提前退出" title="Permanent link">&para;</a></h3>
+<p><a href="#break"><code>break</code></a> 会使 <a href="#repeat"><code>repeat</code></a> 循环立即终止。</p>
+<p>如果在 <a href="#repeat"><code>repeat</code></a> 块之外执行，它会终止整个脚本或当前过程。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, we are using the [`randomg`](drawvg-reference.md#function) function to draw a line with random segments.
+在这个例子中，我们使用 [`randomg`](#函数-randomg) 函数绘制一条由随机线段组成的线。
 
-The loop can be executed `500` times, but it is interrupted if the X coordinate of the [current point](#current-point) (\<cx\>) exceeds the frame width (\<w\>). The [current point](#current-point) is updated after each call to [`rlineto`](drawvg-reference.md#section).
+循环可以执行 `500` 次，但如果[当前点](#当前点)（\<cx\>）的 X 坐标超过帧宽度（\<w\>）就会中断。每次调用 [`rlineto`](#l-rlineto) 之后都会更新[当前点](#当前点)。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>moveto 0 0
 <a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>
@@ -2867,9 +2862,9 @@ The loop can be executed `500` times, but it is interrupted if the X coordinate 
 
 </div>
 
-<h2 id="procedures">Procedures<a class="headerlink" href="#procedures" title="Permanent link">&para;</a></h2>
-<p>A procedure is a name associated with a block that can be executed multiple times. It can take between 0 and 6 parameters.</p>
-<p><a href="./#section"><code>proc</code></a> is used to set the parameter names and the block for a procedure:</p>
+<h2 id="过程">过程<a class="headerlink" href="#过程" title="Permanent link">&para;</a></h2>
+<p>过程是与一个块关联的名称，可以多次执行。它可以接受 0 到 6 个参数。</p>
+<p><a href="#proc"><code>proc</code></a> 用于设置过程的参数名和块：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>proc p0 {
 <a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>    // …
 <a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>}
@@ -2878,14 +2873,14 @@ The loop can be executed `500` times, but it is interrupted if the X coordinate 
 <a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a>    // …
 <a id="__codelineno-43-7" name="__codelineno-43-7" href="#__codelineno-43-7"></a>}
 </code></pre></div>
-<p>Inside the block, the arguments can be accessed as regular variables:</p>
+<p>在块内，参数可以作为普通变量访问：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>proc square center_x center_y side {
 <a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>    rect
 <a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>        (center_x - side / 2) (center_y - side / 2)
 <a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>        side side
 <a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>}
 </code></pre></div>
-<p><a href="./#section"><code>call</code></a> executes the block assigned to the procedure name. It requires the name of the procedure, and the value for each parameter defined in the call to <a href="./#section"><code>proc</code></a>.</p>
+<p><a href="#call"><code>call</code></a> 执行分配给过程名的块。它要求提供过程名，以及 <a href="#proc"><code>proc</code></a> 调用中定义的每个参数的值。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>call p0
 <a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>
 <a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>call p1 1 2
@@ -2896,11 +2891,11 @@ The loop can be executed `500` times, but it is interrupted if the X coordinate 
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, the procedure `zigzag` draws multiple lines from the [current point](#current-point).
+在这个例子中，过程 `zigzag` 从[当前点](#当前点)绘制多条线。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>setvar len (w / 10)
 <a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>setlinewidth 5
@@ -2926,7 +2921,7 @@ In this example, the procedure `zigzag` draws multiple lines from the [current p
 <a id="__codelineno-46-22" name="__codelineno-46-22" href="#__codelineno-46-22"></a>call zigzag
 </code></pre></div>
 
-The color and the Y coordinate of the starting point can be sent as procedure arguments:
+起点的颜色和 Y 坐标可以作为过程参数传入：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>setvar len (w / 10)
 <a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>setlinewidth 5
@@ -2949,16 +2944,16 @@ The color and the Y coordinate of the starting point can be sent as procedure ar
 
 </div>
 
-<p>When the procedure returns, the value of the variable for each argument is restored to the value it had before calling the procedure. Changes in other variables (with <a href="./#section"><code>setvar</code></a>, <a href="./#section"><code>getmetadata</code></a>, <a href="./#section"><code>defhsla</code></a>, and <a href="./#section"><code>defrgba</code></a>) are preserved.</p>
+<p>当过程返回时，每个参数对应的变量值会恢复为调用过程之前的值。对其他变量的修改（通过 <a href="#setvar"><code>setvar</code></a>、<a href="#getmetadata"><code>getmetadata</code></a>、<a href="#defhsla"><code>defhsla</code></a> 和 <a href="#defrgba"><code>defrgba</code></a>）会被保留。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In the next example, the variable \<A\> has the value `0` before calling the procedure \<P\>. During the execution of \<P\>, `A` is `1`, but after it, \<A\> is `0` again.
+在下一个例子中，变量 \<A\> 在调用过程 \<P\> 之前的值为 `0`。在 \<P\> 执行期间，`A` 为 `1`；执行结束后，\<A\> 又变回 `0`。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>setvar A 0
 <a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>
@@ -2971,7 +2966,7 @@ In the next example, the variable \<A\> has the value `0` before calling the pro
 <a id="__codelineno-48-9" name="__codelineno-48-9" href="#__codelineno-48-9"></a>print A
 </code></pre></div>
 
-It writes the following messages:
+它会写出以下消息：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>[7:7] A = 0.000
 <a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>[4:8] A = 1.000
@@ -2980,17 +2975,17 @@ It writes the following messages:
 
 </div>
 
-<p><a href="./#section"><code>break</code></a> causes the script to leave the current procedure, similar to the <a href="https://en.wikipedia.org/wiki/Return_statement"><code>return</code> statement</a> in other programming languages, unless it is called within a <a href="./#section"><code>repeat</code></a> loop.</p>
-<p>The body of the procedure must be defined with <a href="./#section"><code>proc</code></a> <em>before</em> using <a href="./#section"><code>call</code></a>.</p>
+<p><a href="#break"><code>break</code></a> 会使脚本退出当前过程，类似于其他编程语言中的 <a href="https://en.wikipedia.org/wiki/Return_statement"><code>return</code> 语句</a>，除非它是在 <a href="#repeat"><code>repeat</code></a> 循环内被调用。</p>
+<p>过程体必须在使用 <a href="#call"><code>call</code></a> <em>之前</em>用 <a href="#proc"><code>proc</code></a> 定义。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, when the procedure `notyet` is called, its body has not yet defined, so the execution fails with the error `Missing body for procedure 'notyet'`.
+在这个例子中，当过程 `notyet` 被调用时，其过程体尚未定义，因此执行失败并报错 `Missing body for procedure 'notyet'`。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>call notyet
 <a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a>
@@ -3001,16 +2996,16 @@ In this example, when the procedure `notyet` is called, its body has not yet def
 
 </div>
 
-<p>A procedure can be redefined by other calls to <a href="./#section"><code>proc</code></a> with the same name. In such case, <a href="./#section"><code>call</code></a> invokes the last assigned block.</p>
+<p>过程可以通过其他使用同名 <a href="#proc"><code>proc</code></a> 的调用重新定义。在这种情况下，<a href="#call"><code>call</code></a> 会调用最后分配的块。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, the procedure `example` has two different blocks.
+在这个例子中，过程 `example` 有两个不同的块。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>proc example {
 <a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>    // block1
@@ -3027,30 +3022,30 @@ In this example, the procedure `example` has two different blocks.
 
 </div>
 
-<h2 id="functions-in-expressions">Functions in Expressions<a class="headerlink" href="#functions-in-expressions" title="Permanent link">&para;</a></h2>
-<p>There are some functions specific to drawvg available in section "FFmpeg expressions" in <code>ffmpeg-utils</code>.</p>
-<h3 id="function-p">Function <code>p</code><a class="headerlink" href="#function-p" title="Permanent link">&para;</a></h3>
-<p><code>p(x, y)</code> returns the color of the pixel at coordinates <code>x, y</code>, as a <code>0xRRGGBBAA</code> value. It can be assigned to a variable, so the color can be available for <a href="./#section"><code>setcolor</code></a> and <a href="./#section"><code>colorstop</code></a> commands.</p>
-<p>If a single expression contains multiple calls to the function, it must return the value of the last call in order to use it as a color.</p>
+<h2 id="表达式中的函数">表达式中的函数<a class="headerlink" href="#表达式中的函数" title="Permanent link">&para;</a></h2>
+<p><code>ffmpeg-utils</code> 中"FFmpeg 表达式"小节中有一些 drawvg 特有的函数可用。</p>
+<h3 id="函数-p">函数 <code>p</code><a class="headerlink" href="#函数-p" title="Permanent link">&para;</a></h3>
+<p><code>p(x, y)</code> 返回坐标 <code>x, y</code> 处像素的颜色，表示为 <code>0xRRGGBBAA</code> 值。它可以赋给一个变量，使该颜色可供 <a href="#setcolor"><code>setcolor</code></a> 和 <a href="#colorstop"><code>colorstop</code></a> 命令使用。</p>
+<p>如果单个表达式包含多次对该函数的调用，则必须返回最后一次调用的值，才能将其用作颜色。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, the first call to `p(0, 0)` is stored in the variable \<0\> of the expression. Then, the same expression makes a second call to `p(1, 1)`, and finally it returns the value in the variable \<0\>.
+在这个例子中，第一次调用 `p(0, 0)` 的结果存储在表达式的变量 \<0\> 中。然后同一表达式进行第二次调用 `p(1, 1)`，最后返回变量 \<0\> 中的值。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="n">setvar</span><span class="w"> </span><span class="nf">pixel</span><span class="w"> </span><span class="p">(</span><span class="n">st</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">));</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="n">ld</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 </code></pre></div>
 
-Since the result of the expression is not the last call to `p`, the variable \<pixel\> can not be used as a color, but it still can be used as a numeric `0xRRGGBBAA` value.
+由于表达式的结果不是最后一次对 `p` 的调用，变量 \<pixel\> 不能用作颜色，但仍可用作数值型的 `0xRRGGBBAA` 值。
 
 </div>
 
-<p>If the coordinates are outside the frame, or any of the arguments is not a finite number (like <a href="https://en.wikipedia.org/wiki/NaN"><code>NaN</code></a>), the function returns <code>NaN</code>.</p>
-<p>The <a href="./#variables">transformation matrix</a> is applied to the arguments. To use the original frame coordinates, call <a href="./#section"><code>resetmatrix</code></a> between <a href="./#section"><code>save</code></a> and <a href="./#section"><code>restore</code></a>:</p>
+<p>如果坐标在帧之外，或任一参数不是有限数（如 <a href="https://en.wikipedia.org/wiki/NaN"><code>NaN</code></a>），该函数返回 <code>NaN</code>。</p>
+<p><a href="#变换">变换矩阵</a>会作用于这些参数。要使用原始帧坐标，请在 <a href="#save"><code>save</code></a> 和 <a href="#restore"><code>restore</code></a> 之间调用 <a href="#resetmatrix"><code>resetmatrix</code></a>：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>save
 <a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a>resetmatrix
 <a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a>setvar pixel (p(0, 0))    // top-left pixel of the frame.
@@ -3058,7 +3053,7 @@ Since the result of the expression is not the last call to `p`, the variable \<p
 <a id="__codelineno-53-5" name="__codelineno-53-5" href="#__codelineno-53-5"></a>
 <a id="__codelineno-53-6" name="__codelineno-53-6" href="#__codelineno-53-6"></a>setcolor pixel
 </code></pre></div>
-<p>Bitwise operations can be used to extract individual color components:</p>
+<p>可以使用按位运算来提取各个颜色分量：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>setvar pixel (p(x, y))
 <a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>
 <a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a>if (not(isnan(pixel))) {
@@ -3068,18 +3063,18 @@ Since the result of the expression is not the last call to `p`, the variable \<p
 <a id="__codelineno-54-7" name="__codelineno-54-7" href="#__codelineno-54-7"></a>    setvar px_alpha (bitand(pixel, 0xFF))
 <a id="__codelineno-54-8" name="__codelineno-54-8" href="#__codelineno-54-8"></a>}
 </code></pre></div>
-<h3 id="function-pathlen">Function <code>pathlen</code><a class="headerlink" href="#function-pathlen" title="Permanent link">&para;</a></h3>
-<p><code>pathlen(n)</code> computes the length of the current path, by adding the length of each line segment returned by <a href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-copy-path-flat"><code>cairo_copy_path_flat</code></a>.</p>
-<p>The function expects an argument \&lt;n&gt;, as the maximum number of line segments to add to the length, or <code>0</code> to add all segments.</p>
+<h3 id="函数-pathlen">函数 <code>pathlen</code><a class="headerlink" href="#函数-pathlen" title="Permanent link">&para;</a></h3>
+<p><code>pathlen(n)</code> 通过累加 <a href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-copy-path-flat"><code>cairo_copy_path_flat</code></a> 返回的每条线段的长度来计算当前路径的长度。</p>
+<p>该函数接受一个参数 \&lt;n&gt;，作为要累加到长度中的线段数上限，或 <code>0</code> 表示累加所有线段。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, `pathlen` is used to animate the stroke of a spiral, in a 5 seconds loop.
+在这个例子中，`pathlen` 被用于在 5 秒循环中制作螺旋线描边的动画。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>M (w / 2) (h / 2)
 <a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a>
@@ -3104,20 +3099,20 @@ In this example, `pathlen` is used to animate the stroke of a spiral, in a 5 sec
 
 </div>
 
-<h3 id="function-randomg">Function <code>randomg</code><a class="headerlink" href="#function-randomg" title="Permanent link">&para;</a></h3>
-<p><code>randomg(idx)</code> is similar to the <code>random(idx)</code> function, available in section "FFmpeg expressions" in <code>ffmpeg-utils</code>, but its state is global to the frame, instead of specific to each expression.</p>
-<p>To understand the difference, we need to dive into how <code>random(idx)</code> works inside a drawvg script.</p>
-<p>First, each expression in FFmpeg has a set of 10 internal variables, which can be written with <code>st(idx, value)</code>, and can be read with <code>ld(idx)</code>. \&lt;idx&gt; is a value between <code>0</code> and <code>9</code>. These variables are initialized to <code>0</code>.</p>
-<p>When a drawvg script is parsed, each expression is compiled with <a href="https://ffmpeg.org/doxygen/8.0/eval_8h.html#ad3bf8f3330d1fd139de2ca156c313f34"><code>av_expr_parse</code></a>, from <a href="https://ffmpeg.org/libavutil.html">libavutil</a>, and these compiled expressions are reused for every frame. The changes in the internal variables (with <code>st(idx, value)</code>) are visible between frames, but they are not shared between expressions.</p>
+<h3 id="函数-randomg">函数 <code>randomg</code><a class="headerlink" href="#函数-randomg" title="Permanent link">&para;</a></h3>
+<p><code>randomg(idx)</code> 类似于 <code>ffmpeg-utils</code> 中"FFmpeg 表达式"小节提供的 <code>random(idx)</code> 函数，但它的状态对整帧是全局的，而不是每个表达式各自持有。</p>
+<p>要理解它们的区别，我们需要深入了解 <code>random(idx)</code> 在 drawvg 脚本中的工作方式。</p>
+<p>首先，FFmpeg 中的每个表达式都有一组 10 个内部变量，可用 <code>st(idx, value)</code> 写入，用 <code>ld(idx)</code> 读取。\&lt;idx&gt; 是 <code>0</code> 到 <code>9</code> 之间的值。这些变量被初始化为 <code>0</code>。</p>
+<p>当 drawvg 脚本被解析时，每个表达式都会用 <a href="https://ffmpeg.org/doxygen/8.0/eval_8h.html#ad3bf8f3330d1fd139de2ca156c313f34"><code>av_expr_parse</code></a>（来自 <a href="https://ffmpeg.org/libavutil.html">libavutil</a>）编译，并且这些编译后的表达式会在每一帧中复用。内部变量的变化（通过 <code>st(idx, value)</code>）在各帧之间可见，但不会在表达式之间共享。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, the expression for the X coordinate updates its internal variable `0` in every frame:
+在这个例子中，X 坐标的表达式在每一帧都更新其内部变量 `0`：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>circle
 <a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>    (st(0, mod(ld(0) + 15, w))) // X
@@ -3127,11 +3122,11 @@ In this example, the expression for the X coordinate updates its internal variab
 <a id="__codelineno-56-6" name="__codelineno-56-6" href="#__codelineno-56-6"></a>fill
 </code></pre></div>
 
-`st(idx, value)` returns the updated value, so it can be used as the result of the expression.
+`st(idx, value)` 返回更新后的值，因此可以用作表达式的结果。
 
-The radius is not affected because its internal variable (from `ld(0)`) is not updated by the other expression.
+半径不受影响，因为它的内部变量（来自 `ld(0)`）没有被另一个表达式更新。
 
-Also, note that this example is just to show how internal variables are kept between frames. A better approach to create this animation is to use the variables n or t:
+另请注意，这个例子只是为了展示内部变量如何在各帧之间保留。创建这种动画的更好方法是使用变量 n 或 t：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>circle (mod(n * 15, w)) 120 20
 <a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a>fill
@@ -3139,16 +3134,16 @@ Also, note that this example is just to show how internal variables are kept bet
 
 </div>
 
-<p>The function <code>random(idx)</code> returns a <a href="https://en.wikipedia.org/wiki/Pseudorandom_number_generator">pseudorandom</a> value between <code>0</code> and <code>1</code>. \&lt;idx&gt; is the internal variable that is used both as the seed and to keep the state of the number generator.</p>
+<p>函数 <code>random(idx)</code> 返回一个介于 <code>0</code> 和 <code>1</code> 之间的<a href="https://en.wikipedia.org/wiki/Pseudorandom_number_generator">伪随机</a>值。\&lt;idx&gt; 是内部变量，既用作种子，也用于保存数字生成器的状态。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-The next example uses `random(0)` to generate a random value for the center of a circle:
+下一个例子使用 `random(0)` 为圆心生成一个随机值：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>circle
 <a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>    (random(0) * w)
@@ -3158,9 +3153,9 @@ The next example uses `random(0)` to generate a random value for the center of a
 <a id="__codelineno-58-6" name="__codelineno-58-6" href="#__codelineno-58-6"></a>fill
 </code></pre></div>
 
-The circle in every frame is at a different position, but always on the diagonal line of the frame. This happens because the values for the coordinates X and Y are identical, since both number generators use the same seed.
+每一帧的圆都位于不同的位置，但总是在帧的对角线上。这是因为 X 和 Y 坐标的值相同——两个数字生成器使用了相同的种子。
 
-To distribute the circles over the whole frame we need different seeds for each expression. This can be achieved by writing a non-zero value (like `0xF0F0`) to the internal variable of one of expressions, but only when its value is `0`:
+要让圆分布到整个帧上，我们需要为每个表达式使用不同的种子。这可以通过向其中一个表达式的内部变量写入一个非零值（如 `0xF0F0`）来实现，但仅在其值为 `0` 时写入：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a><span class="n">circle</span>
 <a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a><span class="w">    </span><span class="p">(</span><span class="n">random</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">w</span><span class="p">)</span>
@@ -3170,7 +3165,7 @@ To distribute the circles over the whole frame we need different seeds for each 
 <a id="__codelineno-59-6" name="__codelineno-59-6" href="#__codelineno-59-6"></a><span class="n">fill</span>
 </code></pre></div>
 
-This approach is only useful if we need completely different positions in each frame. In the next example, random values are used to distribute many circles over the frame, but the position is fixed. The only change over time is the fill color:
+这种方法只在需要每帧完全不同的位置时才有用。在下一个例子中，随机值用于将许多圆分布到帧上，但位置是固定的。唯一随时间变化的是填充颜色：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a><span class="n">repeat</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a><span class="w">    </span><span class="n">circle</span>
@@ -3187,56 +3182,56 @@ This approach is only useful if we need completely different positions in each f
 <a id="__codelineno-60-13" name="__codelineno-60-13" href="#__codelineno-60-13"></a><span class="n">stroke</span>
 </code></pre></div>
 
-This is achieved by using a precomputed state before calling `random(0)`. The variable \<i\>, updated by [`repeat`](drawvg-reference.md#section), is needed to compute different states in each iteration.
+这是通过在调用 `random(0)` 之前使用一个预计算的状态实现的。变量 \<i\>（由 [`repeat`](#repeat) 更新）用于在每次迭代中计算不同的状态。
 
 </div>
 
-<p>The <code>randomg(idx)</code> function, which is specific to drawvg scripts, is similar to <code>random(idx)</code>, but intended to solve the previous problems:</p>
+<p><code>randomg(idx)</code> 函数是 drawvg 脚本特有的，类似于 <code>random(idx)</code>，但旨在解决前面的问题：</p>
 <ul>
 <li>
-<p>All frames have the same seed.</p>
+<p>所有帧都使用相同的种子。</p>
 </li>
 <li>
-<p>The state is shared between expressions.</p>
+<p>状态在表达式之间共享。</p>
 </li>
 </ul>
-<p>The parameter \&lt;idx&gt; has two uses:</p>
+<p>参数 \&lt;idx&gt; 有两个用途：</p>
 <ul>
 <li>
-<p>The last two bits are the index of an internal state, so it is possible to have 4 different number generators.</p>
+<p>最后两个比特是内部状态的索引，因此可以有 4 个不同的数字生成器。</p>
 </li>
 <li>
-<p>The first call to <code>randomg</code> with a specific index will use the argument as the seed for the number generator in that index.</p>
+<p>对特定索引首次调用 <code>randomg</code> 时，参数将用作该索引处数字生成器的种子。</p>
 </li>
 </ul>
-<p>In a script like this:</p>
+<p>在这样的脚本中：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>M (randomg(0xFF1)) (randomg(0xFF0))
 <a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>l (randomg(0xAA1)) (randomg(0xFF0))
 </code></pre></div>
-<p>There are 4 calls to <code>randomg</code>:</p>
+<p>有 4 次对 <code>randomg</code> 的调用：</p>
 <ol>
 <li>
-<p>The first call, with the argument <code>0xFF1</code>, uses the internal state at index <code>1</code> (because <code>0xFF1</code> modulo <code>4</code> is <code>1</code>).</p>
-<p>Since this is the first use of that index, the number generator is initialized with the seed <code>0xFF1</code>.</p>
+<p>第一次调用的参数为 <code>0xFF1</code>，使用索引 <code>1</code> 处的内部状态（因为 <code>0xFF1</code> 对 <code>4</code> 取模为 <code>1</code>）。</p>
+<p>由于这是该索引的首次使用，数字生成器以种子 <code>0xFF1</code> 初始化。</p>
 </li>
 <li>
-<p>The second call has the same behaviour: it initializes the state at index <code>0</code> with the value <code>0xFF0</code>.</p>
+<p>第二次调用行为相同：它用值 <code>0xFF0</code> 初始化索引 <code>0</code> 处的状态。</p>
 </li>
 <li>
-<p>The third call has the argument <code>0xAA1</code>, and it uses index <code>1</code>. Since that state is already initialized (with the seed <code>0xFF1</code>), the value <code>0xAA1</code> is ignored, and it returns the next number.</p>
+<p>第三次调用的参数为 <code>0xAA1</code>，使用索引 <code>1</code>。由于该状态已经初始化（种子为 <code>0xFF1</code>），值 <code>0xAA1</code> 被忽略，它返回下一个数字。</p>
 </li>
 </ol>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-This example renders a simple rain animation, moving lines from top to bottom.
+这个例子渲染了一个简单的下雨动画，让线条从上到下移动。
 
-`randomg` is used to distribute the lines over the frame, and to apply different speeds to each one.
+`randomg` 用于将线条分布到帧上，并为每条线赋予不同的速度。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>rect 0 0 w h
 <a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a>setcolor midnightblue
@@ -3260,31 +3255,31 @@ This example renders a simple rain animation, moving lines from top to bottom.
 
 </div>
 
-<h2 id="tracing-with-print">Tracing with <code>print</code><a class="headerlink" href="#tracing-with-print" title="Permanent link">&para;</a></h2>
-<p>It is possible to trace the execution of a drawvg script by printing the value of an expression, either with the <a href="./#section"><code>print</code></a> command, or with the print function.</p>
-<p>In both cases, the values are written to the FFmpeg log.</p>
-<p>Printing expressions may have a noticeable impact on the performance, so it is preferable to use it only when necessary.</p>
-<h3 id="function-print">Function print<a class="headerlink" href="#function-print" title="Permanent link">&para;</a></h3>
-<p>The function <code>print(t)</code> writes the value of t, and returns its argument.</p>
+<h2 id="使用-print-跟踪">使用 <code>print</code> 跟踪<a class="headerlink" href="#使用-print-跟踪" title="Permanent link">&para;</a></h2>
+<p>可以通过 <a href="#print"><code>print</code></a> 命令或 print 函数打印表达式的值，来跟踪 drawvg 脚本的执行。</p>
+<p>在这两种情况下，值都会写入 FFmpeg 日志。</p>
+<p>打印表达式可能会对性能产生明显影响，因此最好只在必要时使用。</p>
+<h3 id="函数-print">函数 print<a class="headerlink" href="#函数-print" title="Permanent link">&para;</a></h3>
+<p>函数 <code>print(t)</code> 写出 t 的值，并返回其参数。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-Given a line line this:
+给定这样一行：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>M (sin(2 * PI * t) * w) 0
 </code></pre></div>
 
-We can see the values of `sin(2 * PI * t)` by surrounding it with a call to `print()`:
+我们可以通过用 `print()` 调用将 `sin(2 * PI * t)` 包起来，观察它的值：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a>M (print(sin(2 * PI * t)) * w) 0
 </code></pre></div>
 
-Executing this script with a 1 second / 8 FPS video shows the expected values for the sine function.
+以 1 秒 / 8 FPS 的视频执行此脚本，会显示正弦函数的预期值。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>$ ffmpeg \
 <a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a>    -f lavfi \
@@ -3304,29 +3299,29 @@ Executing this script with a 1 second / 8 FPS video shows the expected values fo
 
 </div>
 
-<h3 id="command-print">Command <code>print</code><a class="headerlink" href="#command-print" title="Permanent link">&para;</a></h3>
-<p>The command <a href="./#section"><code>print</code></a> accepts an arbitrary number of arguments, and for each one it writes:</p>
+<h3 id="命令-print">命令 <code>print</code><a class="headerlink" href="#命令-print" title="Permanent link">&para;</a></h3>
+<p>命令 <a href="#print"><code>print</code></a> 接受任意数量的参数，并对每个参数写出：</p>
 <ul>
 <li>
-<p>The source location (line and column).</p>
+<p>源码位置（行和列）。</p>
 </li>
 <li>
-<p>The source code of the expression.</p>
+<p>表达式的源代码。</p>
 </li>
 <li>
-<p>The result of evaluating the expression.</p>
+<p>表达式求值的结果。</p>
 </li>
 </ul>
-<p>When there are multiple expressions, they are separated by the <code>|</code> character.</p>
+<p>当有多个表达式时，它们用 <code>|</code> 字符分隔。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-The next script prints the position of the [current point](#current-point) after the [`l`](drawvg-reference.md#section) command:
+下一个脚本在 [`l`](#l-rlineto) 命令之后打印[当前点](#当前点)的位置：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>M 10 20
 <a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a>l 100 100
@@ -3334,12 +3329,12 @@ The next script prints the position of the [current point](#current-point) after
 <a id="__codelineno-66-4" name="__codelineno-66-4" href="#__codelineno-66-4"></a>stroke
 </code></pre></div>
 
-For each frame, it produces this output:
+对于每一帧，它产生如下输出：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a>[3:7] cx = 110.000000 | [3:10] cy = 120.000000
 </code></pre></div>
 
-The next example prints the values of `random(0)`:
+下一个例子打印 `random(0)` 的值：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a>$ ffmpeg \
 <a id="__codelineno-68-2" name="__codelineno-68-2" href="#__codelineno-68-2"></a>    -f lavfi \
@@ -3359,17 +3354,17 @@ The next example prints the values of `random(0)`:
 
 </div>
 
-<h1 id="commands_1">Commands<a class="headerlink" href="#commands_1" title="Permanent link">&para;</a></h1>
+<h1 id="命令_1">命令<a class="headerlink" href="#命令_1" title="Permanent link">&para;</a></h1>
 <h2 id="arc"><code>arc</code><a class="headerlink" href="#arc" title="Permanent link">&para;</a></h2>
-<p><strong><code>arc xc yc radius angle1 angle2</code></strong>    — <a href="#implicit-commands"><em>Can be implicit</em></a></p>
-<p>Adds a circular arc of the given \&lt;radius&gt; to the current path. The arc is centered at \&lt;xc, yc&gt;, begins at \&lt;angle1&gt; and proceeds in the direction of increasing angles to end at \&lt;angle2&gt;.</p>
-<p>If there is a <a href="#current-point">current point</a>, a line is added from it to the beginning of the arc. If this is not desired, use <a href="./#section"><code>newpath</code></a> before <a href="./#commands"><code>arc</code></a> to clear the <a href="#current-point">current point</a>.</p>
-<p>See the documentation of the <a href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-arc"><code>cairo_arc</code></a> function for more details.</p>
+<p><strong><code>arc xc yc radius angle1 angle2</code></strong>    — <a href="#隐式命令"><em>可为隐式</em></a></p>
+<p>向当前路径添加一段给定 \&lt;radius&gt; 的圆弧。圆弧以 \&lt;xc, yc&gt; 为圆心，从 \&lt;angle1&gt; 开始，沿角度增大的方向行进，到 \&lt;angle2&gt; 结束。</p>
+<p>如果存在<a href="#当前点">当前点</a>，会从它向圆弧起点添加一条线。如果不希望如此，请在 <a href="#arc"><code>arc</code></a> 之前使用 <a href="#newpath"><code>newpath</code></a> 来清除<a href="#当前点">当前点</a>。</p>
+<p>详见 <a href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-arc"><code>cairo_arc</code></a> 函数的文档，了解更多细节。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -3380,18 +3375,18 @@ Example
 </div>
 
 <h2 id="arcn"><code>arcn</code><a class="headerlink" href="#arcn" title="Permanent link">&para;</a></h2>
-<p><strong><code>arcn xc yc radius angle1 angle2</code></strong>    — <a href="#implicit-commands"><em>Can be implicit</em></a></p>
-<p>Similar to <a href="./#commands"><code>arc</code></a>, but it differs in the direction of the arc between the two angles.</p>
-<p>See the documentation of the <a href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-arc-negative"><code>cairo_arc_negative</code></a> function for more details.</p>
+<p><strong><code>arcn xc yc radius angle1 angle2</code></strong>    — <a href="#隐式命令"><em>可为隐式</em></a></p>
+<p>与 <a href="#arc"><code>arc</code></a> 类似，但两条角度之间的圆弧方向不同。</p>
+<p>详见 <a href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-arc-negative"><code>cairo_arc_negative</code></a> 函数的文档，了解更多细节。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, both [`arc`](drawvg-reference.md#commands) and [`arcn`](drawvg-reference.md#section) have the same angles, but they render different arcs:
+在这个例子中，[`arc`](#arc) 与 [`arcn`](#arcn) 使用相同的角度，但渲染出不同的弧：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a>arc  120  90 60 (PI / 2) 0
 <a id="__codelineno-70-2" name="__codelineno-70-2" href="#__codelineno-70-2"></a>
@@ -3403,39 +3398,39 @@ In this example, both [`arc`](drawvg-reference.md#commands) and [`arcn`](drawvg-
 
 </div>
 
-<p><a href="./#section"><code>newpath</code></a> is needed to prevent a line between the two arcs.</p>
+<p>需要用 <a href="#newpath"><code>newpath</code></a> 来避免在两条弧之间连线。</p>
 <h2 id="break"><code>break</code><a class="headerlink" href="#break" title="Permanent link">&para;</a></h2>
 <p><strong><code>break</code></strong></p>
-<p><a href="./#section"><code>break</code></a> terminates the execution of the innermost block, either a <a href="./#section"><code>repeat</code></a> loop or a procedure.</p>
-<p>If it is used outside of a <a href="./#section"><code>repeat</code></a> / <a href="./#section"><code>proc</code></a> block, it terminates the script for the current frame.</p>
+<p><a href="#break"><code>break</code></a> 终止最内层块的执行，可以是 <a href="#repeat"><code>repeat</code></a> 循环或过程。</p>
+<p>如果在 <a href="#repeat"><code>repeat</code></a> / <a href="#proc"><code>proc</code></a> 块之外使用，它会终止当前帧的脚本。</p>
 <h2 id="call"><code>call</code><a class="headerlink" href="#call" title="Permanent link">&para;</a></h2>
 <p><strong><code>call name args*</code></strong></p>
-<p>Invokes a procedure defined by <a href="./#section"><code>proc</code></a>.</p>
-<p>See the <a href="#procedures">Procedures</a> section above for more details.</p>
+<p>调用由 <a href="#proc"><code>proc</code></a> 定义的过程。</p>
+<p>详见上文的 <a href="#过程">过程</a> 小节，了解更多细节。</p>
 <h2 id="circle"><code>circle</code><a class="headerlink" href="#circle" title="Permanent link">&para;</a></h2>
-<p><strong><code>circle xc yc radius</code></strong>    — <a href="#implicit-commands"><em>Can be implicit</em></a></p>
-<p>Adds a circle of the given \&lt;radius&gt; to the current path. The circle is centered at \&lt;xc, yc&gt;. The <a href="#current-point">current point</a> is cleared before and after adding the circle.</p>
-<p>This is a convenience wrapper for <a href="./#commands"><code>arc</code></a>. A call to <a href="./#section"><code>circle</code></a> is equivalent to:</p>
+<p><strong><code>circle xc yc radius</code></strong>    — <a href="#隐式命令"><em>可为隐式</em></a></p>
+<p>向当前路径添加一个给定 \&lt;radius&gt; 的圆。圆以 \&lt;xc, yc&gt; 为圆心。添加圆之前和之后，<a href="#当前点">当前点</a>都会被清除。</p>
+<p>这是 <a href="#arc"><code>arc</code></a> 的便捷封装。调用 <a href="#circle"><code>circle</code></a> 等价于：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a>newpath
 <a id="__codelineno-71-2" name="__codelineno-71-2" href="#__codelineno-71-2"></a>arc xc yc radius (0) (2 * PI)
 <a id="__codelineno-71-3" name="__codelineno-71-3" href="#__codelineno-71-3"></a>newpath
 </code></pre></div>
 <h2 id="clip-eoclip"><code>clip</code>, <code>eoclip</code><a class="headerlink" href="#clip-eoclip" title="Permanent link">&para;</a></h2>
 <p><strong><code>clip, eoclip</code></strong></p>
-<p>Establishes a new clip region by intersecting the current clip region with the current path as it would be filled by <a href="./#section"><code>fill</code></a> or <a href="./#section"><code>eofill</code></a>.</p>
-<p><a href="./#section"><code>eoclip</code></a> uses the <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-EVEN-ODD:CAPS">even–odd rule</a>. See <a href="./#defining-a-shape">fill rules</a> for more details.</p>
-<p>The path is cleared after updating the clip region, unless the <a href="./#section"><code>preserve</code></a> command is used before <a href="./#section"><code>clip</code></a> or <a href="./#section"><code>eoclip</code></a>.</p>
-<p>See the documentation of the <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-clip"><code>cairo_clip</code></a> function for more details.</p>
+<p>将当前裁剪区域与当前路径（按 <a href="#fill-eofill"><code>fill</code></a> 或 <a href="#fill-eofill"><code>eofill</code></a> 填充它的方式）求交集，建立新的裁剪区域。</p>
+<p><a href="#clip-eoclip"><code>eoclip</code></a> 使用<a href="https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-EVEN-ODD:CAPS">奇偶规则</a>。详见<a href="#填充">填充规则</a>。</p>
+<p>在更新裁剪区域后路径会被清除，除非在 <a href="#clip-eoclip"><code>clip</code></a> 或 <a href="#clip-eoclip"><code>eoclip</code></a> 之前使用了 <a href="#preserve"><code>preserve</code></a> 命令。</p>
+<p>详见 <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-clip"><code>cairo_clip</code></a> 函数的文档，了解更多细节。</p>
 <h2 id="z-z-closepath"><code>Z</code>, <code>z</code>, <code>closepath</code><a class="headerlink" href="#z-z-closepath" title="Permanent link">&para;</a></h2>
 <p><strong><code>Z, z, closepath</code></strong></p>
-<p>Adds a line segment to the path from the <a href="#current-point">current point</a> to the beginning of the current sub-path, and closes this sub-path. The beginning is set by any of the <em>move</em> commands (<a href="./#section"><code>M</code></a>, <a href="./#section"><code>m</code></a>, <a href="./#section"><code>moveto</code></a>, <a href="./#section"><code>rmoveto</code></a>).</p>
-<p>See the documentation of the <a href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-close-path"><code>cairo_close_path</code></a> function for more details.</p>
+<p>向路径添加一条从<a href="#当前点">当前点</a>到当前子路径起点的线段，并闭合该子路径。起点由任何<em>移动</em>命令设置（<a href="#m-moveto"><code>M</code></a>、<a href="#m-rmoveto"><code>m</code></a>、<a href="#m-moveto"><code>moveto</code></a>、<a href="#m-rmoveto"><code>rmoveto</code></a>）。</p>
+<p>详见 <a href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-close-path"><code>cairo_close_path</code></a> 函数的文档，了解更多细节。</p>
 <h2 id="colorstop"><code>colorstop</code><a class="headerlink" href="#colorstop" title="Permanent link">&para;</a></h2>
-<p><strong><code>colorstop offset color</code></strong>    — <a href="#implicit-commands"><em>Can be implicit</em></a></p>
-<p>Adds a color stop to a gradient pattern.</p>
-<p>\&lt;offset&gt; is a value between <code>0</code> and <code>1</code>, and it specifies the location along the gradient's control vector.</p>
-<p>This command must be executed after <a href="./#section"><code>lineargrad</code></a> or <a href="./#section"><code>radialgrad</code></a>.</p>
-<p>Color stops can be added in any number of calls to <a href="./#section"><code>colorstop</code></a>. In the next example, the 3 blocks define the same gradient:</p>
+<p><strong><code>colorstop offset color</code></strong>    — <a href="#隐式命令"><em>可为隐式</em></a></p>
+<p>向渐变图案添加一个色标。</p>
+<p>\&lt;offset&gt; 是 <code>0</code> 到 <code>1</code> 之间的值，它指定沿渐变控制向量的位置。</p>
+<p>此命令必须在 <a href="#lineargrad"><code>lineargrad</code></a> 或 <a href="#radialgrad"><code>radialgrad</code></a> 之后执行。</p>
+<p>色标可以在多次调用 <a href="#colorstop"><code>colorstop</code></a> 中添加。在下一个例子中，3 个块定义了相同的渐变：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a>// 1
 <a id="__codelineno-72-2" name="__codelineno-72-2" href="#__codelineno-72-2"></a>colorstop 0.0 red
 <a id="__codelineno-72-3" name="__codelineno-72-3" href="#__codelineno-72-3"></a>colorstop 0.5 green
@@ -3448,16 +3443,16 @@ In this example, both [`arc`](drawvg-reference.md#commands) and [`arcn`](drawvg-
 <a id="__codelineno-72-10" name="__codelineno-72-10" href="#__codelineno-72-10"></a>// 3
 <a id="__codelineno-72-11" name="__codelineno-72-11" href="#__codelineno-72-11"></a>colorstop 0 red 0.5 green 1 blue
 </code></pre></div>
-<p>See the documentation of the <a href="https://www.cairographics.org/manual/cairo-cairo-pattern-t.html#cairo-pattern-add-color-stop-rgba"><code>cairo_pattern_add_color_stop_rgba</code></a> function for more details.</p>
+<p>详见 <a href="https://www.cairographics.org/manual/cairo-cairo-pattern-t.html#cairo-pattern-add-color-stop-rgba"><code>cairo_pattern_add_color_stop_rgba</code></a> 函数的文档，了解更多细节。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, color stops are added in a [`repeat`](drawvg-reference.md#section) loop.
+在这个例子中，色标在一个 [`repeat`](#repeat) 循环中添加。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a>lineargrad 0 0 w h
 <a id="__codelineno-73-2" name="__codelineno-73-2" href="#__codelineno-73-2"></a>
@@ -3470,7 +3465,7 @@ In this example, color stops are added in a [`repeat`](drawvg-reference.md#secti
 <a id="__codelineno-73-9" name="__codelineno-73-9" href="#__codelineno-73-9"></a>fill
 </code></pre></div>
 
-It is possible to avoid transitions between color stops by repeating the same color in two stops:
+可以通过在两个色标中重复使用相同颜色来避免色标之间的过渡：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-74-1" name="__codelineno-74-1" href="#__codelineno-74-1"></a>lineargrad 0 0 w h
 <a id="__codelineno-74-2" name="__codelineno-74-2" href="#__codelineno-74-2"></a>
@@ -3487,14 +3482,14 @@ It is possible to avoid transitions between color stops by repeating the same co
 </div>
 
 <h2 id="c-curveto"><code>C</code>, <code>curveto</code><a class="headerlink" href="#c-curveto" title="Permanent link">&para;</a></h2>
-<p><strong><code>C, curveto x1 y1 x2 y2 x y</code></strong>    — <a href="#implicit-commands"><em>Can be implicit</em></a></p>
-<p>Draw a cubic Bézier curve from the <a href="#current-point">current point</a> to the <em>end point</em> specified by \&lt;x, y&gt;. The <em>start control point</em> is specified by \&lt;x1, y1&gt; and the <em>end control point</em> is specified by \&lt;x2, y2&gt;.</p>
-<p>The behaviour is identical to the <a href="./#section"><code>C</code></a> command in <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG's <code>&lt;path&gt;</code></a>. For more details, see <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d#cubic_b%C3%A9zier_curve">Cubic Bézier Curve on MDN</a>, and the <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#curve_commands">Curve Commands section of the Paths tutorial on MDN</a>.</p>
+<p><strong><code>C, curveto x1 y1 x2 y2 x y</code></strong>    — <a href="#隐式命令"><em>可为隐式</em></a></p>
+<p>从<a href="#当前点">当前点</a>向 \&lt;x, y&gt; 指定的<em>终点</em>绘制三次贝塞尔曲线。<em>起始控制点</em>由 \&lt;x1, y1&gt; 指定，<em>终止控制点</em>由 \&lt;x2, y2&gt; 指定。</p>
+<p>其行为与 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG 的 <code>&lt;path&gt;</code></a> 中的 <a href="#c-curveto"><code>C</code></a> 命令完全相同。更多细节请参阅 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d#cubic_b%C3%A9zier_curve">MDN 上的三次贝塞尔曲线</a>以及 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#curve_commands">MDN 路径教程的曲线命令小节</a>。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -3511,25 +3506,25 @@ Example
 </div>
 
 <h2 id="c-rcurveto"><code>c</code>, <code>rcurveto</code><a class="headerlink" href="#c-rcurveto" title="Permanent link">&para;</a></h2>
-<p><strong><code>c, rcurveto dx1 dy1 dx2 dy2 dx dy</code></strong>    — <a href="#implicit-commands"><em>Can be implicit</em></a></p>
-<p>Like <a href="./#section"><code>curveto</code></a>, but the coordinates are relative to the <a href="#current-point">current point</a>.</p>
+<p><strong><code>c, rcurveto dx1 dy1 dx2 dy2 dx dy</code></strong>    — <a href="#隐式命令"><em>可为隐式</em></a></p>
+<p>与 <a href="#c-curveto"><code>curveto</code></a> 类似，但坐标相对于<a href="#当前点">当前点</a>。</p>
 <h2 id="defhsla"><code>defhsla</code><a class="headerlink" href="#defhsla" title="Permanent link">&para;</a></h2>
 <p><strong><code>defhsla varname h s l a</code></strong></p>
-<p>Similar to <a href="./#section"><code>sethsla</code></a>, but instead of establishing the color for stroke and fill operations, the computed color is assigned to the variable \&lt;varname&gt;.</p>
-<p>\&lt;varname&gt; can then be used as a color for <a href="./#section"><code>setcolor</code></a> and <a href="./#section"><code>colorstop</code></a>.</p>
-<p>See <a href="./#section"><code>sethsla</code></a> for more details on how the color is computed.</p>
+<p>与 <a href="#sethsla"><code>sethsla</code></a> 类似，但它不设置描边和填充操作所用的颜色，而是将计算出的颜色赋给变量 \&lt;varname&gt;。</p>
+<p>\&lt;varname&gt; 之后可以用作 <a href="#setcolor"><code>setcolor</code></a> 和 <a href="#colorstop"><code>colorstop</code></a> 的颜色。</p>
+<p>有关颜色如何计算的更多细节，请参见 <a href="#sethsla"><code>sethsla</code></a>。</p>
 <h2 id="defrgba"><code>defrgba</code><a class="headerlink" href="#defrgba" title="Permanent link">&para;</a></h2>
 <p><strong><code>defrgba varname r g b a</code></strong></p>
-<p>Computes a color from the <em>red</em>, <em>green</em>, <em>blue</em>, and <em>alpha</em> components, and assigns it to the variable \&lt;varname&gt;.</p>
-<p>All components are values between <code>0</code> and <code>1</code>. Values outside that range are clamped to it.</p>
+<p>根据<em>红</em>、<em>绿</em>、<em>蓝</em>和 <em>alpha</em> 分量计算出一个颜色，并将其赋给变量 \&lt;varname&gt;。</p>
+<p>所有分量都是 <code>0</code> 到 <code>1</code> 之间的值。超出该范围的值会被钳制到该范围内。</p>
 <h2 id="ellipse"><code>ellipse</code><a class="headerlink" href="#ellipse" title="Permanent link">&para;</a></h2>
-<p><strong><code>ellipse cx cy rx ry</code></strong>    — <a href="#implicit-commands"><em>Can be implicit</em></a></p>
-<p>Adds an ellipse to the current path. Similar to <a href="./#section"><code>circle</code></a>, but it is possible to use different radius for both axes.</p>
+<p><strong><code>ellipse cx cy rx ry</code></strong>    — <a href="#隐式命令"><em>可为隐式</em></a></p>
+<p>向当前路径添加一个椭圆。与 <a href="#circle"><code>circle</code></a> 类似，但两个轴可以使用不同的半径。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -3541,53 +3536,53 @@ Example
 
 <h2 id="fill-eofill"><code>fill</code>, <code>eofill</code><a class="headerlink" href="#fill-eofill" title="Permanent link">&para;</a></h2>
 <p><strong><code>fill, eofill</code></strong></p>
-<p>Fill the current path, using the <a href="./#user-variables">current pattern</a> (either a solid color or a gradient).</p>
-<p><a href="./#section"><code>eofill</code></a> uses the <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-EVEN-ODD:CAPS">even–odd rule</a>. See <a href="./#defining-a-shape">fill rules</a> for more details.</p>
-<p>The path is cleared after the operation, unless the <a href="./#section"><code>preserve</code></a> command is used before <a href="./#section"><code>fill</code></a> or <a href="./#section"><code>eofill</code></a>.</p>
-<p>See the documentation of the <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-fill"><code>cairo_fill</code></a> function for more details.</p>
+<p>使用<a href="#图案">当前图案</a>（纯色或渐变）填充当前路径。</p>
+<p><a href="#fill-eofill"><code>eofill</code></a> 使用<a href="https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-EVEN-ODD:CAPS">奇偶规则</a>。详见<a href="#填充">填充规则</a>。</p>
+<p>操作完成后路径会被清除，除非在 <a href="#fill-eofill"><code>fill</code></a> 或 <a href="#fill-eofill"><code>eofill</code></a> 之前使用了 <a href="#preserve"><code>preserve</code></a> 命令。</p>
+<p>详见 <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-fill"><code>cairo_fill</code></a> 函数的文档，了解更多细节。</p>
 <h2 id="getmetadata"><code>getmetadata</code><a class="headerlink" href="#getmetadata" title="Permanent link">&para;</a></h2>
 <p><strong><code>getmetadata varname key</code></strong></p>
-<p>Get the value of a metadata entry created by another filter, and assign it to the variable \&lt;varname&gt;.</p>
-<p>If there is no metadata entry for \&lt;key&gt;, or its value is not a number, \&lt;varname&gt; is set to <a href="https://en.wikipedia.org/wiki/NaN"><code>NaN</code></a>.</p>
-<p>See the <a href="#frame-metadata">Frame Metadata</a> section above for an example.</p>
+<p>获取由其他滤镜创建的元数据项的值，并将其赋给变量 \&lt;varname&gt;。</p>
+<p>如果不存在 \&lt;key&gt; 对应的元数据项，或其值不是数字，则 \&lt;varname&gt; 被设为 <a href="https://en.wikipedia.org/wiki/NaN"><code>NaN</code></a>。</p>
+<p>例子见上文的<a href="#帧元数据">帧元数据</a>小节。</p>
 <h2 id="h-h"><code>H</code>, <code>h</code><a class="headerlink" href="#h-h" title="Permanent link">&para;</a></h2>
-<p><strong><code>H, h x</code></strong>    — <a href="#implicit-commands"><em>Can be implicit</em></a></p>
-<p>Draw a horizontal line from the <a href="#current-point">current point</a> to x.</p>
-<p>The coordinate for <a href="./#section"><code>H</code></a> is absolute, and for <a href="./#section"><code>h</code></a> it is relative to the <a href="#current-point">current point</a>.</p>
+<p><strong><code>H, h x</code></strong>    — <a href="#隐式命令"><em>可为隐式</em></a></p>
+<p>从<a href="#当前点">当前点</a>向 x 绘制一条水平线。</p>
+<p><a href="#h-h"><code>H</code></a> 的坐标是绝对的，而 <a href="#h-h"><code>h</code></a> 的坐标相对于<a href="#当前点">当前点</a>。</p>
 <h2 id="if"><code>if</code><a class="headerlink" href="#if" title="Permanent link">&para;</a></h2>
 <p><strong><code>if condition { block }</code></strong></p>
-<p>Executes a block if the value of \&lt;condition&gt; is not zero, and a finite number (unlike <a href="https://en.wikipedia.org/wiki/NaN"><code>NaN</code></a>).</p>
-<p>See the <a href="./#section">Comparison and Logical Operators</a> section above for more details on how to write conditional expressions.</p>
+<p>当 \&lt;condition&gt; 的值非零且为有限数（与 <a href="https://en.wikipedia.org/wiki/NaN"><code>NaN</code></a> 不同）时，执行一个块。</p>
+<p>如何书写条件表达式的更多细节，请参见上文的<a href="#比较与逻辑运算符">比较与逻辑运算符</a>小节。</p>
 <h2 id="lineargrad"><code>lineargrad</code><a class="headerlink" href="#lineargrad" title="Permanent link">&para;</a></h2>
 <p><strong><code>lineargrad x0 y0 x1 y1</code></strong></p>
-<p>Set the <a href="./#user-variables">current pattern</a> to a new linear gradient, along the line from the coordinates \&lt;x0, y0&gt; to \&lt;x1, y1&gt;.</p>
-<p>This gradient can be used for stroke and fill operations.</p>
-<p>Use <a href="./#section"><code>colorstop</code></a> to set the color for each position in the gradient.</p>
+<p>将<a href="#图案">当前图案</a>设为一个新的线性渐变，沿从坐标 \&lt;x0, y0&gt; 到 \&lt;x1, y1&gt; 的直线。</p>
+<p>此渐变可用于描边和填充操作。</p>
+<p>使用 <a href="#colorstop"><code>colorstop</code></a> 为渐变中的每个位置设置颜色。</p>
 <h2 id="l-lineto"><code>L</code>, <code>lineto</code><a class="headerlink" href="#l-lineto" title="Permanent link">&para;</a></h2>
-<p><strong><code>L, lineto x y</code></strong>    — <a href="#implicit-commands"><em>Can be implicit</em></a></p>
-<p>Draw a line from the <a href="#current-point">current point</a> to the coordinates at \&lt;x, y&gt;.</p>
-<p>See the documentation of the <a href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-line-to"><code>cairo_line_to</code></a> function for more details.</p>
+<p><strong><code>L, lineto x y</code></strong>    — <a href="#隐式命令"><em>可为隐式</em></a></p>
+<p>从<a href="#当前点">当前点</a>向 \&lt;x, y&gt; 坐标绘制一条直线。</p>
+<p>详见 <a href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-line-to"><code>cairo_line_to</code></a> 函数的文档，了解更多细节。</p>
 <h2 id="l-rlineto"><code>l</code>, <code>rlineto</code><a class="headerlink" href="#l-rlineto" title="Permanent link">&para;</a></h2>
-<p><strong><code>l, rlineto dx dy</code></strong>    — <a href="#implicit-commands"><em>Can be implicit</em></a></p>
-<p>Like <a href="./#section"><code>lineto</code></a>, but the coordinates are relative to the <a href="#current-point">current point</a>.</p>
+<p><strong><code>l, rlineto dx dy</code></strong>    — <a href="#隐式命令"><em>可为隐式</em></a></p>
+<p>与 <a href="#l-lineto"><code>lineto</code></a> 类似，但坐标相对于<a href="#当前点">当前点</a>。</p>
 <h2 id="m-moveto"><code>M</code>, <code>moveto</code><a class="headerlink" href="#m-moveto" title="Permanent link">&para;</a></h2>
-<p><strong><code>M, moveto x y</code></strong>    — <a href="#implicit-commands"><em>Can be implicit</em></a></p>
-<p>Begin a new sub-path, and set the <a href="#current-point">current point</a> to \&lt;x, y&gt;.</p>
+<p><strong><code>M, moveto x y</code></strong>    — <a href="#隐式命令"><em>可为隐式</em></a></p>
+<p>开始一个新的子路径，并将<a href="#当前点">当前点</a>设为 \&lt;x, y&gt;。</p>
 <h2 id="m-rmoveto"><code>m</code>, <code>rmoveto</code><a class="headerlink" href="#m-rmoveto" title="Permanent link">&para;</a></h2>
-<p><strong><code>m, rmoveto dx dy</code></strong>    — <a href="#implicit-commands"><em>Can be implicit</em></a></p>
-<p>Like <a href="./#section"><code>moveto</code></a>, but the coordinates are relative to the <a href="#current-point">current point</a>.</p>
+<p><strong><code>m, rmoveto dx dy</code></strong>    — <a href="#隐式命令"><em>可为隐式</em></a></p>
+<p>与 <a href="#m-moveto"><code>moveto</code></a> 类似，但坐标相对于<a href="#当前点">当前点</a>。</p>
 <h2 id="newpath"><code>newpath</code><a class="headerlink" href="#newpath" title="Permanent link">&para;</a></h2>
 <p><strong><code>newpath</code></strong></p>
-<p>Begin a new sub-path. Like <a href="./#section"><code>moveto</code></a>, but there is no <a href="#current-point">current point</a> after it.</p>
+<p>开始一个新的子路径。与 <a href="#m-moveto"><code>moveto</code></a> 类似，但之后没有<a href="#当前点">当前点</a>。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In the next example, [`newpath`](drawvg-reference.md#section) is used in the path on the right to prevent the line connecting both arcs.
+在下一个例子中，右侧的路径使用了 [`newpath`](#newpath)，以避免连接两条弧的线段。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-77-1" name="__codelineno-77-1" href="#__codelineno-77-1"></a>setlinewidth 3
 <a id="__codelineno-77-2" name="__codelineno-77-2" href="#__codelineno-77-2"></a>
@@ -3607,35 +3602,35 @@ In the next example, [`newpath`](drawvg-reference.md#section) is used in the pat
 
 <h2 id="preserve"><code>preserve</code><a class="headerlink" href="#preserve" title="Permanent link">&para;</a></h2>
 <p><strong><code>preserve</code></strong></p>
-<p>Indicates that the next operation to fill, stroke, or clip, must preserve the path, so the same path can be used in multiple operations.</p>
-<p>It has effect on these commands:</p>
+<p>指示接下来的填充、描边或裁剪操作必须保留路径，以便同一路径可用于多个操作。</p>
+<p>它对以下命令有效：</p>
 <ul>
 <li>
-<p><a href="./#section"><code>clip</code></a></p>
+<p><a href="#clip-eoclip"><code>clip</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>eoclip</code></a></p>
+<p><a href="#clip-eoclip"><code>eoclip</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>eofill</code></a></p>
+<p><a href="#fill-eofill"><code>eofill</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>fill</code></a></p>
+<p><a href="#fill-eofill"><code>fill</code></a></p>
 </li>
 <li>
-<p><a href="./#section"><code>stroke</code></a></p>
+<p><a href="#stroke"><code>stroke</code></a></p>
 </li>
 </ul>
-<p>The script can contain any command between <a href="./#section"><code>preserve</code></a> and the associated operation. This allows modifying other properties, like the current color.</p>
+<p>脚本可以在 <a href="#preserve"><code>preserve</code></a> 与相关操作之间包含任意命令。这允许修改其他属性，如当前颜色。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, the same path is used for both [`fill`](drawvg-reference.md#section) and [`stroke`](drawvg-reference.md#section), but with different colors.
+在这个例子中，同一路径既用于 [`fill`](#fill-eofill) 又用于 [`stroke`](#stroke)，但颜色不同。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-78-1" name="__codelineno-78-1" href="#__codelineno-78-1"></a>circle (w / 2) (h / 2) (w / 3)
 <a id="__codelineno-78-2" name="__codelineno-78-2" href="#__codelineno-78-2"></a>
@@ -3649,16 +3644,16 @@ In this example, the same path is used for both [`fill`](drawvg-reference.md#sec
 
 </div>
 
-<p><a href="./#section"><code>preserve</code></a> can be called multiple times, if the same path has to be used in 3 or more operations.</p>
+<p>如果同一路径要在 3 个或更多操作中使用，<a href="#preserve"><code>preserve</code></a> 可以调用多次。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, the path created by [`circle`](drawvg-reference.md#section) is used by [`fill`](drawvg-reference.md#section), [`stroke`](drawvg-reference.md#section), and [`clip`](drawvg-reference.md#section). After [`clip`](drawvg-reference.md#section), the path is cleared.
+在这个例子中，[`circle`](#circle) 创建的路径被 [`fill`](#fill-eofill)、[`stroke`](#stroke) 和 [`clip`](#clip-eoclip) 使用。在 [`clip`](#clip-eoclip) 之后，路径被清除。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-79-1" name="__codelineno-79-1" href="#__codelineno-79-1"></a>circle 100 100 50
 <a id="__codelineno-79-2" name="__codelineno-79-2" href="#__codelineno-79-2"></a>
@@ -3670,22 +3665,22 @@ In this example, the path created by [`circle`](drawvg-reference.md#section) is 
 </div>
 
 <h2 id="print"><code>print</code><a class="headerlink" href="#print" title="Permanent link">&para;</a></h2>
-<p><strong><code>print expr</code></strong>    — <a href="#implicit-commands"><em>Can be implicit</em></a></p>
-<p>Print its arguments to the FFmpeg log.</p>
-<p>See the <a href="#command-print">Command print</a> section above for more details.</p>
+<p><strong><code>print expr</code></strong>    — <a href="#隐式命令"><em>可为隐式</em></a></p>
+<p>将其参数打印到 FFmpeg 日志。</p>
+<p>详见上文的 <a href="#命令-print">命令 print</a> 小节，了解更多细节。</p>
 <h2 id="proc"><code>proc</code><a class="headerlink" href="#proc" title="Permanent link">&para;</a></h2>
 <p><strong><code>proc name params* { block }</code></strong></p>
-<p>Assign the block and the parameters for the procedure \&lt;name&gt;. The procedure can be called multiple times with the <a href="./#section"><code>call</code></a> command.</p>
-<p>See the <a href="#procedures">Procedures</a> section above for more details.</p>
+<p>为过程 \&lt;name&gt; 分配块和参数。该过程可以用 <a href="#call"><code>call</code></a> 命令多次调用。</p>
+<p>详见上文的 <a href="#过程">过程</a> 小节，了解更多细节。</p>
 <h2 id="q"><code>Q</code><a class="headerlink" href="#q" title="Permanent link">&para;</a></h2>
 <p><strong><code>Q x1 y1 x y</code></strong></p>
-<p>Draw a quadratic Bézier curve from the <a href="#current-point">current point</a> to the <em>end point</em> specified by \&lt;x, y&gt;. The <em>control point</em> is specified by \&lt;x1, y1&gt;.</p>
-<p>The behaviour is identical to the <code>Q</code> command in <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG's <code>&lt;path&gt;</code></a>. For more details, see <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d#quadratic_b%C3%A9zier_curve">Quadratic Bézier curve on MDN</a>, and the <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#curve_commands">Curve Commands section of the Paths tutorial on MDN</a>.</p>
+<p>从<a href="#当前点">当前点</a>向 \&lt;x, y&gt; 指定的<em>终点</em>绘制二次贝塞尔曲线。<em>控制点</em>由 \&lt;x1, y1&gt; 指定。</p>
+<p>其行为与 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG 的 <code>&lt;path&gt;</code></a> 中的 <code>Q</code> 命令完全相同。更多细节请参阅 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d#quadratic_b%C3%A9zier_curve">MDN 上的二次贝塞尔曲线</a>以及 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#curve_commands">MDN 路径教程的曲线命令小节</a>。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -3702,23 +3697,23 @@ Example
 
 <h2 id="q_1"><code>q</code><a class="headerlink" href="#q_1" title="Permanent link">&para;</a></h2>
 <p><strong><code>q dx1 dy1 dx dy</code></strong></p>
-<p>Like <a href="./#section"><code>Q</code></a>, but the coordinates are relative to the <a href="#current-point">current point</a>.</p>
+<p>与 <a href="#q"><code>Q</code></a> 类似，但坐标相对于<a href="#当前点">当前点</a>。</p>
 <h2 id="radialgrad"><code>radialgrad</code><a class="headerlink" href="#radialgrad" title="Permanent link">&para;</a></h2>
 <p><strong><code>radialgrad cx0 cy0 radius0 cx1 cy1 radius1</code></strong></p>
-<p>Creates a new radial gradient between the two circles defined by \&lt;cx0 cy0 radius0&gt; and \&lt;cx1 cy1 radius1&gt;. Each set of arguments is the coordinates of the center and the radius.</p>
-<p>This gradient can be used for stroke and fill operations.</p>
-<p>Use <a href="./#section"><code>colorstop</code></a> to set the color for each position in the gradient.</p>
+<p>创建一个径向渐变，介于由 \&lt;cx0 cy0 radius0&gt; 和 \&lt;cx1 cy1 radius1&gt; 定义的两个圆之间。每组参数分别是圆心坐标和半径。</p>
+<p>此渐变可用于描边和填充操作。</p>
+<p>使用 <a href="#colorstop"><code>colorstop</code></a> 为渐变中的每个位置设置颜色。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-The animation in the next example shows how the two circles defined in the [`radialgrad`](drawvg-reference.md#section) arguments interact with each other.
+下一个例子中的动画展示了 [`radialgrad`](#radialgrad) 参数定义的两个圆如何相互作用。
 
-The red circle represent the circle for the \<cx0 cy0 radius0\> arguments, and the yellow circle is the one for the \<cx1 cy1 radius1\> arguments.
+红色圆表示 \<cx0 cy0 radius0\> 参数对应的圆，黄色圆是 \<cx1 cy1 radius1\> 参数对应的圆。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-81-1" name="__codelineno-81-1" href="#__codelineno-81-1"></a>setvar cx0 (mod(t * 30, w))
 <a id="__codelineno-81-2" name="__codelineno-81-2" href="#__codelineno-81-2"></a>setvar cy0 120
@@ -3755,49 +3750,49 @@ The red circle represent the circle for the \<cx0 cy0 radius0\> arguments, and t
 
 <h2 id="rect"><code>rect</code><a class="headerlink" href="#rect" title="Permanent link">&para;</a></h2>
 <p><strong><code>rect x y width height</code></strong></p>
-<p>Adds a rectangle of the given size (\&lt;width&gt; × \&lt;height&gt;), at position \&lt;x, y&gt;, to the current path. The <a href="#current-point">current point</a> is cleared before and after adding the rectangle.</p>
-<p>See the documentation of the <a href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-rectangle"><code>cairo_rectangle</code></a> function for more details.</p>
+<p>向当前路径添加一个给定尺寸（\&lt;width&gt; × \&lt;height&gt;）、位于 \&lt;x, y&gt; 位置的矩形。添加矩形之前和之后，<a href="#当前点">当前点</a>都会被清除。</p>
+<p>详见 <a href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-rectangle"><code>cairo_rectangle</code></a> 函数的文档，了解更多细节。</p>
 <h2 id="repeat"><code>repeat</code><a class="headerlink" href="#repeat" title="Permanent link">&para;</a></h2>
 <p><strong><code>repeat count { block }</code></strong></p>
-<p>Executes a block the number of times indicated by \&lt;count&gt;.</p>
-<p>In each iteration, the variable \&lt;i&gt; is used as a <a href="https://en.wikipedia.org/wiki/For_loop#Loop_counters">loop counter</a>. It takes the values from <code>0</code> to <code>count - 1</code>. When the loop is terminated, the variable is restored to the value before starting the loop.</p>
-<p>If \&lt;count&gt; is less than <code>1</code>, or it is not a finite number (like <a href="https://en.wikipedia.org/wiki/NaN"><code>NaN</code></a>), the block is not executed.</p>
+<p>按 \&lt;count&gt; 指示的次数执行一个块。</p>
+<p>在每次迭代中，变量 \&lt;i&gt; 被用作<a href="https://en.wikipedia.org/wiki/For_loop#Loop_counters">循环计数器</a>。它取 <code>0</code> 到 <code>count - 1</code> 的值。循环终止后，该变量恢复为循环开始前的值。</p>
+<p>如果 \&lt;count&gt; 小于 <code>1</code>，或不是有限数（如 <a href="https://en.wikipedia.org/wiki/NaN"><code>NaN</code></a>），则不会执行该块。</p>
 <h2 id="resetclip"><code>resetclip</code><a class="headerlink" href="#resetclip" title="Permanent link">&para;</a></h2>
 <p><strong><code>resetclip</code></strong></p>
-<p>Reset the current clip region to its original state, covering the whole frame.</p>
-<p>See the documentation of the <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-reset-clip"><code>cairo_reset_clip</code></a> function for more details.</p>
+<p>将当前裁剪区域重置为其原始状态，覆盖整帧。</p>
+<p>详见 <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-reset-clip"><code>cairo_reset_clip</code></a> 函数的文档，了解更多细节。</p>
 <h2 id="resetdash"><code>resetdash</code><a class="headerlink" href="#resetdash" title="Permanent link">&para;</a></h2>
 <p><strong><code>resetdash</code></strong></p>
-<p>Disable the dash pattern to be used by <a href="./#section"><code>stroke</code></a>. This reverts any change made by <a href="./#section"><code>setdash</code></a> and <a href="./#section"><code>setdashoffset</code></a>.</p>
-<p>It calls <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-dash"><code>cairo_set_dash</code></a> with <code>num_dashes</code> set to <code>0</code>.</p>
+<p>禁用 <a href="#stroke"><code>stroke</code></a> 将使用的虚线图案。这会撤销 <a href="#setdash"><code>setdash</code></a> 和 <a href="#setdashoffset"><code>setdashoffset</code></a> 所做的任何更改。</p>
+<p>它以 <code>num_dashes</code> 设为 <code>0</code> 调用 <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-dash"><code>cairo_set_dash</code></a>。</p>
 <h2 id="resetmatrix"><code>resetmatrix</code><a class="headerlink" href="#resetmatrix" title="Permanent link">&para;</a></h2>
 <p><strong><code>resetmatrix</code></strong></p>
-<p>Resets the current <a href="./#variables">transformation matrix</a>.</p>
+<p>重置当前的<a href="#变换">变换矩阵</a>。</p>
 <h2 id="restore"><code>restore</code><a class="headerlink" href="#restore" title="Permanent link">&para;</a></h2>
 <p><strong><code>restore</code></strong></p>
-<p>Restores the state saved by a preceding call to <a href="./#section"><code>save</code></a>.</p>
-<p>For more details, see the <a href="#state-stack">State Stack</a> section above, and the <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-restore"><code>cairo_restore</code></a> function.</p>
+<p>恢复之前调用 <a href="#save"><code>save</code></a> 保存的状态。</p>
+<p>更多细节请参见上文的<a href="#状态栈">状态栈</a>小节，以及 <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-restore"><code>cairo_restore</code></a> 函数。</p>
 <h2 id="rotate"><code>rotate</code><a class="headerlink" href="#rotate" title="Permanent link">&para;</a></h2>
 <p><strong><code>rotate angle</code></strong></p>
-<p>Modifies the current <a href="./#variables">transformation matrix</a> by rotating the user-space axes by \&lt;angle&gt; radians.</p>
-<p>See the documentation of the <a href="https://www.cairographics.org/manual/cairo-Transformations.html#cairo-rotate"><code>cairo_rotate</code></a> function for more details.</p>
+<p>通过将用户空间轴旋转 \&lt;angle&gt; 弧度来修改当前的<a href="#变换">变换矩阵</a>。</p>
+<p>详见 <a href="https://www.cairographics.org/manual/cairo-Transformations.html#cairo-rotate"><code>cairo_rotate</code></a> 函数的文档，了解更多细节。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example:
+在这个例子中：
 
-- [`scalexy`](drawvg-reference.md#section) maps the coordinates to a 1x1 frame.
+- [`scalexy`](#scalexy) 将坐标映射到 1x1 的帧。
 
-- [`translate`](drawvg-reference.md#section) put `0, 0` at the center of the frame.
+- [`translate`](#translate) 把 `0, 0` 放在帧中心。
 
-- [`rotate`](drawvg-reference.md#section) rotates 45°.
+- [`rotate`](#rotate) 旋转 45°。
 
-- [`resetmatrix`](drawvg-reference.md#section) reverts the transformations before [`stroke`](drawvg-reference.md#section), so the line width is not affected by the scale.
+- [`resetmatrix`](#resetmatrix) 在 [`stroke`](#stroke) 之前撤销变换，使线宽不受缩放影响。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-82-1" name="__codelineno-82-1" href="#__codelineno-82-1"></a>scalexy w h
 <a id="__codelineno-82-2" name="__codelineno-82-2" href="#__codelineno-82-2"></a>translate 0.5 0.5
@@ -3810,19 +3805,19 @@ In this example:
 </div>
 
 <h2 id="roundedrect"><code>roundedrect</code><a class="headerlink" href="#roundedrect" title="Permanent link">&para;</a></h2>
-<p><strong><code>roundedrect x y width height radius</code></strong>    — <a href="#implicit-commands"><em>Can be implicit</em></a></p>
-<p>Like <a href="./#section"><code>rect</code></a>, but a circular arc is used for the corners.</p>
+<p><strong><code>roundedrect x y width height radius</code></strong>    — <a href="#隐式命令"><em>可为隐式</em></a></p>
+<p>与 <a href="#rect"><code>rect</code></a> 类似，但角部使用圆弧。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-The next example shows the same rectangle, with different values for the corner radius.
+下一个例子展示了同一个矩形使用不同圆角半径的效果。
 
-The radius is computed by multiplying \<i\> (the [loop counter](https://en.wikipedia.org/wiki/For_loop#Loop_counters)) by `4.5`. This number is chosen to make the last shape a perfect circle.
+半径通过 \<i\>（[循环计数器](https://en.wikipedia.org/wiki/For_loop#Loop_counters)）乘以 `4.5` 计算。选择这个数字是为了让最后一个形状成为正圆。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-83-1" name="__codelineno-83-1" href="#__codelineno-83-1"></a>repeat 9 {
 <a id="__codelineno-83-2" name="__codelineno-83-2" href="#__codelineno-83-2"></a>    roundedrect
@@ -3839,41 +3834,41 @@ The radius is computed by multiplying \<i\> (the [loop counter](https://en.wikip
 
 <h2 id="save"><code>save</code><a class="headerlink" href="#save" title="Permanent link">&para;</a></h2>
 <p><strong><code>save</code></strong></p>
-<p>Saves a copy of the current state on an internal stack. This copy can be restored later with <a href="./#section"><code>restore</code></a>.</p>
-<p>For more details, see the <a href="#state-stack">State Stack</a> section above, and the <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-save"><code>cairo_save</code></a> function.</p>
+<p>将当前状态的副本保存到内部栈上。之后可以用 <a href="#restore"><code>restore</code></a> 恢复该副本。</p>
+<p>更多细节请参见上文的<a href="#状态栈">状态栈</a>小节，以及 <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-save"><code>cairo_save</code></a> 函数。</p>
 <h2 id="scale"><code>scale</code><a class="headerlink" href="#scale" title="Permanent link">&para;</a></h2>
 <p><strong><code>scale sxy</code></strong></p>
-<p>Similar to <a href="./#section"><code>scalexy</code></a>, but the same value is used for both axes. It is equivalent to:</p>
+<p>与 <a href="#scalexy"><code>scalexy</code></a> 类似，但两个轴使用相同的值。它等价于：</p>
 <p><strong><code>scalexy sxy sxy</code></strong></p>
 <h2 id="scalexy"><code>scalexy</code><a class="headerlink" href="#scalexy" title="Permanent link">&para;</a></h2>
 <p><strong><code>scalexy sx sy</code></strong></p>
-<p>Modifies the current <a href="./#variables">transformation matrix</a> by scaling the X and Y user-space axes by \&lt;sx&gt; and \&lt;sy&gt; respectively.</p>
-<p>See the documentation of the <a href="https://www.cairographics.org/manual/cairo-Transformations.html#cairo-scale"><code>cairo_scale</code></a> function for more details.</p>
-<p>See <a href="./#section"><code>rotate</code></a> for an example on combining multiple transformations.</p>
+<p>通过将 X 和 Y 用户空间轴分别缩放 \&lt;sx&gt; 和 \&lt;sy&gt; 来修改当前的<a href="#变换">变换矩阵</a>。</p>
+<p>详见 <a href="https://www.cairographics.org/manual/cairo-Transformations.html#cairo-scale"><code>cairo_scale</code></a> 函数的文档，了解更多细节。</p>
+<p>组合多个变换的示例见 <a href="#rotate"><code>rotate</code></a>。</p>
 <h2 id="setcolor"><code>setcolor</code><a class="headerlink" href="#setcolor" title="Permanent link">&para;</a></h2>
 <p><strong><code>setcolor color</code></strong></p>
-<p>Set a solid color as the <a href="./#user-variables">current pattern</a> for stroke and fill operations</p>
-<p>See the <a href="#colors">Colors</a> section above for more details.</p>
+<p>将纯色设为描边和填充操作的<a href="#图案">当前图案</a>。</p>
+<p>详见上文的 <a href="#颜色">颜色</a> 小节，了解更多细节。</p>
 <h2 id="setdash"><code>setdash</code><a class="headerlink" href="#setdash" title="Permanent link">&para;</a></h2>
-<p><strong><code>setdash length</code></strong>    — <a href="#implicit-commands"><em>Can be implicit</em></a></p>
-<p>Sets the dash pattern to be used by <a href="./#section"><code>stroke</code></a>.</p>
-<p>Each call to <a href="./#section"><code>setdash</code></a> adds a length to the pattern, alternating between <em>on</em> and <em>off</em> portions of the stroke.</p>
-<p>After a call to <a href="./#section"><code>setdash</code></a>, <a href="./#section"><code>resetdash</code></a> is needed either to create a new pattern, or to discard the current one.</p>
-<p>See the documentation of the <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-dash"><code>cairo_set_dash</code></a> function for more details.</p>
+<p><strong><code>setdash length</code></strong>    — <a href="#隐式命令"><em>可为隐式</em></a></p>
+<p>设置 <a href="#stroke"><code>stroke</code></a> 将使用的虚线图案。</p>
+<p>每次调用 <a href="#setdash"><code>setdash</code></a> 都会向图案添加一个长度，在描边的 on 与 off 部分之间交替。</p>
+<p>调用 <a href="#setdash"><code>setdash</code></a> 之后，需要 <a href="#resetdash"><code>resetdash</code></a> 来创建新图案或丢弃当前图案。</p>
+<p>详见 <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-dash"><code>cairo_set_dash</code></a> 函数的文档，了解更多细节。</p>
 <h2 id="setdashoffset"><code>setdashoffset</code><a class="headerlink" href="#setdashoffset" title="Permanent link">&para;</a></h2>
 <p><strong><code>setdashoffset offset</code></strong></p>
-<p>Set the offset into the dash pattern at which the stroke should start.</p>
-<p><a href="./#section"><code>setdash</code></a> must be called <em>before</em> <a href="./#section"><code>setdashoffset</code></a>.</p>
-<p>See the documentation of the <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-dash"><code>cairo_set_dash</code></a> function for more details.</p>
+<p>设置描边应在虚线图案中开始的位置偏移。</p>
+<p><a href="#setdash"><code>setdash</code></a> 必须在 <a href="#setdashoffset"><code>setdashoffset</code></a> <em>之前</em>调用。</p>
+<p>详见 <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-dash"><code>cairo_set_dash</code></a> 函数的文档，了解更多细节。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-The next animation shows the effect of [`setdashoffset`](drawvg-reference.md#section) when its argument changes over time.
+下一个动画展示了 [`setdashoffset`](#setdashoffset) 的参数随时间变化时的效果。
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-84-1" name="__codelineno-84-1" href="#__codelineno-84-1"></a>scalexy w h
 <a id="__codelineno-84-2" name="__codelineno-84-2" href="#__codelineno-84-2"></a>M 0.5 1
@@ -3891,14 +3886,14 @@ The next animation shows the effect of [`setdashoffset`](drawvg-reference.md#sec
 
 <h2 id="sethsla"><code>sethsla</code><a class="headerlink" href="#sethsla" title="Permanent link">&para;</a></h2>
 <p><strong><code>sethsla h s l a</code></strong></p>
-<p>Set the <a href="./#user-variables">current pattern</a> to a solid color, given the <em>hue</em>, <em>saturation</em>, and <em>lightness</em>, and <em>alpha</em> components.</p>
-<p>h is the <em>hue</em>, a value between <code>0</code> and <code>359</code>. Negative values are clamped to <code>0</code>, and values greater than <code>359</code> are interpreted as modulo 360.</p>
-<p>s (<em>saturation</em>), l (<em>lightness</em>), and a (<em>alpha</em>), are values between <code>0</code> and <code>1</code>.</p>
-<p>The conversion to RGB is implemented according to the <a href="https://en.wikipedia.org/wiki/HSL_and_HSV#HSL_to_RGB">formulae from Wikipedia</a>.</p>
+<p>根据<em>色相</em>、<em>饱和度</em>、<em>亮度</em>和 <em>alpha</em> 分量，将<a href="#图案">当前图案</a>设为纯色。</p>
+<p>h 是<em>色相</em>，取值为 <code>0</code> 到 <code>359</code>。负值被钳制为 <code>0</code>，大于 <code>359</code> 的值按模 360 解释。</p>
+<p>s（<em>饱和度</em>）、l（<em>亮度</em>）和 a（<em>alpha</em>）是 <code>0</code> 到 <code>1</code> 之间的值。</p>
+<p>到 RGB 的转换按照<a href="https://en.wikipedia.org/wiki/HSL_and_HSV#HSL_to_RGB">维基百科上的公式</a>实现。</p>
 <h2 id="setlinecap"><code>setlinecap</code><a class="headerlink" href="#setlinecap" title="Permanent link">&para;</a></h2>
 <p><strong><code>setlinecap cap</code></strong></p>
-<p>Set the current line cap style, which determines the shape used to draw the end points of lines.</p>
-<p>\&lt;cap&gt; must be one of the following names:</p>
+<p>设置当前线帽样式，它决定绘制线条端点所用的形状。</p>
+<p>\&lt;cap&gt; 必须是以下名称之一：</p>
 <ul>
 <li>
 <p><code>butt</code></p>
@@ -3910,16 +3905,16 @@ The next animation shows the effect of [`setdashoffset`](drawvg-reference.md#sec
 <p><code>square</code></p>
 </li>
 </ul>
-<p>It calls to <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-line-cap"><code>cairo_set_line_cap</code></a> to set the line cap style.</p>
+<p>它调用 <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-line-cap"><code>cairo_set_line_cap</code></a> 来设置线帽样式。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-This example draws 3 lines with the same length, each one with a different line cap style:
+这个例子绘制 3 条等长的线，每条使用不同的线帽样式：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-85-1" name="__codelineno-85-1" href="#__codelineno-85-1"></a>setlinewidth 40
 <a id="__codelineno-85-2" name="__codelineno-85-2" href="#__codelineno-85-2"></a>
@@ -3945,8 +3940,8 @@ This example draws 3 lines with the same length, each one with a different line 
 
 <h2 id="setlinejoin"><code>setlinejoin</code><a class="headerlink" href="#setlinejoin" title="Permanent link">&para;</a></h2>
 <p><strong><code>setlinejoin join</code></strong></p>
-<p>Sets the current line join style, which determines the shape used to join two line segments.</p>
-<p>\&lt;join&gt; must be one of the following names:</p>
+<p>设置当前线条连接样式，它决定连接两条线段所用的形状。</p>
+<p>\&lt;join&gt; 必须是以下名称之一：</p>
 <ul>
 <li>
 <p><code>bevel</code></p>
@@ -3958,16 +3953,16 @@ This example draws 3 lines with the same length, each one with a different line 
 <p><code>round</code></p>
 </li>
 </ul>
-<p>It calls to <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-line-join"><code>cairo_set_line_join</code></a> to set the line join style.</p>
+<p>它调用 <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-line-join"><code>cairo_set_line_join</code></a> 来设置线条连接样式。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-This example draws 3 lines with the same length, each one with a different line join style:
+这个例子绘制 3 条等长的线，每条使用不同的线条连接样式：
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-86-1" name="__codelineno-86-1" href="#__codelineno-86-1"></a>setlinewidth 30
 <a id="__codelineno-86-2" name="__codelineno-86-2" href="#__codelineno-86-2"></a>
@@ -3988,9 +3983,9 @@ This example draws 3 lines with the same length, each one with a different line 
 
 <h2 id="setlinewidth"><code>setlinewidth</code><a class="headerlink" href="#setlinewidth" title="Permanent link">&para;</a></h2>
 <p><strong><code>setlinewidth width</code></strong></p>
-<p>Set the line width for <a href="./#section"><code>stroke</code></a>.</p>
-<p>\&lt;width&gt; is affected by the <a href="./#variables">transformation matrix</a>.</p>
-<p>To specify a width that is not affected by other transformations, <a href="./#section"><code>resetmatrix</code></a> can be used between <a href="./#section"><code>save</code></a> / <a href="./#section"><code>restore</code></a>:</p>
+<p>设置 <a href="#stroke"><code>stroke</code></a> 的线宽。</p>
+<p>\&lt;width&gt; 受<a href="#变换">变换矩阵</a>影响。</p>
+<p>要指定不受其他变换影响的线宽，可以在 <a href="#save"><code>save</code></a> / <a href="#restore"><code>restore</code></a> 之间使用 <a href="#resetmatrix"><code>resetmatrix</code></a>：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-87-1" name="__codelineno-87-1" href="#__codelineno-87-1"></a>save
 <a id="__codelineno-87-2" name="__codelineno-87-2" href="#__codelineno-87-2"></a>
 <a id="__codelineno-87-3" name="__codelineno-87-3" href="#__codelineno-87-3"></a>resetmatrix
@@ -4000,31 +3995,31 @@ This example draws 3 lines with the same length, each one with a different line 
 <a id="__codelineno-87-7" name="__codelineno-87-7" href="#__codelineno-87-7"></a>// Restore matrix after stroke.
 <a id="__codelineno-87-8" name="__codelineno-87-8" href="#__codelineno-87-8"></a>restore
 </code></pre></div>
-<p>See the documentation of the <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-line-width"><code>cairo_set_line_width</code></a> function for more details.</p>
+<p>详见 <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-line-width"><code>cairo_set_line_width</code></a> 函数的文档，了解更多细节。</p>
 <h2 id="setrgba"><code>setrgba</code><a class="headerlink" href="#setrgba" title="Permanent link">&para;</a></h2>
 <p><strong><code>setrgba r g b a</code></strong></p>
-<p>Set the <a href="./#user-variables">current pattern</a> to a solid color, given the <em>red</em>, <em>green</em>, <em>blue</em>, and <em>alpha</em> components.</p>
-<p>All components are values between <code>0</code> and <code>1</code>. Values outside that range are clamped to it.</p>
+<p>根据<em>红</em>、<em>绿</em>、<em>蓝</em>和 <em>alpha</em> 分量，将<a href="#图案">当前图案</a>设为纯色。</p>
+<p>所有分量都是 <code>0</code> 到 <code>1</code> 之间的值。超出该范围的值会被钳制到该范围内。</p>
 <h2 id="setvar"><code>setvar</code><a class="headerlink" href="#setvar" title="Permanent link">&para;</a></h2>
 <p><strong><code>setvar varname value</code></strong></p>
-<p>Set the variable \&lt;varname&gt; to \&lt;value&gt;.</p>
-<p>See the <a href="#user-variables">User Variables</a> section above for more details.</p>
-<h2 id="stroke_1"><code>stroke</code><a class="headerlink" href="#stroke_1" title="Permanent link">&para;</a></h2>
+<p>将变量 \&lt;varname&gt; 设为 \&lt;value&gt;。</p>
+<p>详见上文的 <a href="#用户变量">用户变量</a> 小节，了解更多细节。</p>
+<h2 id="stroke"><code>stroke</code><a class="headerlink" href="#stroke" title="Permanent link">&para;</a></h2>
 <p><strong><code>stroke</code></strong></p>
-<p>Strokes the current path according to the current line width, line join, line cap, and dash settings.</p>
-<p>The path is cleared after the operation, unless the <a href="./#section"><code>preserve</code></a> command is used before <a href="./#section"><code>stroke</code></a>.</p>
-<p>See the documentation of the <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-stroke"><code>cairo_stroke</code></a> function for more details.</p>
+<p>按照当前的线宽、线条连接、线帽和虚线设置描边当前路径。</p>
+<p>操作完成后路径会被清除，除非在 <a href="#stroke"><code>stroke</code></a> 之前使用了 <a href="#preserve"><code>preserve</code></a> 命令。</p>
+<p>详见 <a href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-stroke"><code>cairo_stroke</code></a> 函数的文档，了解更多细节。</p>
 <h2 id="s-s"><code>S</code>, <code>s</code><a class="headerlink" href="#s-s" title="Permanent link">&para;</a></h2>
-<p><strong><code>S, s x2 y2 x y</code></strong>    — <a href="#implicit-commands"><em>Can be implicit</em></a></p>
-<p>Draw a smooth cubic Bézier curve from the <a href="#current-point">current point</a> to the <em>end point</em> specified by \&lt;x, y&gt;. The <em>end control point</em> is specified by \&lt;x2, y2&gt;.</p>
-<p>The <em>start control point</em> is the reflection of the <em>end control point</em> of the previous curve command about the <em>current point</em>.</p>
-<p>The behaviour is identical to the <code>S</code> command in <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG's <code>&lt;path&gt;</code></a>. For more details, see <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d#cubic_b%C3%A9zier_curve">Cubic Bézier Curve on MDN</a>, and the <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#curve_commands">Curve Commands section of the Paths tutorial on MDN</a>.</p>
-<p><a href="./#section"><code>s</code></a> is like <a href="./#section"><code>S</code></a>, but the coordinates are relative to the <a href="#current-point">current point</a>.</p>
+<p><strong><code>S, s x2 y2 x y</code></strong>    — <a href="#隐式命令"><em>可为隐式</em></a></p>
+<p>从<a href="#当前点">当前点</a>向 \&lt;x, y&gt; 指定的<em>终点</em>绘制平滑三次贝塞尔曲线。<em>终止控制点</em>由 \&lt;x2, y2&gt; 指定。</p>
+<p><em>起始控制点</em>是前一条曲线命令的<em>终止控制点</em>关于<em>当前点</em>的镜像。</p>
+<p>其行为与 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG 的 <code>&lt;path&gt;</code></a> 中的 <code>S</code> 命令完全相同。更多细节请参阅 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d#cubic_b%C3%A9zier_curve">MDN 上的三次贝塞尔曲线</a>以及 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#curve_commands">MDN 路径教程的曲线命令小节</a>。</p>
+<p><a href="#s-s"><code>s</code></a> 与 <a href="#s-s"><code>S</code></a> 类似，但坐标相对于<a href="#当前点">当前点</a>。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -4043,19 +4038,19 @@ Example
 
 <h2 id="translate"><code>translate</code><a class="headerlink" href="#translate" title="Permanent link">&para;</a></h2>
 <p><strong><code>translate tx ty</code></strong></p>
-<p>Modifies the current <a href="./#variables">transformation matrix</a> by translating the user-space origin by \&lt;tx, ty&gt;.</p>
-<p>See the documentation of the <a href="https://www.cairographics.org/manual/cairo-Transformations.html#cairo-translate"><code>cairo_translate</code></a> function for more details.</p>
+<p>通过将用户空间原点平移 \&lt;tx, ty&gt; 来修改当前的<a href="#变换">变换矩阵</a>。</p>
+<p>详见 <a href="https://www.cairographics.org/manual/cairo-Transformations.html#cairo-translate"><code>cairo_translate</code></a> 函数的文档，了解更多细节。</p>
 <h2 id="t-t"><code>T</code>, <code>t</code><a class="headerlink" href="#t-t" title="Permanent link">&para;</a></h2>
-<p><strong><code>T, t x y</code></strong>    — <a href="#implicit-commands"><em>Can be implicit</em></a></p>
-<p>Draw a smooth quadratic Bézier curve from the <a href="#current-point">current point</a> to the <em>end point</em> specified by \&lt;x, y&gt;.</p>
-<p>The <em>control point</em> is the reflection of the <em>control point</em> of the previous curve command about the <em>current point</em>.</p>
-<p>The behaviour is identical to the <code>T</code> command in <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG's <code>&lt;path&gt;</code></a>. For more details, see <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d#quadratic_b%C3%A9zier_curve">Quadratic Bézier curve on MDN</a>, and the <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#curve_commands">Curve Commands section of the Paths tutorial on MDN</a>.</p>
-<p><a href="./#section"><code>t</code></a> is like <a href="./#section"><code>T</code></a>, but the coordinates are relative to the <a href="#current-point">current point</a>.</p>
+<p><strong><code>T, t x y</code></strong>    — <a href="#隐式命令"><em>可为隐式</em></a></p>
+<p>从<a href="#当前点">当前点</a>向 \&lt;x, y&gt; 指定的<em>终点</em>绘制平滑二次贝塞尔曲线。</p>
+<p><em>控制点</em>是前一条曲线命令的<em>控制点</em>关于<em>当前点</em>的镜像。</p>
+<p>其行为与 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG 的 <code>&lt;path&gt;</code></a> 中的 <code>T</code> 命令完全相同。更多细节请参阅 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d#quadratic_b%C3%A9zier_curve">MDN 上的二次贝塞尔曲线</a>以及 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#curve_commands">MDN 路径教程的曲线命令小节</a>。</p>
+<p><a href="#t-t"><code>t</code></a> 与 <a href="#t-t"><code>T</code></a> 类似，但坐标相对于<a href="#当前点">当前点</a>。</p>
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -4073,9 +4068,9 @@ Example
 </div>
 
 <h2 id="v-v"><code>V</code>, <code>v</code><a class="headerlink" href="#v-v" title="Permanent link">&para;</a></h2>
-<p><strong><code>V, v y</code></strong>    — <a href="#implicit-commands"><em>Can be implicit</em></a></p>
-<p>Draw a vertical line from the <a href="#current-point">current point</a> to y.</p>
-<p>The coordinate for <a href="./#section"><code>V</code></a> is absolute, and for <a href="./#section"><code>v</code></a> it is relative to the <a href="#current-point">current point</a>.</p>
+<p><strong><code>V, v y</code></strong>    — <a href="#隐式命令"><em>可为隐式</em></a></p>
+<p>从<a href="#当前点">当前点</a>向 y 绘制一条垂直线。</p>
+<p><a href="#v-v"><code>V</code></a> 的坐标是绝对的，而 <a href="#v-v"><code>v</code></a> 的坐标相对于<a href="#当前点">当前点</a>。</p>
 
 
 
