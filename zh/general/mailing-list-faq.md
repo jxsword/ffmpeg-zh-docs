@@ -1,231 +1,227 @@
-!!! warning "翻译占位页"
-    本页为英文原文占位（翻译进行中，进度见[翻译看板](https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md)）。
-    术语与示例以英文原文为准。
+# 一般问题
 
-# General Questions
+## 什么是邮件列表？
 
-## What is a mailing list?
+邮件列表与给某人发电子邮件没有太大区别，主要区别在于您的消息会被订阅该列表的每个人收到。它有点像论坛，只是以电子邮件形式存在。
 
-A mailing list is not much different than emailing someone, but the main difference is that your message is received by everyone who subscribes to the list. It is somewhat like a forum but in email form.
+例子可参见 [ffmpeg-user 存档](https://lists.ffmpeg.org/pipermail/ffmpeg-user/)。
 
-See the [ffmpeg-user archives](https://lists.ffmpeg.org/pipermail/ffmpeg-user/) for examples.
+## 我可以问哪类问题？
 
-## What type of questions can I ask?
+- [ffmpeg-user](https://lists.ffmpeg.org/mailman/listinfo/ffmpeg-user/)：涉及 FFmpeg 命令行工具（`ffmpeg`、`ffprobe`、`ffplay`）的非脚本化使用或编译问题。
 
-- [ffmpeg-user](https://lists.ffmpeg.org/mailman/listinfo/ffmpeg-user/): For questions involving unscripted usage or compilation of the FFmpeg command-line tools (`ffmpeg`, `ffprobe`, `ffplay`).
+- [libav-user](https://lists.ffmpeg.org/mailman/listinfo/libav-user/)：涉及 FFmpeg libav\* 库（libavcodec、libavformat、libavfilter 等）的问题。
 
-- [libav-user](https://lists.ffmpeg.org/mailman/listinfo/libav-user/): For questions involving the FFmpeg libav\* libraries (libavcodec, libavformat, libavfilter, etc).
+- [ffmpeg-devel](https://lists.ffmpeg.org/mailman/listinfo/ffmpeg-devel/)：讨论 FFmpeg 的开发并提交补丁。用户问题请到 ffmpeg-user 或 libav-user。
 
-- [ffmpeg-devel](https://lists.ffmpeg.org/mailman/listinfo/ffmpeg-devel/): For discussions involving the development of FFmpeg and for submitting patches. User questions should be asked at ffmpeg-user or libav-user.
+报告缺陷请参见 <https://ffmpeg.org/bugreports.html>。
 
-To report a bug see <https://ffmpeg.org/bugreports.html>.
+我们无法为脚本和/或第三方工具提供帮助。
 
-We cannot provide help for scripts and/or third-party tools.
+## 如何向邮件列表提问或发送消息？
 
-## How do I ask a question or send a message to a mailing list?
+首先您必须[订阅](#如何订阅)。之后只需发送一封邮件：
 
-First you must [subscribe](mailing-list-faq.md#subscribing-unsubscribing). Then all you have to do is send an email:
+- 向 <ffmpeg-user@ffmpeg.org> 发送邮件即可向 ffmpeg-user 邮件列表发消息。
 
-- Email <ffmpeg-user@ffmpeg.org> to send a message to the ffmpeg-user mailing list.
+- 向 <libav-user@ffmpeg.org> 发送邮件即可向 libav-user 邮件列表发消息。
 
-- Email <libav-user@ffmpeg.org> to send a message to the libav-user mailing list.
+- 向 <ffmpeg-devel@ffmpeg.org> 发送邮件即可向 ffmpeg-devel 邮件列表发消息。
 
-- Email <ffmpeg-devel@ffmpeg.org> to send a message to the ffmpeg-devel mailing list.
+# 订阅与退订
 
-# Subscribing / Unsubscribing
+## 如何订阅？
 
-## How do I subscribe?
+向 <ffmpeg-user-request@ffmpeg.org> 发送主题为 *subscribe* 的邮件。
 
-Email <ffmpeg-user-request@ffmpeg.org> with the subject *subscribe*.
+或访问 [ffmpeg-user 邮件列表信息页](https://lists.ffmpeg.org/mailman/listinfo/ffmpeg-user/)，参见 *Subscribing to ffmpeg-user* 一节。
 
-Or visit the [ffmpeg-user mailing list info page](https://lists.ffmpeg.org/mailman/listinfo/ffmpeg-user/) and refer to the *Subscribing to ffmpeg-user* section.
+其他邮件列表流程相同。
 
-The process is the same for the other mailing lists.
+## 如何退订？
 
-## How do I unsubscribe?
+向 <ffmpeg-user-request@ffmpeg.org> 发送主题为 *unsubscribe* 的邮件。
 
-Email <ffmpeg-user-request@ffmpeg.org> with subject *unsubscribe*.
+或访问 [ffmpeg-user 邮件列表信息页](https://lists.ffmpeg.org/mailman/listinfo/ffmpeg-user/)，滚动到页面底部，在输入框中填入您的邮箱地址，并点击 *Unsubscribe or edit options* 按钮。
 
-Or visit the [ffmpeg-user mailing list info page](https://lists.ffmpeg.org/mailman/listinfo/ffmpeg-user/), scroll to bottom of page, enter your email address in the box, and click the *Unsubscribe or edit options* button.
+其他邮件列表流程相同。
 
-The process is the same for the other mailing lists.
+除非您完全无法自行操作，否则请避免让邮件列表管理员帮您退订。参见[邮件列表出问题该联系谁？](#邮件列表出问题该联系谁)
 
-Please avoid asking a mailing list admin to unsubscribe you unless you are absolutely unable to do so by yourself. See [Who do I contact if I have a problem with the mailing list?](mailing-list-faq.md#why-do-i-keep-getting-unsubscribed-from-ffmpeg-devel)
+注意可以临时暂停消息投递（度假模式）。参见[如何在不退订的情况下停止邮件投递？](#如何在不退订的情况下停止邮件投递)
 
-Note that it is possible to temporarily halt message delivery (vacation mode). See [How do I disable mail delivery without unsubscribing?](mailing-list-faq.md#how-do-i-filter-mailing-list-messages)
+# 审核队列
 
-# Moderation Queue
+## 为什么我的消息在等待审核人批准？
 
-## Why is my message awaiting moderator approval?
+有些消息会被自动扣留在 *审核队列* 中，必须由邮件列表管理员人工批准：
 
-Some messages are automatically held in the *moderation queue* and must be manually approved by a mailing list admin:
+这些情况是：
 
-These are:
+- 超过[消息大小上限](#消息大小上限是多少)的消息。
 
-- Messages that exceed the [message size limit](mailing-list-faq.md#what-is-top-posting).
+- 账户被设置了 *审核标记* 的用户的消息（极少发生，但可能发生在反复无视规则或对他人恶言相向的用户身上）。
 
-- Messages from users whose accounts have been set with the *moderation flag* (very rarely occurs, but may if a user repeatedly ignores the rules or is abusive towards others).
+## 审核队列中我的消息要多久才会被批准？
 
-## How long does it take for my message in the moderation queue to be approved?
+队列并非定期检查。您可以到 Libera Chat 的 `#ffmpeg-devel` IRC 频道请人批准您的消息。
 
-The queue is not checked on a regular basis. You can ask on the `#ffmpeg-devel` IRC channel on Libera Chat for someone to approve your message.
+## 如何删除审核队列中我的消息？
 
-## How do I delete my message in the moderation queue?
+您应该收到过主题为 *Your message to \<mailing list name\> awaits moderator approval* 的邮件。消息中有一个链接，除非管理员已批准或拒绝该消息，否则您可以经此链接删除您的消息。
 
-You should have received an email with the subject *Your message to \<mailing list name\> awaits moderator approval*. A link is in the message that will allow you to delete your message unless a mailing list admin already approved or rejected it.
+# 存档
 
-# Archives
+## 存档在哪里？
 
-## Where are the archives?
+请参见 [FFmpeg Contact](https://ffmpeg.org/contact.html) 页面上的 *Archives* 一节，获取所有 FFmpeg 邮件列表存档的链接。
 
-See the *Archives* section on the [FFmpeg Contact](https://ffmpeg.org/contact.html) page for links to all FFmpeg mailing list archives.
+注意存档按月分卷。跨月讨论在存档中会按月分开。
 
-Note that the archives are split by month. Discussions that span several months will be split into separate months in the archives.
+## 如何回复存档中的消息？
 
-## How do I reply to a message in the archives?
+点击消息顶部、主题标题正下方的邮件链接。该链接会带上把消息保持在原讨论串内的正确邮件头。
 
-Click the email link at the top of the message just under the subject title. The link will provide the proper headers to keep the message within the thread.
+注意您必须订阅后才能向 ffmpeg-user 或 libav-user 邮件列表发消息。
 
-Note that you must be subscribed to send a message to the ffmpeg-user or libav-user mailing lists.
+## 如何搜索存档？
 
-## How do I search the archives?
-
-Perform a site search using your favorite search engine. Example:
+用您惯用的搜索引擎做站点搜索。示例：
 
 `site:lists.ffmpeg.org/pipermail/ffmpeg-user/ "search term"`
 
-# Other
+# 其他
 
-## Is there an alternative to the mailing list?
+## 有邮件列表的替代方案吗？
 
-You can ask for help in the official `#ffmpeg` IRC channel on Libera Chat.
+您可以在 Libera Chat 的官方 `#ffmpeg` IRC 频道求助。
 
-There are also numerous third-party help sites such as [Super User](https://superuser.com/tags/ffmpeg) and [r/ffmpeg on reddit](https://www.reddit.com/r/ffmpeg/).
+另有许多第三方求助站点，如 [Super User](https://superuser.com/tags/ffmpeg) 和 [r/ffmpeg on reddit](https://www.reddit.com/r/ffmpeg/)。
 
-## What is top-posting?
+## 什么是 top-posting？
 
-See <https://en.wikipedia.org/wiki/Posting_style#Top-posting>.
+参见 <https://en.wikipedia.org/wiki/Posting_style#Top-posting>。
 
-Instead, use trimmed interleaved/inline replies ([example](https://lists.ffmpeg.org/pipermail/ffmpeg-user/2017-April/035849.html)).
+作为替代，请使用修剪整齐的交错式/行内回复（[示例](https://lists.ffmpeg.org/pipermail/ffmpeg-user/2017-April/035849.html)）。
 
-## What is the message size limit?
+## 消息大小上限是多少？
 
-The message size limit is 1000 kilobytes. Please provide links to larger files instead of attaching them.
+消息大小上限为 1000 千字节。较大的文件请提供链接而不是附件。
 
-## Where can I upload sample files?
+## 我可以在哪里上传样本文件？
 
-Anywhere that is not too annoying for us to use.
+任何不会让我们用起来太麻烦的地方都可以。
 
-Google Drive and Dropbox are acceptable if you need a file host, and [0x0.st](https://0x0.st/) is good for files under 256 MiB.
+如果需要文件托管，Google Drive 和 Dropbox 都可以接受；小于 256 MiB 的文件用 [0x0.st](https://0x0.st/) 很方便。
 
-Small, short samples are preferred if possible.
+可能的话，小而短的样本更受欢迎。
 
-## Will I receive spam if I send and/or subscribe to a mailing list?
+## 发送或订阅邮件列表会收到垃圾邮件吗？
 
-Highly unlikely.
+可能性极低。
 
-- The list of subscribed users is not public.
+- 订阅用户名单不公开。
 
-- Email addresses in the archives are obfuscated.
+- 存档中的邮箱地址已做混淆处理。
 
-- Several unique test email accounts were utilized and none have yet received any spam.
+- 我们曾使用多个专用测试邮箱账户进行测试，至今没有收到过任何垃圾邮件。
 
-However, you may see a spam in the mailing lists on rare occasions:
+不过，偶尔您可能会在邮件列表里见到垃圾邮件：
 
-- Spam in the moderation queue may be accidentally approved due to human error.
+- 审核队列中的垃圾邮件可能因人为失误被误批准。
 
-- There have been a few messages from subscribed users who had their own email addresses hacked and spam messages from (or appearing to be from) the hacked account were sent to their contacts (a mailing list being a contact in these cases).
+- 有订阅用户的邮箱账户被黑，来自（或看似来自）被黑账户的垃圾邮件被发给了其联系人（邮件列表也在其联系人之列）。
 
-- If you are subscribed to the bug tracker mailing list (ffmpeg-trac) you may see the occasional spam as a false bug report, but we take measures to try to prevent this.
+- 如果您订阅了缺陷跟踪器邮件列表（ffmpeg-trac），可能偶尔会看到作为虚假缺陷报告出现的垃圾邮件，但我们会采取措施尽量防止。
 
-## How do I filter mailing list messages?
+## 如何过滤邮件列表消息？
 
-Use the *List-Id*. For example, the ffmpeg-user mailing list is `ffmpeg-user.ffmpeg.org`. You can view the List-Id in the raw message or headers.
+使用 *List-Id*。例如 ffmpeg-user 邮件列表的 List-Id 为 `ffmpeg-user.ffmpeg.org`。您可以在原始邮件或邮件头中查看 List-Id。
 
-You can then filter the mailing list messages to their own folder.
+之后您就可以把邮件列表消息过滤到各自的文件夹。
 
-## How do I disable mail delivery without unsubscribing?
+## 如何在不退订的情况下停止邮件投递？
 
-Sometimes you may want to temporarily stop receiving all mailing list messages. This "vacation mode" is simple to do:
+有时您可能想临时停止接收所有邮件列表消息。这个"度假模式"做起来很简单：
 
-1.  Go to the [ffmpeg-user mailing list info page](https://lists.ffmpeg.org/mailman/listinfo/ffmpeg-user/)
+1.  前往 [ffmpeg-user 邮件列表信息页](https://lists.ffmpeg.org/mailman/listinfo/ffmpeg-user/)
 
-2.  Enter your email address in the box at very bottom of the page and click the *Unsubscribe or edit options* box.
+2.  在页面最底部的输入框中填入您的邮箱地址，点击 *Unsubscribe or edit options* 按钮。
 
-3.  Enter your password and click the *Log in* button.
+3.  输入您的密码并点击 *Log in* 按钮。
 
-4.  Look for the *Mail delivery* option. Here you can disable/enable mail delivery. If you check *Set globally* it will apply your choice to all other FFmpeg mailing lists you are subscribed to.
+4.  找到 *Mail delivery* 选项。在此可禁用/启用邮件投递。若勾选 *Set globally*，您的选择将应用于您订阅的所有其他 FFmpeg 邮件列表。
 
-Alternatively, from your subscribed address, send a message to <ffmpeg-user-request@ffmpeg.org> with the subject *set delivery off*. To re-enable mail delivery send a message to <ffmpeg-user-request@ffmpeg.org> with the subject *set delivery on*.
+另外，也可以从您订阅所用的邮箱向 <ffmpeg-user-request@ffmpeg.org> 发送主题为 *set delivery off* 的邮件；要恢复邮件投递，向 <ffmpeg-user-request@ffmpeg.org> 发送主题为 *set delivery on* 的邮件。
 
-## Why is the mailing list munging my address?
+## 为什么邮件列表要改写我的地址？
 
-This is due to subscribers that use an email service with a DMARC reject policy which adds difficulties to mailing list operators.
+这是由于部分订阅者使用的邮件服务商执行 DMARC 拒收策略，给邮件列表运营者带来了麻烦。
 
-The mailing list must re-write (munge) the *From:* header for such users; otherwise their email service will reject and bounce the message resulting in automatic unsubscribing from the mailing list.
+邮件列表必须为这类用户改写（munge）*From:* 头部；否则其邮件服务商会拒收并退回消息，导致其被邮件列表自动退订。
 
-When sending a message these users will see *via \<mailing list name\>* added to their name and the *From:* address munged to the address of the particular mailing list.
+发送消息时，这类用户会看到自己的名字后附加 *via \<mailing list name\>*，且 *From:* 地址被改写为相应邮件列表的地址。
 
-If you want to avoid this then please use a different email service.
+如果想避免这种情况，请换用其他邮件服务。
 
-Note that ffmpeg-devel does not apply any munging as it causes issues with patch authorship. As a result users with an email service with a DMARC reject policy may be automatically unsubscribed due to rejected and bounced messages.
+注意 ffmpeg-devel 不做任何改写，因为改写会干扰补丁作者信息。因此使用带 DMARC 拒收策略邮件服务的用户可能因消息被拒收/退回而被自动退订。
 
-# Rules and Etiquette
+# 规则与礼仪
 
-## What are the rules and the proper etiquette?
+## 规则和正确的礼仪是什么？
 
-There may seem to be many things to remember, but we want to help and following these guidelines will allow you to get answers more quickly and help avoid getting ignored.
+需要记住的东西看起来很多，但我们是想帮您：遵循这些准则能让您更快得到回答，也有助于避免被忽视。
 
-- Always show your actual, unscripted `ffmpeg` command and the complete, uncut console output from your command.
+- 始终展示您实际运行的、非脚本化的 `ffmpeg` 命令，以及该命令完整、未经剪裁的控制台输出。
 
-- Use the most simple and minimal command that still shows the issue you are encountering.
+- 使用仍能展示您所遇问题的最简单、最精简的命令。
 
-- Provide all necessary information so others can attempt to duplicate your issue. This includes the actual command, complete uncut console output, and any inputs that are required to duplicate the issue.
+- 提供所有必要信息，让他人能够尝试复现您的问题。这包括实际命令、完整未经剪裁的控制台输出，以及复现该问题所需的任何输入。
 
-- Use the latest `ffmpeg` build you can get. See the [FFmpeg Download](https://ffmpeg.org/download.html) page for links to recent builds for Linux, macOS, and Windows. Or compile from the current git master branch.
+- 使用您能获取的最新 `ffmpeg` 构建。Linux、macOS 与 Windows 最新构建的链接见 [FFmpeg Download](https://ffmpeg.org/download.html) 页面，或从当前 git master 分支自行编译。
 
-- Avoid [top-posting](https://en.wikipedia.org/wiki/Posting_style#Top-posting). Also see [What is top-posting?](mailing-list-faq.md#is-there-an-alternative-to-the-mailing-list)
+- 避免 [top-posting](https://en.wikipedia.org/wiki/Posting_style#Top-posting)。另见[什么是 top-posting？](#什么是-top-posting)
 
-- Avoid hijacking threads. Thread hijacking is replying to a message and changing the subject line to something unrelated to the original thread. Most email clients will still show the renamed message under the original thread. This can be confusing and these types of messages are often ignored.
+- 避免劫持讨论串。讨论串劫持指回复某消息时把主题行改成与原讨论串无关的内容。多数邮件客户端仍会把改名后的消息显示在原讨论串下，这容易造成混淆，这类消息常被忽视。
 
-- Do not send screenshots. Copy and paste console text instead of making screenshots of the text.
+- 不要发截图。请复制粘贴控制台文本，而不是对文本截图。
 
-- Avoid sending email disclaimers and legalese if possible as this is a public list.
+- 这是公开列表，如无必要请避免发送邮件免责声明和法律措辞（legalese）。
 
-- Avoid using the `-loglevel debug`, `-loglevel quiet`, and `-hide_banner` options unless requested to do so.
+- 如未被要求，避免使用 `-loglevel debug`、`-loglevel quiet` 和 `-hide_banner` 选项。
 
-- If you attach files avoid compressing small files. Uncompressed is preferred.
+- 附文件时不要压缩小文件。首选不压缩。
 
-- Please do not send HTML-only messages. The mailing list will ignore the HTML component of your message. Most mail clients will automatically include a text component: this is what the mailing list will use.
+- 请勿发送纯 HTML 消息。邮件列表会忽略消息的 HTML 成分。多数邮件客户端会自动附带文本成分：邮件列表使用的就是文本成分。
 
-- Configuring your mail client to break lines after 70 or so characters is recommended.
+- 建议配置您的邮件客户端在约 70 个字符处换行。
 
-- Avoid sending the same message to multiple mailing lists.
+- 避免向多个邮件列表发送同一消息。
 
-- Please follow our [Code of Conduct](https://ffmpeg.org/community.html#Code-of-Conduct).
+- 请遵循我们的 [Code of Conduct](https://ffmpeg.org/community.html#Code-of-Conduct)。
 
-# Help
+# 帮助
 
-## Why am I not receiving any messages?
+## 为什么我收不到任何消息？
 
-Some email providers have blacklists or spam filters that block or mark the mailing list messages as false positives. Unfortunately, the user is often not aware of this and is often out of their control.
+一些邮箱服务商把邮件列表消息拉黑或在垃圾邮件过滤器中标记为误报。遗憾的是，用户往往对此不知情，且通常无能为力。
 
-When possible we attempt to notify the provider to be removed from the blacklists or filters.
+条件允许时，我们会设法通知服务商将邮件列表移出黑名单或过滤器。
 
-## Why are my sent messages not showing up?
+## 为什么我发出的消息没有显示？
 
-Excluding [messages that are held in the moderation queue](mailing-list-faq.md#moderation-queue) there are a few other reasons why your messages may fail to appear:
+除[被扣留在审核队列中的消息](#为什么我的消息在等待审核人批准)外，您的消息没有出现还可能有以下原因：
 
-- HTML-only messages are ignored by the mailing lists. Most mail clients automatically include a text component alongside HTML email: this is what the mailing list will use. If it does not then consider your client to be broken, because sending a text component along with the HTML component to form a multi-part message is recommended by email standards.
+- 邮件列表忽略纯 HTML 邮件。多数邮件客户端发送 HTML 邮件时会自动附带文本成分：邮件列表使用的就是文本成分。若没有附带，请认定您的客户端有问题——邮件标准本身就建议随 HTML 成分附带文本成分以构成多部分消息。
 
-- Check your spam folder.
+- 检查您的垃圾邮件文件夹。
 
-## Why do I keep getting unsubscribed from ffmpeg-devel?
+## 为什么我总是被 ffmpeg-devel 退订？
 
-Users with an email service that has a DMARC reject or quarantine policy may be automatically unsubscribed from the ffmpeg-devel mailing list due to the mailing list messages being continuously rejected and bounced back.
+使用带 DMARC 拒收或隔离策略邮件服务的用户，可能因邮件列表消息持续被拒收/退回而被自动移出 ffmpeg-devel 邮件列表。
 
-Consider using a different email service.
+考虑换用其他邮件服务。
 
-## Who do I contact if I have a problem with the mailing list?
+## 邮件列表出问题该联系谁？
 
-Send a message to <ffmpeg-user-owner@ffmpeg.org>.
+向 <ffmpeg-user-owner@ffmpeg.org> 发送消息。
