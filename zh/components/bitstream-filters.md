@@ -1,127 +1,123 @@
-!!! warning "翻译占位页"
-    本页为英文原文占位（翻译进行中，进度见[翻译看板](https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md)）。
-    术语与示例以英文原文为准。
+# 描述
 
-# Description
+本文档介绍 libavcodec 库提供的比特流滤镜。
 
-This document describes the bitstream filters provided by the libavcodec library.
+比特流滤镜作用于已编码的流数据，在不进行解码的情况下执行比特流级别的修改。
 
-A bitstream filter operates on the encoded stream data, and performs bitstream level modifications without performing decoding.
+# 比特流滤镜
 
-# Bitstream Filters
+配置 FFmpeg 构建时，所有受支持的比特流滤镜默认启用。可以使用 configure 选项 `--list-bsfs` 列出全部可用项。
 
-When you configure your FFmpeg build, all the supported bitstream filters are enabled by default. You can list all available ones using the configure option `--list-bsfs`.
+可以使用 configure 选项 `--disable-bsfs` 禁用全部比特流滤镜，并使用选项 `--enable-bsf=BSF` 选择性启用任意比特流滤镜，也可以使用选项 `--disable-bsf=BSF` 禁用特定的比特流滤镜。
 
-You can disable all the bitstream filters using the configure option `--disable-bsfs`, and selectively enable any bitstream filter using the option `--enable-bsf=BSF`, or you can disable a particular bitstream filter using the option `--disable-bsf=BSF`.
+ff\* 工具的 `-bsfs` 选项将显示你的构建中包含的全部受支持比特流滤镜的列表。
 
-The option `-bsfs` of the ff\* tools will display the list of all the supported bitstream filters included in your build.
-
-The ff\* tools have a -bsf option applied per stream, taking a comma-separated list of filters, whose parameters follow the filter name after a '='.
+ff\* 工具具有一个按流应用的 -bsf 选项，它接受以逗号分隔的滤镜列表，滤镜参数跟在滤镜名之后，以 '=' 分隔。
 
 ``` text
 ffmpeg -i INPUT -c:v copy -bsf:v filter1[=opt1=str1:opt2=str2][,filter2] OUTPUT
 ```
 
-Below is a description of the currently available bitstream filters, with their parameters, if any.
+下面介绍当前可用的比特流滤镜及其参数（如有）。
 
 ## aac_adtstoasc
 
-Convert MPEG-2/4 AAC ADTS to an MPEG-4 Audio Specific Configuration bitstream.
+将 MPEG-2/4 AAC ADTS 转换为 MPEG-4 AudioSpecificConfig 比特流。
 
-This filter creates an MPEG-4 AudioSpecificConfig from an MPEG-2/4 ADTS header and removes the ADTS header.
+此滤镜从 MPEG-2/4 ADTS 头创建 MPEG-4 AudioSpecificConfig，并移除该 ADTS 头。
 
-This filter is required for example when copying an AAC stream from a raw ADTS AAC or an MPEG-TS container to MP4A-LATM, to an FLV file, or to MOV/MP4 files and related formats such as 3GP or M4A. Please note that it is auto-inserted for MP4A-LATM and MOV/MP4 and related formats.
+例如，将 AAC 流从原始 ADTS AAC 或 MPEG-TS 容器复制到 MP4A-LATM、FLV 文件，或 MOV/MP4 文件及 3GP、M4A 等相关格式时，就需要此滤镜。请注意，对于 MP4A-LATM 与 MOV/MP4 及相关格式，该滤镜会被自动插入。
 
 ## av1_metadata
 
-Modify metadata embedded in an AV1 stream.
+修改嵌入在 AV1 流中的元数据。
 
-- **`td`** Insert or remove temporal delimiter OBUs in all temporal units of the stream.
+- **`td`** 在流的全部时间单元中插入或移除时间分隔符 OBU。
 
   | Term | Description |
   |----|----|
-  | `insert` | Insert a TD at the beginning of every TU which does not already have one. |
-  | `remove` | Remove the TD from the beginning of every TU which has one. |
+  | `insert` | 在每个尚无 TD 的 TU 开头插入一个 TD。 |
+  | `remove` | 从每个已有 TD 的 TU 开头移除 TD。 |
 
 - **`color_primaries`**
 
 - **`transfer_characteristics`**
 
-- **`matrix_coefficients`** Set the color description fields in the stream (see AV1 section 6.4.2).
+- **`matrix_coefficients`** 设置流中的颜色描述字段（参见 AV1 规范 6.4.2 节）。
 
-- **`color_range`** Set the color range in the stream (see AV1 section 6.4.2; note that this cannot be set for streams using BT.709 primaries, sRGB transfer characteristic and identity (RGB) matrix coefficients).
+- **`color_range`** 设置流中的颜色范围（参见 AV1 规范 6.4.2 节；注意使用 BT.709 基色、sRGB 传递特性以及恒等 (RGB) 矩阵系数的流无法设置此项）。
 
   | Term   | Description    |
   |--------|----------------|
-  | `tv` | Limited range. |
-  | `pc` | Full range.    |
+  | `tv` | 有限范围。 |
+  | `pc` | 全范围。    |
 
-- **`chroma_sample_position`** Set the chroma sample location in the stream (see AV1 section 6.4.2). This can only be set for 4:2:0 streams.
+- **`chroma_sample_position`** 设置流中的色度采样位置（参见 AV1 规范 6.4.2 节）。只能为 4:2:0 流设置。
 
-  | Term          | Description                                               |
-  |---------------|-----------------------------------------------------------|
-  | `vertical`  | Left position (matching the default in MPEG-2 and H.264). |
-  | `colocated` | Top-left position.                                        |
+  | Term          | Description |
+  |---------------|-------------|
+  | `vertical`  | 左侧位置（与 MPEG-2 和 H.264 的默认值一致）。 |
+  | `colocated` | 左上位置。 |
 
-- **`tick_rate`** Set the tick rate (*time_scale / num_units_in_display_tick*) in the timing info in the sequence header.
+- **`tick_rate`** 在序列头的时序信息中设置 tick 率 (*time_scale / num_units_in_display_tick*)。
 
-- **`num_ticks_per_picture`** Set the number of ticks in each picture, to indicate that the stream has a fixed framerate. Ignored if `tick_rate` is not also set.
+- **`num_ticks_per_picture`** 设置每幅图像的 tick 数，以指示流具有固定帧率。若未同时设置 `tick_rate` 则忽略此项。
 
-- **`delete_padding`** Deletes Padding OBUs.
+- **`delete_padding`** 删除填充 OBU。
 
 ## chomp
 
-Remove zero padding at the end of a packet.
+移除包末尾的零填充。
 
 ## dca_core
 
-Extract the core from a DCA/DTS stream, dropping extensions such as DTS-HD.
+从 DCA/DTS 流中提取核心部分，丢弃 DTS-HD 等扩展。
 
 ## dovi_rpu
 
-Manipulate Dolby Vision metadata in a HEVC/AV1 bitstream, optionally enabling metadata compression.
+操作 HEVC/AV1 比特流中的杜比视界 (Dolby Vision) 元数据，可选择启用元数据压缩。
 
-- **`strip`** If enabled, strip all Dolby Vision metadata (configuration record + RPU data blocks) from the stream.
+- **`strip`** 若启用，从流中剥离全部杜比视界元数据（配置记录 + RPU 数据块）。
 
-- **`compression`** Which compression level to enable.
+- **`compression`** 启用哪种压缩级别。
 
-  - **`none`** No metadata compression.
+  - **`none`** 无元数据压缩。
 
-  - **`limited`** Limited metadata compression scheme. Should be compatible with most devices. This is the default.
+  - **`limited`** 受限元数据压缩方案。应与大多数设备兼容。这是默认值。
 
-  - **`extended`** Extended metadata compression. Devices are not required to support this. Note that this level currently behaves the same as `limited` in libavcodec.
+  - **`extended`** 扩展元数据压缩。设备并不要求支持此级别。注意该级别目前在 libavcodec 中的行为与 `limited` 相同。
 
 ## dovi_split
 
-Split a Dolby Vision Profile 7 multi-layer HEVC bitstream. Profile 7 carries the enhancement-layer HEVC bitstream interleaved inside the base-layer access units, wrapped in user-unspecified NAL units of type 63 (UNSPEC63), and the RPU metadata as a sibling user-unspecified NAL of type 62 (UNSPEC62).
+拆分杜比视界 Profile 7 多层 HEVC 比特流。Profile 7 将增强层 HEVC 比特流交织在基础层访问单元内，封装在类型为 63 (UNSPEC63) 的用户未指定 NAL 单元中，并将 RPU 元数据作为类型为 62 (UNSPEC62) 的同级用户未指定 NAL 传输。
 
-- **`mode`** Which Dolby Vision components to keep in the output bitstream.
+- **`mode`** 输出比特流中保留哪些杜比视界组件。
 
-  - **`bl`** Base layer only: drop every UNSPEC63 (EL) and every UNSPEC62 (RPU). The output is a plain HEVC stream with no Dolby Vision markers. This is the default.
+  - **`bl`** 仅基础层：丢弃所有 UNSPEC63 (EL) 和所有 UNSPEC62 (RPU)。输出是不带杜比视界标记的普通 HEVC 流。这是默认值。
 
-  - **`bl_rpu`** Base layer with the RPU NAL kept.
+  - **`bl_rpu`** 保留 RPU NAL 的基础层。
 
-  - **`el`** Enhancement layer only: for every UNSPEC63 NAL, strip the two-byte outer NAL header and emit the inner payload. The result is a standalone HEVC bitstream. UNSPEC62 (RPU) is dropped.
+  - **`el`** 仅增强层：对每个 UNSPEC63 NAL，剥去两字节的外层 NAL 头并输出内部载荷。结果是一个独立的 HEVC 比特流。UNSPEC62 (RPU) 被丢弃。
 
-  - **`el_rpu`** Enhancement layer with the RPU NAL kept verbatim. Same as `el`, but the UNSPEC62 RPU NALs are also emitted alongside the unwrapped EL NALs.
+  - **`el_rpu`** 逐字保留 RPU NAL 的增强层。与 `el` 相同，但 UNSPEC62 RPU NAL 也会与解封装后的 EL NAL 一并输出。
 
 ## dump_extra
 
-Add extradata to the beginning of the filtered packets except when said packets already exactly begin with the extradata that is intended to be added.
+将 extradata 添加到被过滤包的开头，除非这些包本身已经恰好以要添加的 extradata 开头。
 
-- **`freq`** The additional argument specifies which packets should be filtered. It accepts the values:
+- **`freq`** 额外参数指定应过滤哪些包。它接受以下取值：
 
   - **`k`**
 
-  - **`keyframe`** add extradata to all key packets
+  - **`keyframe`** 为所有关键包添加 extradata
 
   - **`e`**
 
-  - **`all`** add extradata to all packets
+  - **`all`** 为所有包添加 extradata
 
-If not specified it is assumed `k`.
+若未指定，则假定为 `k`。
 
-For example the following `ffmpeg` command forces a global header (thus disabling individual packet headers) in the H.264 packets generated by the `libx264` encoder, but corrects them by adding the header stored in extradata to the key packets:
+例如，下面的 `ffmpeg` 命令在 `libx264` 编码器生成的 H.264 包中强制使用全局头（从而禁用逐包头部），并通过将存储在 extradata 中的头部添加到关键包来修正它们：
 
 ``` text
 ffmpeg -i INPUT -map 0 -flags:v +global_header -c:v libx264 -bsf:v dump_extra out.ts
@@ -129,36 +125,36 @@ ffmpeg -i INPUT -map 0 -flags:v +global_header -c:v libx264 -bsf:v dump_extra ou
 
 ## dv_error_marker
 
-Blocks in DV which are marked as damaged are replaced by blocks of the specified color.
+DV 中被标记为受损的块会被指定颜色的块替换。
 
-- **`color`** The color to replace damaged blocks by
+- **`color`** 用于替换受损块的颜色
 
-- **`sta`** A 16 bit mask which specifies which of the 16 possible error status values are to be replaced by colored blocks. 0xFFFE is the default which replaces all non 0 error status values.
+- **`sta`** 一个 16 位掩码，指定 16 个可能的错误状态值中哪些要被彩色块替换。默认值 0xFFFE 会替换所有非 0 的错误状态值。
 
   | Term | Description |
   |----|----|
-  | `ok` | No error, no concealment |
-  | `err` | Error, No concealment |
-  | `res` | Reserved |
-  | `notok` | Error or concealment |
-  | `notres` | Not reserved |
-  | `Aa, Ba, Ca, Ab, Bb, Cb, A, B, C, a, b, erri, erru` | The specific error status code |
+  | `ok` | 无错误，无隐藏 |
+  | `err` | 有错误，无隐藏 |
+  | `res` | 保留 |
+  | `notok` | 有错误或有隐藏 |
+  | `notres` | 非保留 |
+  | `Aa, Ba, Ca, Ab, Bb, Cb, A, B, C, a, b, erri, erru` | 具体的错误状态码 |
 
-  see page 44-46 or section 5.5 of <http://web.archive.org/web/20060927044735/http://www.smpte.org/smpte_store/standards/pdf/s314m.pdf>
+  参见 <http://web.archive.org/web/20060927044735/http://www.smpte.org/smpte_store/standards/pdf/s314m.pdf> 的第 44-46 页或 5.5 节。
 
 ## eac3_core
 
-Extract the core from a E-AC-3 stream, dropping extra channels.
+从 E-AC-3 流中提取核心部分，丢弃额外的声道。
 
 ## eia608_to_smpte436m
 
-Convert from a `EIA_608` stream to a `SMPTE_436M_ANC` data stream, wrapping the closed captions in CTA-708 CDP VANC packets.
+将 `EIA_608` 流转换为 `SMPTE_436M_ANC` 数据流，把隐藏式字幕封装在 CTA-708 CDP VANC 包中。
 
-- **`line_number`** Choose which line number the generated VANC packets should go on. You generally want either line 9 (the default) or 11.
+- **`line_number`** 选择生成的 VANC 包应放在哪一行。通常应选择第 9 行（默认值）或第 11 行。
 
-- **`wrapping_type`** Choose the SMPTE 436M wrapping type, defaults to `vanc_frame`. It accepts the values:
+- **`wrapping_type`** 选择 SMPTE 436M 封装类型，默认为 `vanc_frame`。它接受以下取值：
 
-  - **`vanc_frame`** VANC frame (interlaced or segmented progressive frame)
+  - **`vanc_frame`** VANC 帧（隔行或分段逐行帧）
 
   - **`vanc_field_1`**
 
@@ -166,71 +162,71 @@ Convert from a `EIA_608` stream to a `SMPTE_436M_ANC` data stream, wrapping the 
 
   - **`vanc_progressive_frame`**
 
-- **`sample_coding`** Choose the SMPTE 436M sample coding, defaults to `8bit_luma`. It accepts the values:
+- **`sample_coding`** 选择 SMPTE 436M 采样编码，默认为 `8bit_luma`。它接受以下取值：
 
   | Term | Description |
   |----|----|
-  | `8bit_luma` | 8-bit component luma samples |
-  | `8bit_color_diff` | 8-bit component color difference samples |
-  | `8bit_luma_and_color_diff` | 8-bit component luma and color difference samples |
-  | `10bit_luma` | 10-bit component luma samples |
-  | `10bit_color_diff` | 10-bit component color difference samples |
-  | `10bit_luma_and_color_diff` | 10-bit component luma and color difference samples |
-  | `8bit_luma_parity_error` | 8-bit component luma samples with parity error |
-  | `8bit_color_diff_parity_error` | 8-bit component color difference samples with parity error |
-  | `8bit_luma_and_color_diff_parity_error` | 8-bit component luma and color difference samples with parity error |
+  | `8bit_luma` | 8 位分量亮度采样 |
+  | `8bit_color_diff` | 8 位分量色差采样 |
+  | `8bit_luma_and_color_diff` | 8 位分量亮度和色差采样 |
+  | `10bit_luma` | 10 位分量亮度采样 |
+  | `10bit_color_diff` | 10 位分量色差采样 |
+  | `10bit_luma_and_color_diff` | 10 位分量亮度和色差采样 |
+  | `8bit_luma_parity_error` | 带奇偶校验错误的 8 位分量亮度采样 |
+  | `8bit_color_diff_parity_error` | 8 位分量色差采样带奇偶校验错误 |
+  | `8bit_luma_and_color_diff_parity_error` | 8 位分量亮度和色差采样带奇偶校验错误 |
 
-- **`initial_cdp_sequence_cntr`** The initial value of the CDP's 16-bit unsigned integer `cdp_hdr_sequence_cntr` and `cdp_ftr_sequence_cntr` fields. Defaults to 0.
+- **`initial_cdp_sequence_cntr`** CDP 的 16 位无符号整数字段 `cdp_hdr_sequence_cntr` 与 `cdp_ftr_sequence_cntr` 的初始值。默认为 0。
 
-- **`cdp_frame_rate`** Set the CDP's `cdp_frame_rate` field. This doesn't actually change the timing of the data stream, it just changes the values inserted in that field in the generated CDP packets. Defaults to `30000/1001`.
+- **`cdp_frame_rate`** 设置 CDP 的 `cdp_frame_rate` 字段。这并不会真正改变数据流的时序，只是改变生成的 CDP 包中该字段插入的值。默认为 `30000/1001`。
 
 ## extract_extradata
 
-Extract the in-band extradata.
+提取带内 (in-band) extradata。
 
-Certain codecs allow the long-term headers (e.g. MPEG-2 sequence headers, or H.264/HEVC (VPS/)SPS/PPS) to be transmitted either "in-band" (i.e. as a part of the bitstream containing the coded frames) or "out of band" (e.g. on the container level). This latter form is called "extradata" in FFmpeg terminology.
+某些编解码器允许长期头信息（如 MPEG-2 序列头，或 H.264/HEVC 的 (VPS/)SPS/PPS）以"带内"方式（即作为包含已编码帧的比特流的一部分）或"带外"方式（如在容器层面）传输。后一种形式在 FFmpeg 术语中称为 extradata。
 
-This bitstream filter detects the in-band headers and makes them available as extradata.
+此比特流滤镜检测带内头信息并使其作为 extradata 可用。
 
-- **`remove`** When this option is enabled, the long-term headers are removed from the bitstream after extraction.
+- **`remove`** 启用此选项后，长期头信息会在提取后从比特流中移除。
 
 ## filter_units
 
-Remove units with types in or not in a given set from the stream.
+从流中移除类型属于或不属于给定集合的单元。
 
-- **`pass_types`** List of unit types or ranges of unit types to pass through while removing all others. This is specified as a '\|'-separated list of unit type values or ranges of values with '-'.
+- **`pass_types`** 要放行的单元类型或类型范围列表，同时移除所有其他单元。以 '\|' 分隔的单元类型值列表或用 '-' 表示的值范围列表形式指定。
 
-- **`remove_types`** Identical to `pass_types`, except the units in the given set removed and all others passed through.
+- **`remove_types`** 与 `pass_types` 相同，区别在于给定集合中的单元被移除，所有其他单元被放行。
 
-The types used by pass_types and remove_types correspond to NAL unit types (nal_unit_type) in H.264, HEVC and H.266 (see Table 7-1 in the H.264 and HEVC specifications or Table 5 in the H.266 specification), to marker values for JPEG (without 0xFF prefix) and to start codes without start code prefix (i.e. the byte following the 0x000001) for MPEG-2. For VP8 and VP9, every unit has type zero.
+pass_types 与 remove_types 所用的类型对应 H.264、HEVC 和 H.266 中的 NAL 单元类型 (nal_unit_type)（参见 H.264 和 HEVC 规范的表 7-1 或 H.266 规范的表 5）、JPEG 的标记值（不含 0xFF 前缀），以及 MPEG-2 的起始码（不含起始码前缀，即 0x000001 之后的字节）。对 VP8 和 VP9，每个单元的类型均为零。
 
-Extradata is unchanged by this transformation, but note that if the stream contains inline parameter sets then the output may be unusable if they are removed.
+extradata 不会被此变换改变，但请注意，如果流中包含内联参数集，则移除它们后输出可能不可用。
 
-For example, to remove all non-VCL NAL units from an H.264 stream:
+例如，从 H.264 流中移除所有非 VCL NAL 单元：
 
 ``` text
 ffmpeg -i INPUT -c:v copy -bsf:v 'filter_units=pass_types=1-5' OUTPUT
 ```
 
-To remove all AUDs, SEI and filler from an H.265 stream:
+从 H.265 流中移除所有 AUD、SEI 和填充数据：
 
 ``` text
 ffmpeg -i INPUT -c:v copy -bsf:v 'filter_units=remove_types=35|38-40' OUTPUT
 ```
 
-To remove all user data from a MPEG-2 stream, including Closed Captions:
+从 MPEG-2 流中移除所有用户数据（包括隐藏式字幕）：
 
 ``` text
 ffmpeg -i INPUT -c:v copy -bsf:v 'filter_units=remove_types=178' OUTPUT
 ```
 
-To remove all SEI from a H264 stream, including Closed Captions:
+从 H264 流中移除所有 SEI（包括隐藏式字幕）：
 
 ``` text
 ffmpeg -i INPUT -c:v copy -bsf:v 'filter_units=remove_types=6' OUTPUT
 ```
 
-To remove all prefix and suffix SEI from a HEVC stream, including Closed Captions and dynamic HDR:
+从 HEVC 流中移除所有前缀和后缀 SEI（包括隐藏式字幕和动态 HDR）：
 
 ``` text
 ffmpeg -i INPUT -c:v copy -bsf:v 'filter_units=remove_types=39|40' OUTPUT
@@ -238,21 +234,21 @@ ffmpeg -i INPUT -c:v copy -bsf:v 'filter_units=remove_types=39|40' OUTPUT
 
 ## hapqa_extract
 
-Extract Rgb or Alpha part of an HAPQA file, without recompression, in order to create an HAPQ or an HAPAlphaOnly file.
+从 HAPQA 文件中提取 RGB 或 Alpha 部分，无需重新压缩，从而创建 HAPQ 或 HAPAlphaOnly 文件。
 
-- **`texture`** Specifies the texture to keep.
+- **`texture`** 指定要保留的纹理。
 
   - **`color`**
 
   - **`alpha`**
 
-Convert HAPQA to HAPQ
+将 HAPQA 转换为 HAPQ
 
 ``` text
 ffmpeg -i hapqa_inputfile.mov -c copy -bsf:v hapqa_extract=texture=color -tag:v HapY -metadata:s:v:0 encoder="HAPQ" hapq_file.mov
 ```
 
-Convert HAPQA to HAPAlphaOnly
+将 HAPQA 转换为 HAPAlphaOnly
 
 ``` text
 ffmpeg -i hapqa_inputfile.mov -c copy -bsf:v hapqa_extract=texture=alpha -tag:v HapA -metadata:s:v:0 encoder="HAPAlpha Only" hapalphaonly_file.mov
@@ -260,9 +256,9 @@ ffmpeg -i hapqa_inputfile.mov -c copy -bsf:v hapqa_extract=texture=alpha -tag:v 
 
 ## h264_metadata
 
-Modify metadata embedded in an H.264 stream.
+修改嵌入在 H.264 流中的元数据。
 
-- **`aud`** Insert or remove AUD NAL units in all access units of the stream.
+- **`aud`** 在流的全部访问单元中插入或移除 AUD NAL 单元。
 
   - **`pass`**
 
@@ -270,29 +266,29 @@ Modify metadata embedded in an H.264 stream.
 
   - **`remove`**
 
-  Default is pass.
+  默认值为 pass。
 
-- **`sample_aspect_ratio`** Set the sample aspect ratio of the stream in the VUI parameters. See H.264 table E-1.
+- **`sample_aspect_ratio`** 在 VUI 参数中设置流的采样宽高比。参见 H.264 表 E-1。
 
-- **`overscan_appropriate_flag`** Set whether the stream is suitable for display using overscan or not (see H.264 section E.2.1).
+- **`overscan_appropriate_flag`** 设置该流是否适合使用过扫描 (overscan) 显示（参见 H.264 规范 E.2.1 节）。
 
 - **`video_format`**
 
-- **`video_full_range_flag`** Set the video format in the stream (see H.264 section E.2.1 and table E-2).
+- **`video_full_range_flag`** 设置流中的视频格式（参见 H.264 规范 E.2.1 节和表 E-2）。
 
 - **`colour_primaries`**
 
 - **`transfer_characteristics`**
 
-- **`matrix_coefficients`** Set the colour description in the stream (see H.264 section E.2.1 and tables E-3, E-4 and E-5).
+- **`matrix_coefficients`** 设置流中的颜色描述（参见 H.264 规范 E.2.1 节和表 E-3、E-4、E-5）。
 
-- **`chroma_sample_loc_type`** Set the chroma sample location in the stream (see H.264 section E.2.1 and figure E-1).
+- **`chroma_sample_loc_type`** 设置流中的色度采样位置（参见 H.264 规范 E.2.1 节和图 E-1）。
 
-- **`tick_rate`** Set the tick rate (time_scale / num_units_in_tick) in the VUI parameters. This is the smallest time unit representable in the stream, and in many cases represents the field rate of the stream (double the frame rate).
+- **`tick_rate`** 在 VUI 参数中设置 tick 率 (time_scale / num_units_in_tick)。这是流中可表示的最小时间单位，在许多情况下表示流的场率（帧率的两倍）。
 
-- **`fixed_frame_rate_flag`** Set whether the stream has fixed framerate - typically this indicates that the framerate is exactly half the tick rate, but the exact meaning is dependent on interlacing and the picture structure (see H.264 section E.2.1 and table E-6).
+- **`fixed_frame_rate_flag`** 设置流是否具有固定帧率——通常这表示帧率恰好是 tick 率的一半，但确切含义取决于隔行方式和图像结构（参见 H.264 规范 E.2.1 节和表 E-6）。
 
-- **`zero_new_constraint_set_flags`** Zero constraint_set4_flag and constraint_set5_flag in the SPS. These bits were reserved in a previous version of the H.264 spec, and thus some hardware decoders require these to be zero. The result of zeroing this is still a valid bitstream.
+- **`zero_new_constraint_set_flags`** 将 SPS 中的 constraint_set4_flag 和 constraint_set5_flag 置零。这些位在 H.264 规范的先前版本中是保留位，因此某些硬件解码器要求它们为零。置零后的结果仍是有效的比特流。
 
 - **`crop_left`**
 
@@ -300,17 +296,17 @@ Modify metadata embedded in an H.264 stream.
 
 - **`crop_top`**
 
-- **`crop_bottom`** Set the frame cropping offsets in the SPS. These values will replace the current ones if the stream is already cropped.
+- **`crop_bottom`** 在 SPS 中设置帧裁剪偏移。如果流已被裁剪，这些值将替换当前值。
 
-  These fields are set in pixels. Note that some sizes may not be representable if the chroma is subsampled or the stream is interlaced (see H.264 section 7.4.2.1.1).
+  这些字段以像素为单位设置。注意，如果色度被子采样或流为隔行，某些尺寸可能无法表示（参见 H.264 规范 7.4.2.1.1 节）。
 
-- **`sei_user_data`** Insert a string as SEI unregistered user data. The argument must be of the form *UUID+string*, where the UUID is as hex digits possibly separated by hyphens, and the string can be anything.
+- **`sei_user_data`** 插入一个字符串作为 SEI 未注册用户数据。参数必须采用 *UUID+string* 形式，其中 UUID 为十六进制数字（可含连字符分隔），字符串可以是任意内容。
 
-  For example, `086f3693-b7b3-4f2c-9653-21492feee5b8+hello` will insert the string "hello" associated with the given UUID.
+  例如，`086f3693-b7b3-4f2c-9653-21492feee5b8+hello` 将插入与给定 UUID 关联的字符串 "hello"。
 
-- **`delete_filler`** Deletes both filler NAL units and filler SEI messages.
+- **`delete_filler`** 同时删除填充 NAL 单元和填充 SEI 消息。
 
-- **`display_orientation`** Insert, extract or remove Display orientation SEI messages. See H.264 section D.1.27 and D.2.27 for syntax and semantics.
+- **`display_orientation`** 插入、提取或移除显示方向 (Display orientation) SEI 消息。语法与语义参见 H.264 规范 D.1.27 和 D.2.27 节。
 
   - **`pass`**
 
@@ -320,73 +316,73 @@ Modify metadata embedded in an H.264 stream.
 
   - **`extract`**
 
-  Default is pass.
+  默认值为 pass。
 
-  Insert mode works in conjunction with `rotate` and `flip` options. Any pre-existing Display orientation messages will be removed in insert or remove mode. Extract mode attaches the display matrix to the packet as side data.
+  插入模式与 `rotate` 和 `flip` 选项配合使用。在插入或移除模式下，任何已存在的显示方向消息都会被移除。提取模式会将显示矩阵作为 side data 附加到包上。
 
-- **`rotate`** Set rotation in display orientation SEI (anticlockwise angle in degrees). Range is -360 to +360. Default is NaN.
+- **`rotate`** 在显示方向 SEI 中设置旋转（逆时针角度，单位为度）。范围为 -360 到 +360。默认值为 NaN。
 
-- **`flip`** Set flip in display orientation SEI.
+- **`flip`** 在显示方向 SEI 中设置翻转。
 
   - **`horizontal`**
 
   - **`vertical`**
 
-  Default is unset.
+  默认为未设置。
 
-- **`level`** Set the level in the SPS. Refer to H.264 section A.3 and tables A-1 to A-5.
+- **`level`** 在 SPS 中设置级别。参见 H.264 规范 A.3 节和表 A-1 至 A-5。
 
-  The argument must be the name of a level (for example, `4.2`), a level_idc value (for example, `42`), or the special name `auto` indicating that the filter should attempt to guess the level from the input stream properties.
+  参数必须是级别名称（例如 `4.2`）、level_idc 值（例如 `42`），或特殊名称 `auto`，后者表示滤镜应尝试根据输入流属性猜测级别。
 
 ## h264_mp4toannexb
 
-Convert an H.264 bitstream from length prefixed mode to start code prefixed mode (as defined in the Annex B of the ITU-T H.264 specification).
+将 H.264 比特流从长度前缀模式转换为起始码前缀模式（如 ITU-T H.264 规范附录 B 所定义）。
 
-This is required by some streaming formats, typically the MPEG-2 transport stream format (muxer `mpegts`).
+某些流媒体格式需要此转换，通常是 MPEG-2 传输流格式（复用器 `mpegts`）。
 
-For example to remux an MP4 file containing an H.264 stream to mpegts format with `ffmpeg`, you can use the command:
+例如，使用 `ffmpeg` 将包含 H.264 流的 MP4 文件重新封装为 mpegts 格式，可以使用以下命令：
 
 ``` text
 ffmpeg -i INPUT.mp4 -codec copy -bsf:v h264_mp4toannexb OUTPUT.ts
 ```
 
-Please note that this filter is auto-inserted for MPEG-TS (muxer `mpegts`) and raw H.264 (muxer `h264`) output formats.
+请注意，对于 MPEG-TS（复用器 `mpegts`）和原始 H.264（复用器 `h264`）输出格式，此滤镜会被自动插入。
 
 ## h264_redundant_pps
 
-This applies a specific fixup to some Blu-ray BDMV H264 streams which contain redundant PPSs. The PPSs modify irrelevant parameters of the stream, confusing other transformations which require the correct extradata.
+这对某些包含冗余 PPS 的 Blu-ray BDMV H264 流应用特定的修正。这些 PPS 会修改流中无关的参数，干扰需要正确 extradata 的其他变换。
 
-The encoder used on these impacted streams adds extra PPSs throughout the stream, varying the initial QP and whether weighted prediction was enabled. This causes issues after copying the stream into a global header container, as the starting PPS is not suitable for the rest of the stream. One side effect, for example, is seeking will return garbled output until a new PPS appears.
+用于这些受影响流的编码器会在整个流中添加额外的 PPS，改变初始 QP 以及是否启用加权预测。这会在将流复制到全局头容器后引发问题，因为起始的 PPS 不适合流的其余部分。例如，一个副作用是定位 (seek) 会返回乱码输出，直到新的 PPS 出现。
 
-This BSF removes the extra PPSs and rewrites the slice headers such that the stream uses a single leading PPS in the global header, which resolves the issue.
+此 BSF 移除多余的 PPS 并重写小片 (slice) 头，使流在全局头中使用单一的前导 PPS，从而解决该问题。
 
 ## hevc_metadata
 
-Modify metadata embedded in an HEVC stream.
+修改嵌入在 HEVC 流中的元数据。
 
-- **`aud`** Insert or remove AUD NAL units in all access units of the stream.
+- **`aud`** 在流的全部访问单元中插入或移除 AUD NAL 单元。
 
   - **`insert`**
 
   - **`remove`**
 
-- **`sample_aspect_ratio`** Set the sample aspect ratio in the stream in the VUI parameters.
+- **`sample_aspect_ratio`** 在 VUI 参数中设置流的采样宽高比。
 
 - **`video_format`**
 
-- **`video_full_range_flag`** Set the video format in the stream (see H.265 section E.3.1 and table E.2).
+- **`video_full_range_flag`** 设置流中的视频格式（参见 H.265 规范 E.3.1 节和表 E.2）。
 
 - **`colour_primaries`**
 
 - **`transfer_characteristics`**
 
-- **`matrix_coefficients`** Set the colour description in the stream (see H.265 section E.3.1 and tables E.3, E.4 and E.5).
+- **`matrix_coefficients`** 设置流中的颜色描述（参见 H.265 规范 E.3.1 节和表 E.3、E.4、E.5）。
 
-- **`chroma_sample_loc_type`** Set the chroma sample location in the stream (see H.265 section E.3.1 and figure E.1).
+- **`chroma_sample_loc_type`** 设置流中的色度采样位置（参见 H.265 规范 E.3.1 节和图 E.1）。
 
-- **`tick_rate`** Set the tick rate in the VPS and VUI parameters (time_scale / num_units_in_tick). Combined with `num_ticks_poc_diff_one`, this can set a constant framerate in the stream. Note that it is likely to be overridden by container parameters when the stream is in a container.
+- **`tick_rate`** 在 VPS 和 VUI 参数中设置 tick 率 (time_scale / num_units_in_tick)。与 `num_ticks_poc_diff_one` 组合可在流中设置恒定帧率。注意当流位于容器中时，此项很可能被容器参数覆盖。
 
-- **`num_ticks_poc_diff_one`** Set poc_proportional_to_timing_flag in VPS and VUI and use this value to set num_ticks_poc_diff_one_minus1 (see H.265 sections 7.4.3.1 and E.3.1). Ignored if `tick_rate` is not also set.
+- **`num_ticks_poc_diff_one`** 在 VPS 和 VUI 中设置 poc_proportional_to_timing_flag，并使用此值设置 num_ticks_poc_diff_one_minus1（参见 H.265 规范 7.4.3.1 和 E.3.1 节）。若未同时设置 `tick_rate` 则忽略此项。
 
 - **`crop_left`**
 
@@ -394,37 +390,37 @@ Modify metadata embedded in an HEVC stream.
 
 - **`crop_top`**
 
-- **`crop_bottom`** Set the conformance window cropping offsets in the SPS. These values will replace the current ones if the stream is already cropped.
+- **`crop_bottom`** 在 SPS 中设置一致性窗口 (conformance window) 裁剪偏移。如果流已被裁剪，这些值将替换当前值。
 
-  These fields are set in pixels. Note that some sizes may not be representable if the chroma is subsampled (H.265 section 7.4.3.2.1).
+  这些字段以像素为单位设置。注意，如果色度被子采样，某些尺寸可能无法表示（H.265 规范 7.4.3.2.1 节）。
 
 - **`width`**
 
-- **`height`** Set width and height after crop.
+- **`height`** 设置裁剪后的宽度和高度。
 
-- **`level`** Set the level in the VPS and SPS. See H.265 section A.4 and tables A.6 and A.7.
+- **`level`** 在 VPS 和 SPS 中设置级别。参见 H.265 规范 A.4 节和表 A.6、A.7。
 
-  The argument must be the name of a level (for example, `5.1`), a *general_level_idc* value (for example, `153` for level 5.1), or the special name `auto` indicating that the filter should attempt to guess the level from the input stream properties.
+  参数必须是级别名称（例如 `5.1`）、*general_level_idc* 值（例如 5.1 级对应 `153`），或特殊名称 `auto`，后者表示滤镜应尝试根据输入流属性猜测级别。
 
 ## hevc_mp4toannexb
 
-Convert an HEVC/H.265 bitstream from length prefixed mode to start code prefixed mode (as defined in the Annex B of the ITU-T H.265 specification).
+将 HEVC/H.265 比特流从长度前缀模式转换为起始码前缀模式（如 ITU-T H.265 规范附录 B 所定义）。
 
-This is required by some streaming formats, typically the MPEG-2 transport stream format (muxer `mpegts`).
+某些流媒体格式需要此转换，通常是 MPEG-2 传输流格式（复用器 `mpegts`）。
 
-For example to remux an MP4 file containing an HEVC stream to mpegts format with `ffmpeg`, you can use the command:
+例如，使用 `ffmpeg` 将包含 HEVC 流的 MP4 文件重新封装为 mpegts 格式，可以使用以下命令：
 
 ``` text
 ffmpeg -i INPUT.mp4 -codec copy -bsf:v hevc_mp4toannexb OUTPUT.ts
 ```
 
-Please note that this filter is auto-inserted for MPEG-TS (muxer `mpegts`) and raw HEVC/H.265 (muxer `h265` or `hevc`) output formats.
+请注意，对于 MPEG-TS（复用器 `mpegts`）和原始 HEVC/H.265（复用器 `h265` 或 `hevc`）输出格式，此滤镜会被自动插入。
 
 ## imxdump
 
-Modifies the bitstream to fit in MOV and to be usable by the Final Cut Pro decoder. This filter only applies to the mpeg2video codec, and is likely not needed for Final Cut Pro 7 and newer with the appropriate `-tag:v`.
+修改比特流以适配 MOV 并使其可被 Final Cut Pro 解码器使用。此滤镜仅适用于 mpeg2video 编解码器，对于配有适当 `-tag:v` 的 Final Cut Pro 7 及更新版本，很可能不需要此滤镜。
 
-For example, to remux 30 MB/sec NTSC IMX to MOV:
+例如，将 30 MB/秒的 NTSC IMX 重新封装为 MOV：
 
 ``` text
 ffmpeg -i input.mxf -c copy -bsf:v imxdump -tag:v mx3n output.mov
@@ -432,19 +428,19 @@ ffmpeg -i input.mxf -c copy -bsf:v imxdump -tag:v mx3n output.mov
 
 ## mjpeg2jpeg
 
-Convert MJPEG/AVI1 packets to full JPEG/JFIF packets.
+将 MJPEG/AVI1 包转换为完整的 JPEG/JFIF 包。
 
-MJPEG is a video codec wherein each video frame is essentially a JPEG image. The individual frames can be extracted without loss, e.g. by
+MJPEG 是一种视频编解码器，其中每个视频帧本质上都是一幅 JPEG 图像。各个帧可以无损提取，例如：
 
 ``` text
 ffmpeg -i ../some_mjpeg.avi -c:v copy frames_%d.jpg
 ```
 
-Unfortunately, these chunks are incomplete JPEG images, because they lack the DHT segment required for decoding. Quoting from <http://www.digitalpreservation.gov/formats/fdd/fdd000063.shtml>:
+遗憾的是，这些数据块是不完整的 JPEG 图像，因为它们缺少解码所需的 DHT 段。引用 <http://www.digitalpreservation.gov/formats/fdd/fdd000063.shtml> 的话：
 
-Avery Lee, writing in the rec.video.desktop newsgroup in 2001, commented that "MJPEG, or at least the MJPEG in AVIs having the MJPG fourcc, is restricted JPEG with a fixed – and \*omitted\* – Huffman table. The JPEG must be YCbCr colorspace, it must be 4:2:2, and it must use basic Huffman encoding, not arithmetic or progressive. . . . You can indeed extract the MJPEG frames and decode them with a regular JPEG decoder, but you have to prepend the DHT segment to them, or else the decoder won't have any idea how to decompress the data. The exact table necessary is given in the OpenDML spec."
+Avery Lee 在 2001 年于 rec.video.desktop 新闻组的发言中评论道："MJPEG，或者至少是 AVI 中带有 MJPG fourcc 的 MJPEG，是一种受限的 JPEG，使用固定——且被 \*省略\* 的——霍夫曼表。JPEG 必须是 YCbCr 色彩空间，必须是 4:2:2，并且必须使用基本霍夫曼编码，而非算术编码或渐进式编码。……你确实可以提取 MJPEG 帧并用常规 JPEG 解码器解码，但必须在它们前面加上 DHT 段，否则解码器将完全不知道如何解压这些数据。所需的确切表格在 OpenDML 规范中给出。"
 
-This bitstream filter patches the header of frames extracted from an MJPEG stream (carrying the AVI1 header ID and lacking a DHT segment) to produce fully qualified JPEG images.
+此比特流滤镜修补从 MJPEG 流中提取的帧的头部（这些帧携带 AVI1 头 ID 且缺少 DHT 段），以生成完全合格的 JPEG 图像。
 
 ``` text
 ffmpeg -i mjpeg-movie.avi -c:v copy -bsf:v mjpeg2jpeg frame_%d.jpg
@@ -454,21 +450,21 @@ ffmpeg -i frame_%d.jpg -c:v copy rotated.avi
 
 ## mjpegadump
 
-Add an MJPEG A header to the bitstream, to enable decoding by Quicktime.
+在比特流中添加一个 MJPEG A 头，以启用 QuickTime 解码。
 
 ## mov2textsub
 
-Extract a representable text file from MOV subtitles, stripping the metadata header from each subtitle packet.
+从 MOV 字幕中提取可表示的文本文件，并从每个字幕包中剥离元数据头。
 
-See also the [text2movsub](#text2movsub) filter.
+另请参见 [text2movsub](#text2movsub) 滤镜。
 
 ## mpeg2_metadata
 
-Modify metadata embedded in an MPEG-2 stream.
+修改嵌入在 MPEG-2 流中的元数据。
 
-- **`display_aspect_ratio`** Set the display aspect ratio in the stream.
+- **`display_aspect_ratio`** 设置流中的显示宽高比。
 
-  The following fixed values are supported:
+  支持以下固定值：
 
   - **`4/3`**
 
@@ -476,25 +472,25 @@ Modify metadata embedded in an MPEG-2 stream.
 
   - **`221/100`**
 
-  Any other value will result in square pixels being signalled instead (see H.262 section 6.3.3 and table 6-3).
+  任何其他值都会改为用方像素 (square pixels) 标识（参见 H.262 规范 6.3.3 节和表 6-3）。
 
-- **`frame_rate`** Set the frame rate in the stream. This is constructed from a table of known values combined with a small multiplier and divisor - if the supplied value is not exactly representable, the nearest representable value will be used instead (see H.262 section 6.3.3 and table 6-4).
+- **`frame_rate`** 设置流中的帧率。它由已知值表结合一个小的乘数和除数构成——如果提供的值无法精确表示，将使用最接近的可表示值（参见 H.262 规范 6.3.3 节和表 6-4）。
 
-- **`video_format`** Set the video format in the stream (see H.262 section 6.3.6 and table 6-6).
+- **`video_format`** 设置流中的视频格式（参见 H.262 规范 6.3.6 节和表 6-6）。
 
 - **`colour_primaries`**
 
 - **`transfer_characteristics`**
 
-- **`matrix_coefficients`** Set the colour description in the stream (see H.262 section 6.3.6 and tables 6-7, 6-8 and 6-9).
+- **`matrix_coefficients`** 设置流中的颜色描述（参见 H.262 规范 6.3.6 节和表 6-7、6-8、6-9）。
 
 ## mpeg4_unpack_bframes
 
-Unpack DivX-style packed B-frames.
+解包 DivX 风格的打包 B 帧 (packed B-frames)。
 
-DivX-style packed B-frames are not valid MPEG-4 and were only a workaround for the broken Video for Windows subsystem. They use more space, can cause minor AV sync issues, require more CPU power to decode (unless the player has some decoded picture queue to compensate the 2,0,2,0 frame per packet style) and cause trouble if copied into a standard container like mp4 or mpeg-ps/ts, because MPEG-4 decoders may not be able to decode them, since they are not valid MPEG-4.
+DivX 风格的打包 B 帧不是有效的 MPEG-4，只是对有缺陷的 Video for Windows 子系统的权宜之计。它们占用更多空间，可能导致轻微的音视频同步问题，需要更多 CPU 算力来解码（除非播放器有某种已解码图像队列来补偿每包 2,0,2,0 帧的模式），并且复制到 mp4 或 mpeg-ps/ts 等标准容器时会引起麻烦，因为 MPEG-4 解码器可能无法解码它们——它们不是有效的 MPEG-4。
 
-For example to fix an AVI file containing an MPEG-4 stream with DivX-style packed B-frames using `ffmpeg`, you can use the command:
+例如，使用 `ffmpeg` 修复包含 DivX 风格打包 B 帧的 MPEG-4 流的 AVI 文件，可以使用以下命令：
 
 ``` text
 ffmpeg -i INPUT.avi -codec copy -bsf:v mpeg4_unpack_bframes OUTPUT.avi
@@ -502,57 +498,57 @@ ffmpeg -i INPUT.avi -codec copy -bsf:v mpeg4_unpack_bframes OUTPUT.avi
 
 ## noise
 
-Damages the contents of packets or simply drops them without damaging the container. Can be used for fuzzing or testing error resilience/concealment.
+破坏包的内容或直接丢弃包，而不损坏容器。可用于模糊测试 (fuzzing) 或测试错误恢复/错误隐藏能力。
 
-Parameters:
+参数：
 
-- **`amount`** Accepts an expression whose evaluation per-packet determines how often bytes in that packet will be modified. A value below 0 will result in a variable frequency. Default is 0 which results in no modification. However, if neither amount nor drop is specified, amount will be set to \<-1\>. See below for accepted variables.
+- **`amount`** 接受一个表达式，对每个包求值，其结果决定该包中的字节被修改的频率。低于 0 的值将产生可变频率。默认值为 0，表示不修改。但是，如果既未指定 amount 也未指定 drop，则 amount 将被设置为 \<-1\>。可用变量见下文。
 
-- **`drop`** Accepts an expression evaluated per-packet whose value determines whether that packet is dropped. Evaluation to a positive value results in the packet being dropped. Evaluation to a negative value results in a variable chance of it being dropped, roughly inverse in proportion to the magnitude of the value. Default is 0 which results in no drops. See below for accepted variables.
+- **`drop`** 接受一个对每个包求值的表达式，其值决定是否丢弃该包。求值为正数会导致该包被丢弃。求值为负数会导致该包有可变的丢弃概率，大致与值的幅度成反比。默认值为 0，表示不丢弃。可用变量见下文。
 
-- **`dropamount`** Accepts a non-negative integer, which assigns a variable chance of it being dropped, roughly inverse in proportion to the value. Default is 0 which results in no drops. This option is kept for backwards compatibility and is equivalent to setting drop to a negative value with the same magnitude i.e. `dropamount=4` is the same as `drop=-4`. Ignored if drop is also specified.
+- **`dropamount`** 接受一个非负整数，指定可变的丢弃概率，大致与该值成反比。默认值为 0，表示不丢弃。保留此选项是为了向后兼容，等效于将 drop 设为幅值相同的负值，即 `dropamount=4` 等同于 `drop=-4`。若同时指定了 drop 则忽略此项。
 
-Both `amount` and `drop` accept expressions containing the following variables:
+`amount` 和 `drop` 均接受包含以下变量的表达式：
 
-- **`n`** The index of the packet, starting from zero.
+- **`n`** 包的索引，从零开始。
 
-- **`tb`** The timebase for packet timestamps.
+- **`tb`** 包时间戳的时间基。
 
-- **`pts`** Packet presentation timestamp.
+- **`pts`** 包呈现时间戳。
 
-- **`dts`** Packet decoding timestamp.
+- **`dts`** 包解码时间戳。
 
-- **`nopts`** Constant representing AV_NOPTS_VALUE.
+- **`nopts`** 表示 AV_NOPTS_VALUE 的常量。
 
-- **`startpts`** First non-AV_NOPTS_VALUE PTS seen in the stream.
+- **`startpts`** 流中见到的首个非 AV_NOPTS_VALUE 的 PTS。
 
-- **`startdts`** First non-AV_NOPTS_VALUE DTS seen in the stream.
+- **`startdts`** 流中见到的首个非 AV_NOPTS_VALUE 的 DTS。
 
-- **`duration`** Packet duration, in timebase units.
+- **`duration`** 包时长，以时间基单位计。
 
-- **`pos`** Packet position in input; may be -1 when unknown or not set.
+- **`pos`** 包在输入中的位置；未知或未设置时可能为 -1。
 
-- **`size`** Packet size, in bytes.
+- **`size`** 包大小，以字节计。
 
-- **`key`** Whether packet is marked as a keyframe.
+- **`key`** 包是否被标记为关键帧。
 
-- **`state`** A pseudo random integer, primarily derived from the content of packet payload.
+- **`state`** 一个伪随机整数，主要源自包载荷内容。
 
-### Examples
+### 示例
 
-Apply modification to every byte but don't drop any packets.
+修改每个字节但不丢弃任何包。
 
 ``` text
 ffmpeg -i INPUT -c copy -bsf noise=1 output.mkv
 ```
 
-Drop every video packet not marked as a keyframe after timestamp 30s but do not modify any of the remaining packets.
+丢弃时间戳 30 秒之后所有未标记为关键帧的视频包，但不修改其余任何包。
 
 ``` text
 ffmpeg -i INPUT -c copy -bsf:v noise=drop='gt(pts*tb\,30)*not(key)' output.mkv
 ```
 
-Drop one second of audio every 10 seconds and add some random noise to the rest.
+每 10 秒丢弃一秒的音频，并为其余部分添加一些随机噪声。
 
 ``` text
 ffmpeg -i INPUT -c copy -bsf:a noise=amount=-1:drop='between(mod(pts*tb\,10)\,9\,10)' output.mkv
@@ -560,19 +556,19 @@ ffmpeg -i INPUT -c copy -bsf:a noise=amount=-1:drop='between(mod(pts*tb\,10)\,9\
 
 ## null
 
-This bitstream filter passes the packets through unchanged.
+此比特流滤镜原样传递包。
 
 ## pcm_rechunk
 
-Repacketize PCM audio to a fixed number of samples per packet or a fixed packet rate per second. This is similar to the section "asetnsamples audio filter" in `ffmpeg-filters` but works on audio packets instead of audio frames.
+将 PCM 音频重新打包为每包固定采样数或每秒固定包率。这类似于 `ffmpeg-filters` 中"asetnsamples 音频滤镜"一节，但它作用于音频包而非音频帧。
 
-- **`nb_out_samples, n`** Set the number of samples per each output audio packet. The number is intended as the number of samples *per each channel*. Default value is 1024.
+- **`nb_out_samples, n`** 设置每个输出音频包的采样数。该数字指*每个声道*的采样数。默认值为 1024。
 
-- **`pad, p`** If set to 1, the filter will pad the last audio packet with silence, so that it will contain the same number of samples (or roughly the same number of samples, see `frame_rate`) as the previous ones. Default value is 1.
+- **`pad, p`** 若设为 1，滤镜会用静音填充最后一个音频包，使其包含与前几个包相同数量的采样（或大致相同的数量，参见 `frame_rate`）。默认值为 1。
 
-- **`frame_rate, r`** This option makes the filter output a fixed number of packets per second instead of a fixed number of samples per packet. If the audio sample rate is not divisible by the frame rate then the number of samples will not be constant but will vary slightly so that each packet will start as close to the frame boundary as possible. Using this option has precedence over `nb_out_samples`.
+- **`frame_rate, r`** 此选项使滤镜每秒输出固定数量的包，而不是每包固定数量的采样。如果音频采样率不能被帧率整除，则采样数将不恒定，而是略有变化，使每个包尽可能靠近帧边界开始。此选项的优先级高于 `nb_out_samples`。
 
-You can generate the well known 1602-1601-1602-1601-1602 pattern of 48kHz audio for NTSC frame rate using the `frame_rate` option.
+可以使用 `frame_rate` 选项生成 NTSC 帧率下广为人知的 48kHz 音频 1602-1601-1602-1601-1602 模式。
 
 ``` text
 ffmpeg -f lavfi -i sine=r=48000:d=1 -c pcm_s16le -bsf pcm_rechunk=r=30000/1001 -f framecrc -
@@ -580,17 +576,17 @@ ffmpeg -f lavfi -i sine=r=48000:d=1 -c pcm_s16le -bsf pcm_rechunk=r=30000/1001 -
 
 ## pgs_frame_merge
 
-Merge a sequence of PGS Subtitle segments ending with an "end of display set" segment into a single packet.
+将以"显示集结束"段收尾的 PGS 字幕段序列合并为单个包。
 
-This is required by some containers that support PGS subtitles (muxer `matroska`).
+某些支持 PGS 字幕的容器（复用器 `matroska`）需要此操作。
 
 ## prores_metadata
 
-Modify color property metadata embedded in prores stream.
+修改嵌入在 prores 流中的颜色属性元数据。
 
-- **`color_primaries`** Set the color primaries. Available values are:
+- **`color_primaries`** 设置基色 (color primaries)。可用值为：
 
-  - **`auto`** Keep the same color primaries property (default).
+  - **`auto`** 保持相同的基色属性（默认）。
 
   - **`unknown`**
 
@@ -606,9 +602,9 @@ Modify color property metadata embedded in prores stream.
 
   - **`smpte432`** P3 D65
 
-- **`transfer_characteristics`** Set the color transfer. Available values are:
+- **`transfer_characteristics`** 设置颜色传递 (color transfer)。可用值为：
 
-  - **`auto`** Keep the same transfer characteristics property (default).
+  - **`auto`** 保持相同的传递特性属性（默认）。
 
   - **`unknown`**
 
@@ -618,9 +614,9 @@ Modify color property metadata embedded in prores stream.
 
   - **`arib-std-b67`** ARIB STD-B67
 
-- **`matrix_coefficients`** Set the matrix coefficient. Available values are:
+- **`matrix_coefficients`** 设置矩阵系数。可用值为：
 
-  - **`auto`** Keep the same colorspace property (default).
+  - **`auto`** 保持相同的色彩空间属性（默认）。
 
   - **`unknown`**
 
@@ -630,13 +626,13 @@ Modify color property metadata embedded in prores stream.
 
   - **`bt2020nc`**
 
-Set Rec709 colorspace for each frame of the file
+为文件的每一帧设置 Rec709 色彩空间
 
 ``` text
 ffmpeg -i INPUT -c copy -bsf:v prores_metadata=color_primaries=bt709:color_trc=bt709:colorspace=bt709 output.mov
 ```
 
-Set Hybrid Log-Gamma parameters for each frame of the file
+为文件的每一帧设置 Hybrid Log-Gamma 参数
 
 ``` text
 ffmpeg -i INPUT -c copy -bsf:v prores_metadata=color_primaries=bt2020:color_trc=arib-std-b67:colorspace=bt2020nc output.mov
@@ -644,81 +640,81 @@ ffmpeg -i INPUT -c copy -bsf:v prores_metadata=color_primaries=bt2020:color_trc=
 
 ## remove_extra
 
-Remove extradata from packets.
+从包中移除 extradata。
 
-It accepts the following parameter:
+它接受以下参数：
 
-- **`freq`** Set which frame types to remove extradata from.
+- **`freq`** 设置从哪些帧类型移除 extradata。
 
-  | Term         | Description                               |
-  |--------------|-------------------------------------------|
-  | `k`        | Remove extradata from non-keyframes only. |
-  | `keyframe` | Remove extradata from keyframes only.     |
-  | `e, all`   | Remove extradata from all frames.         |
+  | Term         | Description |
+  |--------------|-------------|
+  | `k`        | 仅从非关键帧移除 extradata。 |
+  | `keyframe` | 仅从关键帧移除 extradata。 |
+  | `e, all`   | 从所有帧移除 extradata。 |
 
 ## setts
 
-Set PTS and DTS in packets.
+设置包中的 PTS 和 DTS。
 
-It accepts the following parameters:
+它接受以下参数：
 
 - **`ts`**
 
 - **`pts`**
 
-- **`dts`** Set expressions for PTS, DTS or both.
+- **`dts`** 设置 PTS、DTS 或两者的表达式。
 
-- **`duration`** Set expression for duration.
+- **`duration`** 设置时长的表达式。
 
-- **`time_base`** Set output time base.
+- **`time_base`** 设置输出时间基。
 
-- **`prescale`** Set whether to convert time fields to user-set output time base before evaluation of expressions. Defaults to 0.
+- **`prescale`** 设置是否在表达式求值之前将时间字段转换为用户设置的输出时间基。默认值为 0。
 
-The expressions are evaluated through the eval API and can contain the following constants:
+表达式通过 eval API 求值，可以包含以下常量：
 
-- **`N`** The count of the input packet. Starting from 0.
+- **`N`** 输入包的计数。从 0 开始。
 
-- **`TS`** The demux timestamp in input in case of `ts` or `dts` option or presentation timestamp in case of `pts` option.
+- **`TS`** 使用 `ts` 或 `dts` 选项时为输入的解复用时间戳，使用 `pts` 选项时为呈现时间戳。
 
-- **`POS`** The original position in the file of the packet, or undefined if undefined for the current packet
+- **`POS`** 包在文件中的原始位置，对当前包未定义时为未定义。
 
-- **`DTS`** The demux timestamp in input.
+- **`DTS`** 输入的解复用时间戳。
 
-- **`PTS`** The presentation timestamp in input.
+- **`PTS`** 输入的呈现时间戳。
 
-- **`DURATION`** The duration in input.
+- **`DURATION`** 输入的时长。
 
-- **`STARTDTS`** The DTS of the first packet.
+- **`STARTDTS`** 第一个包的 DTS。
 
-- **`STARTPTS`** The PTS of the first packet.
+- **`STARTPTS`** 第一个包的 PTS。
 
-- **`PREV_INDTS`** The previous input DTS.
+- **`PREV_INDTS`** 前一个输入 DTS。
 
-- **`PREV_INPTS`** The previous input PTS.
+- **`PREV_INPTS`** 前一个输入 PTS。
 
-- **`PREV_INDURATION`** The previous input duration.
+- **`PREV_INDURATION`** 前一个输入时长。
 
-- **`PREV_OUTDTS`** The previous output DTS.
+- **`PREV_OUTDTS`** 前一个输出 DTS。
 
-- **`PREV_OUTPTS`** The previous output PTS.
+- **`PREV_OUTPTS`** 前一个输出 PTS。
 
-- **`PREV_OUTDURATION`** The previous output duration.
+- **`PREV_OUTDURATION`** 前一个输出时长。
 
-- **`NEXT_DTS`** The next input DTS.
+- **`NEXT_DTS`** 下一个输入 DTS。
 
-- **`NEXT_PTS`** The next input PTS.
+- **`NEXT_PTS`** 下一个输入 PTS。
 
-- **`NEXT_DURATION`** The next input duration.
+- **`NEXT_DURATION`** 下一个输入时长。
 
-- **`TB`** The timebase in which time fields are denominated. The user-set output timebase if prescale is enabled, else the input timebase.
+- **`TB`** 时间字段所采用的时间基。启用 prescale 时为用户设置的输出时间基，否则为输入时间基。
 
-- **`TB_OUT`** The output timebase.
+- **`TB_OUT`** 输出时间基。
 
-- **`SR`** The sample rate of stream packet belongs.
+- **`SR`** 包所属流的采样率。
 
-- **`NOPTS`** The AV_NOPTS_VALUE constant.
+- **`NOPTS`** AV_NOPTS_VALUE 常量。
 
-For example, to set PTS equal to DTS (not recommended if B-frames are involved):
+例如，将 PTS 设为等于 DTS（如果涉及 B 帧则不建议）：
 
 ``` text
 ffmpeg -i INPUT -c:a copy -bsf:a setts=pts=DTS out.mkv
@@ -726,33 +722,33 @@ ffmpeg -i INPUT -c:a copy -bsf:a setts=pts=DTS out.mkv
 
 ## showinfo
 
-Log basic packet information. Mainly useful for testing, debugging, and development.
+记录包的基本信息。主要用于测试、调试和开发。
 
 ## smpte436m_to_eia608
 
-Convert from a `SMPTE_436M_ANC` data stream to a `EIA_608` stream, extracting the closed captions from CTA-708 CDP VANC packets, and ignoring all other data.
+将 `SMPTE_436M_ANC` 数据流转换为 `EIA_608` 流，从 CTA-708 CDP VANC 包中提取隐藏式字幕，并忽略所有其他数据。
 
 ## text2movsub
 
-Convert text subtitles to MOV subtitles (as used by the `mov_text` codec) with metadata headers.
+将文本字幕转换为带元数据头的 MOV 字幕（如 `mov_text` 编解码器所用）。
 
-See also the [mov2textsub](#mov2textsub) filter.
+另请参见 [mov2textsub](#mov2textsub) 滤镜。
 
 ## trace_headers
 
-Log trace output containing all syntax elements in the coded stream headers (everything above the level of individual coded blocks). This can be useful for debugging low-level stream issues.
+记录包含已编码流头中全部语法元素（即高于单个已编码块层级的所有内容）的跟踪输出。这对调试底层流问题很有用。
 
-Supports AV1, H.264, H.265, (M)JPEG, MPEG-2 and VP9, but depending on the build only a subset of these may be available.
+支持 AV1、H.264、H.265、(M)JPEG、MPEG-2 和 VP9，但视构建情况，可能只有其中一部分可用。
 
 ## truehd_core
 
-Extract the core from a TrueHD stream, dropping ATMOS data.
+从 TrueHD 流中提取核心部分，丢弃 ATMOS 数据。
 
 ## vp9_metadata
 
-Modify metadata embedded in a VP9 stream.
+修改嵌入在 VP9 流中的元数据。
 
-- **`color_space`** Set the color space value in the frame header. Note that any frame set to RGB will be implicitly set to PC range and that RGB is incompatible with profiles 0 and 2.
+- **`color_space`** 在帧头中设置色彩空间值。注意任何设为 RGB 的帧都会被隐式设为 PC 范围，且 RGB 与 profile 0 和 2 不兼容。
 
   - **`unknown`**
 
@@ -768,7 +764,7 @@ Modify metadata embedded in a VP9 stream.
 
   - **`rgb`**
 
-- **`color_range`** Set the color range value in the frame header. Note that any value imposed by the color space will take precedence over this value.
+- **`color_range`** 在帧头中设置颜色范围值。注意色彩空间施加的任何值都将优先于此值。
 
   - **`tv`**
 
@@ -776,16 +772,16 @@ Modify metadata embedded in a VP9 stream.
 
 ## vp9_superframe
 
-Merge VP9 invisible (alt-ref) frames back into VP9 superframes. This fixes merging of split/segmented VP9 streams where the alt-ref frame was split from its visible counterpart.
+将 VP9 不可见 (alt-ref) 帧合并回 VP9 超级帧 (superframe)。这修复了拆分/分段 VP9 流的合并问题——其中 alt-ref 帧与其可见对应帧被拆开。
 
 ## vp9_superframe_split
 
-Split VP9 superframes into single frames.
+将 VP9 超级帧拆分为单帧。
 
 ## vp9_raw_reorder
 
-Given a VP9 stream with correct timestamps but possibly out of order, insert additional show-existing-frame packets to correct the ordering.
+给定时间戳正确但顺序可能错乱的 VP9 流，插入额外的 show-existing-frame 包以修正顺序。
 
-# See Also
+# 另请参见
 
 ffmpeg(1), ffplay(1), ffprobe(1), libavcodec(3)
