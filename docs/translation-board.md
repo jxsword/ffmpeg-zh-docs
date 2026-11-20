@@ -19,16 +19,16 @@
 | components/formats.md | 1573 | 0 | 0 | P0（B4 已完成 2026-11-21） |
 | components/protocols.md | 677 | 0 | 0 | P0（B5 已完成 2026-11-21） |
 | components/devices.md | 570 | 0 | 0 | P0（B6 已完成 2026-11-21） |
-| libraries/libavutil.md | 13 | 13 | 0 | P0 |
-| libraries/libavcodec.md | 9 | 9 | 0 | P0 |
-| libraries/libavformat.md | 9 | 9 | 0 | P0 |
-| libraries/libavdevice.md | 8 | 8 | 0 | P0 |
-| libraries/libavfilter.md | 8 | 8 | 0 | P0 |
-| libraries/libswscale.md | 12 | 12 | 0 | P0 |
-| libraries/libswresample.md | 13 | 13 | 0 | P0 |
-| general/faq.md | 193 | 193 | 0 | P0 |
-| general/general.md | 166 | 166 | 0 | P0 |
-| general/platform.md | 100 | 100 | 0 | P0 |
+| libraries/libavutil.md | 13 | 0 | 0 | P0（B7 已完成 2026-11-21） |
+| libraries/libavcodec.md | 9 | 0 | 0 | P0（B7 已完成 2026-11-21） |
+| libraries/libavformat.md | 9 | 0 | 0 | P0（B7 已完成 2026-11-21） |
+| libraries/libavdevice.md | 8 | 0 | 0 | P0（B7 已完成 2026-11-21） |
+| libraries/libavfilter.md | 8 | 0 | 0 | P0（B7 已完成 2026-11-21） |
+| libraries/libswscale.md | 12 | 0 | 0 | P0（B7 已完成 2026-11-21） |
+| libraries/libswresample.md | 13 | 0 | 0 | P0（B7 已完成 2026-11-21） |
+| general/faq.md | 193 | 0 | 0 | P0（B7 已完成 2026-11-21） |
+| general/general.md | 166 | 0 | 0 | P0（B7 已完成 2026-11-21） |
+| general/platform.md | 100 | 0 | 0 | P0（B7 已完成 2026-11-21） |
 | general/developer.md | 287 | 287 | 0 | P0 |
 | general/git-howto.md | 139 | 139 | 0 | P0 |
 | general/fate.md | 0 | 0 | 0 | P0 |
@@ -49,7 +49,7 @@
 | B4 | components/bitstream-filters.md + components/formats.md | 1929 | 已完成（2026-11-21，两笔提交 5a03894/2fdad4d，段级组装+校验全绿；随行=heading-bridge 登记 Format-stream-specifiers/segment 修复 anchor_map 错位/glossary 补录 12 条至 178） |
 | B5 | components/protocols.md | 677 | 已完成（2026-11-21，一笔提交 277d8ce，段级组装+校验全绿；随行=anchor_map 抽查证实 protocols 无跨页英文锚点入链依赖、无需 heading-bridge 登记/glossary 补录 16 条至 194） |
 | B6 | components/devices.md | 570 | 已完成（2026-11-21，一笔提交，段级组装+校验全绿；随行=glossary 补录 11 条至 205） |
-| B7 | libraries/libavutil.md + libraries/libavcodec.md + libraries/libavformat.md + libraries/libavdevice.md + libraries/libavfilter.md + libraries/libswscale.md + libraries/libswresample.md + general/faq.md + general/general.md + general/platform.md | 531 | 未开始 |
+| B7 | libraries/libavutil.md + libraries/libavcodec.md + libraries/libavformat.md + libraries/libavdevice.md + libraries/libavfilter.md + libraries/libswscale.md + libraries/libswresample.md + general/faq.md + general/general.md + general/platform.md | 531 | 已完成（2026-11-21，四笔提交 d3c1f5b/d7e75fa/a9c7861/051e91e，段级组装+校验全绿；随行=无需 heading-bridge 登记（faq 页内锚点 tr 内中文 slug 改写、无跨页入链）/glossary 补录 12 条至 217） |
 | B8 | general/developer.md + general/git-howto.md + general/fate.md + general/authors.md + general/mailing-list-faq.md | 544 | 未开始 |
 | B9 | general/nut.md + general/community.md + general/drawvg-reference.md | 1030 | 未开始 |
 

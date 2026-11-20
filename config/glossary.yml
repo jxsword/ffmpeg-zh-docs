@@ -16,6 +16,8 @@
 # 2026-11-21 随批评审 approved）
 # B6 批随批补录 11 条（抓取/帧缓冲/设备节点/交叉开关/引脚/双工模式/
 # 图文电视/墙钟/预卷/抗锯齿/配置档，2026-11-21 随批评审 approved）
+# B7 批随批补录 12 条（外部库/交叉编译/静态库/共享库/链接器/符号/命名管道/
+# 分发器/音频指纹/工具链/位置无关/导入库，2026-11-21 随批评审 approved）
 # 原则：muxer=复用器 / demuxer=解复用器（社区主流技术译法，R3 明确）
 
 terms:
@@ -1262,3 +1264,65 @@ terms:
     aliases: []
 
 
+  # ===== B7 批（libraries 短页 + general 三页：库/链接/构建语境） =====
+  - en: "external library"
+    zh: "外部库"
+    status: "approved"
+    context: "general/general.md（--enable-lib* 外部编解码库）"
+    aliases: ["external libraries"]
+  - en: "cross-compilation"
+    zh: "交叉编译"
+    status: "approved"
+    context: "general/platform.md + general/faq.md（cross-compile/cross compiling 同）"
+    aliases: ["cross-compiling", "crosscompilation", "cross compiler", "cross-compiler"]
+  - en: "static library"
+    zh: "静态库"
+    status: "approved"
+    context: "general（链接语境）"
+    aliases: []
+  - en: "shared library"
+    zh: "共享库"
+    status: "approved"
+    context: "general（链接语境）"
+    aliases: []
+  - en: "linker"
+    zh: "链接器"
+    status: "approved"
+    context: "general（C/C++ 应用链接 FFmpeg）"
+    aliases: []
+  - en: "symbol"
+    zh: "符号"
+    status: "approved"
+    context: "general（链接器报错 missing symbols）"
+    aliases: []
+  - en: "named pipe"
+    zh: "命名管道"
+    status: "approved"
+    context: "general/faq.md（concat 拼接方案）"
+    aliases: []
+  - en: "dispatcher"
+    zh: "分发器"
+    status: "approved"
+    context: "general/general.md（QSV libmfx dispatcher）"
+    aliases: []
+  - en: "audio fingerprint"
+    zh: "音频指纹"
+    status: "approved"
+    context: "general/general.md（Chromaprint）"
+    aliases: []
+  - en: "toolchain"
+    zh: "工具链"
+    status: "approved"
+    context: "general/platform.md"
+    aliases: []
+  - en: "position independent"
+    zh: "位置无关"
+    status: "approved"
+    context: "general/platform.md（PIC/PIE 链接语境）"
+    aliases: ["position independent code", "position independent binaries"]
+    
+  - en: "import library"
+    zh: "导入库"
+    status: "approved"
+    context: "general/platform.md（MSVC dlltool/lib.exe）"
+    aliases: ["import libraries"]
