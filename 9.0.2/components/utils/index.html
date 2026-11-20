@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#description" class="md-skip">
+        <a href="#描述" class="md-skip">
           跳转至
         </a>
       
@@ -1755,79 +1755,74 @@
   
 
 
-<div class="admonition warning">
-<p class="admonition-title">翻译占位页</p>
-<p>本页为英文原文占位（翻译进行中，进度见<a href="https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md">翻译看板</a>）。
-术语与示例以英文原文为准。</p>
-</div>
-<h1 id="description">Description<a class="headerlink" href="#description" title="Permanent link">&para;</a></h1>
-<p>This document describes some generic features and utilities provided by the libavutil library.</p>
-<h1 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link">&para;</a></h1>
-<p>This section documents the syntax and formats employed by the FFmpeg libraries and tools.</p>
-<h2 id="quoting-and-escaping">Quoting and escaping<a class="headerlink" href="#quoting-and-escaping" title="Permanent link">&para;</a></h2>
-<p>FFmpeg adopts the following quoting and escaping mechanism, unless explicitly specified. The following rules are applied:</p>
+<h1 id="描述">描述<a class="headerlink" href="#描述" title="Permanent link">&para;</a></h1>
+<p>本文描述 libavutil 库提供的一些通用功能与实用工具。</p>
+<h1 id="语法">语法<a class="headerlink" href="#语法" title="Permanent link">&para;</a></h1>
+<p>本节记录 FFmpeg 库和工具采用的语法与格式。</p>
+<h2 id="引号引用与转义">引号引用与转义<a class="headerlink" href="#引号引用与转义" title="Permanent link">&para;</a></h2>
+<p>除非明确指定，FFmpeg 采用以下引号引用与转义机制。应用以下规则：</p>
 <ul>
 <li>
-<p><code>'</code> and <code>\</code> are special characters (respectively used for quoting and escaping). In addition to them, there might be other special characters depending on the specific syntax where the escaping and quoting are employed.</p>
+<p><code>'</code> 和 <code>\</code> 是特殊字符（分别用于引号引用和转义）。除此之外，视引号引用与转义所用的具体语法而定，可能还有其他特殊字符。</p>
 </li>
 <li>
-<p>A special character is escaped by prefixing it with a <code>\</code>.</p>
+<p>特殊字符通过在其前面加 <code>\</code> 来转义。</p>
 </li>
 <li>
-<p>All characters enclosed between <code>''</code> are included literally in the parsed string. The quote character <code>'</code> itself cannot be quoted, so you may need to close the quote and escape it.</p>
+<p><code>''</code> 之间括起的所有字符都按字面包含在解析后的字符串中。引号字符 <code>'</code> 本身不能被引号引用，因此可能需要先闭合引号再对其进行转义。</p>
 </li>
 <li>
-<p>Leading and trailing whitespaces, unless escaped or quoted, are removed from the parsed string.</p>
+<p>前导和尾随空白字符（除非被转义或被引号括起）会从解析后的字符串中移除。</p>
 </li>
 </ul>
-<p>Note that you may need to add a second level of escaping when using the command line or a script, which depends on the syntax of the adopted shell language.</p>
-<p>The function <code>av_get_token</code> defined in <code>libavutil/avstring.h</code> can be used to parse a token quoted or escaped according to the rules defined above.</p>
-<p>The tool <code>tools/ffescape</code> in the FFmpeg source tree can be used to automatically quote or escape a string in a script.</p>
-<h3 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h3>
+<p>注意，在命令行或脚本中使用时可能需要再加一层转义，这取决于所用 shell 语言的语法。</p>
+<p>定义在 <code>libavutil/avstring.h</code> 中的函数 <code>av_get_token</code> 可用于解析按上述规则做了引号引用或转义的 token。</p>
+<p>FFmpeg 源码树中的工具 <code>tools/ffescape</code> 可用于在脚本中自动对字符串做引号引用或转义。</p>
+<h3 id="示例">示例<a class="headerlink" href="#示例" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Escape the string <code>Crime d'Amour</code> containing the <code>'</code> special character:</li>
+<li>转义包含 <code>'</code> 特殊字符的字符串 <code>Crime d'Amour</code>：</li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Crime d\'Amour
 </code></pre></div>
 <ul>
-<li>The string above contains a quote, so the <code>'</code> needs to be escaped when quoting it:</li>
+<li>上面的字符串包含一个引号，因此对它做引号引用时需要转义 <code>'</code>：</li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>'Crime d'\''Amour'
 </code></pre></div>
 <ul>
-<li>Include leading or trailing whitespaces using quoting:</li>
+<li>使用引号引用来包含前导或尾随空白字符：</li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>'  this string starts and ends with whitespaces  '
 </code></pre></div>
 <ul>
-<li>Escaping and quoting can be mixed together:</li>
+<li>转义与引号引用可以混用：</li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>' The string '\'string\'' is a string '
 </code></pre></div>
 <ul>
-<li>To include a literal <code>\</code> you can use either escaping or quoting:</li>
+<li>要包含字面 <code>\</code>，既可以用转义也可以用引号引用：</li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>'c:\foo' can be written as c:\\foo
 </code></pre></div>
-<h2 id="date">Date<a class="headerlink" href="#date" title="Permanent link">&para;</a></h2>
-<p>The accepted syntax is:</p>
+<h2 id="日期">日期<a class="headerlink" href="#日期" title="Permanent link">&para;</a></h2>
+<p>可接受的语法为：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>[(YYYY-MM-DD|YYYYMMDD)[T|t| ]]((HH:MM:SS[.m...]]])|(HHMMSS[.m...]]]))[Z]
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>now
 </code></pre></div>
-<p>If the value is "now" it takes the current time.</p>
-<p>Time is local time unless Z is appended, in which case it is interpreted as UTC. If the year-month-day part is not specified it takes the current year-month-day.</p>
-<h2 id="time-duration">Time duration<a class="headerlink" href="#time-duration" title="Permanent link">&para;</a></h2>
-<p>There are two accepted syntaxes for expressing time duration.</p>
+<p>若值为 "now"，则取当前时间。</p>
+<p>除非附加 Z（此时按 UTC 解释），时间为本地时间。若未指定年-月-日部分，则取当前年-月-日。</p>
+<h2 id="时长">时长<a class="headerlink" href="#时长" title="Permanent link">&para;</a></h2>
+<p>表达时长有两种可接受的语法。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>[-][HH:]MM:SS[.m...]
 </code></pre></div>
-<p>\&lt;HH&gt; expresses the number of hours, \&lt;MM&gt; the number of minutes for a maximum of 2 digits, and \&lt;SS&gt; the number of seconds for a maximum of 2 digits. The \&lt;m&gt; at the end expresses decimal value for \&lt;SS&gt;.</p>
-<p><em>or</em></p>
+<p>\&lt;HH&gt; 表示小时数，\&lt;MM&gt; 表示分钟数（最多 2 位数字），\&lt;SS&gt; 表示秒数（最多 2 位数字）。末尾的 \&lt;m&gt; 表示 \&lt;SS&gt; 的小数部分。</p>
+<p><em>或</em></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>[-]S+[.m...][s|ms|us]
 </code></pre></div>
-<p>\&lt;S&gt; expresses the number of seconds, with the optional decimal part \&lt;m&gt;. The optional literal suffixes <code>s</code>, <code>ms</code> or <code>us</code> indicate to interpret the value as seconds, milliseconds or microseconds, respectively.</p>
-<p>In both expressions, the optional <code>-</code> indicates negative duration.</p>
-<h3 id="examples_1">Examples<a class="headerlink" href="#examples_1" title="Permanent link">&para;</a></h3>
-<p>The following examples are all valid time duration:</p>
+<p>\&lt;S&gt; 表示秒数，带可选的小数部分 \&lt;m&gt;。可选的字面后缀 <code>s</code>、<code>ms</code> 或 <code>us</code> 分别指示把该值解释为秒、毫秒或微秒。</p>
+<p>两种表达式中，可选的 <code>-</code> 表示负时长。</p>
+<h3 id="示例_1">示例<a class="headerlink" href="#示例_1" title="Permanent link">&para;</a></h3>
+<p>以下均为有效的时长：</p>
 <table>
 <thead>
 <tr>
@@ -1838,33 +1833,33 @@
 <tbody>
 <tr>
 <td><code>55</code></td>
-<td>55 seconds</td>
+<td>55 秒</td>
 </tr>
 <tr>
 <td><code>0.2</code></td>
-<td>0.2 seconds</td>
+<td>0.2 秒</td>
 </tr>
 <tr>
 <td><code>200ms</code></td>
-<td>200 milliseconds, that's 0.2s</td>
+<td>200 毫秒，即 0.2 秒</td>
 </tr>
 <tr>
 <td><code>200000us</code></td>
-<td>200000 microseconds, that's 0.2s</td>
+<td>200000 微秒，即 0.2 秒</td>
 </tr>
 <tr>
 <td><code>12:03:45</code></td>
-<td>12 hours, 03 minutes and 45 seconds</td>
+<td>12 小时，03 分 45 秒</td>
 </tr>
 <tr>
 <td><code>23.189</code></td>
-<td>23.189 seconds</td>
+<td>23.189 秒</td>
 </tr>
 </tbody>
 </table>
-<h2 id="video-size">Video size<a class="headerlink" href="#video-size" title="Permanent link">&para;</a></h2>
-<p>Specify the size of the sourced video, it may be a string of the form \&lt;width&gt;x\&lt;height&gt;, or the name of a size abbreviation.</p>
-<p>The following abbreviations are recognized:</p>
+<h2 id="视频尺寸">视频尺寸<a class="headerlink" href="#视频尺寸" title="Permanent link">&para;</a></h2>
+<p>指定源视频的尺寸，可以是 \&lt;width&gt;x\&lt;height&gt; 形式的字符串，或尺寸缩写名称。</p>
+<p>可识别以下缩写：</p>
 <table>
 <thead>
 <tr>
@@ -2087,9 +2082,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="video-rate">Video rate<a class="headerlink" href="#video-rate" title="Permanent link">&para;</a></h2>
-<p>Specify the frame rate of a video, expressed as the number of frames generated per second. It has to be a string in the format \&lt;frame_rate_num&gt;/\&lt;frame_rate_den&gt;, an integer number, a float number or a valid video frame rate abbreviation.</p>
-<p>The following abbreviations are recognized:</p>
+<h2 id="视频帧率">视频帧率<a class="headerlink" href="#视频帧率" title="Permanent link">&para;</a></h2>
+<p>指定视频的帧率，表示每秒生成的帧数。必须是 \&lt;frame_rate_num&gt;/\&lt;frame_rate_den&gt; 格式的字符串、整数、浮点数或有效的视频帧率缩写。</p>
+<p>可识别以下缩写：</p>
 <table>
 <thead>
 <tr>
@@ -2132,15 +2127,15 @@
 </tr>
 </tbody>
 </table>
-<h2 id="ratio">Ratio<a class="headerlink" href="#ratio" title="Permanent link">&para;</a></h2>
-<p>A ratio can be expressed as an expression, or in the form \&lt;numerator&gt;:\&lt;denominator&gt;.</p>
-<p>Note that a ratio with infinite (1/0) or negative value is considered valid, so you should check on the returned value if you want to exclude those values.</p>
-<p>The undefined value can be expressed using the "0:0" string.</p>
-<h2 id="color">Color<a class="headerlink" href="#color" title="Permanent link">&para;</a></h2>
-<p>It can be the name of a color as defined below (case insensitive match) or a <code>[0x|#]RRGGBB[AA]</code> sequence, possibly followed by @ and a string representing the alpha component.</p>
-<p>The alpha component may be a string composed by "0x" followed by an hexadecimal number or a decimal number between 0.0 and 1.0, which represents the opacity value (<code>0x00</code> or <code>0.0</code> means completely transparent, <code>0xff</code> or <code>1.0</code> completely opaque). If the alpha component is not specified then <code>0xff</code> is assumed.</p>
-<p>The string <code>random</code> will result in a random color.</p>
-<p>The following names of colors are recognized:</p>
+<h2 id="比率">比率<a class="headerlink" href="#比率" title="Permanent link">&para;</a></h2>
+<p>比率可以用表达式表达，或用 \&lt;numerator&gt;:\&lt;denominator&gt; 的形式表达。</p>
+<p>注意，无穷 (1/0) 或负值的比率被视为有效，因此若想排除这些值，应检查返回值。</p>
+<p>未定义值可用字符串 "0:0" 表达。</p>
+<h2 id="颜色">颜色<a class="headerlink" href="#颜色" title="Permanent link">&para;</a></h2>
+<p>可以是下文定义的颜色名称（匹配时不区分大小写），或 <code>[0x|#]RRGGBB[AA]</code> 序列，其后可跟 @ 和表示 alpha 分量的字符串。</p>
+<p>alpha 分量可以是由 "0x" 后接十六进制数组成的字符串，或 0.0 到 1.0 之间的十进制数，表示不透明度（<code>0x00</code> 或 <code>0.0</code> 表示完全透明，<code>0xff</code> 或 <code>1.0</code> 表示完全不透明）。未指定 alpha 分量时假定为 <code>0xff</code>。</p>
+<p>字符串 <code>random</code> 将产生随机颜色。</p>
+<p>可识别以下颜色名称：</p>
 <table>
 <thead>
 <tr>
@@ -2711,9 +2706,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="channel-layout">Channel Layout<a class="headerlink" href="#channel-layout" title="Permanent link">&para;</a></h2>
-<p>A channel layout specifies the spatial disposition of the channels in a multi-channel audio stream. To specify a channel layout, FFmpeg makes use of a special syntax.</p>
-<p>Individual channels are identified by an id, as given by the table below:</p>
+<h2 id="声道布局">声道布局<a class="headerlink" href="#声道布局" title="Permanent link">&para;</a></h2>
+<p>声道布局指定多声道音频流中各声道的空间分布。指定声道布局时，FFmpeg 使用一种特殊语法。</p>
+<p>单个声道由 id 标识，如下表所示：</p>
 <table>
 <thead>
 <tr>
@@ -2724,107 +2719,107 @@
 <tbody>
 <tr>
 <td><code>FL</code></td>
-<td>front left</td>
+<td>左前</td>
 </tr>
 <tr>
 <td><code>FR</code></td>
-<td>front right</td>
+<td>右前</td>
 </tr>
 <tr>
 <td><code>FC</code></td>
-<td>front center</td>
+<td>前中</td>
 </tr>
 <tr>
 <td><code>LFE</code></td>
-<td>low frequency</td>
+<td>低频</td>
 </tr>
 <tr>
 <td><code>BL</code></td>
-<td>back left</td>
+<td>左后</td>
 </tr>
 <tr>
 <td><code>BR</code></td>
-<td>back right</td>
+<td>右后</td>
 </tr>
 <tr>
 <td><code>FLC</code></td>
-<td>front left-of-center</td>
+<td>前中偏左</td>
 </tr>
 <tr>
 <td><code>FRC</code></td>
-<td>front right-of-center</td>
+<td>前中偏右</td>
 </tr>
 <tr>
 <td><code>BC</code></td>
-<td>back center</td>
+<td>后中</td>
 </tr>
 <tr>
 <td><code>SL</code></td>
-<td>side left</td>
+<td>左侧</td>
 </tr>
 <tr>
 <td><code>SR</code></td>
-<td>side right</td>
+<td>右侧</td>
 </tr>
 <tr>
 <td><code>TC</code></td>
-<td>top center</td>
+<td>顶中</td>
 </tr>
 <tr>
 <td><code>TFL</code></td>
-<td>top front left</td>
+<td>顶前左</td>
 </tr>
 <tr>
 <td><code>TFC</code></td>
-<td>top front center</td>
+<td>顶前中</td>
 </tr>
 <tr>
 <td><code>TFR</code></td>
-<td>top front right</td>
+<td>顶前右</td>
 </tr>
 <tr>
 <td><code>TBL</code></td>
-<td>top back left</td>
+<td>顶后左</td>
 </tr>
 <tr>
 <td><code>TBC</code></td>
-<td>top back center</td>
+<td>顶后中</td>
 </tr>
 <tr>
 <td><code>TBR</code></td>
-<td>top back right</td>
+<td>顶后右</td>
 </tr>
 <tr>
 <td><code>DL</code></td>
-<td>downmix left</td>
+<td>下混左</td>
 </tr>
 <tr>
 <td><code>DR</code></td>
-<td>downmix right</td>
+<td>下混右</td>
 </tr>
 <tr>
 <td><code>WL</code></td>
-<td>wide left</td>
+<td>宽左</td>
 </tr>
 <tr>
 <td><code>WR</code></td>
-<td>wide right</td>
+<td>宽右</td>
 </tr>
 <tr>
 <td><code>SDL</code></td>
-<td>surround direct left</td>
+<td>环绕直接左</td>
 </tr>
 <tr>
 <td><code>SDR</code></td>
-<td>surround direct right</td>
+<td>环绕直接右</td>
 </tr>
 <tr>
 <td><code>LFE2</code></td>
-<td>low frequency 2</td>
+<td>低频 2</td>
 </tr>
 </tbody>
 </table>
-<p>Standard channel layout compositions can be specified by using the following identifiers:</p>
+<p>标准声道布局组合可用以下标识符指定：</p>
 <ul>
 <li>
 <p><strong><code>mono</code></strong> FC</p>
@@ -2944,228 +2939,228 @@
 <p><strong><code>22.2</code></strong> FL+FR+FC+LFE+BL+BR+FLC+FRC+BC+SL+SR+TC+TFL+TFC+TFR+TBL+TBC+TBR+LFE2+TSL+TSR+BFC+BFL+BFR</p>
 </li>
 </ul>
-<p>A custom channel layout can be specified as a sequence of terms, separated by '+'. Each term can be:</p>
+<p>自定义声道布局可以用以 '+' 分隔的一系列项指定。每个项可以是：</p>
 <ul>
-<li>the name of a single channel (e.g. <code>FL</code>, <code>FR</code>, <code>FC</code>, <code>LFE</code>, etc.), each optionally containing a custom name after a '@', (e.g. <code>FL@Left</code>, <code>FR@Right</code>, <code>FC@Center</code>, <code>LFE@Low_Frequency</code>, etc.)</li>
+<li>单个声道的名称（例如 <code>FL</code>、<code>FR</code>、<code>FC</code>、<code>LFE</code> 等），每个名称可选地在 '@' 后跟一个自定义名称（例如 <code>FL@Left</code>、<code>FR@Right</code>、<code>FC@Center</code>、<code>LFE@Low_Frequency</code> 等）</li>
 </ul>
-<p>A standard channel layout can be specified by the following:</p>
+<p>标准声道布局可由以下方式指定：</p>
 <ul>
 <li>
-<p>the name of a single channel (e.g. <code>FL</code>, <code>FR</code>, <code>FC</code>, <code>LFE</code>, etc.)</p>
+<p>单个声道的名称（例如 <code>FL</code>、<code>FR</code>、<code>FC</code>、<code>LFE</code> 等）</p>
 </li>
 <li>
-<p>the name of a standard channel layout (e.g. <code>mono</code>, <code>stereo</code>, <code>4.0</code>, <code>quad</code>, <code>5.0</code>, etc.)</p>
+<p>标准声道布局的名称（例如 <code>mono</code>、<code>stereo</code>、<code>4.0</code>、<code>quad</code>、<code>5.0</code> 等）</p>
 </li>
 <li>
-<p>a number of channels, in decimal, followed by 'c', yielding the default channel layout for that number of channels (see the function <code>av_channel_layout_default</code>). Note that not all channel counts have a default layout.</p>
+<p>十进制声道数后跟 'c'，产生该声道数的默认声道布局（参见函数 <code>av_channel_layout_default</code>）。注意并非所有声道数都有默认布局。</p>
 </li>
 <li>
-<p>a number of channels, in decimal, followed by 'C', yielding an unknown channel layout with the specified number of channels. Note that not all channel layout specification strings support unknown channel layouts.</p>
+<p>十进制声道数后跟 'C'，产生具有指定声道数的未知声道布局。注意并非所有声道布局描述字符串都支持未知声道布局。</p>
 </li>
 <li>
-<p>a channel layout mask, in hexadecimal starting with "0x" (see the <code>AV_CH_*</code> macros in <code>libavutil/channel_layout.h</code>.</p>
+<p>以 "0x" 开头的十六进制声道布局掩码（参见 <code>libavutil/channel_layout.h</code> 中的 <code>AV_CH_*</code> 宏。</p>
 </li>
 </ul>
-<p>Before libavutil version 53 the trailing character "c" to specify a number of channels was optional, but now it is required, while a channel layout mask can also be specified as a decimal number (if and only if not followed by "c" or "C").</p>
-<p>See also the function <code>av_channel_layout_from_string</code> defined in <code>libavutil/channel_layout.h</code>.</p>
-<h1 id="expression-evaluation">Expression Evaluation<a class="headerlink" href="#expression-evaluation" title="Permanent link">&para;</a></h1>
-<p>When evaluating an arithmetic expression, FFmpeg uses an internal formula evaluator, implemented through the <code>libavutil/eval.h</code> interface.</p>
-<p>An expression may contain unary, binary operators, constants, and functions.</p>
-<p>Two expressions \&lt;expr1&gt; and \&lt;expr2&gt; can be combined to form another expression "\&lt;expr1&gt;;\&lt;expr2&gt;". \&lt;expr1&gt; and \&lt;expr2&gt; are evaluated in turn, and the new expression evaluates to the value of \&lt;expr2&gt;.</p>
-<p>The following binary operators are available: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>^</code>.</p>
-<p>The following unary operators are available: <code>+</code>, <code>-</code>.</p>
-<p>Some internal variables can be used to store and load intermediary results. They can be accessed using the <code>ld</code> and <code>st</code> functions with an index argument varying from 0 to 9 to specify which internal variable to access.</p>
-<p>The following functions are available:</p>
+<p>在 libavutil 53 版之前，指定声道数的尾部字符 "c" 是可选的，现在则是必需的；而声道布局掩码也可用十进制数指定（当且仅当其后不跟 "c" 或 "C" 时）。</p>
+<p>另请参见定义在 <code>libavutil/channel_layout.h</code> 中的函数 <code>av_channel_layout_from_string</code>。</p>
+<h1 id="表达式求值">表达式求值<a class="headerlink" href="#表达式求值" title="Permanent link">&para;</a></h1>
+<p>对算术表达式求值时，FFmpeg 使用内部公式求值器，通过 <code>libavutil/eval.h</code> 接口实现。</p>
+<p>表达式可包含一元和二元运算符、常量以及函数。</p>
+<p>两个表达式 \&lt;expr1&gt; 和 \&lt;expr2&gt; 可组合成另一表达式 "\&lt;expr1&gt;;\&lt;expr2&gt;"。\&lt;expr1&gt; 和 \&lt;expr2&gt; 依次求值，新表达式的值为 \&lt;expr2&gt; 的值。</p>
+<p>可用的二元运算符有：<code>+</code>、<code>-</code>、<code>*</code>、<code>/</code>、<code>^</code>。</p>
+<p>可用的一元运算符有：<code>+</code>、<code>-</code>。</p>
+<p>某些内部变量可用于存储和加载中间结果。可使用 <code>ld</code> 和 <code>st</code> 函数并带一个 0 到 9 的索引参数来访问它们，以指定访问哪个内部变量。</p>
+<p>可用函数如下：</p>
 <ul>
 <li>
-<p><strong><code>abs(x)</code></strong> Compute absolute value of \&lt;x&gt;.</p>
+<p><strong><code>abs(x)</code></strong> 计算 \&lt;x&gt; 的绝对值。</p>
 </li>
 <li>
-<p><strong><code>acos(x)</code></strong> Compute arccosine of \&lt;x&gt;.</p>
+<p><strong><code>acos(x)</code></strong> 计算 \&lt;x&gt; 的反余弦。</p>
 </li>
 <li>
-<p><strong><code>asin(x)</code></strong> Compute arcsine of \&lt;x&gt;.</p>
+<p><strong><code>asin(x)</code></strong> 计算 \&lt;x&gt; 的反正弦。</p>
 </li>
 <li>
-<p><strong><code>atan(x)</code></strong> Compute arctangent of \&lt;x&gt;.</p>
+<p><strong><code>atan(x)</code></strong> 计算 \&lt;x&gt; 的反正切。</p>
 </li>
 <li>
-<p><strong><code>atan2(y, x)</code></strong> Compute principal value of the arc tangent of \&lt;y&gt;/\&lt;x&gt;.</p>
+<p><strong><code>atan2(y, x)</code></strong> 计算 \&lt;y&gt;/\&lt;x&gt; 的反正切主值。</p>
 </li>
 <li>
-<p><strong><code>between(x, min, max)</code></strong> Return 1 if \&lt;x&gt; is greater than or equal to \&lt;min&gt; and lesser than or equal to \&lt;max&gt;, 0 otherwise.</p>
+<p><strong><code>between(x, min, max)</code></strong> 若 \&lt;x&gt; 大于等于 \&lt;min&gt; 且小于等于 \&lt;max&gt;，返回 1，否则返回 0。</p>
 </li>
 <li>
 <p><strong><code>bitand(x, y)</code></strong></p>
 </li>
 <li>
-<p><strong><code>bitor(x, y)</code></strong> Compute bitwise and/or operation on \&lt;x&gt; and \&lt;y&gt;.</p>
+<p><strong><code>bitor(x, y)</code></strong> 对 \&lt;x&gt; 和 \&lt;y&gt; 执行按位与/或运算。</p>
 </li>
 </ul>
-<p>The results of the evaluation of \&lt;x&gt; and \&lt;y&gt; are converted to integers before executing the bitwise operation.</p>
-<p>Note that both the conversion to integer and the conversion back to floating point can lose precision. Beware of unexpected results for large numbers (usually 2^53 and larger).</p>
+<p>在执行按位运算前，\&lt;x&gt; 和 \&lt;y&gt; 的求值结果会先转换为整数。</p>
+<p>注意，转换为整数以及转换回浮点数都可能损失精度。对大数（通常为 2^53 及以上）要当心意外结果。</p>
 <ul>
 <li>
-<p><strong><code>ceil(expr)</code></strong> Round the value of expression \&lt;expr&gt; upwards to the nearest integer. For example, "ceil(1.5)" is "2.0".</p>
+<p><strong><code>ceil(expr)</code></strong> 把表达式 \&lt;expr&gt; 的值向上取整到最近的整数。例如，"ceil(1.5)" 为 "2.0"。</p>
 </li>
 <li>
-<p><strong><code>clip(x, min, max)</code></strong> Return the value of \&lt;x&gt; clipped between \&lt;min&gt; and \&lt;max&gt;.</p>
+<p><strong><code>clip(x, min, max)</code></strong> 返回 \&lt;x&gt; 被限制在 \&lt;min&gt; 和 \&lt;max&gt; 之间后的值。</p>
 </li>
 <li>
-<p><strong><code>cos(x)</code></strong> Compute cosine of \&lt;x&gt;.</p>
+<p><strong><code>cos(x)</code></strong> 计算 \&lt;x&gt; 的余弦。</p>
 </li>
 <li>
-<p><strong><code>cosh(x)</code></strong> Compute hyperbolic cosine of \&lt;x&gt;.</p>
+<p><strong><code>cosh(x)</code></strong> 计算 \&lt;x&gt; 的双曲余弦。</p>
 </li>
 <li>
-<p><strong><code>eq(x, y)</code></strong> Return 1 if \&lt;x&gt; and \&lt;y&gt; are equivalent, 0 otherwise.</p>
+<p><strong><code>eq(x, y)</code></strong> 若 \&lt;x&gt; 和 \&lt;y&gt; 等价返回 1，否则返回 0。</p>
 </li>
 <li>
-<p><strong><code>exp(x)</code></strong> Compute exponential of \&lt;x&gt; (with base <code>e</code>, the Euler's number).</p>
+<p><strong><code>exp(x)</code></strong> 计算 \&lt;x&gt; 的指数（以 <code>e</code> 为底，即欧拉数）。</p>
 </li>
 <li>
-<p><strong><code>floor(expr)</code></strong> Round the value of expression \&lt;expr&gt; downwards to the nearest integer. For example, "floor(-1.5)" is "-2.0".</p>
+<p><strong><code>floor(expr)</code></strong> 把表达式 \&lt;expr&gt; 的值向下取整到最近的整数。例如，"floor(-1.5)" 为 "-2.0"。</p>
 </li>
 <li>
-<p><strong><code>gauss(x)</code></strong> Compute Gauss function of \&lt;x&gt;, corresponding to <code>exp(-x*x/2) / sqrt(2*PI)</code>.</p>
+<p><strong><code>gauss(x)</code></strong> 计算 \&lt;x&gt; 的高斯函数，对应 <code>exp(-x*x/2) / sqrt(2*PI)</code>。</p>
 </li>
 <li>
-<p><strong><code>gcd(x, y)</code></strong> Return the greatest common divisor of \&lt;x&gt; and \&lt;y&gt;. If both \&lt;x&gt; and \&lt;y&gt; are 0 or either or both are less than zero then behavior is undefined.</p>
+<p><strong><code>gcd(x, y)</code></strong> 返回 \&lt;x&gt; 和 \&lt;y&gt; 的最大公约数。若 \&lt;x&gt; 和 \&lt;y&gt; 均为 0，或任一/两者小于零，则行为未定义。</p>
 </li>
 <li>
-<p><strong><code>gt(x, y)</code></strong> Return 1 if \&lt;x&gt; is greater than \&lt;y&gt;, 0 otherwise.</p>
+<p><strong><code>gt(x, y)</code></strong> 若 \&lt;x&gt; 大于 \&lt;y&gt; 返回 1，否则返回 0。</p>
 </li>
 <li>
-<p><strong><code>gte(x, y)</code></strong> Return 1 if \&lt;x&gt; is greater than or equal to \&lt;y&gt;, 0 otherwise.</p>
+<p><strong><code>gte(x, y)</code></strong> 若 \&lt;x&gt; 大于等于 \&lt;y&gt; 返回 1，否则返回 0。</p>
 </li>
 <li>
-<p><strong><code>hypot(x, y)</code></strong> This function is similar to the C function with the same name; it returns "sqrt(\&lt;x&gt;*\&lt;x&gt; + \&lt;y&gt;*\&lt;y&gt;)", the length of the hypotenuse of a right triangle with sides of length \&lt;x&gt; and \&lt;y&gt;, or the distance of the point (\&lt;x&gt;, \&lt;y&gt;) from the origin.</p>
+<p><strong><code>hypot(x, y)</code></strong> 该函数与同名 C 函数类似；返回 "sqrt(\&lt;x&gt;*\&lt;x&gt; + \&lt;y&gt;*\&lt;y&gt;)"，即边长为 \&lt;x&gt; 和 \&lt;y&gt; 的直角三角形的斜边长度，或点 (\&lt;x&gt;, \&lt;y&gt;) 到原点的距离。</p>
 </li>
 <li>
-<p><strong><code>if(x, y)</code></strong> Evaluate \&lt;x&gt;, and if the result is non-zero return the result of the evaluation of \&lt;y&gt;, return 0 otherwise.</p>
+<p><strong><code>if(x, y)</code></strong> 对 \&lt;x&gt; 求值，若结果非零则返回 \&lt;y&gt; 的求值结果，否则返回 0。</p>
 </li>
 <li>
-<p><strong><code>if(x, y, z)</code></strong> Evaluate \&lt;x&gt;, and if the result is non-zero return the evaluation result of \&lt;y&gt;, otherwise the evaluation result of \&lt;z&gt;.</p>
+<p><strong><code>if(x, y, z)</code></strong> 对 \&lt;x&gt; 求值，若结果非零则返回 \&lt;y&gt; 的求值结果，否则返回 \&lt;z&gt; 的求值结果。</p>
 </li>
 <li>
-<p><strong><code>ifnot(x, y)</code></strong> Evaluate \&lt;x&gt;, and if the result is zero return the result of the evaluation of \&lt;y&gt;, return 0 otherwise.</p>
+<p><strong><code>ifnot(x, y)</code></strong> 对 \&lt;x&gt; 求值，若结果为零则返回 \&lt;y&gt; 的求值结果，否则返回 0。</p>
 </li>
 <li>
-<p><strong><code>ifnot(x, y, z)</code></strong> Evaluate \&lt;x&gt;, and if the result is zero return the evaluation result of \&lt;y&gt;, otherwise the evaluation result of \&lt;z&gt;.</p>
+<p><strong><code>ifnot(x, y, z)</code></strong> 对 \&lt;x&gt; 求值，若结果为零则返回 \&lt;y&gt; 的求值结果，否则返回 \&lt;z&gt; 的求值结果。</p>
 </li>
 <li>
-<p><strong><code>isinf(x)</code></strong> Return 1.0 if \&lt;x&gt; is +/-INFINITY, 0.0 otherwise.</p>
+<p><strong><code>isinf(x)</code></strong> 若 \&lt;x&gt; 为 +/-INFINITY 返回 1.0，否则返回 0.0。</p>
 </li>
 <li>
-<p><strong><code>isnan(x)</code></strong> Return 1.0 if \&lt;x&gt; is NAN, 0.0 otherwise.</p>
+<p><strong><code>isnan(x)</code></strong> 若 \&lt;x&gt; 为 NAN 返回 1.0，否则返回 0.0。</p>
 </li>
 <li>
-<p><strong><code>ld(idx)</code></strong> Load the value of the internal variable with index \&lt;idx&gt;, which was previously stored with st(\&lt;idx&gt;, \&lt;expr&gt;). The function returns the loaded value.</p>
+<p><strong><code>ld(idx)</code></strong> 加载索引为 \&lt;idx&gt; 的内部变量的值，该值此前用 st(\&lt;idx&gt;, \&lt;expr&gt;) 存入。该函数返回加载的值。</p>
 </li>
 <li>
-<p><strong><code>lerp(x, y, z)</code></strong> Return linear interpolation between \&lt;x&gt; and \&lt;y&gt; by amount of \&lt;z&gt;.</p>
+<p><strong><code>lerp(x, y, z)</code></strong> 返回 \&lt;x&gt; 和 \&lt;y&gt; 之间按数量 \&lt;z&gt; 的线性插值。</p>
 </li>
 <li>
-<p><strong><code>log(x)</code></strong> Compute natural logarithm of \&lt;x&gt;.</p>
+<p><strong><code>log(x)</code></strong> 计算 \&lt;x&gt; 的自然对数。</p>
 </li>
 <li>
-<p><strong><code>lt(x, y)</code></strong> Return 1 if \&lt;x&gt; is lesser than \&lt;y&gt;, 0 otherwise.</p>
+<p><strong><code>lt(x, y)</code></strong> 若 \&lt;x&gt; 小于 \&lt;y&gt; 返回 1，否则返回 0。</p>
 </li>
 <li>
-<p><strong><code>lte(x, y)</code></strong> Return 1 if \&lt;x&gt; is lesser than or equal to \&lt;y&gt;, 0 otherwise.</p>
+<p><strong><code>lte(x, y)</code></strong> 若 \&lt;x&gt; 小于等于 \&lt;y&gt; 返回 1，否则返回 0。</p>
 </li>
 <li>
-<p><strong><code>max(x, y)</code></strong> Return the maximum between \&lt;x&gt; and \&lt;y&gt;.</p>
+<p><strong><code>max(x, y)</code></strong> 返回 \&lt;x&gt; 和 \&lt;y&gt; 中的最大值。</p>
 </li>
 <li>
-<p><strong><code>min(x, y)</code></strong> Return the minimum between \&lt;x&gt; and \&lt;y&gt;.</p>
+<p><strong><code>min(x, y)</code></strong> 返回 \&lt;x&gt; 和 \&lt;y&gt; 中的最小值。</p>
 </li>
 <li>
-<p><strong><code>mod(x, y)</code></strong> Compute the remainder of division of \&lt;x&gt; by \&lt;y&gt;.</p>
+<p><strong><code>mod(x, y)</code></strong> 计算 \&lt;x&gt; 除以 \&lt;y&gt; 的余数。</p>
 </li>
 <li>
-<p><strong><code>not(expr)</code></strong> Return 1.0 if \&lt;expr&gt; is zero, 0.0 otherwise.</p>
+<p><strong><code>not(expr)</code></strong> 若 \&lt;expr&gt; 为零返回 1.0，否则返回 0.0。</p>
 </li>
 <li>
-<p><strong><code>pow(x, y)</code></strong> Compute the power of \&lt;x&gt; elevated \&lt;y&gt;, it is equivalent to "(\&lt;x&gt;)^(\&lt;y&gt;)".</p>
+<p><strong><code>pow(x, y)</code></strong> 计算 \&lt;x&gt; 的 \&lt;y&gt; 次幂，相当于 "(\&lt;x&gt;)^(\&lt;y&gt;)"。</p>
 </li>
 <li>
 <p><strong><code>print(t)</code></strong></p>
 </li>
 <li>
-<p><strong><code>print(t, l)</code></strong> Print the value of expression \&lt;t&gt; with loglevel \&lt;l&gt;. If \&lt;l&gt; is not specified then a default log level is used. Return the value of the expression printed.</p>
+<p><strong><code>print(t, l)</code></strong> 以日志级别 \&lt;l&gt; 打印表达式 \&lt;t&gt; 的值。未指定 \&lt;l&gt; 时使用默认日志级别。返回所打印表达式的值。</p>
 </li>
 <li>
-<p><strong><code>random(idx)</code></strong> Return a pseudo random value between 0.0 and 1.0. \&lt;idx&gt; is the index of the internal variable used to save the seed/state, which can be previously stored with <code>st(idx)</code>.</p>
+<p><strong><code>random(idx)</code></strong> 返回 0.0 到 1.0 之间的伪随机值。\&lt;idx&gt; 是用于保存种子/状态的内部变量的索引，该种子/状态可预先用 <code>st(idx)</code> 存入。</p>
 </li>
 </ul>
-<p>To initialize the seed, you need to store the seed value as a 64-bit unsigned integer in the internal variable with index \&lt;idx&gt;.</p>
-<p>For example, to store the seed with value <code>42</code> in the internal variable with index <code>0</code> and print a few random values:</p>
+<p>要初始化种子，需要把种子值作为 64 位无符号整数存入索引为 \&lt;idx&gt; 的内部变量。</p>
+<p>例如，把值 <code>42</code> 作为种子存入索引为 <code>0</code> 的内部变量，并打印几个随机值：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">st</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">42</span><span class="p">);</span><span class="w"> </span><span class="n">print</span><span class="p">(</span><span class="n">random</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span><span class="w"> </span><span class="n">print</span><span class="p">(</span><span class="n">random</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span><span class="w"> </span><span class="n">print</span><span class="p">(</span><span class="n">random</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 </code></pre></div>
 <ul>
-<li><strong><code>randomi(idx, min, max)</code></strong> Return a pseudo random value in the interval between \&lt;min&gt; and \&lt;max&gt;. \&lt;idx&gt; is the index of the internal variable which will be used to save the seed/state, which can be previously stored with <code>st(idx)</code>.</li>
+<li><strong><code>randomi(idx, min, max)</code></strong> 返回 \&lt;min&gt; 和 \&lt;max&gt; 区间内的伪随机值。\&lt;idx&gt; 是将用于保存种子/状态的内部变量的索引，该种子/状态可预先用 <code>st(idx)</code> 存入。</li>
 </ul>
-<p>To initialize the seed, you need to store the seed value as a 64-bit unsigned integer in the internal variable with index \&lt;idx&gt;.</p>
+<p>要初始化种子，需要把种子值作为 64 位无符号整数存入索引为 \&lt;idx&gt; 的内部变量。</p>
 <ul>
-<li><strong><code>root(expr, max)</code></strong> Find an input value for which the function represented by \&lt;expr&gt; with argument \&lt;ld(0)&gt; is 0 in the interval 0..\&lt;max&gt;.</li>
+<li><strong><code>root(expr, max)</code></strong> 在 0..\&lt;max&gt; 区间内求一个输入值，使由 \&lt;expr&gt; 表示、以 \&lt;ld(0)&gt; 为参数的函数值为 0。</li>
 </ul>
-<p>The expression in \&lt;expr&gt; must denote a continuous function or the result is undefined.</p>
-<p>\&lt;ld(0)&gt; is used to represent the function input value, which means that the given expression will be evaluated multiple times with various input values that the expression can access through <code>ld(0)</code>. When the expression evaluates to 0 then the corresponding input value will be returned.</p>
-<ul>
-<li>
-<p><strong><code>round(expr)</code></strong> Round the value of expression \&lt;expr&gt; to the nearest integer. For example, "round(1.5)" is "2.0".</p>
-</li>
-<li>
-<p><strong><code>sgn(x)</code></strong> Compute sign of \&lt;x&gt;.</p>
-</li>
-<li>
-<p><strong><code>sin(x)</code></strong> Compute sine of \&lt;x&gt;.</p>
-</li>
-<li>
-<p><strong><code>sinh(x)</code></strong> Compute hyperbolic sine of \&lt;x&gt;.</p>
-</li>
-<li>
-<p><strong><code>sqrt(expr)</code></strong> Compute the square root of \&lt;expr&gt;. This is equivalent to "(\&lt;expr&gt;)^.5".</p>
-</li>
-<li>
-<p><strong><code>squish(x)</code></strong> Compute expression <code>1/(1 + exp(4*x))</code>.</p>
-</li>
-<li>
-<p><strong><code>st(idx, expr)</code></strong> Store the value of the expression \&lt;expr&gt; in an internal variable. \&lt;idx&gt; specifies the index of the variable where to store the value, and it is a value ranging from 0 to 9. The function returns the value stored in the internal variable.</p>
-</li>
-</ul>
-<p>The stored value can be retrieved with <code>ld(var)</code>.</p>
-<p>Note: variables are currently not shared between expressions.</p>
+<p>\&lt;expr&gt; 中的表达式必须表示连续函数，否则结果未定义。</p>
+<p>\&lt;ld(0)&gt; 用于表示函数输入值，即给定的表达式会被以各种输入值多次求值，表达式可通过 <code>ld(0)</code> 访问这些输入值。当表达式求值为 0 时，返回对应的输入值。</p>
 <ul>
 <li>
-<p><strong><code>tan(x)</code></strong> Compute tangent of \&lt;x&gt;.</p>
+<p><strong><code>round(expr)</code></strong> 把表达式 \&lt;expr&gt; 的值取整到最近的整数。例如，"round(1.5)" 为 "2.0"。</p>
 </li>
 <li>
-<p><strong><code>tanh(x)</code></strong> Compute hyperbolic tangent of \&lt;x&gt;.</p>
+<p><strong><code>sgn(x)</code></strong> 计算 \&lt;x&gt; 的符号。</p>
+</li>
+<li>
+<p><strong><code>sin(x)</code></strong> 计算 \&lt;x&gt; 的正弦。</p>
+</li>
+<li>
+<p><strong><code>sinh(x)</code></strong> 计算 \&lt;x&gt; 的双曲正弦。</p>
+</li>
+<li>
+<p><strong><code>sqrt(expr)</code></strong> 计算 \&lt;expr&gt; 的平方根。相当于 "(\&lt;expr&gt;)^.5"。</p>
+</li>
+<li>
+<p><strong><code>squish(x)</code></strong> 计算表达式 <code>1/(1 + exp(4*x))</code>。</p>
+</li>
+<li>
+<p><strong><code>st(idx, expr)</code></strong> 把表达式 \&lt;expr&gt; 的值存入内部变量。\&lt;idx&gt; 指定存储位置的变量索引，取值范围 0 到 9。该函数返回存入内部变量的值。</p>
+</li>
+</ul>
+<p>存入的值可用 <code>ld(var)</code> 取回。</p>
+<p>注意：变量目前不在多个表达式之间共享。</p>
+<ul>
+<li>
+<p><strong><code>tan(x)</code></strong> 计算 \&lt;x&gt; 的正切。</p>
+</li>
+<li>
+<p><strong><code>tanh(x)</code></strong> 计算 \&lt;x&gt; 的双曲正切。</p>
 </li>
 <li>
 <p><strong><code>taylor(expr, x)</code></strong></p>
 </li>
 <li>
-<p><strong><code>taylor(expr, x, idx)</code></strong> Evaluate a Taylor series at \&lt;x&gt;, given an expression representing the <code>ld(idx)</code>-th derivative of a function at 0.</p>
+<p><strong><code>taylor(expr, x, idx)</code></strong> 给定表示函数在 0 处的 <code>ld(idx)</code> 阶导数的表达式，在 \&lt;x&gt; 处对泰勒级数求值。</p>
 </li>
 </ul>
-<p>When the series does not converge the result is undefined.</p>
-<p>\&lt;ld(idx)&gt; is used to represent the derivative order in \&lt;expr&gt;, which means that the given expression will be evaluated multiple times with various input values that the expression can access through <code>ld(idx)</code>. If \&lt;idx&gt; is not specified then 0 is assumed.</p>
-<p>Note, when you have the derivatives at y instead of 0, <code>taylor(expr, x-y)</code> can be used.</p>
+<p>级数不收敛时结果未定义。</p>
+<p>\&lt;ld(idx)&gt; 在 \&lt;expr&gt; 中表示导数阶数，即给定的表达式会被以各种输入值多次求值，表达式可通过 <code>ld(idx)</code> 访问这些输入值。未指定 \&lt;idx&gt; 时假定为 0。</p>
+<p>注意，当你拥有的是在 y 处而非 0 处的导数时，可使用 <code>taylor(expr, x-y)</code>。</p>
 <ul>
 <li>
-<p><strong><code>time(0)</code></strong> Return the current (wallclock) time in seconds.</p>
+<p><strong><code>time(0)</code></strong> 返回当前（墙上时钟）时间，以秒为单位。</p>
 </li>
 <li>
-<p><strong><code>trunc(expr)</code></strong> Round the value of expression \&lt;expr&gt; towards zero to the nearest integer. For example, "trunc(-1.5)" is "-1.0".</p>
+<p><strong><code>trunc(expr)</code></strong> 把表达式 \&lt;expr&gt; 的值朝零取整到最近的整数。例如，"trunc(-1.5)" 为 "-1.0"。</p>
 </li>
 <li>
-<p><strong><code>while(cond, expr)</code></strong> Evaluate expression \&lt;expr&gt; while the expression \&lt;cond&gt; is non-zero, and returns the value of the last \&lt;expr&gt; evaluation, or NAN if \&lt;cond&gt; was always false.</p>
+<p><strong><code>while(cond, expr)</code></strong> 在表达式 \&lt;cond&gt; 非零期间反复对表达式 \&lt;expr&gt; 求值，返回最后一次 \&lt;expr&gt; 求值的值；若 \&lt;cond&gt; 始终为假，返回 NAN。</p>
 </li>
 </ul>
-<p>The following constants are available:</p>
+<p>可用常量如下：</p>
 <table>
 <thead>
 <tr>
@@ -3176,30 +3171,30 @@
 <tbody>
 <tr>
 <td><code>PI</code></td>
-<td>area of the unit disc, approximately 3.14</td>
+<td>单位圆盘的面积，约 3.14</td>
 </tr>
 <tr>
 <td><code>E</code></td>
-<td>exp(1) (Euler's number), approximately 2.718</td>
+<td>exp(1)（欧拉数），约 2.718</td>
 </tr>
 <tr>
 <td><code>PHI</code></td>
-<td>golden ratio (1+sqrt(5))/2, approximately 1.618</td>
+<td>黄金比率 (1+sqrt(5))/2，约 1.618</td>
 </tr>
 </tbody>
 </table>
-<p>Assuming that an expression is considered "true" if it has a non-zero value, note that:</p>
-<p><code>*</code> works like AND</p>
-<p><code>+</code> works like OR</p>
-<p>For example the construct:</p>
+<p>假定表达式值非零即为"真"，注意：</p>
+<p><code>*</code> 的作用如同 AND</p>
+<p><code>+</code> 的作用如同 OR</p>
+<p>例如以下构造：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>if (A AND B) then C
 </code></pre></div>
-<p>is equivalent to:</p>
+<p>等价于：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>if(A*B, C)
 </code></pre></div>
-<p>In your C code, you can extend the list of unary and binary functions, and define recognized constants, so that they are available for your expressions.</p>
-<p>The evaluator also recognizes the International System unit prefixes. If 'i' is appended after the prefix, binary prefixes are used, which are based on powers of 1024 instead of powers of 1000. The 'B' postfix multiplies the value by 8, and can be appended after a unit prefix or used alone. This allows using for example 'KB', 'MiB', 'G' and 'B' as number postfix.</p>
-<p>The list of available International System prefixes follows, with indication of the corresponding powers of 10 and of 2.</p>
+<p>在你的 C 代码中，可以扩展一元和二元函数列表，并定义可识别的常量，使它们可用于你的表达式。</p>
+<p>求值器还能识别国际单位制词头。若在前缀后附加 'i'，则使用二进制词头（基于 1024 的幂而非 1000 的幂）。'B' 后缀把值乘以 8，可附加在单位词头之后或单独使用。因此可以用 'KB'、'MiB'、'G' 和 'B' 等作为数字后缀。</p>
+<p>可用国际单位制词头列表如下，同时标出对应的 10 的幂和 2 的幂。</p>
 <table>
 <thead>
 <tr>
@@ -3290,7 +3285,7 @@
 </tr>
 </tbody>
 </table>
-<h1 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h1>
+<h1 id="另请参见">另请参见<a class="headerlink" href="#另请参见" title="Permanent link">&para;</a></h1>
 <p>ffmpeg(1), ffplay(1), ffprobe(1), libavutil(3)</p>
 
 

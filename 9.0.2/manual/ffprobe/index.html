@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#synopsis" class="md-skip">
+        <a href="#概要" class="md-skip">
           跳转至
         </a>
       
@@ -1755,386 +1755,381 @@
   
 
 
-<div class="admonition warning">
-<p class="admonition-title">翻译占位页</p>
-<p>本页为英文原文占位（翻译进行中，进度见<a href="https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md">翻译看板</a>）。
-术语与示例以英文原文为准。</p>
-</div>
-<h1 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">&para;</a></h1>
+<h1 id="概要">概要<a class="headerlink" href="#概要" title="Permanent link">&para;</a></h1>
 <p>ffprobe [\&lt;options&gt;] <code>input_url</code></p>
-<h1 id="description">Description<a class="headerlink" href="#description" title="Permanent link">&para;</a></h1>
-<p>ffprobe gathers information from multimedia streams and prints it in human- and machine-readable fashion.</p>
-<p>For example it can be used to check the format of the container used by a multimedia stream and the format and type of each media stream contained in it.</p>
-<p>If a url is specified in input, ffprobe will try to open and probe the url content. If the url cannot be opened or recognized as a multimedia file, a positive exit code is returned.</p>
-<p>If no output is specified as output with <code>o</code> ffprobe will write to stdout.</p>
-<p>ffprobe may be employed both as a standalone application or in combination with a textual filter, which may perform more sophisticated processing, e.g. statistical processing or plotting.</p>
-<p>Options are used to list some of the formats supported by ffprobe or for specifying which information to display, and for setting how ffprobe will show it.</p>
-<p>ffprobe output is designed to be easily parsable by a textual filter, and consists of one or more sections of a form defined by the selected writer, which is specified by the <code>output_format</code> option.</p>
-<p>Sections may contain other nested sections, and are identified by a name (which may be shared by other sections), and an unique name. See the output of <code>sections</code>.</p>
-<p>Metadata tags stored in the container or in the streams are recognized and printed in the corresponding "FORMAT", "STREAM", "STREAM_GROUP_STREAM" or "PROGRAM_STREAM" section.</p>
-<h1 id="options">Options<a class="headerlink" href="#options" title="Permanent link">&para;</a></h1>
-<h2 id="main-options">Main options<a class="headerlink" href="#main-options" title="Permanent link">&para;</a></h2>
+<h1 id="描述">描述<a class="headerlink" href="#描述" title="Permanent link">&para;</a></h1>
+<p>ffprobe 从多媒体流中收集信息，并以人类和机器均可读的方式打印出来。</p>
+<p>例如，可以用它检查多媒体流所用容器的格式，以及其中每条媒体流的格式和类型。</p>
+<p>如果在输入中指定了 url，ffprobe 会尝试打开并探测该 url 的内容。若 url 无法打开或无法识别为多媒体文件，则返回正的退出码。</p>
+<p>如果没有通过 <code>o</code> 指定输出，ffprobe 将写入 stdout。</p>
+<p>ffprobe 既可作为独立应用使用，也可与文本滤镜结合使用，由后者执行更复杂的处理，例如统计处理或绘图。</p>
+<p>选项用于列出 ffprobe 支持的部分格式、指定显示哪些信息，以及设置 ffprobe 将如何显示这些信息。</p>
+<p>ffprobe 的输出设计为易于被文本滤镜解析，由一个或多个小节组成，其形式由所选的写入器 (writer) 定义，写入器通过 <code>output_format</code> 选项指定。</p>
+<p>小节可以包含其他嵌套的小节，每个小节由一个名称（可与其他小节共享）和一个唯一名称标识。参见 <code>sections</code> 的输出。</p>
+<p>存储在容器或流中的元数据标签会被识别，并打印在对应的 "FORMAT"、"STREAM"、"STREAM_GROUP_STREAM" 或 "PROGRAM_STREAM" 小节中。</p>
+<h1 id="选项">选项<a class="headerlink" href="#选项" title="Permanent link">&para;</a></h1>
+<h2 id="主要选项">主要选项<a class="headerlink" href="#主要选项" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong><code>-f format</code></strong> Force format to use.</p>
+<p><strong><code>-f format</code></strong> 强制使用的格式。</p>
 </li>
 <li>
-<p><strong><code>-unit</code></strong> Show the unit of the displayed values.</p>
+<p><strong><code>-unit</code></strong> 为显示的值显示单位。</p>
 </li>
 <li>
-<p><strong><code>-prefix</code></strong> Use SI prefixes for the displayed values. Unless the "-byte_binary_prefix" option is used all the prefixes are decimal.</p>
+<p><strong><code>-prefix</code></strong> 对显示的值使用 SI 前缀。除非使用 "-byte_binary_prefix" 选项，所有前缀均为十进制。</p>
 </li>
 <li>
-<p><strong><code>-byte_binary_prefix</code></strong> Force the use of binary prefixes for byte values.</p>
+<p><strong><code>-byte_binary_prefix</code></strong> 对字节值强制使用二进制前缀。</p>
 </li>
 <li>
-<p><strong><code>-sexagesimal</code></strong> Use sexagesimal format HH:MM:SS.MICROSECONDS for time values.</p>
+<p><strong><code>-sexagesimal</code></strong> 时间值使用六十进制格式 HH:MM:SS.MICROSECONDS。</p>
 </li>
 <li>
-<p><strong><code>-pretty</code></strong> Prettify the format of the displayed values, it corresponds to the options "-unit -prefix -byte_binary_prefix -sexagesimal".</p>
+<p><strong><code>-pretty</code></strong> 美化所显示值的格式，相当于同时使用 "-unit -prefix -byte_binary_prefix -sexagesimal" 选项。</p>
 </li>
 <li>
-<p><strong><code>-output_format, -of, -print_format writer_name[=writer_options]</code></strong> Set the output printing format.</p>
+<p><strong><code>-output_format, -of, -print_format writer_name[=writer_options]</code></strong> 设置输出打印格式。</p>
 </li>
 </ul>
-<p>\&lt;writer_name&gt; specifies the name of the writer, and \&lt;writer_options&gt; specifies the options to be passed to the writer.</p>
-<p>For example for printing the output in JSON format, specify:</p>
+<p>\&lt;writer_name&gt; 指定写入器的名称，\&lt;writer_options&gt; 指定传给写入器的选项。</p>
+<p>例如要以 JSON 格式打印输出，可指定：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>-output_format json
 </code></pre></div>
-<p>For more details on the available output printing formats, see the Writers section below.</p>
+<p>有关可用输出打印格式的更多细节，参见下文的写入器一节。</p>
 <ul>
 <li>
-<p><strong><code>-sections</code></strong> Print sections structure and section information, and exit. The output is not meant to be parsed by a machine.</p>
+<p><strong><code>-sections</code></strong> 打印小节结构和小节信息后退出。其输出并非供机器解析。</p>
 </li>
 <li>
-<p><strong><code>-select_streams stream_specifier</code></strong> Select only the streams specified by \&lt;stream_specifier&gt;. This option affects only the options related to streams (e.g. <code>show_streams</code>, <code>show_packets</code>, etc.).</p>
+<p><strong><code>-select_streams stream_specifier</code></strong> 只选择由 \&lt;stream_specifier&gt; 指定的流。该选项只影响与流相关的选项（例如 <code>show_streams</code>、<code>show_packets</code> 等）。</p>
 </li>
 </ul>
-<p>For example to show only audio streams, you can use the command:</p>
+<p>例如只显示音频流，可使用命令：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ffprobe -show_streams -select_streams a INPUT
 </code></pre></div>
-<p>To show only video packets belonging to the video stream with index 1:</p>
+<p>只显示属于索引为 1 的视频流的视频包：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ffprobe -show_packets -select_streams v:1 INPUT
 </code></pre></div>
 <ul>
-<li><strong><code>-show_data</code></strong> Show payload data, as a hexadecimal and ASCII dump (other formats can be selected using <code>-data_dump_format</code>). Coupled with <code>-show_packets</code>, it will dump the packets' data. Coupled with <code>-show_streams</code>, it will dump the codec extradata.</li>
+<li><strong><code>-show_data</code></strong> 显示载荷数据，以十六进制和 ASCII 转储的形式呈现（可用 <code>-data_dump_format</code> 选择其他格式）。与 <code>-show_packets</code> 搭配时，转储包数据；与 <code>-show_streams</code> 搭配时，转储编解码器 extradata。</li>
 </ul>
-<p>The dump is printed as the "data" field. It may contain newlines.</p>
+<p>转储内容打印为 "data" 字段，其中可能包含换行。</p>
 <ul>
 <li>
-<p><strong><code>-show_data_hash algorithm</code></strong> Show a hash of payload data, for packets with <code>-show_packets</code> and for codec extradata with <code>-show_streams</code>.</p>
+<p><strong><code>-show_data_hash algorithm</code></strong> 显示载荷数据的哈希：配合 <code>-show_packets</code> 用于包，配合 <code>-show_streams</code> 用于编解码器 extradata。</p>
 </li>
 <li>
-<p><strong><code>-data_dump_format format</code></strong> Select a format used for the data dumps enabled with the <code>-show_data</code> option. The default is <code>xxd</code> which is a hexdump format compatible with the well-known <code>xxd</code> program. <code>base64</code> is also supported.</p>
+<p><strong><code>-data_dump_format format</code></strong> 选择 <code>-show_data</code> 选项所启用数据转储使用的格式。默认为 <code>xxd</code>，一种与知名程序 <code>xxd</code> 兼容的十六进制转储格式。也支持 <code>base64</code>。</p>
 </li>
 <li>
-<p><strong><code>-show_error</code></strong> Show information about the error found when trying to probe the input.</p>
+<p><strong><code>-show_error</code></strong> 显示探测输入时发现的错误信息。</p>
 </li>
 </ul>
-<p>The error information is printed within a section with name "ERROR".</p>
+<p>错误信息打印在名为 "ERROR" 的小节中。</p>
 <ul>
-<li><strong><code>-show_format</code></strong> Show information about the container format of the input multimedia stream.</li>
+<li><strong><code>-show_format</code></strong> 显示输入多媒体流容器格式的信息。</li>
 </ul>
-<p>All the container format information is printed within a section with name "FORMAT".</p>
+<p>所有容器格式信息打印在名为 "FORMAT" 的小节中。</p>
 <ul>
-<li><strong><code>-show_entries section_entries</code></strong> Set list of entries to show.</li>
+<li><strong><code>-show_entries section_entries</code></strong> 设置要显示的条目列表。</li>
 </ul>
-<p>Entries are specified according to the following syntax. \&lt;section_entries&gt; contains a list of section entries separated by <code>:</code>. Each section entry is composed by a section name (or unique name), optionally followed by a list of entries local to that section, separated by <code>,</code>.</p>
-<p>If section name is specified but is followed by no <code>=</code>, all entries are printed to output, together with all the contained sections. Otherwise only the entries specified in the local section entries list are printed. In particular, if <code>=</code> is specified but the list of local entries is empty, then no entries will be shown for that section.</p>
-<p>Note that the order of specification of the local section entries is not honored in the output, and the usual display order will be retained.</p>
-<p>The formal syntax is given by:</p>
+<p>条目按以下语法指定。\&lt;section_entries&gt; 包含以 <code>:</code> 分隔的小节条目列表。每个小节条目由一个小节名称（或唯一名称）组成，其后可跟以 <code>,</code> 分隔的该小节局部条目列表。</p>
+<p>如果指定了小节名称但后面没有 <code>=</code>，则打印该小节的所有条目及其包含的所有小节。否则只打印局部条目列表中指定的条目。特别地，如果指定了 <code>=</code> 但局部条目列表为空，则该小节不显示任何条目。</p>
+<p>注意，局部小节条目的指定顺序在输出中不会生效，将保持常规显示顺序。</p>
+<p>形式化语法如下：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>LOCAL_SECTION_ENTRIES ::= SECTION_ENTRY_NAME[,LOCAL_SECTION_ENTRIES]
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>SECTION_ENTRY         ::= SECTION_NAME[=[LOCAL_SECTION_ENTRIES]]
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>SECTION_ENTRIES       ::= SECTION_ENTRY[:SECTION_ENTRIES]
 </code></pre></div>
-<p>For example, to show only the index and type of each stream, and the PTS time, duration time, and stream index of the packets, you can specify the argument:</p>
+<p>例如，只显示每条流的 index（索引）和 type（类型），以及包的 PTS 时间、时长和流索引，可指定参数：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>packet=pts_time,duration_time,stream_index : stream=index,codec_type
 </code></pre></div>
-<p>To show all the entries in the section "format", but only the codec type in the section "stream", specify the argument:</p>
+<p>显示 "format" 小节的所有条目，但 "stream" 小节只显示编解码器类型，可指定参数：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>format : stream=codec_type
 </code></pre></div>
-<p>To show all the tags in the stream and format sections:</p>
+<p>显示 stream 和 format 小节中的所有标签：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>stream_tags : format_tags
 </code></pre></div>
-<p>To show only the <code>title</code> tag (if available) in the stream sections:</p>
+<p>只显示 stream 小节中的 <code>title</code> 标签（如可用）：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>stream_tags=title
 </code></pre></div>
 <ul>
-<li><strong><code>-show_packets</code></strong> Show information about each packet contained in the input multimedia stream.</li>
+<li><strong><code>-show_packets</code></strong> 显示输入多媒体流中每个包的信息。</li>
 </ul>
-<p>The information for each single packet is printed within a dedicated section with name "PACKET".</p>
+<p>每个包的信息打印在名为 "PACKET" 的专用小节中。</p>
 <ul>
-<li><strong><code>-show_frames</code></strong> Show information about each frame and subtitle contained in the input multimedia stream.</li>
+<li><strong><code>-show_frames</code></strong> 显示输入多媒体流中每帧和每条字幕的信息。</li>
 </ul>
-<p>The information for each single frame is printed within a dedicated section with name "FRAME" or "SUBTITLE".</p>
+<p>每帧的信息打印在名为 "FRAME" 或 "SUBTITLE" 的专用小节中。</p>
 <ul>
-<li><strong><code>-show_log loglevel</code></strong> Show logging information from the decoder about each frame according to the value set in \&lt;loglevel&gt;, (see <code>-loglevel</code>). This option requires <code>-show_frames</code>.</li>
+<li><strong><code>-show_log loglevel</code></strong> 按 \&lt;loglevel&gt; 设置的值显示解码器针对每帧输出的日志信息（参见 <code>-loglevel</code>）。该选项要求同时使用 <code>-show_frames</code>。</li>
 </ul>
-<p>The information for each log message is printed within a dedicated section with name "LOG".</p>
+<p>每条日志消息打印在名为 "LOG" 的专用小节中。</p>
 <ul>
-<li><strong><code>-show_streams</code></strong> Show information about each media stream contained in the input multimedia stream.</li>
+<li><strong><code>-show_streams</code></strong> 显示输入多媒体流中每条媒体流的信息。</li>
 </ul>
-<p>Each media stream information is printed within a dedicated section with name "STREAM".</p>
+<p>每条媒体流的信息打印在名为 "STREAM" 的专用小节中。</p>
 <ul>
-<li><strong><code>-show_programs</code></strong> Show information about programs and their streams contained in the input multimedia stream.</li>
+<li><strong><code>-show_programs</code></strong> 显示输入多媒体流中节目及其流的信息。</li>
 </ul>
-<p>Each media stream information is printed within a dedicated section with name "PROGRAM_STREAM".</p>
+<p>每条媒体流的信息打印在名为 "PROGRAM_STREAM" 的小节中。</p>
 <ul>
-<li><strong><code>-show_stream_groups</code></strong> Show information about stream groups and their streams contained in the input multimedia stream.</li>
+<li><strong><code>-show_stream_groups</code></strong> 显示输入多媒体流中流组及其流的信息。</li>
 </ul>
-<p>Each media stream information is printed within a dedicated section with name "STREAM_GROUP_STREAM".</p>
+<p>每条媒体流的信息打印在名为 "STREAM_GROUP_STREAM" 的小节中。</p>
 <ul>
-<li><strong><code>-show_chapters</code></strong> Show information about chapters stored in the format.</li>
+<li><strong><code>-show_chapters</code></strong> 显示格式中存储的章节信息。</li>
 </ul>
-<p>Each chapter is printed within a dedicated section with name "CHAPTER".</p>
+<p>每个章节打印在名为 "CHAPTER" 的专用小节中。</p>
 <ul>
 <li>
-<p><strong><code>-count_frames</code></strong> Count the number of frames per stream and report it in the corresponding stream section.</p>
+<p><strong><code>-count_frames</code></strong> 统计每条流的帧数并在对应的流小节中报告。</p>
 </li>
 <li>
-<p><strong><code>-count_packets</code></strong> Count the number of packets per stream and report it in the corresponding stream section.</p>
+<p><strong><code>-count_packets</code></strong> 统计每条流的包数并在对应的流小节中报告。</p>
 </li>
 <li>
-<p><strong><code>-read_intervals read_intervals</code></strong> Read only the specified intervals. \&lt;read_intervals&gt; must be a sequence of interval specifications separated by ",". <code>ffprobe</code> will seek to the interval starting point, and will continue reading from that.</p>
+<p><strong><code>-read_intervals read_intervals</code></strong> 只读取指定的区间。\&lt;read_intervals&gt; 必须是以 "," 分隔的区间描述序列。<code>ffprobe</code> 会定位到区间起点，并从那里继续读取。</p>
 </li>
 </ul>
-<p>Each interval is specified by two optional parts, separated by "%".</p>
-<p>The first part specifies the interval start position. It is interpreted as an absolute position, or as a relative offset from the current position if it is preceded by the "+" character. If this first part is not specified, no seeking will be performed when reading this interval.</p>
-<p>The second part specifies the interval end position. It is interpreted as an absolute position, or as a relative offset from the current position if it is preceded by the "+" character. If the offset specification starts with "#", it is interpreted as the number of packets to read (not including the flushing packets) from the interval start. If no second part is specified, the program will read until the end of the input.</p>
-<p>Note that seeking is not accurate, thus the actual interval start point may be different from the specified position. Also, when an interval duration is specified, the absolute end time will be computed by adding the duration to the interval start point found by seeking the file, rather than to the specified start value.</p>
-<p>The formal syntax is given by:</p>
+<p>每个区间由以 "%" 分隔的两个可选部分指定。</p>
+<p>第一部分指定区间起始位置。它按绝对位置解释；若以 "+" 字符开头，则按相对当前位置的偏移解释。若未指定第一部分，读取该区间时不进行定位。</p>
+<p>第二部分指定区间结束位置。它按绝对位置解释；若以 "+" 字符开头，则按相对当前位置的偏移解释。若偏移描述以 "#" 开头，则解释为从区间起点开始读取的包数（不包括冲刷包）。若未指定第二部分，程序将读到输入末尾。</p>
+<p>注意定位并不精确，因此实际区间起点可能与指定位置不同。此外，当指定了区间时长时，绝对结束时间按定位文件找到的区间起点加时长计算，而不是加在指定的起始值上。</p>
+<p>形式化语法如下：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>INTERVAL  ::= [START|+START_OFFSET][%[END|+END_OFFSET]]
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>INTERVALS ::= INTERVAL[,INTERVALS]
 </code></pre></div>
-<p>A few examples follow.</p>
+<p>下面给出几个示例。</p>
 <ul>
 <li>
-<p>Seek to time 10, read packets until 20 seconds after the found seek point, then seek to position <code>01:30</code> (1 minute and thirty seconds) and read packets until position <code>01:45</code>.</p>
+<p>定位到时间 10，读取包直到定位点之后 20 秒，然后定位到 <code>01:30</code>（1 分 30 秒）处并读取包直到 <code>01:45</code> 处。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>10%+20,01:30%01:45
 </code></pre></div>
 </li>
 <li>
-<p>Read only 42 packets after seeking to position <code>01:23</code>:</p>
+<p>定位到 <code>01:23</code> 处后只读取 42 个包：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>01:23%+#42
 </code></pre></div>
 </li>
 <li>
-<p>Read only the first 20 seconds from the start:</p>
+<p>只读取开头前 20 秒：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>%+20
 </code></pre></div>
 </li>
 <li>
-<p>Read from the start until position <code>02:30</code>:</p>
+<p>从开头读取到 <code>02:30</code> 处：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>%02:30
 </code></pre></div>
 </li>
 <li>
-<p><strong><code>-show_private_data, -private</code></strong> Show private data, that is data depending on the format of the particular shown element. This option is enabled by default, but you may need to disable it for specific uses, for example when creating XSD-compliant XML output.</p>
+<p><strong><code>-show_private_data, -private</code></strong> 显示私有数据，即依赖于所显示元素具体格式的数据。该选项默认启用，但特定用途下可能需要禁用，例如生成符合 XSD 的 XML 输出时。</p>
 </li>
 <li>
-<p><strong><code>-show_program_version</code></strong> Show information related to program version.</p>
+<p><strong><code>-show_program_version</code></strong> 显示与程序版本相关的信息。</p>
 </li>
 </ul>
-<p>Version information is printed within a section with name "PROGRAM_VERSION".</p>
+<p>版本信息打印在名为 "PROGRAM_VERSION" 的小节中。</p>
 <ul>
-<li><strong><code>-show_library_versions</code></strong> Show information related to library versions.</li>
+<li><strong><code>-show_library_versions</code></strong> 显示与库版本相关的信息。</li>
 </ul>
-<p>Version information for each library is printed within a section with name "LIBRARY_VERSION".</p>
-<ul>
-<li>
-<p><strong><code>-show_versions</code></strong> Show information related to program and library versions. This is the equivalent of setting both <code>-show_program_version</code> and <code>-show_library_versions</code> options.</p>
-</li>
-<li>
-<p><strong><code>-show_pixel_formats</code></strong> Show information about all pixel formats supported by FFmpeg.</p>
-</li>
-</ul>
-<p>Pixel format information for each format is printed within a section with name "PIXEL_FORMAT".</p>
+<p>每个库的版本信息打印在名为 "LIBRARY_VERSION" 的小节中。</p>
 <ul>
 <li>
-<p><strong><code>-show_optional_fields value</code></strong> Some writers viz. JSON and XML, omit the printing of fields with invalid or non-applicable values, while other writers always print them. This option enables one to control this behaviour. Valid values are <code>always</code>/<code>1</code>, <code>never</code>/<code>0</code> and <code>auto</code>/<code>-1</code>. Default is \&lt;auto&gt;.</p>
+<p><strong><code>-show_versions</code></strong> 显示与程序和库版本相关的信息。相当于同时设置 <code>-show_program_version</code> 和 <code>-show_library_versions</code> 选项。</p>
 </li>
 <li>
-<p><strong><code>-analyze_frames</code></strong> Analyze frames and/or their side data up to the provided read interval, providing additional information that may be useful at a stream level. Must be paired with the <code>-show_streams</code> option or it will have no effect.</p>
+<p><strong><code>-show_pixel_formats</code></strong> 显示 FFmpeg 支持的所有像素格式的信息。</p>
 </li>
 </ul>
-<p>Currently, the additional fields provided by this option when enabled are the <code>closed_captions</code> and <code>film_grain</code> fields.</p>
-<p>For example, to analyze the first 20 seconds and populate these fields:</p>
+<p>每个格式的像素格式信息打印在名为 "PIXEL_FORMAT" 的小节中。</p>
+<ul>
+<li>
+<p><strong><code>-show_optional_fields value</code></strong> 某些写入器（即 JSON 和 XML）会省略对无效或不适用值的字段的打印，而其他写入器总是打印它们。该选项可控制这一行为。有效值为 <code>always</code>/<code>1</code>、<code>never</code>/<code>0</code> 和 <code>auto</code>/<code>-1</code>。默认为 \&lt;auto&gt;。</p>
+</li>
+<li>
+<p><strong><code>-analyze_frames</code></strong> 分析帧和/或其 side data 直到给定的读取区间为止，提供可能在流层面有用的附加信息。必须与 <code>-show_streams</code> 选项搭配，否则无效果。</p>
+</li>
+</ul>
+<p>目前，启用该选项后提供的附加字段是 <code>closed_captions</code> 和 <code>film_grain</code> 字段。</p>
+<p>例如，分析前 20 秒并填充这些字段：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ffprobe -show_streams -analyze_frames -read_intervals "%+20" INPUT
 </code></pre></div>
 <ul>
 <li>
-<p><strong><code>-bitexact</code></strong> Force bitexact output, useful to produce output which is not dependent on the specific build.</p>
+<p><strong><code>-bitexact</code></strong> 强制比特精确输出，可用于产生不依赖具体构建的输出。</p>
 </li>
 <li>
-<p><strong><code>-i input_url</code></strong> Read \&lt;input_url&gt;.</p>
+<p><strong><code>-i input_url</code></strong> 读取 \&lt;input_url&gt;。</p>
 </li>
 <li>
-<p><strong><code>-o output_url</code></strong> Write output to \&lt;output_url&gt;. If not specified, the output is sent to stdout.</p>
+<p><strong><code>-o output_url</code></strong> 将输出写入 \&lt;output_url&gt;。未指定时，输出发送到 stdout。</p>
 </li>
 <li>
-<p><strong><code>-c:media_specifier codec_name</code></strong> Force a specific decoder implementation for the stream identified by \&lt;media_specifier&gt;, which can assume the values <code>a</code> (audio), <code>v</code> (video), <code>s</code> (subtitle), and <code>d</code> (data).</p>
+<p><strong><code>-c:media_specifier codec_name</code></strong> 为 \&lt;media_specifier&gt; 标识的流强制指定特定的解码器实现，\&lt;media_specifier&gt; 可取值 <code>a</code>（音频）、<code>v</code>（视频）、<code>s</code>（字幕）和 <code>d</code>（数据）。</p>
 </li>
 </ul>
-<h1 id="writers">Writers<a class="headerlink" href="#writers" title="Permanent link">&para;</a></h1>
-<p>A writer defines the output format adopted by <code>ffprobe</code>, and will be used for printing all the parts of the output.</p>
-<p>A writer may accept one or more arguments, which specify the options to adopt. The options are specified as a list of \&lt;key&gt;=\&lt;value&gt; pairs, separated by ":".</p>
-<p>All writers support the following options:</p>
+<h1 id="写入器">写入器<a class="headerlink" href="#写入器" title="Permanent link">&para;</a></h1>
+<p>写入器 (writer) 定义 <code>ffprobe</code> 采用的输出格式，输出的所有部分都由它打印。</p>
+<p>写入器可接受一个或多个参数，用于指定采用的选项。选项以 \&lt;key&gt;=\&lt;value&gt; 对列表的形式指定，以 ":" 分隔。</p>
+<p>所有写入器都支持以下选项：</p>
 <ul>
-<li><strong><code>string_validation, sv</code></strong> Set string validation mode.</li>
+<li><strong><code>string_validation, sv</code></strong> 设置字符串校验模式。</li>
 </ul>
-<p>The following values are accepted.</p>
+<p>接受以下取值。</p>
 <ul>
 <li>
-<p><strong><code>fail</code></strong> The writer will fail immediately in case an invalid string (UTF-8) sequence or code point is found in the input. This is especially useful to validate input metadata.</p>
+<p><strong><code>fail</code></strong> 一旦在输入中发现无效的字符串 (UTF-8) 序列或码点，写入器立即失败。这对校验输入元数据特别有用。</p>
 </li>
 <li>
-<p><strong><code>ignore</code></strong> Any validation error will be ignored. This will result in possibly broken output, especially with the json or xml writer.</p>
+<p><strong><code>ignore</code></strong> 忽略任何校验错误。这会导致输出可能损坏，尤其是在 json 或 xml 写入器下。</p>
 </li>
 <li>
-<p><strong><code>replace</code></strong> The writer will substitute invalid UTF-8 sequences or code points with the string specified with the <code>string_validation_replacement</code>.</p>
+<p><strong><code>replace</code></strong> 写入器会用 <code>string_validation_replacement</code> 指定的字符串替换无效的 UTF-8 序列或码点。</p>
 </li>
 </ul>
-<p>Default value is <code>replace</code>.</p>
+<p>默认值为 <code>replace</code>。</p>
 <ul>
-<li><strong><code>string_validation_replacement, svr</code></strong> Set replacement string to use in case <code>string_validation</code> is set to <code>replace</code>.</li>
+<li><strong><code>string_validation_replacement, svr</code></strong> 设置 <code>string_validation</code> 为 <code>replace</code> 时使用的替换字符串。</li>
 </ul>
-<p>In case the option is not specified, the writer will assume the empty string, that is it will remove the invalid sequences from the input strings.</p>
-<p>A description of the currently available writers follows.</p>
+<p>未指定该选项时，写入器将视为空字符串，即从输入字符串中删除无效序列。</p>
+<p>下面描述当前可用的写入器。</p>
 <h2 id="default">default<a class="headerlink" href="#default" title="Permanent link">&para;</a></h2>
-<p>Default format.</p>
-<p>Print each section in the form:</p>
+<p>默认格式。</p>
+<p>以如下形式打印每个小节：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>[SECTION]
 <a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>key1=val1
 <a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>...
 <a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>keyN=valN
 <a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>[/SECTION]
 </code></pre></div>
-<p>Metadata tags are printed as a line in the corresponding FORMAT, STREAM, STREAM_GROUP_STREAM or PROGRAM_STREAM section, and are prefixed by the string "TAG:".</p>
-<p>A description of the accepted options follows.</p>
+<p>元数据标签作为一行打印在对应的 FORMAT、STREAM、STREAM_GROUP_STREAM 或 PROGRAM_STREAM 小节中，并以字符串 "TAG:" 为前缀。</p>
+<p>可接受选项的描述如下。</p>
 <ul>
 <li>
-<p><strong><code>nokey, nk</code></strong> If set to 1 specify not to print the key of each field. Default value is 0.</p>
+<p><strong><code>nokey, nk</code></strong> 设为 1 时表示不打印每个字段的键。默认值为 0。</p>
 </li>
 <li>
-<p><strong><code>noprint_wrappers, nw</code></strong> If set to 1 specify not to print the section header and footer. Default value is 0.</p>
+<p><strong><code>noprint_wrappers, nw</code></strong> 设为 1 时表示不打印小节头和小节尾。默认值为 0。</p>
 </li>
 </ul>
 <h2 id="compact-csv">compact, csv<a class="headerlink" href="#compact-csv" title="Permanent link">&para;</a></h2>
-<p>Compact and CSV format.</p>
-<p>The <code>csv</code> writer is equivalent to <code>compact</code>, but supports different defaults.</p>
-<p>Each section is printed on a single line. If no option is specified, the output has the form:</p>
+<p>紧凑格式和 CSV 格式。</p>
+<p><code>csv</code> 写入器等同于 <code>compact</code>，但支持不同的默认值。</p>
+<p>每个小节打印为单行。未指定任何选项时，输出形如：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>section|key1=val1| ... |keyN=valN
 </code></pre></div>
-<p>Metadata tags are printed in the corresponding "format" or "stream" section. A metadata tag key, if printed, is prefixed by the string "tag:".</p>
-<p>The description of the accepted options follows.</p>
+<p>元数据标签打印在对应的 "format" 或 "stream" 小节中。元数据标签的键（如打印）以字符串 "tag:" 为前缀。</p>
+<p>可接受选项的描述如下。</p>
 <ul>
 <li>
-<p><strong><code>item_sep, s</code></strong> Specify the character to use for separating fields in the output line. It must be a single printable character, it is "|" by default ("," for the <code>csv</code> writer).</p>
+<p><strong><code>item_sep, s</code></strong> 指定输出行中分隔字段所用字符。必须是单个可打印字符，默认为 "|"（<code>csv</code> 写入器为 ","）。</p>
 </li>
 <li>
-<p><strong><code>nokey, nk</code></strong> If set to 1 specify not to print the key of each field. Its default value is 0 (1 for the <code>csv</code> writer).</p>
+<p><strong><code>nokey, nk</code></strong> 设为 1 时表示不打印每个字段的键。默认值为 0（<code>csv</code> 写入器为 1）。</p>
 </li>
 <li>
-<p><strong><code>escape, e</code></strong> Set the escape mode to use, default to "c" ("csv" for the <code>csv</code> writer).</p>
+<p><strong><code>escape, e</code></strong> 设置使用的转义模式，默认为 "c"（<code>csv</code> 写入器为 "csv"）。</p>
 </li>
 </ul>
-<p>It can assume one of the following values:</p>
+<p>可取以下值之一：</p>
 <ul>
 <li>
-<p><strong><code>c</code></strong> Perform C-like escaping. Strings containing a newline (<code>\n</code>), carriage return (<code>\r</code>), a tab (<code>\t</code>), a form feed (<code>\f</code>), the escaping character (<code>\</code>) or the item separator character \&lt;SEP&gt; are escaped using C-like fashioned escaping, so that a newline is converted to the sequence <code>\n</code>, a carriage return to <code>\r</code>, <code>\</code> to <code>\\</code> and the separator \&lt;SEP&gt; is converted to <code>\SEP</code>.</p>
+<p><strong><code>c</code></strong> 执行类 C 转义。包含换行（<code>\n</code>）、回车（<code>\r</code>）、制表符（<code>\t</code>）、换页符（<code>\f</code>）、转义字符（<code>\</code>）或字段分隔符 \&lt;SEP&gt; 的字符串按类 C 方式转义：换行转换为序列 <code>\n</code>，回车转换为 <code>\r</code>，<code>\</code> 转换为 <code>\\</code>，分隔符 \&lt;SEP&gt; 转换为 <code>\SEP</code>。</p>
 </li>
 <li>
-<p><strong><code>csv</code></strong> Perform CSV-like escaping, as described in RFC4180. Strings containing a newline (<code>\n</code>), a carriage return (<code>\r</code>), a double quote (<code>"</code>), or \&lt;SEP&gt; are enclosed in double-quotes.</p>
+<p><strong><code>csv</code></strong> 执行类 CSV 转义，如 RFC4180 所述。包含换行（<code>\n</code>）、回车（<code>\r</code>）、双引号（<code>"</code>）或 \&lt;SEP&gt; 的字符串用双引号括起。</p>
 </li>
 <li>
-<p><strong><code>none</code></strong> Perform no escaping.</p>
+<p><strong><code>none</code></strong> 不执行转义。</p>
 </li>
 <li>
-<p><strong><code>print_section, p</code></strong> Print the section name at the beginning of each line if the value is <code>1</code>, disable it with value set to <code>0</code>. Default value is <code>1</code>.</p>
+<p><strong><code>print_section, p</code></strong> 值为 <code>1</code> 时在每行开头打印小节名称，设为 <code>0</code> 禁用。默认值为 <code>1</code>。</p>
 </li>
 </ul>
 <h2 id="flat">flat<a class="headerlink" href="#flat" title="Permanent link">&para;</a></h2>
-<p>Flat format.</p>
-<p>A free-form output where each line contains an explicit key=value, such as "streams.stream.3.tags.foo=bar". The output is shell escaped, so it can be directly embedded in sh scripts as long as the separator character is an alphanumeric character or an underscore (see \&lt;sep_char&gt; option).</p>
-<p>The description of the accepted options follows.</p>
+<p>扁平格式。</p>
+<p>自由格式输出，每行包含显式的 key=value，例如 "streams.stream.3.tags.foo=bar"。输出经过 shell 转义，因此只要分隔符是字母数字字符或下划线（参见 \&lt;sep_char&gt; 选项），就可以直接嵌入 sh 脚本。</p>
+<p>可接受选项的描述如下。</p>
 <ul>
-<li><strong><code>sep_char, s</code></strong> Separator character used to separate the chapter, the section name, IDs and potential tags in the printed field key.</li>
+<li><strong><code>sep_char, s</code></strong> 在打印的字段键中分隔章节、小节名称、ID 和可能的标签所用分隔符。</li>
 </ul>
-<p>Default value is <code>.</code>.</p>
+<p>默认值为 <code>.</code>。</p>
 <ul>
-<li><strong><code>hierarchical, h</code></strong> Specify if the section name specification should be hierarchical. If set to 1, and if there is more than one section in the current chapter, the section name will be prefixed by the name of the chapter. A value of 0 will disable this behavior.</li>
+<li><strong><code>hierarchical, h</code></strong> 指定小节名称是否按层级给出。设为 1 且当前章节中有多个小节时，小节名称将加上章节名称前缀。值为 0 时禁用该行为。</li>
 </ul>
-<p>Default value is 1.</p>
+<p>默认值为 1。</p>
 <h2 id="ini">ini<a class="headerlink" href="#ini" title="Permanent link">&para;</a></h2>
-<p>INI format output.</p>
-<p>Print output in an INI based format.</p>
-<p>The following conventions are adopted:</p>
+<p>INI 格式输出。</p>
+<p>以基于 INI 的格式打印输出。</p>
+<p>采用以下约定：</p>
 <ul>
 <li>
-<p>all key and values are UTF-8</p>
+<p>所有键和值均为 UTF-8</p>
 </li>
 <li>
-<p><code>.</code> is the subgroup separator</p>
+<p><code>.</code> 是子组分隔符</p>
 </li>
 <li>
-<p>newline, <code>\t</code>, <code>\f</code>, <code>\b</code> and the following characters are escaped</p>
+<p>换行、<code>\t</code>、<code>\f</code>、<code>\b</code> 和以下字符会被转义</p>
 </li>
 <li>
-<p><code>\</code> is the escape character</p>
+<p><code>\</code> 是转义字符</p>
 </li>
 <li>
-<p><code>#</code> is the comment indicator</p>
+<p><code>#</code> 是注释指示符</p>
 </li>
 <li>
-<p><code>=</code> is the key/value separator</p>
+<p><code>=</code> 是键/值分隔符</p>
 </li>
 <li>
-<p><code>:</code> is not used but usually parsed as key/value separator</p>
+<p><code>:</code> 不使用，但通常被解析为键/值分隔符</p>
 </li>
 </ul>
-<p>This writer accepts options as a list of \&lt;key&gt;=\&lt;value&gt; pairs, separated by <code>:</code>.</p>
-<p>The description of the accepted options follows.</p>
+<p>该写入器以 \&lt;key&gt;=\&lt;value&gt; 对列表的形式接受选项，以 <code>:</code> 分隔。</p>
+<p>可接受选项的描述如下。</p>
 <ul>
-<li><strong><code>hierarchical, h</code></strong> Specify if the section name specification should be hierarchical. If set to 1, and if there is more than one section in the current chapter, the section name will be prefixed by the name of the chapter. A value of 0 will disable this behavior.</li>
+<li><strong><code>hierarchical, h</code></strong> 指定小节名称是否按层级给出。设为 1 且当前章节中有多个小节时，小节名称将加上章节名称前缀。值为 0 时禁用该行为。</li>
 </ul>
-<p>Default value is 1.</p>
+<p>默认值为 1。</p>
 <h2 id="json">json<a class="headerlink" href="#json" title="Permanent link">&para;</a></h2>
-<p>JSON based format.</p>
-<p>Each section is printed using JSON notation.</p>
-<p>The description of the accepted options follows.</p>
+<p>基于 JSON 的格式。</p>
+<p>每个小节以 JSON 记法打印。</p>
+<p>可接受选项的描述如下。</p>
 <ul>
-<li><strong><code>compact, c</code></strong> If set to 1 enable compact output, that is each section will be printed on a single line. Default value is 0.</li>
+<li><strong><code>compact, c</code></strong> 设为 1 时启用紧凑输出，即每个小节打印为单行。默认值为 0。</li>
 </ul>
-<p>For more information about JSON, see <a href="http://www.json.org/">http://www.json.org/</a>.</p>
+<p>有关 JSON 的更多信息，参见 <a href="http://www.json.org/">http://www.json.org/</a>。</p>
 <h2 id="xml">xml<a class="headerlink" href="#xml" title="Permanent link">&para;</a></h2>
-<p>XML based format.</p>
-<p>The XML output is described in the XML schema description file <code>ffprobe.xsd</code> installed in the FFmpeg datadir.</p>
-<p>An updated version of the schema can be retrieved at the url <a href="http://www.ffmpeg.org/schema/ffprobe.xsd">http://www.ffmpeg.org/schema/ffprobe.xsd</a>, which redirects to the latest schema committed into the FFmpeg development source code tree.</p>
-<p>Note that the output issued will be compliant to the <code>ffprobe.xsd</code> schema only when no special global output options (<code>unit</code>, <code>prefix</code>, <code>byte_binary_prefix</code>, <code>sexagesimal</code> etc.) are specified.</p>
-<p>The description of the accepted options follows.</p>
+<p>基于 XML 的格式。</p>
+<p>XML 输出由随 FFmpeg datadir 安装的 XML schema 描述文件 <code>ffprobe.xsd</code> 描述。</p>
+<p>更新版本的 schema 可从 url <a href="http://www.ffmpeg.org/schema/ffprobe.xsd">http://www.ffmpeg.org/schema/ffprobe.xsd</a> 获取，该 url 重定向到提交进 FFmpeg 开发源码树的最新 schema。</p>
+<p>注意，只有在未指定特殊全局输出选项（<code>unit</code>、<code>prefix</code>、<code>byte_binary_prefix</code>、<code>sexagesimal</code> 等）时，发出的输出才会符合 <code>ffprobe.xsd</code> schema。</p>
+<p>可接受选项的描述如下。</p>
 <ul>
 <li>
-<p><strong><code>fully_qualified, q</code></strong> If set to 1 specify if the output should be fully qualified. Default value is 0. This is required for generating an XML file which can be validated through an XSD file.</p>
+<p><strong><code>fully_qualified, q</code></strong> 设为 1 时指定输出应为完全限定 (fully qualified)。默认值为 0。生成可通过 XSD 文件校验的 XML 文件时需要此项。</p>
 </li>
 <li>
-<p><strong><code>xsd_strict, x</code></strong> If set to 1 perform more checks for ensuring that the output is XSD compliant. Default value is 0. This option automatically sets <code>fully_qualified</code> to 1.</p>
+<p><strong><code>xsd_strict, x</code></strong> 设为 1 时执行更多检查以确保输出符合 XSD。默认值为 0。该选项会自动将 <code>fully_qualified</code> 设为 1。</p>
 </li>
 </ul>
-<p>For more information about the XML format, see <a href="https://www.w3.org/XML/">https://www.w3.org/XML/</a>.</p>
-<h1 id="timecode">Timecode<a class="headerlink" href="#timecode" title="Permanent link">&para;</a></h1>
-<p><code>ffprobe</code> supports Timecode extraction:</p>
+<p>有关 XML 格式的更多信息，参见 <a href="https://www.w3.org/XML/">https://www.w3.org/XML/</a>。</p>
+<h1 id="时间码">时间码<a class="headerlink" href="#时间码" title="Permanent link">&para;</a></h1>
+<p><code>ffprobe</code> 支持时间码提取：</p>
 <ul>
 <li>
-<p>MPEG1/2 timecode is extracted from the GOP, and is available in the video stream details (<code>-show_streams</code>, see \&lt;timecode&gt;).</p>
+<p>MPEG1/2 时间码从 GOP 中提取，可在视频流详情（<code>-show_streams</code>，参见 \&lt;timecode&gt;）中获得。</p>
 </li>
 <li>
-<p>MOV timecode is extracted from tmcd track, so is available in the tmcd stream metadata (<code>-show_streams</code>, see \&lt;TAG:timecode&gt;).</p>
+<p>MOV 时间码从 tmcd 轨道中提取，因此可在 tmcd 流的元数据（<code>-show_streams</code>，参见 \&lt;TAG:timecode&gt;）中获得。</p>
 </li>
 <li>
-<p>DV, GXF and AVI timecodes are available in format metadata (<code>-show_format</code>, see \&lt;TAG:timecode&gt;).</p>
+<p>DV、GXF 和 AVI 时间码可在格式元数据（<code>-show_format</code>，参见 \&lt;TAG:timecode&gt;）中获得。</p>
 </li>
 </ul>
-<h1 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h1>
+<h1 id="另请参见">另请参见<a class="headerlink" href="#另请参见" title="Permanent link">&para;</a></h1>
 <p>ffmpeg(1), ffplay(1), ffmpeg-utils(1), ffmpeg-scaler(1), ffmpeg-resampler(1), ffmpeg-codecs(1), ffmpeg-bitstream-filters(1), ffmpeg-formats(1), ffmpeg-devices(1), ffmpeg-protocols(1), ffmpeg-filters(1)</p>
 
 

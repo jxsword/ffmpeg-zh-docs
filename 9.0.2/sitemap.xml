@@ -2,2290 +2,2290 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/components/bitstream-filters/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/components/codecs/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/components/devices/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/components/formats/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/components/protocols/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/components/resampler/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/components/scaler/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/components/utils/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/overview/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/aap/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/abuffer/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/abuffersink/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/acompressor/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/acontrast/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/acopy/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/acrossfade/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/acrossover/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/acrusher/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/acue/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/adeclick/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/adeclip/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/adecorrelate/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/adelay/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/adenorm/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/aderivative/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/adrc/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/adynamicequalizer/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/adynamicsmooth/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/aecho/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/aemphasis/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/aeval/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/aevalsrc/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/aexciter/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/afade/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/afdelaysrc/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/afftdn/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/afftfilt/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/afir/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/afireqsrc/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/afirsrc/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/aformat/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/afreqshift/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/afwtdn/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/agate/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/aiir/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/alimiter/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/allpass/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/aloop/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/amerge/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/amix/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/amultiply/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/anequalizer/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/anlmdn/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/anlmf/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/anoisesrc/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/anull/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/anullsink/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/anullsrc/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/apad/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/aphaser/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/aphaseshift/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/apsnr/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/apsyclip/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/apulsator/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/aresample/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/areverse/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/arls/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/arnndn/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/asdr/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/asetnsamples/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/asetrate/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/ashowinfo/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/asisdr/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/asoftclip/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/aspectralstats/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/asr/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/astats/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/asubboost/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/asubcut/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/asupercut/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/asuperpass/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/asuperstop/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/atempo/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/atilt/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/atrim/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/axcorrelate/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/bandpass/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/bandreject/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/bass/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/biquad/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/bs2b/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/channelmap/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/channelsplit/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/chorus/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/compand/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/compensationdelay/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/crossfeed/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/crystalizer/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/dcshift/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/deesser/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/dialoguenhance/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/drmeter/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/dynaudnorm/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/earwax/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/equalizer/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/extrastereo/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/firequalizer/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/flanger/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/flite/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/haas/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/hdcd/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/headphone/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/highpass/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/hilbert/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/join/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/ladspa/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/loudnorm/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/lowpass/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/lv2/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/mcompand/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/pan/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/replaygain/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/resample/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/rubberband/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/sidechaincompress/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/sidechaingate/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/silencedetect/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/silenceremove/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/sinc/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/sine/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/sofalizer/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/speechnorm/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/stereotools/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/stereowiden/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/superequalizer/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/surround/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/tiltshelf/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/treble/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/tremolo/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/vibrato/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/virtualbass/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/volume/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/volumedetect/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/audio/whisper/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/a3dscope/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/abitscope/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/adrawgraph/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/agraphmonitor/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/ahistogram/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/amovie/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/aphasemeter/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/avectorscope/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/avsynctest/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/bench/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/concat/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/ebur128/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/interleave/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/latency/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/metadata/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/movie/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/perms/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/realtime/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/segment/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/select/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/sendcmd/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/setpts/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/setrange/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/settb/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/showcqt/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/showcwt/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/showfreqs/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/showspatial/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/showspectrum/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/showspectrumpic/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/showvolume/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/showwaves/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/showwavespic/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/sidedata/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/spectrumsynth/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/split/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/multimedia/zmq/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/addroi/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/allrgb/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/alphaextract/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/alphamerge/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/amplify/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/ass/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/atadenoise/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/avgblur/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/avgblur_opencl/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/avgblur_vulkan/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/backgroundkey/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/bbox/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/bilateral/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/bilateral_cuda/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/bitplanenoise/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/blackdetect/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/blackframe/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/blend/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/blend_vulkan/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/blockdetect/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/blurdetect/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/bm3d/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/boxblur/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/boxblur_opencl/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/buffer/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/buffersink/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/bwdif/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/bwdif_cuda/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/bwdif_vulkan/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/cas/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/ccrepack/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/cellauto/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/chromaber_vulkan/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/chromahold/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/chromakey/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/chromakey_cuda/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/chromanr/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/chromashift/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/ciescope/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/codecview/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/color_vulkan/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/colorbalance/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/colorchannelmixer/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/colorcontrast/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/colorcorrect/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/colordetect/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/colorhold/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/colorize/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/colorkey/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/colorkey_opencl/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/colorlevels/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/colormap/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/colormatrix/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/colorspace/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/colorspace_cuda/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/colortemperature/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/convolution/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/convolution_opencl/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/convolve/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/copy/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/coreimage/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/coreimagesrc/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/corr/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/cover_rect/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/crop/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/cropdetect/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/cue/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/curves/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/datascope/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/dblur/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/dctdnoiz/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/ddagrab/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/deband/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/deblock/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/decimate/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/deconvolve/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/dedot/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/deflate/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/deflicker/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/deinterlace_d3d12/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/dejudder/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/delogo/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/derain/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/deshake/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/deshake_opencl/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/despill/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/detelecine/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/dilation/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/dilation_opencl/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/displace/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/dnn_classify/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/dnn_detect/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/dnn_processing/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/drawbox/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/drawbox_vaapi/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/drawgraph/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/drawgrid/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/drawtext/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/drawvg/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/edgedetect/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/elbg/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/entropy/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/epx/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/eq/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/erosion/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/erosion_opencl/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/estdif/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/exposure/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/extractplanes/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/fade/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/feedback/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/fftdnoiz/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/fftfilt/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/field/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/fieldhint/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/fieldmatch/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/fieldorder/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/fillborders/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/find_rect/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/flip_vulkan/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/floodfill/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/format/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/fps/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/framepack/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/framerate/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/framestep/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/frc_amf/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/freezedetect/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/freezeframes/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/frei0r/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/frei0r_src/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/fspp/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/fsync/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/gblur/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/gblur_vulkan/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/geq/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/gfxcapture/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/gradfun/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/gradients/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/graphmonitor/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/grayworld/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/greyedge/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/guided/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/haldclut/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/hflip/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/hflip_vulkan/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/histeq/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/histogram/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/hqdn3d/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/hqx/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/hstack/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/hstack_qsv/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/hstack_vaapi/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/hsvhold/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/hsvkey/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/hue/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/huesaturation/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/hwdownload/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/hwmap/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/hwupload/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/hwupload_cuda/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/hysteresis/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/iccdetect/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/iccgen/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/identity/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/idet/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/il/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/inflate/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/interlace/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/kerndeint/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/kirsch/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/lagfun/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/lcevc/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/lenscorrection/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/lensfun/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/libplacebo/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/libvmaf/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/libvmaf_cuda/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/life/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/limitdiff/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/limiter/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/loop/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/lumakey/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/lut/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/lut1d/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/lut2/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/lut3d/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/mandelbrot/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/maskedclamp/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/maskedmax/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/maskedmerge/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/maskedmin/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/maskedthreshold/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/maskfun/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/mcdeint/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/median/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/mergeplanes/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/mestimate/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/mestimate_d3d12/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/midequalizer/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/minterpolate/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/mix/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/monochrome/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/morpho/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/mpdecimate/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/mptestsrc/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/msad/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/multiply/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/negate/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/nlmeans/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/nlmeans_opencl/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/nlmeans_vulkan/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/nnedi/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/noformat/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/noise/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/normalize/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/null/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/nullsink/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/ocio/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/ocr/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/ocv/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/openclsrc/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/oscilloscope/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/overlay/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/overlay_cuda/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/overlay_opencl/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/overlay_vaapi/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/overlay_vulkan/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/owdenoise/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/pad/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/pad_cuda/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/pad_opencl/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/pad_vaapi/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/palettegen/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/paletteuse/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/perlin/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/perspective/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/phase/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/photosensitivity/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/pixdesctest/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/pixelize/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/pixscope/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/pp7/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/premultiply/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/premultiply_dynamic/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/prewitt/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/prewitt_opencl/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/program_opencl/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/pseudocolor/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/psnr/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/pullup/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/qp/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/qrencode/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/qrencodesrc/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/quirc/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/random/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/readeia608/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/readvitc/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/remap/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/remap_opencl/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/removegrain/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/removelogo/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/repeatfields/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/reverse/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/rgbashift/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/roberts/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/roberts_opencl/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/rotate/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/sab/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/scale/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/scale_cuda/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/scale_vt/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/scdet/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/scharr/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/scroll/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/selectivecolor/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/separatefields/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/setdar/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/setfield/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/setparams/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/shear/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/showinfo/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/showpalette/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/shuffleframes/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/shufflepixels/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/shuffleplanes/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/sierpinski/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/signalstats/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/signature/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/siti/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/smartblur/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/sobel/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/sobel_opencl/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/spp/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/sr/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/sr_amf/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/ssim/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/stereo3d/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/streamselect/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/subtitles/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/super2xsai/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/swaprect/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/swapuv/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/tblend/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/telecine/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/thistogram/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/threshold/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/thumbnail/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/thumbnail_cuda/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/tile/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/tiltandshift/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/tinterlace/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/tmedian/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/tmidequalizer/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/tmix/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/tonemap/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/tonemap_opencl/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/tonemap_vaapi/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/tpad/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/transpose/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/transpose_cuda/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/transpose_vt/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/transpose_vulkan/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/trim/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/unpremultiply/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/unsharp/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/unsharp_opencl/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/untile/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/uspp/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/v360/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/vaguedenoiser/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/varblur/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/vectorscope/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/vflip/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/vflip_vulkan/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/vfrdet/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/vibrance/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/vidstabdetect/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/vidstabtransform/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/vif/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/vignette/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/vmafmotion/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/vpp_amf/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/vstack/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/vstack_qsv/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/vstack_vaapi/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/w3fdif/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/waveform/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/weave/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/xbr/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/xcorrelate/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/xfade/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/xfade_opencl/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/xmedian/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/xpsnr/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/xstack/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/xstack_qsv/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/xstack_vaapi/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/yadif/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/yadif_cuda/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/yaepblur/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/zoneplate/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/zoompan/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/filters/video/zscale/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/general/APIchanges/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/general/authors/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/general/community/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/general/developer/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/general/drawvg-reference/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/general/faq/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/general/fate/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/general/general/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/general/git-howto/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/general/mailing-list-faq/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/general/nut/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/general/platform/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/libraries/libavcodec/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/libraries/libavdevice/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/libraries/libavfilter/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/libraries/libavformat/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/libraries/libavutil/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/libraries/libswresample/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/libraries/libswscale/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/manual/common-options/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/manual/ffmpeg/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/manual/ffplay/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
     <url>
          <loc>https://jxsword.github.io/ffmpeg-zh-docs/9.0.2/manual/ffprobe/</loc>
-         <lastmod>2026-11-19</lastmod>
+         <lastmod>2026-11-20</lastmod>
     </url>
 </urlset>

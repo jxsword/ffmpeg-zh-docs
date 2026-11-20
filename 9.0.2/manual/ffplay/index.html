@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#synopsis" class="md-skip">
+        <a href="#概要" class="md-skip">
           跳转至
         </a>
       
@@ -1755,81 +1755,76 @@
   
 
 
-<div class="admonition warning">
-<p class="admonition-title">翻译占位页</p>
-<p>本页为英文原文占位（翻译进行中，进度见<a href="https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md">翻译看板</a>）。
-术语与示例以英文原文为准。</p>
-</div>
-<h1 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">&para;</a></h1>
+<h1 id="概要">概要<a class="headerlink" href="#概要" title="Permanent link">&para;</a></h1>
 <p>ffplay [\&lt;options&gt;] [<code>input_url</code>]</p>
-<h1 id="description">Description<a class="headerlink" href="#description" title="Permanent link">&para;</a></h1>
-<p>FFplay is a very simple and portable media player using the FFmpeg libraries and the SDL library. It is mostly used as a testbed for the various FFmpeg APIs.</p>
-<h1 id="options">Options<a class="headerlink" href="#options" title="Permanent link">&para;</a></h1>
-<h2 id="main-options">Main options<a class="headerlink" href="#main-options" title="Permanent link">&para;</a></h2>
+<h1 id="描述">描述<a class="headerlink" href="#描述" title="Permanent link">&para;</a></h1>
+<p>FFplay 是一个非常简单、可移植的媒体播放器，使用 FFmpeg 库和 SDL 库构建。它主要用作各类 FFmpeg API 的试验平台。</p>
+<h1 id="选项">选项<a class="headerlink" href="#选项" title="Permanent link">&para;</a></h1>
+<h2 id="主要选项">主要选项<a class="headerlink" href="#主要选项" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong><code>-x width</code></strong> Force displayed width.</p>
+<p><strong><code>-x width</code></strong> 强制显示宽度。</p>
 </li>
 <li>
-<p><strong><code>-y height</code></strong> Force displayed height.</p>
+<p><strong><code>-y height</code></strong> 强制显示高度。</p>
 </li>
 <li>
-<p><strong><code>-fs</code></strong> Start in fullscreen mode.</p>
+<p><strong><code>-fs</code></strong> 以全屏模式启动。</p>
 </li>
 <li>
-<p><strong><code>-an</code></strong> Disable audio.</p>
+<p><strong><code>-an</code></strong> 禁用音频。</p>
 </li>
 <li>
-<p><strong><code>-vn</code></strong> Disable video.</p>
+<p><strong><code>-vn</code></strong> 禁用视频。</p>
 </li>
 <li>
-<p><strong><code>-sn</code></strong> Disable subtitles.</p>
+<p><strong><code>-sn</code></strong> 禁用字幕。</p>
 </li>
 <li>
-<p><strong><code>-ss pos</code></strong> Seek to \&lt;pos&gt;. Note that in most formats it is not possible to seek exactly, so <code>ffplay</code> will seek to the nearest seek point to \&lt;pos&gt;.</p>
+<p><strong><code>-ss pos</code></strong> 定位到 \&lt;pos&gt;。注意多数格式无法做到精确定位，因此 <code>ffplay</code> 会定位到距 \&lt;pos&gt; 最近的定位点。</p>
 </li>
 </ul>
-<p>\&lt;pos&gt; must be a time duration specification, see section "the Time duration section in the ffmpeg-utils(1) manual" in <code>ffmpeg-utils</code>.</p>
+<p>\&lt;pos&gt; 必须是时长描述，参见 <code>ffmpeg-utils</code>（ffmpeg-utils(1) 手册）中的 Time duration（时长）一节。</p>
 <ul>
-<li><strong><code>-t duration</code></strong> Play \&lt;duration&gt; seconds of audio/video.</li>
+<li><strong><code>-t duration</code></strong> 播放 \&lt;duration&gt; 秒的音频/视频。</li>
 </ul>
-<p>\&lt;duration&gt; must be a time duration specification, see section "the Time duration section in the ffmpeg-utils(1) manual" in <code>ffmpeg-utils</code>.</p>
+<p>\&lt;duration&gt; 必须是时长描述，参见 <code>ffmpeg-utils</code>（ffmpeg-utils(1) 手册）中的 Time duration（时长）一节。</p>
 <ul>
 <li>
-<p><strong><code>-bytes</code></strong> Seek by bytes.</p>
+<p><strong><code>-bytes</code></strong> 按字节定位。</p>
 </li>
 <li>
-<p><strong><code>-seek_interval</code></strong> Set custom interval, in seconds, for seeking using left/right keys. Default is 10 seconds.</p>
+<p><strong><code>-seek_interval</code></strong> 设置使用左/右方向键定位时的自定义间隔（以秒为单位）。默认为 10 秒。</p>
 </li>
 <li>
-<p><strong><code>-nodisp</code></strong> Disable graphical display.</p>
+<p><strong><code>-nodisp</code></strong> 禁用图形显示。</p>
 </li>
 <li>
-<p><strong><code>-noborder</code></strong> Borderless window.</p>
+<p><strong><code>-noborder</code></strong> 无边框窗口。</p>
 </li>
 <li>
-<p><strong><code>-alwaysontop</code></strong> Window always on top. Available on: X11 with SDL &gt;= 2.0.5, Windows SDL &gt;= 2.0.6.</p>
+<p><strong><code>-alwaysontop</code></strong> 窗口置顶。可用平台：X11（SDL &gt;= 2.0.5）、Windows（SDL &gt;= 2.0.6）。</p>
 </li>
 <li>
-<p><strong><code>-volume</code></strong> Set the startup volume. 0 means silence, 100 means no volume reduction or amplification. Negative values are treated as 0, values above 100 are treated as 100.</p>
+<p><strong><code>-volume</code></strong> 设置启动音量。0 表示静音，100 表示既不降低也不放大音量。负值按 0 处理，超过 100 的值按 100 处理。</p>
 </li>
 <li>
-<p><strong><code>-f fmt</code></strong> Force format.</p>
+<p><strong><code>-f fmt</code></strong> 强制格式。</p>
 </li>
 <li>
-<p><strong><code>-window_title title</code></strong> Set window title (default is the input filename).</p>
+<p><strong><code>-window_title title</code></strong> 设置窗口标题（默认为输入文件名）。</p>
 </li>
 <li>
-<p><strong><code>-left title</code></strong> Set the x position for the left of the window (default is a centered window).</p>
+<p><strong><code>-left title</code></strong> 设置窗口左边缘的 x 位置（默认为窗口居中）。</p>
 </li>
 <li>
-<p><strong><code>-top title</code></strong> Set the y position for the top of the window (default is a centered window).</p>
+<p><strong><code>-top title</code></strong> 设置窗口顶部的 y 位置（默认为窗口居中）。</p>
 </li>
 <li>
-<p><strong><code>-loop number</code></strong> Loops movie playback \&lt;number&gt; times. 0 means forever.</p>
+<p><strong><code>-loop number</code></strong> 将影片播放循环 \&lt;number&gt; 次。0 表示无限循环。</p>
 </li>
 <li>
-<p><strong><code>-showmode mode</code></strong> Set the show mode to use. Available values for \&lt;mode&gt; are:</p>
+<p><strong><code>-showmode mode</code></strong> 设置要使用的显示模式。\&lt;mode&gt; 的可用取值为：</p>
 </li>
 </ul>
 <table>
@@ -1842,160 +1837,160 @@
 <tbody>
 <tr>
 <td><code>0, video</code></td>
-<td>show video</td>
+<td>显示视频</td>
 </tr>
 <tr>
 <td><code>1, waves</code></td>
-<td>show audio waves</td>
+<td>显示音频波形</td>
 </tr>
 <tr>
 <td><code>2, rdft</code></td>
-<td>show audio frequency band using RDFT ((Inverse) Real Discrete Fourier Transform)</td>
+<td>使用 RDFT（(逆)实数离散傅里叶变换）显示音频频带</td>
 </tr>
 </tbody>
 </table>
-<p>Default value is "video", if video is not present or cannot be played "rdft" is automatically selected.</p>
-<p>You can interactively cycle through the available show modes by pressing the key w.</p>
+<p>默认值为 "video"；若视频不存在或无法播放，则自动选择 "rdft"。</p>
+<p>按 w 键可在可用的显示模式之间交互式循环切换。</p>
 <ul>
-<li><strong><code>-vf filtergraph</code></strong> Create the filtergraph specified by \&lt;filtergraph&gt; and use it to filter the video stream.</li>
+<li><strong><code>-vf filtergraph</code></strong> 创建由 \&lt;filtergraph&gt; 指定的滤镜链图，并用它对视频流进行滤镜处理。</li>
 </ul>
-<p>\&lt;filtergraph&gt; is a description of the filtergraph to apply to the stream, and must have a single video input and a single video output. In the filtergraph, the input is associated to the label <code>in</code>, and the output to the label <code>out</code>. See the ffmpeg-filters manual for more information about the filtergraph syntax.</p>
-<p>You can specify this parameter multiple times and cycle through the specified filtergraphs along with the show modes by pressing the key w.</p>
+<p>\&lt;filtergraph&gt; 是要应用于该流的滤镜链图描述，必须具有单个视频输入和单个视频输出。在滤镜链图中，输入关联到标签 <code>in</code>，输出关联到标签 <code>out</code>。滤镜链图语法的更多信息参见 ffmpeg-filters 手册。</p>
+<p>可以多次指定该参数，按 w 键即可在指定的各个滤镜链图与显示模式之间循环切换。</p>
 <ul>
 <li>
-<p><strong><code>-af filtergraph</code></strong> \&lt;filtergraph&gt; is a description of the filtergraph to apply to the input audio. Use the option "-filters" to show all the available filters (including sources and sinks).</p>
+<p><strong><code>-af filtergraph</code></strong> \&lt;filtergraph&gt; 是要应用于输入音频的滤镜链图描述。使用 "-filters" 选项可显示所有可用滤镜（包括源和汇）。</p>
 </li>
 <li>
-<p><strong><code>-i input_url</code></strong> Read \&lt;input_url&gt;.</p>
-</li>
-</ul>
-<h2 id="advanced-options">Advanced options<a class="headerlink" href="#advanced-options" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p><strong><code>-stats</code></strong> Print several playback statistics, in particular show the stream duration, the codec parameters, the current position in the stream and the audio/video synchronisation drift. It is shown by default, unless the log level is lower than <code>info</code>. Its display can be forced by manually specifying this option. To disable it, you need to specify <code>-nostats</code>.</p>
-</li>
-<li>
-<p><strong><code>-fast</code></strong> Non-spec-compliant optimizations.</p>
-</li>
-<li>
-<p><strong><code>-genpts</code></strong> Generate pts.</p>
-</li>
-<li>
-<p><strong><code>-sync type</code></strong> Set the master clock to audio (<code>type=audio</code>), video (<code>type=video</code>) or external (<code>type=ext</code>). Default is audio. The master clock is used to control audio-video synchronization. Most media players use audio as master clock, but in some cases (streaming or high quality broadcast) it is necessary to change that. This option is mainly used for debugging purposes.</p>
-</li>
-<li>
-<p><strong><code>-ast audio_stream_specifier</code></strong> Select the desired audio stream using the given stream specifier. The stream specifiers are described in the <a href="../common-options/#stream-specifiers">Stream specifiers</a> chapter. If this option is not specified, the "best" audio stream is selected in the program of the already selected video stream.</p>
-</li>
-<li>
-<p><strong><code>-vst video_stream_specifier</code></strong> Select the desired video stream using the given stream specifier. The stream specifiers are described in the <a href="../common-options/#stream-specifiers">Stream specifiers</a> chapter. If this option is not specified, the "best" video stream is selected.</p>
-</li>
-<li>
-<p><strong><code>-sst subtitle_stream_specifier</code></strong> Select the desired subtitle stream using the given stream specifier. The stream specifiers are described in the <a href="../common-options/#stream-specifiers">Stream specifiers</a> chapter. If this option is not specified, the "best" subtitle stream is selected in the program of the already selected video or audio stream.</p>
-</li>
-<li>
-<p><strong><code>-autoexit</code></strong> Exit when video is done playing.</p>
-</li>
-<li>
-<p><strong><code>-exitonkeydown</code></strong> Exit if any key is pressed.</p>
-</li>
-<li>
-<p><strong><code>-exitonmousedown</code></strong> Exit if any mouse button is pressed.</p>
-</li>
-<li>
-<p><strong><code>-codec:media_specifier codec_name</code></strong> Force a specific decoder implementation for the stream identified by \&lt;media_specifier&gt;, which can assume the values <code>a</code> (audio), <code>v</code> (video), and <code>s</code> subtitle.</p>
-</li>
-<li>
-<p><strong><code>-acodec codec_name</code></strong> Force a specific audio decoder.</p>
-</li>
-<li>
-<p><strong><code>-vcodec codec_name</code></strong> Force a specific video decoder.</p>
-</li>
-<li>
-<p><strong><code>-scodec codec_name</code></strong> Force a specific subtitle decoder.</p>
-</li>
-<li>
-<p><strong><code>-autorotate</code></strong> Automatically rotate the video according to file metadata. Enabled by default, use <code>-noautorotate</code> to disable it.</p>
-</li>
-<li>
-<p><strong><code>-framedrop</code></strong> Drop video frames if video is out of sync. Enabled by default if the master clock is not set to video. Use this option to enable frame dropping for all master clock sources, use <code>-noframedrop</code> to disable it.</p>
-</li>
-<li>
-<p><strong><code>-infbuf</code></strong> Do not limit the input buffer size, read as much data as possible from the input as soon as possible. Enabled by default for realtime streams, where data may be dropped if not read in time. Use this option to enable infinite buffers for all inputs, use <code>-noinfbuf</code> to disable it.</p>
-</li>
-<li>
-<p><strong><code>-filter_threads nb_threads</code></strong> Defines how many threads are used to process a filter pipeline. Each pipeline will produce a thread pool with this many threads available for parallel processing. The default is 0 which means that the thread count will be determined by the number of available CPUs.</p>
-</li>
-<li>
-<p><strong><code>-enable_vulkan</code></strong> Use vulkan renderer rather than SDL builtin renderer. Depends on libplacebo.</p>
-</li>
-<li>
-<p><strong><code>-vulkan_params</code></strong> Vulkan configuration using a list of \&lt;key&gt;=\&lt;value&gt; pairs separated by ":".</p>
-</li>
-<li>
-<p><strong><code>-hwaccel</code></strong> Use HW accelerated decoding. Enable this option will enable vulkan renderer automatically.</p>
-</li>
-<li>
-<p><strong><code>-video_bg pattern</code></strong> Set the video background pattern used for transparent videos. For solid color patterns you can use the color name or color code as specified in the section "Color section in the ffmpeg-utils(1) manual" in <code>ffmpeg-utils</code>. You can also use the special <code>tiles</code> keyword for a checker board style pattern. This is also the default. The <code>none</code> pattern does rendering without alpha blending effectively ignoring alpha channel.</p>
+<p><strong><code>-i input_url</code></strong> 读取 \&lt;input_url&gt;。</p>
 </li>
 </ul>
-<h2 id="while-playing">While playing<a class="headerlink" href="#while-playing" title="Permanent link">&para;</a></h2>
+<h2 id="高级选项">高级选项<a class="headerlink" href="#高级选项" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>q, ESC</strong> Quit.</p>
+<p><strong><code>-stats</code></strong> 打印若干播放统计信息，特别是显示流时长、编解码器参数、当前在流中的位置以及音频/视频同步漂移。默认显示，除非日志级别低于 <code>info</code>。手动指定该选项可强制显示。要禁用它，需要指定 <code>-nostats</code>。</p>
 </li>
 <li>
-<p><strong>f</strong> Toggle full screen.</p>
+<p><strong><code>-fast</code></strong> 不完全符合规范标准的优化。</p>
 </li>
 <li>
-<p><strong>p, SPC</strong> Pause.</p>
+<p><strong><code>-genpts</code></strong> 生成 pts。</p>
 </li>
 <li>
-<p><strong>m</strong> Toggle mute.</p>
+<p><strong><code>-sync type</code></strong> 将主时钟设为音频（<code>type=audio</code>）、视频（<code>type=video</code>）或外部（<code>type=ext</code>）。默认为音频。主时钟用于控制音视频同步。多数媒体播放器使用音频作为主时钟，但在某些情况下（流媒体或高质量广播）需要改变这一点。该选项主要用于调试目的。</p>
+</li>
+<li>
+<p><strong><code>-ast audio_stream_specifier</code></strong> 使用给定的流说明符选择所需的音频流。流说明符在<a href="../common-options/#流说明符">流说明符</a>章节中描述。未指定该选项时，会在已选视频流所在节目中选择"最佳"音频流。</p>
+</li>
+<li>
+<p><strong><code>-vst video_stream_specifier</code></strong> 使用给定的流说明符选择所需的视频流。流说明符在<a href="../common-options/#流说明符">流说明符</a>章节中描述。未指定该选项时，会选择"最佳"视频流。</p>
+</li>
+<li>
+<p><strong><code>-sst subtitle_stream_specifier</code></strong> 使用给定的流说明符选择所需的字幕流。流说明符在<a href="../common-options/#流说明符">流说明符</a>章节中描述。未指定该选项时，会在已选视频或音频流所在节目中选择"最佳"字幕流。</p>
+</li>
+<li>
+<p><strong><code>-autoexit</code></strong> 视频播放完毕后退出。</p>
+</li>
+<li>
+<p><strong><code>-exitonkeydown</code></strong> 按下任意键时退出。</p>
+</li>
+<li>
+<p><strong><code>-exitonmousedown</code></strong> 按下任意鼠标键时退出。</p>
+</li>
+<li>
+<p><strong><code>-codec:media_specifier codec_name</code></strong> 为 \&lt;media_specifier&gt; 标识的流强制指定特定的解码器实现，\&lt;media_specifier&gt; 可取值 <code>a</code>（音频）、<code>v</code>（视频）和 <code>s</code>（字幕）。</p>
+</li>
+<li>
+<p><strong><code>-acodec codec_name</code></strong> 强制使用特定的音频解码器。</p>
+</li>
+<li>
+<p><strong><code>-vcodec codec_name</code></strong> 强制使用特定的视频解码器。</p>
+</li>
+<li>
+<p><strong><code>-scodec codec_name</code></strong> 强制使用特定的字幕解码器。</p>
+</li>
+<li>
+<p><strong><code>-autorotate</code></strong> 根据文件元数据自动旋转视频。默认启用，使用 <code>-noautorotate</code> 可禁用。</p>
+</li>
+<li>
+<p><strong><code>-framedrop</code></strong> 视频失去同步时丢弃视频帧。主时钟未设为视频时默认启用。使用该选项可对所有主时钟来源启用丢帧，使用 <code>-noframedrop</code> 可禁用。</p>
+</li>
+<li>
+<p><strong><code>-infbuf</code></strong> 不限制输入缓冲区大小，尽快从输入读取尽可能多的数据。对实时流默认启用（若不及时读取，数据可能被丢弃）。使用该选项可为所有输入启用无限缓冲，使用 <code>-noinfbuf</code> 可禁用。</p>
+</li>
+<li>
+<p><strong><code>-filter_threads nb_threads</code></strong> 定义处理滤镜管线使用多少线程。每条管线都会创建一个包含这么多线程的线程池供并行处理使用。默认值为 0，表示线程数由可用 CPU 数量决定。</p>
+</li>
+<li>
+<p><strong><code>-enable_vulkan</code></strong> 使用 vulkan 渲染器而非 SDL 内置渲染器。依赖 libplacebo。</p>
+</li>
+<li>
+<p><strong><code>-vulkan_params</code></strong> 通过以 ":" 分隔的 \&lt;key&gt;=\&lt;value&gt; 对列表配置 Vulkan。</p>
+</li>
+<li>
+<p><strong><code>-hwaccel</code></strong> 使用硬件加速解码。启用该选项会自动启用 vulkan 渲染器。</p>
+</li>
+<li>
+<p><strong><code>-video_bg pattern</code></strong> 设置透明视频使用的视频背景图案。纯色图案可使用颜色名称或颜色代码，参见 <code>ffmpeg-utils</code>（ffmpeg-utils(1) 手册）中的 Color（颜色）一节。还可使用特殊关键字 <code>tiles</code> 表示棋盘格样式图案，这也是默认值。<code>none</code> 图案在渲染时不做 alpha 混合，相当于忽略透明通道。</p>
+</li>
+</ul>
+<h2 id="播放期间">播放期间<a class="headerlink" href="#播放期间" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><strong>q, ESC</strong> 退出。</p>
+</li>
+<li>
+<p><strong>f</strong> 切换全屏。</p>
+</li>
+<li>
+<p><strong>p, SPC</strong> 暂停。</p>
+</li>
+<li>
+<p><strong>m</strong> 切换静音。</p>
 </li>
 <li>
 <p><strong>9, 0</strong></p>
 </li>
 <li>
-<p><strong>/, *</strong> Decrease and increase volume respectively.</p>
+<p><strong>/, *</strong> 分别减小和增大音量。</p>
 </li>
 <li>
-<p><strong>a</strong> Cycle audio channel in the current program.</p>
+<p><strong>a</strong> 在当前节目中循环切换音频声道。</p>
 </li>
 <li>
-<p><strong>v</strong> Cycle video channel.</p>
+<p><strong>v</strong> 循环切换视频声道。</p>
 </li>
 <li>
-<p><strong>t</strong> Cycle subtitle channel in the current program.</p>
+<p><strong>t</strong> 在当前节目中循环切换字幕声道。</p>
 </li>
 <li>
-<p><strong>c</strong> Cycle program.</p>
+<p><strong>c</strong> 循环切换节目。</p>
 </li>
 <li>
-<p><strong>w</strong> Cycle video filters or show modes.</p>
+<p><strong>w</strong> 循环切换视频滤镜或显示模式。</p>
 </li>
 <li>
-<p><strong>s</strong> Step to the next frame.</p>
+<p><strong>s</strong> 步进到下一帧。</p>
 </li>
 </ul>
-<p>Pause if the stream is not already paused, step to the next video frame, and pause.</p>
+<p>若流尚未暂停则先暂停，步进到下一个视频帧，然后暂停。</p>
 <ul>
 <li>
-<p><strong>left/right</strong> Seek backward/forward by 10 seconds or a custom interval if -seek_interval is set.</p>
+<p><strong>left/right</strong> 向后/向前定位 10 秒；若设置了 -seek_interval 则按自定义间隔定位。</p>
 </li>
 <li>
-<p><strong>down/up</strong> Seek backward/forward 1 minute.</p>
+<p><strong>down/up</strong> 向后/向前定位 1 分钟。</p>
 </li>
 <li>
-<p><strong>page down/page up</strong> Seek to previous/next chapter or backward/forward 10 minutes if no chapters.</p>
+<p><strong>page down/page up</strong> 定位到上一个/下一个章节；若无章节则向后/向前 10 分钟。</p>
 </li>
 <li>
-<p><strong>right mouse click</strong> Seek to percentage in file corresponding to fraction of width.</p>
+<p><strong>right mouse click</strong> 按点击位置相对窗口宽度的比例定位到文件中的对应百分比处。</p>
 </li>
 <li>
-<p><strong>left mouse double-click</strong> Toggle full screen.</p>
+<p><strong>left mouse double-click</strong> 切换全屏。</p>
 </li>
 </ul>
-<h1 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h1>
+<h1 id="另请参见">另请参见<a class="headerlink" href="#另请参见" title="Permanent link">&para;</a></h1>
 <p>ffmpeg(1), ffprobe(1), ffmpeg-utils(1), ffmpeg-scaler(1), ffmpeg-resampler(1), ffmpeg-codecs(1), ffmpeg-bitstream-filters(1), ffmpeg-formats(1), ffmpeg-devices(1), ffmpeg-protocols(1), ffmpeg-filters(1)</p>
 
 

@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#stream-specifiers" class="md-skip">
+        <a href="#流说明符" class="md-skip">
           跳转至
         </a>
       
@@ -649,10 +649,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#stream-specifiers" class="md-nav__link">
+  <a href="#流说明符" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Stream specifiers
+        流说明符
       
     </span>
   </a>
@@ -660,10 +660,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#generic-options" class="md-nav__link">
+  <a href="#通用选项" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Generic options
+        通用选项
       
     </span>
   </a>
@@ -1823,26 +1823,21 @@
 
   <h1>公共选项（ffmpeg/ffplay/ffprobe）</h1>
 
-<div class="admonition warning">
-<p class="admonition-title">翻译占位页</p>
-<p>本页为英文原文占位（翻译进行中，进度见<a href="https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md">翻译看板</a>）。
-术语与示例以英文原文为准。</p>
-</div>
-<h2 id="stream-specifiers">Stream specifiers<a class="headerlink" href="#stream-specifiers" title="Permanent link">&para;</a></h2>
-<p>Some options are applied per-stream, e.g. bitrate or codec. Stream specifiers are used to precisely specify which stream(s) a given option belongs to.</p>
-<p>A stream specifier is a string generally appended to the option name and separated from it by a colon. E.g. <code>-codec:a:1 ac3</code> contains the <code>a:1</code> stream specifier, which matches the second audio stream. Therefore, it would select the ac3 codec for the second audio stream.</p>
-<p>A stream specifier can match several streams, so that the option is applied to all of them. E.g. the stream specifier in <code>-b:a 128k</code> matches all audio streams.</p>
-<p>An empty stream specifier matches all streams. For example, <code>-codec copy</code> or <code>-codec: copy</code> would copy all the streams without reencoding.</p>
-<p>Possible forms of stream specifiers are:</p>
+<h2 id="流说明符">流说明符<a class="headerlink" href="#流说明符" title="Permanent link">&para;</a></h2>
+<p>有些选项按流生效，例如码率或编解码器。流说明符用于精确指定某个选项属于哪条（些）流。</p>
+<p>流说明符是一个字符串，通常附加在选项名之后、以冒号与之分隔。例如 <code>-codec:a:1 ac3</code> 包含流说明符 <code>a:1</code>，匹配第二条音频流，因此会为第二条音频流选择 ac3 编解码器。</p>
+<p>流说明符可以匹配多条流，从而该选项会应用于所有匹配的流。例如 <code>-b:a 128k</code> 中的流说明符匹配所有音频流。</p>
+<p>空的流说明符匹配所有流。例如 <code>-codec copy</code> 或 <code>-codec: copy</code> 将不重编码地复制所有流。</p>
+<p>流说明符的可能形式有：</p>
 <ul>
 <li>
-<p><strong><code>stream_index</code></strong> Matches the stream with this index. E.g. <code>-threads:1 4</code> would set the thread count for the second stream to 4. If \&lt;stream_index&gt; is used as an additional stream specifier (see below), then it selects stream number \&lt;stream_index&gt; from the matching streams. Stream numbering is based on the order of the streams as detected by libavformat except when a stream group specifier or program ID is also specified. In this case it is based on the ordering of the streams in the group or program.</p>
+<p><strong><code>stream_index</code></strong> 匹配具有此索引的流。例如 <code>-threads:1 4</code> 会把第二条流的线程数设为 4。若 \&lt;stream_index&gt; 作为附加流说明符使用（见下文），则从匹配的流中选取第 \&lt;stream_index&gt; 条流。流编号基于 libavformat 检测到流的顺序；但同时指定了流组说明符或节目 ID 时，基于该组或该节目内流的顺序。</p>
 </li>
 <li>
-<p><strong><code>stream_type[:additional_stream_specifier]</code></strong> \&lt;stream_type&gt; is one of following: 'v' or 'V' for video, 'a' for audio, 's' for subtitle, 'd' for data, and 't' for attachments. 'v' matches all video streams, 'V' only matches video streams which are not attached pictures, video thumbnails or cover arts. If \&lt;additional_stream_specifier&gt; is used, then it matches streams which both have this type and match the \&lt;additional_stream_specifier&gt;. Otherwise, it matches all streams of the specified type.</p>
+<p><strong><code>stream_type[:additional_stream_specifier]</code></strong> \&lt;stream_type&gt; 为以下之一：'v' 或 'V' 表示视频，'a' 表示音频，'s' 表示字幕，'d' 表示数据，'t' 表示附件。'v' 匹配所有视频流，'V' 只匹配非附加图片、视频缩略图或封面的视频流。若使用 \&lt;additional_stream_specifier&gt;，则匹配既属于该类型又匹配 \&lt;additional_stream_specifier&gt; 的流；否则，匹配该类型的所有流。</p>
 </li>
 <li>
-<p><strong><code>g:group_specifier[:additional_stream_specifier]</code></strong> Matches streams which are in the group with the specifier \&lt;group_specifier&gt;. if \&lt;additional_stream_specifier&gt; is used, then it matches streams which both are part of the group and match the \&lt;additional_stream_specifier&gt;. \&lt;group_specifier&gt; may be one of the following:</p>
+<p><strong><code>g:group_specifier[:additional_stream_specifier]</code></strong> 匹配属于说明符 \&lt;group_specifier&gt; 所指组的流。若使用 \&lt;additional_stream_specifier&gt;，则匹配既属于该组又匹配 \&lt;additional_stream_specifier&gt; 的流。\&lt;group_specifier&gt; 可为以下之一：</p>
 </li>
 </ul>
 <table>
@@ -1855,225 +1850,225 @@
 <tbody>
 <tr>
 <td><code>group_index</code></td>
-<td>Match the stream with this group index.</td>
+<td>匹配具有该组索引的流。</td>
 </tr>
 <tr>
 <td><code>#group_id or i:group_id</code></td>
-<td>Match the stream with this group id.</td>
+<td>匹配具有该组 id 的流。</td>
 </tr>
 </tbody>
 </table>
 <ul>
 <li>
-<p><strong><code>p:program_id[:additional_stream_specifier]</code></strong> Matches streams which are in the program with the id \&lt;program_id&gt;. If \&lt;additional_stream_specifier&gt; is used, then it matches streams which both are part of the program and match the \&lt;additional_stream_specifier&gt;.</p>
+<p><strong><code>p:program_id[:additional_stream_specifier]</code></strong> 匹配属于 id 为 \&lt;program_id&gt; 的节目的流。若使用 \&lt;additional_stream_specifier&gt;，则匹配既属于该节目又匹配 \&lt;additional_stream_specifier&gt; 的流。</p>
 </li>
 <li>
-<p><strong><code>#stream_id or i:stream_id</code></strong> Match the stream by stream id (e.g. PID in MPEG-TS container).</p>
+<p><strong><code>#stream_id or i:stream_id</code></strong> 按流 id 匹配流（例如 MPEG-TS 容器中的 PID）。</p>
 </li>
 <li>
-<p><strong><code>m:key[:value]</code></strong> Matches streams with the metadata tag \&lt;key&gt; having the specified value. If \&lt;value&gt; is not given, matches streams that contain the given tag with any value. The colon character ':' in \&lt;key&gt; or \&lt;value&gt; needs to be backslash-escaped.</p>
+<p><strong><code>m:key[:value]</code></strong> 匹配元数据标签 \&lt;key&gt; 具有指定值的流。未给出 \&lt;value&gt; 时，匹配包含该标签（任意值）的流。\&lt;key&gt; 或 \&lt;value&gt; 中的冒号字符 ':' 需要反斜杠转义。</p>
 </li>
 <li>
-<p><strong><code>disp:dispositions[:additional_stream_specifier]</code></strong> Matches streams with the given disposition(s). \&lt;dispositions&gt; is a list of one or more dispositions (as printed by the <code>-dispositions</code> option) joined with '+'.</p>
+<p><strong><code>disp:dispositions[:additional_stream_specifier]</code></strong> 匹配具有给定 disposition 标志的流。\&lt;dispositions&gt; 是一个或多个 disposition（由 <code>-dispositions</code> 选项打印的那些）以 '+' 连接的列表。</p>
 </li>
 <li>
-<p><strong><code>u</code></strong> Matches streams with usable configuration, the codec must be defined and the essential information such as video dimension or audio sample rate must be present.</p>
-</li>
-</ul>
-<p>Note that in <code>ffmpeg</code>, matching by metadata will only work properly for input files.</p>
-<h2 id="generic-options">Generic options<a class="headerlink" href="#generic-options" title="Permanent link">&para;</a></h2>
-<p>These options are shared amongst the ff* tools.</p>
-<ul>
-<li>
-<p><strong><code>-L, -license</code></strong> Show license.</p>
-</li>
-<li>
-<p><strong><code>-h, -?, -help, --help [arg]</code></strong> Show help. An optional parameter may be specified to print help about a specific item. If no argument is specified, only basic (non advanced) tool options are shown.</p>
+<p><strong><code>u</code></strong> 匹配配置可用的流：编解码器必须已定义，且视频尺寸或音频采样率等关键信息必须存在。</p>
 </li>
 </ul>
-<p>Possible values of \&lt;arg&gt; are:</p>
+<p>注意在 <code>ffmpeg</code> 中，按元数据匹配只对输入文件正常工作。</p>
+<h2 id="通用选项">通用选项<a class="headerlink" href="#通用选项" title="Permanent link">&para;</a></h2>
+<p>这些选项为 ff* 系列工具共用。</p>
 <ul>
 <li>
-<p><strong><code>long</code></strong> Print advanced tool options in addition to the basic tool options.</p>
+<p><strong><code>-L, -license</code></strong> 显示许可。</p>
 </li>
 <li>
-<p><strong><code>full</code></strong> Print complete list of options, including shared and private options for encoders, decoders, demuxers, muxers, filters, etc.</p>
-</li>
-<li>
-<p><strong><code>decoder=decoder_name</code></strong> Print detailed information about the decoder named \&lt;decoder_name&gt;. Use the <code>-decoders</code> option to get a list of all decoders.</p>
-</li>
-<li>
-<p><strong><code>encoder=encoder_name</code></strong> Print detailed information about the encoder named \&lt;encoder_name&gt;. Use the <code>-encoders</code> option to get a list of all encoders.</p>
-</li>
-<li>
-<p><strong><code>demuxer=demuxer_name</code></strong> Print detailed information about the demuxer named \&lt;demuxer_name&gt;. Use the <code>-formats</code> option to get a list of all demuxers and muxers.</p>
-</li>
-<li>
-<p><strong><code>muxer=muxer_name</code></strong> Print detailed information about the muxer named \&lt;muxer_name&gt;. Use the <code>-formats</code> option to get a list of all muxers and demuxers.</p>
-</li>
-<li>
-<p><strong><code>filter=filter_name</code></strong> Print detailed information about the filter named \&lt;filter_name&gt;. Use the <code>-filters</code> option to get a list of all filters.</p>
-</li>
-<li>
-<p><strong><code>bsf=bitstream_filter_name</code></strong> Print detailed information about the bitstream filter named \&lt;bitstream_filter_name&gt;. Use the <code>-bsfs</code> option to get a list of all bitstream filters.</p>
-</li>
-<li>
-<p><strong><code>protocol=protocol_name</code></strong> Print detailed information about the protocol named \&lt;protocol_name&gt;. Use the <code>-protocols</code> option to get a list of all protocols.</p>
-</li>
-<li>
-<p><strong><code>-version</code></strong> Show version.</p>
-</li>
-<li>
-<p><strong><code>-buildconf</code></strong> Show the build configuration, one option per line.</p>
-</li>
-<li>
-<p><strong><code>-formats</code></strong> Show available formats (including devices).</p>
-</li>
-<li>
-<p><strong><code>-demuxers</code></strong> Show available demuxers.</p>
-</li>
-<li>
-<p><strong><code>-muxers</code></strong> Show available muxers.</p>
-</li>
-<li>
-<p><strong><code>-devices</code></strong> Show available devices.</p>
-</li>
-<li>
-<p><strong><code>-codecs</code></strong> Show all codecs known to libavcodec.</p>
+<p><strong><code>-h, -?, -help, --help [arg]</code></strong> 显示帮助。可指定可选参数以打印关于特定项的帮助。未指定参数时，仅显示基本（非高级）工具选项。</p>
 </li>
 </ul>
-<p>Note that the term 'codec' is used throughout this documentation as a shortcut for what is more correctly called a media bitstream format.</p>
+<p>\&lt;arg&gt; 的可能取值如下：</p>
 <ul>
 <li>
-<p><strong><code>-decoders</code></strong> Show available decoders.</p>
+<p><strong><code>long</code></strong> 除基本工具选项外还打印高级工具选项。</p>
 </li>
 <li>
-<p><strong><code>-encoders</code></strong> Show all available encoders.</p>
+<p><strong><code>full</code></strong> 打印完整选项列表，包括编码器、解码器、解复用器、复用器、滤镜等的共享选项和私有选项。</p>
 </li>
 <li>
-<p><strong><code>-bsfs</code></strong> Show available bitstream filters.</p>
+<p><strong><code>decoder=decoder_name</code></strong> 打印名为 \&lt;decoder_name&gt; 的解码器的详细信息。使用 <code>-decoders</code> 选项获取所有解码器列表。</p>
 </li>
 <li>
-<p><strong><code>-protocols</code></strong> Show available protocols.</p>
+<p><strong><code>encoder=encoder_name</code></strong> 打印名为 \&lt;encoder_name&gt; 的编码器的详细信息。使用 <code>-encoders</code> 选项获取所有编码器列表。</p>
 </li>
 <li>
-<p><strong><code>-filters</code></strong> Show available libavfilter filters.</p>
+<p><strong><code>demuxer=demuxer_name</code></strong> 打印名为 \&lt;demuxer_name&gt; 的解复用器的详细信息。使用 <code>-formats</code> 选项获取所有解复用器和复用器列表。</p>
 </li>
 <li>
-<p><strong><code>-pix_fmts</code></strong> Show available pixel formats.</p>
+<p><strong><code>muxer=muxer_name</code></strong> 打印名为 \&lt;muxer_name&gt; 的复用器的详细信息。使用 <code>-formats</code> 选项获取所有复用器和解复用器列表。</p>
 </li>
 <li>
-<p><strong><code>-sample_fmts</code></strong> Show available sample formats.</p>
+<p><strong><code>filter=filter_name</code></strong> 打印名为 \&lt;filter_name&gt; 的滤镜的详细信息。使用 <code>-filters</code> 选项获取所有滤镜列表。</p>
 </li>
 <li>
-<p><strong><code>-layouts</code></strong> Show channel names and standard channel layouts.</p>
+<p><strong><code>bsf=bitstream_filter_name</code></strong> 打印名为 \&lt;bitstream_filter_name&gt; 的比特流滤镜的详细信息。使用 <code>-bsfs</code> 选项获取所有比特流滤镜列表。</p>
 </li>
 <li>
-<p><strong><code>-dispositions</code></strong> Show stream dispositions.</p>
+<p><strong><code>protocol=protocol_name</code></strong> 打印名为 \&lt;protocol_name&gt; 的协议的详细信息。使用 <code>-protocols</code> 选项获取所有协议列表。</p>
 </li>
 <li>
-<p><strong><code>-colors</code></strong> Show recognized color names.</p>
+<p><strong><code>-version</code></strong> 显示版本。</p>
 </li>
 <li>
-<p><strong><code>-sources device[,opt1=val1[,opt2=val2]...]</code></strong> Show autodetected sources of the input device. Some devices may provide system-dependent source names that cannot be autodetected. The returned list cannot be assumed to be always complete.</p>
+<p><strong><code>-buildconf</code></strong> 显示构建配置，每行一个选项。</p>
+</li>
+<li>
+<p><strong><code>-formats</code></strong> 显示可用格式（包括设备）。</p>
+</li>
+<li>
+<p><strong><code>-demuxers</code></strong> 显示可用解复用器。</p>
+</li>
+<li>
+<p><strong><code>-muxers</code></strong> 显示可用复用器。</p>
+</li>
+<li>
+<p><strong><code>-devices</code></strong> 显示可用设备。</p>
+</li>
+<li>
+<p><strong><code>-codecs</code></strong> 显示 libavcodec 已知的所有编解码器。</p>
+</li>
+</ul>
+<p>注意，本档通篇将 'codec' 一词用作简称，其更准确的说法是媒体比特流格式。</p>
+<ul>
+<li>
+<p><strong><code>-decoders</code></strong> 显示可用解码器。</p>
+</li>
+<li>
+<p><strong><code>-encoders</code></strong> 显示所有可用编码器。</p>
+</li>
+<li>
+<p><strong><code>-bsfs</code></strong> 显示可用比特流滤镜。</p>
+</li>
+<li>
+<p><strong><code>-protocols</code></strong> 显示可用协议。</p>
+</li>
+<li>
+<p><strong><code>-filters</code></strong> 显示 libavfilter 可用滤镜。</p>
+</li>
+<li>
+<p><strong><code>-pix_fmts</code></strong> 显示可用像素格式。</p>
+</li>
+<li>
+<p><strong><code>-sample_fmts</code></strong> 显示可用采样格式。</p>
+</li>
+<li>
+<p><strong><code>-layouts</code></strong> 显示声道名称和标准声道布局。</p>
+</li>
+<li>
+<p><strong><code>-dispositions</code></strong> 显示流的 disposition 标志。</p>
+</li>
+<li>
+<p><strong><code>-colors</code></strong> 显示已识别的颜色名称。</p>
+</li>
+<li>
+<p><strong><code>-sources device[,opt1=val1[,opt2=val2]...]</code></strong> 显示输入设备的自动探测源。某些设备可能提供无法自动探测的、依赖系统的源名称。返回的列表不能假定总是完整。</p>
 </li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ffmpeg -sources pulse,server=192.168.0.4
 </code></pre></div>
 <ul>
-<li><strong><code>-sinks device[,opt1=val1[,opt2=val2]...]</code></strong> Show autodetected sinks of the output device. Some devices may provide system-dependent sink names that cannot be autodetected. The returned list cannot be assumed to be always complete.</li>
+<li><strong><code>-sinks device[,opt1=val1[,opt2=val2]...]</code></strong> 显示输出设备的自动探测汇。某些设备可能提供无法自动探测的、依赖系统的汇名称。返回的列表不能假定总是完整。</li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ffmpeg -sinks pulse,server=192.168.0.4
 </code></pre></div>
 <ul>
-<li><strong><code>-loglevel [flags+]loglevel | -v [flags+]loglevel</code></strong> Set logging level and flags used by the library.</li>
+<li><strong><code>-loglevel [flags+]loglevel | -v [flags+]loglevel</code></strong> 设置库使用的日志级别和标志。</li>
 </ul>
-<p>The optional \&lt;flags&gt; prefix can consist of the following values:</p>
+<p>可选的 \&lt;flags&gt; 前缀可由以下值组成：</p>
 <ul>
 <li>
-<p><strong><code>repeat</code></strong> Indicates that repeated log output should not be compressed to the first line and the "Last message repeated n times" line will be omitted.</p>
+<p><strong><code>repeat</code></strong> 表示重复的日志输出不压缩至第一行，并且省略 "Last message repeated n times" 一行。</p>
 </li>
 <li>
-<p><strong><code>level</code></strong> Indicates that log output should add a <code>[level]</code> prefix to each message line. This can be used as an alternative to log coloring, e.g. when dumping the log to file.</p>
+<p><strong><code>level</code></strong> 表示日志输出为每条消息行添加 <code>[level]</code> 前缀。可用作日志着色的替代，例如把日志转储到文件时。</p>
 </li>
 <li>
-<p><strong><code>time</code></strong> Indicates that log lines should be prefixed with time information.</p>
+<p><strong><code>time</code></strong> 表示日志行加时间信息前缀。</p>
 </li>
 <li>
-<p><strong><code>datetime</code></strong> Indicates that log lines should be prefixed with date and time information.</p>
+<p><strong><code>datetime</code></strong> 表示日志行加日期和时间信息前缀。</p>
 </li>
 </ul>
-<p>Flags can also be used alone by adding a '+'/'-' prefix to set/reset a single flag without affecting other \&lt;flags&gt; or changing \&lt;loglevel&gt;. When setting both \&lt;flags&gt; and \&lt;loglevel&gt;, a '+' separator is expected between the last \&lt;flags&gt; value and before \&lt;loglevel&gt;.</p>
-<p>\&lt;loglevel&gt; is a string or a number containing one of the following values:</p>
+<p>标志也可以单独使用：加 '+'/'-' 前缀设置/重置单个标志，不影响其他 \&lt;flags&gt;，也不改变 \&lt;loglevel&gt;。同时设置 \&lt;flags&gt; 和 \&lt;loglevel&gt; 时，最后一个 \&lt;flags&gt; 值与 \&lt;loglevel&gt; 之间应有一个 '+' 分隔符。</p>
+<p>\&lt;loglevel&gt; 是包含以下取值之一的字符串或数字：</p>
 <ul>
 <li>
-<p><strong><code>quiet, -8</code></strong> Show nothing at all; be silent.</p>
+<p><strong><code>quiet, -8</code></strong> 什么都不显示；保持静默。</p>
 </li>
 <li>
-<p><strong><code>panic, 0</code></strong> Only show fatal errors which could lead the process to crash, such as an assertion failure. This is not currently used for anything.</p>
+<p><strong><code>panic, 0</code></strong> 只显示可能导致进程崩溃的致命错误，例如断言失败。目前不用于任何用途。</p>
 </li>
 <li>
-<p><strong><code>fatal, 8</code></strong> Only show fatal errors. These are errors after which the process absolutely cannot continue.</p>
+<p><strong><code>fatal, 8</code></strong> 只显示致命错误。这些是进程绝对无法再继续的错误。</p>
 </li>
 <li>
-<p><strong><code>error, 16</code></strong> Show all errors, including ones which can be recovered from.</p>
+<p><strong><code>error, 16</code></strong> 显示所有错误，包括可从中恢复的错误。</p>
 </li>
 <li>
-<p><strong><code>warning, 24</code></strong> Show all warnings and errors. Any message related to possibly incorrect or unexpected events will be shown.</p>
+<p><strong><code>warning, 24</code></strong> 显示所有警告和错误。任何与可能不正确或意外事件相关的消息都会显示。</p>
 </li>
 <li>
-<p><strong><code>info, 32</code></strong> Show informative messages during processing. This is in addition to warnings and errors. This is the default value.</p>
+<p><strong><code>info, 32</code></strong> 显示处理过程中的提示信息。这是警告和错误之外的补充。这是默认值。</p>
 </li>
 <li>
-<p><strong><code>verbose, 40</code></strong> Same as <code>info</code>, except more verbose.</p>
+<p><strong><code>verbose, 40</code></strong> 与 <code>info</code> 相同，但更详细。</p>
 </li>
 <li>
-<p><strong><code>debug, 48</code></strong> Show everything, including debugging information.</p>
+<p><strong><code>debug, 48</code></strong> 显示一切，包括调试信息。</p>
 </li>
 <li>
 <p><strong><code>trace, 56</code></strong></p>
 </li>
 </ul>
-<p>For example to enable repeated log output, add the <code>level</code> prefix, and set \&lt;loglevel&gt; to <code>verbose</code>:</p>
+<p>例如：启用重复日志输出、添加 <code>level</code> 前缀，并将 \&lt;loglevel&gt; 设为 <code>verbose</code>：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ffmpeg -loglevel repeat+level+verbose -i input output
 </code></pre></div>
-<p>Another example that enables repeated log output without affecting current state of <code>level</code> prefix flag or \&lt;loglevel&gt;:</p>
+<p>另一个示例：启用重复日志输出，但不影响 <code>level</code> 前缀标志的当前状态或 \&lt;loglevel&gt;：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ffmpeg [...] -loglevel +repeat
 </code></pre></div>
-<p>By default the program logs to stderr. If coloring is supported by the terminal, colors are used to mark errors and warnings. Log coloring can be disabled setting the environment variable <code>AV_LOG_FORCE_NOCOLOR</code>, or can be forced setting the environment variable <code>AV_LOG_FORCE_COLOR</code>.</p>
+<p>默认情况下程序将日志记录到 stderr。若终端支持着色，会用颜色标记错误和警告。可通过设置环境变量 <code>AV_LOG_FORCE_NOCOLOR</code> 禁用日志着色，或设置环境变量 <code>AV_LOG_FORCE_COLOR</code> 强制启用。</p>
 <ul>
-<li><strong><code>-report</code></strong> Dump full command line and log output to a file named <code>program-YYYYMMDD-HHMMSS.log</code> in the current directory. This file can be useful for bug reports. It also implies <code>-loglevel debug</code>.</li>
+<li><strong><code>-report</code></strong> 把完整命令行和日志输出转储到当前目录下名为 <code>program-YYYYMMDD-HHMMSS.log</code> 的文件。该文件对缺陷报告很有用。它还意味着 <code>-loglevel debug</code>。</li>
 </ul>
-<p>Setting the environment variable <code>FFREPORT</code> to any value has the same effect. If the value is a ':'-separated key=value sequence, these options will affect the report; option values must be escaped if they contain special characters or the options delimiter ':' (see the "Quoting and escaping" section in the ffmpeg-utils manual).</p>
-<p>The following options are recognized:</p>
+<p>把环境变量 <code>FFREPORT</code> 设为任意值有同样效果。若值为以 ':' 分隔的 key=value 序列，这些选项会影响报告；选项值含特殊字符或选项分隔符 ':' 时必须转义（参见 ffmpeg-utils 手册中的 "Quoting and escaping"（引号引用与转义）一节）。</p>
+<p>可识别以下选项：</p>
 <ul>
 <li>
-<p><strong><code>file</code></strong> set the file name to use for the report; <code>%p</code> is expanded to the name of the program, <code>%t</code> is expanded to a timestamp, <code>%%</code> is expanded to a plain <code>%</code></p>
+<p><strong><code>file</code></strong> 设置报告所用文件名；<code>%p</code> 展开为程序名，<code>%t</code> 展开为时间戳，<code>%%</code> 展开为普通 <code>%</code></p>
 </li>
 <li>
-<p><strong><code>level</code></strong> set the log verbosity level using a numerical value (see <code>-loglevel</code>).</p>
+<p><strong><code>level</code></strong> 用数值设置日志详细程度（参见 <code>-loglevel</code>）。</p>
 </li>
 </ul>
-<p>For example, to output a report to a file named <code>ffreport.log</code> using a log level of <code>32</code> (alias for log level <code>info</code>):</p>
+<p>例如，把报告输出到名为 <code>ffreport.log</code> 的文件，日志级别用 <code>32</code>（日志级别 <code>info</code> 的别名）：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>FFREPORT=file=ffreport.log:level=32 ffmpeg -i input output
 </code></pre></div>
-<p>Errors in parsing the environment variable are not fatal, and will not appear in the report.</p>
+<p>解析环境变量出错不是致命的，也不会出现在报告中。</p>
 <ul>
-<li><strong><code>-hide_banner</code></strong> Suppress printing banner.</li>
+<li><strong><code>-hide_banner</code></strong> 不打印横幅。</li>
 </ul>
-<p>All FFmpeg tools will normally show a copyright notice, build options and library versions. This option can be used to suppress printing this information.</p>
+<p>FFmpeg 各工具通常会显示版权声明、构建选项和库版本。该选项可用于不打印这些信息。</p>
 <ul>
-<li><strong><code>-cpuflags flags (global)</code></strong> Allows setting and clearing cpu flags. This option is intended for testing. Do not use it unless you know what you're doing.</li>
+<li><strong><code>-cpuflags flags (global)</code></strong> 允许设置和清除 CPU 标志。该选项用于测试。不了解其后果请勿使用。</li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ffmpeg -cpuflags -sse+mmx ...
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>ffmpeg -cpuflags mmx ...
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>ffmpeg -cpuflags 0 ...
 </code></pre></div>
-<p>Possible flags for this option are:</p>
+<p>该选项可用的标志如下：</p>
 <ul>
 <li>
 <p><strong><code>x86</code></strong></p>
-<ul>
+</li>
 <li>
 <p><strong><code>mmx</code></strong></p>
 </li>
@@ -2137,11 +2132,9 @@
 <li>
 <p><strong><code>cmov</code></strong></p>
 </li>
-</ul>
-</li>
 <li>
 <p><strong><code>ARM</code></strong></p>
-<ul>
+</li>
 <li>
 <p><strong><code>armv5te</code></strong></p>
 </li>
@@ -2163,11 +2156,9 @@
 <li>
 <p><strong><code>setend</code></strong></p>
 </li>
-</ul>
-</li>
 <li>
 <p><strong><code>AArch64</code></strong></p>
-<ul>
+</li>
 <li>
 <p><strong><code>armv8</code></strong></p>
 </li>
@@ -2177,17 +2168,15 @@
 <li>
 <p><strong><code>neon</code></strong></p>
 </li>
-</ul>
-</li>
 <li>
 <p><strong><code>PowerPC</code></strong></p>
-<ul>
-<li><strong><code>altivec</code></strong></li>
-</ul>
+</li>
+<li>
+<p><strong><code>altivec</code></strong></p>
 </li>
 <li>
 <p><strong><code>Specific Processors</code></strong></p>
-<ul>
+</li>
 <li>
 <p><strong><code>pentium2</code></strong></p>
 </li>
@@ -2212,36 +2201,34 @@
 <li>
 <p><strong><code>k8</code></strong></p>
 </li>
-</ul>
-</li>
 <li>
-<p><strong><code>-cpucount count (global)</code></strong> Override detection of CPU count. This option is intended for testing. Do not use it unless you know what you're doing.</p>
+<p><strong><code>-cpucount count (global)</code></strong> 覆盖 CPU 数量探测。该选项用于测试。不了解其后果请勿使用。</p>
 </li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ffmpeg -cpucount 2
 </code></pre></div>
 <ul>
-<li><strong><code>-max_alloc bytes</code></strong> Set the maximum size limit for allocating a block on the heap by ffmpeg's family of malloc functions. Exercise <strong>extreme caution</strong> when using this option. Don't use if you do not understand the full consequence of doing so. Default is INT_MAX.</li>
+<li><strong><code>-max_alloc bytes</code></strong> 设置 ffmpeg 的 malloc 函数族在堆上分配内存块的大小上限。使用该选项时务必<strong>极其谨慎</strong>。若不了解其全部后果请勿使用。默认值为 INT_MAX。</li>
 </ul>
 <h2 id="avoptions">AVOptions<a class="headerlink" href="#avoptions" title="Permanent link">&para;</a></h2>
-<p>These options are provided directly by the libavformat, libavdevice and libavcodec libraries. To see the list of available AVOptions, use the <code>-help</code> option. They are separated into two categories:</p>
+<p>这些选项由 libavformat、libavdevice 和 libavcodec 库直接提供。要查看可用 AVOptions 列表，使用 <code>-help</code> 选项。它们分为两类：</p>
 <ul>
 <li>
-<p><strong><code>generic</code></strong> These options can be set for any container, codec or device. Generic options are listed under AVFormatContext options for containers/devices and under AVCodecContext options for codecs.</p>
+<p><strong><code>generic</code></strong> 这些选项可设置于任何容器、编解码器或设备。通用选项在容器/设备下列于 AVFormatContext 选项，在编解码器下列于 AVCodecContext 选项。</p>
 </li>
 <li>
-<p><strong><code>private</code></strong> These options are specific to the given container, device or codec. Private options are listed under their corresponding containers/devices/codecs.</p>
+<p><strong><code>private</code></strong> 这些选项特定于给定容器、设备或编解码器。私有选项列于对应的容器/设备/编解码器之下。</p>
 </li>
 </ul>
-<p>For example to write an ID3v2.3 header instead of a default ID3v2.4 to an MP3 file, use the <code>id3v2_version</code> private option of the MP3 muxer:</p>
+<p>例如，向 MP3 文件写入 ID3v2.3 头而非默认的 ID3v2.4，使用 MP3 复用器的 <code>id3v2_version</code> 私有选项：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ffmpeg -i input.flac -id3v2_version 3 out.mp3
 </code></pre></div>
-<p>All codec AVOptions are per-stream, and thus a stream specifier should be attached to them:</p>
+<p>所有编解码器 AVOptions 均按流生效，因此应附加流说明符：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>ffmpeg -i multichannel.mxf -map 0:v:0 -map 0:a:0 -map 0:a:0 -c:a:0 ac3 -b:a:0 640k -ac:a:1 2 -c:a:1 aac -b:2 128k out.mp4
 </code></pre></div>
-<p>In the above example, a multichannel audio stream is mapped twice for output. The first instance is encoded with codec ac3 and bitrate 640k. The second instance is downmixed to 2 channels and encoded with codec aac. A bitrate of 128k is specified for it using absolute index of the output stream.</p>
-<p>Note: the <code>-nooption</code> syntax cannot be used for boolean AVOptions, use <code>-option 0</code>/<code>-option 1</code>.</p>
-<p>Note: the old undocumented way of specifying per-stream AVOptions by prepending v/a/s to the options name is now obsolete and will be removed soon.</p>
+<p>上例中，一条多声道音频流被映射两次用于输出。第一个实例用 ac3 编解码器以 640k 码率编码。第二个实例被下混到 2 声道并用 aac 编解码器编码。其码率 128k 通过输出流的绝对索引指定。</p>
+<p>注意：<code>-nooption</code> 语法不能用于布尔 AVOptions，请使用 <code>-option 0</code>/<code>-option 1</code>。</p>
+<p>注意：通过在选项名前加 v/a/s 前缀来指定逐流 AVOptions 的旧式做法（未成文档）现已废弃，即将移除。</p>
 
 
 
