@@ -15,3 +15,12 @@ entries:
   codec_002doptions:
     page: components/codecs.md
     slug: 编解码器选项
+  # B4 批（formats.md）登记：anchor_map 存在标题-锚点错位缺陷
+  # （Format-stream-specifiers→format-options、segment→examples），按 DR-011
+  # 以 heading-bridge 覆盖（规则 2.5 优先于 anchor_map 第 3 步）。
+  Format-stream-specifiers:
+    page: components/formats.md
+    slug: 格式流说明符
+  segment:
+    page: components/formats.md
+    slug: segment-stream_segment-ssegment

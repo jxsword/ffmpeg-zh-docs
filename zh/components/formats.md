@@ -1,308 +1,304 @@
-!!! warning "翻译占位页"
-    本页为英文原文占位（翻译进行中，进度见[翻译看板](https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md)）。
-    术语与示例以英文原文为准。
+# 描述
 
-# Description
+本文档介绍 libavformat 库所支持的格式（复用器与解复用器）。
 
-This document describes the supported formats (muxers and demuxers) provided by the libavformat library.
+# 格式选项
 
-# Format Options
+libavformat 库提供一些通用全局选项，可为所有复用器和解复用器设置。此外，每个复用器或解复用器还可以支持所谓的私有选项，即特定于该组件的选项。
 
-The libavformat library provides some generic global options, which can be set on all the muxers and demuxers. In addition each muxer or demuxer may support so-called private options, which are specific for that component.
+选项可通过在 FFmpeg 工具中指定 -\<option\> \<value\> 来设置，或通过在 `AVFormatContext` 选项中显式设值来设置；以编程方式使用时，可使用 `libavutil/opt.h` API。
 
-Options may be set by specifying -\<option\> \<value\> in the FFmpeg tools, or by setting the value explicitly in the `AVFormatContext` options or using the `libavutil/opt.h` API for programmatic use.
+受支持选项的列表如下：
 
-The list of supported options follows:
-
-- **`avioflags flags (input/output)`** Possible values:
+- **`avioflags flags (input/output)`** 可能的取值：
 
   | Term       | Description       |
   |------------|-------------------|
-  | `direct` | Reduce buffering. |
+  | `direct` | 减少缓冲。 |
 
-- **`probesize integer (input)`** Set probing size in bytes, i.e. the size of the data to analyze to get stream information. A higher value will enable detecting more information in case it is dispersed into the stream, but will increase latency. Must be an integer not lesser than 32. It is 5000000 by default.
+- **`probesize integer (input)`** 设置探测大小（字节），即为了获取流信息而分析的数据大小。较大的值能够在信息分散到流中的情况下检测到更多信息，但会增加延迟。必须是不小于 32 的整数。默认为 5000000。
 
-- **`max_probe_packets integer (input)`** Set the maximum number of buffered packets when probing a codec. Default is 2500 packets.
+- **`max_probe_packets integer (input)`** 设置探测编解码器时缓冲包的最大数量。默认为 2500 个包。
 
-- **`packetsize integer (output)`** Set packet size.
+- **`packetsize integer (output)`** 设置包大小。
 
-- **`fflags flags`** Set format flags. Some are implemented for a limited number of formats.
+- **`fflags flags`** 设置格式标志。部分标志仅对有限数量的格式实现。
 
-  Possible values for input files:
+  输入文件的可能取值：
 
-  - **`discardcorrupt`** Discard corrupted packets.
+  - **`discardcorrupt`** 丢弃损坏的包。
 
-  - **`fastseek`** Enable fast, but inaccurate seeks for some formats.
+  - **`fastseek`** 为某些格式启用快速但不精确的定位。
 
-  - **`genpts`** Generate missing PTS if DTS is present.
+  - **`genpts`** 若存在 DTS 则生成缺失的 PTS。
 
-  - **`igndts`** Ignore DTS if PTS is also set. In case the PTS is set, the DTS value is set to NOPTS. This is ignored when the `nofillin` flag is set.
+  - **`igndts`** 若 PTS 也已设置则忽略 DTS。当 PTS 已设置时，DTS 值被设为 NOPTS。设置 `nofillin` 标志时此项被忽略。
 
-  - **`ignidx`** Ignore index.
+  - **`ignidx`** 忽略索引。
 
-  - **`nobuffer`** Reduce the latency introduced by buffering during initial input streams analysis.
+  - **`nobuffer`** 减少初始输入流分析期间缓冲引入的延迟。
 
-  - **`nofillin`** Do not fill in missing values in packet fields that can be exactly calculated.
+  - **`nofillin`** 不填充包字段中缺失的、可精确计算的值。
 
-  - **`noparse`** Disable AVParsers, this needs `+nofillin` too.
+  - **`noparse`** 禁用 AVParser，这还需要 `+nofillin`。
 
-  - **`sortdts`** Try to interleave output packets by DTS. At present, available only for AVIs with an index.
+  - **`sortdts`** 尝试按 DTS 交错输出包。目前仅对带索引的 AVI 可用。
 
-  Possible values for output files:
+  输出文件的可能取值：
 
-  - **`autobsf`** Automatically apply bitstream filters as required by the output format. Enabled by default.
+  - **`autobsf`** 按输出格式的要求自动应用比特流滤镜。默认启用。
 
-  - **`bitexact`** Only write platform-, build- and time-independent data. This ensures that file and data checksums are reproducible and match between platforms. Its primary use is for regression testing.
+  - **`bitexact`** 只写入与平台、构建和时间无关的数据。这确保文件和数据校验和可复现且跨平台一致。其主要用途是回归测试。
 
-  - **`flush_packets`** Write out packets immediately.
+  - **`flush_packets`** 立即写出包。
 
-  - **`shortest`** Stop muxing at the end of the shortest stream. It may be needed to increase max_interleave_delta to avoid flushing the longer streams before EOF.
+  - **`shortest`** 在最短流结束时停止复用。可能需要增大 max_interleave_delta 以避免在 EOF 之前刷新较长的流。
 
-- **`seek2any integer (input)`** Allow seeking to non-keyframes on demuxer level when supported if set to 1. Default is 0.
+- **`seek2any integer (input)`** 若设为 1，则允许在解复用器层面定位到非关键帧（在受支持时）。默认值为 0。
 
-- **`analyzeduration integer (input)`** Specify how many microseconds are analyzed to probe the input. A higher value will enable detecting more accurate information, but will increase latency. It defaults to 5,000,000 microseconds = 5 seconds.
+- **`analyzeduration integer (input)`** 指定探测输入时分析多少微秒。较大的值能够检测到更精确的信息，但会增加延迟。默认值为 5,000,000 微秒 = 5 秒。
 
-- **`cryptokey hexadecimal string (input)`** Set decryption key.
+- **`cryptokey hexadecimal string (input)`** 设置解密密钥。
 
-- **`indexmem integer (input)`** Set max memory used for timestamp index (per stream).
+- **`indexmem integer (input)`** 设置时间戳索引（每流）可用的最大内存。
 
-- **`rtbufsize integer (input)`** Set max memory used for buffering real-time frames.
+- **`rtbufsize integer (input)`** 设置缓冲实时帧可用的最大内存。
 
-- **`fdebug flags (input/output)`** Print specific debug info.
+- **`fdebug flags (input/output)`** 打印特定的调试信息。
 
-  Possible values:
+  可能的取值：
 
   | Term | Description |
   |----|----|
-  | `ts` | Print timestamp information. |
-  | `id3v2` | Print ID3v2 frame data when demuxing files containing ID3v2 tags. |
+  | `ts` | 打印时间戳信息。 |
+  | `id3v2` | 解复用含 ID3v2 标签的文件时打印 ID3v2 帧数据。 |
 
-- **`max_delay integer (input/output)`** Set maximum muxing or demuxing delay in microseconds.
+- **`max_delay integer (input/output)`** 设置复用或解复用的最大延迟（微秒）。
 
-- **`fpsprobesize integer (input)`** Set number of frames used to probe fps.
+- **`fpsprobesize integer (input)`** 设置用于探测 fps 的帧数。
 
-- **`audio_preload integer (output)`** Set microseconds by which audio packets should be interleaved earlier.
+- **`audio_preload integer (output)`** 设置音频包提前交错的时间（微秒）。
 
-- **`chunk_duration integer (output)`** Set microseconds for each chunk.
+- **`chunk_duration integer (output)`** 设置每个 chunk 的时长（微秒）。
 
-- **`chunk_size integer (output)`** Set size in bytes for each chunk.
+- **`chunk_size integer (output)`** 设置每个 chunk 的大小（字节）。
 
-- **`err_detect, f_err_detect flags (input)`** Set error detection flags. `f_err_detect` is deprecated and should be used only via the `ffmpeg` tool.
+- **`err_detect, f_err_detect flags (input)`** 设置错误检测标志。`f_err_detect` 已弃用，只能通过 `ffmpeg` 工具使用。
 
-  Possible values:
+  可能的取值：
 
-  - **`crccheck`** Verify embedded CRCs.
+  - **`crccheck`** 校验内嵌的 CRC。
 
-  - **`bitstream`** Detect bitstream specification deviations.
+  - **`bitstream`** 检测比特流规范偏差。
 
-  - **`buffer`** Detect improper bitstream length.
+  - **`buffer`** 检测不正确的比特流长度。
 
-  - **`explode`** Abort decoding on minor error detection.
+  - **`explode`** 检测到轻微错误时中止解码。
 
-  - **`careful`** Consider things that violate the spec and have not been seen in the wild as errors.
+  - **`careful`** 将违反规范且现实中未见过的情况视为错误。
 
-  - **`compliant`** Consider all spec non compliancies as errors.
+  - **`compliant`** 将所有不符合规范的情况视为错误。
 
-  - **`aggressive`** Consider things that a sane encoder should not do as an error.
+  - **`aggressive`** 将正常编码器不应做出的行为视为错误。
 
-- **`max_interleave_delta integer (output)`** Set maximum buffering duration for interleaving. The duration is expressed in microseconds, and defaults to 10000000 (10 seconds).
+- **`max_interleave_delta integer (output)`** 设置交错的最大缓冲时长。该时长以微秒表示，默认为 10000000（10 秒）。
 
-  To ensure all the streams are interleaved correctly, libavformat will wait until it has at least one packet for each stream before actually writing any packets to the output file. When some streams are "sparse" (i.e. there are large gaps between successive packets), this can result in excessive buffering.
+  为确保所有流正确交错，libavformat 会等到每个流都至少有一个包之后才真正向输出文件写入任何包。当某些流"稀疏"（即连续包之间存在大段空隙）时，这可能造成过度缓冲。
 
-  This field specifies the maximum difference between the timestamps of the first and the last packet in the muxing queue, above which libavformat will output a packet regardless of whether it has queued a packet for all the streams.
+  此字段指定复用队列中第一个包与最后一个包时间戳之间的最大差值，超过该差值时，libavformat 将输出一个包，而不管它是否已为所有流排入了包。
 
-  If set to 0, libavformat will continue buffering packets until it has a packet for each stream, regardless of the maximum timestamp difference between the buffered packets.
+  若设为 0，libavformat 将持续缓冲包，直到每个流都有一个包，而不考虑缓冲包之间的最大时间戳差值。
 
-- **`use_wallclock_as_timestamps integer (input)`** Use wallclock as timestamps if set to 1. Default is 0.
+- **`use_wallclock_as_timestamps integer (input)`** 若设为 1，使用墙上时钟作为时间戳。默认值为 0。
 
-- **`avoid_negative_ts integer (output)`** Possible values:
+- **`avoid_negative_ts integer (output)`** 可能的取值：
 
-  - **`make_non_negative`** Shift timestamps to make them non-negative. Also note that this affects only leading negative timestamps, and not non-monotonic negative timestamps.
+  - **`make_non_negative`** 平移时间戳使其非负。另请注意，此项只影响开头的负时间戳，不影响非单调的负时间戳。
 
-  - **`make_zero`** Shift timestamps so that the first timestamp is 0.
+  - **`make_zero`** 平移时间戳，使第一个时间戳为 0。
 
-  - **`auto (default)`** Enables shifting when required by the target format.
+  - **`auto (default)`** 在目标格式需要时启用平移。
 
-  - **`disabled`** Disables shifting of timestamp.
+  - **`disabled`** 禁用时间戳平移。
 
-  When shifting is enabled, all output timestamps are shifted by the same amount. Audio, video, and subtitles desynching and relative timestamp differences are preserved compared to how they would have been without shifting.
+  启用平移时，所有输出时间戳平移相同的量。与不平移相比，音频、视频和字幕的失步以及相对时间戳差异都会保持不变。
 
-- **`skip_initial_bytes integer (input)`** Set number of bytes to skip before reading header and frames if set to 1. Default is 0.
+- **`skip_initial_bytes integer (input)`** 若设为 1，设置读取头和帧之前要跳过的字节数。默认值为 0。
 
-- **`correct_ts_overflow integer (input)`** Correct single timestamp overflows if set to 1. Default is 1.
+- **`correct_ts_overflow integer (input)`** 若设为 1，修正单个时间戳溢出。默认值为 1。
 
-- **`flush_packets integer (output)`** Flush the underlying I/O stream after each packet. Default is -1 (auto), which means that the underlying protocol will decide, 1 enables it, and has the effect of reducing the latency, 0 disables it and may increase IO throughput in some cases.
+- **`flush_packets integer (output)`** 在每个包之后刷新底层 I/O 流。默认值为 -1（自动），即由底层协议决定；1 启用它，具有降低延迟的效果；0 禁用它，在某些情况下可能提高 I/O 吞吐量。
 
-- **`output_ts_offset offset (output)`** Set the output time offset.
+- **`output_ts_offset offset (output)`** 设置输出时间偏移。
 
-  \<offset\> must be a time duration specification, see section "the Time duration section in the ffmpeg-utils(1) manual" in `ffmpeg-utils`.
+  \<offset\> 必须是时长描述 (time duration specification)，参见 `ffmpeg-utils` 中"the Time duration section in the ffmpeg-utils(1) manual"（时长）一节。
 
-  The offset is added by the muxer to the output timestamps.
+  该偏移由复用器加到输出时间戳上。
 
-  Specifying a positive offset means that the corresponding streams are delayed bt the time duration specified in \<offset\>. Default value is `0` (meaning that no offset is applied).
+  指定正的偏移意味着相应的流延迟 \<offset\> 中指定的时长。默认值为 `0`（即不应用偏移）。
 
-- **`format_whitelist list (input)`** "," separated list of allowed demuxers. By default all are allowed.
+- **`format_whitelist list (input)`** 以 "," 分隔的允许解复用器列表。默认全部允许。
 
-- **`dump_separator string (input)`** Separator used to separate the fields printed on the command line about the Stream parameters. For example, to separate the fields with newlines and indentation:
+- **`dump_separator string (input)`** 用于分隔命令行上打印的流参数字段的分隔符。例如，用换行和缩进分隔字段：
 
   ``` text
   ffprobe -dump_separator "
                             "  -i ~/videos/matrixbench_mpeg2.mpg
   ```
 
-- **`max_streams integer (input)`** Specifies the maximum number of streams. This can be used to reject files that would require too many resources due to a large number of streams.
+- **`max_streams integer (input)`** 指定流的最大数量。可用于拒绝因流数量过大而需要过多资源的文件。
 
-- **`skip_estimate_duration_from_pts bool (input)`** Skip estimation of input duration if it requires an additional probing for PTS at end of file. At present, applicable for MPEG-PS and MPEG-TS.
+- **`skip_estimate_duration_from_pts bool (input)`** 如果估计输入时长需要对文件末尾的 PTS 进行额外探测，则跳过该估计。目前适用于 MPEG-PS 和 MPEG-TS。
 
-- **`duration_probesize integer (input)`** Set probing size, in bytes, for input duration estimation when it actually requires an additional probing for PTS at end of file (at present: MPEG-PS and MPEG-TS). It is aimed at users interested in better durations probing for itself, or indirectly because using the concat demuxer, for example. The typical use case is an MPEG-TS CBR with a high bitrate, high video buffering and ending cleaning with similar PTS for video and audio: in such a scenario, the large physical gap between the last video packet and the last audio packet makes it necessary to read many bytes in order to get the video stream duration. Another use case is where the default probing behaviour only reaches a single video frame which is not the last one of the stream due to frame reordering, so the duration is not accurate. Setting this option has a performance impact even for small files because the probing size is fixed. Default behaviour is a general purpose trade-off, largely adaptive, but the probing size will not be extended to get streams durations at all costs. Must be an integer not lesser than 1, or 0 for default behaviour.
+- **`duration_probesize integer (input)`** 设置输入时长估计实际需要对文件末尾 PTS 进行额外探测时（当前：MPEG-PS 和 MPEG-TS）的探测大小（字节）。此选项面向希望获得更准确时长探测结果的用户，或例如使用 concat 解复用器而间接需要的用户。典型场景是高码率、高视频缓冲、结尾清理后视频与音频 PTS 相近的 MPEG-TS CBR：在这种场景下，最后一个视频包与最后一个音频包之间的大段物理间隔使得必须读取大量字节才能获得视频流时长。另一个场景是默认探测行为由于帧重排只到达流中非最后一帧的单个视频帧，导致时长不准确。设置此选项会带来性能影响，即使是小文件也是如此，因为探测大小是固定的。默认行为是通用性的权衡，在很大程度上自适应，但不会不惜代价地扩展探测大小来获取流时长。必须是不小于 1 的整数，或 0 表示默认行为。
 
-- **`strict, f_strict integer (input/output)`** Specify how strictly to follow the standards. `f_strict` is deprecated and should be used only via the `ffmpeg` tool.
+- **`strict, f_strict integer (input/output)`** 指定遵循标准的严格程度。`f_strict` 已弃用，只能通过 `ffmpeg` 工具使用。
 
-  Possible values:
+  可能的取值：
 
-  - **`very`** strictly conform to an older more strict version of the spec or reference software
+  - **`very`** 严格遵循规范的更旧更严格版本或参考软件
 
-  - **`strict`** strictly conform to all the things in the spec no matter what consequences
+  - **`strict`** 无论如何都严格遵循规范中的所有内容
 
   - **`normal`**
 
-  - **`unofficial`** allow unofficial extensions
+  - **`unofficial`** 允许非官方扩展
 
-  - **`experimental`** allow non standardized experimental things, experimental (unfinished/work in progress/not well tested) decoders and encoders. Note: experimental decoders can pose a security risk, do not use this for decoding untrusted input.
+  - **`experimental`** 允许非标准化的实验性内容、实验性（未完成/开发中/未经充分测试）解码器和编码器。注意：实验性解码器可能带来安全风险，请勿将其用于解码不受信任的输入。
 
-## Format stream specifiers
+## 格式流说明符
 
-Format stream specifiers allow selection of one or more streams that match specific properties.
+格式流说明符允许选择匹配特定属性的一个或多个流。
 
-The exact semantics of stream specifiers is defined by the `avformat_match_stream_specifier()` function declared in the `libavformat/avformat.h` header and documented in the section "Stream specifiers section in the ffmpeg(1) manual" in `ffmpeg`.
+流说明符的确切语义由 `libavformat/avformat.h` 头文件中声明的 `avformat_match_stream_specifier()` 函数定义，并在 `ffmpeg` 中"Stream specifiers section in the ffmpeg(1) manual"（流说明符）一节有文档说明。
 
-# Demuxers
+# 解复用器
 
-Demuxers are configured elements in FFmpeg that can read the multimedia streams from a particular type of file.
+解复用器是 FFmpeg 中的配置元素，可以从特定类型的文件读取多媒体流。
 
-When you configure your FFmpeg build, all the supported demuxers are enabled by default. You can list all available ones using the configure option `--list-demuxers`.
+配置 FFmpeg 构建时，所有受支持的解复用器默认启用。可以使用 configure 选项 `--list-demuxers` 列出全部可用项。
 
-You can disable all the demuxers using the configure option `--disable-demuxers`, and selectively enable a single demuxer with the option `--enable-demuxer=DEMUXER`, or disable it with the option `--disable-demuxer=DEMUXER`.
+可以使用 configure 选项 `--disable-demuxers` 禁用全部解复用器，并使用选项 `--enable-demuxer=DEMUXER` 选择性启用单个解复用器，或使用选项 `--disable-demuxer=DEMUXER` 禁用它。
 
-The option `-demuxers` of the ff\* tools will display the list of enabled demuxers. Use `-formats` to view a combined list of enabled demuxers and muxers.
+ff\* 工具的 `-demuxers` 选项将显示已启用解复用器的列表。使用 `-formats` 查看已启用解复用器和复用器的合并列表。
 
-The description of some of the currently available demuxers follows.
+下面介绍部分当前可用的解复用器。
 
 ## aa
 
-Audible Format 2, 3, and 4 demuxer.
+Audible Format 2、3 和 4 解复用器。
 
-This demuxer is used to demux Audible Format 2, 3, and 4 (.aa) files.
+此解复用器用于解复用 Audible Format 2、3 和 4 (.aa) 文件。
 
 ## aac
 
-Raw Audio Data Transport Stream AAC demuxer.
+Raw Audio Data Transport Stream AAC 解复用器。
 
-This demuxer is used to demux an ADTS input containing a single AAC stream alongwith any ID3v1/2 or APE tags in it.
+此解复用器用于解复用包含单个 AAC 流以及其中任何 ID3v1/2 或 APE 标签的 ADTS 输入。
 
 ## apng
 
-Animated Portable Network Graphics demuxer.
+动图便携式网络图形 (Animated Portable Network Graphics) 解复用器。
 
-This demuxer is used to demux APNG files. All headers, but the PNG signature, up to (but not including) the first fcTL chunk are transmitted as extradata. Frames are then split as being all the chunks between two fcTL ones, or between the last fcTL and IEND chunks.
+此解复用器用于解复用 APNG 文件。除 PNG 签名外，直到（但不包含）第一个 fcTL chunk 的所有头信息都作为 extradata 传输。随后，帧被拆分为两个 fcTL chunk 之间、或最后一个 fcTL 与 IEND chunk 之间的所有 chunk。
 
-- **`-ignore_loop bool`** Ignore the loop variable in the file if set. Default is enabled.
+- **`-ignore_loop bool`** 若设置，忽略文件中的循环变量。默认启用。
 
-- **`-max_fps int`** Maximum framerate in frames per second. Default of 0 imposes no limit.
+- **`-max_fps int`** 最大帧率（每秒帧数）。默认值 0 表示不限制。
 
-- **`-default_fps int`** Default framerate in frames per second when none is specified in the file (0 meaning as fast as possible). Default is 15.
+- **`-default_fps int`** 文件中未指定时的默认帧率（每秒帧数）（0 表示尽可能快）。默认值为 15。
 
 ## asf
 
-Advanced Systems Format demuxer.
+Advanced Systems Format 解复用器。
 
-This demuxer is used to demux ASF files and MMS network streams.
+此解复用器用于解复用 ASF 文件和 MMS 网络流。
 
 | Term | Description |
 |----|----|
-| `-no_resync_search bool` | Do not try to resynchronize by looking for a certain optional start code. |
+| `-no_resync_search bool` | 不尝试通过查找某个可选起始码来重新同步。 |
 
 ## concat
 
-Virtual concatenation script demuxer.
+虚拟拼接脚本 (virtual concatenation script) 解复用器。
 
-This demuxer reads a list of files and other directives from a text file and demuxes them one after the other, as if all their packets had been muxed together.
+此解复用器从文本文件读取文件列表和其他指令，并依次解复用它们，就像所有包被一起复用一样。
 
-The timestamps in the files are adjusted so that the first file starts at 0 and each next file starts where the previous one finishes. Note that it is done globally and may cause gaps if all streams do not have exactly the same length.
+文件中的时间戳会被调整，使第一个文件从 0 开始，每个后续文件从前一个文件结束之处开始。注意这是全局进行的，如果所有流的长度不完全相同，可能产生空隙。
 
-All files must have the same streams (same codecs, same time base, etc.).
+所有文件必须具有相同的流（相同的编解码器、相同的时间基等）。
 
-The duration of each file is used to adjust the timestamps of the next file: if the duration is incorrect (because it was computed using the bit-rate or because the file is truncated, for example), it can cause artifacts. The `duration` directive can be used to override the duration stored in each file.
+每个文件的时长用于调整下一个文件的时间戳：如果时长不正确（例如因为它是用码率计算的，或因为文件被截断），可能造成伪影。可以使用 `duration` 指令覆盖存储在每个文件中的时长。
 
-### Syntax
+### 语法
 
-The script is a text file in extended-ASCII, with one directive per line. Empty lines, leading spaces and lines starting with '#' are ignored. The following directive is recognized:
+脚本是扩展 ASCII 编码的文本文件，每行一条指令。空行、前导空格和以 '#' 开头的行会被忽略。可识别以下指令：
 
-- **`file path`** Path to a file to read; special characters and spaces must be escaped with backslash or single quotes.
+- **`file path`** 要读取的文件的路径；特殊字符和空格必须用反斜杠或单引号转义。
 
-  All subsequent file-related directives apply to that file.
+  所有后续与文件相关的指令都作用于该文件。
 
-- **`ffconcat version 1.0`** Identify the script type and version.
+- **`ffconcat version 1.0`** 标识脚本类型和版本。
 
-  To make FFmpeg recognize the format automatically, this directive must appear exactly as is (no extra space or byte-order-mark) on the very first line of the script.
+  为了让 FFmpeg 自动识别该格式，此指令必须原样出现在脚本的第一行（不能有额外空格或字节序标记）。
 
-- **`duration dur`** Duration of the file. This information can be specified from the file; specifying it here may be more efficient or help if the information from the file is not available or accurate.
+- **`duration dur`** 文件的时长。此信息可从文件中指定；在此指定可能更高效，或在文件中的信息不可用或不准确时有所帮助。
 
-  If the duration is set for all files, then it is possible to seek in the whole concatenated video.
+  如果为所有文件都设置了时长，则可以在整个拼接视频中定位。
 
-- **`inpoint timestamp`** In point of the file. When the demuxer opens the file it instantly seeks to the specified timestamp. Seeking is done so that all streams can be presented successfully at In point.
+- **`inpoint timestamp`** 文件的入点。解复用器打开文件时会立即定位到指定的时间戳。定位的方式是使所有流都能在入点处成功呈现。
 
-  This directive works best with intra frame codecs, because for non-intra frame ones you will usually get extra packets before the actual In point and the decoded content will most likely contain frames before In point too.
+  此指令对帧内编解码器效果最佳，因为对非帧内编解码器，通常会在实际入点之前得到额外的包，且解码内容很可能也包含入点之前的帧。
 
-  For each file, packets before the file In point will have timestamps less than the calculated start timestamp of the file (negative in case of the first file), and the duration of the files (if not specified by the `duration` directive) will be reduced based on their specified In point.
+  对每个文件，文件入点之前的包的时间戳会小于该文件计算出的起始时间戳（第一个文件时为负），且文件时长（若未通过 `duration` 指令指定）会根据其指定的入点缩减。
 
-  Because of potential packets before the specified In point, packet timestamps may overlap between two concatenated files.
+  由于指定入点之前可能存在包，两个拼接文件的包时间戳可能重叠。
 
-- **`outpoint timestamp`** Out point of the file. When the demuxer reaches the specified decoding timestamp in any of the streams, it handles it as an end of file condition and skips the current and all the remaining packets from all streams.
+- **`outpoint timestamp`** 文件的出点。当解复用器在任何流中到达指定的解码时间戳时，将其作为文件结束条件处理，并跳过当前流及所有流的剩余所有包。
 
-  Out point is exclusive, which means that the demuxer will not output packets with a decoding timestamp greater or equal to Out point.
+  出点是排他的，即解复用器不会输出解码时间戳大于或等于出点的包。
 
-  This directive works best with intra frame codecs and formats where all streams are tightly interleaved. For non-intra frame codecs you will usually get additional packets with presentation timestamp after Out point therefore the decoded content will most likely contain frames after Out point too. If your streams are not tightly interleaved you may not get all the packets from all streams before Out point and you may only will be able to decode the earliest stream until Out point.
+  此指令对帧内编解码器以及所有流紧密交错的格式效果最佳。对非帧内编解码器，通常会在出点之后得到带有呈现时间戳的额外包，因此解码内容很可能也包含出点之后的帧。如果流未紧密交错，可能得不到出点之前所有流的全部包，且只能解码最早的流直到出点。
 
-  The duration of the files (if not specified by the `duration` directive) will be reduced based on their specified Out point.
+  文件时长（若未通过 `duration` 指令指定）会根据其指定的出点缩减。
 
-- **`file_packet_metadata key=value`** Metadata of the packets of the file. The specified metadata will be set for each file packet. You can specify this directive multiple times to add multiple metadata entries. This directive is deprecated, use `file_packet_meta` instead.
+- **`file_packet_metadata key=value`** 文件包的元数据。指定的元数据会为每个文件包设置。可多次指定此指令以添加多个元数据条目。此指令已弃用，请改用 `file_packet_meta`。
 
-- **`file_packet_meta key value`** Metadata of the packets of the file. The specified metadata will be set for each file packet. You can specify this directive multiple times to add multiple metadata entries.
+- **`file_packet_meta key value`** 文件包的元数据。指定的元数据会为每个文件包设置。可多次指定此指令以添加多个元数据条目。
 
-- **`option key value`** Option to access, open and probe the file. Can be present multiple times.
+- **`option key value`** 用于访问、打开和探测文件的选项。可出现多次。
 
-- **`stream`** Introduce a stream in the virtual file. All subsequent stream-related directives apply to the last introduced stream. Some streams properties must be set in order to allow identifying the matching streams in the subfiles. If no streams are defined in the script, the streams from the first file are copied.
+- **`stream`** 在虚拟文件中引入一个流。所有后续与流相关的指令都作用于最后引入的流。必须设置某些流属性，才能在子文件中识别匹配的流。如果脚本中未定义流，则复制第一个文件的流。
 
-- **`exact_stream_id id`** Set the id of the stream. If this directive is given, the string with the corresponding id in the subfiles will be used. This is especially useful for MPEG-PS (VOB) files, where the order of the streams is not reliable.
+- **`exact_stream_id id`** 设置流的 id。若给出此指令，将使用子文件中具有相应 id 的字符串。这对 MPEG-PS (VOB) 文件尤其有用，因为其流顺序不可靠。
 
-- **`stream_meta key value`** Metadata for the stream. Can be present multiple times.
+- **`stream_meta key value`** 流的元数据。可出现多次。
 
-- **`stream_codec value`** Codec for the stream.
+- **`stream_codec value`** 流的编解码器。
 
-- **`stream_extradata hex_string`** Extradata for the string, encoded in hexadecimal.
+- **`stream_extradata hex_string`** 流的 extradata，以十六进制编码。
 
-- **`chapter id start end`** Add a chapter. \<id\> is an unique identifier, possibly small and consecutive.
+- **`chapter id start end`** 添加一个章节。\<id\> 是唯一标识符，可以是较小且连续的数字。
 
-### Options
+### 选项
 
-This demuxer accepts the following option:
+此解复用器接受以下选项：
 
-- **`safe`** If set to 1, reject unsafe file paths and directives. A file path is considered safe if it does not contain a protocol specification and is relative and all components only contain characters from the portable character set (letters, digits, period, underscore and hyphen) and have no period at the beginning of a component.
+- **`safe`** 若设为 1，拒绝不安全的文件路径和指令。文件路径被视为安全的条件是：不包含协议规范、为相对路径、所有组件只包含可移植字符集中的字符（字母、数字、句点、下划线和连字符），且组件开头没有句点。
 
-  If set to 0, any file name is accepted.
+  若设为 0，接受任何文件名。
 
-  The default is 1.
+  默认值为 1。
 
-- **`auto_convert`** If set to 1, try to perform automatic conversions on packet data to make the streams concatenable. The default is 1.
+- **`auto_convert`** 若设为 1，尝试对包数据执行自动转换，使流可拼接。默认值为 1。
 
-  Currently, the only conversion is adding the h264_mp4toannexb bitstream filter to H.264 streams in MP4 format. This is necessary in particular if there are resolution changes.
+  目前，唯一的转换是为 MP4 格式的 H.264 流添加 h264_mp4toannexb 比特流滤镜。在存在分辨率变化时尤其必要。
 
-- **`segment_time_metadata`** If set to 1, every packet will contain the \<lavf.concat.start_time\> and the \<lavf.concat.duration\> packet metadata values which are the start_time and the duration of the respective file segments in the concatenated output expressed in microseconds. The duration metadata is only set if it is known based on the concat file. The default is 0.
+- **`segment_time_metadata`** 若设为 1，每个包将包含 \<lavf.concat.start_time\> 和 \<lavf.concat.duration\> 包元数据值，即拼接输出中相应文件分段的 start_time 和 duration（以微秒表示）。仅在基于 concat 文件可知时才设置 duration 元数据。默认值为 0。
 
-### Examples
+### 示例
 
-- Use absolute filenames and include some comments:
+- 使用绝对文件名并包含一些注释：
 
   ``` text
   # my first filename
@@ -313,7 +309,7 @@ This demuxer accepts the following option:
   file '/mnt/share/file 3'\''.wav'
   ```
 
-- Allow for input format auto-probing, use safe filenames and set the duration of the first file:
+- 允许自动探测输入格式，使用安全文件名并设置第一个文件的时长：
 
   ``` text
   ffconcat version 1.0
@@ -326,91 +322,91 @@ This demuxer accepts the following option:
 
 ## dash
 
-Dynamic Adaptive Streaming over HTTP demuxer.
+基于 HTTP 的动态自适应流媒体 (Dynamic Adaptive Streaming over HTTP) 解复用器。
 
-This demuxer presents all AVStreams found in the manifest. By setting the discard flags on AVStreams the caller can decide which streams to actually receive. Each stream mirrors the `id` and `bandwidth` properties from the `<Representation>` as metadata keys named "id" and "variant_bitrate" respectively.
+此解复用器呈现清单 (manifest) 中找到的所有 AVStream。通过对 AVStream 设置 discard 标志，调用方可以决定实际接收哪些流。每个流镜像 `<Representation>` 中的 `id` 和 `bandwidth` 属性，分别作为名为 "id" 和 "variant_bitrate" 的元数据键。
 
-### Options
+### 选项
 
-This demuxer accepts the following option:
+此解复用器接受以下选项：
 
-- **`cenc_decryption_key`** Default 16-byte key, in hex, to decrypt files encrypted using ISO Common Encryption (CENC/AES-128 CTR; ISO/IEC 23001-7).
+- **`cenc_decryption_key`** 默认的 16 字节密钥（十六进制），用于解密使用 ISO 通用加密 (CENC/AES-128 CTR; ISO/IEC 23001-7) 加密的文件。
 
-- **`cenc_decryption_keys`** Dictionary of 16-byte key ID =\> 16-byte key, both in hex, to decrypt files encrypted using ISO Common Encryption (CENC/AES-128 CTR; ISO/IEC 23001-7).
+- **`cenc_decryption_keys`** 16 字节密钥 ID =\> 16 字节密钥的字典（均为十六进制），用于解密使用 ISO 通用加密 (CENC/AES-128 CTR; ISO/IEC 23001-7) 加密的文件。
 
 ## dvdvideo
 
-DVD-Video demuxer, powered by libdvdnav and libdvdread.
+DVD-Video 解复用器，由 libdvdnav 和 libdvdread 驱动。
 
-Can directly ingest DVD titles, specifically sequential PGCs, into a conversion pipeline. Menu assets, such as background video or audio, can also be demuxed given the menu's coordinates (at best effort).
+可将 DVD 标题（具体为顺序 PGC）直接送入转换管线。菜单资产（如背景视频或音频）也可以在给定菜单坐标的情况下解复用（尽力而为）。
 
-Block devices (DVD drives), ISO files, and directory structures are accepted. Activate with `-f dvdvideo` in front of one of these inputs.
+接受块设备（DVD 光驱）、ISO 文件和目录结构。在这些输入之前使用 `-f dvdvideo` 激活。
 
-This demuxer does NOT have decryption code of any kind. You are on your own working with encrypted DVDs, and should not expect support on the matter.
+此解复用器不具备任何形式的解密代码。处理加密 DVD 需自行设法，不应期待这方面的支持。
 
-Underlying playback is handled by libdvdnav, and structure parsing by libdvdread. FFmpeg must be built with GPL library support available as well as the configure switches `--enable-libdvdnav` and `--enable-libdvdread`.
+底层播放由 libdvdnav 处理，结构解析由 libdvdread 处理。FFmpeg 构建时必须提供 GPL 库支持，以及 configure 开关 `--enable-libdvdnav` 和 `--enable-libdvdread`。
 
-You will need to provide either the desired "title number" or exact PGC/PG coordinates. Many open-source DVD players and tools can aid in providing this information. If not specified, the demuxer will default to title 1 which works for many discs. However, due to the flexibility of the format, it is recommended to check manually. There are many discs that are authored strangely or with invalid headers.
+需要提供所需的"标题编号"或精确的 PGC/PG 坐标。许多开源 DVD 播放器和工具可帮助提供此信息。若未指定，解复用器默认为标题 1，这对许多光盘有效。但由于格式的灵活性，建议手动检查。有些光盘的编排很奇怪或带有无效头。
 
-If the input is a real DVD drive, please note that there are some drives which may silently fail on reading bad sectors from the disc, returning random bits instead which is effectively corrupt data. This is especially prominent on aging or rotting discs. A second pass and integrity checks would be needed to detect the corruption. This is not an FFmpeg issue.
+如果输入是真实 DVD 光驱，请注意有些光驱在读取光盘坏扇区时可能静默失败，返回随机比特，这实际上是损坏的数据。这在老化或霉变的光盘上尤为突出。需要二次读取和完整性检查才能检测出损坏。这不是 FFmpeg 的问题。
 
-### Background
+### 背景
 
-DVD-Video is not a directly accessible, linear container format in the traditional sense. Instead, it allows for complex and programmatic playback of carefully muxed MPEG-PS streams that are stored in headerless VOB files. To the end-user, these streams are known simply as "titles", but the actual logical playback sequence is defined by one or more "PGCs", or Program Group Chains, within the title. The PGC is in turn comprised of multiple "PGs", or Programs", which are the actual video segments (and for a typical video feature, sequentially ordered). The PGC structure, along with stream layout and metadata, are stored in IFO files that need to be parsed. PGCs can be thought of as playlists in easier terms.
+DVD-Video 不是传统意义上可直接访问的线性容器格式。相反，它允许对精心复用的、存储在无头 VOB 文件中的 MPEG-PS 流进行复杂的程序化播放。对最终用户而言，这些流简单地称为"标题"，而实际的逻辑播放顺序由标题内的一个或多个"PGC"（Program Group Chain，节目组链）定义。PGC 又由多个"PG"（Program，节目）组成，PG 是实际的视频分段（对典型的视频作品而言按顺序排列）。PGC 结构连同流布局和元数据一起存储在需要解析的 IFO 文件中。简单来说，可以把 PGC 看作播放列表。
 
-An actual DVD player relies on user GUI interaction via menus and an internal VM to drive the direction of demuxing. Generally, the user would either navigate (via menus) or automatically be redirected to the PGC of their choice. During this process and the subsequent playback, the DVD player's internal VM also maintains a state and executes instructions that can create jumps to different sectors during playback. This is why libdvdnav is involved, as a linear read of the MPEG-PS blobs on the disc (VOBs) is not enough to produce the right sequence in many cases.
+真实的 DVD 播放器依靠用户通过菜单的 GUI 交互以及内部 VM 来驱动解复用的方向。通常，用户要么（通过菜单）导航，要么自动跳转到其选择的 PGC。在此过程和随后的播放期间，DVD 播放器的内部 VM 还会维护状态并执行可在播放期间创建到不同扇区跳转的指令。这就是需要 libdvdnav 的原因，因为仅线性读取光盘上的 MPEG-PS 数据块（VOB）在许多情况下不足以产生正确的顺序。
 
-There are many other DVD structures (a long subject) that will not be discussed here. NAV packets, in particular, are handled by this demuxer to build accurate timing but not emitted as a stream. For a good high-level understanding, refer to: <https://code.videolan.org/videolan/libdvdnav/-/blob/master/doc/dvd_structures>
+还有许多其他 DVD 结构（一个很长的主题）此处不作讨论。特别是 NAV 包，由该解复用器处理以构建精确的时序，但不作为流输出。要获得良好的高层理解，请参阅：<https://code.videolan.org/videolan/libdvdnav/-/blob/master/doc/dvd_structures>
 
-### Options
+### 选项
 
-This demuxer accepts the following options:
+此解复用器接受以下选项：
 
-- **`title int`** The title number to play. Must be set if `pgc` and `pg` are not set. Not applicable to menus. Default is 0 (auto), which currently only selects the first available title (title 1) and notifies the user about the implications.
+- **`title int`** 要播放的标题编号。若未设置 `pgc` 和 `pg` 则必须设置。不适用于菜单。默认值为 0（自动），目前只选择第一个可用标题（标题 1），并通知用户其影响。
 
-- **`chapter_start int`** The chapter, or PTT (part-of-title), number to start at. Not applicable to menus. Default is 1.
+- **`chapter_start int`** 开始的章节（或 PTT (part-of-title)）编号。不适用于菜单。默认值为 1。
 
-- **`chapter_end int`** The chapter, or PTT (part-of-title), number to end at. Not applicable to menus. Default is 0, which is a special value to signal end at the last possible chapter.
+- **`chapter_end int`** 结束的章节（或 PTT (part-of-title)）编号。不适用于菜单。默认值为 0，这是一个特殊值，表示在最后一个可能的章节结束。
 
-- **`angle int`** The video angle number, referring to what is essentially an additional video stream that is composed from alternate frames interleaved in the VOBs. Not applicable to menus. Default is 1.
+- **`angle int`** 视频角度编号，指本质上是由 VOB 中交织的替代帧构成的附加视频流。不适用于菜单。默认值为 1。
 
-- **`region int`** The region code to use for playback. Some discs may use this to default playback at a particular angle in different regions. This option will not affect the region code of a real DVD drive, if used as an input. Not applicable to menus. Default is 0, "world".
+- **`region int`** 用于播放的区域码。某些光盘可能用它来在不同区域默认以特定角度播放。若使用真实 DVD 光驱作为输入，此选项不会影响其区域码。不适用于菜单。默认值为 0，即"世界"。
 
-- **`menu bool`** Demux menu assets instead of navigating a title. Requires exact coordinates of the menu (`menu_lu`, `menu_vts`, `pgc`, `pg`). Default is false.
+- **`menu bool`** 解复用菜单资产而不是导航标题。需要菜单的精确坐标（`menu_lu`、`menu_vts`、`pgc`、`pg`）。默认为 false。
 
-- **`menu_lu int`** The menu language to demux. In DVD, menus are grouped by language. Default is 1, the first language unit.
+- **`menu_lu int`** 要解复用的菜单语言。DVD 中菜单按语言分组。默认值为 1，即第一个语言单元。
 
-- **`menu_vts int`** The VTS where the menu lives, or 0 if it is a VMG menu (root-level). Default is 1, menu of the first VTS.
+- **`menu_vts int`** 菜单所在的 VTS，若是 VMG 菜单（根级）则为 0。默认值为 1，即第一个 VTS 的菜单。
 
-- **`pgc int`** The entry PGC to start playback, in conjunction with `pg`. Alternative to setting `title`. Chapter markers are not supported at this time. Must be explicitly set for menus. Default is 0, automatically resolve from value of `title`.
+- **`pgc int`** 开始播放的入口 PGC，与 `pg` 配合使用。也可通过设置 `title` 实现。目前不支持章节标记。菜单必须显式设置。默认值为 0，自动从 `title` 的值解析。
 
-- **`pg int`** The entry PG to start playback, in conjunction with `pgc`. Alternative to setting `title`. Chapter markers are not supported at this time. Default is 1, the first PG of the PGC.
+- **`pg int`** 开始播放的入口 PG，与 `pgc` 配合使用。也可通过设置 `title` 实现。目前不支持章节标记。默认值为 1，即 PGC 的第一个 PG。
 
-- **`preindex bool`** Enable this to have accurate chapter (PTT) markers and duration measurement, which requires a slow second pass read in order to index the chapter marker timestamps from NAV packets. This is non-ideal extra work for real optical drives. It is recommended and faster to use this option with a backup of the DVD structure stored on a hard drive. Not compatible with `pgc` and `pg`. Default is 0, false.
+- **`preindex bool`** 启用后可获得准确的章节 (PTT) 标记和时长测量，但需要缓慢的二次读取，以便从 NAV 包索引章节标记时间戳。对真实光驱而言这是不理想的额外工作。建议对存储在硬盘上的 DVD 结构备份使用此选项，更快。与 `pgc` 和 `pg` 不兼容。默认值为 0，即 false。
 
-- **`trim bool`** Skip padding cells (i.e. cells shorter than 1 second) from the beginning. There exist many discs with filler segments at the beginning of the PGC, often with junk data intended for controlling a real DVD player's buffering speed and with no other material data value. Not applicable to menus. Default is 1, true.
+- **`trim bool`** 跳过开头的填充单元（即短于 1 秒的单元）。许多光盘在 PGC 开头带有填充段，通常含有用于控制真实 DVD 播放器缓冲速度的垃圾数据，没有其他实质内容。不适用于菜单。默认值为 1，即 true。
 
-### Examples
+### 示例
 
-- Open title 3 from a given DVD structure:
+- 打开给定 DVD 结构中的标题 3：
 
   ``` text
   ffmpeg -f dvdvideo -title 3 -i <path to DVD> ...
   ```
 
-- Open chapters 3-6 from title 1 from a given DVD structure:
+- 打开给定 DVD 结构中标题 1 的第 3-6 章：
 
   ``` text
   ffmpeg -f dvdvideo -chapter_start 3 -chapter_end 6 -title 1 -i <path to DVD> ...
   ```
 
-- Open only chapter 5 from title 1 from a given DVD structure:
+- 只打开给定 DVD 结构中标题 1 的第 5 章：
 
   ``` text
   ffmpeg -f dvdvideo -chapter_start 5 -chapter_end 5 -title 1 -i <path to DVD> ...
   ```
 
-- Demux menu with language 1 from VTS 1, PGC 1, starting at PG 1:
+- 从 VTS 1、PGC 1 解复用语言 1 的菜单，从 PG 1 开始：
 
   ``` text
   ffmpeg -f dvdvideo -menu 1 -menu_lu 1 -menu_vts 1 -pgc 1 -pg 1 -i <path to DVD> ...
@@ -418,31 +414,31 @@ This demuxer accepts the following options:
 
 ## ea
 
-Electronic Arts Multimedia format demuxer.
+Electronic Arts 多媒体格式解复用器。
 
-This format is used by various Electronic Arts games.
+此格式被多款 Electronic Arts 游戏使用。
 
-### Options
+### 选项
 
-- **`merge_alpha bool`** Normally the VP6 alpha channel (if exists) is returned as a secondary video stream, by setting this option you can make the demuxer return a single video stream which contains the alpha channel in addition to the ordinary video.
+- **`merge_alpha bool`** 通常，VP6 透明通道（如果存在）会作为辅助视频流返回；设置此选项后，解复用器将返回单一视频流，其中除普通视频外还包含透明通道。
 
 ## imf
 
-Interoperable Master Format demuxer.
+可互操作母版格式 (Interoperable Master Format) 解复用器。
 
-This demuxer presents audio and video streams found in an IMF Composition, as specified in [SMPTE ST 2067-2](https://doi.org/10.5594/SMPTE.ST2067-2.2020).
+此解复用器呈现 IMF Composition 中找到的音频和视频流，如 [SMPTE ST 2067-2](https://doi.org/10.5594/SMPTE.ST2067-2.2020) 所规定。
 
 ``` text
 ffmpeg [-assetmaps <path of ASSETMAP1>,<path of ASSETMAP2>,...] -i <path of CPL> ...
 ```
 
-If `-assetmaps` is not specified, the demuxer looks for a file called `ASSETMAP.xml` in the same directory as the CPL.
+若未指定 `-assetmaps`，解复用器会在 CPL 所在目录中查找名为 `ASSETMAP.xml` 的文件。
 
 ## flv, live_flv, kux
 
-Adobe Flash Video Format demuxer.
+Adobe Flash Video 格式解复用器。
 
-This demuxer is used to demux FLV files and RTMP network streams. In case of live network streams, if you force format, you may use live_flv option instead of flv to survive timestamp discontinuities. KUX is a flv variant used on the Youku platform.
+此解复用器用于解复用 FLV 文件和 RTMP 网络流。对于直播网络流，如果强制指定格式，可以使用 live_flv 选项代替 flv，以应对时间戳不连续。KUX 是优酷平台使用的 flv 变体。
 
 ``` text
 ffmpeg -f flv -i myfile.flv ...
@@ -451,138 +447,138 @@ ffmpeg -f live_flv -i rtmp://<any.server>/anything/key ....
 
 | Term | Description |
 |----|----|
-| `-flv_metadata bool` | Allocate the streams according to the onMetaData array content. |
-| `-flv_ignore_prevtag bool` | Ignore the size of previous tag value. |
-| `-flv_full_metadata bool` | Output all context of the onMetadata. |
+| `-flv_metadata bool` | 根据 onMetaData 数组内容分配流。 |
+| `-flv_ignore_prevtag bool` | 忽略前一个 tag 值的大小。 |
+| `-flv_full_metadata bool` | 输出 onMetadata 的全部上下文。 |
 
 ## gif
 
-Animated GIF demuxer.
+动图 GIF (Animated GIF) 解复用器。
 
-It accepts the following options:
+它接受以下选项：
 
-- **`min_delay`** Set the minimum valid delay between frames in hundredths of seconds. Range is 0 to 6000. Default value is 2.
+- **`min_delay`** 设置帧间最小有效延迟（单位为百分之一秒）。范围为 0 到 6000。默认值为 2。
 
-- **`max_gif_delay`** Set the maximum valid delay between frames in hundredth of seconds. Range is 0 to 65535. Default value is 65535 (nearly eleven minutes), the maximum value allowed by the specification.
+- **`max_gif_delay`** 设置帧间最大有效延迟（单位为百分之一秒）。范围为 0 到 65535。默认值为 65535（接近十一分钟），即规范允许的最大值。
 
-- **`default_delay`** Set the default delay between frames in hundredths of seconds. Range is 0 to 6000. Default value is 10.
+- **`default_delay`** 设置帧间默认延迟（单位为百分之一秒）。范围为 0 到 6000。默认值为 10。
 
-- **`ignore_loop`** GIF files can contain information to loop a certain number of times (or infinitely). If `ignore_loop` is set to 1, then the loop setting from the input will be ignored and looping will not occur. If set to 0, then looping will occur and will cycle the number of times according to the GIF. Default value is 1.
+- **`ignore_loop`** GIF 文件可包含按一定次数（或无限次）循环的信息。若 `ignore_loop` 设为 1，则忽略输入中的循环设置，不进行循环。若设为 0，则进行循环，并按 GIF 的设置循环相应次数。默认值为 1。
 
-For example, with the overlay filter, place an infinitely looping GIF over another video:
+例如，借助 overlay 滤镜，将无限循环的 GIF 叠加在另一个视频上：
 
 ``` text
 ffmpeg -i input.mp4 -ignore_loop 0 -i input.gif -filter_complex overlay=shortest=1 out.mkv
 ```
 
-Note that in the above example the shortest option for overlay filter is used to end the output video at the length of the shortest input file, which in this case is `input.mp4` as the GIF in this example loops infinitely.
+注意，上例使用 overlay 滤镜的 shortest 选项使输出视频在最短输入文件的长度处结束，在本例中即 `input.mp4`，因为示例中的 GIF 无限循环。
 
 ## hls
 
-HLS demuxer
+HLS 解复用器
 
-Apple HTTP Live Streaming demuxer.
+Apple HTTP Live Streaming 解复用器。
 
-This demuxer presents all AVStreams from all variant streams. The id field is set to the bitrate variant index number. By setting the discard flags on AVStreams (by pressing 'a' or 'v' in ffplay), the caller can decide which variant streams to actually receive. The total bitrate of the variant that the stream belongs to is available in a metadata key named "variant_bitrate".
+此解复用器呈现来自所有变体流 (variant stream) 的全部 AVStream。id 字段设为码率变体的索引号。通过对 AVStream 设置 discard 标志（在 ffplay 中按 'a' 或 'v'），调用方可以决定实际接收哪些变体流。流所属变体的总码率可在名为 "variant_bitrate" 的元数据键中获得。
 
-It accepts the following options:
+它接受以下选项：
 
-- **`live_start_index`** segment index to start live streams at (negative values are from the end).
+- **`live_start_index`** 直播流起始的分段索引（负值表示从末尾计）。
 
-- **`prefer_x_start`** prefer to use \#EXT-X-START if it's in playlist instead of live_start_index.
+- **`prefer_x_start`** 若播放列表中存在 \#EXT-X-START，则优先使用它而不是 live_start_index。
 
-- **`allowed_extensions`** ',' separated list of file extensions that hls is allowed to access.
+- **`allowed_extensions`** 以 ',' 分隔的、允许 hls 访问的文件扩展名列表。
 
-- **`extension_picky`** This blocks disallowed extensions from probing It also requires all available segments to have matching extensions to the format except mpegts, which is always allowed. It is recommended to set the whitelists correctly instead of depending on extensions Enabled by default.
+- **`extension_picky`** 阻止不允许的扩展名参与探测。它还要求所有可用分段的扩展名与格式匹配（mpegts 除外，mpegts 始终被允许）。建议正确设置白名单而不是依赖扩展名。默认启用。
 
-- **`max_reload`** Maximum number of times a insufficient list is attempted to be reloaded. Default value is 1000.
+- **`max_reload`** 尝试重新加载不完整列表的最大次数。默认值为 1000。
 
-- **`m3u8_hold_counters`** The maximum number of times to load m3u8 when it refreshes without new segments. Default value is 1000.
+- **`m3u8_hold_counters`** m3u8 刷新但没有新分段时的最大加载次数。默认值为 1000。
 
-- **`http_persistent`** Use persistent HTTP connections. Applicable only for HTTP streams. Enabled by default.
+- **`http_persistent`** 使用持久 HTTP 连接。仅适用于 HTTP 流。默认启用。
 
-- **`http_multiple`** Use multiple HTTP connections for downloading HTTP segments. Enabled by default for HTTP/1.1 servers.
+- **`http_multiple`** 使用多个 HTTP 连接下载 HTTP 分段。对 HTTP/1.1 服务器默认启用。
 
-- **`http_seekable`** Use HTTP partial requests for downloading HTTP segments. 0 = disable, 1 = enable, -1 = auto, Default is auto.
+- **`http_seekable`** 使用 HTTP 部分请求下载 HTTP 分段。0 = 禁用，1 = 启用，-1 = 自动。默认为自动。
 
-- **`seg_format_options`** Set options for the demuxer of media segments using a list of key=value pairs separated by `:`.
+- **`seg_format_options`** 使用以 `:` 分隔的 key=value 对列表设置媒体分段解复用器的选项。
 
-- **`seg_max_retry`** Maximum number of times to reload a segment on error, useful when segment skip on network error is not desired. Default value is 0.
+- **`seg_max_retry`** 出错时重新加载分段的最大次数，在不希望因网络错误跳过分段时有用。默认值为 0。
 
 ## image2
 
-Image file demuxer.
+图像文件解复用器。
 
-This demuxer reads from a list of image files specified by a pattern. The syntax and meaning of the pattern is specified by the option \<pattern_type\>.
+此解复用器从模式 (pattern) 指定的图像文件列表读取。模式的语法与含义由选项 \<pattern_type\> 指定。
 
-The pattern may contain a suffix which is used to automatically determine the format of the images contained in the files.
+模式可以包含一个后缀，用于自动确定文件中所含图像的格式。
 
-The size, the pixel format, and the format of each image must be the same for all the files in the sequence.
+序列中所有文件的每个图像的大小、像素格式和格式必须相同。
 
-This demuxer accepts the following options:
+此解复用器接受以下选项：
 
-- **`framerate`** Set the frame rate for the video stream. It defaults to 25.
+- **`framerate`** 设置视频流的帧率。默认为 25。
 
-- **`loop`** If set to 1, loop over the input. Default value is 0.
+- **`loop`** 若设为 1，循环读取输入。默认值为 0。
 
-- **`pattern_type`** Select the pattern type used to interpret the provided filename.
+- **`pattern_type`** 选择用于解释所提供文件名的模式类型。
 
-  \<pattern_type\> accepts one of the following values.
+  \<pattern_type\> 接受以下取值之一。
 
-  - **`none`** Disable pattern matching, therefore the video will only contain the specified image. You should use this option if you do not want to create sequences from multiple images and your filenames may contain special pattern characters.
+  - **`none`** 禁用模式匹配，因此视频将只包含指定的图像。如果不想从多幅图像创建序列，且文件名可能包含特殊模式字符，应使用此选项。
 
-  - **`sequence`** Select a sequence pattern type, used to specify a sequence of files indexed by sequential numbers.
+  - **`sequence`** 选择序列模式类型，用于指定以顺序编号索引的文件序列。
 
-    A sequence pattern may contain the string "%d" or "%0\<N\>d", which specifies the position of the characters representing a sequential number in each filename matched by the pattern. If the form "%d0\<N\>d" is used, the string representing the number in each filename is 0-padded and \<N\> is the total number of 0-padded digits representing the number. The literal character '%' can be specified in the pattern with the string "%%".
+    序列模式可包含字符串 "%d" 或 "%0\<N\>d"，它指定每个匹配文件名中表示顺序编号的字符的位置。若使用 "%d0\<N\>d" 形式，每个文件名中表示编号的字符串以 0 填充，\<N\> 是表示编号的 0 填充位数的总数。模式中可用字符串 "%%" 指定字面字符 '%'。
 
-    If the sequence pattern contains "%d" or "%0\<N\>d", the first filename of the file list specified by the pattern must contain a number inclusively contained between \<start_number\> and \<start_number\>+\<start_number_range\>-1, and all the following numbers must be sequential.
+    若序列模式包含 "%d" 或 "%0\<N\>d"，则模式指定的文件列表的第一个文件名必须包含介于 \<start_number\> 与 \<start_number\>+\<start_number_range\>-1 之间（含边界）的编号，且后续所有编号必须连续。
 
-    For example the pattern "img-%03d.bmp" will match a sequence of filenames of the form `img-001.bmp`, `img-002.bmp`, ..., `img-010.bmp`, etc.; the pattern "i%%m%%g-%d.jpg" will match a sequence of filenames of the form `i%m%g-1.jpg`, `i%m%g-2.jpg`, ..., `i%m%g-10.jpg`, etc.
+    例如，模式 "img-%03d.bmp" 将匹配 `img-001.bmp`、`img-002.bmp`、……、`img-010.bmp` 等形式的文件名序列；模式 "i%%m%%g-%d.jpg" 将匹配 `i%m%g-1.jpg`、`i%m%g-2.jpg`、……、`i%m%g-10.jpg` 等形式的文件名序列。
 
-    Note that the pattern must not necessarily contain "%d" or "%0\<N\>d", for example to convert a single image file `img.jpeg` you can employ the command:
+    注意，模式不一定必须包含 "%d" 或 "%0\<N\>d"，例如转换单个图像文件 `img.jpeg` 可以使用命令：
 
     ``` text
     ffmpeg -i img.jpeg img.png
     ```
 
-  - **`glob`** Select a glob wildcard pattern type.
+  - **`glob`** 选择 glob 通配符模式类型。
 
-    The pattern is interpreted like a `glob()` pattern. This is only selectable if libavformat was compiled with globbing support.
+    模式按 `glob()` 模式解释。仅当 libavformat 编译时带有 glob 支持才可选择此项。
 
-  Default value is \<sequence\>.
+  默认值为 \<sequence\>。
 
-- **`pixel_format`** Set the pixel format of the images to read. If not specified the pixel format is guessed from the first image file in the sequence.
+- **`pixel_format`** 设置要读取图像的像素格式。若未指定，则从序列中第一幅图像文件猜测。
 
-- **`start_number`** Set the index of the file matched by the image file pattern to start to read from. Default value is 0.
+- **`start_number`** 设置图像文件模式匹配的文件中开始读取的索引。默认值为 0。
 
-- **`start_number_range`** Set the index interval range to check when looking for the first image file in the sequence, starting from \<start_number\>. Default value is 5.
+- **`start_number_range`** 设置查找序列中第一幅图像文件时检查的索引区间范围，从 \<start_number\> 开始。默认值为 5。
 
-- **`ts_from_file`** If set to 1, will set frame timestamp to modification time of image file. Note that monotonity of timestamps is not provided: images go in the same order as without this option. Default value is 0. If set to 2, will set frame timestamp to the modification time of the image file in nanosecond precision.
+- **`ts_from_file`** 若设为 1，将帧时间戳设为图像文件的修改时间。注意这不保证时间戳单调：图像顺序与不使用此选项时相同。默认值为 0。若设为 2，将帧时间戳设为图像文件的修改时间（纳秒精度）。
 
-- **`video_size`** Set the video size of the images to read. If not specified the video size is guessed from the first image file in the sequence.
+- **`video_size`** 设置要读取图像的视频尺寸。若未指定，则从序列中第一幅图像文件猜测。
 
-- **`export_path_metadata`** If set to 1, will add two extra fields to the metadata found in input, making them also available for other filters (see \<drawtext\> filter for examples). Default value is 0. The extra fields are described below:
+- **`export_path_metadata`** 若设为 1，将在输入中发现的元数据基础上增加两个额外字段，使其也可供其他滤镜使用（示例参见 \<drawtext\> 滤镜）。默认值为 0。额外字段说明如下：
 
   | Term | Description |
   |----|----|
-  | `lavf.image2dec.source_path` | Corresponds to the full path to the input file being read. |
-  | `lavf.image2dec.source_basename` | Corresponds to the name of the file being read. |
+  | `lavf.image2dec.source_path` | 对应被读取输入文件的完整路径。 |
+  | `lavf.image2dec.source_basename` | 对应被读取文件的名称。 |
 
-### Examples
+### 示例
 
-- Use `ffmpeg` for creating a video from the images in the file sequence `img-001.jpeg`, `img-002.jpeg`, ..., assuming an input frame rate of 10 frames per second:
+- 使用 `ffmpeg` 从文件序列 `img-001.jpeg`、`img-002.jpeg`、……的图像创建视频，假设输入帧率为每秒 10 帧：
 
   ``` text
   ffmpeg -framerate 10 -i 'img-%03d.jpeg' out.mkv
   ```
 
-- As above, but start by reading from a file with index 100 in the sequence:
+- 同上，但从序列中索引为 100 的文件开始读取：
 
   ``` text
   ffmpeg -framerate 10 -start_number 100 -i 'img-%03d.jpeg' out.mkv
   ```
 
-- Read images matching the "\*.png" glob pattern , that is all the files terminating with the ".png" suffix:
+- 读取匹配 "\*.png" glob 模式的图像，即所有以 ".png" 后缀结尾的文件：
 
   ``` text
   ffmpeg -framerate 10 -pattern_type glob -i "*.png" out.mkv
@@ -590,151 +586,151 @@ This demuxer accepts the following options:
 
 ## libgme
 
-The Game Music Emu library is a collection of video game music file emulators.
+Game Music Emu 库是视频游戏音乐文件模拟器的集合。
 
-See <https://bitbucket.org/mpyne/game-music-emu/overview> for more information.
+更多信息参见 <https://bitbucket.org/mpyne/game-music-emu/overview>。
 
-It accepts the following options:
+它接受以下选项：
 
-- **`track_index`** Set the index of which track to demux. The demuxer can only export one track. Track indexes start at 0. Default is to pick the first track. Number of tracks is exported as \<tracks\> metadata entry.
+- **`track_index`** 设置要解复用的音轨索引。该解复用器只能导出一条音轨。音轨索引从 0 开始。默认选取第一条音轨。音轨数作为 \<tracks\> 元数据条目导出。
 
-- **`sample_rate`** Set the sampling rate of the exported track. Range is 1000 to 999999. Default is 44100.
+- **`sample_rate`** 设置导出音轨的采样率。范围为 1000 到 999999。默认值为 44100。
 
-- **`max_size (bytes)`** The demuxer buffers the entire file into memory. Adjust this value to set the maximum buffer size, which in turn, acts as a ceiling for the size of files that can be read. Default is 50 MiB.
+- **`max_size (bytes)`** 该解复用器将整个文件缓冲进内存。调整此值以设置最大缓冲大小，它同时构成可读文件大小的上限。默认为 50 MiB。
 
 ## libmodplug
 
-ModPlug based module demuxer
+基于 ModPlug 的模块 (module) 解复用器
 
-See <https://github.com/Konstanty/libmodplug>
+参见 <https://github.com/Konstanty/libmodplug>
 
-It will export one 2-channel 16-bit 44.1 kHz audio stream. Optionally, a `pal8` 16-color video stream can be exported with or without printed metadata.
+它将导出一条 2 声道 16 位 44.1 kHz 音频流。可选地，还可导出一条 `pal8` 16 色视频流（可带或不带打印的元数据）。
 
-It accepts the following options:
+它接受以下选项：
 
-- **`noise_reduction`** Apply a simple low-pass filter. Can be 1 (on) or 0 (off). Default is 0.
+- **`noise_reduction`** 应用简单的低通滤镜。可为 1（开）或 0（关）。默认值为 0。
 
-- **`reverb_depth`** Set amount of reverb. Range 0-100. Default is 0.
+- **`reverb_depth`** 设置混响量。范围 0-100。默认值为 0。
 
-- **`reverb_delay`** Set delay in ms, clamped to 40-250 ms. Default is 0.
+- **`reverb_delay`** 设置延迟（毫秒），限制在 40-250 ms。默认值为 0。
 
-- **`bass_amount`** Apply bass expansion a.k.a. XBass or megabass. Range is 0 (quiet) to 100 (loud). Default is 0.
+- **`bass_amount`** 应用低音扩展，又称 XBass 或 megabass。范围为 0（安静）到 100（响亮）。默认值为 0。
 
-- **`bass_range`** Set cutoff i.e. upper-bound for bass frequencies. Range is 10-100 Hz. Default is 0.
+- **`bass_range`** 设置低音频率的截止频率（即上限）。范围为 10-100 Hz。默认值为 0。
 
-- **`surround_depth`** Apply a Dolby Pro-Logic surround effect. Range is 0 (quiet) to 100 (heavy). Default is 0.
+- **`surround_depth`** 应用 Dolby Pro-Logic 环绕声效果。范围为 0（安静）到 100（浓重）。默认值为 0。
 
-- **`surround_delay`** Set surround delay in ms, clamped to 5-40 ms. Default is 0.
+- **`surround_delay`** 设置环绕延迟（毫秒），限制在 5-40 ms。默认值为 0。
 
-- **`max_size`** The demuxer buffers the entire file into memory. Adjust this value to set the maximum buffer size, which in turn, acts as a ceiling for the size of files that can be read. Range is 0 to 100 MiB. 0 removes buffer size limit (not recommended). Default is 5 MiB.
+- **`max_size`** 该解复用器将整个文件缓冲进内存。调整此值以设置最大缓冲大小，它同时构成可读文件大小的上限。范围为 0 到 100 MiB。0 表示移除缓冲大小限制（不推荐）。默认为 5 MiB。
 
-- **`video_stream_expr`** String which is evaluated using the eval API to assign colors to the generated video stream. Variables which can be used are `x`, `y`, `w`, `h`, `t`, `speed`, `tempo`, `order`, `pattern` and `row`.
+- **`video_stream_expr`** 通过 eval API 求值的字符串，用于为生成的视频流指定颜色。可用变量为 `x`、`y`、`w`、`h`、`t`、`speed`、`tempo`、`order`、`pattern` 和 `row`。
 
-- **`video_stream`** Generate video stream. Can be 1 (on) or 0 (off). Default is 0.
+- **`video_stream`** 生成视频流。可为 1（开）或 0（关）。默认值为 0。
 
-- **`video_stream_w`** Set video frame width in 'chars' where one char indicates 8 pixels. Range is 20-512. Default is 30.
+- **`video_stream_w`** 设置视频帧宽度（以"字符"为单位，一个字符表示 8 像素）。范围为 20-512。默认值为 30。
 
-- **`video_stream_h`** Set video frame height in 'chars' where one char indicates 8 pixels. Range is 20-512. Default is 30.
+- **`video_stream_h`** 设置视频帧高度（以"字符"为单位，一个字符表示 8 像素）。范围为 20-512。默认值为 30。
 
-- **`video_stream_ptxt`** Print metadata on video stream. Includes `speed`, `tempo`, `order`, `pattern`, `row` and `ts` (time in ms). Can be 1 (on) or 0 (off). Default is 1.
+- **`video_stream_ptxt`** 在视频流上打印元数据。包括 `speed`、`tempo`、`order`、`pattern`、`row` 和 `ts`（时间，毫秒）。可为 1（开）或 0（关）。默认值为 1。
 
 ## libopenmpt
 
-libopenmpt based module demuxer
+基于 libopenmpt 的模块 (module) 解复用器
 
-See <https://lib.openmpt.org/libopenmpt/> for more information.
+更多信息参见 <https://lib.openmpt.org/libopenmpt/>。
 
-Some files have multiple subsongs (tracks) this can be set with the `subsong` option.
+某些文件包含多个子歌曲 (subsongs/音轨)，可通过 `subsong` 选项设置。
 
-It accepts the following options:
+它接受以下选项：
 
-- **`subsong`** Set the subsong index. This can be either 'all', 'auto', or the index of the subsong. Subsong indexes start at 0. The default is 'auto'.
+- **`subsong`** 设置子歌曲索引。可为 'all'、'auto' 或子歌曲的索引。子歌曲索引从 0 开始。默认值为 'auto'。
 
-  The default value is to let libopenmpt choose.
+  默认值是让 libopenmpt 自行选择。
 
-- **`layout`** Set the channel layout. Valid values are 1, 2, and 4 channel layouts. The default value is STEREO.
+- **`layout`** 设置声道布局。有效值为 1、2 和 4 声道布局。默认值为 STEREO。
 
-- **`sample_rate`** Set the sample rate for libopenmpt to output. Range is from 1000 to INT_MAX. The value default is 48000.
+- **`sample_rate`** 设置 libopenmpt 输出的采样率。范围为 1000 到 INT_MAX。默认值为 48000。
 
 ## mcc
 
-Demuxer for MacCaption MCC files, it supports MCC versions 1.0 and 2.0. MCC files store VANC data, which can include closed captions (EIA-608 and CEA-708), ancillary time code, pan-scan data, etc. By default, for backward compatibility, the MCC demuxer extracts just the EIA-608 and CEA-708 closed captions and returns a `EIA_608` stream, ignoring all other VANC data. You can change it to return all VANC data in a `SMPTE_436M_ANC` data stream by setting `-eia608_extract 0`
+MacCaption MCC 文件解复用器，支持 MCC 版本 1.0 和 2.0。MCC 文件存储 VANC 数据，其中可包含隐藏式字幕（EIA-608 和 CEA-708）、辅助时间码、摇移 (pan-scan) 数据等。默认情况下，出于向后兼容，MCC 解复用器只提取 EIA-608 和 CEA-708 隐藏式字幕并返回 `EIA_608` 流，忽略所有其他 VANC 数据。可通过设置 `-eia608_extract 0` 将其改为返回包含全部 VANC 数据的 `SMPTE_436M_ANC` 数据流
 
-### Examples
+### 示例
 
-- Convert a MCC file to Scenarist (SCC) format:
+- 将 MCC 文件转换为 Scenarist (SCC) 格式：
 
   ``` text
   ffmpeg -i CC.mcc -c:s copy CC.scc
   ```
 
-  Note that the SCC format only supports EIA-608, so this will discard all other data such as CEA-708 extensions.
+  注意 SCC 格式只支持 EIA-608，因此会丢弃所有其他数据（如 CEA-708 扩展）。
 
-- Merge a MCC file into a MXF file:
+- 将 MCC 文件合并进 MXF 文件：
 
   ``` text
   ffmpeg -i video_and_audio.mxf -eia608_extract 0 -i CC.mcc -c copy -map 0 -map 1 out.mxf
   ```
 
-  This retains all VANC data and inserts it into the output MXF file as a `SMPTE_436M_ANC` data stream.
+  这样会保留全部 VANC 数据，并将其作为 `SMPTE_436M_ANC` 数据流插入输出的 MXF 文件。
 
 ## mov/mp4/3gp
 
-Demuxer for Quicktime File Format & ISO/IEC Base Media File Format (ISO/IEC 14496-12 or MPEG-4 Part 12, ISO/IEC 15444-12 or JPEG 2000 Part 12).
+QuickTime 文件格式与 ISO/IEC 基础媒体文件格式 (ISO/IEC 14496-12 或 MPEG-4 Part 12、ISO/IEC 15444-12 或 JPEG 2000 Part 12) 解复用器。
 
-Registered extensions: mov, mp4, m4a, 3gp, 3g2, mj2, psp, m4b, ism, ismv, isma, f4v
+注册的扩展名：mov、mp4、m4a、3gp、3g2、mj2、psp、m4b、ism、ismv、isma、f4v
 
-### Options
+### 选项
 
-This demuxer accepts the following options:
+此解复用器接受以下选项：
 
-- **`enable_drefs`** Enable loading of external tracks, disabled by default. Enabling this can theoretically leak information in some use cases.
+- **`enable_drefs`** 启用外部轨道 (external track) 的加载，默认禁用。在某些使用场景下启用它理论上可能泄露信息。
 
-- **`use_absolute_path`** Allows loading of external tracks via absolute paths, disabled by default. Enabling this poses a security risk. It should only be enabled if the source is known to be non-malicious.
+- **`use_absolute_path`** 允许通过绝对路径加载外部轨道，默认禁用。启用会带来安全风险。仅在确认来源无恶意时才应启用。
 
-- **`seek_streams_individually`** When seeking, identify the closest point in each stream individually and demux packets in that stream from identified point. This can lead to a different sequence of packets compared to demuxing linearly from the beginning. Default is true.
+- **`seek_streams_individually`** 定位时逐流单独寻找最近点，并从该点开始解复用该流的包。与从头线性解复用相比，这可能导致不同的包序列。默认值为 true。
 
-- **`ignore_editlist`** Ignore any edit list atoms. The demuxer, by default, modifies the stream index to reflect the timeline described by the edit list. Default is false.
+- **`ignore_editlist`** 忽略任何 edit list atom。默认情况下，解复用器会修改流索引以反映 edit list 描述的时间线。默认值为 false。
 
-- **`advanced_editlist`** Modify the stream index to reflect the timeline described by the edit list. `ignore_editlist` must be set to false for this option to be effective. If both `ignore_editlist` and this option are set to false, then only the start of the stream index is modified to reflect initial dwell time or starting timestamp described by the edit list. Default is true.
+- **`advanced_editlist`** 修改流索引以反映 edit list 描述的时间线。此选项生效要求 `ignore_editlist` 设为 false。若 `ignore_editlist` 与此选项都设为 false，则只修改流索引的开头，以反映 edit list 描述的初始停留时间或起始时间戳。默认值为 true。
 
-- **`ignore_chapters`** Don't parse chapters. This includes GoPro 'HiLight' tags/moments. Note that chapters are only parsed when input is seekable. Default is false.
+- **`ignore_chapters`** 不解析章节。包括 GoPro 'HiLight' 标签/时刻。注意只有输入可定位时才会解析章节。默认值为 false。
 
-- **`use_mfra_for`** For seekable fragmented input, set fragment's starting timestamp from media fragment random access box, if present.
+- **`use_mfra_for`** 对可定位的分片输入，从媒体分片随机访问 box（如果存在）设置分片的起始时间戳。
 
-  Following options are available:
+  可用选项如下：
 
-  - **`auto`** Auto-detect whether to set mfra timestamps as PTS or DTS *(default)*
+  - **`auto`** 自动检测将 mfra 时间戳设为 PTS 还是 DTS *(默认)*
 
-  - **`dts`** Set mfra timestamps as DTS
+  - **`dts`** 将 mfra 时间戳设为 DTS
 
-  - **`pts`** Set mfra timestamps as PTS
+  - **`pts`** 将 mfra 时间戳设为 PTS
 
-  - **`0`** Don't use mfra box to set timestamps
+  - **`0`** 不使用 mfra box 设置时间戳
 
-- **`use_tfdt`** For fragmented input, set fragment's starting timestamp to `baseMediaDecodeTime` from the `tfdt` box. Default is enabled, which will prefer to use the `tfdt` box to set DTS. Disable to use the `earliest_presentation_time` from the `sidx` box. In either case, the timestamp from the `mfra` box will be used if it's available and `use_mfra_for` is set to pts or dts.
+- **`use_tfdt`** 对分片输入，将分片起始时间戳设为 `tfdt` box 中的 `baseMediaDecodeTime`。默认启用，即优先使用 `tfdt` box 设置 DTS。禁用以使用 `sidx` box 中的 `earliest_presentation_time`。无论哪种情况，若 mfra box 可用且 `use_mfra_for` 设为 pts 或 dts，都会使用 `mfra` box 中的时间戳。
 
-- **`export_all`** Export unrecognized boxes within the \<udta\> box as metadata entries. The first four characters of the box type are set as the key. Default is false.
+- **`export_all`** 将 \<udta\> box 内未识别的 box 导出为元数据条目。box 类型的前四个字符作为键。默认值为 false。
 
-- **`export_xmp`** Export entire contents of \<XMP\_\> box and \<uuid\> box as a string with key `xmp`. Note that if `export_all` is set and this option isn't, the contents of \<XMP\_\> box are still exported but with key `XMP_`. Default is false.
+- **`export_xmp`** 将 \<XMP\_\> box 和 \<uuid\> box 的全部内容导出为键为 `xmp` 的字符串。注意若设置了 `export_all` 而未设置此选项，\<XMP\_\> box 的内容仍会导出，但键为 `XMP_`。默认值为 false。
 
-- **`activation_bytes`** 4-byte key required to decrypt Audible AAX and AAX+ files. See Audible AAX subsection below.
+- **`activation_bytes`** 解密 Audible AAX 与 AAX+ 文件所需的 4 字节密钥。参见下文 Audible AAX 小节。
 
-- **`audible_fixed_key`** Fixed key used for handling Audible AAX/AAX+ files. It has been pre-set so should not be necessary to specify.
+- **`audible_fixed_key`** 处理 Audible AAX/AAX+ 文件使用的固定密钥。已预先设置，无需指定。
 
-- **`decryption_key`** Default 16-byte key, in hex, to decrypt files encrypted using ISO Common Encryption (CENC/AES-128 CTR; ISO/IEC 23001-7).
+- **`decryption_key`** 默认的 16 字节密钥（十六进制），用于解密使用 ISO 通用加密 (CENC/AES-128 CTR; ISO/IEC 23001-7) 加密的文件。
 
-- **`decryption_keys`** Dictionary of 16-byte key ID =\> 16-byte key, both in hex, to decrypt files encrypted using ISO Common Encryption (CENC/AES-128 CTR; ISO/IEC 23001-7).
+- **`decryption_keys`** 16 字节密钥 ID =\> 16 字节密钥的字典（均为十六进制），用于解密使用 ISO 通用加密 (CENC/AES-128 CTR; ISO/IEC 23001-7) 加密的文件。
 
-- **`max_stts_delta`** Very high sample deltas written in a trak's stts box may occasionally be intended but usually they are written in error or used to store a negative value for dts correction when treated as signed 32-bit integers. This option lets the user set an upper limit, beyond which the delta is clamped to 1. Values greater than the limit if negative when cast to int32 are used to adjust onward dts.
+- **`max_stts_delta`** 写入 trak 的 stts box 的极高采样增量偶尔是有意为之，但通常是错误写入，或用于在被当作有符号 32 位整数时存储负值以修正 dts。此选项允许用户设置上限，超过上限的增量会被限制为 1。超出上限的值若转换为 int32 后为负，则用于调整后续 dts。
 
-  Unit is the track time scale. Range is 0 to UINT_MAX. Default is `UINT_MAX - 48000*10` which allows up to a 10 second dts correction for 48 kHz audio streams while accommodating 99.9% of `uint32` range.
+  单位为轨道时间基 (track time scale)。范围为 0 到 UINT_MAX。默认值为 `UINT_MAX - 48000*10`，它允许 48 kHz 音频流最多 10 秒的 dts 修正，同时覆盖 99.9% 的 `uint32` 范围。
 
-- **`interleaved_read`** Interleave packets from multiple tracks at demuxer level. For badly interleaved files, this prevents playback issues caused by large gaps between packets in different tracks, as MOV/MP4 do not have packet placement requirements. However, this can cause excessive seeking on very badly interleaved files, due to seeking between tracks, so disabling it may prevent I/O issues, at the expense of playback.
+- **`interleaved_read`** 在解复用器层面交错来自多条轨道的包。对交错不良的文件，这可避免不同轨道的包之间的大段空隙引起的播放问题（MOV/MP4 对包位置没有要求）。但这对交错极其糟糕的文件可能造成过度定位（轨道间来回寻道），因此禁用它可能避免 I/O 问题，但牺牲播放质量。
 
 ### Audible AAX
 
-Audible AAX files are encrypted M4B files, and they can be decrypted by specifying a 4 byte activation secret.
+Audible AAX 文件是加密的 M4B 文件，可通过指定 4 字节激活密钥解密。
 
 ``` text
 ffmpeg -activation_bytes 1CEB00DA -i test.aax -vn -c:a copy output.mp4
@@ -742,55 +738,55 @@ ffmpeg -activation_bytes 1CEB00DA -i test.aax -vn -c:a copy output.mp4
 
 ## mpegts
 
-MPEG-2 transport stream demuxer.
+MPEG-2 传输流解复用器。
 
-This demuxer accepts the following options:
+此解复用器接受以下选项：
 
-- **`resync_size`** Set size limit for looking up a new synchronization. Default value is 65536.
+- **`resync_size`** 设置查找新同步的大小限制。默认值为 65536。
 
-- **`skip_unknown_pmt`** Skip PMTs for programs not defined in the PAT. Default value is 0.
+- **`skip_unknown_pmt`** 跳过未在 PAT 中定义的节目的 PMT。默认值为 0。
 
-- **`fix_teletext_pts`** Override teletext packet PTS and DTS values with the timestamps calculated from the PCR of the first program which the teletext stream is part of and is not discarded. Default value is 1, set this option to 0 if you want your teletext packet PTS and DTS values untouched.
+- **`fix_teletext_pts`** 用图文电视流所属且未被丢弃的第一个节目的 PCR 计算出的时间戳，覆盖图文电视包的 PTS 和 DTS 值。默认值为 1；若想保持图文电视包的 PTS 与 DTS 原样，将此选项设为 0。
 
-- **`ts_packetsize`** Output option carrying the raw packet size in bytes. Show the detected raw packet size, cannot be set by the user.
+- **`ts_packetsize`** 输出选项，携带以字节为单位的原始包大小。显示检测到的原始包大小，用户无法设置。
 
-- **`scan_all_pmts`** Scan and combine all PMTs. The value is an integer with value from -1 to 1 (-1 means automatic setting, 1 means enabled, 0 means disabled). Default value is -1.
+- **`scan_all_pmts`** 扫描并合并所有 PMT。取值为 -1 到 1 的整数（-1 表示自动设置，1 表示启用，0 表示禁用）。默认值为 -1。
 
-- **`merge_pmt_versions`** Reuse existing streams when a PMT's version is updated and elementary streams move to different PIDs. Default value is 0.
+- **`merge_pmt_versions`** 当 PMT 版本更新且基本流移动到不同 PID 时复用现有流。默认值为 0。
 
-- **`max_packet_size`** Set maximum size, in bytes, of packet emitted by the demuxer. Payloads above this size are split across multiple packets. Range is 184 to INT_MAX/2. Default is 204800 bytes.
+- **`max_packet_size`** 设置解复用器输出包的最大大小（字节）。超过此大小的载荷会被拆分到多个包。范围为 184 到 INT_MAX/2。默认值为 204800 字节。
 
 ## mpjpeg
 
-MJPEG encapsulated in multi-part MIME demuxer.
+多部分 MIME 封装的 MJPEG 解复用器。
 
-This demuxer allows reading of MJPEG, where each frame is represented as a part of multipart/x-mixed-replace stream.
+此解复用器允许读取 MJPEG，其中每帧表示为 multipart/x-mixed-replace 流的一部分。
 
-- **`strict_mime_boundary`** Default implementation applies a relaxed standard to multi-part MIME boundary detection, to prevent regression with numerous existing endpoints not generating a proper MIME MJPEG stream. Turning this option on by setting it to 1 will result in a stricter check of the boundary value.
+- **`strict_mime_boundary`** 默认实现对多部分 MIME 边界检测采用宽松标准，以避免与大量未生成规范 MIME MJPEG 流的现有端点产生回归。将此选项设为 1 开启后将进行更严格的边界值检查。
 
 ## rawvideo
 
-Raw video demuxer.
+原始视频 (raw video) 解复用器。
 
-This demuxer allows one to read raw video data. Since there is no header specifying the assumed video parameters, the user must specify them in order to be able to decode the data correctly.
+此解复用器允许读取原始视频数据。由于没有指定视频参数的头信息，用户必须显式指定它们才能正确解码数据。
 
-This demuxer accepts the following options:
+此解复用器接受以下选项：
 
-- **`framerate`** Set input video frame rate. Default value is 25.
+- **`framerate`** 设置输入视频帧率。默认值为 25。
 
-- **`pixel_format`** Set the input video pixel format. Default value is `yuv420p`.
+- **`pixel_format`** 设置输入视频像素格式。默认值为 `yuv420p`。
 
-- **`stride`** Set frame line size in bytes, only required if there are extra padding. For multiplane formats, `stride` is a list of line size for each plane.
+- **`stride`** 设置帧行大小（字节），仅在存在额外填充时需要。对多平面格式，`stride` 是每个平面行大小的列表。
 
-- **`video_size`** Set the input video size. This value must be specified explicitly.
+- **`video_size`** 设置输入视频尺寸。此值必须显式指定。
 
-For example to read a rawvideo file `input.raw` with `ffplay`, assuming a pixel format of `rgb24`, a video size of `320x240`, and a frame rate of 10 images per second, use the command:
+例如，使用 `ffplay` 读取 rawvideo 文件 `input.raw`，假设像素格式为 `rgb24`、视频尺寸为 `320x240`、帧率为每秒 10 幅图像，使用命令：
 
 ``` text
 ffplay -f rawvideo -pixel_format rgb24 -video_size 320x240 -framerate 10 input.raw
 ```
 
-Read a rawvideo with `ffplay`, assuming a pixel format of `yuv420p`, a video size of `1080x1920`, has 8 bytes of padding in each line of Y plane, and 4 bytes of padding with UV plane,
+使用 `ffplay` 读取 rawvideo，假设像素格式为 `yuv420p`、视频尺寸为 `1080x1920`，Y 平面每行有 8 字节填充，UV 平面有 4 字节填充，
 
 ``` text
 ffplay -f rawvideo -pixel_format yuv420p -video_size 1080x1920 -stride 1088,544,544 input.raw
@@ -798,33 +794,33 @@ ffplay -f rawvideo -pixel_format yuv420p -video_size 1080x1920 -stride 1088,544,
 
 ## rcwt
 
-RCWT (Raw Captions With Time) is a format native to ccextractor, a commonly used open source tool for processing 608/708 Closed Captions (CC) sources. For more information on the format, see "rcwtenc" in `ffmpeg-formats`.
+RCWT (Raw Captions With Time) 是 ccextractor 原生的格式，ccextractor 是处理 608/708 隐藏式字幕 (CC) 源的常用开源工具。关于该格式的更多信息，参见 `ffmpeg-formats` 中的"rcwtenc"。
 
-This demuxer implements the specification as of March 2024, which has been stable and unchanged since April 2014.
+此解复用器实现 2024 年 3 月版的规范，该规范自 2014 年 4 月以来保持稳定未变。
 
-### Examples
+### 示例
 
-- Render CC to ASS using the built-in decoder:
+- 使用内置解码器将 CC 渲染为 ASS：
 
   ``` text
   ffmpeg -i CC.rcwt.bin CC.ass
   ```
 
-  Note that if your output appears to be empty, you may have to manually set the decoder's `data_field` option to pick the desired CC substream.
+  注意如果输出为空，可能需要手动设置解码器的 `data_field` 选项以选择所需的 CC 子流。
 
-- Convert an RCWT backup to Scenarist (SCC) format:
+- 将 RCWT 备份转换为 Scenarist (SCC) 格式：
 
   ``` text
   ffmpeg -i CC.rcwt.bin -c:s copy CC.scc
   ```
 
-  Note that the SCC format does not support all of the possible CC extensions that can be stored in RCWT (such as EIA-708).
+  注意 SCC 格式不支持 RCWT 中可存储的全部 CC 扩展（如 EIA-708）。
 
 ## sbg
 
-SBaGen script demuxer.
+SBaGen 脚本解复用器。
 
-This demuxer reads the script language used by SBaGen <http://uazu.net/sbagen/> to generate binaural beats sessions. A SBG script looks like that:
+此解复用器读取 SBaGen <http://uazu.net/sbagen/> 用来生成双耳节拍 (binaural beats) 会话的脚本语言。SBG 脚本形如：
 
 ``` text
 -SE
@@ -838,19 +834,19 @@ NOW      == a
 +0:30:00    off
 ```
 
-A SBG script can mix absolute and relative timestamps. If the script uses either only absolute timestamps (including the script start time) or only relative ones, then its layout is fixed, and the conversion is straightforward. On the other hand, if the script mixes both kind of timestamps, then the \<NOW\> reference for relative timestamps will be taken from the current time of day at the time the script is read, and the script layout will be frozen according to that reference. That means that if the script is directly played, the actual times will match the absolute timestamps up to the sound controller's clock accuracy, but if the user somehow pauses the playback or seeks, all times will be shifted accordingly.
+SBG 脚本可混合绝对与相对时间戳。如果脚本只使用绝对时间戳（包括脚本起始时间）或只使用相对时间戳，其布局是固定的，转换很直接。反之，如果脚本混合了两种时间戳，则相对时间戳的 \<NOW\> 参考将取自读取脚本时的当前时刻，脚本布局会根据该参考冻结。这意味着直接播放脚本时，实际时间将与绝对时间戳一致（误差为声音控制器的时钟精度），但如果用户暂停播放或定位，所有时间都会相应偏移。
 
 ## tedcaptions
 
-JSON captions used for [TED Talks](http://www.ted.com/).
+[TED Talks](http://www.ted.com/) 使用的 JSON 字幕。
 
-TED does not provide links to the captions, but they can be guessed from the page. The file `tools/bookmarklets.html` from the FFmpeg source tree contains a bookmarklet to expose them.
+TED 不提供字幕链接，但可以从页面猜出。FFmpeg 源码树中的文件 `tools/bookmarklets.html` 包含一个用于展示字幕链接的书签脚本 (bookmarklet)。
 
-This demuxer accepts the following option:
+此解复用器接受以下选项：
 
-- **`start_time`** Set the start time of the TED talk, in milliseconds. The default is 15000 (15s). It is used to sync the captions with the downloadable videos, because they include a 15s intro.
+- **`start_time`** 设置 TED 演讲的起始时间（毫秒）。默认为 15000（15 秒）。它用于将字幕与可下载视频同步，因为视频包含 15 秒的开场。
 
-Example: convert the captions to a format most players understand:
+示例：将字幕转换为大多数播放器都能理解的格式：
 
 ``` text
 ffmpeg -i http://www.ted.com/talks/subtitles/id/1/lang/en talk1-en.srt
@@ -858,273 +854,273 @@ ffmpeg -i http://www.ted.com/talks/subtitles/id/1/lang/en talk1-en.srt
 
 ## vapoursynth
 
-Vapoursynth wrapper.
+VapourSynth 包装器。
 
-Due to security concerns, Vapoursynth scripts will not be autodetected so the input format has to be forced. For ff\* CLI tools, add `-f vapoursynth` before the input `-i yourscript.vpy`.
+出于安全考虑，VapourSynth 脚本不会被自动检测，因此必须强制指定输入格式。对 ff\* 命令行工具，在输入 `-i yourscript.vpy` 之前添加 `-f vapoursynth`。
 
-This demuxer accepts the following option:
+此解复用器接受以下选项：
 
-- **`max_script_size`** The demuxer buffers the entire script into memory. Adjust this value to set the maximum buffer size, which in turn, acts as a ceiling for the size of scripts that can be read. Default is 1 MiB.
+- **`max_script_size`** 该解复用器将整个脚本缓冲进内存。调整此值以设置最大缓冲大小，它同时构成可读脚本大小的上限。默认为 1 MiB。
 
 ## w64
 
-Sony Wave64 Audio demuxer.
+Sony Wave64 音频解复用器。
 
-This demuxer accepts the following options:
+此解复用器接受以下选项：
 
-- **`max_size`** See the same option for the [wav](#wav) demuxer.
+- **`max_size`** 参见 [wav](#wav) 解复用器的同名选项。
 
 ## wav
 
-RIFF Wave Audio demuxer.
+RIFF Wave 音频解复用器。
 
-This demuxer accepts the following options:
+此解复用器接受以下选项：
 
-- **`ignore_length bool`** Ignore the size of the `data` chunk and keep reading until the end of the file if set. May be useful to read broken or partial files where the header was not properly updated, but will misinterpret files with non-audio chunks after the `data` chunk. Default is disabled.
+- **`ignore_length bool`** 若设置，忽略 `data` chunk 的大小并持续读取到文件末尾。对头信息未正确更新的损坏或不完整文件可能有用，但会误读 `data` chunk 之后带有非音频 chunk 的文件。默认禁用。
 
-- **`max_size`** Specify the maximum packet size in bytes for the demuxed packets. By default this is set to 0, which means that a sensible value is chosen based on the input format.
+- **`max_size`** 指定解复用包的最大包大小（字节）。默认设为 0，表示根据输入格式选择合适的值。
 
 ## webp
 
-Animated WebP demuxer.
+动图 WebP (Animated WebP) 解复用器。
 
-It accepts the following options:
+它接受以下选项：
 
-- **`-min_delay int`** Set the minimum valid delay between frames in milliseconds. Range is 0 to 60000. Default value is 10.
+- **`-min_delay int`** 设置帧间最小有效延迟（毫秒）。范围为 0 到 60000。默认值为 10。
 
-- **`-max_webp_delay int`** Set the maximum valid delay between frames in milliseconds. Range is 0 to 16777215. Default value is 16777215 (over four hours), the maximum value allowed by the specification.
+- **`-max_webp_delay int`** 设置帧间最大有效延迟（毫秒）。范围为 0 到 16777215。默认值为 16777215（超过四小时），即规范允许的最大值。
 
-- **`-default_delay int`** Set the default delay between frames in milliseconds. Range is 0 to 60000. Default value is 100.
+- **`-default_delay int`** 设置帧间默认延迟（毫秒）。范围为 0 到 60000。默认值为 100。
 
-- **`-ignore_loop bool`** WebP files can contain information to loop a certain number of times (or infinitely). If `ignore_loop` is set to true, then the loop setting from the input will be ignored and looping will not occur. If set to false, then looping will occur and will cycle the number of times according to the WebP. Default value is true.
+- **`-ignore_loop bool`** WebP 文件可包含按一定次数（或无限次）循环的信息。若 `ignore_loop` 设为 true，则忽略输入中的循环设置，不进行循环。若设为 false，则进行循环，并按 WebP 的设置循环相应次数。默认值为 true。
 
-- **`usebgcolor bool`** WebP files contain a background color hint in the ANIM chunk, but the WebP specification says that viewer applications are not required to use it. If `usebgcolor` is set to true, then the background color hint will be used, otherwise transparent black will be used for the background. Default value is false.
+- **`usebgcolor bool`** WebP 文件在 ANIM chunk 中包含背景颜色提示，但 WebP 规范说明查看器应用不要求使用它。若 `usebgcolor` 设为 true，则使用背景颜色提示，否则背景使用透明黑。默认值为 false。
 
-# Muxers
+# 复用器
 
-Muxers are configured elements in FFmpeg which allow writing multimedia streams to a particular type of file.
+复用器是 FFmpeg 中的配置元素，用于将多媒体流写入特定类型的文件。
 
-When you configure your FFmpeg build, all the supported muxers are enabled by default. You can list all available muxers using the configure option `--list-muxers`.
+配置 FFmpeg 构建时，所有受支持的复用器默认启用。可以使用 configure 选项 `--list-muxers` 列出全部可用复用器。
 
-You can disable all the muxers with the configure option `--disable-muxers` and selectively enable / disable single muxers with the options `--enable-muxer=MUXER` / `--disable-muxer=MUXER`.
+可以使用 configure 选项 `--disable-muxers` 禁用全部复用器，并使用选项 `--enable-muxer=MUXER` / `--disable-muxer=MUXER` 选择性启用/禁用单个复用器。
 
-The option `-muxers` of the ff\* tools will display the list of enabled muxers. Use `-formats` to view a combined list of enabled demuxers and muxers.
+ff\* 工具的 `-muxers` 选项将显示已启用复用器的列表。使用 `-formats` 查看已启用解复用器和复用器的合并列表。
 
-A description of some of the currently available muxers follows.
+下面介绍部分当前可用的复用器。
 
-## Raw muxers
+## Raw 复用器
 
-This section covers raw muxers. They accept a single stream matching the designated codec. They do not store timestamps or metadata. The recognized extension is the same as the muxer name unless indicated otherwise.
+本节介绍 raw 复用器。它们接受匹配指定编解码器的单一流。它们不存储时间戳或元数据。可识别的扩展名与复用器名相同，除非另有说明。
 
-It comprises the following muxers. The media type and the eventual extensions used to automatically selects the muxer from the output extensions are also shown.
+它包含以下复用器。表中同时列出媒体类型以及用于根据输出扩展名自动选择复用器的扩展名（如有）。
 
-- **`ac3 audio`** Dolby Digital, also known as AC-3.
+- **`ac3 audio`** Dolby Digital，又称 AC-3。
 
-- **`adx audio`** CRI Middleware ADX audio.
+- **`adx audio`** CRI Middleware ADX 音频。
 
-  This muxer will write out the total sample count near the start of the first packet when the output is seekable and the count can be stored in 32 bits.
+  当输出可定位且总数能以 32 位存储时，此复用器会在第一个包开头的附近写出采样总数。
 
 - **`aptx audio`** aptX (Audio Processing Technology for Bluetooth)
 
-- **`aptx_hd audio (aptxdh)`** aptX HD (Audio Processing Technology for Bluetooth) audio
+- **`aptx_hd audio (aptxdh)`** aptX HD (Audio Processing Technology for Bluetooth) 音频
 
-- **`avs2 video (avs, avs2)`** AVS2-P2 (Audio Video Standard - Second generation - Part 2) / IEEE 1857.4 video
+- **`avs2 video (avs, avs2)`** AVS2-P2 (Audio Video Standard - Second generation - Part 2) / IEEE 1857.4 视频
 
-- **`avs3 video (avs3)`** AVS3-P2 (Audio Video Standard - Third generation - Part 2) / IEEE 1857.10 video
+- **`avs3 video (avs3)`** AVS3-P2 (Audio Video Standard - Third generation - Part 2) / IEEE 1857.10 视频
 
-- **`cavsvideo video (cavs)`** Chinese AVS (Audio Video Standard - First generation)
+- **`cavsvideo video (cavs)`** 中国 AVS (Audio Video Standard - First generation)
 
-- **`codec2raw audio`** Codec 2 audio.
+- **`codec2raw audio`** Codec 2 音频。
 
-  No extension is registered so format name has to be supplied e.g. with the ffmpeg CLI tool `-f codec2raw`.
+  未注册扩展名，因此必须提供格式名，例如通过 ffmpeg 命令行工具的 `-f codec2raw`。
 
-- **`data any`** Generic data muxer.
+- **`data any`** 通用数据复用器。
 
-  This muxer accepts a single stream with any codec of any type. The input stream has to be selected using the `-map` option with the `ffmpeg` CLI tool.
+  此复用器接受任意类型、任意编解码器的单一流。使用 `ffmpeg` 命令行工具时，必须通过 `-map` 选项选择输入流。
 
-  No extension is registered so format name has to be supplied e.g. with the `ffmpeg` CLI tool `-f data`.
+  未注册扩展名，因此必须提供格式名，例如通过 `ffmpeg` 命令行工具的 `-f data`。
 
-- **`dfpwm audio (dfpwm)`** Raw DFPWM1a (Dynamic Filter Pulse With Modulation) audio muxer.
+- **`dfpwm audio (dfpwm)`** Raw DFPWM1a (Dynamic Filter Pulse With Modulation) 音频复用器。
 
-- **`dirac video (drc, vc2)`** BBC Dirac video.
+- **`dirac video (drc, vc2)`** BBC Dirac 视频。
 
-  The Dirac Pro codec is a subset and is standardized as SMPTE VC-2.
+  Dirac Pro 编解码器是其子集，已标准化为 SMPTE VC-2。
 
-- **`dnxhd video (dnxhd, dnxhr)`** Avid DNxHD video.
+- **`dnxhd video (dnxhd, dnxhr)`** Avid DNxHD 视频。
 
-  It is standardized as SMPTE VC-3. Accepts DNxHR streams.
+  已标准化为 SMPTE VC-3。接受 DNxHR 流。
 
-- **`dts audio`** DTS Coherent Acoustics (DCA) audio
+- **`dts audio`** DTS Coherent Acoustics (DCA) 音频
 
-- **`eac3 audio`** Dolby Digital Plus, also known as Enhanced AC-3
+- **`eac3 audio`** Dolby Digital Plus，又称 Enhanced AC-3
 
-- **`evc video (evc)`** MPEG-5 Essential Video Coding (EVC) / EVC / MPEG-5 Part 1 EVC video
+- **`evc video (evc)`** MPEG-5 Essential Video Coding (EVC) / EVC / MPEG-5 Part 1 EVC 视频
 
-- **`g722 audio`** ITU-T G.722 audio
+- **`g722 audio`** ITU-T G.722 音频
 
-- **`g723_1 audio (tco, rco)`** ITU-T G.723.1 audio
+- **`g723_1 audio (tco, rco)`** ITU-T G.723.1 音频
 
-- **`g726 audio`** ITU-T G.726 big-endian ("left-justified") audio.
+- **`g726 audio`** ITU-T G.726 大端序（"left-justified"）音频。
 
-  No extension is registered so format name has to be supplied e.g. with the `ffmpeg` CLI tool `-f g726`.
+  未注册扩展名，因此必须提供格式名，例如通过 `ffmpeg` 命令行工具的 `-f g726`。
 
-- **`g726le audio`** ITU-T G.726 little-endian ("right-justified") audio.
+- **`g726le audio`** ITU-T G.726 小端序（"right-justified"）音频。
 
-  No extension is registered so format name has to be supplied e.g. with the `ffmpeg` CLI tool `-f g726le`.
+  未注册扩展名，因此必须提供格式名，例如通过 `ffmpeg` 命令行工具的 `-f g726le`。
 
-- **`gsm audio`** Global System for Mobile Communications audio
+- **`gsm audio`** 全球移动通信系统 (GSM) 音频
 
-- **`h261 video`** ITU-T H.261 video
+- **`h261 video`** ITU-T H.261 视频
 
-- **`h263 video`** ITU-T H.263 / H.263-1996, H.263+ / H.263-1998 / H.263 version 2 video
+- **`h263 video`** ITU-T H.263 / H.263-1996、H.263+ / H.263-1998 / H.263 version 2 视频
 
-- **`h264 video (h264, 264)`** ITU-T H.264 / MPEG-4 Part 10 AVC video. Bitstream shall be converted to Annex B syntax if it's in length-prefixed mode.
+- **`h264 video (h264, 264)`** ITU-T H.264 / MPEG-4 Part 10 AVC 视频。比特流若为长度前缀模式，须转换为 Annex B 语法。
 
-- **`hevc video (hevc, h265, 265)`** ITU-T H.265 / MPEG-H Part 2 HEVC video. Bitstream shall be converted to Annex B syntax if it's in length-prefixed mode.
+- **`hevc video (hevc, h265, 265)`** ITU-T H.265 / MPEG-H Part 2 HEVC 视频。比特流若为长度前缀模式，须转换为 Annex B 语法。
 
-- **`m4v video`** MPEG-4 Part 2 video
+- **`m4v video`** MPEG-4 Part 2 视频
 
-- **`mjpeg video (mjpg, mjpeg)`** Motion JPEG video
+- **`mjpeg video (mjpg, mjpeg)`** Motion JPEG 视频
 
-- **`mlp audio`** Meridian Lossless Packing, also known as Packed PCM
+- **`mlp audio`** Meridian Lossless Packing，又称 Packed PCM
 
-- **`mp2 audio (mp2, m2a, mpa)`** MPEG-1 Audio Layer II audio
+- **`mp2 audio (mp2, m2a, mpa)`** MPEG-1 Audio Layer II 音频
 
-- **`mpeg1video video (mpg, mpeg, m1v)`** MPEG-1 Part 2 video.
+- **`mpeg1video video (mpg, mpeg, m1v)`** MPEG-1 Part 2 视频。
 
-- **`mpeg2video video (m2v)`** ITU-T H.262 / MPEG-2 Part 2 video
+- **`mpeg2video video (m2v)`** ITU-T H.262 / MPEG-2 Part 2 视频
 
-- **`obu video`** AV1 low overhead Open Bitstream Units muxer.
+- **`obu video`** AV1 低开销开放比特流单元 (Open Bitstream Units) 复用器。
 
-  Temporal delimiter OBUs will be inserted in all temporal units of the stream.
+  时间分隔符 OBU 会插入流的所有时间单元中。
 
-- **`rawvideo video (yuv, rgb)`** Raw uncompressed video.
+- **`rawvideo video (yuv, rgb)`** 原始未压缩视频。
 
-- **`sbc audio (sbc, msbc)`** Bluetooth SIG low-complexity subband codec audio
+- **`sbc audio (sbc, msbc)`** Bluetooth SIG 低复杂度子带编解码器音频
 
-- **`truehd audio (thd)`** Dolby TrueHD audio
+- **`truehd audio (thd)`** Dolby TrueHD 音频
 
-- **`vc1 video`** SMPTE 421M / VC-1 video
+- **`vc1 video`** SMPTE 421M / VC-1 视频
 
-### Examples
+### 示例
 
-- Store raw video frames with the `rawvideo` muxer using `ffmpeg`:
+- 使用 `ffmpeg` 以 `rawvideo` 复用器存储原始视频帧：
 
   ``` text
   ffmpeg -f lavfi -i testsrc -t 10 -s hd1080p testsrc.yuv
   ```
 
-  Since the rawvideo muxer do not store the information related to size and format, this information must be provided when demuxing the file:
+  由于 rawvideo 复用器不存储尺寸与格式相关信息，解复用该文件时必须提供这些信息：
 
   ``` text
   ffplay -video_size 1920x1080 -pixel_format rgb24 -f rawvideo testsrc.rgb
   ```
 
-## Raw PCM muxers
+## Raw PCM 复用器
 
-This section covers raw PCM (Pulse-Code Modulation) audio muxers.
+本节介绍 raw PCM（脉冲编码调制）音频复用器。
 
-They accept a single stream matching the designated codec. They do not store timestamps or metadata. The recognized extension is the same as the muxer name.
+它们接受匹配指定编解码器的单一流。它们不存储时间戳或元数据。可识别的扩展名与复用器名相同。
 
-It comprises the following muxers. The optional additional extension used to automatically select the muxer from the output extension is also shown in parentheses.
+它包含以下复用器。括号中同时列出用于根据输出扩展名自动选择复用器的附加扩展名（如有）。
 
 | Term           | Description                             |
 |----------------|-----------------------------------------|
-| `alaw (al)`  | PCM A-law                               |
-| `f32be`      | PCM 32-bit floating-point big-endian    |
-| `f32le`      | PCM 32-bit floating-point little-endian |
-| `f64be`      | PCM 64-bit floating-point big-endian    |
-| `f64le`      | PCM 64-bit floating-point little-endian |
-| `mulaw (ul)` | PCM mu-law                              |
-| `s16be`      | PCM signed 16-bit big-endian            |
-| `s16le`      | PCM signed 16-bit little-endian         |
-| `s24be`      | PCM signed 24-bit big-endian            |
-| `s24le`      | PCM signed 24-bit little-endian         |
-| `s32be`      | PCM signed 32-bit big-endian            |
-| `s32le`      | PCM signed 32-bit little-endian         |
-| `s8 (sb)`    | PCM signed 8-bit                        |
-| `u16be`      | PCM unsigned 16-bit big-endian          |
-| `u16le`      | PCM unsigned 16-bit little-endian       |
-| `u24be`      | PCM unsigned 24-bit big-endian          |
-| `u24le`      | PCM unsigned 24-bit little-endian       |
-| `u32be`      | PCM unsigned 32-bit big-endian          |
-| `u32le`      | PCM unsigned 32-bit little-endian       |
-| `u8 (ub)`    | PCM unsigned 8-bit                      |
+| `alaw (al)`  | PCM A-law（A 律）                               |
+| `f32be`      | PCM 32 位浮点大端序    |
+| `f32le`      | PCM 32 位浮点小端序 |
+| `f64be`      | PCM 64 位浮点大端序    |
+| `f64le`      | PCM 64 位浮点小端序 |
+| `mulaw (ul)` | PCM mu-law（μ 律）                              |
+| `s16be`      | PCM 有符号 16 位大端序            |
+| `s16le`      | PCM 有符号 16 位小端序         |
+| `s24be`      | PCM 有符号 24 位大端序            |
+| `s24le`      | PCM 有符号 24 位小端序         |
+| `s32be`      | PCM 有符号 32 位大端序            |
+| `s32le`      | PCM 有符号 32 位小端序         |
+| `s8 (sb)`    | PCM 有符号 8 位                        |
+| `u16be`      | PCM 无符号 16 位大端序          |
+| `u16le`      | PCM 无符号 16 位小端序       |
+| `u24be`      | PCM 无符号 24 位大端序          |
+| `u24le`      | PCM 无符号 24 位小端序       |
+| `u32be`      | PCM 无符号 32 位大端序          |
+| `u32le`      | PCM 无符号 32 位小端序       |
+| `u8 (ub)`    | PCM 无符号 8 位                      |
 | `vidc`       | PCM Archimedes VIDC                     |
 
-## MPEG-1/MPEG-2 program stream muxers
+## MPEG-1/MPEG-2 节目流复用器
 
-This section covers formats belonging to the MPEG-1 and MPEG-2 Systems family.
+本节介绍属于 MPEG-1 与 MPEG-2 Systems 家族的格式。
 
-The MPEG-1 Systems format (also known as ISO/IEEC 11172-1 or MPEG-1 program stream) has been adopted for the format of media track stored in VCD (Video Compact Disc).
+MPEG-1 Systems 格式（又称 ISO/IEEC 11172-1 或 MPEG-1 节目流）被用作 VCD (Video Compact Disc) 中存储的媒体轨道格式。
 
-The MPEG-2 Systems standard (also known as ISO/IEEC 13818-1) covers two containers formats, one known as transport stream and one known as program stream; only the latter is covered here.
+MPEG-2 Systems 标准（又称 ISO/IEEC 13818-1）涵盖两种容器格式：一种称为传输流，一种称为节目流；此处只介绍后者。
 
-The MPEG-2 program stream format (also known as VOB due to the corresponding file extension) is an extension of MPEG-1 program stream: in addition to support different codecs for the audio and video streams, it also stores subtitles and navigation metadata. MPEG-2 program stream has been adopted for storing media streams in SVCD and DVD storage devices.
+MPEG-2 节目流格式（因相应文件扩展名又称 VOB）是 MPEG-1 节目流的扩展：除支持为音频流和视频流使用不同编解码器外，它还存储字幕和导航元数据。MPEG-2 节目流被用于 SVCD 和 DVD 存储设备中的媒体流存储。
 
-This section comprises the following muxers.
+本节包含以下复用器。
 
-- **`mpeg (mpg,mpeg)`** MPEG-1 Systems / MPEG-1 program stream muxer.
+- **`mpeg (mpg,mpeg)`** MPEG-1 Systems / MPEG-1 节目流复用器。
 
-- **`vcd`** MPEG-1 Systems / MPEG-1 program stream (VCD) muxer.
+- **`vcd`** MPEG-1 Systems / MPEG-1 节目流 (VCD) 复用器。
 
-  This muxer can be used to generate tracks in the format accepted by the VCD (Video Compact Disc) storage devices.
+  此复用器可用于生成 VCD (Video Compact Disc) 存储设备所接受格式的轨道。
 
-  It is the same as the `mpeg` muxer with a few differences.
+  它与 `mpeg` 复用器相同，仅有少量差异。
 
-- **`vob`** MPEG-2 program stream (VOB) muxer.
+- **`vob`** MPEG-2 节目流 (VOB) 复用器。
 
-- **`dvd`** MPEG-2 program stream (DVD VOB) muxer.
+- **`dvd`** MPEG-2 节目流 (DVD VOB) 复用器。
 
-  This muxer can be used to generate tracks in the format accepted by the DVD (Digital Versatile Disc) storage devices.
+  此复用器可用于生成 DVD (Digital Versatile Disc) 存储设备所接受格式的轨道。
 
-  This is the same as the `vob` muxer with a few differences.
+  它与 `vob` 复用器相同，仅有少量差异。
 
-- **`svcd (vob)`** MPEG-2 program stream (SVCD VOB) muxer.
+- **`svcd (vob)`** MPEG-2 节目流 (SVCD VOB) 复用器。
 
-  This muxer can be used to generate tracks in the format accepted by the SVCD (Super Video Compact Disc) storage devices.
+  此复用器可用于生成 SVCD (Super Video Compact Disc) 存储设备所接受格式的轨道。
 
-  This is the same as the `vob` muxer with a few differences.
+  它与 `vob` 复用器相同，仅有少量差异。
 
-### Options
+### 选项
 
-- **`muxrate rate`** Set user-defined mux rate expressed as a number of bits/s. If not specified the automatically computed mux rate is employed. Default value is `0`.
+- **`muxrate rate`** 设置用户自定义复用率（单位为比特/秒）。若未指定，则采用自动计算的复用率。默认值为 `0`。
 
-- **`preload delay`** Set initial demux-decode delay in microseconds. Default value is `500000`.
+- **`preload delay`** 设置初始解复用-解码延迟（微秒）。默认值为 `500000`。
 
-## MOV/MPEG-4/ISOMBFF muxers
+## MOV/MPEG-4/ISOMBFF 复用器
 
-This section covers formats belonging to the QuickTime / MOV family, including the MPEG-4 Part 14 format and ISO base media file format (ISOBMFF). These formats share a common structure based on the ISO base media file format (ISOBMFF).
+本节介绍属于 QuickTime / MOV 家族的格式，包括 MPEG-4 Part 14 格式与 ISO 基础媒体文件格式 (ISOBMFF)。这些格式共享基于 ISO 基础媒体文件格式 (ISOBMFF) 的共同结构。
 
-The MOV format was originally developed for use with Apple QuickTime. It was later used as the basis for the MPEG-4 Part 1 (later Part 14) format, also known as ISO/IEC 14496-1. That format was then generalized into ISOBMFF, also named MPEG-4 Part 12 format, ISO/IEC 14496-12, or ISO/IEC 15444-12.
+MOV 格式最初为 Apple QuickTime 开发。后来它被用作 MPEG-4 Part 1（后为 Part 14）格式（又称 ISO/IEC 14496-1）的基础。该格式随后被泛化为 ISOBMFF，又称 MPEG-4 Part 12 格式、ISO/IEC 14496-12 或 ISO/IEC 15444-12。
 
-It comprises the following muxers.
+它包含以下复用器。
 
-- **`3gp`** Third Generation Partnership Project (3GPP) format for 3G UMTS multimedia services
+- **`3gp`** 第三代合作伙伴项目 (3GPP) 用于 3G UMTS 多媒体服务的格式
 
-- **`3g2`** Third Generation Partnership Project 2 (3GP2 or 3GPP2) format for 3G CDMA2000 multimedia services, similar to `3gp` with extensions and limitations
+- **`3g2`** 第三代合作伙伴项目 2 (3GP2 或 3GPP2) 用于 3G CDMA2000 多媒体服务的格式，与 `3gp` 相似，但有扩展与限制
 
-- **`f4v`** Adobe Flash Video format
+- **`f4v`** Adobe Flash Video 格式
 
-- **`ipod`** MPEG-4 audio file format, as MOV/MP4 but limited to contain only audio streams, typically played with the Apple ipod device
+- **`ipod`** MPEG-4 音频文件格式，如同 MOV/MP4 但仅限音频流，通常用 Apple ipod 设备播放
 
-- **`ismv`** Microsoft IIS (Internet Information Services) Smooth Streaming Audio/Video (ISMV or ISMA) format. This is based on MPEG-4 Part 14 format with a few incompatible variants, used to stream media files for the Microsoft IIS server.
+- **`ismv`** Microsoft IIS (Internet Information Services) Smooth Streaming 音频/视频 (ISMV 或 ISMA) 格式。基于 MPEG-4 Part 14 格式，带有少量不兼容变体，用于为 Microsoft IIS 服务器流式传输媒体文件。
 
-- **`mov`** QuickTime player format identified by the `.mov` extension
+- **`mov`** 由 `.mov` 扩展名标识的 QuickTime 播放器格式
 
-- **`mp4`** MP4 or MPEG-4 Part 14 format
+- **`mp4`** MP4 或 MPEG-4 Part 14 格式
 
-- **`psp`** PlayStation Portable MP4/MPEG-4 Part 14 format variant. This is based on MPEG-4 Part 14 format with a few incompatible variants, used to play files on PlayStation devices.
+- **`psp`** PlayStation Portable MP4/MPEG-4 Part 14 格式变体。基于 MPEG-4 Part 14 格式，带有少量不兼容变体，用于在 PlayStation 设备上播放文件。
 
-### Fragmentation
+### 分片
 
-The `mov`, `mp4`, and `ismv` muxers support fragmentation. Normally, a MOV/MP4 file has all the metadata about all packets stored in one location.
+`mov`、`mp4` 和 `ismv` 复用器支持分片 (fragmentation)。通常，MOV/MP4 文件将关于所有包的全部元数据存储在一个位置。
 
-This data is usually written at the end of the file, but it can be moved to the start for better playback by adding `+faststart` to the `-movflags`, or using the `qt-faststart` tool).
+这些数据通常写在文件末尾，但为了更好的播放体验，可以通过向 `-movflags` 添加 `+faststart`（或使用 `qt-faststart` 工具）将其移到文件开头。
 
-A fragmented file consists of a number of fragments, where packets and metadata about these packets are stored together. Writing a fragmented file has the advantage that the file is decodable even if the writing is interrupted (while a normal MOV/MP4 is undecodable if it is not properly finished), and it requires less memory when writing very long files (since writing normal MOV/MP4 files stores info about every single packet in memory until the file is closed). The downside is that it is less compatible with other applications.
+分片文件由若干分片 (fragment) 组成，包与关于这些包的元数据存储在一起。写入分片文件的优点是：即使写入被中断，文件也可解码（而普通 MOV/MP4 若未正常结束则不可解码）；并且在写入超长文件时占用更少内存（因为写入普通 MOV/MP4 文件时，关于每个包的信息都会保存在内存中直到文件关闭）。缺点是与其他应用的兼容性较差。
 
-Fragmentation is enabled by setting one of the options that define how to cut the file into fragments:
+通过设置以下定义如何将文件切分为分片的选项之一来启用分片：
 
 - **`frag_duration`**
 
@@ -1136,123 +1132,123 @@ Fragmentation is enabled by setting one of the options that define how to cut th
 
 - **`movflags +frag_custom`**
 
-If more than one condition is specified, fragments are cut when one of the specified conditions is fulfilled. The exception to this is the option `min_frag_duration`, which has to be fulfilled for any of the other conditions to apply.
+若指定了多个条件，则在满足任一指定条件时切分分片。例外是选项 `min_frag_duration`，它必须满足，其他条件才适用。
 
-### Options
+### 选项
 
-- **`brand brand_string`** Override major brand.
+- **`brand brand_string`** 覆盖主品牌 (major brand)。
 
-- **`empty_hdlr_name bool`** Enable to skip writing the name inside a `hdlr` box. Default is `false`.
+- **`empty_hdlr_name bool`** 启用后跳过写入 `hdlr` box 内的名称。默认值为 `false`。
 
-- **`encryption_key key`** set the media encryption key in hexadecimal format
+- **`encryption_key key`** 以十六进制格式设置媒体加密密钥
 
-- **`encryption_kid kid`** set the media encryption key identifier in hexadecimal format
+- **`encryption_kid kid`** 以十六进制格式设置媒体加密密钥标识符
 
-- **`encryption_scheme scheme`** configure the encryption scheme, allowed values are `none`, and `cenc-aes-ctr`
+- **`encryption_scheme scheme`** 配置加密方案，允许的值为 `none` 与 `cenc-aes-ctr`
 
-- **`frag_duration duration`** Create fragments that are \<duration\> microseconds long.
+- **`frag_duration duration`** 创建时长为 \<duration\> 微秒的分片。
 
-- **`frag_interleave number`** Interleave samples within fragments (max number of consecutive samples, lower is tighter interleaving, but with more overhead. It is set to `0` by default.
+- **`frag_interleave number`** 在分片内交错采样（最大连续采样数；数值越小交错越紧密，但开销越大）。默认设为 `0`。
 
-- **`frag_size size`** create fragments that contain up to \<size\> bytes of payload data
+- **`frag_size size`** 创建最多包含 \<size\> 字节载荷数据的分片
 
-- **`iods_audio_profile profile`** specify iods number for the audio profile atom (from -1 to 255), default is `-1`
+- **`iods_audio_profile profile`** 指定音频 profile atom 的 iods 编号（从 -1 到 255），默认值为 `-1`
 
-- **`iods_video_profile profile`** specify iods number for the video profile atom (from -1 to 255), default is `-1`
+- **`iods_video_profile profile`** 指定视频 profile atom 的 iods 编号（从 -1 到 255），默认值为 `-1`
 
-- **`ism_lookahead num_entries`** specify number of lookahead entries for ISM files (from 0 to 255), default is `0`
+- **`ism_lookahead num_entries`** 指定 ISM 文件的前瞻 (lookahead) 条目数（从 0 到 255），默认值为 `0`
 
-- **`min_frag_duration duration`** do not create fragments that are shorter than \<duration\> microseconds long
+- **`min_frag_duration duration`** 不创建短于 \<duration\> 微秒的分片
 
-- **`moov_size bytes`** Reserves space for the moov atom at the beginning of the file instead of placing the moov atom at the end. If the space reserved is insufficient, muxing will fail.
+- **`moov_size bytes`** 在文件开头为 moov atom 预留空间，而不是把 moov atom 放在文件末尾。若预留空间不足，复用将失败。
 
-- **`mov_gamma gamma`** specify gamma value for gama atom (as a decimal number from 0 to 10), default is `0.0`, must be set together with `+ movflags`
+- **`mov_gamma gamma`** 指定 gama atom 的 gamma 值（0 到 10 的十进制数），默认值为 `0.0`，必须与 `+ movflags` 一起设置
 
-- **`movflags flags`** Set various muxing switches. The following flags can be used:
+- **`movflags flags`** 设置各种复用开关。可用标志如下：
 
-  - **`cmaf`** write CMAF (Common Media Application Format) compatible fragmented MP4 output
+  - **`cmaf`** 写入 CMAF (Common Media Application Format) 兼容的分片 MP4 输出
 
-  - **`dash`** write DASH (Dynamic Adaptive Streaming over HTTP) compatible fragmented MP4 output
+  - **`dash`** 写入 DASH (Dynamic Adaptive Streaming over HTTP) 兼容的分片 MP4 输出
 
-  - **`default_base_moof`** Similarly to the `omit_tfhd_offset` flag, this flag avoids writing the absolute base_data_offset field in tfhd atoms, but does so by using the new default-base-is-moof flag instead. This flag is new from 14496-12:2012. This may make the fragments easier to parse in certain circumstances (avoiding basing track fragment location calculations on the implicit end of the previous track fragment).
+  - **`default_base_moof`** 与 `omit_tfhd_offset` 标志类似，此标志避免在 tfhd atom 中写入绝对 base_data_offset 字段，但改用新的 default-base-is-moof 标志实现。此标志来自 14496-12:2012。在某些情况下可让分片更易解析（避免将轨道分片位置计算基于前一个轨道分片的隐式结尾）。
 
-  - **`delay_moov`** delay writing the initial moov until the first fragment is cut, or until the first fragment flush
+  - **`delay_moov`** 延迟写入初始 moov，直到切出第一个分片或第一次刷新分片
 
-  - **`disable_chpl`** Disable Nero chapter markers (chpl atom). Normally, both Nero chapters and a QuickTime chapter track are written to the file. With this option set, only the QuickTime chapter track will be written. Nero chapters can cause failures when the file is reprocessed with certain tagging programs, like mp3Tag 2.61a and iTunes 11.3, most likely other versions are affected as well.
+  - **`disable_chpl`** 禁用 Nero 章节标记 (chpl atom)。通常，Nero 章节与 QuickTime 章节轨道都会写入文件。设置此选项后只写 QuickTime 章节轨道。用某些打标程序（如 mp3Tag 2.61a 与 iTunes 11.3，很可能其他版本也受影响）重新处理文件时，Nero 章节可能导致失败。
 
-  - **`faststart`** Run a second pass moving the index (moov atom) to the beginning of the file. This operation can take a while, and will not work in various situations such as fragmented output, thus it is not enabled by default.
+  - **`faststart`** 执行第二遍处理，将索引 (moov atom) 移到文件开头。此操作可能耗时，且在分片输出等多种情况下不可用，因此默认不启用。
 
-  - **`frag_custom`** Allow the caller to manually choose when to cut fragments, by calling `av_write_frame(ctx, NULL)` to write a fragment with the packets written so far. (This is only useful with other applications integrating libavformat, not from `ffmpeg`.)
+  - **`frag_custom`** 允许调用方通过调用 `av_write_frame(ctx, NULL)` 手动选择何时切分分片，以写出迄今写入的包组成的一个分片。（这只对集成 libavformat 的其他应用有用，不适用于 `ffmpeg`。）
 
-  - **`frag_discont`** signal that the next fragment is discontinuous from earlier ones
+  - **`frag_discont`** 表示下一个分片与之前的分片不连续
 
-  - **`frag_every_frame`** fragment at every frame
+  - **`frag_every_frame`** 每帧切分一个分片
 
-  - **`frag_keyframe`** start a new fragment at each video keyframe
+  - **`frag_keyframe`** 在每个视频关键帧处开始新分片
 
-  - **`global_sidx`** write a global sidx index at the start of the file
+  - **`global_sidx`** 在文件开头写入全局 sidx 索引
 
-  - **`isml`** create a live smooth streaming feed (for pushing to a publishing point)
+  - **`isml`** 创建直播平滑流媒体推送源（用于推流到发布点）
 
-  - **`negative_cts_offsets`** Enables utilization of version 1 of the CTTS box, in which the CTS offsets can be negative. This enables the initial sample to have DTS/CTS of zero, and reduces the need for edit lists for some cases such as video tracks with B-frames. Additionally, eases conformance with the DASH-IF interoperability guidelines.
+  - **`negative_cts_offsets`** 启用 CTTS box 版本 1，其中 CTS 偏移可为负。这使得初始采样的 DTS/CTS 可以为零，并减少了某些情况（如带 B 帧的视频轨道）对 edit list 的需求。此外，更易符合 DASH-IF 互操作性指南。
 
-    This option is implicitly set when writing `ismv` (Smooth Streaming) files.
+    写入 `ismv` (Smooth Streaming) 文件时隐式设置此选项。
 
-  - **`omit_tfhd_offset`** Do not write any absolute base_data_offset in tfhd atoms. This avoids tying fragments to absolute byte positions in the file/streams.
+  - **`omit_tfhd_offset`** 不在 tfhd atom 中写入任何绝对 base_data_offset。这可避免将分片绑定到文件/流中的绝对字节位置。
 
-  - **`prefer_icc`** If writing colr atom prioritise usage of ICC profile if it exists in stream packet side data.
+  - **`prefer_icc`** 写入 colr atom 时，若流包 side data 中存在 ICC profile，则优先使用它。
 
-  - **`rtphint`** add RTP hinting tracks to the output file
+  - **`rtphint`** 向输出文件添加 RTP 提示 (hinting) 轨道
 
-  - **`separate_moof`** Write a separate moof (movie fragment) atom for each track. Normally, packets for all tracks are written in a moof atom (which is slightly more efficient), but with this option set, the muxer writes one moof/mdat pair for each track, making it easier to separate tracks.
+  - **`separate_moof`** 为每条轨道写一个独立的 moof (movie fragment) atom。通常，所有轨道的包写在一个 moof atom 中（效率略高），但设置此选项后，复用器为每条轨道写一对 moof/mdat，使轨道更易分离。
 
-  - **`skip_sidx`** Skip writing of sidx atom. When bitrate overhead due to sidx atom is high, this option could be used for cases where sidx atom is not mandatory. When the `global_sidx` flag is enabled, this option is ignored.
+  - **`skip_sidx`** 跳过 sidx atom 的写入。当 sidx atom 带来的码率开销较高时，可在 sidx atom 非必需的场景使用此选项。启用 `global_sidx` 标志时忽略此选项。
 
-  - **`skip_trailer`** skip writing the mfra/tfra/mfro trailer for fragmented files
+  - **`skip_trailer`** 跳过为分片文件写 mfra/tfra/mfro 尾部
 
-  - **`use_metadata_tags`** use mdta atom for metadata
+  - **`use_metadata_tags`** 使用 mdta atom 存储元数据
 
-  - **`write_colr`** write colr atom even if the color info is unspecified. This flag is experimental, may be renamed or changed, do not use from scripts.
+  - **`write_colr`** 即使颜色信息未指定也写入 colr atom。此标志是实验性的，可能被重命名或更改，请勿在脚本中使用。
 
-  - **`write_gama`** write deprecated gama atom
+  - **`write_gama`** 写入已弃用的 gama atom
 
-  - **`hybrid_fragmented`** For recoverability - write the output file as a fragmented file. This allows the intermediate file to be read while being written (in particular, if the writing process is aborted uncleanly). When writing is finished, the file is converted to a regular, non-fragmented file, which is more compatible and allows easier and quicker seeking.
+  - **`hybrid_fragmented`** 出于可恢复性考虑，将输出文件写成分片文件。这使得中间文件在写入过程中即可被读取（特别是当写入进程不干净地中止时）。写入完成后，文件被转换为常规的非分片文件，兼容性更好，且定位更轻松快速。
 
-    If writing is aborted, the intermediate file can manually be remuxed to get a regular, non-fragmented file of what had been written into the unfinished file.
+    若写入被中止，可手动将中间文件重新封装，从未完成的文件中得到已写入内容的常规非分片文件。
 
-- **`movie_timescale scale`** Set the timescale written in the movie header box (`mvhd`). Range is 1 to INT_MAX. Default is `1000`.
+- **`movie_timescale scale`** 设置写入电影头 box (`mvhd`) 的 timescale。范围为 1 到 INT_MAX。默认值为 `1000`。
 
-- **`rtpflags flags`** Add RTP hinting tracks to the output file.
+- **`rtpflags flags`** 向输出文件添加 RTP 提示轨道。
 
-  The following flags can be used:
+  可用标志如下：
 
   | Term | Description |
   |----|----|
-  | `h264_mode0` | use mode 0 for H.264 in RTP |
-  | `latm` | use MP4A-LATM packetization instead of MPEG4-GENERIC for AAC |
-  | `rfc2190` | use RFC 2190 packetization instead of RFC 4629 for H.263 |
-  | `send_bye` | send RTCP BYE packets when finishing |
-  | `skip_rtcp` | do not send RTCP sender reports |
+  | `h264_mode0` | 对 RTP 中的 H.264 使用 mode 0 |
+  | `latm` | 对 AAC 使用 MP4A-LATM 封包而不是 MPEG4-GENERIC |
+  | `rfc2190` | 对 H.263 使用 RFC 2190 封包而不是 RFC 4629 |
+  | `send_bye` | 结束时发送 RTCP BYE 包 |
+  | `skip_rtcp` | 不发送 RTCP 发送方报告 |
 
-- **`skip_iods bool`** skip writing iods atom (default value is `true`)
+- **`skip_iods bool`** 跳过 iods atom 的写入（默认值为 `true`）
 
-- **`use_editlist bool`** use edit list (default value is `auto`)
+- **`use_editlist bool`** 使用 edit list（默认值为 `auto`）
 
-- **`use_stream_ids_as_track_ids bool`** use stream ids as track ids (default value is `false`)
+- **`use_stream_ids_as_track_ids bool`** 使用流 id 作为轨道 id（默认值为 `false`）
 
-- **`video_track_timescale scale`** Set the timescale used for video tracks. Range is `0` to INT_MAX. If set to `0`, the timescale is automatically set based on the native stream time base. Default is `0`.
+- **`video_track_timescale scale`** 设置视频轨道使用的 timescale。范围为 `0` 到 INT_MAX。若设为 `0`，timescale 将根据原生流时间基自动设置。默认值为 `0`。
 
-- **`write_btrt bool`** Force or disable writing bitrate box inside stsd box of a track. The box contains decoding buffer size (in bytes), maximum bitrate and average bitrate for the track. The box will be skipped if none of these values can be computed. Default is `-1` or `auto`, which will write the box only in MP4 mode.
+- **`write_btrt bool`** 强制或禁用在轨道的 stsd box 内写入码率 box。该 box 包含轨道的解码缓冲大小（字节）、最大码率与平均码率。若这些值都无法计算，将跳过该 box。默认值为 `-1` 或 `auto`，即仅在 MP4 模式下写入。
 
-- **`write_prft option`** Write producer time reference box (PRFT) with a specified time source for the NTP field in the PRFT box. Set value as `wallclock` to specify timesource as wallclock time and `pts` to specify timesource as input packets' PTS values.
+- **`write_prft option`** 写入带指定时间源的生成者时间参考 box (PRFT)，用于 PRFT box 中的 NTP 字段。设为 `wallclock` 表示时间源为墙上时钟，设为 `pts` 表示时间源为输入包的 PTS 值。
 
-- **`write_tmcd bool`** Specify `on` to force writing a timecode track, `off` to disable it and `auto` to write a timecode track only for mov and mp4 output (default).
+- **`write_tmcd bool`** 设为 `on` 强制写入时间码轨道，`off` 禁用它，`auto` 表示仅为 mov 与 mp4 输出写入时间码轨道（默认）。
 
-  Setting value to `pts` is applicable only for a live encoding use case, where PTS values are set as as wallclock time at the source. For example, an encoding use case with decklink capture source where `video_pts` and `audio_pts` are set to `abs_wallclock`.
+  设为 `pts` 仅适用于直播编码场景，其中 PTS 值在源头即按墙上时钟设置。例如使用 decklink 采集源且 `video_pts` 与 `audio_pts` 设为 `abs_wallclock` 的编码场景。
 
-### Examples
+### 示例
 
-- Push Smooth Streaming content in real time to a publishing point on IIS with the `ismv` muxer using `ffmpeg`:
+- 使用 `ffmpeg` 与 `ismv` 复用器将 Smooth Streaming 内容实时推送到 IIS 上的发布点：
 
   ``` text
   ffmpeg -re <normal input/transcoding options> -movflags isml+frag_keyframe -f ismv http://server/publishingpoint.isml/Streams(Encoder1)
@@ -1260,103 +1256,103 @@ If more than one condition is specified, fragments are cut when one of the speci
 
 ## a64
 
-A64 Commodore 64 video muxer.
+A64 Commodore 64 视频复用器。
 
-This muxer accepts a single `a64_multi` or `a64_multi5` codec video stream.
+此复用器接受单条 `a64_multi` 或 `a64_multi5` 编解码器视频流。
 
 ## ac4
 
-Raw AC-4 audio muxer.
+Raw AC-4 音频复用器。
 
-This muxer accepts a single `ac4` audio stream.
+此复用器接受单条 `ac4` 音频流。
 
-### Options
+### 选项
 
-- **`write_crc bool`** when enabled, write a CRC checksum for each packet to the output, default is `false`
+- **`write_crc bool`** 启用后为每个包向输出写入 CRC 校验和，默认值为 `false`
 
 ## adts
 
-Audio Data Transport Stream muxer.
+Audio Data Transport Stream 复用器。
 
-It accepts a single AAC stream.
+它接受单条 AAC 流。
 
-### Options
+### 选项
 
-- **`write_id3v2 bool`** Enable to write ID3v2.4 tags at the start of the stream. Default is disabled.
+- **`write_id3v2 bool`** 启用后在流开头写入 ID3v2.4 标签。默认禁用。
 
-- **`write_apetag bool`** Enable to write APE tags at the end of the stream. Default is disabled.
+- **`write_apetag bool`** 启用后在流末尾写入 APE 标签。默认禁用。
 
-- **`write_mpeg2 bool`** Enable to set MPEG version bit in the ADTS frame header to 1 which indicates MPEG-2. Default is 0, which indicates MPEG-4.
+- **`write_mpeg2 bool`** 启用后将 ADTS 帧头中的 MPEG 版本位设为 1，表示 MPEG-2。默认值为 0，表示 MPEG-4。
 
 ## aea
 
-MD STUDIO audio muxer.
+MD STUDIO 音频复用器。
 
-This muxer accepts a single ATRAC1 audio stream with either one or two channels and a sample rate of 44100Hz.
+此复用器接受单条 ATRAC1 音频流，声道数为 1 或 2，采样率为 44100Hz。
 
-As AEA supports storing the track title, this muxer will also write the title from stream's metadata to the container.
+由于 AEA 支持存储音轨标题，此复用器还会将流元数据中的标题写入容器。
 
 ## aiff
 
-Audio Interchange File Format muxer.
+Audio Interchange File Format 复用器。
 
-### Options
+### 选项
 
-- **`write_id3v2 bool`** Enable ID3v2 tags writing when set to 1. Default is 0 (disabled).
+- **`write_id3v2 bool`** 设为 1 时启用 ID3v2 标签写入。默认值为 0（禁用）。
 
-- **`id3v2_version bool`** Select ID3v2 version to write. Currently only version 3 and 4 (aka. ID3v2.3 and ID3v2.4) are supported. The default is version 4.
+- **`id3v2_version bool`** 选择要写入的 ID3v2 版本。目前仅支持版本 3 与 4（即 ID3v2.3 与 ID3v2.4）。默认为版本 4。
 
 ## alp
 
-High Voltage Software's Lego Racers game audio muxer.
+High Voltage Software 的 Lego Racers 游戏音频复用器。
 
-It accepts a single ADPCM_IMA_ALP stream with no more than 2 channels and a sample rate not greater than 44100 Hz.
+它接受单条不超过 2 声道、采样率不高于 44100 Hz 的 ADPCM_IMA_ALP 流。
 
-Extensions: `tun`, `pcm`
+扩展名：`tun`、`pcm`
 
-### Options
+### 选项
 
-- **`type type`** Set file type.
+- **`type type`** 设置文件类型。
 
-  \<type\> accepts the following values:
+  \<type\> 接受以下取值：
 
-  - **`tun`** Set file type as music. Must have a sample rate of 22050 Hz.
+  - **`tun`** 将文件类型设为音乐。采样率必须为 22050 Hz。
 
-  - **`pcm`** Set file type as sfx.
+  - **`pcm`** 将文件类型设为音效 (sfx)。
 
-  - **`auto`** Set file type as per output file extension. `.pcm` results in type `pcm` else type `tun` is set. \<(default)\>
+  - **`auto`** 按输出文件扩展名设置文件类型。`.pcm` 得到类型 `pcm`，否则设为类型 `tun`。\<(default)\>
 
 ## amr
 
-3GPP AMR (Adaptive Multi-Rate) audio muxer.
+3GPP AMR (Adaptive Multi-Rate) 音频复用器。
 
-It accepts a single audio stream containing an AMR NB stream.
+它接受单条包含 AMR NB 流的音频流。
 
 ## amv
 
-AMV (Actions Media Video) format muxer.
+AMV (Actions Media Video) 格式复用器。
 
 ## apm
 
-Ubisoft Rayman 2 APM audio muxer.
+Ubisoft Rayman 2 APM 音频复用器。
 
-It accepts a single ADPCM IMA APM audio stream.
+它接受单条 ADPCM IMA APM 音频流。
 
 ## apng
 
-Animated Portable Network Graphics muxer.
+动图便携式网络图形 (Animated Portable Network Graphics) 复用器。
 
-It accepts a single APNG video stream.
+它接受单条 APNG 视频流。
 
-### Options
+### 选项
 
-- **`final_delay delay`** Force a delay expressed in seconds after the last frame of each repetition. Default value is `0.0`.
+- **`final_delay delay`** 强制在每次重复的最后一帧之后加上以秒表示的延迟。默认值为 `0.0`。
 
-- **`plays repetitions`** specify how many times to play the content, `0` causes an infinite loop, with `1` there is no loop
+- **`plays repetitions`** 指定内容播放次数，`0` 表示无限循环，`1` 表示不循环
 
-### Examples
+### 示例
 
-- Use `ffmpeg` to generate an APNG output with 2 repetitions, and with a delay of half a second after the first repetition:
+- 使用 `ffmpeg` 生成重复 2 次、且第一次重复后延迟半秒的 APNG 输出：
 
   ``` text
   ffmpeg -i INPUT -final_delay 0.5 -plays 2 out.apng
@@ -1364,193 +1360,193 @@ It accepts a single APNG video stream.
 
 ## argo_asf
 
-Argonaut Games ASF audio muxer.
+Argonaut Games ASF 音频复用器。
 
-It accepts a single ADPCM audio stream.
+它接受单条 ADPCM 音频流。
 
-### Options
+### 选项
 
-- **`version_major version`** override file major version, specified as an integer, default value is `2`
+- **`version_major version`** 覆盖文件主版本号，以整数指定，默认值为 `2`
 
-- **`version_minor version`** override file minor version, specified as an integer, default value is `1`
+- **`version_minor version`** 覆盖文件次版本号，以整数指定，默认值为 `1`
 
-- **`name name`** Embed file name into file, if not specified use the output file name. The name is truncated to 8 characters.
+- **`name name`** 将文件名嵌入文件，若未指定则使用输出文件名。名称会截断为 8 个字符。
 
 ## argo_cvg
 
-Argonaut Games CVG audio muxer.
+Argonaut Games CVG 音频复用器。
 
-It accepts a single one-channel ADPCM 22050Hz audio stream.
+它接受单条单声道 22050Hz ADPCM 音频流。
 
-The `loop` and `reverb` options set the corresponding flags in the header which can be later retrieved to process the audio stream accordingly.
+`loop` 与 `reverb` 选项设置头中相应的标志，之后可检索这些标志来相应处理音频流。
 
-### Options
+### 选项
 
-- **`skip_rate_check bool`** skip sample rate check (default is `false`)
+- **`skip_rate_check bool`** 跳过采样率检查（默认值为 `false`）
 
-- **`loop bool`** set loop flag (default is `false`)
+- **`loop bool`** 设置循环标志（默认值为 `false`）
 
-- **`reverb boolean`** set reverb flag (default is `true`)
+- **`reverb boolean`** 设置混响标志（默认值为 `true`）
 
 ## asf, asf_stream
 
-Advanced / Active Systems (or Streaming) Format audio muxer.
+Advanced / Active Systems (or Streaming) Format 音频复用器。
 
-The `asf_stream` variant should be selected for streaming.
+流式传输时应选择 `asf_stream` 变体。
 
-Note that Windows Media Audio (wma) and Windows Media Video (wmv) use this muxer too.
+注意 Windows Media Audio (wma) 与 Windows Media Video (wmv) 也使用此复用器。
 
-### Options
+### 选项
 
-- **`packet_size size`** Set the muxer packet size as a number of bytes. By tuning this setting you may reduce data fragmentation or muxer overhead depending on your source. Default value is `3200`, minimum is `100`, maximum is `64Ki`.
+- **`packet_size size`** 设置复用器包大小（字节）。根据源的不同，调整此设置可减少数据碎片或复用器开销。默认值为 `3200`，最小为 `100`，最大为 `64Ki`。
 
 ## ass
 
-ASS/SSA (SubStation Alpha) subtitles muxer.
+ASS/SSA (SubStation Alpha) 字幕复用器。
 
-It accepts a single ASS subtitles stream.
+它接受单条 ASS 字幕流。
 
-### Options
+### 选项
 
-- **`ignore_readorder bool`** Write dialogue events immediately, even if they are out-of-order, default is `false`, otherwise they are cached until the expected time event is found.
+- **`ignore_readorder bool`** 立即写入对话事件（即使乱序），默认值为 `false`；否则会缓存它们，直到找到预期时间的事件。
 
 ## ast
 
-AST (Audio Stream) muxer.
+AST (Audio Stream) 复用器。
 
-This format is used to play audio on some Nintendo Wii games.
+此格式用于在某些 Nintendo Wii 游戏中播放音频。
 
-It accepts a single audio stream.
+它接受单条音频流。
 
-The `loopstart` and `loopend` options can be used to define a section of the file to loop for players honoring such options.
+`loopstart` 与 `loopend` 选项可用于定义文件中循环的区段，供支持这些选项的播放器使用。
 
-### Options
+### 选项
 
-- **`loopstart start`** Specify loop start position expressesd in milliseconds, from `-1` to `INT_MAX`, in case `-1` is set then no loop is specified (default -1) and the `loopend` value is ignored.
+- **`loopstart start`** 指定循环起始位置（毫秒），范围 `-1` 到 `INT_MAX`；若设为 `-1` 则不指定循环（默认 -1），且 `loopend` 值被忽略。
 
-- **`loopend end`** Specify loop end position expressed in milliseconds, from `0` to `INT_MAX`, default is `0`, in case `0` is set it assumes the total stream duration.
+- **`loopend end`** 指定循环结束位置（毫秒），范围 `0` 到 `INT_MAX`，默认值为 `0`；若设为 `0` 则视为总流时长。
 
 ## au
 
-SUN AU audio muxer.
+SUN AU 音频复用器。
 
-It accepts a single audio stream.
+它接受单条音频流。
 
 ## avi
 
-Audio Video Interleaved muxer.
+Audio Video Interleaved 复用器。
 
-AVI is a proprietary format developed by Microsoft, and later formally specified through the Open DML specification.
+AVI 是 Microsoft 开发的专有格式，后来通过 Open DML 规范正式定案。
 
-Because of differences in players implementations, it might be required to set some options to make sure that the generated output can be correctly played by the target player.
+由于各播放器实现存在差异，可能需要设置一些选项，以确保生成的输出能被目标播放器正确播放。
 
-### Options
+### 选项
 
-- **`flipped_raw_rgb bool`** If set to `true`, store positive height for raw RGB bitmaps, which indicates bitmap is stored bottom-up. Note that this option does not flip the bitmap which has to be done manually beforehand, e.g. by using the `vflip` filter. Default is `false` and indicates bitmap is stored top down.
+- **`flipped_raw_rgb bool`** 若设为 `true`，为 raw RGB 位图存储正的高度值，表示位图自底向上存储。注意此选项不会翻转位图，翻转须事先手动完成，例如使用 `vflip` 滤镜。默认值为 `false`，表示位图自顶向下存储。
 
-- **`reserve_index_space size`** Reserve the specified amount of bytes for the OpenDML master index of each stream within the file header. By default additional master indexes are embedded within the data packets if there is no space left in the first master index and are linked together as a chain of indexes. This index structure can cause problems for some use cases, e.g. third-party software strictly relying on the OpenDML index specification or when file seeking is slow. Reserving enough index space in the file header avoids these problems.
+- **`reserve_index_space size`** 在文件头中为每条流的 OpenDML 主索引预留指定的字节数。默认情况下，若第一个主索引没有剩余空间，额外的主索引会嵌入数据包中并链接成索引链。这种索引结构在某些使用场景下会造成问题，例如严格依赖 OpenDML 索引规范的第三方软件，或文件定位缓慢时。在文件头中预留足够的索引空间可避免这些问题。
 
-  The required index space depends on the output file size and should be about 16 bytes per gigabyte. When this option is omitted or set to zero the necessary index space is guessed.
+  所需的索引空间取决于输出文件大小，每吉字节约 16 字节。省略此选项或设为零时会猜测必要的索引空间。
 
-  Default value is `0`.
+  默认值为 `0`。
 
-- **`write_channel_mask bool`** Write the channel layout mask into the audio stream header.
+- **`write_channel_mask bool`** 将声道布局掩码写入音频流头。
 
-  This option is enabled by default. Disabling the channel mask can be useful in specific scenarios, e.g. when merging multiple audio streams into one for compatibility with software that only supports a single audio stream in AVI (see section "the "amerge" section in the ffmpeg-filters manual" in `ffmpeg-filters`).
+  此选项默认启用。禁用声道掩码在特定场景下有用，例如将多条音频流合并为一条以兼容只支持 AVI 中单条音频流的软件（参见 `ffmpeg-filters` 中"the "amerge" section in the ffmpeg-filters manual"（amerge）一节）。
 
 ## avif
 
-AV1 (Alliance for Open Media Video codec 1) image format muxer.
+AV1 (Alliance for Open Media Video codec 1) 图像格式复用器。
 
-This muxers stores images encoded using the AV1 codec.
+此复用器存储使用 AV1 编解码器编码的图像。
 
-It accepts one or two video streams. In case two video streams are provided, the second one shall contain a single plane storing the alpha mask.
+它接受一条或两条视频流。若提供两条视频流，第二条应包含存储透明掩码的单一平面。
 
-In case more than one image is provided, the generated output is considered an animated AVIF and the number of loops can be specified with the `loop` option.
+若提供多幅图像，生成的输出视为动画 AVIF，循环次数可用 `loop` 选项指定。
 
-This is based on the specification by Alliance for Open Media at url <https://aomediacodec.github.io/av1-avif>.
+这基于 Alliance for Open Media 的规范，网址为 <https://aomediacodec.github.io/av1-avif>。
 
-### Options
+### 选项
 
-- **`loop count`** number of times to loop an animated AVIF, `0` specify an infinite loop, default is `0`
+- **`loop count`** 动画 AVIF 的循环次数，`0` 表示无限循环，默认值为 `0`
 
-- **`movie_timescale timescale`** Set the timescale written in the movie header box (`mvhd`). Range is 1 to INT_MAX. Default is `1000`.
+- **`movie_timescale timescale`** 设置写入电影头 box (`mvhd`) 的 timescale。范围为 1 到 INT_MAX。默认值为 `1000`。
 
 ## avm2
 
-ShockWave Flash (SWF) / ActionScript Virtual Machine 2 (AVM2) format muxer.
+ShockWave Flash (SWF) / ActionScript Virtual Machine 2 (AVM2) 格式复用器。
 
-It accepts one audio stream, one video stream, or both.
+它接受一条音频流、一条视频流或两者兼有。
 
 ## bit
 
-G.729 (.bit) file format muxer.
+G.729 (.bit) 文件格式复用器。
 
-It accepts a single G.729 audio stream.
+它接受单条 G.729 音频流。
 
 ## caf
 
-Apple CAF (Core Audio Format) muxer.
+Apple CAF (Core Audio Format) 复用器。
 
-It accepts a single audio stream.
+它接受单条音频流。
 
 ## codec2
 
-Codec2 audio audio muxer.
+Codec2 音频复用器。
 
-It accepts a single codec2 audio stream.
+它接受单条 codec2 音频流。
 
 ## chromaprint
 
-Chromaprint fingerprinter muxers.
+Chromaprint 指纹器 (fingerprinter) 复用器。
 
-To enable compilation of this filter you need to configure FFmpeg with `--enable-chromaprint`.
+要启用此滤镜的编译，需要以 `--enable-chromaprint` 配置 FFmpeg。
 
-This muxer feeds audio data to the Chromaprint library, which generates a fingerprint for the provided audio data. See: <https://acoustid.org/chromaprint>
+此复用器将音频数据馈送给 Chromaprint 库，由它为提供的音频数据生成指纹。参见：<https://acoustid.org/chromaprint>
 
-It takes a single signed native-endian 16-bit raw audio stream of at most 2 channels.
+它接受单条至多 2 声道的有符号本机字节序 16 位 raw 音频流。
 
-### Options
+### 选项
 
-- **`algorithm version`** Select version of algorithm to fingerprint with. Range is `0` to `4`. Version `3` enables silence detection. Default is `1`.
+- **`algorithm version`** 选择用于生成指纹的算法版本。范围为 `0` 到 `4`。版本 `3` 启用静音检测。默认值为 `1`。
 
-- **`fp_format format`** Format to output the fingerprint as. Accepts the following options:
+- **`fp_format format`** 指纹的输出格式。接受以下选项：
 
-  - **`base64`** Base64 compressed fingerprint *(default)*
+  - **`base64`** Base64 压缩指纹 *(默认)*
 
-  - **`compressed`** Binary compressed fingerprint
+  - **`compressed`** 二进制压缩指纹
 
-  - **`raw`** Binary raw fingerprint
+  - **`raw`** 二进制原始指纹
 
-- **`silence_threshold threshold`** Threshold for detecting silence. Range is from `-1` to `32767`, where `-1` disables silence detection. Silence detection can only be used with version `3` of the algorithm.
+- **`silence_threshold threshold`** 静音检测阈值。范围从 `-1` 到 `32767`，其中 `-1` 禁用静音检测。静音检测只能配合算法版本 `3` 使用。
 
-  Silence detection must be disabled for use with the AcoustID service. Default is `-1`.
+  使用 AcoustID 服务时必须禁用静音检测。默认值为 `-1`。
 
 ## crc
 
-CRC (Cyclic Redundancy Check) muxer.
+CRC (Cyclic Redundancy Check，循环冗余校验) 复用器。
 
-This muxer computes and prints the Adler-32 CRC of all the input audio and video frames. By default audio frames are converted to signed 16-bit raw audio and video frames to raw video before computing the CRC.
+此复用器计算并打印全部输入音频与视频帧的 Adler-32 CRC。默认情况下，计算 CRC 前音频帧被转换为有符号 16 位 raw 音频，视频帧被转换为 raw 视频。
 
-The output of the muxer consists of a single line of the form: CRC=0x\<CRC\>, where \<CRC\> is a hexadecimal number 0-padded to 8 digits containing the CRC for all the decoded input frames.
+复用器的输出由单行组成，形如 CRC=0x\<CRC\>，其中 \<CRC\> 是以 0 填充到 8 位的十六进制数，包含全部已解码输入帧的 CRC。
 
-See also the [framecrc](#framecrc) muxer.
+另请参见 [framecrc](#framecrc) 复用器。
 
-### Examples
+### 示例
 
-- Use `ffmpeg` to compute the CRC of the input, and store it in the file `out.crc`:
+- 使用 `ffmpeg` 计算输入的 CRC 并存储到文件 `out.crc`：
 
   ``` text
   ffmpeg -i INPUT -f crc out.crc
   ```
 
-- Use `ffmpeg` to print the CRC to stdout with the command:
+- 使用 `ffmpeg` 将 CRC 打印到标准输出：
 
   ``` text
   ffmpeg -i INPUT -f crc -
   ```
 
-- You can select the output format of each frame with `ffmpeg` by specifying the audio and video codec and format. For example, to compute the CRC of the input audio converted to PCM unsigned 8-bit and the input video converted to MPEG-2 video, use the command:
+- 可以通过指定音频与视频编解码器及格式，用 `ffmpeg` 选择每帧的输出格式。例如，计算转换为 PCM 无符号 8 位的输入音频与转换为 MPEG-2 视频的输入视频的 CRC，使用命令：
 
   ``` text
   ffmpeg -i INPUT -c:a pcm_u8 -c:v mpeg2video -f crc -
@@ -1558,61 +1554,61 @@ See also the [framecrc](#framecrc) muxer.
 
 ## dash
 
-Dynamic Adaptive Streaming over HTTP (DASH) muxer.
+基于 HTTP 的动态自适应流媒体 (Dynamic Adaptive Streaming over HTTP, DASH) 复用器。
 
-This muxer creates segments and manifest files according to the MPEG-DASH standard ISO/IEC 23009-1:2014 and following standard updates.
+此复用器按照 MPEG-DASH 标准 ISO/IEC 23009-1:2014 及后续标准更新创建分段与清单文件。
 
-For more information see:
+更多信息参见：
 
-- ISO DASH Specification: <http://standards.iso.org/ittf/PubliclyAvailableStandards/c065274_ISO_IEC_23009-1_2014.zip>
+- ISO DASH 规范：<http://standards.iso.org/ittf/PubliclyAvailableStandards/c065274_ISO_IEC_23009-1_2014.zip>
 
-- WebM DASH Specification: <https://sites.google.com/a/webmproject.org/wiki/adaptive-streaming/webm-dash-specification>
+- WebM DASH 规范：<https://sites.google.com/a/webmproject.org/wiki/adaptive-streaming/webm-dash-specification>
 
-This muxer creates an MPD (Media Presentation Description) manifest file and segment files for each stream. Segment files are placed in the same directory of the MPD manifest file.
+此复用器为每条流创建一个 MPD (Media Presentation Description) 清单文件和分段文件。分段文件与 MPD 清单文件放在同一目录。
 
-The segment filename might contain pre-defined identifiers used in the manifest `SegmentTemplate` section as defined in section 5.3.9.4.4 of the standard.
+分段文件名可以包含预定义标识符，这些标识符在清单 `SegmentTemplate` 小节中使用，如标准 5.3.9.4.4 节所定义。
 
-Available identifiers are `$RepresentationID$`, `$Number$`, `$Bandwidth$`, and `$Time$`. In addition to the standard identifiers, an ffmpeg-specific `$ext$` identifier is also supported. When specified, `ffmpeg` will replace `$ext$` in the file name with muxing format's extensions such as `mp4`, `webm` etc.
+可用标识符为 `$RepresentationID$`、`$Number$`、`$Bandwidth$` 与 `$Time$`。除标准标识符外，还支持 ffmpeg 特有的 `$ext$` 标识符。指定时，`ffmpeg` 会将文件名中的 `$ext$` 替换为复用格式的扩展名，如 `mp4`、`webm` 等。
 
-### Options
+### 选项
 
-- **`adaptation_sets adaptation_sets`** Assign streams to adaptation sets, specified in the MPD manifest `AdaptationSets` section.
+- **`adaptation_sets adaptation_sets`** 将流分配到适配集 (adaptation set)，在 MPD 清单的 `AdaptationSets` 小节中指定。
 
-  An adaptation set contains a set of one or more streams accessed as a single subset, e.g. corresponding streams encoded at different size selectable by the user depending on the available bandwidth, or to different audio streams with a different language.
+  适配集包含一组作为单一子集访问的一条或多条流，例如用户根据可用带宽选择的不同尺寸编码的相应流，或不同语言的多条音频流。
 
-  Each adaptation set is specified with the syntax:
+  每个适配集按以下语法指定：
 
   ``` text
   id=index,streams=streams
   ```
 
-  where \<index\> must be a numerical index, and \<streams\> is a sequence of `,`-separated stream indices. Multiple adaptation sets can be specified, separated by spaces.
+  其中 \<index\> 必须是数值索引，\<streams\> 是以 `,` 分隔的流索引序列。可指定多个适配集，以空格分隔。
 
-  To map all video (or audio) streams to an adaptation set, `v` (or `a`) can be used as stream identifier instead of IDs.
+  要将全部视频（或音频）流映射到一个适配集，可用 `v`（或 `a`）作为流标识符代替 ID。
 
-  When no assignment is defined, this defaults to an adaptation set for each stream.
+  未定义分配时，默认为每条流一个适配集。
 
-  The following optional fields can also be specified:
+  还可指定以下可选字段：
 
-  - **`descriptor`** Define the descriptor as defined by ISO/IEC 23009-1:2014/Amd.2:2015.
+  - **`descriptor`** 按 ISO/IEC 23009-1:2014/Amd.2:2015 的定义指定描述符 (descriptor)。
 
-    For example:
+    例如：
 
     ``` text
     <SupplementalProperty schemeIdUri=\"urn:mpeg:dash:srd:2014\" value=\"0,0,0,1,1,2,2\"/>
     ```
 
-    The descriptor string should be a self-closing XML tag.
+    描述符字符串应是自闭合的 XML 标签。
 
-  - **`frag_duration`** Override the global fragment duration specified with the `frag_duration` option.
+  - **`frag_duration`** 覆盖用 `frag_duration` 选项指定的全局分片时长。
 
-  - **`frag_type`** Override the global fragment type specified with the `frag_type` option.
+  - **`frag_type`** 覆盖用 `frag_type` 选项指定的全局分片类型。
 
-  - **`seg_duration`** Override the global segment duration specified with the `seg_duration` option.
+  - **`seg_duration`** 覆盖用 `seg_duration` 选项指定的全局分段时长。
 
-  - **`trick_id`** Mark an adaptation set as containing streams meant to be used for Trick Mode for the referenced adaptation set.
+  - **`trick_id`** 将适配集标记为包含用于所引用适配集特技模式 (Trick Mode) 的流。
 
-  A few examples of possible values for the `adaptation_sets` option follow:
+  下面是 `adaptation_sets` 选项的一些可能取值示例：
 
   ``` text
   id=0,seg_duration=2,frag_duration=1,frag_type=duration,streams=v id=1,seg_duration=2,frag_type=none,streams=a
@@ -1622,130 +1618,130 @@ Available identifiers are `$RepresentationID$`, `$Number$`, `$Bandwidth$`, and `
   id=0,seg_duration=2,frag_type=none,streams=0 id=1,seg_duration=10,frag_type=none,trick_id=0,streams=1
   ```
 
-- **`dash_segment_type type`** Set DASH segment files type.
+- **`dash_segment_type type`** 设置 DASH 分段文件类型。
 
-  Possible values:
+  可能的取值：
 
-  - **`auto`** The dash segment files format will be selected based on the stream codec. This is the default mode.
+  - **`auto`** DASH 分段文件格式根据流编解码器选择。这是默认模式。
 
-  - **`mp4`** the dash segment files will be in ISOBMFF/MP4 format
+  - **`mp4`** DASH 分段文件为 ISOBMFF/MP4 格式
 
-  - **`webm`** the dash segment files will be in WebM format
+  - **`webm`** DASH 分段文件为 WebM 格式
 
-- **`extra_window_size size`** Set the maximum number of segments kept outside of the manifest before removing from disk.
+- **`extra_window_size size`** 设置从磁盘移除前保留在清单之外的最大分段数。
 
-- **`format_options options_list`** Set container format (mp4/webm) options using a `:`-separated list of key=value parameters. Values containing `:` special characters must be escaped.
+- **`format_options options_list`** 使用以 `:` 分隔的 key=value 参数列表设置容器格式 (mp4/webm) 选项。包含 `:` 特殊字符的值必须转义。
 
-- **`frag_duration duration`** Set the length in seconds of fragments within segments, fractional value can also be set.
+- **`frag_duration duration`** 设置分段的分片长度（秒），可设置小数值。
 
-- **`frag_type type`** Set the type of interval for fragmentation.
+- **`frag_type type`** 设置分片化 (fragmentation) 的间隔类型。
 
-  Possible values:
+  可能的取值：
 
-  - **`auto`** set one fragment per segment
+  - **`auto`** 每个分段一个分片
 
-  - **`every_frame`** fragment at every frame
+  - **`every_frame`** 每帧切分一个分片
 
-  - **`duration`** fragment at specific time intervals
+  - **`duration`** 按特定时间间隔切分分片
 
-  - **`pframes`** fragment at keyframes and following P-Frame reordering (Video only, experimental)
+  - **`pframes`** 在关键帧及后续 P 帧重排处切分分片（仅视频，实验性）
 
-- **`global_sidx bool`** Write global `SIDX` atom. Applicable only for single file, mp4 output, non-streaming mode.
+- **`global_sidx bool`** 写入全局 `SIDX` atom。仅适用于单文件、mp4 输出、非流式模式。
 
-- **`hls_master_name file_name`** HLS master playlist name. Default is `master.m3u8`.
+- **`hls_master_name file_name`** HLS 主播放列表名称。默认为 `master.m3u8`。
 
-- **`hls_playlist bool`** Generate HLS playlist files. The master playlist is generated with filename specified by the `hls_master_name` option. One media playlist file is generated for each stream with filenames `media_0.m3u8`, `media_1.m3u8`, etc.
+- **`hls_playlist bool`** 生成 HLS 播放列表文件。主播放列表按 `hls_master_name` 选项指定的文件名生成。每条流生成一个媒体播放列表文件，文件名为 `media_0.m3u8`、`media_1.m3u8` 等。
 
-- **`http_opts http_opts`** Specify a list of `:`-separated key=value options to pass to the underlying HTTP protocol. Applicable only for HTTP output.
+- **`http_opts http_opts`** 指定以 `:` 分隔的 key=value 选项列表，传给底层 HTTP 协议。仅适用于 HTTP 输出。
 
-- **`http_persistent bool`** Use persistent HTTP connections. Applicable only for HTTP output.
+- **`http_persistent bool`** 使用持久 HTTP 连接。仅适用于 HTTP 输出。
 
-- **`http_user_agent user_agent`** Override User-Agent field in HTTP header. Applicable only for HTTP output.
+- **`http_user_agent user_agent`** 覆盖 HTTP 头中的 User-Agent 字段。仅适用于 HTTP 输出。
 
-- **`ignore_io_errors bool`** Ignore IO errors during open and write. Useful for long-duration runs with network output. This is disabled by default.
+- **`ignore_io_errors bool`** 忽略打开和写入期间的 I/O 错误。对网络输出的长时间运行有用。默认禁用。
 
-- **`index_correction bool`** Enable or disable segment index correction logic. Applicable only when `use_template` is enabled and `use_timeline` is disabled. This is disabled by default.
+- **`index_correction bool`** 启用或禁用分段索引修正逻辑。仅在启用 `use_template` 且禁用 `use_timeline` 时适用。默认禁用。
 
-  When enabled, the logic monitors the flow of segment indexes. If a streams's segment index value is not at the expected real time position, then the logic corrects that index value.
+  启用后，该逻辑监测分段索引的流动。若某流的分段索引值不在预期的实时位置，逻辑会修正该索引值。
 
-  Typically this logic is needed in live streaming use cases. The network bandwidth fluctuations are common during long run streaming. Each fluctuation can cause the segment indexes fall behind the expected real time position.
+  直播场景通常需要此逻辑。长时间流式传输期间网络带宽波动很常见，每次波动都可能使分段索引落后于预期的实时位置。
 
-- **`init_seg_name init_name`** DASH-templated name to use for the initialization segment. Default is `init-stream$RepresentationID$.$ext$`. `$ext$` is replaced with the file name extension specific for the segment format.
+- **`init_seg_name init_name`** 用于初始化分段的 DASH 模板名。默认为 `init-stream$RepresentationID$.$ext$`。`$ext$` 会替换为分段格式特有的文件扩展名。
 
-- **`ldash bool`** Enable Low-latency Dash by constraining the presence and values of some elements. This is disabled by default.
+- **`ldash bool`** 通过约束某些元素的存在与取值启用低延迟 Dash (Low-latency Dash)。默认禁用。
 
-- **`lhls bool`** Enable Low-latency HLS (LHLS). Add `#EXT-X-PREFETCH` tag with current segment's URI. hls.js player folks are trying to standardize an open LHLS spec. The draft spec is available at <https://github.com/video-dev/hlsjs-rfcs/blob/lhls-spec/proposals/0001-lhls.md>.
+- **`lhls bool`** 启用低延迟 HLS (LHLS)。添加带当前分段 URI 的 `#EXT-X-PREFETCH` 标签。hls.js 播放器社区正尝试标准化开放的 LHLS 规范，草案见 <https://github.com/video-dev/hlsjs-rfcs/blob/lhls-spec/proposals/0001-lhls.md>。
 
-  This option tries to comply with the above open spec. It enables `streaming` and `hls_playlist` options automatically. This is an experimental feature.
+  此选项尽量符合上述开放规范。它会自动启用 `streaming` 与 `hls_playlist` 选项。这是实验性功能。
 
-  Note: This is not Apple's version LHLS. See <https://datatracker.ietf.org/doc/html/draft-pantos-hls-rfc8216bis>
+  注意：这不是 Apple 版本的 LHLS。参见 <https://datatracker.ietf.org/doc/html/draft-pantos-hls-rfc8216bis>
 
-- **`master_m3u8_publish_rate segment_intervals_count`** Publish master playlist repeatedly every after specified number of segment intervals.
+- **`master_m3u8_publish_rate segment_intervals_count`** 每隔指定数量的分段间隔重复发布主播放列表。
 
-- **`max_playback_rate rate`** Set the maximum playback rate indicated as appropriate for the purposes of automatically adjusting playback latency and buffer occupancy during normal playback by clients.
+- **`max_playback_rate rate`** 设置指示的最大播放速率，供客户端在正常播放期间自动调整播放延迟与缓冲占用。
 
-- **`media_seg_name segment_name`** DASH-templated name to use for the media segments. Default is `chunk-stream$RepresentationID$-$Number%05d$.$ext$`. `$ext$` is replaced with the file name extension specific for the segment format.
+- **`media_seg_name segment_name`** 用于媒体分段的 DASH 模板名。默认为 `chunk-stream$RepresentationID$-$Number%05d$.$ext$`。`$ext$` 会替换为分段格式特有的文件扩展名。
 
-- **`method method`** Use the given HTTP method to create output files. Generally set to `PUT` or `POST`.
+- **`method method`** 使用给定的 HTTP 方法创建输出文件。通常设为 `PUT` 或 `POST`。
 
-- **`min_playback_rate rate`** Set the minimum playback rate indicated as appropriate for the purposes of automatically adjusting playback latency and buffer occupancy during normal playback by clients.
+- **`min_playback_rate rate`** 设置指示的最小播放速率，供客户端在正常播放期间自动调整播放延迟与缓冲占用。
 
-- **`mpd_profile flags`** Set one or more MPD manifest profiles.
+- **`mpd_profile flags`** 设置一个或多个 MPD 清单 profile。
 
-  Possible values:
+  可能的取值：
 
   | Term         | Description                                       |
   |--------------|---------------------------------------------------|
-  | `dash`     | MPEG-DASH ISO Base media file format live profile |
+  | `dash`     | MPEG-DASH ISO 基础媒体文件格式直播 profile |
   | `dvb_dash` | DVB-DASH profile                                  |
 
-  Default value is `dash`.
+  默认值为 `dash`。
 
-- **`remove_at_exit bool`** Enable or disable removal of all segments when finished. This is disabled by default.
+- **`remove_at_exit bool`** 启用或禁用完成时移除全部分段。默认禁用。
 
-- **`seg_duration duration`** Set the segment length in seconds (fractional value can be set). The value is treated as average segment duration when the `use_template` option is enabled and the `use_timeline` option is disabled and as minimum segment duration for all the other use cases.
+- **`seg_duration duration`** 设置分段长度（秒，可设小数值）。启用 `use_template` 且禁用 `use_timeline` 时该值作为平均分段时长，其他所有场景下作为最小分段时长。
 
-  Default value is `5`.
+  默认值为 `5`。
 
-- **`single_file bool`** Enable or disable storing all segments in one file, accessed using byte ranges. This is disabled by default.
+- **`single_file bool`** 启用或禁用将全部分段存储在一个文件中（通过字节范围访问）。默认禁用。
 
-  The name of the single file can be specified with the `single_file_name` option, if not specified assume the basename of the manifest file with the output format extension.
+  单文件的名称可用 `single_file_name` 选项指定；未指定时假定为清单文件的基本名加输出格式扩展名。
 
-- **`single_file_name file_name`** DASH-templated name to use for the manifest `baseURL` element. Imply that the `single_file` option is set to \<true\>. In the template, `$ext$` is replaced with the file name extension specific for the segment format.
+- **`single_file_name file_name`** 用于清单 `baseURL` 元素的 DASH 模板名。隐含 `single_file` 选项设为 \<true\>。模板中 `$ext$` 会替换为分段格式特有的文件扩展名。
 
-- **`availability_start_time_ms milliseconds`** Set the MPD `availabilityStartTime` attribute as Unix epoch time in milliseconds. If set to `0`, the wall clock is used when the first packet is written. This is useful for live outputs that need a stable availability start time across restarts.
+- **`availability_start_time_ms milliseconds`** 将 MPD `availabilityStartTime` 属性设为以毫秒为单位的 Unix 纪元时间。设为 `0` 时，写入第一个包时使用墙上时钟。这对需要在重启间保持稳定可用起始时间的直播输出很有用。
 
-- **`streaming bool`** Enable or disable chunk streaming mode of output. In chunk streaming mode, each frame will be a `moof` fragment which forms a chunk. This is disabled by default.
+- **`streaming bool`** 启用或禁用输出的分块流式传输模式 (chunk streaming)。此模式下每帧都是一个构成 chunk 的 `moof` 分片。默认禁用。
 
-- **`suggested_presentation_delay duration`** Set the MPD `suggestedPresentationDelay` attribute. If set to `0`, the last segment duration is used.
+- **`suggested_presentation_delay duration`** 设置 MPD `suggestedPresentationDelay` 属性。设为 `0` 时使用最后一个分段的时长。
 
-- **`target_latency target_latency`** Set an intended target latency in seconds for serving (fractional value can be set). Applicable only when the `streaming` and `write_prft` options are enabled. This is an informative fields clients can use to measure the latency of the service.
+- **`target_latency target_latency`** 设置服务端的预期目标延迟（秒，可设小数值）。仅在启用 `streaming` 与 `write_prft` 选项时适用。这是供客户端测量服务延迟的提示性字段。
 
-- **`timeout timeout`** Set timeout for socket I/O operations expressed in seconds (fractional value can be set). Applicable only for HTTP output.
+- **`timeout timeout`** 设置套接字 I/O 操作超时（秒，可设小数值）。仅适用于 HTTP 输出。
 
-- **`update_period period`** Set the MPD update period, for dynamic content. The unit is second. If set to `0`, the period is automatically computed.
+- **`update_period period`** 设置动态内容的 MPD 更新周期。单位为秒。设为 `0` 时自动计算周期。
 
-  Default value is `0`.
+  默认值为 `0`。
 
-- **`use_template bool`** Enable or disable use of `SegmentTemplate` instead of `SegmentList` in the manifest. This is enabled by default.
+- **`use_template bool`** 启用或禁用在清单中使用 `SegmentTemplate` 而非 `SegmentList`。默认启用。
 
-- **`use_timeline bool`** Enable or disable use of `SegmentTimeline` within the `SegmentTemplate` manifest section. This is enabled by default.
+- **`use_timeline bool`** 启用或禁用在 `SegmentTemplate` 清单小节中使用 `SegmentTimeline`。默认启用。
 
-- **`utc_timing_url url`** URL of the page that will return the UTC timestamp in ISO format, for example `https://time.akamai.com/?iso`
+- **`utc_timing_url url`** 返回 ISO 格式 UTC 时间戳的页面 URL，例如 `https://time.akamai.com/?iso`
 
-- **`window_size size`** Set the maximum number of segments kept in the manifest, discard the oldest one. This is useful for live streaming.
+- **`window_size size`** 设置清单中保留的最大分段数，丢弃最旧的。对直播有用。
 
-  If the value is `0`, all segments are kept in the manifest. Default value is `0`.
+  值为 `0` 时保留清单中的全部分段。默认值为 `0`。
 
-- **`write_prft write_prft`** Write Producer Reference Time elements on supported streams. This also enables writing prft boxes in the underlying muxer. Applicable only when the \<utc_url\> option is enabled. It is set to \<auto\> by default, in which case the muxer will attempt to enable it only in modes that require it.
+- **`write_prft write_prft`** 在受支持的流上写入生成者参考时间 (Producer Reference Time) 元素。这也会启用底层复用器中的 prft box 写入。仅在启用 \<utc_url\> 选项时适用。默认为 \<auto\>，此时复用器只在需要的模式下尝试启用它。
 
-### Example
+### 示例
 
-Generate a DASH output reading from an input source in realtime using `ffmpeg`.
+使用 `ffmpeg` 从实时输入源生成 DASH 输出。
 
-Two multimedia streams are generated from the input file, both containing a video stream encoded through `libx264`, and an audio stream encoded with `libfdk_aac`. The first multimedia stream contains video with a bitrate of 800k and audio at the default rate, the second with video scaled to 320x170 pixels at 300k and audio resampled at 22005 Hz.
+从输入文件生成两条多媒体流，均包含经 `libx264` 编码的视频流和以 `libfdk_aac` 编码的音频流。第一条多媒体流包含 800k 码率的视频与默认码率的音频；第二条包含缩放至 320x170 像素、300k 码率的视频与重采样到 22050 Hz 的音频。
 
-The `window_size` option keeps only the latest 5 segments with the default duration of 5 seconds.
+`window_size` 选项只保留最近 5 个分段（默认时长 5 秒）。
 
 ``` text
 ffmpeg -re -i <input> -map 0 -map 0 -c:a libfdk_aac -c:v libx264 \
@@ -1759,29 +1755,29 @@ ffmpeg -re -i <input> -map 0 -map 0 -c:a libfdk_aac -c:v libx264 \
 
 ## daud
 
-D-Cinema audio muxer.
+D-Cinema 音频复用器。
 
-It accepts a single 6-channels audio stream resampled at 96000 Hz encoded with the `pcm_24daud` codec.
+它接受单条 6 声道、重采样至 96000 Hz、以 `pcm_24daud` 编解码器编码的音频流。
 
-### Example
+### 示例
 
-Use `ffmpeg` to mux input audio to a `5.1` channel layout resampled at 96000Hz:
+使用 `ffmpeg` 将输入音频复用为重采样至 96000Hz 的 `5.1` 声道布局：
 
 ``` text
 ffmpeg -i INPUT -af aresample=96000,pan=5.1 slow.302
 ```
 
-For ffmpeg versions before 7.0 you might have to use the `asetnsamples` filter to limit the muxed packet size, because this format does not support muxing packets larger than 65535 bytes (3640 samples). For newer ffmpeg versions audio is automatically packetized to 36000 byte (2000 sample) packets.
+对 7.0 之前的 ffmpeg 版本，可能需要使用 `asetnsamples` 滤镜限制复用包大小，因为此格式不支持复用大于 65535 字节（3640 个采样）的包。对较新的 ffmpeg 版本，音频会自动打包成 36000 字节（2000 个采样）的包。
 
 ## dv
 
-DV (Digital Video) muxer.
+DV (Digital Video) 复用器。
 
-It accepts exactly one `dvvideo` video stream and at most two `pcm_s16` audio streams. More constraints are defined by the property of the video, which must correspond to a DV video supported profile, and on the framerate.
+它恰好接受一条 `dvvideo` 视频流和至多两条 `pcm_s16` 音频流。更多约束由视频属性（必须对应受支持的 DV 视频 profile）以及帧率定义。
 
-### Example
+### 示例
 
-Use `ffmpeg` to convert the input:
+使用 `ffmpeg` 转换输入：
 
 ``` text
 ffmpeg -i INPUT -s:v 720x480 -pix_fmt yuv411p -r 29.97 -ac 2 -ar 48000 -y out.dv
@@ -1789,15 +1785,15 @@ ffmpeg -i INPUT -s:v 720x480 -pix_fmt yuv411p -r 29.97 -ac 2 -ar 48000 -y out.dv
 
 ## ffmetadata
 
-FFmpeg metadata muxer.
+FFmpeg 元数据复用器。
 
-This muxer writes the streams metadata in the `ffmetadata` format.
+此复用器以 `ffmetadata` 格式写入流元数据。
 
-See section "the Metadata chapter" in `ffmpeg-formats` for information about the format.
+格式信息参见 `ffmpeg-formats` 中"the Metadata chapter"（元数据）一章。
 
-### Example
+### 示例
 
-Use `ffmpeg` to extract metadata from an input file to a `metadata.ffmeta` file in `ffmetadata` format:
+使用 `ffmpeg` 将输入文件的元数据提取为 `ffmetadata` 格式的 `metadata.ffmeta` 文件：
 
 ``` text
 ffmpeg -i INPUT -f ffmetadata metadata.ffmeta
@@ -1805,53 +1801,53 @@ ffmpeg -i INPUT -f ffmetadata metadata.ffmeta
 
 ## fifo
 
-FIFO (First-In First-Out) muxer.
+FIFO (First-In First-Out，先进先出) 复用器。
 
-The `fifo` pseudo-muxer allows the separation of encoding and muxing by using a first-in-first-out queue and running the actual muxer in a separate thread.
+`fifo` 伪复用器 (pseudo-muxer) 通过使用先进先出队列并在独立线程中运行实际复用器，实现编码与复用的分离。
 
-This is especially useful in combination with the [tee](#tee) muxer and can be used to send data to several destinations with different reliability/writing speed/latency.
+它与 [tee](#tee) 复用器结合使用尤其有用，可用于向多个目标发送数据，各目标具有不同的可靠性/写入速度/延迟。
 
-The target muxer is either selected from the output name or specified through the `fifo_format` option.
+目标复用器从输出名中选择，或通过 `fifo_format` 选项指定。
 
-The behavior of the `fifo` muxer if the queue fills up or if the output fails (e.g. if a packet cannot be written to the output) is selectable:
+当队列填满或输出失败（例如包无法写入输出）时，`fifo` 复用器的行为可以选择：
 
-- Output can be transparently restarted with configurable delay between retries based on real time or time of the processed stream.
+- 输出可以透明重启，重试之间的延迟可配置（基于实时或被处理流的时间）。
 
-- Encoding can be blocked during temporary failure, or continue transparently dropping packets in case the FIFO queue fills up.
+- 临时故障期间可阻塞编码，或在 FIFO 队列填满时透明地继续丢弃包。
 
-API users should be aware that callback functions (`interrupt_callback`, `io_open` and `io_close`) used within its `AVFormatContext` must be thread-safe.
+API 用户应注意，其 `AVFormatContext` 内使用的回调函数（`interrupt_callback`、`io_open` 与 `io_close`）必须是线程安全的。
 
-### Options
+### 选项
 
-- **`attempt_recovery bool`** If failure occurs, attempt to recover the output. This is especially useful when used with network output, since it makes it possible to restart streaming transparently. By default this option is set to `false`.
+- **`attempt_recovery bool`** 发生故障时尝试恢复输出。与网络输出配合使用时尤其有用，可以透明地重启流式传输。此选项默认设为 `false`。
 
-- **`drop_pkts_on_overflow bool`** If set to `true`, in case the fifo queue fills up, packets will be dropped rather than blocking the encoder. This makes it possible to continue streaming without delaying the input, at the cost of omitting part of the stream. By default this option is set to `false`, so in such cases the encoder will be blocked until the muxer processes some of the packets and none of them is lost.
+- **`drop_pkts_on_overflow bool`** 若设为 `true`，当 fifo 队列填满时将丢弃包而不是阻塞编码器。这使流式传输得以继续而不延迟输入，代价是省略部分流。此选项默认设为 `false`，此时编码器会被阻塞，直到复用器处理掉部分包，且没有包丢失。
 
-- **`fifo_format format_name`** Specify the format name. Useful if it cannot be guessed from the output name suffix.
+- **`fifo_format format_name`** 指定格式名。当无法从输出名后缀猜出格式时有用。
 
-- **`format_opts options`** Specify format options for the underlying muxer. Muxer options can be specified as a list of \<key\>=\<value\> pairs separated by ':'.
+- **`format_opts options`** 指定底层复用器的格式选项。复用器选项可以以 ':' 分隔的 \<key\>=\<value\> 对列表指定。
 
-- **`max_recovery_attempts count`** Set maximum number of successive unsuccessful recovery attempts after which the output fails permanently. By default this option is set to `0` (unlimited).
+- **`max_recovery_attempts count`** 设置连续恢复尝试失败的最大次数，超过后输出永久失败。此选项默认设为 `0`（无限）。
 
-- **`queue_size size`** Specify size of the queue as a number of packets. Default value is `60`.
+- **`queue_size size`** 以包数指定队列大小。默认值为 `60`。
 
-- **`recover_any_error bool`** If set to `true`, recovery will be attempted regardless of type of the error causing the failure. By default this option is set to `false` and in case of certain (usually permanent) errors the recovery is not attempted even when the `attempt_recovery` option is set to `true`.
+- **`recover_any_error bool`** 若设为 `true`，无论导致故障的错误类型如何都会尝试恢复。此选项默认设为 `false`；发生某些（通常是永久性的）错误时，即使 `attempt_recovery` 选项设为 `true` 也不会尝试恢复。
 
-- **`recovery_wait_streamtime bool`** If set to `false`, the real time is used when waiting for the recovery attempt (i.e. the recovery will be attempted after the time specified by the `recovery_wait_time` option).
+- **`recovery_wait_streamtime bool`** 若设为 `false`，等待恢复尝试时使用实时（即在 `recovery_wait_time` 选项指定的时间后尝试恢复）。
 
-  If set to `true`, the time of the processed stream is taken into account instead (i.e. the recovery will be attempted after discarding the packets corresponding to the `recovery_wait_time` option).
+  若设为 `true`，则改为考虑被处理流的时间（即在丢弃与 `recovery_wait_time` 选项对应的包之后尝试恢复）。
 
-  By default this option is set to `false`.
+  此选项默认设为 `false`。
 
-- **`recovery_wait_time duration`** Specify waiting time in seconds before the next recovery attempt after previous unsuccessful recovery attempt. Default value is `5`.
+- **`recovery_wait_time duration`** 指定上一次恢复尝试失败后到下一次恢复尝试前的等待时间（秒）。默认值为 `5`。
 
-- **`restart_with_keyframe bool`** Specify whether to wait for the keyframe after recovering from queue overflow or failure. This option is set to `false` by default.
+- **`restart_with_keyframe bool`** 指定从队列溢出或故障恢复后是否等待关键帧。此选项默认设为 `false`。
 
-- **`timeshift duration`** Buffer the specified amount of packets and delay writing the output. Note that the value of the `queue_size` option must be big enough to store the packets for timeshift. At the end of the input the fifo buffer is flushed at realtime speed.
+- **`timeshift duration`** 缓冲指定数量的包并延迟写出输出。注意 `queue_size` 选项的值必须大到足以存储时移 (timeshift) 所需的包。输入结束时，fifo 缓冲以实时速度刷新。
 
-### Example
+### 示例
 
-Use `ffmpeg` to stream to an RTMP server, continue processing the stream at real-time rate even in case of temporary failure (network outage) and attempt to recover streaming every second indefinitely:
+使用 `ffmpeg` 向 RTMP 服务器推流，在临时故障（网络中断）时仍以实时速率继续处理流，并每秒尝试恢复推流，无限重试：
 
 ``` text
 ffmpeg -re -i ... -c:v libx264 -c:a aac -f fifo -fifo_format flv \
@@ -1861,41 +1857,41 @@ ffmpeg -re -i ... -c:v libx264 -c:a aac -f fifo -fifo_format flv \
 
 ## film_cpk
 
-Sega film (.cpk) muxer.
+Sega film (.cpk) 复用器。
 
-This format was used as internal format for several Sega games.
+此格式曾被多款 Sega 游戏用作内部格式。
 
-For more information regarding the Sega film file format, visit <http://wiki.multimedia.cx/index.php?title=Sega_FILM>.
+关于 Sega film 文件格式的更多信息，访问 <http://wiki.multimedia.cx/index.php?title=Sega_FILM>。
 
-It accepts at maximum one `cinepak` or raw video stream, and at maximum one audio stream.
+它最多接受一条 `cinepak` 或 raw 视频流，以及最多一条音频流。
 
 ## filmstrip
 
-Adobe Filmstrip muxer.
+Adobe Filmstrip 复用器。
 
-This format is used by several Adobe tools to store a generated filmstrip export. It accepts a single raw video stream.
+多款 Adobe 工具用此格式存储生成的胶片条 (filmstrip) 导出。它接受单条 raw 视频流。
 
 ## fits
 
-Flexible Image Transport System (FITS) muxer.
+灵活图像传输系统 (Flexible Image Transport System, FITS) 复用器。
 
-This image format is used to store astronomical data.
+此图像格式用于存储天文数据。
 
-For more information regarding the format, visit <https://fits.gsfc.nasa.gov>.
+关于该格式的更多信息，访问 <https://fits.gsfc.nasa.gov>。
 
 ## flac
 
-Raw FLAC audio muxer.
+Raw FLAC 音频复用器。
 
-This muxer accepts exactly one FLAC audio stream. Additionally, it is possible to add images with disposition `attached_pic`.
+此复用器恰好接受一条 FLAC 音频流。此外，可以添加带 `attached_pic` disposition 的图像。
 
-### Options
+### 选项
 
-- **`write_header bool`** write the file header if set to `true`, default is `true`
+- **`write_header bool`** 设为 `true` 时写文件头，默认值为 `true`
 
-### Example
+### 示例
 
-Use `ffmpeg` to store the audio stream from an input file, together with several pictures used with `attached_pic` disposition:
+使用 `ffmpeg` 存储输入文件的音频流，以及若干配合 `attached_pic` disposition 使用的图片：
 
 ``` text
 ffmpeg -i INPUT -i pic1.png -i pic2.jpg -map 0:a -map 1 -map 2 -disposition:v attached_pic OUTPUT
@@ -1903,135 +1899,135 @@ ffmpeg -i INPUT -i pic1.png -i pic2.jpg -map 0:a -map 1 -map 2 -disposition:v at
 
 ## flv
 
-Adobe Flash Video Format muxer.
+Adobe Flash Video Format 复用器。
 
-### Options
+### 选项
 
-- **`flvflags flags`** Possible values:
+- **`flvflags flags`** 可能的取值：
 
-  - **`aac_seq_header_detect`** Place AAC sequence header based on audio stream data.
+  - **`aac_seq_header_detect`** 基于音频流数据放置 AAC 序列头。
 
-  - **`no_sequence_end`** Disable sequence end tag.
+  - **`no_sequence_end`** 禁用序列结束标签。
 
-  - **`no_metadata`** Disable metadata tag.
+  - **`no_metadata`** 禁用元数据标签。
 
-  - **`no_duration_filesize`** Disable duration and filesize in metadata when they are equal to zero at the end of stream. (Be used to non-seekable living stream).
+  - **`no_duration_filesize`** 当流末尾的时长与文件大小为零时，禁用元数据中的时长与文件大小。（用于不可定位的直播流）。
 
-  - **`add_keyframe_index`** Used to facilitate seeking; particularly for HTTP pseudo streaming.
+  - **`add_keyframe_index`** 用于辅助定位，对 HTTP 伪流 (pseudo streaming) 尤其有用。
 
 ## framecrc
 
-Per-packet CRC (Cyclic Redundancy Check) testing format.
+逐包 CRC (Cyclic Redundancy Check) 测试格式。
 
-This muxer computes and prints the Adler-32 CRC for each audio and video packet. By default audio frames are converted to signed 16-bit raw audio and video frames to raw video before computing the CRC.
+此复用器为每个音频与视频包计算并打印 Adler-32 CRC。默认情况下，计算 CRC 前音频帧被转换为有符号 16 位 raw 音频，视频帧被转换为 raw 视频。
 
-The output of the muxer consists of a line for each audio and video packet of the form:
+复用器的输出为每个音频与视频包一行，形如：
 
 ``` text
 stream_index, packet_dts, packet_pts, packet_duration, packet_size, 0xCRC
 ```
 
-\<CRC\> is a hexadecimal number 0-padded to 8 digits containing the CRC of the packet.
+\<CRC\> 是以 0 填充到 8 位的十六进制数，包含该包的 CRC。
 
-### Examples
+### 示例
 
-For example to compute the CRC of the audio and video frames in `INPUT`, converted to raw audio and video packets, and store it in the file `out.crc`:
+例如，计算 `INPUT` 中转换为 raw 音频与视频包的音频和视频帧的 CRC，并存储到文件 `out.crc`：
 
 ``` text
 ffmpeg -i INPUT -f framecrc out.crc
 ```
 
-To print the information to stdout, use the command:
+将信息打印到标准输出，使用命令：
 
 ``` text
 ffmpeg -i INPUT -f framecrc -
 ```
 
-With `ffmpeg`, you can select the output format to which the audio and video frames are encoded before computing the CRC for each packet by specifying the audio and video codec. For example, to compute the CRC of each decoded input audio frame converted to PCM unsigned 8-bit and of each decoded input video frame converted to MPEG-2 video, use the command:
+使用 `ffmpeg` 时，可以通过指定音频与视频编解码器，选择在计算每个包的 CRC 前音频与视频帧编码到的输出格式。例如，计算转换为 PCM 无符号 8 位的每个已解码输入音频帧与转换为 MPEG-2 视频的每个已解码输入视频帧的 CRC，使用命令：
 
 ``` text
 ffmpeg -i INPUT -c:a pcm_u8 -c:v mpeg2video -f framecrc -
 ```
 
-See also the [crc](#crc) muxer.
+另请参见 [crc](#crc) 复用器。
 
 ## framehash
 
-Per-packet hash testing format.
+逐包哈希 (hash) 测试格式。
 
-This muxer computes and prints a cryptographic hash for each audio and video packet. This can be used for packet-by-packet equality checks without having to individually do a binary comparison on each.
+此复用器为每个音频与视频包计算并打印加密哈希。可用于逐包相等性检查，无需对每个包单独做二进制比较。
 
-By default audio frames are converted to signed 16-bit raw audio and video frames to raw video before computing the hash, but the output of explicit conversions to other codecs can also be used. It uses the SHA-256 cryptographic hash function by default, but supports several other algorithms.
+默认情况下，计算哈希前音频帧被转换为有符号 16 位 raw 音频，视频帧被转换为 raw 视频，但也可使用显式转换为其他编解码器后的输出。默认使用 SHA-256 加密哈希函数，但也支持若干其他算法。
 
-The output of the muxer consists of a line for each audio and video packet of the form:
+复用器的输出为每个音频与视频包一行，形如：
 
 ``` text
 stream_index, packet_dts, packet_pts, packet_duration, packet_size, hash
 ```
 
-\<hash\> is a hexadecimal number representing the computed hash for the packet.
+\<hash\> 是表示该包计算所得哈希的十六进制数。
 
-- **`hash algorithm`** Use the cryptographic hash function specified by the string \<algorithm\>. Supported values include `MD5`, `murmur3`, `RIPEMD128`, `RIPEMD160`, `RIPEMD256`, `RIPEMD320`, `SHA160`, `SHA224`, `SHA256` (default), `SHA512/224`, `SHA512/256`, `SHA384`, `SHA512`, `CRC32` and `adler32`.
+- **`hash algorithm`** 使用字符串 \<algorithm\> 指定的加密哈希函数。支持的值包括 `MD5`、`murmur3`、`RIPEMD128`、`RIPEMD160`、`RIPEMD256`、`RIPEMD320`、`SHA160`、`SHA224`、`SHA256`（默认）、`SHA512/224`、`SHA512/256`、`SHA384`、`SHA512`、`CRC32` 与 `adler32`。
 
-### Examples
+### 示例
 
-To compute the SHA-256 hash of the audio and video frames in `INPUT`, converted to raw audio and video packets, and store it in the file `out.sha256`:
+计算 `INPUT` 中转换为 raw 音频与视频包的音频和视频帧的 SHA-256 哈希，并存储到文件 `out.sha256`：
 
 ``` text
 ffmpeg -i INPUT -f framehash out.sha256
 ```
 
-To print the information to stdout, using the MD5 hash function, use the command:
+以 MD5 哈希函数将信息打印到标准输出，使用命令：
 
 ``` text
 ffmpeg -i INPUT -f framehash -hash md5 -
 ```
 
-See also the [hash](#hash) muxer.
+另请参见 [hash](#hash) 复用器。
 
 ## framemd5
 
-Per-packet MD5 testing format.
+逐包 MD5 测试格式。
 
-This is a variant of the [framehash](#framehash) muxer. Unlike that muxer, it defaults to using the MD5 hash function.
+这是 [framehash](#framehash) 复用器的变体。与该复用器不同，它默认使用 MD5 哈希函数。
 
-### Examples
+### 示例
 
-To compute the MD5 hash of the audio and video frames in `INPUT`, converted to raw audio and video packets, and store it in the file `out.md5`:
+计算 `INPUT` 中转换为 raw 音频与视频包的音频和视频帧的 MD5 哈希，并存储到文件 `out.md5`：
 
 ``` text
 ffmpeg -i INPUT -f framemd5 out.md5
 ```
 
-To print the information to stdout, use the command:
+将信息打印到标准输出，使用命令：
 
 ``` text
 ffmpeg -i INPUT -f framemd5 -
 ```
 
-See also the [framehash](#framehash) and [md5](#md5) muxers.
+另请参见 [framehash](#framehash) 与 [md5](#md5) 复用器。
 
 ## gif
 
-Animated GIF muxer.
+动图 GIF (Animated GIF) 复用器。
 
-Note that the GIF format has a very large time base: the delay between two frames can therefore not be smaller than one centisecond.
+注意 GIF 格式的时间基非常大：两帧之间的延迟因此不能小于一百分之一秒。
 
-### Options
+### 选项
 
-- **`loop bool`** Set the number of times to loop the output. Use `-1` for no loop, `0` for looping indefinitely (default).
+- **`loop bool`** 设置输出循环次数。`-1` 表示不循环，`0` 表示无限循环（默认）。
 
-- **`final_delay delay`** Force the delay (expressed in centiseconds) after the last frame. Each frame ends with a delay until the next frame. The default is `-1`, which is a special value to tell the muxer to reuse the previous delay. In case of a loop, you might want to customize this value to mark a pause for instance.
+- **`final_delay delay`** 强制最后一帧之后的延迟（以百分之一秒表示）。每帧以到下一帧的延迟结尾。默认值为 `-1`，这是一个特殊值，告诉复用器复用上一个延迟。循环时可能需要自定义此值，例如用于标记停顿。
 
-### Example
+### 示例
 
-Encode a gif looping 10 times, with a 5 seconds delay between the loops:
+编码循环 10 次、循环间延迟 5 秒的 GIF：
 
 ``` text
 ffmpeg -i INPUT -loop 10 -final_delay 500 out.gif
 ```
 
-Note 1: if you wish to extract the frames into separate GIF files, you need to force the [image2](#image2) muxer:
+注意 1：若希望将帧提取为单独的 GIF 文件，需要强制使用 [image2](#image2) 复用器：
 
 ``` text
 ffmpeg -i INPUT -c:v gif -f image2 "out%d.gif"
@@ -2039,63 +2035,63 @@ ffmpeg -i INPUT -c:v gif -f image2 "out%d.gif"
 
 ## gxf
 
-General eXchange Format (GXF) muxer.
+通用交换格式 (General eXchange Format, GXF) 复用器。
 
-GXF was developed by Grass Valley Group, then standardized by SMPTE as SMPTE 360M and was extended in SMPTE RDD 14-2007 to include high-definition video resolutions.
+GXF 由 Grass Valley Group 开发，后由 SMPTE 标准化为 SMPTE 360M，并在 SMPTE RDD 14-2007 中扩展以支持高清视频分辨率。
 
-It accepts at most one video stream with codec `mjpeg`, or `mpeg1video`, or `mpeg2video`, or `dvvideo` with resolution `512x480` or `608x576`, and several audio streams with rate 48000Hz and codec `pcm16_le`.
+它最多接受一条编解码器为 `mjpeg`、`mpeg1video`、`mpeg2video`，或分辨率为 `512x480` 或 `608x576` 的 `dvvideo` 视频流，以及若干采样率 48000Hz、编解码器为 `pcm16_le` 的音频流。
 
 ## hash
 
-Hash testing format.
+哈希 (hash) 测试格式。
 
-This muxer computes and prints a cryptographic hash of all the input audio and video frames. This can be used for equality checks without having to do a complete binary comparison.
+此复用器计算并打印全部输入音频与视频帧的加密哈希。可用于相等性检查，无需做完整的二进制比较。
 
-By default audio frames are converted to signed 16-bit raw audio and video frames to raw video before computing the hash, but the output of explicit conversions to other codecs can also be used. Timestamps are ignored. It uses the SHA-256 cryptographic hash function by default, but supports several other algorithms.
+默认情况下，计算哈希前音频帧被转换为有符号 16 位 raw 音频，视频帧被转换为 raw 视频，但也可使用显式转换为其他编解码器后的输出。时间戳被忽略。默认使用 SHA-256 加密哈希函数，但也支持若干其他算法。
 
-The output of the muxer consists of a single line of the form: \<algo\>=\<hash\>, where \<algo\> is a short string representing the hash function used, and \<hash\> is a hexadecimal number representing the computed hash.
+复用器的输出由单行组成，形如 \<algo\>=\<hash\>，其中 \<algo\> 是表示所用哈希函数的短字符串，\<hash\> 是表示计算所得哈希的十六进制数。
 
-- **`hash algorithm`** Use the cryptographic hash function specified by the string \<algorithm\>. Supported values include `MD5`, `murmur3`, `RIPEMD128`, `RIPEMD160`, `RIPEMD256`, `RIPEMD320`, `SHA160`, `SHA224`, `SHA256` (default), `SHA512/224`, `SHA512/256`, `SHA384`, `SHA512`, `CRC32` and `adler32`.
+- **`hash algorithm`** 使用字符串 \<algorithm\> 指定的加密哈希函数。支持的值包括 `MD5`、`murmur3`、`RIPEMD128`、`RIPEMD160`、`RIPEMD256`、`RIPEMD320`、`SHA160`、`SHA224`、`SHA256`（默认）、`SHA512/224`、`SHA512/256`、`SHA384`、`SHA512`、`CRC32` 与 `adler32`。
 
-### Examples
+### 示例
 
-To compute the SHA-256 hash of the input converted to raw audio and video, and store it in the file `out.sha256`:
+计算转换为 raw 音频与视频的输入的 SHA-256 哈希，并存储到文件 `out.sha256`：
 
 ``` text
 ffmpeg -i INPUT -f hash out.sha256
 ```
 
-To print an MD5 hash to stdout use the command:
+将 MD5 哈希打印到标准输出，使用命令：
 
 ``` text
 ffmpeg -i INPUT -f hash -hash md5 -
 ```
 
-See also the [framehash](#framehash) muxer.
+另请参见 [framehash](#framehash) 复用器。
 
 ## hds
 
-HTTP Dynamic Streaming (HDS) muxer.
+HTTP 动态流媒体 (HTTP Dynamic Streaming, HDS) 复用器。
 
-HTTP dynamic streaming, or HDS, is an adaptive bitrate streaming method developed by Adobe. HDS delivers MP4 video content over HTTP connections. HDS can be used for on-demand streaming or live streaming.
+HTTP 动态流媒体（HDS）是 Adobe 开发的自适应码率流媒体方法。HDS 通过 HTTP 连接交付 MP4 视频内容。HDS 可用于点播流或直播流。
 
-This muxer creates an .f4m (Adobe Flash Media Manifest File) manifest, an .abst (Adobe Bootstrap File) for each stream, and segment files in a directory specified as the output.
+此复用器在指定为输出的目录中创建一个 .f4m (Adobe Flash Media Manifest File) 清单、每条流一个 .abst (Adobe Bootstrap File)，以及分段文件。
 
-These needs to be accessed by an HDS player through HTTPS for it to be able to perform playback on the generated stream.
+HDS 播放器需要通过 HTTPS 访问这些文件，才能对生成的流进行播放。
 
-### Options
+### 选项
 
-- **`extra_window_size int`** number of fragments kept outside of the manifest before removing from disk
+- **`extra_window_size int`** 从磁盘移除前保留在清单之外的分片数
 
-- **`min_frag_duration microseconds`** minimum fragment duration (in microseconds), default value is 1 second (`10000000`)
+- **`min_frag_duration microseconds`** 最小分片时长（微秒），默认值为 1 秒 (`10000000`)
 
-- **`remove_at_exit bool`** remove all fragments when finished when set to `true`
+- **`remove_at_exit bool`** 设为 `true` 时完成时移除全部分片
 
-- **`window_size int`** number of fragments kept in the manifest, if set to a value different from `0`. By default all segments are kept in the output directory.
+- **`window_size int`** 清单中保留的分片数（若设为非 `0` 值）。默认情况下全部分段都保留在输出目录中。
 
-### Example
+### 示例
 
-Use `ffmpeg` to generate HDS files to the `output.hds` directory in real-time rate:
+使用 `ffmpeg` 以实时速率向 `output.hds` 目录生成 HDS 文件：
 
 ``` text
 ffmpeg -re -i INPUT -f hds -b:v 200k output.hds
@@ -2103,75 +2099,75 @@ ffmpeg -re -i INPUT -f hds -b:v 200k output.hds
 
 ## hls
 
-Apple HTTP Live Streaming muxer that segments MPEG-TS according to the HTTP Live Streaming (HLS) specification.
+Apple HTTP Live Streaming 复用器，按 HTTP Live Streaming (HLS) 规范对 MPEG-TS 分段。
 
-It creates a playlist file, and one or more segment files. The output filename specifies the playlist filename.
+它创建一个播放列表文件和一个或多个分段文件。输出文件名即播放列表文件名。
 
-By default, the muxer creates a file for each segment produced. These files have the same name as the playlist, followed by a sequential number and a .ts extension.
+默认情况下，复用器为每个生成的分段创建一个文件。这些文件与播放列表同名，后接顺序编号和 .ts 扩展名。
 
-Make sure to require a closed GOP when encoding and to set the GOP size to fit your segment time constraint.
+编码时务必要求封闭 GOP (closed GOP)，并将 GOP 大小设为符合分段时长约束。
 
-For example, to convert an input file with `ffmpeg`:
+例如，使用 `ffmpeg` 转换输入文件：
 
 ``` text
 ffmpeg -i in.mkv -c:v h264 -flags +cgop -g 30 -hls_time 1 out.m3u8
 ```
 
-This example will produce the playlist, `out.m3u8`, and segment files: `out0.ts`, `out1.ts`, `out2.ts`, etc.
+此示例将生成播放列表 `out.m3u8` 和分段文件：`out0.ts`、`out1.ts`、`out2.ts` 等。
 
-See also the [segment](formats.md#examples) muxer, which provides a more generic and flexible implementation of a segmenter, and can be used to perform HLS segmentation.
+另请参见 [segment](#segment) 复用器，它提供了更通用灵活的分段器实现，可用于执行 HLS 分段。
 
-### Options
+### 选项
 
-- **`hls_init_time duration`** Set the initial target segment length. Default value is \<0\>.
+- **`hls_init_time duration`** 设置初始目标分段长度。默认值为 \<0\>。
 
-  \<duration\> must be a time duration specification, see section "the Time duration section in the ffmpeg-utils(1) manual" in `ffmpeg-utils`.
+  \<duration\> 必须是时长描述 (time duration specification)，参见 `ffmpeg-utils` 中"the Time duration section in the ffmpeg-utils(1) manual"（时长）一节。
 
-  Segment will be cut on the next key frame after this time has passed on the first m3u8 list. After the initial playlist is filled, `ffmpeg` will cut segments at duration equal to `hls_time`.
+  在第一个 m3u8 列表上经过该时间后，将在下一个关键帧处切分分段。初始播放列表填满后，`ffmpeg` 将按等于 `hls_time` 的时长切分分段。
 
-- **`hls_time duration`** Set the target segment length. Default value is 2.
+- **`hls_time duration`** 设置目标分段长度。默认值为 2。
 
-  \<duration\> must be a time duration specification, see section "the Time duration section in the ffmpeg-utils(1) manual" in `ffmpeg-utils`. Segment will be cut on the next key frame after this time has passed.
+  \<duration\> 必须是时长描述 (time duration specification)，参见 `ffmpeg-utils` 中"the Time duration section in the ffmpeg-utils(1) manual"（时长）一节。经过该时间后将在下一个关键帧处切分分段。
 
-- **`hls_list_size size`** Set the maximum number of playlist entries. If set to 0 the list file will contain all the segments. Default value is 5.
+- **`hls_list_size size`** 设置播放列表条目的最大数量。设为 0 时列表文件将包含全部分段。默认值为 5。
 
-- **`hls_delete_threshold size`** Set the number of unreferenced segments to keep on disk before `hls_flags delete_segments` deletes them. Increase this to allow continue clients to download segments which were recently referenced in the playlist. Default value is 1, meaning segments older than `hls_list_size+1` will be deleted.
+- **`hls_delete_threshold size`** 设置在 `hls_flags delete_segments` 删除前，磁盘上保留的未被引用分段的数量。增大此值可让客户端继续下载播放列表中最近引用过的分段。默认值为 1，即早于 `hls_list_size+1` 的分段会被删除。
 
-- **`hls_start_number_source source`** Start the playlist sequence number (`#EXT-X-MEDIA-SEQUENCE`) according to the specified source. Unless `hls_flags single_file` is set, it also specifies source of starting sequence numbers of segment and subtitle filenames. In any case, if `hls_flags append_list` is set and read playlist sequence number is greater than the specified start sequence number, then that value will be used as start value.
+- **`hls_start_number_source source`** 按指定来源开始播放列表序号 (`#EXT-X-MEDIA-SEQUENCE`)。除非设置了 `hls_flags single_file`，它还指定分段与字幕文件名起始序号的来源。无论如何，若设置了 `hls_flags append_list` 且读取到的播放列表序号大于指定的起始序号，则使用该值作为起始值。
 
-  It accepts the following values:
+  它接受以下取值：
 
-  - **`generic (default)`** Set the start numbers according to the `start_number` option value.
+  - **`generic (default)`** 根据 `start_number` 选项的值设置起始编号。
 
-  - **`epoch`** Set the start number as the seconds since epoch (1970-01-01 00:00:00).
+  - **`epoch`** 将起始编号设为自纪元 (1970-01-01 00:00:00) 以来的秒数。
 
-  - **`epoch_us`** Set the start number as the microseconds since epoch (1970-01-01 00:00:00).
+  - **`epoch_us`** 将起始编号设为自纪元 (1970-01-01 00:00:00) 以来的微秒数。
 
-  - **`datetime`** Set the start number based on the current date/time as YYYYmmddHHMMSS. e.g. 20161231235759.
+  - **`datetime`** 基于当前日期/时间（格式 YYYYmmddHHMMSS）设置起始编号，例如 20161231235759。
 
-- **`start_number number`** Start the playlist sequence number (`#EXT-X-MEDIA-SEQUENCE`) from the specified \<number\> when `hls_start_number_source` value is \<generic\>. (This is the default case.) Unless `hls_flags single_file` is set, it also specifies starting sequence numbers of segment and subtitle filenames. Default value is 0.
+- **`start_number number`** 当 `hls_start_number_source` 值为 \<generic\> 时（这是默认情况），从指定的 \<number\> 开始播放列表序号 (`#EXT-X-MEDIA-SEQUENCE`)。除非设置了 `hls_flags single_file`，它还指定分段与字幕文件名的起始序号。默认值为 0。
 
-- **`hls_allow_cache bool`** Explicitly set whether the client MAY (1) or MUST NOT (0) cache media segments.
+- **`hls_allow_cache bool`** 显式设置客户端是否可以 (1) 或不得 (0) 缓存媒体分段。
 
-- **`hls_base_url baseurl`** Append \<baseurl\> to every entry in the playlist. Useful to generate playlists with absolute paths.
+- **`hls_base_url baseurl`** 将 \<baseurl\> 追加到播放列表的每个条目。用于生成带绝对路径的播放列表。
 
-  Note that the playlist sequence number must be unique for each segment and it is not to be confused with the segment filename sequence number which can be cyclic, for example if the `wrap` option is specified.
+  注意播放列表序号对每个分段必须唯一，不要与分段文件名序号混淆——后者可以是循环的，例如指定了 `wrap` 选项时。
 
-- **`hls_segment_filename filename`** Set the segment filename. Unless the `hls_flags` option is set with `single_file`, \<filename\> is used as a string format with the segment number appended.
+- **`hls_segment_filename filename`** 设置分段文件名。除非 `hls_flags` 选项设为 `single_file`，\<filename\> 将作为字符串格式使用，后接分段编号。
 
-  For example:
+  例如：
 
   ``` text
   ffmpeg -i in.nut -hls_segment_filename 'file%03d.ts' out.m3u8
   ```
 
-  will produce the playlist, `out.m3u8`, and segment files: `file000.ts`, `file001.ts`, `file002.ts`, etc.
+  将生成播放列表 `out.m3u8` 和分段文件：`file000.ts`、`file001.ts`、`file002.ts` 等。
 
-  \<filename\> may contain a full path or relative path specification, but only the file name part without any path will be contained in the m3u8 segment list. Should a relative path be specified, the path of the created segment files will be relative to the current working directory. When `strftime_mkdir` is set, the whole expanded value of \<filename\> will be written into the m3u8 segment list.
+  \<filename\> 可包含完整路径或相对路径说明，但 m3u8 分段列表中只包含不带任何路径的文件名部分。若指定相对路径，创建的分段文件的路径将相对于当前工作目录。设置 `strftime_mkdir` 时，\<filename\> 展开后的完整值会写入 m3u8 分段列表。
 
-  When `var_stream_map` is set with two or more variant streams, the \<filename\> pattern must contain the string "%v", and this string will be expanded to the position of variant stream index in the generated segment file names.
+  当 `var_stream_map` 设置了两个或更多变体流时，\<filename\> 模式必须包含字符串 "%v"，该字符串会展开为变体流索引在生成的分段文件名中的位置。
 
-  For example:
+  例如：
 
   ``` text
   ffmpeg -i in.ts -b:v:0 1000k -b:v:1 256k -b:a:0 64k -b:a:1 32k \
@@ -2179,11 +2175,11 @@ See also the [segment](formats.md#examples) muxer, which provides a more generic
     -hls_segment_filename 'file_%v_%03d.ts' out_%v.m3u8
   ```
 
-  will produce the playlists segment file sets: `file_0_000.ts`, `file_0_001.ts`, `file_0_002.ts`, etc. and `file_1_000.ts`, `file_1_001.ts`, `file_1_002.ts`, etc.
+  将生成播放列表分段文件集：`file_0_000.ts`、`file_0_001.ts`、`file_0_002.ts` 等，以及 `file_1_000.ts`、`file_1_001.ts`、`file_1_002.ts` 等。
 
-  The string "%v" may be present in the filename or in the last directory name containing the file, but only in one of them. (Additionally, %v may appear multiple times in the last sub-directory or filename.) If the string %v is present in the directory name, then sub-directories are created after expanding the directory name pattern. This enables creation of segments corresponding to different variant streams in subdirectories.
+  字符串 "%v" 可出现在文件名或包含该文件的最后一级目录名中，但只能出现在其中之一。（此外，%v 可在最后一级子目录或文件名中出现多次。）若 %v 出现在目录名中，则会在展开目录名模式后创建子目录。这使得可以在子目录中创建对应不同变体流的分段。
 
-  For example:
+  例如：
 
   ``` text
   ffmpeg -i in.ts -b:v:0 1000k -b:v:1 256k -b:a:0 64k -b:a:1 32k \
@@ -2191,49 +2187,49 @@ See also the [segment](formats.md#examples) muxer, which provides a more generic
     -hls_segment_filename 'vs%v/file_%03d.ts' vs%v/out.m3u8
   ```
 
-  will produce the playlists segment file sets: `vs0/file_000.ts`, `vs0/file_001.ts`, `vs0/file_002.ts`, etc. and `vs1/file_000.ts`, `vs1/file_001.ts`, `vs1/file_002.ts`, etc.
+  将生成播放列表分段文件集：`vs0/file_000.ts`、`vs0/file_001.ts`、`vs0/file_002.ts` 等，以及 `vs1/file_000.ts`、`vs1/file_001.ts`、`vs1/file_002.ts` 等。
 
-- **`strftime bool`** Use `strftime()` on \<filename\> to expand the segment filename with localtime. The segment number is also available in this mode, but to use it, you need to set `second_level_segment_index` in the `hls_flag` and %%d will be the specifier.
+- **`strftime bool`** 对 \<filename\> 使用 `strftime()` 以本地时间展开分段文件名。此模式下分段编号同样可用，但使用它需要在 `hls_flag` 中设置 `second_level_segment_index`，且以 %%d 作为说明符。
 
-  For example:
+  例如：
 
   ``` text
   ffmpeg -i in.nut -strftime 1 -hls_segment_filename 'file-%Y%m%d-%s.ts' out.m3u8
   ```
 
-  will produce the playlist, `out.m3u8`, and segment files: `file-20160215-1455569023.ts`, `file-20160215-1455569024.ts`, etc. Note: On some systems/environments, the `%s` specifier is not available. See `strftime()` documentation.
+  将生成播放列表 `out.m3u8` 和分段文件：`file-20160215-1455569023.ts`、`file-20160215-1455569024.ts` 等。注意：在某些系统/环境中，`%s` 说明符不可用。参见 `strftime()` 文档。
 
-  For example:
+  例如：
 
   ``` text
   ffmpeg -i in.nut -strftime 1 -hls_flags second_level_segment_index -hls_segment_filename 'file-%Y%m%d-%%04d.ts' out.m3u8
   ```
 
-  will produce the playlist, `out.m3u8`, and segment files: `file-20160215-0001.ts`, `file-20160215-0002.ts`, etc.
+  将生成播放列表 `out.m3u8` 和分段文件：`file-20160215-0001.ts`、`file-20160215-0002.ts` 等。
 
-- **`strftime_mkdir bool`** Used together with `strftime`, it will create all subdirectories which are present in the expanded values of option `hls_segment_filename`.
+- **`strftime_mkdir bool`** 与 `strftime` 配合使用，它将创建选项 `hls_segment_filename` 展开值中出现的所有子目录。
 
-  For example:
+  例如：
 
   ``` text
   ffmpeg -i in.nut -strftime 1 -strftime_mkdir 1 -hls_segment_filename '%Y%m%d/file-%Y%m%d-%s.ts' out.m3u8
   ```
 
-  will create a directory `201560215` (if it does not exist), and then produce the playlist, `out.m3u8`, and segment files: `20160215/file-20160215-1455569023.ts`, `20160215/file-20160215-1455569024.ts`, etc.
+  将创建目录 `201560215`（如果不存在），然后生成播放列表 `out.m3u8` 和分段文件：`20160215/file-20160215-1455569023.ts`、`20160215/file-20160215-1455569024.ts` 等。
 
-  For example:
+  例如：
 
   ``` text
   ffmpeg -i in.nut -strftime 1 -strftime_mkdir 1 -hls_segment_filename '%Y/%m/%d/file-%Y%m%d-%s.ts' out.m3u8
   ```
 
-  will create a directory hierarchy `2016/02/15` (if any of them do not exist), and then produce the playlist, `out.m3u8`, and segment files: `2016/02/15/file-20160215-1455569023.ts`, `2016/02/15/file-20160215-1455569024.ts`, etc.
+  将创建目录层级 `2016/02/15`（如果任一层不存在），然后生成播放列表 `out.m3u8` 和分段文件：`2016/02/15/file-20160215-1455569023.ts`、`2016/02/15/file-20160215-1455569024.ts` 等。
 
-- **`hls_segment_options options_list`** Set output format options using a :-separated list of key=value parameters. Values containing `:` special characters must be escaped.
+- **`hls_segment_options options_list`** 使用以 :-分隔的 key=value 参数列表设置输出格式选项。包含 `:` 特殊字符的值必须转义。
 
-- **`hls_key_info_file key_info_file`** Use the information in \<key_info_file\> for segment encryption. The first line of \<key_info_file\> specifies the key URI written to the playlist. The key URL is used to access the encryption key during playback. The second line specifies the path to the key file used to obtain the key during the encryption process. The key file is read as a single packed array of 16 octets in binary format. The optional third line specifies the initialization vector (IV) as a hexadecimal string to be used instead of the segment sequence number (default) for encryption. Changes to \<key_info_file\> will result in segment encryption with the new key/IV and an entry in the playlist for the new key URI/IV if `hls_flags periodic_rekey` is enabled.
+- **`hls_key_info_file key_info_file`** 使用 \<key_info_file\> 中的信息进行分段加密。\<key_info_file\> 的第一行指定写入播放列表的密钥 URI。密钥 URL 用于播放期间访问加密密钥。第二行指定加密过程中获取密钥的密钥文件路径。密钥文件按二进制格式的 16 个八位组的单一打包数组读取。可选的第三行指定初始化向量 (IV)（十六进制字符串），代替默认的分段序号用于加密。若启用 `hls_flags periodic_rekey`，对 \<key_info_file\> 的更改将导致用新密钥/IV 进行分段加密，并在播放列表中添加新密钥 URI/IV 的条目。
 
-  Key info file format:
+  密钥信息文件格式：
 
   ``` text
   key URI
@@ -2241,7 +2237,7 @@ See also the [segment](formats.md#examples) muxer, which provides a more generic
   IV (optional)
   ```
 
-  Example key URIs:
+  密钥 URI 示例：
 
   ``` text
   http://server/file.key
@@ -2249,20 +2245,20 @@ See also the [segment](formats.md#examples) muxer, which provides a more generic
   file.key
   ```
 
-  Example key file paths:
+  密钥文件路径示例：
 
   ``` text
   file.key
   /path/to/file.key
   ```
 
-  Example IV:
+  IV 示例：
 
   ``` text
   0123456789ABCDEF0123456789ABCDEF
   ```
 
-  Key info file example:
+  密钥信息文件示例：
 
   ``` text
   http://server/file.key
@@ -2270,7 +2266,7 @@ See also the [segment](formats.md#examples) muxer, which provides a more generic
   0123456789ABCDEF0123456789ABCDEF
   ```
 
-  Example shell script:
+  Shell 脚本示例：
 
   ``` shell
   #!/bin/sh
@@ -2283,75 +2279,75 @@ See also the [segment](formats.md#examples) muxer, which provides a more generic
     -hls_key_info_file file.keyinfo out.m3u8
   ```
 
-- **`hls_enc bool`** Enable (1) or disable (0) the AES128 encryption. When enabled every segment generated is encrypted and the encryption key is saved as \<playlist name\>.key.
+- **`hls_enc bool`** 启用 (1) 或禁用 (0) AES128 加密。启用后每个生成的分段都会被加密，加密密钥保存为 \<playlist name\>.key。
 
-- **`hls_enc_key key`** Specify a 16-octet key to encrypt the segments, by default it is randomly generated.
+- **`hls_enc_key key`** 指定用于加密分段的 16 八位组密钥，默认随机生成。
 
-- **`hls_enc_key_url keyurl`** If set, \<keyurl\> is prepended instead of \<baseurl\> to the key filename in the playlist.
+- **`hls_enc_key_url keyurl`** 若设置，播放列表中的密钥文件名前附加 \<keyurl\> 而不是 \<baseurl\>。
 
-- **`hls_enc_iv iv`** Specify the 16-octet initialization vector for every segment instead of the autogenerated ones.
+- **`hls_enc_iv iv`** 为每个分段指定 16 八位组初始化向量，代替自动生成的。
 
-- **`hls_segment_type flags`** Possible values:
+- **`hls_segment_type flags`** 可能的取值：
 
-  - **`mpegts`** Output segment files in MPEG-2 Transport Stream format. This is compatible with all HLS versions.
+  - **`mpegts`** 以 MPEG-2 传输流格式输出分段文件。与所有 HLS 版本兼容。
 
-  - **`fmp4`** Output segment files in fragmented MP4 format, similar to MPEG-DASH. fmp4 files may be used in HLS version 7 and above.
+  - **`fmp4`** 以分片 MP4 格式输出分段文件，类似 MPEG-DASH。fmp4 文件可用于 HLS 版本 7 及以上。
 
-- **`hls_fmp4_init_filename filename`** Set filename for the fragment files header file, default filename is `init.mp4`.
+- **`hls_fmp4_init_filename filename`** 设置分片文件头文件的文件名，默认文件名为 `init.mp4`。
 
-  When `strftime` is enabled, \<filename\> is expanded to the segment filename with localtime.
+  启用 `strftime` 时，\<filename\> 会按本地时间展开为分段文件名。
 
-  For example:
+  例如：
 
   ``` text
   ffmpeg -i in.nut -hls_segment_type fmp4 -strftime 1 -hls_fmp4_init_filename "%s_init.mp4" out.m3u8
   ```
 
-  will produce init like this `1602678741_init.mp4`.
+  将生成形如 `1602678741_init.mp4` 的 init 文件。
 
-- **`hls_fmp4_init_resend bool`** Resend init file after m3u8 file refresh every time, default is \<0\>.
+- **`hls_fmp4_init_resend bool`** 每次刷新 m3u8 文件后重发 init 文件，默认为 \<0\>。
 
-  When `var_stream_map` is set with two or more variant streams, the \<filename\> pattern must contain the string "%v", this string specifies the position of variant stream index in the generated init file names. The string "%v" may be present in the filename or in the last directory name containing the file. If the string is present in the directory name, then sub-directories are created after expanding the directory name pattern. This enables creation of init files corresponding to different variant streams in subdirectories.
+  当 `var_stream_map` 设置了两个或更多变体流时，\<filename\> 模式必须包含字符串 "%v"，该字符串指定变体流索引在生成的 init 文件名中的位置。字符串 "%v" 可出现在文件名或包含该文件的最后一级目录名中。若字符串出现在目录名中，则会在展开目录名模式后创建子目录。这使得可以在子目录中创建对应不同变体流的 init 文件。
 
-- **`hls_flags flags`** Possible values:
+- **`hls_flags flags`** 可能的取值：
 
-  - **`single_file`** If this flag is set, the muxer will store all segments in a single MPEG-TS file, and will use byte ranges in the playlist. HLS playlists generated with this way will have the version number 4.
+  - **`single_file`** 若设置此标志，复用器将全部分段存储在单个 MPEG-TS 文件中，并在播放列表中使用字节范围。以此方式生成的 HLS 播放列表版本号为 4。
 
-    For example:
+    例如：
 
     ``` text
     ffmpeg -i in.nut -hls_flags single_file out.m3u8
     ```
 
-    will produce the playlist, `out.m3u8`, and a single segment file, `out.ts`.
+    将生成播放列表 `out.m3u8` 和单个分段文件 `out.ts`。
 
-  - **`delete_segments`** Segment files removed from the playlist are deleted after a period of time equal to the duration of the segment plus the duration of the playlist.
+  - **`delete_segments`** 从播放列表移除的分段文件在等于分段时长加播放列表时长的期间过后被删除。
 
-  - **`append_list`** Append new segments into the end of old segment list, and remove the `#EXT-X-ENDLIST` from the old segment list.
+  - **`append_list`** 将新分段追加到旧分段列表末尾，并从旧分段列表移除 `#EXT-X-ENDLIST`。
 
-  - **`round_durations`** Round the duration info in the playlist file segment info to integer values, instead of using floating point. If there are no other features requiring higher HLS versions be used, then this will allow `ffmpeg` to output a HLS version 2 m3u8.
+  - **`round_durations`** 将播放列表文件分段信息中的时长取整为整数，而不是使用浮点数。若没有其他需要更高 HLS 版本的特性，这将允许 `ffmpeg` 输出 HLS 版本 2 的 m3u8。
 
-  - **`discont_start`** Add the `#EXT-X-DISCONTINUITY` tag to the playlist, before the first segment's information.
+  - **`discont_start`** 在第一个分段信息之前向播放列表添加 `#EXT-X-DISCONTINUITY` 标签。
 
-  - **`omit_endlist`** Do not append the `EXT-X-ENDLIST` tag at the end of the playlist.
+  - **`omit_endlist`** 不在播放列表末尾追加 `EXT-X-ENDLIST` 标签。
 
-  - **`periodic_rekey`** The file specified by `hls_key_info_file` will be checked periodically and detect updates to the encryption info. Be sure to replace this file atomically, including the file containing the AES encryption key.
+  - **`periodic_rekey`** 定期检查 `hls_key_info_file` 指定的文件并检测加密信息的更新。务必原子性地替换该文件，包括包含 AES 加密密钥的文件。
 
-  - **`independent_segments`** Add the `#EXT-X-INDEPENDENT-SEGMENTS` tag to playlists that has video segments and when all the segments of that playlist are guaranteed to start with a key frame.
+  - **`independent_segments`** 对含视频分段、且其全部分段保证以关键帧开始的播放列表添加 `#EXT-X-INDEPENDENT-SEGMENTS` 标签。
 
-  - **`iframes_only`** Add the `#EXT-X-I-FRAMES-ONLY` tag to playlists that has video segments and can play only I-frames in the `#EXT-X-BYTERANGE` mode.
+  - **`iframes_only`** 对含视频分段、且可在 `#EXT-X-BYTERANGE` 模式下只播放 I 帧的播放列表添加 `#EXT-X-I-FRAMES-ONLY` 标签。
 
-  - **`split_by_time`** Allow segments to start on frames other than key frames. This improves behavior on some players when the time between key frames is inconsistent, but may make things worse on others, and can cause some oddities during seeking. This flag should be used with the `hls_time` option.
+  - **`split_by_time`** 允许分段在非关键帧处开始。这改善了关键帧间隔不一致时某些播放器的行为，但可能使另一些播放器变差，并可能在定位时引起一些怪异现象。此标志应与 `hls_time` 选项配合使用。
 
-  - **`program_date_time`** Generate `EXT-X-PROGRAM-DATE-TIME` tags.
+  - **`program_date_time`** 生成 `EXT-X-PROGRAM-DATE-TIME` 标签。
 
-  - **`second_level_segment_index`** Make it possible to use segment indexes as %%d in the `hls_segment_filename` option expression besides date/time values when `strftime` option is on. To get fixed width numbers with trailing zeroes, %%0xd format is available where x is the required width.
+  - **`second_level_segment_index`** 当 `strftime` 选项开启时，使分段编号可作为 %%d 用于 `hls_segment_filename` 选项表达式中的日期/时间值之外。要获得带尾零的定宽数字，可使用 %%0xd 格式，其中 x 为所需宽度。
 
-  - **`second_level_segment_size`** Make it possible to use segment sizes (counted in bytes) as %%s in `hls_segment_filename` option expression besides date/time values when strftime is on. To get fixed width numbers with trailing zeroes, %%0xs format is available where x is the required width.
+  - **`second_level_segment_size`** 当 strftime 开启时，使分段大小（以字节计）可作为 %%s 用于 `hls_segment_filename` 选项表达式中的日期/时间值之外。要获得带尾零的定宽数字，可使用 %%0xs 格式，其中 x 为所需宽度。
 
-  - **`second_level_segment_duration`** Make it possible to use segment duration (calculated in microseconds) as %%t in `hls_segment_filename` option expression besides date/time values when strftime is on. To get fixed width numbers with trailing zeroes, %%0xt format is available where x is the required width.
+  - **`second_level_segment_duration`** 当 strftime 开启时，使分段时长（以微秒计）可作为 %%t 用于 `hls_segment_filename` 选项表达式中的日期/时间值之外。要获得带尾零的定宽数字，可使用 %%0xt 格式，其中 x 为所需宽度。
 
-    For example:
+    例如：
 
     ``` text
     ffmpeg -i sample.mpeg \
@@ -2360,41 +2356,41 @@ See also the [segment](formats.md#examples) muxer, which provides a more generic
        -strftime 1 -strftime_mkdir 1 -hls_segment_filename "segment_%Y%m%d%H%M%S_%%04d_%%08s_%%013t.ts" stream.m3u8
     ```
 
-    will produce segments like this: `segment_20170102194334_0003_00122200_0000003000000.ts`, `segment_20170102194334_0004_00120072_0000003000000.ts` etc.
+    将生成形如 `segment_20170102194334_0003_00122200_0000003000000.ts`、`segment_20170102194334_0004_00120072_0000003000000.ts` 等的分段。
 
-  - **`temp_file`** Write segment data to `filename.tmp` and rename to filename only once the segment is complete.
+  - **`temp_file`** 将分段数据写入 `filename.tmp`，仅在分段完成后才重命名为 filename。
 
-    A webserver serving up segments can be configured to reject requests to \*.tmp to prevent access to in-progress segments before they have been added to the m3u8 playlist.
+    提供分段的 web 服务器可配置为拒绝 \*.tmp 请求，以防止在分段加入 m3u8 播放列表之前访问进行中的分段。
 
-    This flag also affects how m3u8 playlist files are created. If this flag is set, all playlist files will be written into a temporary file and renamed after they are complete, similarly as segments are handled. But playlists with `file` protocol and with `hls_playlist_type` type other than `vod` are always written into a temporary file regardless of this flag.
+    此标志还影响 m3u8 播放列表文件的创建方式。设置此标志后，所有播放列表文件都会先写入临时文件，完成后重命名，与分段的处理方式类似。但使用 `file` 协议且 `hls_playlist_type` 非 `vod` 的播放列表，无论此标志如何，总是写入临时文件。
 
-    Master playlist files specified with `master_pl_name`, if any, with `file` protocol, are always written into temporary file regardless of this flag if `master_pl_publish_rate` value is other than zero.
+    用 `master_pl_name` 指定的主播放列表文件（如有），使用 `file` 协议时，若 `master_pl_publish_rate` 值非零，无论此标志如何总是写入临时文件。
 
-- **`hls_playlist_type type`** If type is `event`, emit `#EXT-X-PLAYLIST-TYPE:EVENT` in the m3u8 header. This forces `hls_list_size` to 0; the playlist can only be appended to.
+- **`hls_playlist_type type`** 若 type 为 `event`，在 m3u8 头中输出 `#EXT-X-PLAYLIST-TYPE:EVENT`。这强制 `hls_list_size` 为 0；播放列表只能追加。
 
-  If type is `vod`, emit `#EXT-X-PLAYLIST-TYPE:VOD` in the m3u8 header. This forces `hls_list_size` to 0; the playlist must not change.
+  若 type 为 `vod`，在 m3u8 头中输出 `#EXT-X-PLAYLIST-TYPE:VOD`。这强制 `hls_list_size` 为 0；播放列表不得改变。
 
-- **`method method`** Use the given HTTP method to create the hls files.
+- **`method method`** 使用给定的 HTTP 方法创建 hls 文件。
 
-  For example:
+  例如：
 
   ``` text
   ffmpeg -re -i in.ts -f hls -method PUT http://example.com/live/out.m3u8
   ```
 
-  will upload all the mpegts segment files to the HTTP server using the HTTP PUT method, and update the m3u8 files every `refresh` times using the same method. Note that the HTTP server must support the given method for uploading files.
+  将用 HTTP PUT 方法上传所有 mpegts 分段文件到 HTTP 服务器，并每 `refresh` 次用相同方法更新 m3u8 文件。注意 HTTP 服务器必须支持该上传方法。
 
-- **`http_user_agent agent`** Override User-Agent field in HTTP header. Applicable only for HTTP output.
+- **`http_user_agent agent`** 覆盖 HTTP 头中的 User-Agent 字段。仅适用于 HTTP 输出。
 
-- **`var_stream_map stream_map`** Specify a map string defining how to group the audio, video and subtitle streams into different variant streams. The variant stream groups are separated by space.
+- **`var_stream_map stream_map`** 指定映射字符串，定义如何将音频、视频和字幕流分组为不同变体流。变体流组以空格分隔。
 
-  Expected string format is like this "a:0,v:0 a:1,v:1 ....". Here a:, v:, s: are the keys to specify audio, video and subtitle streams respectively. Allowed values are 0 to 9 (limited just based on practical usage).
+  预期字符串格式形如 "a:0,v:0 a:1,v:1 ...."。其中 a:、v:、s: 分别是指定音频、视频和字幕流的键。允许的值为 0 到 9（仅基于实际用量的限制）。
 
-  When there are two or more variant streams, the output filename pattern must contain the string "%v": this string specifies the position of variant stream index in the output media playlist filenames. The string "%v" may be present in the filename or in the last directory name containing the file. If the string is present in the directory name, then sub-directories are created after expanding the directory name pattern. This enables creation of variant streams in subdirectories.
+  有两个或更多变体流时，输出文件名模式必须包含字符串 "%v"：该字符串指定变体流索引在输出媒体播放列表文件名中的位置。字符串 "%v" 可出现在文件名或包含该文件的最后一级目录名中。若字符串出现在目录名中，则会在展开目录名模式后创建子目录。这使得可以在子目录中创建变体流。
 
-  A few examples follow.
+  举几例说明。
 
-  - Create two hls variant streams. The first variant stream will contain video stream of bitrate 1000k and audio stream of bitrate 64k and the second variant stream will contain video stream of bitrate 256k and audio stream of bitrate 32k. Here, two media playlist with file names `out_0.m3u8` and `out_1.m3u8` will be created.
+  - 创建两个 hls 变体流。第一个变体流包含 1000k 码率的视频流与 64k 码率的音频流，第二个变体流包含 256k 码率的视频流与 32k 码率的音频流。这里将创建文件名为 `out_0.m3u8` 与 `out_1.m3u8` 的两个媒体播放列表。
 
     ``` text
     ffmpeg -re -i in.ts -b:v:0 1000k -b:v:1 256k -b:a:0 64k -b:a:1 32k \
@@ -2402,7 +2398,7 @@ See also the [segment](formats.md#examples) muxer, which provides a more generic
       http://example.com/live/out_%v.m3u8
     ```
 
-  - If you want something meaningful text instead of indexes in result names, you may specify names for each or some of the variants. The following example will create two hls variant streams as in the previous one. But here, the two media playlist with file names `out_my_hd.m3u8` and `out_my_sd.m3u8` will be created.
+  - 若希望结果名称中出现有意义的文本而不是索引，可为每个或部分变体指定名称。下例创建与前例相同的两个 hls 变体流。但这里将创建文件名为 `out_my_hd.m3u8` 与 `out_my_sd.m3u8` 的两个媒体播放列表。
 
     ``` text
     ffmpeg -re -i in.ts -b:v:0 1000k -b:v:1 256k -b:a:0 64k -b:a:1 32k \
@@ -2410,7 +2406,7 @@ See also the [segment](formats.md#examples) muxer, which provides a more generic
       http://example.com/live/out_%v.m3u8
     ```
 
-  - Create three hls variant streams. The first variant stream will be a video only stream with video bitrate 1000k, the second variant stream will be an audio only stream with bitrate 64k and the third variant stream will be a video only stream with bitrate 256k. Here, three media playlist with file names `out_0.m3u8`, `out_1.m3u8` and `out_2.m3u8` will be created.
+  - 创建三个 hls 变体流。第一个变体流是 1000k 码率的纯视频流，第二个变体流是 64k 码率的纯音频流，第三个变体流是 256k 码率的纯视频流。这里将创建文件名为 `out_0.m3u8`、`out_1.m3u8` 与 `out_2.m3u8` 的三个媒体播放列表。
 
     ``` text
     ffmpeg -re -i in.ts -b:v:0 1000k -b:v:1 256k -b:a:0 64k \
@@ -2418,7 +2414,7 @@ See also the [segment](formats.md#examples) muxer, which provides a more generic
       http://example.com/live/out_%v.m3u8
     ```
 
-  - Create the variant streams in subdirectories. Here, the first media playlist is created at `http://example.com/live/vs_0/out.m3u8` and the second one at `http://example.com/live/vs_1/out.m3u8`.
+  - 在子目录中创建变体流。这里，第一个媒体播放列表创建于 `http://example.com/live/vs_0/out.m3u8`，第二个创建于 `http://example.com/live/vs_1/out.m3u8`。
 
     ``` text
     ffmpeg -re -i in.ts -b:v:0 1000k -b:v:1 256k -b:a:0 64k -b:a:1 32k \
@@ -2426,7 +2422,7 @@ See also the [segment](formats.md#examples) muxer, which provides a more generic
       http://example.com/live/vs_%v/out.m3u8
     ```
 
-  - Create two audio only and two video only variant streams. In addition to the `#EXT-X-STREAM-INF` tag for each variant stream in the master playlist, the `#EXT-X-MEDIA` tag is also added for the two audio only variant streams and they are mapped to the two video only variant streams with audio group names 'aud_low' and 'aud_high'. By default, a single hls variant containing all the encoded streams is created.
+  - 创建两条纯音频与两条纯视频变体流。除主播放列表中每个变体流的 `#EXT-X-STREAM-INF` 标签外，还会为两条纯音频变体流添加 `#EXT-X-MEDIA` 标签，并用音频组名 'aud_low' 与 'aud_high' 将它们映射到两条纯视频变体流。默认情况下会创建包含全部已编码流的单个 hls 变体。
 
     ``` text
     ffmpeg -re -i in.ts -b:a:0 32k -b:a:1 64k -b:v:0 1000k -b:v:1 3000k  \
@@ -2436,7 +2432,7 @@ See also the [segment](formats.md#examples) muxer, which provides a more generic
       http://example.com/live/out_%v.m3u8
     ```
 
-  - Create two audio only and one video only variant streams. In addition to the `#EXT-X-STREAM-INF` tag for each variant stream in the master playlist, the `#EXT-X-MEDIA` tag is also added for the two audio only variant streams and they are mapped to the one video only variant streams with audio group name 'aud_low', and the audio group have default stat is NO or YES. By default, a single hls variant containing all the encoded streams is created.
+  - 创建两条纯音频与一条纯视频变体流。除主播放列表中每个变体流的 `#EXT-X-STREAM-INF` 标签外，还会为两条纯音频变体流添加 `#EXT-X-MEDIA` 标签，并用音频组名 'aud_low' 将它们映射到那条纯视频变体流，音频组的默认状态为 NO 或 YES。默认情况下会创建包含全部已编码流的单个 hls 变体。
 
     ``` text
     ffmpeg -re -i in.ts -b:a:0 32k -b:a:1 64k -b:v:0 1000k \
@@ -2446,7 +2442,7 @@ See also the [segment](formats.md#examples) muxer, which provides a more generic
       http://example.com/live/out_%v.m3u8
     ```
 
-  - Create two audio only and one video only variant streams. In addition to the `#EXT-X-STREAM-INF` tag for each variant stream in the master playlist, the `#EXT-X-MEDIA` tag is also added for the two audio only variant streams and they are mapped to the one video only variant streams with audio group name 'aud_low', and the audio group have default stat is NO or YES, and one audio have and language is named ENG, the other audio language is named CHN. By default, a single hls variant containing all the encoded streams is created.
+  - 创建两条纯音频与一条纯视频变体流。除主播放列表中每个变体流的 `#EXT-X-STREAM-INF` 标签外，还会为两条纯音频变体流添加 `#EXT-X-MEDIA` 标签，并用音频组名 'aud_low' 将它们映射到那条纯视频变体流，音频组的默认状态为 NO 或 YES，且一条音频的语言名为 ENG，另一条音频的语言名为 CHN。默认情况下会创建包含全部已编码流的单个 hls 变体。
 
     ``` text
     ffmpeg -re -i in.ts -b:a:0 32k -b:a:1 64k -b:v:0 1000k \
@@ -2456,7 +2452,7 @@ See also the [segment](formats.md#examples) muxer, which provides a more generic
       http://example.com/live/out_%v.m3u8
     ```
 
-  - Create a single variant stream. Add the `#EXT-X-MEDIA` tag with `TYPE=SUBTITLES` in the master playlist with webvtt subtitle group name 'subtitle' and optional subtitle name, e.g. 'English'. Make sure the input file has one text subtitle stream at least.
+  - 创建单条变体流。在主播放列表中添加带 `TYPE=SUBTITLES` 的 `#EXT-X-MEDIA` 标签，webvtt 字幕组名为 'subtitle'，可选字幕名如 'English'。确保输入文件至少有一条文本字幕流。
 
     ``` text
     ffmpeg -y -i input_with_subtitle.mkv \
@@ -2469,13 +2465,13 @@ See also the [segment](formats.md#examples) muxer, which provides a more generic
      delete_segments+discont_start+split_by_time ./tmp/video.m3u8
     ```
 
-- **`cc_stream_map cc_stream_map`** Map string which specifies different closed captions groups and their attributes. The closed captions stream groups are separated by space.
+- **`cc_stream_map cc_stream_map`** 映射字符串，指定不同的隐藏式字幕组及其属性。隐藏式字幕流组以空格分隔。
 
-  Expected string format is like this "ccgroup:\<group name\>,instreamid:\<INSTREAM-ID\>,language:\<language code\> ....". 'ccgroup' and 'instreamid' are mandatory attributes. 'language' is an optional attribute.
+  预期字符串格式形如 "ccgroup:\<group name\>,instreamid:\<INSTREAM-ID\>,language:\<language code\> ...."。'ccgroup' 与 'instreamid' 是必需属性。'language' 是可选属性。
 
-  The closed captions groups configured using this option are mapped to different variant streams by providing the same 'ccgroup' name in the `var_stream_map` string.
+  用此选项配置的隐藏式字幕组，通过在 `var_stream_map` 字符串中提供相同的 'ccgroup' 名称映射到不同变体流。
 
-  For example:
+  例如：
 
   ``` text
   ffmpeg -re -i in.ts -b:v:0 1000k -b:v:1 256k -b:a:0 64k -b:a:1 32k \
@@ -2487,11 +2483,11 @@ See also the [segment](formats.md#examples) muxer, which provides a more generic
     http://example.com/live/out_%v.m3u8
   ```
 
-  will add two `#EXT-X-MEDIA` tags with `TYPE=CLOSED-CAPTIONS` in the master playlist for the INSTREAM-IDs 'CC1' and 'CC2'. Also, it will add `CLOSED-CAPTIONS` attribute with group name 'cc' for the two output variant streams.
+  将在主播放列表中为 INSTREAM-ID 'CC1' 与 'CC2' 添加两个带 `TYPE=CLOSED-CAPTIONS` 的 `#EXT-X-MEDIA` 标签。此外，还会为两条输出变体流添加组名为 'cc' 的 `CLOSED-CAPTIONS` 属性。
 
-  If `var_stream_map` is not set, then the first available ccgroup in `cc_stream_map` is mapped to the output variant stream.
+  若未设置 `var_stream_map`，则 `cc_stream_map` 中第一个可用的 ccgroup 映射到输出变体流。
 
-  For example:
+  例如：
 
   ``` text
   ffmpeg -re -i in.ts -b:v 1000k -b:a 64k -a53cc 1 -f hls \
@@ -2500,58 +2496,58 @@ See also the [segment](formats.md#examples) muxer, which provides a more generic
     http://example.com/live/out.m3u8
   ```
 
-  this will add `#EXT-X-MEDIA` tag with `TYPE=CLOSED-CAPTIONS` in the master playlist with group name 'cc', language 'en' (english) and INSTREAM-ID 'CC1'. Also, it will add `CLOSED-CAPTIONS` attribute with group name 'cc' for the output variant stream.
+  这将在主播放列表中添加带 `TYPE=CLOSED-CAPTIONS` 的 `#EXT-X-MEDIA` 标签，组名为 'cc'、语言为 'en'（英语）、INSTREAM-ID 为 'CC1'。此外，还会为输出变体流添加组名为 'cc' 的 `CLOSED-CAPTIONS` 属性。
 
-- **`master_pl_name name`** Create HLS master playlist with the given name.
+- **`master_pl_name name`** 用给定名称创建 HLS 主播放列表。
 
-  For example:
+  例如：
 
   ``` text
   ffmpeg -re -i in.ts -f hls -master_pl_name master.m3u8 http://example.com/live/out.m3u8
   ```
 
-  creates an HLS master playlist with name `master.m3u8` which is published at <http://example.com/live/>.
+  创建名为 `master.m3u8` 的 HLS 主播放列表，发布于 <http://example.com/live/>。
 
-- **`master_pl_publish_rate count`** Publish master play list repeatedly every after specified number of segment intervals.
+- **`master_pl_publish_rate count`** 每隔指定数量的分段间隔重复发布主播放列表。
 
-  For example:
+  例如：
 
   ``` text
   ffmpeg -re -i in.ts -f hls -master_pl_name master.m3u8 \
   -hls_time 2 -master_pl_publish_rate 30 http://example.com/live/out.m3u8
   ```
 
-  creates an HLS master playlist with name `master.m3u8` and keeps publishing it repeatedly every after 30 segments i.e. every after 60s.
+  创建名为 `master.m3u8` 的 HLS 主播放列表，并每 30 个分段（即每 60 秒）重复发布。
 
-- **`http_persistent bool`** Use persistent HTTP connections. Applicable only for HTTP output.
+- **`http_persistent bool`** 使用持久 HTTP 连接。仅适用于 HTTP 输出。
 
-- **`timeout timeout`** Set timeout for socket I/O operations. Applicable only for HTTP output.
+- **`timeout timeout`** 设置套接字 I/O 操作超时。仅适用于 HTTP 输出。
 
-- **`ignore_io_errors bool`** Ignore IO errors during open, write and delete. Useful for long-duration runs with network output.
+- **`ignore_io_errors bool`** 忽略打开、写入和删除期间的 I/O 错误。对网络输出的长时间运行有用。
 
-- **`headers headers`** Set custom HTTP headers, can override built in default headers. Applicable only for HTTP output.
+- **`headers headers`** 设置自定义 HTTP 头，可覆盖内置默认头。仅适用于 HTTP 输出。
 
 ## iamf
 
-Immersive Audio Model and Formats (IAMF) muxer.
+沉浸式音频模型与格式 (Immersive Audio Model and Formats, IAMF) 复用器。
 
-IAMF is used to provide immersive audio content for presentation on a wide range of devices in both streaming and offline applications. These applications include internet audio streaming, multicasting/broadcasting services, file download, gaming, communication, virtual and augmented reality, and others. In these applications, audio may be played back on a wide range of devices, e.g., headphones, mobile phones, tablets, TVs, sound bars, home theater systems, and big screens.
+IAMF 用于为流式与离线应用中广泛设备上的呈现提供沉浸式音频内容。这些应用包括互联网音频流、组播/广播服务、文件下载、游戏、通信、虚拟与增强现实等。在这些应用中，音频可在多种设备上播放，如耳机、手机、平板电脑、电视、条形音箱、家庭影院系统和大屏幕。
 
-This format was promoted and designed by Alliance for Open Media.
+此格式由 Alliance for Open Media 推动并设计。
 
-For more information about this format, see <https://aomedia.org/iamf/>.
+关于此格式的更多信息，参见 <https://aomedia.org/iamf/>。
 
 ## ico
 
-ICO file muxer.
+ICO 文件复用器。
 
-Microsoft's icon file format (ICO) has some strict limitations that should be noted:
+Microsoft 的图标文件格式 (ICO) 有一些值得注意的严格限制：
 
-- Size cannot exceed 256 pixels in any dimension
+- 任意维度不得超过 256 像素
 
-- Only BMP and PNG images can be stored
+- 只能存储 BMP 与 PNG 图像
 
-- If a BMP image is used, it must be one of the following pixel formats:
+- 若使用 BMP 图像，必须是以下像素格式之一：
 
   ``` text
   BMP Bit Depth      FFmpeg Pixel Format
@@ -2563,83 +2559,83 @@ Microsoft's icon file format (ICO) has some strict limitations that should be no
   32bit              bgra
   ```
 
-- If a BMP image is used, it must use the BITMAPINFOHEADER DIB header
+- 若使用 BMP 图像，必须使用 BITMAPINFOHEADER DIB 头
 
-- If a PNG image is used, it must use the rgba pixel format
+- 若使用 PNG 图像，必须使用 rgba 像素格式
 
 ## ilbc
 
-Internet Low Bitrate Codec (iLBC) raw muxer.
+Internet Low Bitrate Codec (iLBC) raw 复用器。
 
-It accepts a single `ilbc` audio stream.
+它接受单条 `ilbc` 音频流。
 
 ## image2, image2pipe
 
-Image file muxer.
+图像文件复用器。
 
-The `image2` muxer writes video frames to image files.
+`image2` 复用器将视频帧写入图像文件。
 
-The output filenames are specified by a pattern, which can be used to produce sequentially numbered series of files. The pattern may contain the string "%d" or "%0\<N\>d", this string specifies the position of the characters representing a numbering in the filenames. If the form "%0\<N\>d" is used, the string representing the number in each filename is 0-padded to \<N\> digits. The literal character '%' can be specified in the pattern with the string "%%".
+输出文件名由模式 (pattern) 指定，模式可用于生成按顺序编号的文件系列。模式可包含字符串 "%d" 或 "%0\<N\>d"，该字符串指定文件名中表示编号的字符的位置。若使用 "%0\<N\>d" 形式，每个文件名中表示编号的字符串以 0 填充到 \<N\> 位。模式中可用字符串 "%%" 指定字面字符 '%'。
 
-If the pattern contains "%d" or "%0\<N\>d", the first filename of the file list specified will contain the number 1, all the following numbers will be sequential.
+若模式包含 "%d" 或 "%0\<N\>d"，指定文件列表的第一个文件名将包含编号 1，后续编号依次连续。
 
-The pattern may contain a suffix which is used to automatically determine the format of the image files to write.
+模式可包含一个后缀，用于自动确定要写入图像文件的格式。
 
-For example the pattern "img-%03d.bmp" will specify a sequence of filenames of the form `img-001.bmp`, `img-002.bmp`, ..., `img-010.bmp`, etc. The pattern "img%%-%d.jpg" will specify a sequence of filenames of the form `img%-1.jpg`, `img%-2.jpg`, ..., `img%-10.jpg`, etc.
+例如，模式 "img-%03d.bmp" 将指定 `img-001.bmp`、`img-002.bmp`、……、`img-010.bmp` 等形式的文件名序列。模式 "img%%-%d.jpg" 将指定 `img%-1.jpg`、`img%-2.jpg`、……、`img%-10.jpg` 等形式的文件名序列。
 
-The image muxer supports the .Y.U.V image file format. This format is special in that each image frame consists of three files, for each of the YUV420P components. To read or write this image file format, specify the name of the '.Y' file. The muxer will automatically open the '.U' and '.V' files as required.
+图像复用器支持 .Y.U.V 图像文件格式。此格式比较特殊：每幅图像帧由三个文件组成，对应 YUV420P 的各个分量。读取或写入此图像文件格式时，指定 '.Y' 文件名。复用器会按需自动打开 '.U' 与 '.V' 文件。
 
-The `image2pipe` muxer accepts the same options as the `image2` muxer, but ignores the pattern verification and expansion, as it is supposed to write to the command output rather than to an actual stored file.
+`image2pipe` 复用器接受与 `image2` 复用器相同的选项，但忽略模式校验与展开，因为它写入的是命令输出而非实际存储的文件。
 
-### Options
+### 选项
 
-- **`frame_pts bool`** If set to 1, expand the filename with the packet PTS (presentation time stamp). Default value is 0.
+- **`frame_pts bool`** 若设为 1，用包 PTS (presentation time stamp) 展开文件名。默认值为 0。
 
-- **`start_number count`** Start the sequence from the specified number. Default value is 1.
+- **`start_number count`** 从指定编号开始序列。默认值为 1。
 
-- **`update bool`** If set to 1, the filename will always be interpreted as just a filename, not a pattern, and the corresponding file will be continuously overwritten with new images. Default value is 0.
+- **`update bool`** 若设为 1，文件名将始终只按文件名解释（而不是模式），相应文件会被新图像持续覆盖。默认值为 0。
 
-- **`strftime bool`** If set to 1, expand the filename with date and time information from `strftime()`. Default value is 0.
+- **`strftime bool`** 若设为 1，用 `strftime()` 的日期与时间信息展开文件名。默认值为 0。
 
-- **`atomic_writing bool`** Write output to a temporary file, which is renamed to target filename once writing is completed. Default is disabled.
+- **`atomic_writing bool`** 将输出写入临时文件，写入完成后重命名为目标文件名。默认禁用。
 
-- **`protocol_opts options_list`** Set protocol options as a :-separated list of key=value parameters. Values containing the `:` special character must be escaped.
+- **`protocol_opts options_list`** 以 :-分隔的 key=value 参数列表设置协议选项。包含 `:` 特殊字符的值必须转义。
 
-### Examples
+### 示例
 
-- Use `ffmpeg` for creating a sequence of files `img-001.jpeg`, `img-002.jpeg`, ..., taking one image every second from the input video:
+- 使用 `ffmpeg` 创建文件序列 `img-001.jpeg`、`img-002.jpeg`、……，每秒从输入视频取一幅图像：
 
   ``` text
   ffmpeg -i in.avi -fps_mode cfr -r 1 -f image2 'img-%03d.jpeg'
   ```
 
-  Note that with `ffmpeg`, if the format is not specified with the `-f` option and the output filename specifies an image file format, the image2 muxer is automatically selected, so the previous command can be written as:
+  注意使用 `ffmpeg` 时，若未用 `-f` 选项指定格式且输出文件名指明图像文件格式，会自动选择 image2 复用器，因此上一命令可写为：
 
   ``` text
   ffmpeg -i in.avi -fps_mode cfr -r 1 'img-%03d.jpeg'
   ```
 
-  Note also that the pattern must not necessarily contain "%d" or "%0\<N\>d", for example to create a single image file `img.jpeg` from the start of the input video you can employ the command:
+  另外注意模式不一定必须包含 "%d" 或 "%0\<N\>d"，例如从输入视频开头创建单个图像文件 `img.jpeg` 可使用命令：
 
   ``` text
   ffmpeg -i in.avi -f image2 -frames:v 1 img.jpeg
   ```
 
-- The `strftime` option allows you to expand the filename with date and time information. Check the documentation of the `strftime()` function for the syntax.
+- `strftime` 选项允许用日期与时间信息展开文件名。语法参见 `strftime()` 函数的文档。
 
-  To generate image files from the `strftime()` "%Y-%m-%d\_%H-%M-%S" pattern, the following `ffmpeg` command can be used:
+  要按 `strftime()` 的 "%Y-%m-%d\_%H-%M-%S" 模式生成图像文件，可用以下 `ffmpeg` 命令：
 
   ``` text
   ffmpeg -f v4l2 -r 1 -i /dev/video0 -f image2 -strftime 1 "%Y-%m-%d_%H-%M-%S.jpg"
   ```
 
-- Set the file name with current frame's PTS:
+- 用当前帧的 PTS 设置文件名：
 
   ``` text
   ffmpeg -f v4l2 -r 1 -i /dev/video0 -copyts -f image2 -frame_pts true %d.jpg
   ```
 
-- Publish contents of your desktop directly to a WebDAV server every second:
+- 每秒将桌面内容直接发布到 WebDAV 服务器：
 
   ``` text
   ffmpeg -f x11grab -framerate 1 -i :0.0 -q:v 6 -update 1 -protocol_opts method=PUT http://example.com/desktop.jpg
@@ -2647,59 +2643,59 @@ The `image2pipe` muxer accepts the same options as the `image2` muxer, but ignor
 
 ## ircam
 
-Berkeley / IRCAM / CARL Sound Filesystem (BICSF) format muxer.
+Berkeley / IRCAM / CARL Sound Filesystem (BICSF) 格式复用器。
 
-The Berkeley/IRCAM/CARL Sound Format, developed in the 1980s, is a result of the merging of several different earlier sound file formats and systems including the csound system developed by Dr Gareth Loy at the Computer Audio Research Lab (CARL) at UC San Diego, the IRCAM sound file system developed by Rob Gross and Dan Timis at the Institut de Recherche et Coordination Acoustique / Musique in Paris and the Berkeley Fast Filesystem.
+Berkeley/IRCAM/CARL 声音格式诞生于 20 世纪 80 年代，是多个早期声音文件格式与系统合并的结果，包括 UC San Diego 计算机音频研究实验室 (CARL) 的 Gareth Loy 博士开发的 csound 系统、巴黎声学与音乐研究协调研究所 (Institut de Recherche et Coordination Acoustique / Musique) 的 Rob Gross 与 Dan Timis 开发的 IRCAM 声音文件系统，以及 Berkeley 快速文件系统。
 
-It was developed initially as part of the Berkeley/IRCAM/CARL Sound Filesystem, a suite of programs designed to implement a filesystem for audio applications running under Berkeley UNIX. It was particularly popular in academic music research centres, and was used a number of times in the creation of early computer-generated compositions.
+它最初作为 Berkeley/IRCAM/CARL Sound Filesystem 的一部分开发，这是一套为运行于 Berkeley UNIX 下的音频应用实现文件系统的程序。它在学术音乐研究中心尤为流行，曾数次用于早期计算机生成作品的创作。
 
-This muxer accepts a single audio stream containing PCM data.
+此复用器接受单条包含 PCM 数据的音频流。
 
 ## ivf
 
-On2 IVF muxer.
+On2 IVF 复用器。
 
-IVF was developed by On2 Technologies (formerly known as Duck Corporation), to store internally developed codecs.
+IVF 由 On2 Technologies（前称 Duck Corporation）开发，用于存储其内部开发的编解码器。
 
-This muxer accepts a single `vp8`, `vp9`, or `av1` video stream.
+此复用器接受单条 `vp8`、`vp9` 或 `av1` 视频流。
 
 ## jacosub
 
-JACOsub subtitle format muxer.
+JACOsub 字幕格式复用器。
 
-This muxer accepts a single `jacosub` subtitles stream.
+此复用器接受单条 `jacosub` 字幕流。
 
-For more information about the format, see <http://unicorn.us.com/jacosub/jscripts.html>.
+关于该格式的更多信息，参见 <http://unicorn.us.com/jacosub/jscripts.html>。
 
 ## kvag
 
-Simon & Schuster Interactive VAG muxer.
+Simon & Schuster Interactive VAG 复用器。
 
-This custom VAG container is used by some Simon & Schuster Interactive games such as "Real War", and "Real War: Rogue States".
+此自定义 VAG 容器被一些 Simon & Schuster Interactive 游戏使用，如 "Real War" 与 "Real War: Rogue States"。
 
-This muxer accepts a single `adpcm_ima_ssi` audio stream.
+此复用器接受单条 `adpcm_ima_ssi` 音频流。
 
 ## lc3
 
-Bluetooth SIG Low Complexity Communication Codec audio (LC3), or ETSI TS 103 634 Low Complexity Communication Codec plus (LC3plus).
+Bluetooth SIG 低复杂度通信编解码器音频 (LC3)，或 ETSI TS 103 634 低复杂度通信编解码器增强版 (LC3plus)。
 
-This muxer accepts a single `lc3` audio stream.
+此复用器接受单条 `lc3` 音频流。
 
 ## lrc
 
-LRC lyrics file format muxer.
+LRC 歌词文件格式复用器。
 
-LRC (short for LyRiCs) is a computer file format that synchronizes song lyrics with an audio file, such as MP3, Vorbis, or MIDI.
+LRC（LyRiCs 的缩写）是一种将歌曲歌词与音频文件（如 MP3、Vorbis 或 MIDI）同步的计算机文件格式。
 
-This muxer accepts a single `subrip` or `text` subtitles stream.
+此复用器接受单条 `subrip` 或 `text` 字幕流。
 
-### Options
+### 选项
 
-- **`precision number`** Set the number of decimal digits used for the fractional (sub-second) part of the timestamps. Range is `1` to `6`. Default is `2`, i.e. centiseconds.
+- **`precision number`** 设置时间戳小数（亚秒）部分使用的十进制位数。范围为 `1` 到 `6`。默认值为 `2`，即百分之一秒。
 
-### Metadata
+### 元数据
 
-The following metadata tags are converted to the format corresponding metadata:
+以下元数据标签会转换为格式对应的元数据：
 
 - **`title`**
 
@@ -2715,121 +2711,121 @@ The following metadata tags are converted to the format corresponding metadata:
 
 - **`encoder_version`**
 
-If `encoder_version` is not explicitly set, it is automatically set to the libavformat version.
+若未显式设置 `encoder_version`，它会自动设为 libavformat 版本。
 
 ## matroska
 
-Matroska container muxer.
+Matroska 容器复用器。
 
-This muxer implements the matroska and webm container specs.
+此复用器实现 matroska 与 webm 容器规范。
 
-### Metadata
+### 元数据
 
-The recognized metadata settings in this muxer are:
+此复用器识别的元数据设置如下：
 
-- **`title`** Set title name provided to a single track. This gets mapped to the FileDescription element for a stream written as attachment.
+- **`title`** 设置提供给单条轨道的标题名。对作为附件写入的流，它会映射到 FileDescription 元素。
 
-- **`language`** Specify the language of the track in the Matroska languages form.
+- **`language`** 以 Matroska 语言形式指定轨道的语言。
 
-  The language can be either the 3 letters bibliographic ISO-639-2 (ISO 639-2/B) form (like "fre" for French), or a language code mixed with a country code for specialities in languages (like "fre-ca" for Canadian French).
+  语言可以是 3 字母文献型 ISO-639-2 (ISO 639-2/B) 形式（如法语为 "fre"），也可以是混合国家代码以表示语言特例的语言代码（如加拿大法语为 "fre-ca"）。
 
-- **`stereo_mode`** Set stereo 3D video layout of two views in a single video track.
+- **`stereo_mode`** 设置单条视频轨道中两个视图的立体 3D 视频布局。
 
-  The following values are recognized:
+  可识别以下取值：
 
-  - **`mono`** video is not stereo
+  - **`mono`** 视频不是立体声
 
-  - **`left_right`** Both views are arranged side by side, Left-eye view is on the left
+  - **`left_right`** 两个视图并排排列，左眼视图在左
 
-  - **`bottom_top`** Both views are arranged in top-bottom orientation, Left-eye view is at bottom
+  - **`bottom_top`** 两个视图上下排列，左眼视图在下
 
-  - **`top_bottom`** Both views are arranged in top-bottom orientation, Left-eye view is on top
+  - **`top_bottom`** 两个视图上下排列，左眼视图在上
 
-  - **`checkerboard_rl`** Each view is arranged in a checkerboard interleaved pattern, Left-eye view being first
+  - **`checkerboard_rl`** 每个视图以棋盘交织模式排列，左眼视图在前
 
-  - **`checkerboard_lr`** Each view is arranged in a checkerboard interleaved pattern, Right-eye view being first
+  - **`checkerboard_lr`** 每个视图以棋盘交织模式排列，右眼视图在前
 
-  - **`row_interleaved_rl`** Each view is constituted by a row based interleaving, Right-eye view is first row
+  - **`row_interleaved_rl`** 每个视图由基于行的交织构成，右眼视图为第一行
 
-  - **`row_interleaved_lr`** Each view is constituted by a row based interleaving, Left-eye view is first row
+  - **`row_interleaved_lr`** 每个视图由基于行的交织构成，左眼视图为第一行
 
-  - **`col_interleaved_rl`** Both views are arranged in a column based interleaving manner, Right-eye view is first column
+  - **`col_interleaved_rl`** 两个视图按基于列的交织方式排列，右眼视图为第一列
 
-  - **`col_interleaved_lr`** Both views are arranged in a column based interleaving manner, Left-eye view is first column
+  - **`col_interleaved_lr`** 两个视图按基于列的交织方式排列，左眼视图为第一列
 
-  - **`anaglyph_cyan_red`** All frames are in anaglyph format viewable through red-cyan filters
+  - **`anaglyph_cyan_red`** 全部帧为红青滤光镜可观看的双色立体 (anaglyph) 格式
 
-  - **`right_left`** Both views are arranged side by side, Right-eye view is on the left
+  - **`right_left`** 两个视图并排排列，右眼视图在左
 
-  - **`anaglyph_green_magenta`** All frames are in anaglyph format viewable through green-magenta filters
+  - **`anaglyph_green_magenta`** 全部帧为绿品红滤光镜可观看的双色立体 (anaglyph) 格式
 
-  - **`block_lr`** Both eyes laced in one Block, Left-eye view is first
+  - **`block_lr`** 双眼编入同一 Block，左眼视图在前
 
-  - **`block_rl`** Both eyes laced in one Block, Right-eye view is first
+  - **`block_rl`** 双眼编入同一 Block，右眼视图在前
 
-For example a 3D WebM clip can be created using the following command line:
+例如，可用以下命令行创建 3D WebM 片段：
 
 ``` text
 ffmpeg -i sample_left_right_clip.mpg -an -c:v libvpx -metadata stereo_mode=left_right -y stereo_clip.webm
 ```
 
-### Options
+### 选项
 
-- **`reserve_index_space size`** By default, this muxer writes the index for seeking (called cues in Matroska terms) at the end of the file, because it cannot know in advance how much space to leave for the index at the beginning of the file. However for some use cases – e.g. streaming where seeking is possible but slow – it is useful to put the index at the beginning of the file.
+- **`reserve_index_space size`** 默认情况下，此复用器把用于定位的索引（Matroska 术语称 cues）写在文件末尾，因为它无法预先知道应在文件开头为索引留多少空间。但对某些使用场景——例如定位可行但缓慢的流式传输——把索引放在文件开头是有用的。
 
-  If this option is set to a non-zero value, the muxer will reserve \<size\> bytes of space in the file header and then try to write the cues there when the muxing finishes. If the reserved space does not suffice, no Cues will be written, the file will be finalized and writing the trailer will return an error. A safe size for most use cases should be about 50kB per hour of video.
+  若此选项设为非零值，复用器将在文件头中预留 \<size\> 字节空间，并在复用完成后尝试将 cues 写在那里。若预留空间不足，则不写 cues，文件完成定稿，写尾部时返回错误。对大多数场景，每小时视频约 50kB 是安全的大小。
 
-  Note that cues are only written if the output is seekable and this option will have no effect if it is not.
+  注意只有输出可定位时才写 cues；不可定位时此选项无效。
 
-- **`cues_to_front bool`** If set, the muxer will write the index at the beginning of the file by shifting the main data if necessary. This can be combined with reserve_index_space in which case the data is only shifted if the initially reserved space turns out to be insufficient.
+- **`cues_to_front bool`** 若设置，复用器会通过必要时平移主数据将索引写在文件开头。这可与 reserve_index_space 结合使用，此时只在最初预留的空间不足时才平移数据。
 
-  This option is ignored if the output is unseekable.
+  输出不可定位时忽略此选项。
 
-- **`cluster_size_limit size`** Store at most the provided amount of bytes in a cluster.
+- **`cluster_size_limit size`** 每个 cluster 至多存储指定的字节数。
 
-  If not specified, the limit is set automatically to a sensible hardcoded fixed value.
+  未指定时，限制自动设为合理的硬编码固定值。
 
-- **`cluster_time_limit duration`** Store at most the provided number of milliseconds in a cluster.
+- **`cluster_time_limit duration`** 每个 cluster 至多存储指定的毫秒数。
 
-  If not specified, the limit is set automatically to a sensible hardcoded fixed value.
+  未指定时，限制自动设为合理的硬编码固定值。
 
-- **`dash bool`** Create a WebM file conforming to WebM DASH specification. By default it is set to `false`.
+- **`dash bool`** 创建符合 WebM DASH 规范的 WebM 文件。默认设为 `false`。
 
-- **`dash_track_number index`** Track number for the DASH stream. By default it is set to `1`.
+- **`dash_track_number index`** DASH 流的轨道编号。默认设为 `1`。
 
-- **`live bool`** Write files assuming it is a live stream. By default it is set to `false`.
+- **`live bool`** 以直播流假设写入文件。默认设为 `false`。
 
-- **`allow_raw_vfw bool`** Allow raw VFW mode. By default it is set to `false`.
+- **`allow_raw_vfw bool`** 允许 raw VFW 模式。默认设为 `false`。
 
-- **`flipped_raw_rgb bool`** If set to `true`, store positive height for raw RGB bitmaps, which indicates bitmap is stored bottom-up. Note that this option does not flip the bitmap which has to be done manually beforehand, e.g. by using the `vflip` filter. Default is `false` and indicates bitmap is stored top down.
+- **`flipped_raw_rgb bool`** 若设为 `true`，为 raw RGB 位图存储正的高度值，表示位图自底向上存储。注意此选项不会翻转位图，翻转须事先手动完成，例如使用 `vflip` 滤镜。默认值为 `false`，表示位图自顶向下存储。
 
-- **`write_crc32 bool`** Write a CRC32 element inside every Level 1 element. By default it is set to `true`. This option is ignored for WebM.
+- **`write_crc32 bool`** 在每个 Level 1 元素内写入 CRC32 元素。默认设为 `true`。对 WebM 忽略此选项。
 
-- **`default_mode mode`** Control how the FlagDefault of the output tracks will be set. It influences which tracks players should play by default. The default mode is `passthrough`.
+- **`default_mode mode`** 控制输出轨道的 FlagDefault 如何设置。它影响播放器默认应播放哪些轨道。默认模式为 `passthrough`。
 
-  - **`infer`** Every track with disposition default will have the FlagDefault set. Additionally, for each type of track (audio, video or subtitle), if no track with disposition default of this type exists, then the first track of this type will be marked as default (if existing). This ensures that the default flag is set in a sensible way even if the input originated from containers that lack the concept of default tracks.
+  - **`infer`** 每条带 default disposition 的轨道都会设置 FlagDefault。此外，对每类轨道（音频、视频或字幕），若该类不存在带 default disposition 的轨道，则该类的第一条轨道会被标记为默认（如存在）。这确保即使输入来自缺少默认轨道概念的容器，默认标志也以合理方式设置。
 
-  - **`infer_no_subs`** This mode is the same as infer except that if no subtitle track with disposition default exists, no subtitle track will be marked as default.
+  - **`infer_no_subs`** 此模式与 infer 相同，区别是若不存在带 default disposition 的字幕轨道，则不将任何字幕轨道标记为默认。
 
-  - **`passthrough`** In this mode the FlagDefault is set if and only if the AV_DISPOSITION_DEFAULT flag is set in the disposition of the corresponding stream.
+  - **`passthrough`** 此模式下，当且仅当相应流的 disposition 中设置了 AV_DISPOSITION_DEFAULT 标志时才设置 FlagDefault。
 
 ## md5
 
-MD5 testing format.
+MD5 测试格式。
 
-This is a variant of the [hash](#hash) muxer. Unlike that muxer, it defaults to using the MD5 hash function.
+这是 [hash](#hash) 复用器的变体。与该复用器不同，它默认使用 MD5 哈希函数。
 
-See also the [hash](#hash) and [framemd5](#framemd5) muxers.
+另请参见 [hash](#hash) 与 [framemd5](#framemd5) 复用器。
 
-### Examples
+### 示例
 
-- To compute the MD5 hash of the input converted to raw audio and video, and store it in the file `out.md5`:
+- 计算转换为 raw 音频与视频的输入的 MD5 哈希，并存储到文件 `out.md5`：
 
   ``` text
   ffmpeg -i INPUT -f md5 out.md5
   ```
 
-- To print the MD5 hash to stdout:
+- 将 MD5 哈希打印到标准输出：
 
   ``` text
   ffmpeg -i INPUT -f md5 -
@@ -2837,31 +2833,31 @@ See also the [hash](#hash) and [framemd5](#framemd5) muxers.
 
 ## mcc
 
-Muxer for MacCaption MCC files, it supports MCC versions 1.0 and 2.0. MCC files store VANC data, which can include closed captions (EIA-608 and CEA-708), ancillary time code, pan-scan data, etc.
+MacCaption MCC 文件复用器，支持 MCC 版本 1.0 和 2.0。MCC 文件存储 VANC 数据，其中可包含隐藏式字幕（EIA-608 和 CEA-708）、辅助时间码、摇移 (pan-scan) 数据等。
 
-### Options
+### 选项
 
-The muxer options are:
+复用器选项如下：
 
-- **`override_time_code_rate`** Override the `Time Code Rate` value in the output. Defaults to trying to deduce from the stream's `time_base`, which often doesn't work.
+- **`override_time_code_rate`** 覆盖输出中的 `Time Code Rate` 值。默认尝试从流的 `time_base` 推断，但通常推断不出来。
 
-- **`use_u_alias`** Use the `U` alias for the byte sequence `E1h 00h 00h 00h`. Disabled by default because some `.mcc` files disagree on whether it has 2 or 3 zero bytes.
+- **`use_u_alias`** 对字节序列 `E1h 00h 00h 00h` 使用 `U` 别名。默认禁用，因为部分 `.mcc` 文件对它是 2 个还是 3 个零字节存在分歧。
 
-- **`mcc_version`** The MCC file format version. Must be either 1 or 2, defaults to 2.
+- **`mcc_version`** MCC 文件格式版本。必须是 1 或 2，默认为 2。
 
-- **`creation_program`** The creation program. Defaults to this version of FFmpeg.
+- **`creation_program`** 创建程序。默认为本版本的 FFmpeg。
 
-- **`creation_time`** The creation time. Defaults to the current time.
+- **`creation_time`** 创建时间。默认为当前时间。
 
-### Examples
+### 示例
 
-- Extract a MXF `SMPTE_436M_ANC` stream from a MXF file and write it to a MCC file at 30 fps.
+- 从 MXF 文件提取 MXF `SMPTE_436M_ANC` 流并写入 30 fps 的 MCC 文件。
 
   ``` text
   ffmpeg -i input.mxf -c copy -map 0:d -override_time_code_rate 30 out.mcc
   ```
 
-- Extract EIA-608/CTA-708 closed captions from a `.mp4` file and write them to a MCC file at 29.97 fps.
+- 从 `.mp4` 文件提取 EIA-608/CTA-708 隐藏式字幕并写入 29.97 fps 的 MCC 文件。
 
   ``` text
   ffmpeg -f lavfi -i "movie=input.mp4[out+subcc]" -c:s copy -map 0:s -override_time_code_rate 30000/1001 out.mcc
@@ -2869,48 +2865,48 @@ The muxer options are:
 
 ## microdvd
 
-MicroDVD subtitle format muxer.
+MicroDVD 字幕格式复用器。
 
-This muxer accepts a single `microdvd` subtitles stream.
+此复用器接受单条 `microdvd` 字幕流。
 
 ## mmf
 
-Synthetic music Mobile Application Format (SMAF) format muxer.
+合成音乐移动应用格式 (Synthetic music Mobile Application Format, SMAF) 复用器。
 
-SMAF is a music data format specified by Yamaha for portable electronic devices, such as mobile phones and personal digital assistants.
+SMAF 是 Yamaha 为手机和个人数字助理等便携电子设备指定的音乐数据格式。
 
-This muxer accepts a single `adpcm_yamaha` audio stream.
+此复用器接受单条 `adpcm_yamaha` 音频流。
 
 ## mp3
 
-The MP3 muxer writes a raw MP3 stream with the following optional features:
+MP3 复用器写入带以下可选特性的 raw MP3 流：
 
-- An ID3v2 metadata header at the beginning (enabled by default). Versions 2.3 and 2.4 are supported, the `id3v2_version` private option controls which one is used (3 or 4). Setting `id3v2_version` to 0 disables the ID3v2 header completely.
+- 开头的 ID3v2 元数据头（默认启用）。支持版本 2.3 与 2.4，私有选项 `id3v2_version` 控制使用哪一个（3 或 4）。将 `id3v2_version` 设为 0 可完全禁用 ID3v2 头。
 
-  The muxer supports writing attached pictures (APIC frames) to the ID3v2 header. The pictures are supplied to the muxer in form of a video stream with a single packet. There can be any number of those streams, each will correspond to a single APIC frame. The stream metadata tags \<title\> and \<comment\> map to APIC \<description\> and \<picture type\> respectively. See <http://id3.org/id3v2.4.0-frames> for allowed picture types.
+  复用器支持向 ID3v2 头写入附图 (APIC 帧)。图片以含单个包的视频流形式提供给复用器。可以有任意多条这样的流，每条对应一个 APIC 帧。流元数据标签 \<title\> 与 \<comment\> 分别映射到 APIC 的 \<description\> 与 \<picture type\>。允许的图片类型参见 <http://id3.org/id3v2.4.0-frames>。
 
-  Note that the APIC frames must be written at the beginning, so the muxer will buffer the audio frames until it gets all the pictures. It is therefore advised to provide the pictures as soon as possible to avoid excessive buffering.
+  注意 APIC 帧必须写在开头，因此复用器会缓冲音频帧直到收到全部图片。因此建议尽早提供图片，避免过度缓冲。
 
-- A Xing/LAME frame right after the ID3v2 header (if present). It is enabled by default, but will be written only if the output is seekable. The `write_xing` private option can be used to disable it. The frame contains various information that may be useful to the decoder, like the audio duration or encoder delay.
+- ID3v2 头（如果存在）之后的 Xing/LAME 帧。默认启用，但只在输出可定位时写入。私有选项 `write_xing` 可禁用它。该帧包含对解码器可能有用的各种信息，如音频时长或编码器延迟。
 
-- A legacy ID3v1 tag at the end of the file (disabled by default). It may be enabled with the `write_id3v1` private option, but as its capabilities are very limited, its usage is not recommended.
+- 文件末尾的旧式 ID3v1 标签（默认禁用）。可用私有选项 `write_id3v1` 启用，但其能力非常有限，不建议使用。
 
-Examples:
+示例：
 
-Write an mp3 with an ID3v2.3 header and an ID3v1 footer:
+写入带 ID3v2.3 头与 ID3v1 尾的 mp3：
 
 ``` text
 ffmpeg -i INPUT -id3v2_version 3 -write_id3v1 1 out.mp3
 ```
 
-To attach a picture to an mp3 file select both the audio and the picture stream with `map`:
+用 `map` 同时选择音频流与图片流，将图片附加到 mp3 文件：
 
 ``` text
 ffmpeg -i input.mp3 -i cover.png -c copy -map 0 -map 1
 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (Front)" out.mp3
 ```
 
-Write a "clean" MP3 without any extra features:
+写入不带任何额外特性的"干净"MP3：
 
 ``` text
 ffmpeg -i input.wav -write_xing 0 -id3v2_version 0 out.mp3
@@ -2918,77 +2914,77 @@ ffmpeg -i input.wav -write_xing 0 -id3v2_version 0 out.mp3
 
 ## mpegts
 
-MPEG transport stream muxer.
+MPEG 传输流复用器。
 
-This muxer implements ISO 13818-1 and part of ETSI EN 300 468.
+此复用器实现 ISO 13818-1 与 ETSI EN 300 468 的部分内容。
 
-The recognized metadata settings in mpegts muxer are `service_provider` and `service_name`. If they are not set the default for `service_provider` is `FFmpeg` and the default for `service_name` is `Service01`.
+mpegts 复用器识别的元数据设置为 `service_provider` 与 `service_name`。未设置时，`service_provider` 默认为 `FFmpeg`，`service_name` 默认为 `Service01`。
 
-### Options
+### 选项
 
-The muxer options are:
+复用器选项如下：
 
-- **`mpegts_transport_stream_id integer`** Set the `transport_stream_id`. This identifies a transponder in DVB. Default is `0x0001`.
+- **`mpegts_transport_stream_id integer`** 设置 `transport_stream_id`。它在 DVB 中标识一个转发器 (transponder)。默认为 `0x0001`。
 
-- **`mpegts_original_network_id integer`** Set the `original_network_id`. This is unique identifier of a network in DVB. Its main use is in the unique identification of a service through the path `Original_Network_ID, Transport_Stream_ID`. Default is `0xff01`.
+- **`mpegts_original_network_id integer`** 设置 `original_network_id`。它是 DVB 中网络的唯一标识符，主要用于通过路径 `Original_Network_ID, Transport_Stream_ID` 唯一标识一个服务。默认为 `0xff01`。
 
-- **`mpegts_service_id integer`** Set the `service_id`, also known as program in DVB. Default is `0x0001`.
+- **`mpegts_service_id integer`** 设置 `service_id`，在 DVB 中也称节目 (program)。默认为 `0x0001`。
 
-- **`mpegts_service_type integer`** Set the program `service_type`. Default is `digital_tv`. Accepts the following options:
+- **`mpegts_service_type integer`** 设置节目 `service_type`。默认为 `digital_tv`。接受以下选项：
 
-  - **`hex_value`** Any hexadecimal value between `0x01` and `0xff` as defined in ETSI 300 468.
+  - **`hex_value`** `0x01` 到 `0xff` 之间的任意十六进制值，按 ETSI 300 468 定义。
 
-  - **`digital_tv`** Digital TV service.
+  - **`digital_tv`** 数字电视服务。
 
-  - **`digital_radio`** Digital Radio service.
+  - **`digital_radio`** 数字广播服务。
 
-  - **`teletext`** Teletext service.
+  - **`teletext`** 图文电视服务。
 
-  - **`advanced_codec_digital_radio`** Advanced Codec Digital Radio service.
+  - **`advanced_codec_digital_radio`** 高级编解码器数字广播服务。
 
-  - **`mpeg2_digital_hdtv`** MPEG2 Digital HDTV service.
+  - **`mpeg2_digital_hdtv`** MPEG2 数字 HDTV 服务。
 
-  - **`advanced_codec_digital_sdtv`** Advanced Codec Digital SDTV service.
+  - **`advanced_codec_digital_sdtv`** 高级编解码器数字 SDTV 服务。
 
-  - **`advanced_codec_digital_hdtv`** Advanced Codec Digital HDTV service.
+  - **`advanced_codec_digital_hdtv`** 高级编解码器数字 HDTV 服务。
 
-  - **`hevc_digital_hdtv`** HEVC Digital Television service.
+  - **`hevc_digital_hdtv`** HEVC 数字电视服务。
 
-- **`mpegts_pmt_start_pid integer`** Set the first PID for PMTs. Default is `0x1000`, minimum is `0x0020`, maximum is `0x1ffa`. This option has no effect in m2ts mode where the PMT PID is fixed `0x0100`.
+- **`mpegts_pmt_start_pid integer`** 设置 PMT 的首个 PID。默认为 `0x1000`，最小为 `0x0020`，最大为 `0x1ffa`。在 m2ts 模式下此选项无效，PMT PID 固定为 `0x0100`。
 
-- **`mpegts_start_pid integer`** Set the first PID for elementary streams. Default is `0x0100`, minimum is `0x0020`, maximum is `0x1ffa`. This option has no effect in m2ts mode where the elementary stream PIDs are fixed.
+- **`mpegts_start_pid integer`** 设置基本流的首个 PID。默认为 `0x0100`，最小为 `0x0020`，最大为 `0x1ffa`。在 m2ts 模式下此选项无效，基本流 PID 固定。
 
-- **`mpegts_m2ts_mode boolean`** Enable m2ts mode if set to `1`. Default value is `-1` which disables m2ts mode.
+- **`mpegts_m2ts_mode boolean`** 设为 `1` 时启用 m2ts 模式。默认值为 `-1`，即禁用 m2ts 模式。
 
-- **`muxrate integer`** Set a constant muxrate. Default is VBR.
+- **`muxrate integer`** 设置恒定复用率。默认为 VBR。
 
-- **`pes_payload_size integer`** Set minimum PES packet payload in bytes. Default is `2930`.
+- **`pes_payload_size integer`** 设置最小 PES 包载荷（字节）。默认值为 `2930`。
 
-- **`mpegts_flags flags`** Set mpegts flags. Accepts the following options:
+- **`mpegts_flags flags`** 设置 mpegts 标志。接受以下选项：
 
   | Term | Description |
   |----|----|
-  | `resend_headers` | Reemit PAT/PMT before writing the next packet. |
-  | `latm` | Use LATM packetization for AAC. |
-  | `pat_pmt_at_frames` | Reemit PAT and PMT at each video frame. |
-  | `system_b` | Conform to System B (DVB) instead of System A (ATSC). |
-  | `initial_discontinuity` | Mark the initial packet of each stream as discontinuity. |
-  | `nit` | Emit NIT table. |
-  | `omit_rai` | Disable writing of random access indicator. |
+  | `resend_headers` | 写下一个包之前重发 PAT/PMT。 |
+  | `latm` | 对 AAC 使用 LATM 封包。 |
+  | `pat_pmt_at_frames` | 在每个视频帧重发 PAT 与 PMT。 |
+  | `system_b` | 遵循 System B (DVB) 而不是 System A (ATSC)。 |
+  | `initial_discontinuity` | 将每条流的初始包标记为不连续。 |
+  | `nit` | 输出 NIT 表。 |
+  | `omit_rai` | 禁用随机访问指示符 (random access indicator) 的写入。 |
 
-- **`mpegts_copyts boolean`** Preserve original timestamps, if value is set to `1`. Default value is `-1`, which results in shifting timestamps so that they start from 0.
+- **`mpegts_copyts boolean`** 值设为 `1` 时保留原始时间戳。默认值为 `-1`，即平移时间戳使其从 0 开始。
 
-- **`omit_video_pes_length boolean`** Omit the PES packet length for video packets. Default is `1` (true).
+- **`omit_video_pes_length boolean`** 省略视频包的 PES 包长度。默认值为 `1`（true）。
 
-- **`pcr_period integer`** Override the default PCR retransmission time in milliseconds. Default is `-1` which means that the PCR interval will be determined automatically: 20 ms is used for CBR streams, the highest multiple of the frame duration which is less than 100 ms is used for VBR streams.
+- **`pcr_period integer`** 覆盖默认的 PCR 重传时间（毫秒）。默认为 `-1`，表示 PCR 间隔自动确定：CBR 流使用 20 ms，VBR 流使用小于 100 ms 的帧时长最大整数倍。
 
-- **`pat_period duration`** Maximum time in seconds between PAT/PMT tables. Default is `0.1`.
+- **`pat_period duration`** PAT/PMT 表之间的最大间隔时间（秒）。默认值为 `0.1`。
 
-- **`sdt_period duration`** Maximum time in seconds between SDT tables. Default is `0.5`.
+- **`sdt_period duration`** SDT 表之间的最大间隔时间（秒）。默认值为 `0.5`。
 
-- **`nit_period duration`** Maximum time in seconds between NIT tables. Default is `0.5`.
+- **`nit_period duration`** NIT 表之间的最大间隔时间（秒）。默认值为 `0.5`。
 
-- **`tables_version integer`** Set PAT, PMT, SDT and NIT version (default `0`, valid values are from 0 to 31, inclusively). This option allows updating stream structure so that standard consumer may detect the change. To do so, reopen output `AVFormatContext` (in case of API usage) or restart `ffmpeg` instance, cyclically changing `tables_version` value:
+- **`tables_version integer`** 设置 PAT、PMT、SDT 与 NIT 版本（默认 `0`，有效值为 0 到 31，含边界）。此选项允许更新流结构，使标准消费端能检测到变化。为此需重新打开输出 `AVFormatContext`（API 用法）或重启 `ffmpeg` 实例，循环变更 `tables_version` 值：
 
   ``` text
   ffmpeg -i source1.ts -codec copy -f mpegts -tables_version 0 udp://1.1.1.1:1111
@@ -3000,7 +2996,7 @@ The muxer options are:
   ...
   ```
 
-### Example
+### 示例
 
 ``` text
 ffmpeg -i file.mpg -c copy \
@@ -3016,29 +3012,29 @@ ffmpeg -i file.mpg -c copy \
 
 ## mxf, mxf_d10, mxf_opatom
 
-MXF muxer.
+MXF 复用器。
 
-### Options
+### 选项
 
-The muxer options are:
+复用器选项如下：
 
-- **`store_user_comments bool`** Set if user comments should be stored if available or never. IRT D-10 does not allow user comments. The default is thus to write them for mxf and mxf_opatom but not for mxf_d10
+- **`store_user_comments bool`** 设置是否存储用户注释（如有）。IRT D-10 不允许用户注释，因此默认为 mxf 与 mxf_opatom 写注释，mxf_d10 不写
 
 ## null
 
-Null muxer.
+Null 复用器。
 
-This muxer does not generate any output file, it is mainly useful for testing or benchmarking purposes.
+此复用器不生成任何输出文件，主要用于测试或基准测试。
 
-For example to benchmark decoding with `ffmpeg` you can use the command:
+例如，用 `ffmpeg` 做解码基准测试可使用命令：
 
 ``` text
 ffmpeg -benchmark -i INPUT -f null out.null
 ```
 
-Note that the above command does not read or write the `out.null` file, but specifying the output file is required by the `ffmpeg` syntax.
+注意上述命令不读写 `out.null` 文件，但 `ffmpeg` 语法要求指定输出文件。
 
-Alternatively you can write the command as:
+也可以将命令写为：
 
 ``` text
 ffmpeg -benchmark -i INPUT -f null -
@@ -3046,17 +3042,17 @@ ffmpeg -benchmark -i INPUT -f null -
 
 ## nut
 
-- **`-syncpoints flags`** Change the syncpoint usage in nut:
+- **`-syncpoints flags`** 更改 nut 中同步点 (syncpoint) 的使用方式：
 
   - **`default use the normal low-overhead seeking aids.`**
 
-  - **`none do not use the syncpoints at all, reducing the overhead but making the stream non-seekable;`** Use of this option is not recommended, as the resulting files are very damage sensitive and seeking is not possible. Also in general the overhead from syncpoints is negligible. Note, -`write_index` 0 can be used to disable all growing data tables, allowing to mux endless streams with limited memory and without these disadvantages.
+  - **`none do not use the syncpoints at all, reducing the overhead but making the stream non-seekable;`** 不建议使用此选项，因为生成的文件对损坏非常敏感且无法定位。此外一般来说同步点的开销可忽略。注意，-`write_index` 0 可用于禁用所有增长型数据表，从而在有限内存下复用无限流且没有这些缺点。
 
   - **`timestamped extend the syncpoint with a wallclock field.`**
 
-  The \<none\> and \<timestamped\> flags are experimental.
+  \<none\> 与 \<timestamped\> 标志是实验性的。
 
-- **`-write_index bool`** Write index at the end, the default is to write an index.
+- **`-write_index bool`** 在末尾写索引，默认写索引。
 
 ``` text
 ffmpeg -i INPUT -f_strict experimental -syncpoints none - | processor
@@ -3064,33 +3060,33 @@ ffmpeg -i INPUT -f_strict experimental -syncpoints none - | processor
 
 ## ogg
 
-Ogg container muxer.
+Ogg 容器复用器。
 
-- **`-page_duration duration`** Preferred page duration, in microseconds. The muxer will attempt to create pages that are approximately \<duration\> microseconds long. This allows the user to compromise between seek granularity and container overhead. The default is 1 second. A value of 0 will fill all segments, making pages as large as possible. A value of 1 will effectively use 1 packet-per-page in most situations, giving a small seek granularity at the cost of additional container overhead.
+- **`-page_duration duration`** 首选页时长（微秒）。复用器会尝试创建约 \<duration\> 微秒长的页。这让用户在定位粒度与容器开销之间权衡。默认为 1 秒。值 0 会填满所有分段，使页尽可能大。值 1 在多数情况下相当于每页一个包，以额外容器开销换取较小的定位粒度。
 
-- **`-serial_offset value`** Serial value from which to set the streams serial number. Setting it to different and sufficiently large values ensures that the produced ogg files can be safely chained.
+- **`-serial_offset value`** 用于设置流序列号的起始序列值。设为不同且足够大的值可确保生成的 ogg 文件可安全串联。
 
 ## pdv
 
-Playdate Video muxer.
+Playdate 视频复用器。
 
-This muxer writes the Playdate video container used by Panic's Playdate SDK. It requires a seekable output and a single PDV video stream.
+此复用器写入 Panic 的 Playdate SDK 使用的 Playdate 视频容器。它要求输出可定位，以及单条 PDV 视频流。
 
-- **`max_frames frames`** Reserve space for at most \<frames\> video frames in the file header. This option is mandatory.
+- **`max_frames frames`** 在文件头中为至多 \<frames\> 个视频帧预留空间。此选项是必需的。
 
 ## rcwt
 
-RCWT (Raw Captions With Time) is a format native to ccextractor, a commonly used open source tool for processing 608/708 Closed Captions (CC) sources. It can be used to archive the original extracted CC bitstream and to produce a source file for later processing or conversion. The format allows for interoperability between ccextractor and FFmpeg, is simple to parse, and can be used to create a backup of the CC presentation.
+RCWT (Raw Captions With Time) 是 ccextractor 原生的格式，ccextractor 是处理 608/708 隐藏式字幕 (CC) 源的常用开源工具。它可用于存档提取的原始 CC 比特流，并生成供后续处理或转换的源文件。该格式支持 ccextractor 与 FFmpeg 之间的互操作，解析简单，可用于创建 CC 呈现的备份。
 
-This muxer implements the specification as of March 2024, which has been stable and unchanged since April 2014.
+此复用器实现 2024 年 3 月版的规范，该规范自 2014 年 4 月以来保持稳定未变。
 
-This muxer will have some nuances from the way that ccextractor muxes RCWT. No compatibility issues when processing the output with ccextractor have been observed as a result of this so far, but mileage may vary and outputs will not be a bit-exact match.
+此复用器与 ccextractor 复用 RCWT 的方式存在一些细微差异。迄今未观察到处理输出与 ccextractor 的兼容性问题，但情况可能各异，输出不会逐位完全一致。
 
-A free specification of RCWT can be found here: <https://github.com/CCExtractor/ccextractor/blob/master/docs/BINARY_FILE_FORMAT.TXT>
+RCWT 的自由规范见：<https://github.com/CCExtractor/ccextractor/blob/master/docs/BINARY_FILE_FORMAT.TXT>
 
-### Examples
+### 示例
 
-- Extract Closed Captions to RCWT using lavfi:
+- 使用 lavfi 提取隐藏式字幕到 RCWT：
 
   ``` text
   ffmpeg -f lavfi -i "movie=INPUT.mkv[out+subcc]" -map 0:s:0 -c:s copy -f rcwt CC.rcwt.bin
@@ -3098,177 +3094,177 @@ A free specification of RCWT can be found here: <https://github.com/CCExtractor/
 
 ## segment, stream_segment, ssegment
 
-Basic stream segmenter.
+基础流分段器 (stream segmenter)。
 
-This muxer outputs streams to a number of separate files of nearly fixed duration. Output filename pattern can be set in a fashion similar to [image2](#image2), or by using a `strftime` template if the `strftime` option is enabled.
+此复用器将流输出到若干时长接近固定的独立文件。输出文件名模式可按类似 [image2](#image2) 的方式设置，或在启用 `strftime` 选项时使用 `strftime` 模板。
 
-`stream_segment` is a variant of the muxer used to write to streaming output formats, i.e. which do not require global headers, and is recommended for outputting e.g. to MPEG transport stream segments. `ssegment` is a shorter alias for `stream_segment`.
+`stream_segment` 是该复用器的变体，用于写入不需要全局头的流式输出格式，推荐用于输出到 MPEG 传输流分段等。`ssegment` 是 `stream_segment` 的简写别名。
 
-Every segment starts with a keyframe of the selected reference stream, which is set through the `reference_stream` option.
+每个分段从所选参考流的一个关键帧开始，参考流通过 `reference_stream` 选项设置。
 
-Note that if you want accurate splitting for a video file, you need to make the input key frames correspond to the exact splitting times expected by the segmenter, or the segment muxer will start the new segment with the key frame found next after the specified start time.
+注意，若想对视频文件进行精确切分，需要让输入关键帧对应分段器预期的精确切分时间，否则分段复用器会从指定起始时间之后找到的下一个关键帧开始新分段。
 
-The segment muxer works best with a single constant frame rate video.
+分段复用器与单一恒定帧率视频配合效果最佳。
 
-Optionally it can generate a list of the created segments, by setting the option \<segment_list\>. The list type is specified by the \<segment_list_type\> option. The entry filenames in the segment list are set by default to the basename of the corresponding segment files.
+可选地，它可以通过设置选项 \<segment_list\> 生成已创建分段的列表。列表类型由 \<segment_list_type\> 选项指定。分段列表中的条目文件名默认为相应分段文件的基本名。
 
-See also the [hls](#hls) muxer, which provides a more specific implementation for HLS segmentation.
+另请参见 [hls](#hls) 复用器，它提供了针对 HLS 分段的更具体实现。
 
-### Options
+### 选项
 
-The segment muxer supports the following options:
+分段复用器支持以下选项：
 
-- **`increment_tc 1|0`** if set to `1`, increment timecode between each segment If this is selected, the input need to have a timecode in the first video stream. Default value is `0`.
+- **`increment_tc 1|0`** 若设为 `1`，在每个分段之间递增时间码。选择此项时，输入的第一条视频流需要有时间码。默认值为 `0`。
 
-- **`reference_stream specifier`** Set the reference stream, as specified by the string \<specifier\>. If \<specifier\> is set to `auto`, the reference is chosen automatically. Otherwise it must be a stream specifier (see the "Stream specifiers" chapter in the ffmpeg manual) which specifies the reference stream. The default value is `auto`.
+- **`reference_stream specifier`** 设置参考流，由字符串 \<specifier\> 指定。\<specifier\> 设为 `auto` 时自动选择参考。否则它必须是流说明符（参见 ffmpeg 手册的"Stream specifiers"一章），用以指定参考流。默认值为 `auto`。
 
-- **`segment_format format`** Override the inner container format, by default it is guessed by the filename extension.
+- **`segment_format format`** 覆盖内部容器格式，默认由文件名扩展名猜出。
 
-- **`segment_format_options options_list`** Set output format options using a :-separated list of key=value parameters. Values containing the `:` special character must be escaped.
+- **`segment_format_options options_list`** 使用以 :-分隔的 key=value 参数列表设置输出格式选项。包含 `:` 特殊字符的值必须转义。
 
-- **`segment_list name`** Generate also a listfile named \<name\>. If not specified no listfile is generated.
+- **`segment_list name`** 同时生成名为 \<name\> 的列表文件。未指定时不生成列表文件。
 
-- **`segment_list_flags flags`** Set flags affecting the segment list generation.
+- **`segment_list_flags flags`** 设置影响分段列表生成的标志。
 
-  It currently supports the following flags:
+  目前支持以下标志：
 
   | Term      | Description                                   |
   |-----------|-----------------------------------------------|
-  | `cache` | Allow caching (only affects M3U8 list files). |
-  | `live`  | Allow live-friendly file generation.          |
+  | `cache` | 允许缓存（只影响 M3U8 列表文件）。 |
+  | `live`  | 允许生成对直播友好的文件。          |
 
-- **`segment_list_size size`** Update the list file so that it contains at most \<size\> segments. If 0 the list file will contain all the segments. Default value is 0.
+- **`segment_list_size size`** 更新列表文件使其至多包含 \<size\> 个分段。若为 0，列表文件将包含全部分段。默认值为 0。
 
-- **`segment_list_entry_prefix prefix`** Prepend \<prefix\> to each entry. Useful to generate absolute paths. By default no prefix is applied.
+- **`segment_list_entry_prefix prefix`** 为每个条目前加 \<prefix\>。用于生成绝对路径。默认不加前缀。
 
-- **`segment_list_type type`** Select the listing format.
+- **`segment_list_type type`** 选择列表格式。
 
-  The following values are recognized:
+  可识别以下取值：
 
-  - **`flat`** Generate a flat list for the created segments, one segment per line.
+  - **`flat`** 为已创建分段生成平面列表，每行一个分段。
 
-  - **`csv, ext`** Generate a list for the created segments, one segment per line, each line matching the format (comma-separated values):
+  - **`csv, ext`** 为已创建分段生成列表，每行一个分段，每行匹配以下格式（逗号分隔值）：
 
     ``` text
     segment_filename,segment_start_time,segment_end_time
     ```
 
-    \<segment_filename\> is the name of the output file generated by the muxer according to the provided pattern. CSV escaping (according to RFC4180) is applied if required.
+    \<segment_filename\> 是复用器按给定模式生成的输出文件名。必要时应用 CSV 转义（按 RFC4180）。
 
-    \<segment_start_time\> and \<segment_end_time\> specify the segment start and end time expressed in seconds.
+    \<segment_start_time\> 与 \<segment_end_time\> 指定分段的开始与结束时间（秒）。
 
-    A list file with the suffix `".csv"` or `".ext"` will auto-select this format.
+    后缀为 `".csv"` 或 `".ext"` 的列表文件会自动选择此格式。
 
-    `ext` is deprecated in favor or `csv`.
+    `ext` 已弃用，建议改用 `csv`。
 
-  - **`ffconcat`** Generate an ffconcat file for the created segments. The resulting file can be read using the FFmpeg [concat](#concat) demuxer.
+  - **`ffconcat`** 为已创建分段生成 ffconcat 文件。结果文件可用 FFmpeg [concat](#concat) 解复用器读取。
 
-    A list file with the suffix `".ffcat"` or `".ffconcat"` will auto-select this format.
+    后缀为 `".ffcat"` 或 `".ffconcat"` 的列表文件会自动选择此格式。
 
-  - **`m3u8`** Generate an extended M3U8 file, version 3, compliant with <http://tools.ietf.org/id/draft-pantos-http-live-streaming>.
+  - **`m3u8`** 生成扩展 M3U8 文件（版本 3），符合 <http://tools.ietf.org/id/draft-pantos-http-live-streaming>。
 
-    A list file with the suffix `".m3u8"` will auto-select this format.
+    后缀为 `".m3u8"` 的列表文件会自动选择此格式。
 
-  If not specified the type is guessed from the list file name suffix.
+  未指定时，类型由列表文件名后缀猜出。
 
-- **`segment_time time`** Set segment duration to \<time\>, the value must be a duration specification. Default value is "2". See also the `segment_times` option.
+- **`segment_time time`** 将分段时长设为 \<time\>，值必须是时长描述。默认值为 "2"。另请参见 `segment_times` 选项。
 
-  Note that splitting may not be accurate, unless you force the reference stream key-frames at the given time. See the introductory notice and the examples below.
+  注意切分可能不精确，除非你在给定时间强制参考流关键帧。参见开头说明与下文示例。
 
-- **`min_seg_duration time`** Set minimum segment duration to \<time\>, the value must be a duration specification. This prevents the muxer ending segments at a duration below this value. Only effective with `segment_time`. Default value is "0".
+- **`min_seg_duration time`** 将最小分段时长设为 \<time\>，值必须是时长描述。它防止复用器在低于该值的时长处结束分段。仅与 `segment_time` 配合有效。默认值为 "0"。
 
-- **`segment_atclocktime 1|0`** If set to "1" split at regular clock time intervals starting from 00:00 o'clock. The \<time\> value specified in `segment_time` is used for setting the length of the splitting interval.
+- **`segment_atclocktime 1|0`** 若设为 "1"，按从 00:00 起的常规时钟时间间隔切分。`segment_time` 中指定的 \<time\> 值用于设置切分间隔的长度。
 
-  For example with `segment_time` set to "900" this makes it possible to create files at 12:00 o'clock, 12:15, 12:30, etc.
+  例如，`segment_time` 设为 "900" 时，可以在 12:00、12:15、12:30 等时刻创建文件。
 
-  Default value is "0".
+  默认值为 "0"。
 
-- **`segment_clocktime_offset duration`** Delay the segment splitting times with the specified duration when using `segment_atclocktime`.
+- **`segment_clocktime_offset duration`** 使用 `segment_atclocktime` 时，用指定时长延迟分段切分时刻。
 
-  For example with `segment_time` set to "900" and `segment_clocktime_offset` set to "300" this makes it possible to create files at 12:05, 12:20, 12:35, etc.
+  例如，`segment_time` 设为 "900"、`segment_clocktime_offset` 设为 "300" 时，可以在 12:05、12:20、12:35 等时刻创建文件。
 
-  Default value is "0".
+  默认值为 "0"。
 
-- **`segment_clocktime_wrap_duration duration`** Force the segmenter to only start a new segment if a packet reaches the muxer within the specified duration after the segmenting clock time. This way you can make the segmenter more resilient to backward local time jumps, such as leap seconds or transition to standard time from daylight savings time.
+- **`segment_clocktime_wrap_duration duration`** 强制分段器只在分段时钟时间之后的指定时长内有包到达复用器时才开始新分段。这样可让分段器对本地时间回拨（如闰秒或从夏令时切换回标准时间）更有韧性。
 
-  Default is the maximum possible duration which means starting a new segment regardless of the elapsed time since the last clock time.
+  默认为最大可能时长，即无论距上一个时钟时间过了多久都开始新分段。
 
-- **`segment_time_delta delta`** Specify the accuracy time when selecting the start time for a segment, expressed as a duration specification. Default value is "0".
+- **`segment_time_delta delta`** 指定选择分段起始时间时的容差时间，以时长描述表示。默认值为 "0"。
 
-  When delta is specified a key-frame will start a new segment if its PTS satisfies the relation:
+  指定 delta 后，若关键帧的 PTS 满足以下关系，则会开始新分段：
 
   ``` text
   PTS >= start_time - time_delta
   ```
 
-  This option is useful when splitting video content, which is always split at GOP boundaries, in case a key frame is found just before the specified split time.
+  此选项在切分视频内容（总是在 GOP 边界切分）时有用，以防在指定切分时间之前刚好有关键帧。
 
-  In particular may be used in combination with the `ffmpeg` option \<force_key_frames\>. The key frame times specified by \<force_key_frames\> may not be set accurately because of rounding issues, with the consequence that a key frame time may result set just before the specified time. For constant frame rate videos a value of 1/(2\*\<frame_rate\>) should address the worst case mismatch between the specified time and the time set by \<force_key_frames\>.
+  特别地，可与 `ffmpeg` 选项 \<force_key_frames\> 组合使用。\<force_key_frames\> 指定的关键帧时间可能因舍入问题无法精确设置，导致关键帧时间恰好设在指定时间之前。对恒定帧率视频，值 1/(2\*\<frame_rate\>) 应能解决指定时间与 \<force_key_frames\> 所设时间的最坏失配。
 
-- **`segment_times times`** Specify a list of split points. \<times\> contains a list of comma separated duration specifications, in increasing order. See also the `segment_time` option.
+- **`segment_times times`** 指定切分点列表。\<times\> 包含以逗号分隔、按升序排列的时长描述列表。另请参见 `segment_time` 选项。
 
-- **`segment_frames frames`** Specify a list of split video frame numbers. \<frames\> contains a list of comma separated integer numbers, in increasing order.
+- **`segment_frames frames`** 指定切分视频帧编号列表。\<frames\> 包含以逗号分隔、按升序排列的整数列表。
 
-  This option specifies to start a new segment whenever a reference stream key frame is found and the sequential number (starting from 0) of the frame is greater or equal to the next value in the list.
+  此选项指定：每当发现参考流关键帧且帧的顺序编号（从 0 起）大于或等于列表中下一个值时，开始新分段。
 
-- **`segment_wrap limit`** Wrap around segment index once it reaches \<limit\>.
+- **`segment_wrap limit`** 分段索引达到 \<limit\> 后循环回绕。
 
-- **`segment_start_number number`** Set the sequence number of the first segment. Defaults to `0`.
+- **`segment_start_number number`** 设置第一个分段的序号。默认为 `0`。
 
-- **`strftime 1|0`** Use the `strftime` function to define the name of the new segments to write. If this is selected, the output segment name must contain a `strftime` function template. Default value is `0`.
+- **`strftime 1|0`** 使用 `strftime` 函数定义要写入的新分段名。选择此项时，输出分段名必须包含 `strftime` 函数模板。默认值为 `0`。
 
-- **`break_non_keyframes 1|0`** If enabled, allow segments to start on frames other than keyframes. This improves behavior on some players when the time between keyframes is inconsistent, but may make things worse on others, and can cause some oddities during seeking. Defaults to `0`.
+- **`break_non_keyframes 1|0`** 若启用，允许分段在非关键帧处开始。这改善了关键帧间隔不一致时某些播放器的行为，但可能使另一些播放器变差，并可能在定位时引起一些怪异现象。默认为 `0`。
 
-- **`reset_timestamps 1|0`** Reset timestamps at the beginning of each segment, so that each segment will start with near-zero timestamps. It is meant to ease the playback of the generated segments. May not work with some combinations of muxers/codecs. It is set to `0` by default.
+- **`reset_timestamps 1|0`** 在每个分段开头重置时间戳，使每个分段以接近零的时间戳开始。旨在方便播放生成的分段。可能与某些复用器/编解码器组合不兼容。默认设为 `0`。
 
-- **`initial_offset offset`** Specify timestamp offset to apply to the output packet timestamps. The argument must be a time duration specification, and defaults to 0.
+- **`initial_offset offset`** 指定应用于输出包时间戳的时间戳偏移。参数必须是时长描述，默认为 0。
 
-- **`write_empty_segments 1|0`** If enabled, write an empty segment if there are no packets during the period a segment would usually span. Otherwise, the segment will be filled with the next packet written. Defaults to `0`.
+- **`write_empty_segments 1|0`** 若启用，当分段通常跨越的期间内没有任何包时写一个空分段。否则分段将由下一个写入的包填充。默认为 `0`。
 
-Make sure to require a closed GOP when encoding and to set the GOP size to fit your segment time constraint.
+编码时务必要求封闭 GOP (closed GOP)，并将 GOP 大小设为符合分段时长约束。
 
-### Examples
+### 示例
 
-- Remux the content of file `in.mkv` to a list of segments `out-000.nut`, `out-001.nut`, etc., and write the list of generated segments to `out.list`:
+- 将文件 `in.mkv` 的内容重新封装为分段列表 `out-000.nut`、`out-001.nut` 等，并将生成的分段列表写入 `out.list`：
 
   ``` text
   ffmpeg -i in.mkv -codec hevc -flags +cgop -g 60 -map 0 -f segment -segment_list out.list out%03d.nut
   ```
 
-- Segment input and set output format options for the output segments:
+- 对输入分段并为输出分段设置输出格式选项：
 
   ``` text
   ffmpeg -i in.mkv -f segment -segment_time 10 -segment_format_options movflags=+faststart out%03d.mp4
   ```
 
-- Segment the input file according to the split points specified by the \<segment_times\> option:
+- 按 \<segment_times\> 选项指定的切分点对输入文件分段：
 
   ``` text
   ffmpeg -i in.mkv -codec copy -map 0 -f segment -segment_list out.csv -segment_times 1,2,3,5,8,13,21 out%03d.nut
   ```
 
-- Use the `ffmpeg` `force_key_frames` option to force key frames in the input at the specified location, together with the segment option `segment_time_delta` to account for possible roundings operated when setting key frame times.
+- 使用 `ffmpeg` 的 `force_key_frames` 选项在输入的指定位置强制关键帧，并配合分段选项 `segment_time_delta` 来考虑设置关键帧时间时可能进行的舍入。
 
   ``` text
   ffmpeg -i in.mkv -force_key_frames 1,2,3,5,8,13,21 -codec:v mpeg4 -codec:a pcm_s16le -map 0 \
   -f segment -segment_list out.csv -segment_times 1,2,3,5,8,13,21 -segment_time_delta 0.05 out%03d.nut
   ```
 
-  In order to force key frames on the input file, transcoding is required.
+  为了在输入文件上强制关键帧，需要转码。
 
-- Segment the input file by splitting the input file according to the frame numbers sequence specified with the `segment_frames` option:
+- 按 `segment_frames` 选项指定的帧编号序列切分输入文件：
 
   ``` text
   ffmpeg -i in.mkv -codec copy -map 0 -f segment -segment_list out.csv -segment_frames 100,200,300,500,800 out%03d.nut
   ```
 
-- Convert the `in.mkv` to TS segments using the `libx264` and `aac` encoders:
+- 使用 `libx264` 与 `aac` 编码器将 `in.mkv` 转换为 TS 分段：
 
   ``` text
   ffmpeg -i in.mkv -map 0 -codec:v libx264 -codec:a aac -f ssegment -segment_list out.list out%03d.ts
   ```
 
-- Segment the input file, and create an M3U8 live playlist (can be used as live HLS source):
+- 对输入文件分段并创建 M3U8 直播播放列表（可用作直播 HLS 源）：
 
   ``` text
   ffmpeg -re -i in.mkv -codec copy -map 0 -f segment -segment_list playlist.m3u8 \
@@ -3277,114 +3273,114 @@ Make sure to require a closed GOP when encoding and to set the GOP size to fit y
 
 ## smoothstreaming
 
-Smooth Streaming muxer generates a set of files (Manifest, chunks) suitable for serving with conventional web server.
+Smooth Streaming 复用器生成一组适合用常规 web 服务器提供的文件（清单、chunk）。
 
-- **`window_size`** Specify the number of fragments kept in the manifest. Default 0 (keep all).
+- **`window_size`** 指定清单中保留的分片数。默认 0（全部保留）。
 
-- **`extra_window_size`** Specify the number of fragments kept outside of the manifest before removing from disk. Default 5.
+- **`extra_window_size`** 指定从磁盘移除前保留在清单之外的分片数。默认 5。
 
-- **`lookahead_count`** Specify the number of lookahead fragments. Default 2.
+- **`lookahead_count`** 指定前瞻 (lookahead) 分片数。默认 2。
 
-- **`min_frag_duration`** Specify the minimum fragment duration (in microseconds). Default 5000000.
+- **`min_frag_duration`** 指定最小分片时长（微秒）。默认 5000000。
 
-- **`remove_at_exit`** Specify whether to remove all fragments when finished. Default 0 (do not remove).
+- **`remove_at_exit`** 指定完成时是否移除全部分片。默认 0（不移除）。
 
 ## streamhash
 
-Per stream hash testing format.
+逐流哈希 (hash) 测试格式。
 
-This muxer computes and prints a cryptographic hash of all the input frames, on a per-stream basis. This can be used for equality checks without having to do a complete binary comparison.
+此复用器按流计算并打印全部输入帧的加密哈希。可用于相等性检查，无需做完整的二进制比较。
 
-By default audio frames are converted to signed 16-bit raw audio and video frames to raw video before computing the hash, but the output of explicit conversions to other codecs can also be used. Timestamps are ignored. It uses the SHA-256 cryptographic hash function by default, but supports several other algorithms.
+默认情况下，计算哈希前音频帧被转换为有符号 16 位 raw 音频，视频帧被转换为 raw 视频，但也可使用显式转换为其他编解码器后的输出。时间戳被忽略。默认使用 SHA-256 加密哈希函数，但也支持若干其他算法。
 
-The output of the muxer consists of one line per stream of the form: \<streamindex\>,\<streamtype\>,\<algo\>=\<hash\>, where \<streamindex\> is the index of the mapped stream, \<streamtype\> is a single character indicating the type of stream, \<algo\> is a short string representing the hash function used, and \<hash\> is a hexadecimal number representing the computed hash.
+复用器的输出为每条流一行，形如 \<streamindex\>,\<streamtype\>,\<algo\>=\<hash\>，其中 \<streamindex\> 是被映射流的索引，\<streamtype\> 是表示流类型的单个字符，\<algo\> 是表示所用哈希函数的短字符串，\<hash\> 是表示计算所得哈希的十六进制数。
 
-- **`hash algorithm`** Use the cryptographic hash function specified by the string \<algorithm\>. Supported values include `MD5`, `murmur3`, `RIPEMD128`, `RIPEMD160`, `RIPEMD256`, `RIPEMD320`, `SHA160`, `SHA224`, `SHA256` (default), `SHA512/224`, `SHA512/256`, `SHA384`, `SHA512`, `CRC32` and `adler32`.
+- **`hash algorithm`** 使用字符串 \<algorithm\> 指定的加密哈希函数。支持的值包括 `MD5`、`murmur3`、`RIPEMD128`、`RIPEMD160`、`RIPEMD256`、`RIPEMD320`、`SHA160`、`SHA224`、`SHA256`（默认）、`SHA512/224`、`SHA512/256`、`SHA384`、`SHA512`、`CRC32` 与 `adler32`。
 
-### Examples
+### 示例
 
-To compute the SHA-256 hash of the input converted to raw audio and video, and store it in the file `out.sha256`:
+计算转换为 raw 音频与视频的输入的 SHA-256 哈希，并存储到文件 `out.sha256`：
 
 ``` text
 ffmpeg -i INPUT -f streamhash out.sha256
 ```
 
-To print an MD5 hash to stdout use the command:
+将 MD5 哈希打印到标准输出，使用命令：
 
 ``` text
 ffmpeg -i INPUT -f streamhash -hash md5 -
 ```
 
-See also the [hash](#hash) and [framehash](#framehash) muxers.
+另请参见 [hash](#hash) 与 [framehash](#framehash) 复用器。
 
 ## tee
 
-The tee muxer can be used to write the same data to several outputs, such as files or streams. It can be used, for example, to stream a video over a network and save it to disk at the same time.
+tee 复用器可用于将相同数据写到多个输出，如文件或流。例如可用于在网络上传输视频的同时保存到磁盘。
 
-It is different from specifying several outputs to the `ffmpeg` command-line tool. With the tee muxer, the audio and video data will be encoded only once. With conventional multiple outputs, multiple encoding operations in parallel are initiated, which can be a very expensive process. The tee muxer is not useful when using the libavformat API directly because it is then possible to feed the same packets to several muxers directly.
+它与向 `ffmpeg` 命令行工具指定多个输出不同。使用 tee 复用器时，音频与视频数据只编码一次。使用常规多输出时，会启动多个并行编码操作，代价可能很高。直接使用 libavformat API 时 tee 复用器没有用处，因为那时可以直接把相同的包馈送给多个复用器。
 
-Since the tee muxer does not represent any particular output format, ffmpeg cannot auto-select output streams. So all streams intended for output must be specified using `-map`. See the examples below.
+由于 tee 复用器不代表任何特定输出格式，ffmpeg 无法自动选择输出流。因此所有要输出的流都必须用 `-map` 指定。参见下文示例。
 
-Some encoders may need different options depending on the output format; the auto-detection of this can not work with the tee muxer, so they need to be explicitly specified. The main example is the `global_header` flag.
+某些编码器可能因输出格式不同而需要不同选项；tee 复用器无法自动检测这一点，因此需要显式指定。主要例子是 `global_header` 标志。
 
-The slave outputs are specified in the file name given to the muxer, separated by '\|'. If any of the slave name contains the '\|' separator, leading or trailing spaces or any special character, those must be escaped (see section "the "Quoting and escaping" section in the ffmpeg-utils(1) manual" in `ffmpeg-utils`).
+从属输出 (slave output) 在给复用器的文件名中指定，以 '\|' 分隔。若任何从属名称包含 '\|' 分隔符、前导或尾随空格或任何特殊字符，必须转义（参见 `ffmpeg-utils` 中"the "Quoting and escaping" section in the ffmpeg-utils(1) manual"（引号与转义）一节）。
 
-### Options
+### 选项
 
-- **`use_fifo bool`** If set to 1, slave outputs will be processed in separate threads using the [fifo](#fifo) muxer. This allows to compensate for different speed/latency/reliability of outputs and setup transparent recovery. By default this feature is turned off.
+- **`use_fifo bool`** 若设为 1，从属输出将用 [fifo](#fifo) 复用器在独立线程中处理。这可以补偿不同输出的速度/延迟/可靠性差异，并设置透明恢复。默认关闭此功能。
 
-- **`fifo_options`** Options to pass to fifo pseudo-muxer instances. See [fifo](#fifo).
+- **`fifo_options`** 传给 fifo 伪复用器实例的选项。参见 [fifo](#fifo)。
 
-Muxer options can be specified for each slave by prepending them as a list of \<key\>=\<value\> pairs separated by ':', between square brackets. If the options values contain a special character or the ':' separator, they must be escaped; note that this is a second level escaping.
+可为每个从属指定复用器选项，方法是在方括号内前缀一组以 ':' 分隔的 \<key\>=\<value\> 对。若选项值包含特殊字符或 ':' 分隔符，必须转义；注意这是第二层转义。
 
-The following special options are also recognized:
+还识别以下特殊选项：
 
-- **`f`** Specify the format name. Required if it cannot be guessed from the output URL.
+- **`f`** 指定格式名。无法从输出 URL 猜出时必需。
 
-- **`bsfs[/spec]`** Specify a list of bitstream filters to apply to the specified output.
+- **`bsfs[/spec]`** 指定应用于指定输出的比特流滤镜列表。
 
-  It is possible to specify to which streams a given bitstream filter applies, by appending a stream specifier to the option separated by `/`. \<spec\> must be a stream specifier (see [Format stream specifiers](#format-stream-specifiers)).
+  可以通过在选项后附加以 `/` 分隔的流说明符，指定给定的比特流滤镜应用于哪些流。\<spec\> 必须是流说明符（参见 [格式流说明符](#Format-stream-specifiers)）。
 
-  If the stream specifier is not specified, the bitstream filters will be applied to all streams in the output. This will cause that output operation to fail if the output contains streams to which the bitstream filter cannot be applied e.g. `h264_mp4toannexb` being applied to an output containing an audio stream.
+  未指定流说明符时，比特流滤镜将应用于输出中的所有流。若输出包含无法应用该比特流滤镜的流（例如对包含音频流的输出应用 `h264_mp4toannexb`），该输出操作将失败。
 
-  Options for a bitstream filter must be specified in the form of `opt=value`.
+  比特流滤镜的选项必须以 `opt=value` 形式指定。
 
-  Several bitstream filters can be specified, separated by ",".
+  可指定多个比特流滤镜，以 "," 分隔。
 
-- **`use_fifo bool`** This allows to override tee muxer use_fifo option for individual slave muxer.
+- **`use_fifo bool`** 允许为单个从属复用器覆盖 tee 复用器的 use_fifo 选项。
 
-- **`fifo_options`** This allows to override tee muxer fifo_options for individual slave muxer. See [fifo](#fifo).
+- **`fifo_options`** 允许为单个从属复用器覆盖 tee 复用器的 fifo_options。参见 [fifo](#fifo)。
 
-- **`select`** Select the streams that should be mapped to the slave output, specified by a stream specifier. If not specified, this defaults to all the mapped streams. This will cause that output operation to fail if the output format does not accept all mapped streams.
+- **`select`** 选择应映射到从属输出的流，由流说明符指定。未指定时默认为全部已映射流。若输出格式不接受全部已映射流，该输出操作将失败。
 
-  You may use multiple stream specifiers separated by commas (`,`) e.g.: `a:0,v`
+  可以使用以逗号 (`,`) 分隔的多个流说明符，例如：`a:0,v`
 
-- **`onfail`** Specify behaviour on output failure. This can be set to either `abort` (which is default) or `ignore`. `abort` will cause whole process to fail in case of failure on this slave output. `ignore` will ignore failure on this output, so other outputs will continue without being affected.
+- **`onfail`** 指定输出失败时的行为。可设为 `abort`（默认）或 `ignore`。`abort` 会使整个进程在此从属输出失败时失败。`ignore` 会忽略此输出的失败，其他输出继续不受影响。
 
-### Examples
+### 示例
 
-- Encode something and both archive it in a WebM file and stream it as MPEG-TS over UDP:
+- 编码内容并同时存档为 WebM 文件、以 MPEG-TS 经 UDP 推流：
 
   ``` text
   ffmpeg -i ... -c:v libx264 -c:a mp2 -f tee -map 0:v -map 0:a
     "archive-20121107.mkv|[f=mpegts]udp://10.0.1.255:1234/"
   ```
 
-- As above, but continue streaming even if output to local file fails (for example local drive fills up):
+- 同上，但即使输出到本地文件失败（例如本地磁盘写满）也继续推流：
 
   ``` text
   ffmpeg -i ... -c:v libx264 -c:a mp2 -f tee -map 0:v -map 0:a
     "[onfail=ignore]archive-20121107.mkv|[f=mpegts]udp://10.0.1.255:1234/"
   ```
 
-- Use `ffmpeg` to encode the input, and send the output to three different destinations. The `dump_extra` bitstream filter is used to add extradata information to all the output video keyframes packets, as requested by the MPEG-TS format. The select option is applied to `out.aac` in order to make it contain only audio packets.
+- 使用 `ffmpeg` 编码输入，并将输出发送到三个不同目标。`dump_extra` 比特流滤镜用于向全部输出视频关键帧包添加 extradata 信息（MPEG-TS 格式要求）。select 选项应用于 `out.aac`，使其只包含音频包。
 
   ``` text
   ffmpeg -i ... -map 0 -flags +global_header -c:v libx264 -c:a aac
          -f tee "[bsfs/v=dump_extra=freq=keyframe]out.ts|[movflags=+faststart]out.mp4|[select=a]out.aac"
   ```
 
-- As above, but select only stream `a:1` for the audio output. Note that a second level escaping must be performed, as ":" is a special character used to separate options.
+- 同上，但音频输出只选择流 `a:1`。注意必须进行第二层转义，因为 ":" 是用于分隔选项的特殊字符。
 
   ``` text
   ffmpeg -i ... -map 0 -flags +global_header -c:v libx264 -c:a aac
@@ -3393,53 +3389,53 @@ The following special options are also recognized:
 
 ## wav
 
-RIFF Wave Audio muxer.
+RIFF Wave 音频复用器。
 
-### Options
+### 选项
 
-- **`rf64 mode`** Choose whether to use the RF64 file format instead of RIFF. RF64 allows files larger than 4 gigabytes, but RF64 support is not as universal as RIFF.
+- **`rf64 mode`** 选择是否用 RF64 文件格式代替 RIFF。RF64 允许大于 4 GB 的文件，但 RF64 支持不如 RIFF 普遍。
 
-  The following modes are recognized:
+  可识别以下模式：
 
-  - **`auto`** Start writing a standard RIFF file to retain compatibility with non-RF64-aware software, but switch to RF64 if the output file grows larger than 4 gigabytes. Reserves a small amount of extra space in the header using a `JUNK` chunk, which should be ignored by all compliant RIFF readers, but some extremely simplistic WAV readers may be confused by this.
+  - **`auto`** 先写标准 RIFF 文件以保持与非 RF64 感知软件的兼容性，但若输出文件超过 4 GB 则切换到 RF64。会用 `JUNK` chunk 在头中预留少量额外空间，所有合规的 RIFF 读取器都应忽略它，但一些极其简化的 WAV 读取器可能因此混淆。
 
-  - **`always`** Always use the RF64 format regardless of file size. The output file will only be readable by RF64-compatible software and is no longer a standard RIFF WAVE file.
+  - **`always`** 无论文件大小都使用 RF64 格式。输出文件只能被 RF64 兼容软件读取，不再是标准 RIFF WAVE 文件。
 
-  - **`never`** Always use plain RIFF, never RF64. This mode is the most compatible with legacy software, but if the output file grows beyond 4 gigabytes, the 32-bit size field in the `data` chunk will no longer be able to correctly represent the size, and most audio software will not be able to read some or all of the data. (The [wav](#wav) demuxer's `ignore_length` option can be used to recover such a file.) This is the default mode.
+  - **`never`** 总是使用普通 RIFF，绝不使用 RF64。此模式对旧软件兼容性最好，但若输出文件超过 4 GB，`data` chunk 中的 32 位大小字段将无法正确表示大小，多数音频软件将无法读取部分或全部数据。（[wav](#wav) 解复用器的 `ignore_length` 选项可用于恢复此类文件。）这是默认模式。
 
-- **`write_bext bool`** Add a Broadcast Wave Format `BEXT` chunk containing extended audio metadata if enabled. Defaults to false.
+- **`write_bext bool`** 启用后添加包含扩展音频元数据的 Broadcast Wave Format `BEXT` chunk。默认为 false。
 
-- **`write_peak mode`** Add a Peak Envelope chunk (EBU Tech 3285 Supplement 3) if enabled. Defaults to off.
+- **`write_peak mode`** 启用后添加峰值包络 chunk (Peak Envelope chunk, EBU Tech 3285 Supplement 3)。默认关闭。
 
-  - **`off`** Do not add the Peak Envelope chunk.
+  - **`off`** 不添加峰值包络 chunk。
 
-  - **`on`** Add the Peak Envelope chunk, calculating the peak values based on the `peak_block_size`, `peak_format`, and `peak_ppv` options.
+  - **`on`** 添加峰值包络 chunk，基于 `peak_block_size`、`peak_format` 与 `peak_ppv` 选项计算峰值。
 
-  - **`only`** Like `on`, but skip writing the actual audio data (no `data` chunk will be written to the file; only the Peak Envelope and other metadata chunks will be written.)
+  - **`only`** 类似 `on`，但跳过实际音频数据写入（文件不写 `data` chunk；只写峰值包络与其他元数据 chunk）。
 
-- **`peak_block_size int`** Number of audio samples used to generate each peak frame, up to 65536. Default is 256.
+- **`peak_block_size int`** 用于生成每个峰值帧的音频采样数，最大 65536。默认为 256。
 
-- **`peak_format format`** The format of the peak envelope data (1: uint8, 2: uint16). Default is 2 (uint16).
+- **`peak_format format`** 峰值包络数据的格式（1: uint8，2: uint16）。默认为 2 (uint16)。
 
-- **`peak_ppv int`** Number of peak points per peak value (1 or 2). Default is 2.
+- **`peak_ppv int`** 每个峰值值的峰值点数（1 或 2）。默认为 2。
 
 ## webm_chunk
 
-WebM Live Chunk Muxer.
+WebM 直播分块 (Live Chunk) 复用器。
 
-This muxer writes out WebM headers and chunks as separate files which can be consumed by clients that support WebM Live streams via DASH.
+此复用器将 WebM 头与 chunk 写为独立文件，供支持经 DASH 的 WebM 直播流的客户端使用。
 
-### Options
+### 选项
 
-This muxer supports the following options:
+此复用器支持以下选项：
 
 | Term | Description |
 |----|----|
-| `chunk_start_index` | Index of the first chunk (defaults to 0). |
-| `header` | Filename of the header where the initialization data will be written. |
-| `audio_chunk_duration` | Duration of each audio chunk in milliseconds (defaults to 5000). |
+| `chunk_start_index` | 第一个 chunk 的索引（默认为 0）。 |
+| `header` | 写入初始化数据的头的文件名。 |
+| `audio_chunk_duration` | 每个音频 chunk 的时长（毫秒）（默认为 5000）。 |
 
-### Example
+### 示例
 
 ``` text
 ffmpeg -f v4l2 -i /dev/video0 \
@@ -3463,35 +3459,35 @@ ffmpeg -f v4l2 -i /dev/video0 \
 
 ## webm_dash_manifest
 
-WebM DASH Manifest muxer.
+WebM DASH 清单复用器。
 
-This muxer implements the WebM DASH Manifest specification to generate the DASH manifest XML. It also supports manifest generation for DASH live streams.
+此复用器实现 WebM DASH 清单规范以生成 DASH 清单 XML。它也支持为 DASH 直播流生成清单。
 
-For more information see:
+更多信息参见：
 
-- WebM DASH Specification: <https://sites.google.com/a/webmproject.org/wiki/adaptive-streaming/webm-dash-specification>
+- WebM DASH 规范：<https://sites.google.com/a/webmproject.org/wiki/adaptive-streaming/webm-dash-specification>
 
-- ISO DASH Specification: <http://standards.iso.org/ittf/PubliclyAvailableStandards/c065274_ISO_IEC_23009-1_2014.zip>
+- ISO DASH 规范：<http://standards.iso.org/ittf/PubliclyAvailableStandards/c065274_ISO_IEC_23009-1_2014.zip>
 
-### Options
+### 选项
 
-This muxer supports the following options:
+此复用器支持以下选项：
 
-- **`adaptation_sets`** This option has the following syntax: "id=x,streams=a,b,c id=y,streams=d,e" where x and y are the unique identifiers of the adaptation sets and a,b,c,d and e are the indices of the corresponding audio and video streams. Any number of adaptation sets can be added using this option.
+- **`adaptation_sets`** 此选项语法为："id=x,streams=a,b,c id=y,streams=d,e"，其中 x 与 y 是适配集的唯一标识符，a、b、c、d、e 是相应音频与视频流的索引。可用此选项添加任意数量的适配集。
 
-- **`live`** Set this to 1 to create a live stream DASH Manifest. Default: 0.
+- **`live`** 设为 1 以创建直播流 DASH 清单。默认：0。
 
-- **`chunk_start_index`** Start index of the first chunk. This will go in the `startNumber` attribute of the `SegmentTemplate` element in the manifest. Default: 0.
+- **`chunk_start_index`** 第一个 chunk 的起始索引。它进入清单中 `SegmentTemplate` 元素的 `startNumber` 属性。默认：0。
 
-- **`chunk_duration_ms`** Duration of each chunk in milliseconds. This will go in the `duration` attribute of the `SegmentTemplate` element in the manifest. Default: 1000.
+- **`chunk_duration_ms`** 每个 chunk 的时长（毫秒）。它进入清单中 `SegmentTemplate` 元素的 `duration` 属性。默认：1000。
 
-- **`utc_timing_url`** URL of the page that will return the UTC timestamp in ISO format. This will go in the `value` attribute of the `UTCTiming` element in the manifest. Default: None.
+- **`utc_timing_url`** 返回 ISO 格式 UTC 时间戳的页面 URL。它进入清单中 `UTCTiming` 元素的 `value` 属性。默认：无。
 
-- **`time_shift_buffer_depth`** Smallest time (in seconds) shifting buffer for which any Representation is guaranteed to be available. This will go in the `timeShiftBufferDepth` attribute of the `MPD` element. Default: 60.
+- **`time_shift_buffer_depth`** 保证任何 Representation 可用的最小时移缓冲时间（秒）。它进入清单中 `MPD` 元素的 `timeShiftBufferDepth` 属性。默认：60。
 
-- **`minimum_update_period`** Minimum update period (in seconds) of the manifest. This will go in the `minimumUpdatePeriod` attribute of the `MPD` element. Default: 0.
+- **`minimum_update_period`** 清单的最小更新周期（秒）。它进入清单中 `MPD` 元素的 `minimumUpdatePeriod` 属性。默认：0。
 
-### Example
+### 示例
 
 ``` text
 ffmpeg -f webm_dash_manifest -i video1.webm \
@@ -3507,13 +3503,13 @@ ffmpeg -f webm_dash_manifest -i video1.webm \
 
 ## whip
 
-WebRTC (Real-Time Communication) muxer that supports sub-second latency streaming according to the WHIP (WebRTC-HTTP ingestion protocol) specification.
+支持按 WHIP (WebRTC-HTTP ingestion protocol) 规范进行亚秒级延迟流式传输的 WebRTC (Real-Time Communication) 复用器。
 
-This is an experimental feature.
+这是实验性功能。
 
-It uses HTTP as a signaling protocol to exchange SDP capabilities and ICE lite candidates. Then, it uses STUN binding requests and responses to establish a session over UDP. Subsequently, it initiates a DTLS handshake to exchange the SRTP encryption keys. Lastly, it splits video and audio frames into RTP packets and encrypts them using SRTP.
+它使用 HTTP 作为信令协议交换 SDP 能力与 ICE lite 候选。随后使用 STUN 绑定请求与响应在 UDP 上建立会话。接着发起 DTLS 握手以交换 SRTP 加密密钥。最后将视频与音频帧拆分为 RTP 包并用 SRTP 加密。
 
-Ensure that you use H.264 without B frames and Opus for the audio codec. For example, to convert an input file with `ffmpeg` to WebRTC:
+请确保视频使用不带 B 帧的 H.264，音频编解码器使用 Opus。例如，用 `ffmpeg` 将输入文件转换为 WebRTC：
 
 ``` text
 ffmpeg -re -i input.mp4 -acodec libopus -ar 48000 -ac 2 \
@@ -3521,63 +3517,63 @@ ffmpeg -re -i input.mp4 -acodec libopus -ar 48000 -ac 2 \
   -f whip "http://localhost:1985/rtc/v1/whip/?app=live&stream=livestream"
 ```
 
-For this example, we have employed low latency options, resulting in an end-to-end latency of approximately 150ms.
+在此示例中我们采用了低延迟选项，端到端延迟约为 150ms。
 
-### Options
+### 选项
 
-This muxer supports the following options:
+此复用器支持以下选项：
 
-- **`handshake_timeout integer`** Set the timeout in milliseconds for ICE and DTLS handshake. Default value is 5000.
+- **`handshake_timeout integer`** 设置 ICE 与 DTLS 握手的超时（毫秒）。默认值为 5000。
 
-- **`timeout integer`** Set timeout in seconds for socket I/O operations. Applicable only for HTTP output. Default value is -1.
+- **`timeout integer`** 设置套接字 I/O 操作超时（秒）。仅适用于 HTTP 输出。默认值为 -1。
 
-- **`pkt_size integer`** Set the maximum size, in bytes, of RTP packets that send out. Default value is 1200.
+- **`pkt_size integer`** 设置发出的 RTP 包的最大大小（字节）。默认值为 1200。
 
-- **`ts_buffer_size integer`** Set the buffer size, in bytes, of underlying protocol. Default value is -1(auto). The UDP auto selects a reasonable value.
+- **`ts_buffer_size integer`** 设置底层协议的缓冲大小（字节）。默认值为 -1（自动）。UDP 自动选择合理的值。
 
-- **`whip_flags flags`** Possible values:
+- **`whip_flags flags`** 可能的取值：
 
   | Term | Description |
   |----|----|
-  | `dtls_active` | The muxer will try to set dtls active role and send the first client hello. |
+  | `dtls_active` | 复用器将尝试设置 dtls 主动角色并发送第一个 client hello。 |
 
-- **`rtp_history integer`** Set the number of RTP history items to store. Default value is 512.
+- **`rtp_history integer`** 设置要存储的 RTP 历史条目数。默认值为 512。
 
-- **`authorization string`** The optional Bearer token for WHIP Authorization.
+- **`authorization string`** WHIP 授权的可选 Bearer 令牌。
 
-- **`cert_file string`** The optional certificate file path for DTLS.
+- **`cert_file string`** DTLS 的可选证书文件路径。
 
-- **`key_file string`** The optional private key file path for DTLS.
+- **`key_file string`** DTLS 的可选私钥文件路径。
 
-# Metadata
+# 元数据
 
-FFmpeg is able to dump metadata from media files into a simple UTF-8-encoded INI-like text file and then load it back using the metadata muxer/demuxer.
+FFmpeg 可以将媒体文件中的元数据转储到简单的 UTF-8 编码、类 INI 的文本文件中，然后再用元数据复用器/解复用器加载回来。
 
-The file format is as follows:
+文件格式如下：
 
-1.  A file consists of a header and a number of metadata tags divided into sections, each on its own line.
+1.  文件由头和若干分为小节 (section) 的元数据标签组成，各占一行。
 
-2.  The header is a `;FFMETADATA` string, followed by a version number (now 1).
+2.  头是一个 `;FFMETADATA` 字符串，后跟版本号（当前为 1）。
 
-3.  Metadata tags are of the form `key=value`
+3.  元数据标签形如 `key=value`
 
-4.  Immediately after header follows global metadata
+4.  头之后紧跟全局元数据
 
-5.  After global metadata there may be sections with per-stream/per-chapter metadata.
+5.  全局元数据之后可以有带每流/每章节元数据的小节。
 
-6.  A section starts with the section name in uppercase (i.e. STREAM or CHAPTER) in brackets (`[`, `]`) and ends with next section or end of file.
+6.  小节以括号（`[`、`]`）中的大写小节名（即 STREAM 或 CHAPTER）开始，到下一个小节或文件末尾结束。
 
-7.  At the beginning of a chapter section there may be an optional timebase to be used for start/end values. It must be in form `TIMEBASE=num/den`, where \<num\> and \<den\> are integers. If the timebase is missing then start/end times are assumed to be in nanoseconds.
+7.  章节小节开头可以有可选的 timebase，用于 start/end 值。它必须形如 `TIMEBASE=num/den`，其中 \<num\> 与 \<den\> 是整数。若缺少 timebase，则 start/end 时间按纳秒假定。
 
-    Next a chapter section must contain chapter start and end times in form `START=num`, `END=num`, where \<num\> is a positive integer.
+    接着，章节小节必须包含形如 `START=num`、`END=num` 的章节开始与结束时间，其中 \<num\> 是正整数。
 
-8.  Empty lines and lines starting with `;` or `#` are ignored.
+8.  空行以及以 `;` 或 `#` 开头的行被忽略。
 
-9.  Metadata keys or values containing special characters (`=`, `;`, `#`, `\` and a newline) must be escaped with a backslash `\`.
+9.  包含特殊字符（`=`、`;`、`#`、`\` 和换行）的元数据键或值必须用反斜杠 `\` 转义。
 
-10. Note that whitespace in metadata (e.g. `foo = bar`) is considered to be a part of the tag (in the example above key is `foo`, value is `bar`).
+10. 注意元数据中的空白（如 `foo = bar`）被视为标签的一部分（上例中键为 `foo`，值为 `bar`）。
 
-A ffmetadata file might look like this:
+ffmetadata 文件可能形如：
 
 ``` text
 ;FFMETADATA1
@@ -3596,20 +3592,20 @@ title=multi\
 line
 ```
 
-By using the ffmetadata muxer and demuxer it is possible to extract metadata from an input file to an ffmetadata file, and then transcode the file into an output file with the edited ffmetadata file.
+通过配合使用 ffmetadata 复用器与解复用器，可以把输入文件的元数据提取到 ffmetadata 文件，然后用编辑后的 ffmetadata 文件把该文件转码为输出文件。
 
-Extracting an ffmetadata file with `ffmpeg` goes as follows:
+用 `ffmpeg` 提取 ffmetadata 文件如下：
 
 ``` text
 ffmpeg -i INPUT -f ffmetadata FFMETADATAFILE
 ```
 
-Reinserting edited metadata information from the FFMETADATAFILE file can be done as:
+从 FFMETADATAFILE 文件重新插入编辑后的元数据信息可这样做：
 
 ``` text
 ffmpeg -i INPUT -i FFMETADATAFILE -map_metadata 1 -codec copy OUTPUT
 ```
 
-# See Also
+# 另请参见
 
 ffmpeg(1), ffplay(1), ffprobe(1), libavformat(3)
