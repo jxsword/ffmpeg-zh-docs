@@ -219438,7 +219438,7 @@
             "level": 1,
             "title": "Authors"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "authors.md-p0",
@@ -219450,7 +219450,7 @@
           "metadata": {
             "section": "Authors"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "authors.md-p1",
@@ -219462,7 +219462,7 @@
           "metadata": {
             "section": "Authors"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "authors.md-p2",
@@ -219474,7 +219474,7 @@
           "metadata": {
             "section": "Authors"
           },
-          "status": "pending"
+          "status": "done"
         }
       ]
     },

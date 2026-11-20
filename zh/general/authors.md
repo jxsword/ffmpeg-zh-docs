@@ -1,11 +1,7 @@
-!!! warning "翻译占位页"
-    本页为英文原文占位（翻译进行中，进度见[翻译看板](https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md)）。
-    术语与示例以英文原文为准。
+# 作者
 
-# Authors
+FFmpeg 开发者。
 
-The FFmpeg developers.
+有关作者归属的详细信息，请查阅项目的 Git 历史（https://git.ffmpeg.org/ffmpeg），例如在 FFmpeg 源码目录中键入 `git log` 命令，或浏览位于 <https://git.ffmpeg.org/ffmpeg> 的在线仓库。
 
-For details about the authorship, see the Git history of the project (https://git.ffmpeg.org/ffmpeg), e.g. by typing the command `git log` in the FFmpeg source directory, or browsing the online repository at <https://git.ffmpeg.org/ffmpeg>.
-
-Maintainers for the specific components are listed in the file `MAINTAINERS` in the source code tree.
+各具体组件的维护者列于源码树中的 `MAINTAINERS` 文件。
