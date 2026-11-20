@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#introduction" class="md-skip">
+        <a href="#简介" class="md-skip">
           跳转至
         </a>
       
@@ -1755,105 +1755,100 @@
   
 
 
-<div class="admonition warning">
-<p class="admonition-title">翻译占位页</p>
-<p>本页为英文原文占位（翻译进行中，进度见<a href="https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md">翻译看板</a>）。
-术语与示例以英文原文为准。</p>
-</div>
-<h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h1>
-<p>This document aims in giving some quick references on a set of useful Git commands. You should always use the extensive and detailed documentation provided directly by Git:</p>
+<h1 id="简介">简介<a class="headerlink" href="#简介" title="Permanent link">&para;</a></h1>
+<p>本文档旨在提供一组常用 Git 命令的快速参考。您应始终使用 Git 自带的详尽文档：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git --help
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>man git
 </code></pre></div>
-<p>shows you the available subcommands,</p>
+<p>列出可用的子命令，</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git &lt;command&gt; --help
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>man git-&lt;command&gt;
 </code></pre></div>
-<p>shows information about the subcommand \&lt;command&gt;.</p>
-<p>Additional information could be found on the <a href="http://gitref.org">Git Reference</a> website.</p>
-<p>For more information about the Git project, visit the <a href="http://git-scm.com/">Git website</a>.</p>
-<p>Consult these resources whenever you have problems, they are quite exhaustive.</p>
-<p>What follows now is a basic introduction to Git and some FFmpeg-specific guidelines to ease the contribution to the project.</p>
-<h1 id="basics-usage">Basics Usage<a class="headerlink" href="#basics-usage" title="Permanent link">&para;</a></h1>
-<h2 id="get-git">Get Git<a class="headerlink" href="#get-git" title="Permanent link">&para;</a></h2>
-<p>You can get Git from <a href="http://git-scm.com/">http://git-scm.com/</a> Most distribution and operating system provide a package for it.</p>
-<h2 id="cloning-the-source-tree">Cloning the source tree<a class="headerlink" href="#cloning-the-source-tree" title="Permanent link">&para;</a></h2>
+<p>显示有关 \&lt;command&gt; 子命令的信息。</p>
+<p>更多信息可参考 <a href="http://gitref.org">Git Reference</a> 网站。</p>
+<p>想进一步了解 Git 项目，请访问 <a href="http://git-scm.com/">Git 网站</a>。</p>
+<p>遇到问题时请查阅这些资源，它们相当详尽。</p>
+<p>接下来是对 Git 的基础介绍，以及一些便于向本项目贡献的 FFmpeg 专属指南。</p>
+<h1 id="基本用法">基本用法<a class="headerlink" href="#基本用法" title="Permanent link">&para;</a></h1>
+<h2 id="获取-git">获取 Git<a class="headerlink" href="#获取-git" title="Permanent link">&para;</a></h2>
+<p>您可以从 <a href="http://git-scm.com/">http://git-scm.com/</a> 获取 Git。多数发行版和操作系统都提供相应软件包。</p>
+<h2 id="克隆源码树">克隆源码树<a class="headerlink" href="#克隆源码树" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git clone https://git.ffmpeg.org/ffmpeg.git &lt;target&gt;
 </code></pre></div>
-<p>This will put the FFmpeg sources into the directory \&lt;\&lt;target&gt;&gt;.</p>
+<p>这会把 FFmpeg 源码放入 \&lt;\&lt;target&gt;&gt; 目录。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git clone git@source.ffmpeg.org:ffmpeg &lt;target&gt;
 </code></pre></div>
-<p>This will put the FFmpeg sources into the directory \&lt;\&lt;target&gt;&gt; and let you push back your changes to the remote repository.</p>
+<p>这会把 FFmpeg 源码放入 \&lt;\&lt;target&gt;&gt; 目录，并允许您将修改推送回远程仓库。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>git clone git@ffmpeg.org:ffmpeg-web &lt;target&gt;
 </code></pre></div>
-<p>This will put the source of the FFmpeg website into the directory \&lt;\&lt;target&gt;&gt; and let you push back your changes to the remote repository.</p>
-<p>If you don't have write-access to the ffmpeg-web repository, you can create patches after making a read-only ffmpeg-web clone:</p>
+<p>这会把 FFmpeg 网站源码放入 \&lt;\&lt;target&gt;&gt; 目录，并允许您将修改推送回远程仓库。</p>
+<p>如果您对 ffmpeg-web 仓库没有写权限，可以只读克隆 ffmpeg-web 后制作补丁：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>git clone git://ffmpeg.org/ffmpeg-web &lt;target&gt;
 </code></pre></div>
-<p>Make sure that you do not have Windows line endings in your checkouts, otherwise you may experience spurious compilation failures. One way to achieve this is to run</p>
+<p>请确保您的检出中没有 Windows 换行符，否则可能遇到莫名其妙的编译失败。一种做法是运行</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>git config --global core.autocrlf false
 </code></pre></div>
-<h2 id="updating-the-source-tree-to-the-latest-revision">Updating the source tree to the latest revision<a class="headerlink" href="#updating-the-source-tree-to-the-latest-revision" title="Permanent link">&para;</a></h2>
+<h2 id="将源码树更新到最新版本">将源码树更新到最新版本<a class="headerlink" href="#将源码树更新到最新版本" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>git pull (--rebase)
 </code></pre></div>
-<p>pulls in the latest changes from the tracked branch. The tracked branch can be remote. By default the master branch tracks the branch master in the remote origin.</p>
-<p><code>--rebase</code> (see below) is recommended.</p>
-<h2 id="rebasing-your-local-branches">Rebasing your local branches<a class="headerlink" href="#rebasing-your-local-branches" title="Permanent link">&para;</a></h2>
+<p>会拉取被跟踪分支的最新变更。被跟踪分支可以是远程分支。默认情况下，master 分支跟踪远程 origin 的 master 分支。</p>
+<p>推荐 <code>--rebase</code>（见下文）。</p>
+<h2 id="变基本地分支">变基本地分支<a class="headerlink" href="#变基本地分支" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>git pull --rebase
 </code></pre></div>
-<p>fetches the changes from the main repository and replays your local commits over it. This is required to keep all your local changes at the top of FFmpeg's master tree. The master tree will reject pushes with merge commits.</p>
-<h2 id="addingremoving-filesdirectories">Adding/removing files/directories<a class="headerlink" href="#addingremoving-filesdirectories" title="Permanent link">&para;</a></h2>
+<p>从主仓库拉取变更并把您的本地提交在其上重放。这是让所有本地修改保持在 FFmpeg master 树顶端的必要操作。master 树会拒绝带合并提交的推送。</p>
+<h2 id="添加删除文件目录">添加/删除文件/目录<a class="headerlink" href="#添加删除文件目录" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>git add [-A] &lt;filename/dirname&gt;
 <a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>git rm [-r] &lt;filename/dirname&gt;
 </code></pre></div>
-<p>Git needs to get notified of all changes you make to your working directory that makes files appear or disappear. Line moves across files are automatically tracked.</p>
-<h2 id="showing-modifications">Showing modifications<a class="headerlink" href="#showing-modifications" title="Permanent link">&para;</a></h2>
+<p>Git 需要得到通知才能知晓您对工作目录所做的、使文件出现或消失的所有变更。跨文件移动行会被自动跟踪。</p>
+<h2 id="查看修改">查看修改<a class="headerlink" href="#查看修改" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>git diff &lt;filename(s)&gt;
 </code></pre></div>
-<p>will show all local modifications in your working directory as unified diff.</p>
-<h2 id="inspecting-the-changelog">Inspecting the changelog<a class="headerlink" href="#inspecting-the-changelog" title="Permanent link">&para;</a></h2>
+<p>会以 unified diff 形式显示工作目录中的所有本地修改。</p>
+<h2 id="查看变更日志">查看变更日志<a class="headerlink" href="#查看变更日志" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>git log &lt;filename(s)&gt;
 </code></pre></div>
-<p>You may also use the graphical tools like <code>gitview</code> or <code>gitk</code> or the web interface available at <a href="https://git.ffmpeg.org/ffmpeg.git">https://git.ffmpeg.org/ffmpeg.git</a>.</p>
-<h2 id="checking-source-tree-status">Checking source tree status<a class="headerlink" href="#checking-source-tree-status" title="Permanent link">&para;</a></h2>
+<p>您也可以使用 <code>gitview</code> 或 <code>gitk</code> 等图形工具，或访问 <a href="https://git.ffmpeg.org/ffmpeg.git">https://git.ffmpeg.org/ffmpeg.git</a> 的网页界面。</p>
+<h2 id="检查源码树状态">检查源码树状态<a class="headerlink" href="#检查源码树状态" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>git status
 </code></pre></div>
-<p>detects all the changes you made and lists what actions will be taken in case of a commit (additions, modifications, deletions, etc.).</p>
-<h2 id="committing">Committing<a class="headerlink" href="#committing" title="Permanent link">&para;</a></h2>
+<p>检出所有您所做的变更，并列举一旦提交将采取的动作（新增、修改、删除等）。</p>
+<h2 id="提交">提交<a class="headerlink" href="#提交" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>git diff --check
 </code></pre></div>
-<p>to double check your changes before committing them to avoid trouble later on. All experienced developers do this on each and every commit, no matter how small.</p>
-<p>Every one of them has been saved from looking like a fool by this many times. It's very easy for stray debug output or cosmetic modifications to slip in, please avoid problems through this extra level of scrutiny.</p>
-<p>For cosmetics-only commits you should get (almost) empty output from</p>
+<p>在提交前复查您的修改，避免日后惹上麻烦。所有有经验的开发者在每次提交前都这样做，无论修改多小。</p>
+<p>他们每个人都曾多次靠这一步免于闹笑话。杂散的调试输出或外观性修改很容易混进去，请通过这层额外把关避免麻烦。</p>
+<p>对于纯外观性提交，以下命令的输出应当（几乎）为空：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>git diff -w -b &lt;filename(s)&gt;
 </code></pre></div>
-<p>Also check the output of</p>
+<p>另请检查</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>git status
 </code></pre></div>
-<p>to make sure you don't have untracked files or deletions.</p>
+<p>的输出，确认没有未跟踪文件或删除项。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>git add [-i|-p|-A] &lt;filenames/dirnames&gt;
 </code></pre></div>
-<p>Make sure you have told Git your name, email address and GPG key</p>
+<p>确保已告知 Git 您的姓名、邮箱地址和 GPG 密钥</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>git config --global user.name "My Name"
 <a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>git config --global user.email my@email.invalid
 <a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>git config --global user.signingkey ABCDEF0123245
 </code></pre></div>
-<p>Enable signing all commits or use -S</p>
+<p>启用对所有提交签名，或使用 -S</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>git config --global commit.gpgsign true
 </code></pre></div>
-<p>Use <code>--global</code> to set the global configuration for all your Git checkouts.</p>
-<p>Git will select the changes to the files for commit. Optionally you can use the interactive or the patch mode to select hunk by hunk what should be added to the commit.</p>
+<p>使用 <code>--global</code> 为您所有的 Git 检出设置全局配置。</p>
+<p>Git 会为提交挑选对文件的修改。可选地，您可以用交互模式或补丁模式逐块（hunk）挑选要纳入提交的内容。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>git commit
 </code></pre></div>
-<p>Git will commit the selected changes to your current local branch.</p>
-<p>You will be prompted for a log message in an editor, which is either set in your personal configuration file through</p>
+<p>Git 会把选中的修改提交到您当前的本地分支。</p>
+<p>您将在编辑器中被提示填写日志信息。编辑器既可在个人配置文件中通过</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>git config --global core.editor
 </code></pre></div>
-<p>or set by one of the following environment variables: \&lt;GIT_EDITOR&gt;, \&lt;VISUAL&gt; or \&lt;EDITOR&gt;.</p>
-<h2 id="writing-a-commit-message">Writing a commit message<a class="headerlink" href="#writing-a-commit-message" title="Permanent link">&para;</a></h2>
-<p>Log messages should be concise but descriptive.</p>
-<p>The first line must contain the context, a colon and a very short summary of what the commit does. Details can be added, if necessary, separated by an empty line. These details should not exceed 60-72 characters per line, except when containing code.</p>
-<p>Example of a good commit message:</p>
+<p>指定，或由以下环境变量指定：\&lt;GIT_EDITOR&gt;、\&lt;VISUAL&gt; 或 \&lt;EDITOR&gt;。</p>
+<h2 id="编写提交信息">编写提交信息<a class="headerlink" href="#编写提交信息" title="Permanent link">&para;</a></h2>
+<p>日志信息应简洁而具有描述性。</p>
+<p>首行必须包含上下文、冒号和对其所做修改的极简摘要。必要时可在空一行后补充细节，细节部分每行不超过 60-72 字符（含代码时除外）。</p>
+<p>优秀提交信息示例：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>avcodec/cbs: add a helper to read extradata within packet side data
 <a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
 <a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>Using ff_cbs_read() on the raw buffer will not parse it as extradata,
@@ -1862,88 +1857,88 @@
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>ptr might be NULL
 </code></pre></div>
-<p>If the summary on the first line is not enough, in the body of the message, explain why you made a change, what you did will be obvious from the changes themselves most of the time. Saying just "bug fix" or "10l" is bad. Remember that people of varying skill levels look at and educate themselves while reading through your code. Don't include filenames in log messages except in the context, Git provides that information.</p>
-<p>If the commit fixes a registered issue, state it in a separate line of the body: <code>Fix Trac ticket #42.</code></p>
-<p>The first line will be used to name the patch by <code>git format-patch</code>.</p>
-<p>Common mistakes for the first line, as seen in <code>git log --oneline</code> include: missing context at the beginning; description of what the code did before the patch; line too long or wrapped to the second line.</p>
-<h2 id="preparing-a-patchset">Preparing a patchset<a class="headerlink" href="#preparing-a-patchset" title="Permanent link">&para;</a></h2>
+<p>如果首行摘要不够，在正文中说明您为什么做该修改——您做了什么，多数时候从修改本身就能看出来。只说"缺陷修复"或"10l"是不好的。要记住：不同水平的读者会阅读并学习您的代码。除上下文外不要在日志信息中包含文件名，Git 会提供该信息。</p>
+<p>如果提交修复了已登记的问题，在正文单独一行注明：<code>Fix Trac ticket #42.</code></p>
+<p>首行会被 <code>git format-patch</code> 用作补丁名。</p>
+<p><code>git log --oneline</code> 中常见的首行错误包括：开头缺上下文；描述的是补丁前的旧行为；首行过长或折到第二行。</p>
+<h2 id="准备补丁集">准备补丁集<a class="headerlink" href="#准备补丁集" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>git format-patch &lt;commit&gt; [-o directory]
 </code></pre></div>
-<p>will generate a set of patches for each commit between \&lt;\&lt;commit&gt;&gt; and current \&lt;HEAD&gt;. E.g.</p>
+<p>会为 \&lt;\&lt;commit&gt;&gt; 与当前 \&lt;HEAD&gt; 之间的每个提交生成一组补丁。例如</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>git format-patch origin/master
 </code></pre></div>
-<p>will generate patches for all commits on current branch which are not present in upstream. A useful shortcut is also</p>
+<p>会为当前分支上所有不在上游的提交生成补丁。另一个实用的快捷方式是</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>git format-patch -n
 </code></pre></div>
-<p>which will generate patches from last \&lt;n&gt; commits. By default the patches are created in the current directory.</p>
-<h2 id="sending-patches-for-review">Sending patches for review<a class="headerlink" href="#sending-patches-for-review" title="Permanent link">&para;</a></h2>
+<p>它会为最近 \&lt;n&gt; 个提交生成补丁。默认情况下，补丁创建在当前目录。</p>
+<h2 id="发送补丁供评审">发送补丁供评审<a class="headerlink" href="#发送补丁供评审" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>git send-email &lt;commit list|directory&gt;
 </code></pre></div>
-<p>will send the patches created by <code>git format-patch</code> or directly generates them. All the email fields can be configured in the global/local configuration or overridden by command line. Note that this tool must often be installed separately (e.g. \&lt;git-email&gt; package on Debian-based distros).</p>
-<h2 id="renamingmovingcopying-files-or-contents-of-files">Renaming/moving/copying files or contents of files<a class="headerlink" href="#renamingmovingcopying-files-or-contents-of-files" title="Permanent link">&para;</a></h2>
-<p>Git automatically tracks such changes, making those normal commits.</p>
+<p>会发送 <code>git format-patch</code> 创建的补丁，或直接生成补丁并发送。所有邮件字段都可在全局/本地配置中设置，或用命令行覆盖。注意该工具通常需要单独安装（如 Debian 系发行版的 \&lt;git-email&gt; 包）。</p>
+<h2 id="重命名移动复制文件或文件内容">重命名/移动/复制文件或文件内容<a class="headerlink" href="#重命名移动复制文件或文件内容" title="Permanent link">&para;</a></h2>
+<p>Git 会自动跟踪此类变更，使其成为普通提交。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>mv/cp path/file otherpath/otherfile
 <a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>git add [-A] .
 <a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>git commit
 </code></pre></div>
-<h1 id="git-configuration">Git configuration<a class="headerlink" href="#git-configuration" title="Permanent link">&para;</a></h1>
-<p>In order to simplify a few workflows, it is advisable to configure both your personal Git installation and your local FFmpeg repository.</p>
-<h2 id="personal-git-installation">Personal Git installation<a class="headerlink" href="#personal-git-installation" title="Permanent link">&para;</a></h2>
-<p>Add the following to your <code>~/.gitconfig</code> to help <code>git send-email</code> and <code>git format-patch</code> detect renames:</p>
+<h1 id="git-配置">Git 配置<a class="headerlink" href="#git-配置" title="Permanent link">&para;</a></h1>
+<p>为简化若干工作流，建议同时配置您的个人 Git 安装和本地 FFmpeg 仓库。</p>
+<h2 id="个人-git-安装">个人 Git 安装<a class="headerlink" href="#个人-git-安装" title="Permanent link">&para;</a></h2>
+<p>将以下内容加入您的 <code>~/.gitconfig</code>，帮助 <code>git send-email</code> 和 <code>git format-patch</code> 检测重命名：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>[diff]
 <a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>        renames = copy
 </code></pre></div>
-<h2 id="repository-configuration">Repository configuration<a class="headerlink" href="#repository-configuration" title="Permanent link">&para;</a></h2>
-<p>In order to have <code>git send-email</code> automatically send patches to the ffmpeg-devel mailing list, add the following stanza to <code>/path/to/ffmpeg/repository/.git/config</code>:</p>
+<h2 id="仓库配置">仓库配置<a class="headerlink" href="#仓库配置" title="Permanent link">&para;</a></h2>
+<p>为了让 <code>git send-email</code> 自动把补丁发到 ffmpeg-devel 邮件列表，向 <code>/path/to/ffmpeg/repository/.git/config</code> 添加以下配置段：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>[sendemail]
 <a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>        to = ffmpeg-devel@ffmpeg.org
 </code></pre></div>
-<h1 id="ffmpeg-specific">FFmpeg specific<a class="headerlink" href="#ffmpeg-specific" title="Permanent link">&para;</a></h1>
-<h2 id="reverting-broken-commits">Reverting broken commits<a class="headerlink" href="#reverting-broken-commits" title="Permanent link">&para;</a></h2>
+<h1 id="ffmpeg-专属内容">FFmpeg 专属内容<a class="headerlink" href="#ffmpeg-专属内容" title="Permanent link">&para;</a></h1>
+<h2 id="回退损坏的提交">回退损坏的提交<a class="headerlink" href="#回退损坏的提交" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>git reset &lt;commit&gt;
 </code></pre></div>
-<p><code>git reset</code> will uncommit the changes till \&lt;\&lt;commit&gt;&gt; rewriting the current branch history.</p>
+<p><code>git reset</code> 会撤销直至 \&lt;\&lt;commit&gt;&gt; 的提交，并重写当前分支的历史。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>git commit --amend
 </code></pre></div>
-<p>allows one to amend the last commit details quickly.</p>
+<p>可快速修订最后一次提交的详情。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>git rebase -i origin/master
 </code></pre></div>
-<p>will replay local commits over the main repository allowing to edit, merge or remove some of them in the process.</p>
-<p><code>git reset</code>, <code>git commit --amend</code> and <code>git rebase</code> rewrite history, so you should use them ONLY on your local or topic branches. The main repository will reject those changes.</p>
+<p>会在主仓库之上重放本地提交，过程中允许编辑、合并或移除其中部分提交。</p>
+<p><code>git reset</code>、<code>git commit --amend</code> 与 <code>git rebase</code> 都会改写历史，因此只应在您的本地分支或主题分支上使用它们。主仓库会拒绝这些修改。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>git revert &lt;commit&gt;
 </code></pre></div>
-<p><code>git revert</code> will generate a revert commit. This will not make the faulty commit disappear from the history.</p>
-<h2 id="pushing-changes-to-remote-trees">Pushing changes to remote trees<a class="headerlink" href="#pushing-changes-to-remote-trees" title="Permanent link">&para;</a></h2>
+<p><code>git revert</code> 会生成一个回退提交。这不会让问题提交从历史中消失。</p>
+<h2 id="把修改推送到远程树">把修改推送到远程树<a class="headerlink" href="#把修改推送到远程树" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>git push origin master --dry-run
 </code></pre></div>
-<p>Will simulate a push of the local master branch to the default remote (\&lt;origin&gt;). And list which branches and ranges or commits would have been pushed. Git will prevent you from pushing changes if the local and remote trees are out of sync. Refer to <a href="#updating-the-source-tree-to-the-latest-revision">Updating the source tree to the latest revision</a>.</p>
+<p>会模拟把本地 master 分支推送到默认远程（\&lt;origin&gt;），并列出将被推送的分支、范围或提交。本地与远程树不同步时，Git 会阻止推送。参见<a href="#将源码树更新到最新版本">将源码树更新到最新版本</a>。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>git remote add &lt;name&gt; &lt;url&gt;
 </code></pre></div>
-<p>Will add additional remote with a name reference, it is useful if you want to push your local branch for review on a remote host.</p>
+<p>会添加一个带名称引用的额外远程，若您想把本地分支推送到远程主机供评审，这会很有用。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>git push &lt;remote&gt; &lt;refspec&gt;
 </code></pre></div>
-<p>Will push the changes to the \&lt;\&lt;remote&gt;&gt; repository. Omitting \&lt;\&lt;refspec&gt;&gt; makes <code>git push</code> update all the remote branches matching the local ones.</p>
-<h2 id="finding-a-specific-svn-revision">Finding a specific svn revision<a class="headerlink" href="#finding-a-specific-svn-revision" title="Permanent link">&para;</a></h2>
-<p>Since version 1.7.1 Git supports <code>:/foo</code> syntax for specifying commits based on a regular expression. see man gitrevisions</p>
+<p>会把修改推送到 \&lt;\&lt;remote&gt;&gt; 仓库。省略 \&lt;\&lt;refspec&gt;&gt; 会让 <code>git push</code> 更新所有与本地对应的远程分支。</p>
+<h2 id="查找特定的-svn-版本">查找特定的 svn 版本<a class="headerlink" href="#查找特定的-svn-版本" title="Permanent link">&para;</a></h2>
+<p>自 1.7.1 版起，Git 支持 <code>:/foo</code> 语法按正则表达式指定提交。参见 man gitrevisions</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>git show :/'as revision 23456'
 </code></pre></div>
-<p>will show the svn changeset <code>r23456</code>. With older Git versions searching in the <code>git log</code> output is the easiest option (especially if a pager with search capabilities is used).</p>
-<p>This commit can be checked out with</p>
+<p>会显示 svn 变更集 <code>r23456</code>。更早的 Git 版本在 <code>git log</code> 输出中搜索是最简单的办法（尤其在使用支持搜索的分页器时）。</p>
+<p>可以用以下命令检出该提交</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>git checkout -b svn_23456 :/'as revision 23456'
 </code></pre></div>
-<p>or for Git \&lt; 1.7.1 with</p>
+<p>或 Git \&lt; 1.7.1 用</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>git checkout -b svn_23456 $SHA1
 </code></pre></div>
-<p>where \&lt;\$SHA1&gt; is the commit hash from the <code>git log</code> output.</p>
-<h1 id="gpg-key-generation">gpg key generation<a class="headerlink" href="#gpg-key-generation" title="Permanent link">&para;</a></h1>
-<p>If you have no gpg key yet, we recommend that you create a ed25519 based key as it is small, fast and secure. Especially it results in small signatures in git.</p>
+<p>其中 \&lt;\$SHA1&gt; 是 <code>git log</code> 输出中的提交哈希。</p>
+<h1 id="gpg-密钥生成">gpg 密钥生成<a class="headerlink" href="#gpg-密钥生成" title="Permanent link">&para;</a></h1>
+<p>如果您还没有 gpg 密钥，我们推荐创建基于 ed25519 的密钥，它小、快、安全，尤其能让 git 中的签名很小。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>gpg --default-new-key-algo "ed25519/cert,sign+cv25519/encr" --quick-generate-key "human@server.com"
 </code></pre></div>
-<p>When generating a key, make sure the email specified matches the email used in git as some sites like github consider mismatches a reason to declare such commits unverified. After generating a key you can add it to the MAINTAINER file and upload it to a keyserver.</p>
-<h1 id="pre-push-checklist">Pre-push checklist<a class="headerlink" href="#pre-push-checklist" title="Permanent link">&para;</a></h1>
-<p>Once you have a set of commits that you feel are ready for pushing, work through the following checklist to doublecheck everything is in proper order. This list tries to be exhaustive. In case you are just pushing a typo in a comment, some of the steps may be unnecessary. Apply your common sense, but if in doubt, err on the side of caution.</p>
-<p>First, make sure that the commits and branches you are going to push match what you want pushed and that nothing is missing, extraneous or wrong. You can see what will be pushed by running the git push command with <code>--dry-run</code> first. And then inspecting the commits listed with <code>git log -p 1234567..987654</code>. The <code>git status</code> command may help in finding local changes that have been forgotten to be added.</p>
-<p>Next let the code pass through a full run of our test suite.</p>
+<p>生成密钥时，请确保所指定的邮箱与 git 中使用的一致——GitHub 等站点会把不匹配视为将提交标记为未验证的理由。生成密钥后，您可以将其加入 MAINTAINER 文件并上传到密钥服务器。</p>
+<h1 id="推送前检查清单">推送前检查清单<a class="headerlink" href="#推送前检查清单" title="Permanent link">&para;</a></h1>
+<p>一旦您准备好一组可以推送的提交，请过一遍以下检查清单，确认一切就绪。本清单力求全面。若您只是推一个注释里的错字，其中某些步骤可能不必要。请运用常识，但拿不准时宁可谨慎。</p>
+<p>首先，确保将推送的提交和分支与您想推送的内容一致，没有缺漏、多余或错误。可先运行 git push 命令加 <code>--dry-run</code> 查看将要推送的内容，然后用 <code>git log -p 1234567..987654</code> 查看列出的提交。<code>git status</code> 命令有助于发现遗漏添加的本地修改。</p>
+<p>接下来让代码完整跑一遍我们的测试套件。</p>
 <ul>
 <li>
 <p><code>make distclean</code></p>
@@ -1955,14 +1950,14 @@
 <p><code>make fate</code></p>
 </li>
 <li>
-<p>if fate fails due to missing samples run <code>make fate-rsync</code> and retry</p>
+<p>若 fate 因缺少样本而失败，运行 <code>make fate-rsync</code> 并重试</p>
 </li>
 </ul>
-<p>Make sure all your changes have been checked before pushing them, the test suite only checks against regressions and that only to some extend. It does obviously not check newly added features/code to be working unless you have added a test for that (which is recommended).</p>
-<p>Also note that every single commit should pass the test suite, not just the result of a series of patches.</p>
-<p>Once everything passed, push the changes to your public ffmpeg clone and post a merge request to ffmpeg-devel. You can also push them directly but this is not recommended.</p>
-<h1 id="server-issues">Server Issues<a class="headerlink" href="#server-issues" title="Permanent link">&para;</a></h1>
-<p>Contact the project admins at <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#111;&#116;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;">&#114;&#111;&#111;&#116;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;</a> if you have technical problems with the Git server.</p>
+<p>推送前请确认所有修改都已检查过——测试套件只检查回归，且也只是一定程度上。它显然不会检查新添加的功能/代码是否真的可用，除非您为它加了测试（推荐）。</p>
+<p>另请注意，系列中的每个提交都应能通过测试套件，而不只是补丁系列的最终结果。</p>
+<p>一切通过后，把修改推送到您的公开 ffmpeg 克隆，并向 ffmpeg-devel 发合并请求。也可以直接推，但不推荐。</p>
+<h1 id="服务器问题">服务器问题<a class="headerlink" href="#服务器问题" title="Permanent link">&para;</a></h1>
+<p>如果 Git 服务器遇到技术问题，请通过 <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#111;&#116;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;">&#114;&#111;&#111;&#116;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;</a> 联系项目管理员。</p>
 
 
 

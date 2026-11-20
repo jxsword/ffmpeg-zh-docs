@@ -81,6 +81,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#简介" class="md-skip">
+          跳转至
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1530,6 +1535,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -1748,13 +1755,176 @@
   
 
 
-  <h1>FATE 测试</h1>
-
-<div class="admonition warning">
-<p class="admonition-title">翻译占位页</p>
-<p>本页为英文原文占位（翻译进行中，进度见<a href="https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md">翻译看板</a>）。
-术语与示例以英文原文为准。</p>
-</div>
+<h1 id="简介">简介<a class="headerlink" href="#简介" title="Permanent link">&para;</a></h1>
+<p>FATE 是一个客户端侧的扩展回归测试套件，也是服务端侧进行结果聚合与展示的手段。</p>
+<p>本文档第一部分说明如何从您的 FFmpeg 源码目录使用 FATE 测试您的 ffmpeg 二进制。第二部分说明如何运行 FATE 并将结果提交到 FFmpeg 的 FATE 服务器。</p>
+<p>无论如何，您都可以访问下面的网站查看公开可见的 FATE 结果：</p>
+<p><a href="http://fate.ffmpeg.org/">http://fate.ffmpeg.org/</a></p>
+<p>特别推荐所有向 FFmpeg 贡献源码的人查看，因为它能看出您最近的贡献是否破坏了某些平台上的某个测试。这类破坏通常发生在开发者无法实测的平台。</p>
+<p>本文档第二部分说明如何运行 FATE 把结果提交到 FFmpeg 的 FATE 服务器。如果您想提交结果，请先确认您的 CPU、OS 与编译器组合尚未列在上文提到的网站上。</p>
+<p>第三部分给出 FATE makefile 目标与变量的完整清单。</p>
+<h1 id="在-ffmpeg-源码目录中使用-fate">在 FFmpeg 源码目录中使用 FATE<a class="headerlink" href="#在-ffmpeg-源码目录中使用-fate" title="Permanent link">&para;</a></h1>
+<p>如果您想在您的机器上运行 FATE，需要先配置 FFmpeg。您可以在配置阶段经 <code>--samples=/path/to/fate-suite</code> 参数指定样本位置。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>./configure --enable-somelib --samples=/path/to/fate-suite
+</code></pre></div>
+<p>配置成功后，需要就地添加和/或更新样本：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>make fate-rsync
+</code></pre></div>
+<p>现在就可以运行 FATE：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>make fate
+</code></pre></div>
+<p>可添加的参数清单参见 <a href="#makefile-变量">makefile 变量</a>。</p>
+<p>如果您在配置阶段没有设置样本路径，或想在启动 FATE 前覆盖它，可以用以下三种方式之一。</p>
+<p>要么通过设置 make 变量：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>make fate-rsync SAMPLES=/path/to/fate-suite
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>make fate       SAMPLES=/path/to/fate-suite
+</code></pre></div>
+<p>或为当前会话设置环境变量：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>export FATE_SAMPLES=/path/to/fate-suite
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>make fate-rsync
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>make fate
+</code></pre></div>
+<p>或为单条命令临时前缀设置：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>FATE_SAMPLES=/path/to/fate-suite make fate-rsync
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>FATE_SAMPLES=/path/to/fate-suite make fate
+</code></pre></div>
+<p>该变量也可以写入您的 shell 配置文件使其永久生效。</p>
+<p>不要在样本路径中放 '~' 字符表示主目录。由于 shell 的细微行为差异，这会导致 FATE 失败。另外在 Windows 上，路径必须相对于构建路径——此情形下即 FFmpeg 源码目录。</p>
+<p>请注意默认禁用了部分断言，因此请在配置时留意设置 <code>--assert-level=&lt;level&gt;</code>，例如追求最高测试覆盖率时：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>./configure --assert-level=2
+</code></pre></div>
+<p>注意提升断言级别可能影响性能。</p>
+<p>要获取完整的测试清单，运行命令：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>make fate-list
+</code></pre></div>
+<p>您可以通过指定列表中带 <code>fate-</code> 前缀的对应项来选择要运行的测试子集，例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>make fate-ffprobe_compact fate-ffprobe_xml
+</code></pre></div>
+<p>这样在出现失败时更容易只跑几个测试，而无需运行完整测试套件。</p>
+<p>要用自定义包装器运行测试，向 <code>configure</code> 传递 <code>--target-exec</code> 或设置 \&lt;TARGET_EXEC&gt; make 变量。</p>
+<h1 id="将结果提交到-ffmpeg-结果聚合服务器">将结果提交到 FFmpeg 结果聚合服务器<a class="headerlink" href="#将结果提交到-ffmpeg-结果聚合服务器" title="Permanent link">&para;</a></h1>
+<p>要把结果提交到服务器，应当从 FFmpeg 源码经 shell 脚本 <code>tests/fate.sh</code> 运行 fate。该脚本需要以配置文件作为第一个参数调用。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>tests/fate.sh /path/to/fate_config
+</code></pre></div>
+<p>带注释的配置文件模板位于 <code>doc/fate_config.sh.template</code>，其中描述了各个配置变量。</p>
+<p>请基于配置模板创建符合您需求的配置。<code>slot</code> 配置变量可以是任意尚未使用的字符串，但建议按 <code>arch-os-compiler-compiler version</code> 模式命名。配置文件本身会在 shell 脚本中被 source，因此可以使用所有 shell 特性，便于按构建需要设置环境。</p>
+<p>首次试运行时，<code>fate_recv</code> 变量应为空或被注释掉。这样除不向服务器提交结果外，一切照常运行。配置文件中指定的 \$workdir 中应出现以下文件：</p>
+<ul>
+<li>
+<p>configure.log</p>
+</li>
+<li>
+<p>compile.log</p>
+</li>
+<li>
+<p>test.log</p>
+</li>
+<li>
+<p>report</p>
+</li>
+<li>
+<p>version</p>
+</li>
+</ul>
+<p>当一切正常后，您可以创建 SSH 密钥对，并把公钥发送给 FATE 服务器管理员，联系邮箱为 <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#97;&#116;&#101;&#45;&#97;&#100;&#109;&#105;&#110;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;">&#102;&#97;&#116;&#101;&#45;&#97;&#100;&#109;&#105;&#110;&#64;&#102;&#102;&#109;&#112;&#101;&#103;&#46;&#111;&#114;&#103;</a>。</p>
+<p>配置 SSH 客户端连接 FATE 服务器时使用该密钥做公钥认证。同时别忘了核实服务器身份并接受其主机密钥。通常的做法是手动运行一次 SSH 客户端，接受密钥后终止它。FATE 服务器的指纹为：</p>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RSA</code></td>
+<td>d3:f1:83:97:a4:75:2b:a6:fb:d6:e8:aa:81:93:97:51</td>
+</tr>
+<tr>
+<td><code>ECDSA</code></td>
+<td>76:9f:68:32:04:1e:d5:d4:ec:47:3f:dc:fc:18:17:86</td>
+</tr>
+</tbody>
+</table>
+<p>如果连接 FATE 服务器遇到问题，可尝试带一个或多个 <code>-v</code> 选项运行 <code>ssh</code> 命令。您应当会得到有关 SSH 配置和认证过程的详细输出。</p>
+<p>剩下的唯一工作就是自动化 fate.sh 脚本的执行与样本目录的同步。</p>
+<h1 id="向-fate-套件上传新样本">向 fate 套件上传新样本<a class="headerlink" href="#向-fate-套件上传新样本" title="Permanent link">&para;</a></h1>
+<p>如果需要上传样本，请发邮件至 samples-request。</p>
+<p>这面向在 fate 套件服务器上拥有账户的开发者。上传新样本时，请确保它们尽量小——每个客户端的磁盘空间、网络带宽等都会受益于更小的测试用例。同时请记住较早的检出仍会使用既有样本文件，因此实践中一般不要替换、移除或覆盖文件，否则很可能破坏较早的检出或发布。另外，某次提交所需的全部样本应在其推送前，理想情况下提前 24 小时，完成上传。如果您需要账户以便经常上传样本，或希望以此帮助他人，请发邮件到 ffmpeg-devel。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>#First update your local samples copy:
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>rsync -vauL --chmod=Dg+s,Duo+x,ug+rw,o+r,o-w,+X fate-suite.ffmpeg.org:/home/samples/fate-suite/ ~/fate-suite
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>#Then do a dry run checking what would be uploaded:
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>rsync -vanL --no-g --chmod=Dg+s,Duo+x,ug+rw,o+r,o-w,+X ~/fate-suite/ fate-suite.ffmpeg.org:/home/samples/fate-suite
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>#Upload the files:
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>rsync -vaL  --no-g --chmod=Dg+s,Duo+x,ug+rw,o+r,o-w,+X ~/fate-suite/ fate-suite.ffmpeg.org:/home/samples/fate-suite
+</code></pre></div>
+<h1 id="fate-makefile-目标与变量">FATE makefile 目标与变量<a class="headerlink" href="#fate-makefile-目标与变量" title="Permanent link">&para;</a></h1>
+<h2 id="makefile-目标">Makefile 目标<a class="headerlink" href="#makefile-目标" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><strong><code>fate-rsync</code></strong> 下载/同步样本文件到已配置的样本目录。</p>
+</li>
+<li>
+<p><strong><code>fate-list</code></strong> 会列出所有 fate/回归测试目标。</p>
+</li>
+<li>
+<p><strong><code>fate-list-failing</code></strong> 列出上次执行时失败的 fate 测试。</p>
+</li>
+<li>
+<p><strong><code>fate-clear-reports</code></strong> 移除先前测试执行的测试报告（清理掉 fate-list-failing 可能返回的过期结果）。</p>
+</li>
+<li>
+<p><strong><code>fate</code></strong> 运行 FATE 测试套件（需要 fate-suite 数据集）。</p>
+</li>
+</ul>
+<h2 id="makefile-变量">Makefile 变量<a class="headerlink" href="#makefile-变量" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><strong><code>V</code></strong> 详细程度，可设为 0、1 或 2。</p>
+</li>
+<li>
+<p>0：仅显示测试参数</p>
+</li>
+<li>
+<p>1：仅显示测试中使用的命令</p>
+</li>
+<li>
+<p>2：显示全部信息</p>
+</li>
+<li>
+<p><strong><code>SAMPLES</code></strong> 在 make 时指定或覆盖 FATE 样本路径，仅在运行回归测试时有意义。</p>
+</li>
+<li>
+<p><strong><code>THREADS</code></strong> 指定运行回归测试时使用的线程数，对检测线程相关的回归很有用。</p>
+</li>
+</ul>
+<p>该变量可设为字符串 "random"，可选地后跟数字（如 "random99"），这将让每个测试使用随机数量的线程。若指定了数字，则作为线程数上限，否则上限为 16。</p>
+<p>若某测试失败，它所用线程数会被写入 errfile。</p>
+<ul>
+<li>
+<p><strong><code>THREAD_TYPE</code></strong> 指定测试哪种线程策略，<code>slice</code> 或 <code>frame</code>，默认 <code>slice+frame</code>。</p>
+</li>
+<li>
+<p><strong><code>CPUFLAGS</code></strong> 指定 CPU 标志。</p>
+</li>
+<li>
+<p><strong><code>TARGET_EXEC</code></strong> 指定或覆盖用于运行测试的包装器。<code>TARGET_EXEC</code> 选项提供了一种以 <code>valgrind</code>、<code>qemu-user</code> 或 <code>wine</code> 包裹运行 FATE，或经 <code>ssh</code> 在远程目标上运行 FATE 的方式。</p>
+</li>
+<li>
+<p><strong><code>GEN</code></strong> 设为 <code>1</code> 以生成缺失或不匹配的参考结果。</p>
+</li>
+<li>
+<p><strong><code>HWACCEL</code></strong> 指定运行回归测试时使用哪种硬件加速，默认 <code>none</code>。</p>
+</li>
+<li>
+<p><strong><code>KEEP</code></strong> 设为 <code>1</code> 可在测试成功时保留 fate 测试生成的临时文件。默认 <code>0</code>，即移除这些文件。测试失败时文件总是保留。</p>
+</li>
+</ul>
+<h2 id="示例">示例<a class="headerlink" href="#示例" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>make V=1 SAMPLES=/var/fate/samples THREADS=2 CPUFLAGS=mmx fate
+</code></pre></div>
 
 
 
