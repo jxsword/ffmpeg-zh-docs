@@ -1,0 +1,14 @@
+# 跨页标题锚点桥接表（heading-bridge，DR-011）
+#
+# 用途：目标页翻译后标题 slug 已中文化，站内入链仍以英文锚点书写时，
+# fix_links 规则 2.5 据此重写为「目标页 + 中文 slug」。
+# 与 anchor_map.yml 的分工：anchor_map=官方 @anchor/@node 编码 id 的派生映射
+# （sync 重建）；本表=翻译批次维护的手工桥接（不会被 sync 覆盖）。
+#
+# 维护约定：每批翻译新页后，把该页标题被站内入链引用的英文锚点登记于此
+# （键=链接书写形式，加载器按 aggressive_form 归一化匹配；
+# 值=目标页相对 zh/ 路径 + 译文标题 slug，口径同 cjk_slugify/page_slug）。
+entries:
+  Stream-specifiers:
+    page: manual/common-options.md
+    slug: 流说明符

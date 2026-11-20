@@ -132,17 +132,27 @@ def build_fixer():
                 if v:
                     anchor_index.setdefault(v, []).append(entry)
 
+    # 标题桥接（DR-011）：目标页翻译后标题 slug 中文化，站内入链仍书写
+    # 英文锚点时的显式映射（键经 aggressive_form 归一化）
+    bridge: dict = {}
+    bridge_path = CONFIG_DIR / 'heading-bridge.yml'
+    if bridge_path.exists():
+        bdata = yaml.safe_load(bridge_path.read_text(encoding='utf-8')) or {}
+        for written, info in (bdata.get('entries') or {}).items():
+            bridge[aggressive_form(written)] = (info['page'], info['slug'])
+
     alias_map = {}
     if MANIFEST.exists():
         manifest = json.loads(MANIFEST.read_text(encoding='utf-8'))
         for a in manifest.get('aliases', []):
             alias_map[a['alias']] = (a['group'], a['page'])
-    return headings, anchor_index, alias_map, page_index, filter_route
+    return headings, anchor_index, alias_map, page_index, filter_route, bridge
 
 
 def fix_page(text: str, page_rel: str, headings: dict, anchor_index: dict,
              alias_map: dict, page_index: dict, filter_route: dict,
-             warnings: list) -> str:
+             warnings: list, bridge: dict | None = None) -> str:
+    bridge = bridge or {}
     """单页链接重写。page_rel 形如 manual/ffmpeg.md。"""
     def rel_target(src: str, dst: str) -> str:
         """mkdocs 相对链接基于源 md 所在目录解析。"""
@@ -161,6 +171,11 @@ def fix_page(text: str, page_rel: str, headings: dict, anchor_index: dict,
         if hits:
             target = hits[0][0]
             return rel_target(page_rel, target), key
+        # 2.5) 标题桥接（DR-011）：目标页已翻译（标题 slug 中文化）的跨页英文锚点
+        bhit = bridge.get(aggressive_form(anchor))
+        if bhit:
+            page, slug = bhit
+            return rel_target(page_rel, page), slug
         # 3) 官方 @anchor id（anchor_map；激进归一化抹平编码/大小写/连字符差异）
         hit = (anchor_index.get(anchor)
                or anchor_index.get(aggressive_form(anchor)))
@@ -235,13 +250,13 @@ def main(argv=None) -> int:
     args = ap.parse_args(argv)
 
     site = Path(args.site_dir)
-    headings, anchor_index, alias_map, page_index, filter_route = build_fixer()
+    headings, anchor_index, alias_map, page_index, filter_route, bridge = build_fixer()
     warnings: list = []
     for md in sorted(site.rglob('*.md')):
         text = md.read_text(encoding='utf-8')
         fixed = fix_page(text, str(md.relative_to(site)), headings,
                          anchor_index, alias_map, page_index, filter_route,
-                         warnings)
+                         warnings, bridge)
         if fixed != text:
             md.write_text(fixed, encoding='utf-8')
     Path(args.report).parent.mkdir(parents=True, exist_ok=True)

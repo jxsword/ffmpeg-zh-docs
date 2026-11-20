@@ -123,6 +123,30 @@
 
 ---
 
+## DR-011 2026-11-20 跨页标题锚点桥接（heading-bridge）机制 [状态: 生效]
+- 背景: 目标页翻译后标题 slug 中文化（DR-010），其他页入链仍书写英文锚点
+  （如 #Stream-specifiers，ffmpeg 5 处 + ffplay 3 处指向 common-options）。
+  fix_links 规则 2 依赖 zh 页标题 slug，规则 3 的 anchor_map 为 sync 派生产物
+  （common-options 页 0 条且不可手工续写，sync 重建会覆盖）。B1 §5.2 预警的
+  "跨页官方锚点在翻译页间失效"问题在 B2（common-options 入批）提前成立。
+- 选项与权衡: A) fix_links 增规则 2.5 + 手工维护 config/heading-bridge.yml
+  （显式、增量、不被 sync 覆盖；每批登记成本极低）← 采纳;
+  B) 手工续写 anchor_map.yml（被 sync 重建覆盖，违反"纯派生产物"坑位 #6）弃用;
+  C) 翻译时把入链全部预改写为中文 slug（已提交页面如 ffmpeg.md 需回改，
+     跨批一致性差）弃用。
+- 结论: fix_links 规则 2.5 读 heading-bridge.yml（键 aggressive_form 归一化），
+  命中即重写为「目标页 + 中文 slug」；B2 初始登记 Stream-specifiers 1 条；
+  后续批次翻译新页时随批登记入链引用到的英文锚点。
+- 理由: 唯一同时满足"不违反派生产物纪律、增量维护、跨批可延续"的方案；
+  与 anchor_map 分工清晰（官方编码 id=派生映射，标题桥接=翻译批次维护）。
+- 影响: scripts/fix_links.py、config/heading-bridge.yml（新）、
+  tests/test_b1_tools.py（+1 用例）、F 系列/B3+ 各批随批登记；
+  验证=pytest 55 项全绿 + 翻译 common-options 后 canonical 构建
+  unresolved=0 且链接重写为 common-options.md#流说明符。
+- 记录时间 / 会话: 2026-11-20 / M2 翻译会话 B2
+
+---
+
 > **前瞻**: ffmpeg-devel 关于文档许可的书面确认结论到达后，回填 DR-006 或新开 DR。
 >
-> *下一编号：DR-011*
+> *下一编号：DR-012*

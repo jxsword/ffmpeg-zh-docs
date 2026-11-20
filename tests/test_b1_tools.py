@@ -188,3 +188,18 @@ def test_validate_missing_target(tmp_path):
     s.write_text('x\n', encoding='utf-8')
     r = validate_translation.validate_file(s, tmp_path / 'nope.md', {})
     assert any('Target file not found' in e for e in r['errors'])
+
+
+def test_fix_links_heading_bridge():
+    # DR-011：目标页翻译后标题 slug 中文化，跨页英文锚点经 heading-bridge 重写
+    import fix_links  # noqa: E402
+    headings = {'流说明符': [('manual/common-options.md', 'Stream specifiers')]}
+    bridge = {fix_links.aggressive_form('Stream-specifiers'):
+              ('manual/common-options.md', '流说明符')}
+    warnings = []
+    out = fix_links.fix_page(
+        '另请参见[流说明符](#Stream-specifiers)章节。\n',
+        'manual/headings-bridge-test-src.md', headings, {}, {}, {}, {},
+        warnings, bridge)
+    assert '](common-options.md#流说明符)' in out
+    assert warnings == []
