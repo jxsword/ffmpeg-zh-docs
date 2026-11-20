@@ -1,6 +1,6 @@
 # 翻译任务看板（translation-board）
 
-> 基线：n9.0.2（2026-09-18）· 段落总数：19046 · 状态口径：pending=待翻译 / skipped=不译豁免（fmt DR-014）
+> 基线：n9.0.2（2026-09-18）· 段落总数：19124 · 状态口径：pending=待翻译 / skipped=不译豁免（fmt DR-014）
 > 生成：scripts/gen_board.py（M1 收尾）· 批次粒度 ≈ 500 段/会话
 
 ## 总览
@@ -29,11 +29,11 @@
 | general/faq.md | 193 | 0 | 0 | P0（B7 已完成 2026-11-21） |
 | general/general.md | 166 | 0 | 0 | P0（B7 已完成 2026-11-21） |
 | general/platform.md | 100 | 0 | 0 | P0（B7 已完成 2026-11-21） |
-| general/developer.md | 287 | 287 | 0 | P0 |
-| general/git-howto.md | 139 | 139 | 0 | P0 |
-| general/fate.md | 0 | 0 | 0 | P0 |
-| general/authors.md | 4 | 4 | 0 | P0 |
-| general/mailing-list-faq.md | 114 | 114 | 0 | P2 |
+| general/developer.md | 287 | 0 | 0 | P0（B8 已完成 2026-11-21） |
+| general/git-howto.md | 139 | 0 | 0 | P0（B8 已完成 2026-11-21） |
+| general/fate.md | 78 | 0 | 0 | P0（B8 已完成 2026-11-21；看板原记 0 段系 M1 fate 修复前的陈旧快照，B8 按 state 权威口径补译） |
+| general/authors.md | 4 | 0 | 0 | P0（B8 已完成 2026-11-21） |
+| general/mailing-list-faq.md | 114 | 0 | 0 | P2（B8 已完成 2026-11-21） |
 | general/nut.md | 28 | 28 | 0 | P2 |
 | general/community.md | 73 | 73 | 0 | P2 |
 | general/drawvg-reference.md | 929 | 929 | 0 | P2 |
@@ -50,7 +50,7 @@
 | B5 | components/protocols.md | 677 | 已完成（2026-11-21，一笔提交 277d8ce，段级组装+校验全绿；随行=anchor_map 抽查证实 protocols 无跨页英文锚点入链依赖、无需 heading-bridge 登记/glossary 补录 16 条至 194） |
 | B6 | components/devices.md | 570 | 已完成（2026-11-21，一笔提交，段级组装+校验全绿；随行=glossary 补录 11 条至 205） |
 | B7 | libraries/libavutil.md + libraries/libavcodec.md + libraries/libavformat.md + libraries/libavdevice.md + libraries/libavfilter.md + libraries/libswscale.md + libraries/libswresample.md + general/faq.md + general/general.md + general/platform.md | 531 | 已完成（2026-11-21，四笔提交 d3c1f5b/d7e75fa/a9c7861/051e91e，段级组装+校验全绿；随行=无需 heading-bridge 登记（faq 页内锚点 tr 内中文 slug 改写、无跨页入链）/glossary 补录 12 条至 217） |
-| B8 | general/developer.md + general/git-howto.md + general/fate.md + general/authors.md + general/mailing-list-faq.md | 544 | 未开始 |
+| B8 | general/developer.md + general/git-howto.md + general/fate.md + general/authors.md + general/mailing-list-faq.md | 622 | 已完成（2026-11-21，五笔提交 485f2a5/ac5f61a/7ef3530/690e537/7664fe1 + 校验器修复 743ecb6，段级组装+校验全绿；随行=fate.md 按 state 权威口径补译 78 段（看板原记 0 段系 M1 陈旧快照）/glossary 补录 19 条至 236/validate_translation HTML 栈检查放行邮箱自动链接） |
 | B9 | general/nut.md + general/community.md + general/drawvg-reference.md | 1030 | 未开始 |
 
 ## 批次（filters 卷 F 系列，按章节分组，DR-008）

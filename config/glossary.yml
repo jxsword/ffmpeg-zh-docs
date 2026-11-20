@@ -1326,3 +1326,105 @@ terms:
     status: "approved"
     context: "general/platform.md（MSVC dlltool/lib.exe）"
     aliases: ["import libraries"]
+
+  # ===== B8 批补录（19 条，2026-11-21 随批评审 approved）=====
+  # general/developer.md：review/backport/release branch/point release/maintainer/
+  # sign-off/coverage/checklist/pull request
+  # general/git-howto.md：rebase/commit message/annotated tag
+  # general/mailing-list-faq.md：moderation queue/archive/spam/thread
+  # general/fate.md：wrapper/host key/fingerprint
+  - en: "rebase"
+    zh: "变基"
+    status: "approved"
+    context: "general/git-howto"
+    aliases: []
+  - en: "review"
+    zh: "评审"
+    status: "approved"
+    context: "general/developer"
+    aliases: []
+  - en: "maintainer"
+    zh: "维护者"
+    status: "approved"
+    context: "general（MAINTAINERS 文件名不译）"
+    aliases: []
+  - en: "commit message"
+    zh: "提交信息"
+    status: "approved"
+    context: "general/git-howto（示例信息内容保留英文）"
+    aliases: []
+  - en: "backport"
+    zh: "回迁"
+    status: "approved"
+    context: "general/developer（发布分支维护语境）"
+    aliases: ["backporting"]
+  - en: "release branch"
+    zh: "发布分支"
+    status: "approved"
+    context: "general/developer"
+    aliases: []
+  - en: "point release"
+    zh: "点版本发布"
+    status: "approved"
+    context: "general/developer"
+    aliases: []
+  - en: "sign-off"
+    zh: "签署"
+    status: "approved"
+    context: "general/developer（DCO 签署）"
+    aliases: ["sign your work"]
+  - en: "coverage"
+    zh: "覆盖率"
+    status: "approved"
+    context: "general/developer（gcov/lcov 测试覆盖率）"
+    aliases: []
+  - en: "checklist"
+    zh: "检查清单"
+    status: "approved"
+    context: "general"
+    aliases: []
+  - en: "pull request"
+    zh: "拉取请求"
+    status: "approved"
+    context: "general（Forgejo/GitHub 语境）"
+    aliases: ["merge request"]
+  - en: "annotated tag"
+    zh: "附注标签"
+    status: "approved"
+    context: "general/git-howto/developer（git tag）"
+    aliases: []
+  - en: "moderation queue"
+    zh: "审核队列"
+    status: "approved"
+    context: "general/mailing-list-faq"
+    aliases: ["moderation flag"]
+  - en: "archive"
+    zh: "存档"
+    status: "approved"
+    context: "general/mailing-list-faq（邮件列表存档）"
+    aliases: ["archives"]
+  - en: "spam"
+    zh: "垃圾邮件"
+    status: "approved"
+    context: "general/mailing-list-faq"
+    aliases: []
+  - en: "thread"
+    zh: "讨论串"
+    status: "approved"
+    context: "general/mailing-list-faq（邮件讨论串）"
+    aliases: ["thread hijacking=讨论串劫持"]
+  - en: "wrapper"
+    zh: "包装器"
+    status: "approved"
+    context: "general/fate（测试包装器）"
+    aliases: []
+  - en: "host key"
+    zh: "主机密钥"
+    status: "approved"
+    context: "general/fate（SSH）"
+    aliases: []
+  - en: "fingerprint"
+    zh: "指纹"
+    status: "approved"
+    context: "general/fate（SSH 指纹；区别于 audio fingerprint）"
+    aliases: []
