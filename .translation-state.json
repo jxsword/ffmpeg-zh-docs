@@ -211994,7 +211994,7 @@
             "level": 1,
             "title": "Unix-like"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p0",
@@ -212006,7 +212006,7 @@
           "metadata": {
             "section": "Unix-like"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p1",
@@ -212018,7 +212018,7 @@
           "metadata": {
             "section": "Unix-like"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p2",
@@ -212030,7 +212030,7 @@
           "metadata": {
             "section": "Unix-like"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p3",
@@ -212044,7 +212044,7 @@
             "level": 2,
             "title": "Advanced linking configuration"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p0",
@@ -212056,7 +212056,7 @@
           "metadata": {
             "section": "Advanced linking configuration"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p1",
@@ -212068,7 +212068,7 @@
           "metadata": {
             "section": "Advanced linking configuration"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p2",
@@ -212080,7 +212080,7 @@
           "metadata": {
             "section": "Advanced linking configuration"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p3",
@@ -212094,7 +212094,7 @@
             "level": 2,
             "title": "BSD"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p0",
@@ -212106,7 +212106,7 @@
           "metadata": {
             "section": "BSD"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p1",
@@ -212120,7 +212120,7 @@
             "level": 2,
             "title": "(Open)Solaris"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p0",
@@ -212132,7 +212132,7 @@
           "metadata": {
             "section": "(Open)Solaris"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p1",
@@ -212144,7 +212144,7 @@
           "metadata": {
             "section": "(Open)Solaris"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p2",
@@ -212158,7 +212158,7 @@
             "level": 2,
             "title": "Darwin (Mac OS X, iPhone)"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p0",
@@ -212170,7 +212170,7 @@
           "metadata": {
             "section": "Darwin (Mac OS X, iPhone)"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p1",
@@ -212182,7 +212182,7 @@
           "metadata": {
             "section": "Darwin (Mac OS X, iPhone)"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p2",
@@ -212194,7 +212194,7 @@
           "metadata": {
             "section": "Darwin (Mac OS X, iPhone)"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p3",
@@ -212208,7 +212208,7 @@
             "level": 1,
             "title": "DOS"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p0",
@@ -212220,7 +212220,7 @@
           "metadata": {
             "section": "DOS"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p1",
@@ -212234,7 +212234,7 @@
             "level": 1,
             "title": "OS/2"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p0",
@@ -212246,7 +212246,7 @@
           "metadata": {
             "section": "OS/2"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p1",
@@ -212260,7 +212260,7 @@
             "level": 1,
             "title": "Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p0",
@@ -212274,7 +212274,7 @@
             "level": 2,
             "title": "Native Windows compilation using MinGW or MinGW-w64"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p0",
@@ -212286,7 +212286,7 @@
           "metadata": {
             "section": "Native Windows compilation using MinGW or MinGW-w64"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p1",
@@ -212298,7 +212298,7 @@
           "metadata": {
             "section": "Native Windows compilation using MinGW or MinGW-w64"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p2",
@@ -212310,7 +212310,7 @@
           "metadata": {
             "section": "Native Windows compilation using MinGW or MinGW-w64"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p3",
@@ -212322,7 +212322,7 @@
           "metadata": {
             "section": "Native Windows compilation using MinGW or MinGW-w64"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p4",
@@ -212334,7 +212334,7 @@
           "metadata": {
             "section": "Native Windows compilation using MinGW or MinGW-w64"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p5",
@@ -212346,7 +212346,7 @@
           "metadata": {
             "section": "Native Windows compilation using MinGW or MinGW-w64"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p6",
@@ -212360,7 +212360,7 @@
             "level": 3,
             "title": "Native Windows compilation using MSYS2"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p0",
@@ -212372,7 +212372,7 @@
           "metadata": {
             "section": "Native Windows compilation using MSYS2"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p1",
@@ -212384,7 +212384,7 @@
           "metadata": {
             "section": "Native Windows compilation using MSYS2"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p2",
@@ -212396,7 +212396,7 @@
           "metadata": {
             "section": "Native Windows compilation using MSYS2"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p3",
@@ -212408,7 +212408,7 @@
           "metadata": {
             "section": "Native Windows compilation using MSYS2"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p4",
@@ -212422,7 +212422,7 @@
             "level": 2,
             "title": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p0",
@@ -212434,7 +212434,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p1",
@@ -212446,7 +212446,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p2",
@@ -212458,7 +212458,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p3",
@@ -212470,7 +212470,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p4",
@@ -212482,7 +212482,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p5",
@@ -212494,7 +212494,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p6",
@@ -212506,7 +212506,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p7",
@@ -212518,7 +212518,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p8",
@@ -212530,7 +212530,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p9",
@@ -212542,7 +212542,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p10",
@@ -212554,7 +212554,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p11",
@@ -212566,7 +212566,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p12",
@@ -212578,7 +212578,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p13",
@@ -212590,7 +212590,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p14",
@@ -212602,7 +212602,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p15",
@@ -212614,7 +212614,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p16",
@@ -212626,7 +212626,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p17",
@@ -212638,7 +212638,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p18",
@@ -212650,7 +212650,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p19",
@@ -212662,7 +212662,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p20",
@@ -212674,7 +212674,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p21",
@@ -212686,7 +212686,7 @@
           "metadata": {
             "section": "Microsoft Visual C++ or Intel C++ Compiler for Windows"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p22",
@@ -212700,7 +212700,7 @@
             "level": 3,
             "title": "Linking to FFmpeg with Microsoft Visual C++"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p0",
@@ -212712,7 +212712,7 @@
           "metadata": {
             "section": "Linking to FFmpeg with Microsoft Visual C++"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p1",
@@ -212724,7 +212724,7 @@
           "metadata": {
             "section": "Linking to FFmpeg with Microsoft Visual C++"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p2",
@@ -212736,7 +212736,7 @@
           "metadata": {
             "section": "Linking to FFmpeg with Microsoft Visual C++"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p3",
@@ -212748,7 +212748,7 @@
           "metadata": {
             "section": "Linking to FFmpeg with Microsoft Visual C++"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p4",
@@ -212760,7 +212760,7 @@
           "metadata": {
             "section": "Linking to FFmpeg with Microsoft Visual C++"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p5",
@@ -212772,7 +212772,7 @@
           "metadata": {
             "section": "Linking to FFmpeg with Microsoft Visual C++"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p6",
@@ -212784,7 +212784,7 @@
           "metadata": {
             "section": "Linking to FFmpeg with Microsoft Visual C++"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p7",
@@ -212796,7 +212796,7 @@
           "metadata": {
             "section": "Linking to FFmpeg with Microsoft Visual C++"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p8",
@@ -212808,7 +212808,7 @@
           "metadata": {
             "section": "Linking to FFmpeg with Microsoft Visual C++"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p9",
@@ -212820,7 +212820,7 @@
           "metadata": {
             "section": "Linking to FFmpeg with Microsoft Visual C++"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p10",
@@ -212832,7 +212832,7 @@
           "metadata": {
             "section": "Linking to FFmpeg with Microsoft Visual C++"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p11",
@@ -212844,7 +212844,7 @@
           "metadata": {
             "section": "Linking to FFmpeg with Microsoft Visual C++"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p12",
@@ -212858,7 +212858,7 @@
             "level": 2,
             "title": "Cross compilation for Windows with Linux"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p0",
@@ -212870,7 +212870,7 @@
           "metadata": {
             "section": "Cross compilation for Windows with Linux"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p1",
@@ -212882,7 +212882,7 @@
           "metadata": {
             "section": "Cross compilation for Windows with Linux"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p2",
@@ -212894,7 +212894,7 @@
           "metadata": {
             "section": "Cross compilation for Windows with Linux"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p3",
@@ -212906,7 +212906,7 @@
           "metadata": {
             "section": "Cross compilation for Windows with Linux"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p4",
@@ -212918,7 +212918,7 @@
           "metadata": {
             "section": "Cross compilation for Windows with Linux"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p5",
@@ -212932,7 +212932,7 @@
             "level": 2,
             "title": "Compilation under Cygwin"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p0",
@@ -212944,7 +212944,7 @@
           "metadata": {
             "section": "Compilation under Cygwin"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p1",
@@ -212956,7 +212956,7 @@
           "metadata": {
             "section": "Compilation under Cygwin"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p2",
@@ -212968,7 +212968,7 @@
           "metadata": {
             "section": "Compilation under Cygwin"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p3",
@@ -212980,7 +212980,7 @@
           "metadata": {
             "section": "Compilation under Cygwin"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p4",
@@ -212992,7 +212992,7 @@
           "metadata": {
             "section": "Compilation under Cygwin"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p5",
@@ -213004,7 +213004,7 @@
           "metadata": {
             "section": "Compilation under Cygwin"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p6",
@@ -213016,7 +213016,7 @@
           "metadata": {
             "section": "Compilation under Cygwin"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p7",
@@ -213028,7 +213028,7 @@
           "metadata": {
             "section": "Compilation under Cygwin"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p8",
@@ -213040,7 +213040,7 @@
           "metadata": {
             "section": "Compilation under Cygwin"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p9",
@@ -213052,7 +213052,7 @@
           "metadata": {
             "section": "Compilation under Cygwin"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p10",
@@ -213066,7 +213066,7 @@
             "level": 2,
             "title": "Crosscompilation for Windows under Cygwin"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p0",
@@ -213078,7 +213078,7 @@
           "metadata": {
             "section": "Crosscompilation for Windows under Cygwin"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p1",
@@ -213090,7 +213090,7 @@
           "metadata": {
             "section": "Crosscompilation for Windows under Cygwin"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p2",
@@ -213102,7 +213102,7 @@
           "metadata": {
             "section": "Crosscompilation for Windows under Cygwin"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p3",
@@ -213114,7 +213114,7 @@
           "metadata": {
             "section": "Crosscompilation for Windows under Cygwin"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p4",
@@ -213126,7 +213126,7 @@
           "metadata": {
             "section": "Crosscompilation for Windows under Cygwin"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p5",
@@ -213138,7 +213138,7 @@
           "metadata": {
             "section": "Crosscompilation for Windows under Cygwin"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p6",
@@ -213150,7 +213150,7 @@
           "metadata": {
             "section": "Crosscompilation for Windows under Cygwin"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p7",
@@ -213162,7 +213162,7 @@
           "metadata": {
             "section": "Crosscompilation for Windows under Cygwin"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p8",
@@ -213176,7 +213176,7 @@
             "level": 2,
             "title": "ARM64EC"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p0",
@@ -213188,7 +213188,7 @@
           "metadata": {
             "section": "ARM64EC"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p1",
@@ -213200,7 +213200,7 @@
           "metadata": {
             "section": "ARM64EC"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "platform.md-p2",
@@ -213212,7 +213212,7 @@
           "metadata": {
             "section": "ARM64EC"
           },
-          "status": "pending"
+          "status": "done"
         }
       ]
     },
