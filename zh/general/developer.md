@@ -1,82 +1,78 @@
-!!! warning "翻译占位页"
-    本页为英文原文占位（翻译进行中，进度见[翻译看板](https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md)）。
-    术语与示例以英文原文为准。
+# 简介
 
-# Introduction
+本文关注的是 FFmpeg *本身*的开发。关于在其他程序中使用 FFmpeg 库的信息可在别处找到，例如：
 
-This text is concerned with the development *of* FFmpeg itself. Information on using the FFmpeg libraries in other programs can be found elsewhere, e.g. in:
+- 已安装的头文件
 
-- the installed header files
+- 由这些头文件生成的 [Doxygen 文档](http://ffmpeg.org/doxygen/trunk/index.html)
 
-- [the Doxygen documentation](http://ffmpeg.org/doxygen/trunk/index.html) generated from the headers
+- `doc/examples` 下的示例
 
-- the examples under `doc/examples`
+关于在外部程序中使用 FFmpeg 的更详细法律信息，请阅读源码树中的 `LICENSE` 文件，并查阅 <https://ffmpeg.org/legal.html>。
 
-For more detailed legal information about the use of FFmpeg in external programs read the `LICENSE` file in the source tree and consult <https://ffmpeg.org/legal.html>.
+如果您为自己的使用场景修改了 FFmpeg 代码，我们强烈鼓励您*将修改提交回来*，并以本文档作为指南。这样做既有现实层面的理由，也有理念层面的理由：
 
-If you modify FFmpeg code for your own use case, you are highly encouraged to *submit your changes back to us*, using this document as a guide. There are both pragmatic and ideological reasons to do so:
+- 在主线开发之外维护自己的改动以跟上上游开发既耗时又容易出错。而您的代码进入主代码树后，将由 FFmpeg 开发者代为维护。
 
-- Maintaining external changes to keep up with upstream development is time-consuming and error-prone. With your code in the main tree, it will be maintained by FFmpeg developers.
+- FFmpeg 开发者中有该领域的顶尖专家，他们能发现您代码中的缺陷或设计问题。
 
-- FFmpeg developers include leading experts in the field who can find bugs or design flaws in your code.
+- 支持您觉得有用的项目，才能确保它持续得到维护和发展。
 
-- By supporting the project you find useful you ensure it continues to be maintained and developed.
+所有拟议的代码修改都应提交到 [Forgejo](https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls) 或[开发邮件列表](mailto:ffmpeg-devel@ffmpeg.org)接受评审，详见[提交补丁](#提交补丁)一章。代码应符合[开发政策](#开发政策)，并遵循[编码规则](#编码规则)。执行提交的开发者与补丁作者都要对自己的修改负责，并应尽力修复其提交引发的问题。
 
-All proposed code changes should be submitted for review to [Forgejo](https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls) or [the development mailing list](mailto:ffmpeg-devel@ffmpeg.org), as described in more detail in the [Submitting patches](#submitting-patches) chapter. The code should comply with the [Development Policy](#development-policy) and follow the [Coding Rules](#coding-rules). The developer making the commit and the author are responsible for their changes and should try to fix issues their commit causes.
+# 编码规则
 
-# Coding Rules
+## 语言
 
-## Language
+FFmpeg 主要使用 ISO C11 语言编写，但公共头文件必须保持 C99 兼容。
 
-FFmpeg is mainly programmed in the ISO C11 language, except for the public headers which must stay C99 compatible.
+出于充分理由可以使用编译器专属扩展，但不得形成依赖，即代码在缺少该扩展的编译器上仍必须能够编译并正常工作。
 
-Compiler-specific extensions may be used with good reason, but must not be depended on, i.e. the code must still compile and work with compilers lacking the extension.
+代码库中任何地方都不得使用以下 C99 特性：
 
-The following C99 features must not be used anywhere in the codebase:
+- 变长数组；
 
-- variable-length arrays;
-
-- complex numbers;
+- 复数；
 
 ### SIMD/DSP
 
-As modern compilers are unable to generate efficient SIMD or other performance-critical DSP code from plain C, handwritten assembly is used. Usually such code is isolated in a separate function. Then the standard approach is writing multiple versions of this function – a plain C one that works everywhere and may also be useful for debugging, and potentially multiple architecture-specific optimized implementations. Initialization code then chooses the best available version at runtime and loads it into a function pointer; the function in question is then always called through this pointer.
+由于现代编译器无法从纯 C 代码生成高效的 SIMD 或其他性能关键的 DSP 代码，因此需要手写汇编。这类代码通常被隔离在单独的函数中。标准做法是为该函数编写多个版本——一个到处可用、也便于调试的纯 C 版本，以及可能的多个架构专属优化实现。初始化代码随后在运行时挑选最优的可用版本并装入函数指针；此后该函数始终通过这个指针调用。
 
-The specific syntax used for writing assembly is:
+编写汇编所用的具体语法为：
 
-- NASM on x86;
+- x86 上使用 NASM；
 
-- GAS on ARM and RISC-V.
+- ARM 与 RISC-V 上使用 GAS。
 
-A unit testing framework for assembly called `checkasm` lives under `tests/checkasm`. All new assembly should come with `checkasm` tests; adding tests for existing assembly that lacks them is also strongly encouraged.
+汇编单元测试框架 `checkasm` 位于 `tests/checkasm`。所有新增汇编都应附带 `checkasm` 测试；也强烈鼓励为缺少测试的既有汇编补充测试。
 
-### Other languages
+### 其他语言
 
-Other languages than C may be used in special cases:
+特殊情况下可以使用 C 以外的语言：
 
-- Compiler intrinsics or inline assembly when the code in question cannot be written in the standard way described in the [SIMD/DSP](developer.md#simddsp) section. This typically applies to code that needs to be inlined.
+- 当相关代码无法按 [SIMD/DSP](#simddsp) 一节所述的标准方式编写时，可使用编译器内建函数（intrinsics）或内联汇编。这通常适用于需要内联的代码。
 
-- Objective-C where required for interacting with macOS-specific interfaces.
+- 需要与 macOS 专属接口交互时，可使用 Objective-C。
 
-## Code formatting conventions
+## 代码排版约定
 
-There are the following guidelines regarding the code style in files:
+关于源文件中的代码风格，有以下准则：
 
-- Indent size is 4.
+- 缩进宽度为 4。
 
-- The TAB character is forbidden outside of Makefiles as is any form of trailing whitespace. Commits containing either will be rejected by the git repository.
+- 制表符（TAB）在 Makefile 之外禁止使用，任何形式的行尾空白同样禁止。含两者的提交会被 git 仓库拒绝。
 
-- You should try to limit your code lines to 80 characters; however, do so if and only if this improves readability.
+- 您应尽量将代码行控制在 80 个字符以内；但仅在此举确实能提升可读性时才这样做。
 
-- K&R coding style is used.
+- 采用 K&R 代码风格。
 
-The presentation is one inspired by 'indent -i4 -kr -nut'.
+本排版风格受 'indent -i4 -kr -nut' 启发。
 
-### Examples
+### 示例
 
-Some notable examples to illustrate common code style in FFmpeg:
+以下是一些值得注意的示例，用于说明 FFmpeg 的常见代码风格：
 
-- Space around assignments and after `if`/`do`/`while`/`for` keywords:
+- 赋值号两侧以及 `if`/`do`/`while`/`for` 关键字之后留空格：
 
   ``` c
   // Good
@@ -95,7 +91,7 @@ Some notable examples to illustrate common code style in FFmpeg:
   size_t size = 0;
   ```
 
-  However no spaces between the parentheses and condition, unless it helps readability of complex conditions, so the following should not be done:
+  但圆括号与条件之间不要留空格，除非这样有助于阅读复杂条件，因此不应写成下面这样：
 
   ``` c
   // Bad style
@@ -103,14 +99,14 @@ Some notable examples to illustrate common code style in FFmpeg:
       av_foo();
   ```
 
-- No unnecessary parentheses, unless it helps readability:
+- 不加多余的圆括号，除非有助于可读性：
 
   ``` text
   // Good
   int fields = ilace ? 2 : 1;
   ```
 
-- Don't wrap single-line blocks in braces. Use braces only if there is an accompanying else statement. This keeps future code changes easier to keep track of.
+- 不要给单行语句块套花括号。仅当存在配套的 else 语句时才使用花括号。这样便于日后跟踪代码变更。
 
   ``` c
   // Good
@@ -122,7 +118,7 @@ Some notable examples to illustrate common code style in FFmpeg:
       return AVERROR_INVALIDDATA;
   ```
 
-- Avoid assignments in conditions where it makes sense:
+- 在合理的情况下避免在条件表达式中进行赋值：
 
   ``` c
   // Good
@@ -143,7 +139,7 @@ Some notable examples to illustrate common code style in FFmpeg:
       av_log(ctx, AV_LOG_INFO, "Item '%s': '%s'\n", entry->key, entry->value);
   ```
 
-- When declaring a pointer variable, the `*` goes with the variable not the type:
+- 声明指针变量时，`*` 靠近变量名而不是类型：
 
   ``` text
   // Good
@@ -155,7 +151,7 @@ Some notable examples to illustrate common code style in FFmpeg:
   AVStream* stream;
   ```
 
-- When sensible, prefer a narrow variable scope, especially in for loops:
+- 在合理的情况下优先使用尽量小的变量作用域，for 循环尤甚：
 
   ``` c
   // Good
@@ -173,11 +169,11 @@ Some notable examples to illustrate common code style in FFmpeg:
   }
   ```
 
-If you work on a file that does not follow these guidelines consistently, change the parts that you are editing to follow these guidelines but do not make unrelated changes in the file to make it conform to these.
+如果您处理的文件并未一贯遵循这些准则，请将您正在编辑的部分改为遵循这些准则，但不要为了迎合它们而在文件中做无关的修改。
 
-### Vim configuration
+### Vim 配置
 
-In order to configure Vim to follow FFmpeg formatting conventions, paste the following snippet into your `.vimrc`:
+要让 Vim 遵循 FFmpeg 的排版约定，请将以下片段粘贴到您的 `.vimrc` 中：
 
 ``` text
 " indentation rules for FFmpeg: 4 spaces, no tabs
@@ -195,9 +191,9 @@ match ForbiddenWhitespace /\s\+$\|\t/
 autocmd InsertEnter * match ForbiddenWhitespace /\t\|\s\+\%#\@<!$/
 ```
 
-### Emacs configuration
+### Emacs 配置
 
-For Emacs, add these roughly equivalent lines to your `.emacs.d/init.el`:
+对于 Emacs，请将下面这些大致等效的行添加到您的 `.emacs.d/init.el`：
 
 ``` text
 (c-add-style "ffmpeg"
@@ -212,11 +208,11 @@ For Emacs, add these roughly equivalent lines to your `.emacs.d/init.el`:
 (setq c-default-style "ffmpeg")
 ```
 
-## Comments
+## 注释
 
-Use the JavaDoc/Doxygen format (see examples below) so that code documentation can be generated automatically. All nontrivial functions should have a comment above them explaining what the function does, even if it is just one sentence. All structures and their member variables should be documented, too.
+请使用 JavaDoc/Doxygen 格式（见下文示例），以便自动生成代码文档。所有非平凡函数的上方都应有注释说明其功能，哪怕只有一句话。所有结构体及其成员变量也都应有文档说明。
 
-Avoid Qt-style and similar Doxygen syntax with `!` in it, i.e. replace `//!` with `///` and similar. Also @ syntax should be employed for markup commands, i.e. use `@param` and not `\param`.
+避免使用 Qt 风格及其他含 `!` 的 Doxygen 语法，即用 `///` 取代 `//!` 等。标记命令也应采用 @ 语法，即使用 `@param` 而不是 `\param`。
 
 ``` c
 /**
@@ -248,75 +244,75 @@ int myfunc(int my_parameter)
 ...
 ```
 
-## Naming conventions
+## 命名约定
 
-Names of functions, variables, and struct members must be lowercase, using underscores (\_) to separate words. For example, `avfilter_get_video_buffer` is an acceptable function name and `AVFilterGetVideo` is not.
+函数、变量和结构体成员的名称必须小写，使用下划线（\_）分隔单词。例如 `avfilter_get_video_buffer` 是可接受的函数名，而 `AVFilterGetVideo` 则不是。
 
-Struct, union, enum, and typedeffed type names must use CamelCase. All structs and unions should be typedeffed to the same name as the struct/union tag, e.g. `typedef struct AVFoo { ... } AVFoo;`. Enums are typically not typedeffed.
+struct、union、enum 以及经 typedef 定义的类型名必须使用 CamelCase。所有 struct 与 union 都应通过 typedef 定义为与其标签相同的名字，例如 `typedef struct AVFoo { ... } AVFoo;`。enum 通常不做 typedef。
 
-Enumeration constants and macros must be UPPERCASE, except for macros masquerading as functions, which should use the function naming convention.
+枚举常量和宏必须全部大写，但伪装成函数的宏除外，这类宏应遵循函数命名约定。
 
-All identifiers in the libraries should be namespaced as follows:
+库中所有标识符应按如下方式做命名空间隔离：
 
-- No namespacing for identifiers with file and lower scope (e.g. local variables, static functions), and struct and union members,
+- 文件及更小作用域的标识符（如局部变量、静态函数）以及 struct 和 union 成员不做命名空间隔离；
 
-- The `ff_` prefix must be used for variables and functions visible outside of file scope, but only used internally within a single library, e.g. `ff_w64_demuxer`. This prevents name collisions when FFmpeg is statically linked.
+- 作用域超出文件、但仅在单个库内部使用的变量与函数必须使用 `ff_` 前缀，例如 `ff_w64_demuxer`。这可避免 FFmpeg 被静态链接时的命名冲突。
 
-- For variables and functions visible outside of file scope, used internally across multiple libraries, use `avpriv_` as prefix, for example, `avpriv_report_missing_feature`.
+- 作用域超出文件、且在多个库内部跨库使用的变量与函数，使用 `avpriv_` 前缀，例如 `avpriv_report_missing_feature`。
 
-- All other internal identifiers, like private type or macro names, should be namespaced only to avoid possible internal conflicts. E.g. `H264_NAL_SPS` vs. `HEVC_NAL_SPS`.
+- 其余内部标识符（如私有类型名或宏名）只需做命名空间隔离以避免可能的内部冲突，例如 `H264_NAL_SPS` 与 `HEVC_NAL_SPS`。
 
-- Each library has its own prefix for public symbols, in addition to the commonly used `av_` (`avformat_` for libavformat, `avcodec_` for libavcodec, `swr_` for libswresample, etc). Check the existing code and choose names accordingly.
+- 除通用的 `av_` 之外，每个库的公共符号还有各自的前缀（libavformat 用 `avformat_`，libavcodec 用 `avcodec_`，libswresample 用 `swr_` 等）。请查看现有代码并据此选择名称。
 
-- Other public identifiers (struct, union, enum, macro, type names) must use their library's public prefix (`AV`, `Sws`, or `Swr`).
+- 其他公共标识符（struct、union、enum、宏、类型名）必须使用所属库的公共前缀（`AV`、`Sws` 或 `Swr`）。
 
-Furthermore, name space reserved for the system should not be invaded. Identifiers ending in `_t` are reserved by [POSIX](http://pubs.opengroup.org/onlinepubs/007904975/functions/xsh_chap02_02.html#tag_02_02_02). Also avoid names starting with `__` or `_` followed by an uppercase letter as they are reserved by the C standard. Names starting with `_` are reserved at the file level and may not be used for externally visible symbols. If in doubt, just avoid names starting with `_` altogether.
+此外，不得侵入系统保留的命名空间。以 `_t` 结尾的标识符由 [POSIX](http://pubs.opengroup.org/onlinepubs/007904975/functions/xsh_chap02_02.html#tag_02_02_02) 保留。同时避免以 `__` 开头、或以 `_` 后跟大写字母开头的名称，它们由 C 标准保留。以 `_` 开头的名称在文件作用域级别被保留，不得用于外部可见的符号。拿不准时，干脆避免一切以 `_` 开头的名称。
 
-## Miscellaneous conventions
+## 其他约定
 
-- Casts should be used only when necessary. Unneeded parentheses should also be avoided if they don't make the code easier to understand.
+- 仅在必要时使用强制类型转换。无助于理解代码的多余圆括号也应避免。
 
-- Where applicable, SI units shall be used. For example timeouts should use seconds as the fundamental unit not microseconds. That means a bare value like `1.0` must mean 1 second, `50m` means 50 milliseconds. For weight, gram shall be used.
+- 适用之处应使用 SI 单位。例如超时时长应以秒而非微秒为基本单位，即 `1.0` 这样的裸值必须表示 1 秒，`50m` 表示 50 毫秒。重量则以克为单位。
 
-# Development Policy
+# 开发政策
 
-## Code behaviour
+## 代码行为
 
-**Correctness**
+**正确性**
 
-The code must be valid. It must not crash, abort, access invalid pointers, leak memory, cause data races or signed integer overflow, or otherwise cause undefined behaviour. Error codes should be checked and, when applicable, forwarded to the caller.
+代码必须正确有效。不得崩溃、中止、访问无效指针、泄漏内存、引发数据竞争或有符号整数溢出，也不得以其他方式造成未定义行为。错误码应予检查，并在适用时向上传给调用者。
 
-**Thread- and library-safety**
+**线程与库安全**
 
-Our libraries may be called by multiple independent callers in the same process. These calls may happen from any number of threads and the different call sites may not be aware of each other - e.g. a user program may be calling our libraries directly, and use one or more libraries that also call our libraries. The code must behave correctly under such conditions.
+同一进程中的多个独立调用者都可能调用我们的库。这些调用可能来自任意数量的线程，且不同调用点彼此可能并不知晓——例如用户程序直接调用我们的库，同时又使用一个或多个同样会调用我们库的其他库。代码必须在这些条件下表现正确。
 
-**Robustness**
+**健壮性**
 
-The code must treat as untrusted any bytestream received from a caller or read from a file, network, etc. It must not misbehave when arbitrary data is sent to it - typically it should print an error message and return `AVERROR_INVALIDDATA` on encountering invalid input data.
+代码必须将从调用者接收或从文件、网络等读取的任何字节流视为不可信数据。收到任意数据时不得行为失常——通常应在遇到无效输入数据时打印错误消息并返回 `AVERROR_INVALIDDATA`。
 
-**Memory allocation**
+**内存分配**
 
-The code must use the `av_malloc()` family of functions from `libavutil/mem.h` to perform all memory allocation, except in special cases (e.g. when interacting with an external library that requires a specific allocator to be used).
+代码必须使用 `libavutil/mem.h` 中的 `av_malloc()` 系列函数进行所有内存分配，特殊情况除外（例如与要求使用特定分配器的外部库交互时）。
 
-All allocations should be checked and `AVERROR(ENOMEM)` returned on failure. A common mistake is that error paths leak memory - make sure that does not happen.
+所有分配都应检查，失败时返回 `AVERROR(ENOMEM)`。常见错误是错误处理路径泄漏内存——请务必避免。
 
 **stdio**
 
-Our libraries must not access the stdio streams stdin/stdout/stderr directly (e.g. via `printf()` family of functions), as that is not library-safe. For logging, use `av_log()`.
+我们的库不得直接访问 stdio 流 stdin/stdout/stderr（例如通过 `printf()` 系列函数），因为这不符合库安全要求。日志请使用 `av_log()`。
 
-## Patches/Committing
+## 补丁与提交
 
-**Licenses for patches must be compatible with FFmpeg.**
+**补丁的许可证必须与 FFmpeg 兼容。**
 
-Contributions should be licensed under the [LGPL 2.1](http://www.gnu.org/licenses/lgpl-2.1.html), including an "or any later version" clause, or, if you prefer a gift-style license, the [ISC](http://opensource.org/licenses/isc-license.txt) or [MIT](http://mit-license.org/) license. [GPL 2](http://www.gnu.org/licenses/gpl-2.0.html) including an "or any later version" clause is also acceptable, but LGPL is preferred. If you add a new file, give it a proper license header. Do not copy and paste it from a random place, use an existing file as template.
+贡献代码应采用 [LGPL 2.1](http://www.gnu.org/licenses/lgpl-2.1.html) 许可（含"或任意后续版本"条款）；如果您偏好赠予式许可，可采用 [ISC](http://opensource.org/licenses/isc-license.txt) 或 [MIT](http://mit-license.org/) 许可。含"或任意后续版本"条款的 [GPL 2](http://www.gnu.org/licenses/gpl-2.0.html) 也可接受，但首选 LGPL。新增文件时请为其添加规范的许可证头，不要从随机的地方复制粘贴，应使用现有文件作为模板。
 
-**You must not commit code which breaks FFmpeg!**
+**严禁提交会破坏 FFmpeg 的代码！**
 
-This means unfinished code which is enabled and breaks compilation, or compiles but does not work/breaks the regression tests. Code which is unfinished but disabled may be permitted under-circumstances, like missing samples or an implementation with a small subset of features. Always check the mailing list for any reviewers with issues and test FATE before you push.
+这是指启用后会导致编译失败、或虽能编译但无法工作/破坏回归测试的未完成代码。未完成但被禁用的代码在特定情况下可以允许，例如缺少样本或仅实现了小部分功能。推送前务必到邮件列表确认没有评审人提出异议，并测试 FATE。
 
-**Commit messages**
+**提交信息**
 
-Commit messages are highly important tools for informing other developers on what a given change does and why. Every commit must always have a properly filled out commit message with the following format:
+提交信息是告知其他开发者某项修改做了什么、为什么这样改的重要工具。每个提交都必须始终附带填写规范的提交信息，格式如下：
 
 ``` text
 area changed: short 1 line description
@@ -324,370 +320,370 @@ area changed: short 1 line description
 details describing what and why and giving references.
 ```
 
-If the commit addresses a known bug on our bug tracker or other external issue (e.g. CVE), the commit message should include the relevant bug ID(s) or other external identifiers. Note that this should be done in addition to a proper explanation and not instead of it. Comments such as "fixed!" or "Changed it." are not acceptable.
+如果提交修复了错误跟踪器上已知的缺陷或其他外部问题（如 CVE），提交信息中应包含相关的缺陷 ID 或其他外部标识符。注意这是在规范说明之外的额外要求，而非替代。诸如"fixed!"或"Changed it."之类的注释不可接受。
 
-When applying patches that have been discussed at length on the mailing list, reference the thread in the commit message.
+应用邮件列表上经过深入讨论的补丁时，请在该提交信息中引用相应的讨论串。
 
-**Testing must be adequate but not excessive.**
+**测试要充分但不过度。**
 
-If it works for you, others, and passes FATE then it should be OK to commit it, provided it fits the other committing criteria. You should not worry about over-testing things. If your code has problems (portability, triggers compiler bugs, unusual environment etc) they will be reported and eventually fixed.
+如果代码对您和对他人都工作正常并通过 FATE，那么只要符合其他提交标准，就可以提交。您不必担心测试过度。如果您的代码有问题（可移植性、触发编译器缺陷、异常环境等），问题会被报告并最终得到修复。
 
-**Do not commit unrelated changes together.**
+**不要把不相关的修改合并提交。**
 
-They should be split them into self-contained pieces. Also do not forget that if part B depends on part A, but A does not depend on B, then A can and should be committed first and separate from B. Keeping changes well split into self-contained parts makes reviewing and understanding them on the commit log mailing list easier. This also helps in case of debugging later on. Also if you have doubts about splitting or not splitting, do not hesitate to ask/discuss it on the developer mailing list.
+应将它们拆分为各自独立的部分。同时别忘了：若部分 B 依赖部分 A，而 A 不依赖 B，那么 A 可以且应当先于 B 单独提交。把修改妥善拆分成自成一体的部分，便于在提交日志邮件列表上评审和理解，也有助于日后的调试。如果您对拆与不拆拿不准，尽管到开发邮件列表上询问或讨论。
 
-**Bug fixes intended for backporting should stay focused.**
+**打算回迁的缺陷修复应保持聚焦。**
 
-Keep bug fixes as small as possible while fully fixing the reported issue. Changes not needed for correctness or robustness should be submitted separately, especially if they increase complexity or affect backporting.
+缺陷修复应在完整修复所报问题的前提下尽量小。正确性或健壮性并不需要的修改应单独提交，尤其是会增加复杂度或影响回迁的修改。
 
-**Cosmetic changes should be kept in separate patches.**
+**外观性修改应放入单独的补丁。**
 
-We refuse source indentation and other cosmetic changes if they are mixed with functional changes, such commits will be rejected and removed. However, indentation changes that can be ignored by `git diff --ignore-all-space` (e.g. changes in whitespace amount, leading/trailing spaces) may be mixed with functional changes, since reviewers can use `git diff -w` or `git log -p --ignore-all-space` to review only the functional parts of the change. Forgejo's pull request interface also provides a "Hide whitespace changes" option for this purpose. Every developer has his own indentation style, you should not change it. Of course if you (re)write something, you can use your own style, even though we would prefer if the indentation throughout FFmpeg was consistent (Many projects force a given indentation style - we do not.). If you really need to make non-whitespace cosmetic changes, separate them strictly from real changes.
+若源码缩进及其他外观性修改与功能性修改混在一起，我们会拒绝此类提交并予以移除。但 `git diff --ignore-all-space` 可以忽略的缩进变化（如空白量增减、行首/行尾空格）可以与功能性修改混合，因为评审者可以用 `git diff -w` 或 `git log -p --ignore-all-space` 只评审功能部分。Forgejo 的拉取请求界面也为此提供"隐藏空白变化"选项。每位开发者都有自己的缩进风格，您不应改动它。当然，如果您（重新）编写某段代码，可以使用自己的风格，尽管我们更希望 FFmpeg 全库的缩进保持一致（许多项目强制统一的缩进风格——我们不这样）。如果您确实需要做非空白的外观性修改，请将其与真正的修改严格分开。
 
-NOTE: If you had to put if(){ .. } over a large (\> 5 lines) chunk of code, then either do NOT change the indentation of the inner part within (do not move it to the right)! or do so in a separate commit
+注意：如果您不得不给一大段（\> 5 行）代码套上 if(){ .. }，那么要么不要改动其中内部部分的缩进（不要整体右移），要么把缩进调整放进单独的提交
 
-**Credit the author of the patch.**
+**注明补丁作者。**
 
-Make sure the author of the commit is set correctly. (see git commit –author) If you apply a patch, send an answer to ffmpeg-devel (or wherever you got the patch from) saying that you applied the patch.
+确保提交的作者信息设置正确。（参见 git commit –author）如果您应用了某个补丁，请向 ffmpeg-devel（或您获取补丁的地方）回信说明您已应用该补丁。
 
-**Credit any researchers**
+**致谢相关研究人员**
 
-If a commit/patch fixes an issues found by some researcher, always credit the researcher in the commit message for finding/reporting the issue.
+如果某个提交/补丁修复了研究人员发现的问题，请始终在提交信息中致谢发现/报告该问题的人。
 
-**Always wait long enough before pushing changes**
+**推送修改前总要等待足够长的时间**
 
-Do NOT commit to code actively maintained by others without permission. Send a patch to ffmpeg-devel. If no one answers within a reasonable time-frame (12h for build failures and security fixes, 3 days small changes, 1 week for big patches) then commit your patch if you think it is OK. Also note, the maintainer can simply ask for more time to review!
+未经许可，不要提交他人积极维护的代码。请把补丁发到 ffmpeg-devel。如果在合理时间内无人回应（构建失败和安全修复为 12 小时，小修改为 3 天，大补丁为 1 周），且您认为补丁没有问题，即可提交。另外请注意，维护者可以简单地向您请求更多评审时间！
 
-## Code
+## 代码
 
-**Warnings for correct code may be disabled if there is no other option.**
+**若无其他选择，可以禁用针对正确代码的编译警告。**
 
-Compiler warnings indicate potential bugs or code with bad style. If a type of warning always points to correct and clean code, that warning should be disabled, not the code changed. Thus the remaining warnings can either be bugs or correct code. If it is a bug, the bug has to be fixed. If it is not, the code should be changed to not generate a warning unless that causes a slowdown or obfuscates the code.
+编译器警告预示潜在缺陷或风格不良的代码。如果某类警告总是指向正确且干净的代码，那么应禁用的是警告本身，而不是去改代码。这样剩余的警告要么是缺陷，要么对应正确的代码。若是缺陷，就必须修复；若不是，则应改写代码使其不再产生警告，除非这样会导致性能下降或使代码晦涩难懂。
 
-## Library public interfaces
+## 库的公共接口
 
-Every library in FFmpeg provides a set of public APIs in its installed headers, which are those listed in the variable `HEADERS` in that library's `Makefile`. All identifiers defined in those headers (except for those explicitly documented otherwise), and corresponding symbols exported from compiled shared or static libraries are considered public interfaces and must comply with the API and ABI compatibility rules described in this section.
+FFmpeg 的每个库都在其安装头文件中提供一组公共 API，即该库 `Makefile` 中 `HEADERS` 变量所列的头文件。这些头文件中定义的所有标识符（明确另行说明者除外）以及编译产物（共享库或静态库）导出的对应符号，均视为公共接口，必须遵守本节所述的 API 与 ABI 兼容性规则。
 
-Public APIs must be backward compatible within a given major version. I.e. any valid user code that compiles and works with a given library version must still compile and work with any later version, as long as the major version number is unchanged. "Valid user code" here means code that is calling our APIs in a documented and/or intended manner and is not relying on any undefined behavior. Incrementing the major version may break backward compatibility, but only to the extent described in [Major version bumps](#major-version-bumps).
+公共 API 在同一主版本内必须保持向后兼容。也就是说，只要主版本号不变，任何能编译并与某版本库正常配合的用户代码，都必须仍能编译并与之后任何版本正常配合。此处"有效用户代码"指以有文档记载和/或预期的方式调用我们 API、且不依赖任何未定义行为的代码。提升主版本号可能破坏向后兼容，但仅限于[主版本号提升](#主版本号提升)一节所述的范围。
 
-We also guarantee backward ABI compatibility for shared and static libraries. I.e. it should be possible to replace a shared or static build of our library with a build of any later version (re-linking the user binary in the static case) without breaking any valid user binaries, as long as the major version number remains unchanged.
+我们还为共享库和静态库保证向后 ABI 兼容。也就是说，只要主版本号保持不变，就应当能够把我们的库替换为任意更高版本的构建产物（静态库情形需重新链接用户二进制），而不会破坏任何有效的用户二进制。
 
-### Adding new interfaces
+### 添加新接口
 
-Any new public identifiers in installed headers are considered new API - this includes new functions, structs, macros, enum values, typedefs, new fields in existing structs, new installed headers, etc. Consider the following guidelines when adding new APIs.
+安装头文件中的任何新公共标识符都视为新 API——包括新函数、struct、宏、枚举值、typedef、现有 struct 的新字段、新安装头文件等。添加新 API 时请考虑以下准则。
 
-**Motivation**
+**动机**
 
-While new APIs can be added relatively easily, changing or removing them is much harder due to abovementioned compatibility requirements. You should then consider carefully whether the functionality you are adding really needs to be exposed to our callers as new public API.
+新 API 的添加相对容易，但由于上述兼容性要求，修改或移除它们要困难得多。因此您应仔细斟酌：要添加的功能是否真的需要作为新的公共 API 暴露给我们的调用者。
 
-Your new API should have at least one well-established use case outside of the library that cannot be easily achieved with existing APIs. Every library in FFmpeg also has a defined scope - your new API must fit within it.
+您的新 API 应至少有一个库外部的成熟用例，且该用例无法用现有 API 轻松实现。FFmpeg 的每个库都有明确的职责范围——新 API 必须落在其内。
 
-**Replacing existing APIs**
+**替换既有 API**
 
-If your new API is replacing an existing one, it should be strictly superior to it, so that the advantages of using the new API outweigh the cost to the callers of changing their code. After adding the new API you should then deprecate the old one and schedule it for removal, as described in [Removing interfaces](#removing-interfaces).
+如果新 API 要取代既有 API，它必须严格优于后者，使新 API 带来的好处超过调用者改代码的代价。添加新 API 后，您应弃用旧 API 并安排其移除，如[移除接口](#移除接口)一节所述。
 
-If you deem an existing API deficient and want to fix it, the preferred approach in most cases is to add a differently-named replacement and deprecate the existing API rather than modify it. It is important to make the changes visible to our callers (e.g. through compile- or run-time deprecation warnings) and make it clear how to transition to the new API (e.g. in the Doxygen documentation or on the wiki).
+如果您认为某个既有 API 有缺陷并想修复它，多数情况下的首选做法是新增一个不同名称的替代 API 并弃用既有 API，而不是直接修改它。要让调用者切实感知这些变化（例如通过编译期或运行期弃用警告），并说明清楚如何迁移到新 API（例如在 Doxygen 文档或 wiki 中）。
 
-**API design**
+**API 设计**
 
-The FFmpeg libraries are used by a variety of callers to perform a wide range of multimedia-related processing tasks. You should therefore - within reason - try to design your new API for the broadest feasible set of use cases and avoid unnecessarily limiting it to a specific type of callers (e.g. just media playback or just transcoding).
+FFmpeg 库被各种各样的调用者用于执行广泛的多媒体处理任务。因此，您应在合理范围内尽量面向最广的可行用例集合来设计新 API，避免不必要地把它局限于某类调用者（如仅媒体播放或仅转码）。
 
-**Consistency**
+**一致性**
 
-Check whether similar APIs already exist in FFmpeg. If they do, try to model your new addition on them to achieve better overall consistency.
+检查 FFmpeg 中是否已有类似的 API。若有，尽量以它们为蓝本设计新成员，以获得更好的整体一致性。
 
-The naming of your new identifiers should follow the [Naming conventions](#naming-conventions) and be aligned with other similar APIs, if applicable.
+新标识符的命名应遵循[命名约定](#命名约定)，并在适用时与其他类似 API 保持一致。
 
-**Extensibility**
+**可扩展性**
 
-You should also consider how your API might be extended in the future in a backward-compatible way. If you are adding a new struct `AVFoo`, the standard approach is requiring the caller to always allocate it through a constructor function, typically named `av_foo_alloc()`. This way new fields may be added to the end of the struct without breaking ABI compatibility. Typically you will also want a destructor - `av_foo_free(AVFoo**)` that frees the indirectly supplied object (and its contents, if applicable) and writes `NULL` to the supplied pointer, thus eliminating the potential dangling pointer in the caller's memory.
+您还应考虑 API 未来如何以向后兼容的方式扩展。若要添加新 struct `AVFoo`，标准做法是要求调用者始终通过构造函数分配它，该函数通常命名为 `av_foo_alloc()`。这样便可在 struct 末尾追加新字段而不破坏 ABI 兼容。通常还需要一个析构函数——`av_foo_free(AVFoo**)`，释放间接传入的对象（及其内容，如适用）并向传入的指针写入 `NULL`，从而消除调用者内存中潜在的悬空指针。
 
-If you are adding new functions, consider whether it might be desirable to tweak their behavior in the future - you may want to add a flags argument, even though it would be unused initially.
+如果添加新函数，考虑将来是否可能需要调整其行为——或许应增加一个 flags 参数，即便最初用不上。
 
-**Documentation**
+**文档**
 
-All new APIs must be documented as Doxygen-formatted comments above the identifiers you add to the public headers. You should also briefly mention the change in `doc/APIchanges`.
+所有新 API 都必须在公共头文件中所添加标识符的上方以 Doxygen 格式注释写明文档。您还应在 `doc/APIchanges` 中简要提及该变化。
 
-**Bump the version**
+**提升版本号**
 
-Backward-incompatible API or ABI changes require incrementing (bumping) the major version number, as described in [Major version bumps](#major-version-bumps). Major bumps are significant events that happen on a schedule - so if your change strictly requires one you should add it under `#if` preprocessor guards that disable it until the next major bump happens.
+破坏向后兼容的 API 或 ABI 变更需要提升（bump）主版本号，如[主版本号提升](#主版本号提升)一节所述。主版本提升是按计划发生的重大事件——因此如果您的修改确需如此，应将其置于 `#if` 预处理卫兵之下先行禁用，待下一次主版本提升时再启用。
 
-New APIs that can be added without breaking API or ABI compatibility require bumping the minor version number.
+能在不破坏 API 与 ABI 兼容的前提下添加的新 API，需要提升次版本号。
 
-Incrementing the third (micro) version component means a noteworthy binary compatible change (e.g. encoder bug fix that matters for the decoder). The third component always starts at 100 to distinguish FFmpeg from Libav.
+提升第三段（micro，微）版本号意味着一次值得注意的二进制兼容变更（例如对解码器有影响的编码器缺陷修复）。第三段版本号总是从 100 起始，以区别于 Libav。
 
-### Removing interfaces
+### 移除接口
 
-Due to abovementioned compatibility guarantees, removing APIs is an involved process that should only be undertaken with good reason. Typically a deficient, restrictive, or otherwise inadequate API is replaced by a superior one, though it does at times happen that we remove an API without any replacement (e.g. when the feature it provides is deemed not worth the maintenance effort, out of scope of the project, fundamentally flawed, etc.).
+由于上述兼容性保证，移除 API 是一个复杂的过程，只应有充分理由时才进行。通常是有缺陷、受限或以其他方式不敷使用的 API 被更优秀者取代；但偶尔我们也会在没有任何替代的情况下移除某个 API（例如其提供的功能被认为不值得维护投入、超出项目范围、存在根本性缺陷等）。
 
-The removal has two steps - first the API is deprecated and scheduled for removal, but remains present and functional. The second step is actually removing the API - this is described in [Major version bumps](#major-version-bumps).
+移除分两步——第一步先将 API 弃用并列入移除计划，此期间它仍然存在且可用；第二步才真正移除 API，这在[主版本号提升](#主版本号提升)一节有述。
 
-To deprecate an API you should signal to our users that they should stop using it. E.g. if you intend to remove struct members or functions, you should mark them with `attribute_deprecated`. When this cannot be done, it may be possible to detect the use of the deprecated API at runtime and print a warning (though take care not to print it too often). You should also document the deprecation (and the replacement, if applicable) in the relevant Doxygen documentation block.
+要弃用某个 API，您应向用户发出停止使用的信号。例如若要移除 struct 成员或函数，应为其标注 `attribute_deprecated`。当无法如此标注时，或许可以在运行期检测到已弃用 API 的使用并打印警告（注意不要打印得太频繁）。您还应在相应的 Doxygen 文档块中写明弃用（及替代方案，如适用）。
 
-Finally, you should define a deprecation guard along the lines of `#define FF_API_<FOO> (LIBAVBAR_VERSION_MAJOR < XX)` (where XX is the major version in which the API will be removed) in `libavbar/version_major.h` (`version.h` in case of `libavutil`). Then wrap all uses of the deprecated API in `#if FF_API_<FOO> .... #endif`, so that the code will automatically get disabled once the major version reaches XX. You can also use `FF_DISABLE_DEPRECATION_WARNINGS` and `FF_ENABLE_DEPRECATION_WARNINGS` to suppress compiler deprecation warnings inside these guards. You should test that the code compiles and works with the guard macro evaluating to both true and false.
+最后，您应按 `#define FF_API_<FOO> (LIBAVBAR_VERSION_MAJOR < XX)` 的形式定义弃用保护宏（其中 XX 为该 API 将被移除的主版本号），位置在 `libavbar/version_major.h`（`libavutil` 为 `version.h`）。然后，用 `#if FF_API_<FOO> .... #endif` 包裹已弃用 API 的所有使用处，使代码在主版本达到 XX 时自动禁用。您还可以在这些卫兵内使用 `FF_DISABLE_DEPRECATION_WARNINGS` 和 `FF_ENABLE_DEPRECATION_WARNINGS` 来抑制编译器弃用警告。您应测试代码在保护宏取真与取假两种情况下都能编译并正常工作。
 
-### Major version bumps
+### 主版本号提升
 
-A major version bump signifies an API and/or ABI compatibility break. To reduce the negative effects on our callers, who are required to adapt their code, backward-incompatible changes during a major bump should be limited to:
+主版本号提升意味着 API 和/或 ABI 兼容性破坏。为减轻调用者（他们必须适配自己的代码）受到的负面影响，主版本提升期间的不兼容变更应仅限于：
 
-- Removing previously deprecated APIs.
+- 移除此前已弃用的 API。
 
-- Performing ABI- but not API-breaking changes, like reordering struct contents.
+- 执行破坏 ABI 但不破坏 API 的变更，例如重排 struct 成员顺序。
 
-## Documentation/Other
+## 文档与其他
 
-**Subscribe to the ffmpeg-devel mailing list.**
+**订阅 ffmpeg-devel 邮件列表。**
 
-It is important to be subscribed to the [ffmpeg-devel](https://lists.ffmpeg.org/mailman/listinfo/ffmpeg-devel) mailing list. Almost any non-trivial patch is to be sent there for review. Other developers may have comments about your contribution. We expect you see those comments, and to improve it if requested. (N.B. Experienced committers have other channels, and may sometimes skip review for trivial fixes.) Also, discussion here about bug fixes and FFmpeg improvements by other developers may be helpful information for you. Finally, by being a list subscriber, your contribution will be posted immediately to the list, without the moderation hold which messages from non-subscribers experience.
+订阅 [ffmpeg-devel](https://lists.ffmpeg.org/mailman/listinfo/ffmpeg-devel) 邮件列表很重要。几乎所有非平凡补丁都应发到该列表接受评审。其他开发者可能对您的贡献提出意见，我们期望您看到这些意见，并在被要求时加以改进。（注意：有经验的提交者另有渠道，对琐碎修复有时可跳过评审。）此外，其他开发者在这里讨论的缺陷修复与 FFmpeg 改进对您也可能是很有用的信息。最后，作为列表订阅者，您的贡献会立即投递到列表，而不会经历非订阅者消息所受的审核滞留。
 
-However, it is more important to the project that we receive your patch than that you be subscribed to the ffmpeg-devel list. If you have a patch, and don't want to subscribe and discuss the patch, then please do send it to the list anyway.
+不过，对项目而言，收到您的补丁比您订阅 ffmpeg-devel 列表更重要。如果您手头有补丁，又不想订阅并讨论它，也请照样发到列表。
 
-**Subscribe to the ffmpeg-cvslog mailing list.**
+**订阅 ffmpeg-cvslog 邮件列表。**
 
-Diffs of all commits are sent to the [ffmpeg-cvslog](https://lists.ffmpeg.org/mailman/listinfo/ffmpeg-cvslog) mailing list. Some developers read this list to review all code base changes from all sources. Subscribing to this list is not mandatory.
+所有提交的 diff 都会发送到 [ffmpeg-cvslog](https://lists.ffmpeg.org/mailman/listinfo/ffmpeg-cvslog) 邮件列表。一些开发者阅读该列表以评审来自所有来源的全部代码库变更。是否订阅该列表不做强制要求。
 
-**Keep the documentation up to date.**
+**保持文档同步更新。**
 
-Update the documentation if you change behavior or add features. If you are unsure how best to do this, send a patch to ffmpeg-devel, the documentation maintainer(s) will review and commit your stuff.
+如果您更改了行为或添加了功能，请更新文档。若不确定怎样写最好，请把补丁发到 ffmpeg-devel，文档维护者会评审并提交您的内容。
 
-**Important discussions should be accessible to all.**
+**重要讨论应让所有人都能看到。**
 
-Try to keep important discussions and requests (also) on the public developer mailing list, so that all developers can benefit from them.
+尽量把重要的讨论和请求（也）放在公开的开发邮件列表上，让所有开发者都能从中受益。
 
-**Check your entries in MAINTAINERS.**
+**检查您在 MAINTAINERS 中的条目。**
 
-Make sure that no parts of the codebase that you maintain are missing from the `MAINTAINERS` file. If something that you want to maintain is missing add it with your name after it. If at some point you no longer want to maintain some code, then please help in finding a new maintainer and also don't forget to update the `MAINTAINERS` file.
+确保您维护的代码库部分没有遗漏于 `MAINTAINERS` 文件。若您想维护的内容尚未列出，请将您的名字附在其后加入。若某个时候您不再想维护某些代码，请协助寻找新的维护者，并且别忘了更新 `MAINTAINERS` 文件。
 
-We think our rules are not too hard. If you have comments, contact us.
+我们认为这些规则并不苛刻。如有意见，欢迎联系我们。
 
-# Submitting patches
+# 提交补丁
 
-First, read the [Coding Rules](#coding-rules) above if you did not yet, in particular the rules regarding patch submission.
+首先，如果您还没有读过前文的[编码规则](#编码规则)，请先阅读它，尤其是有关补丁提交的规则。
 
-When you submit your patch, please use `git format-patch` or `git send-email`. We cannot read other diffs :-).
+提交补丁时，请使用 `git format-patch` 或 `git send-email`。我们读不了其他格式的 diff :-)。
 
-Also please do not submit a patch which contains several unrelated changes. Split it into separate, self-contained pieces. This does not mean splitting file by file. Instead, make the patch as small as possible while still keeping it as a logical unit that contains an individual change, even if it spans multiple files. This makes reviewing your patches much easier for us and greatly increases your chances of getting your patch applied.
+另外请不要提交包含多个不相关修改的补丁。请将其拆分为各自独立的部分。这不是按文件拆分，而是让补丁在仍保持为一个包含单项修改的逻辑单元的前提下尽量小，即便它横跨多个文件。这会让我们评审您的补丁轻松得多，也大大提高补丁被采纳的机会。
 
-Use the patcheck tool of FFmpeg to check your patch. The tool is located in the tools directory.
+请使用 FFmpeg 的 patcheck 工具检查您的补丁，该工具位于 tools 目录。
 
-Run the [Regression tests](#regression-tests) before submitting a patch in order to verify it does not cause unexpected problems.
+提交补丁前请运行[回归测试](#回归测试)，以验证补丁不会造成意外问题。
 
-It also helps quite a bit if you tell us what the patch does (for example 'replaces lrint by lrintf'), and why (for example '\*BSD isn't C99 compliant and has no lrint()')
+如果您能说明补丁做了什么（例如"用 lrintf 替换 lrint"）以及为什么（例如"\*BSD 不符合 C99、没有 lrint()"），也会很有帮助。
 
-Also please if you send several patches, send each patch as a separate mail, do not attach several unrelated patches to the same mail.
+另外，若发送多个补丁，请每个补丁单独一封邮件，不要把多个不相关补丁附加在同一封邮件里。
 
-Patches should be posted to [Forgejo](https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls) or the [ffmpeg-devel](https://lists.ffmpeg.org/mailman/listinfo/ffmpeg-devel) mailing list. Use `git send-email` when possible since it will properly send patches without requiring extra care. If you cannot, then send patches as base64-encoded attachments, so your patch is not trashed during transmission. Also ensure the correct mime type is used (text/x-diff or text/x-patch or at least text/plain) and that only one patch is inline or attached per mail. You can check <https://patchwork.ffmpeg.org>, if your patch does not show up, its mime type likely was wrong.
+补丁应发布到 [Forgejo](https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls) 或 [ffmpeg-devel](https://lists.ffmpeg.org/mailman/listinfo/ffmpeg-devel) 邮件列表。尽可能使用 `git send-email`，它能正确发送补丁而无需额外操心。若无法使用，请将补丁作为 base64 编码的附件发送，以免补丁在传输中被破坏。同时确保使用正确的 MIME 类型（text/x-diff 或 text/x-patch，至少为 text/plain），且每封邮件内嵌或附件只含一个补丁。您可以到 <https://patchwork.ffmpeg.org> 查看；如果补丁没有出现，很可能是 MIME 类型不对。
 
-**How to setup git send-email?**
+**如何配置 git send-email？**
 
-Please see <https://git-send-email.io/>. For gmail additionally see <https://shallowsky.com/blog/tech/email/gmail-app-passwds.html>.
+请参见 <https://git-send-email.io/>。Gmail 用户另见 <https://shallowsky.com/blog/tech/email/gmail-app-passwds.html>。
 
-**Sending patches from email clients**
+**从邮件客户端发送补丁**
 
-Using `git send-email` might not be desirable for everyone. The following trick allows to send patches via email clients in a safe way. It has been tested with Outlook and Thunderbird (with X-Unsent extension) and might work with other applications.
+并非人人都适合用 `git send-email`。下面的技巧允许以安全的方式经邮件客户端发送补丁。它已在 Outlook 和 Thunderbird（借助 X-Unsent 扩展）上测试通过，可能也适用于其他应用。
 
-Create your patch like this:
+像这样创建补丁：
 
 ``` text
 git format-patch -s -o "outputfolder" --add-header "X-Unsent: 1" --suffix .eml --to ffmpeg-devel@ffmpeg.org -1 1a2b3c4d
 ```
 
-Now you'll just need to open the eml file with the email application and execute 'Send'.
+之后只需用邮件应用打开该 eml 文件并执行"发送"即可。
 
-**Reviews**
+**评审**
 
-Your patch or pull request will be reviewed on the mailing list or on code.ffmpeg.org. You will likely be asked to make some changes and are expected to send in an improved version that incorporates the requests from the review. This process may go through several iterations. Once your patch is deemed good enough, some developer will pick it up and commit it to the official FFmpeg tree. If you want an LLM-based review, add [Forgejo Fairy](https://code.ffmpeg.org/Forgejo_Fairy) as a reviewer to your pull request. Issues with Fairy herself can be reported at her [repository](https://code.ffmpeg.org/michaelni/Fairies).
+您的补丁或拉取请求将在邮件列表或 code.ffmpeg.org 上评审。您很可能会被要求做一些修改，并应在修改后提交采纳了评审意见的改进版本。此过程可能历经数轮。补丁一旦被认为足够好，某位开发者会接手并将其提交到官方 FFmpeg 代码树。如果您想要基于 LLM 的评审，可将 [Forgejo Fairy](https://code.ffmpeg.org/Forgejo_Fairy) 加为您拉取请求的评审人。Fairy 本身的问题可报告到她的[仓库](https://code.ffmpeg.org/michaelni/Fairies)。
 
-Give us a few days to react. But if some time passes without reaction, send a reminder by email. Your patch should eventually be dealt with.
+给我们几天反应时间。若一段时间过去仍无反应，请发邮件提醒。您的补丁终会得到处理。
 
-# New codecs or formats checklist
+# 新编解码器或格式检查清单
 
-1.  Did you use av_cold for codec initialization and close functions?
+1.  编解码器的初始化与关闭函数是否使用了 av_cold？
 
-2.  Did you add a long_name under NULL_IF_CONFIG_SMALL to the AVCodec or AVInputFormat/AVOutputFormat struct?
+2.  是否在 NULL_IF_CONFIG_SMALL 之下为 AVCodec 或 AVInputFormat/AVOutputFormat 结构体添加了 long_name？
 
-3.  Did you bump the minor version number (and reset the micro version number) in `libavcodec/version.h` or `libavformat/version.h`?
+3.  是否在 `libavcodec/version.h` 或 `libavformat/version.h` 中提升了次版本号（并重置微版本号）？
 
-4.  Did you register it in `allcodecs.c` or `allformats.c`?
+4.  是否已在 `allcodecs.c` 或 `allformats.c` 中注册？
 
-5.  Did you add the AVCodecID to `codec_id.h`? When adding new codec IDs, also add an entry to the codec descriptor list in `libavcodec/codec_desc.c`.
+5.  是否已把 AVCodecID 添加到 `codec_id.h`？添加新编解码器 ID 时，还应向 `libavcodec/codec_desc.c` 的编解码器描述符列表添加条目。
 
-6.  If it has a FourCC, did you add it to `libavformat/riff.c`, even if it is only a decoder?
+6.  若它有 FourCC，是否已将其添加到 `libavformat/riff.c`，即便它只是个解码器？
 
-7.  Did you add a rule to compile the appropriate files in the Makefile? Remember to do this even if you're just adding a format to a file that is already being compiled by some other rule, like a raw demuxer.
+7.  是否在 Makefile 中添加了编译相应文件的规则？即使只是向某个已由其他规则编译的文件（如裸 demuxer）添加一种格式，也记得要做这一步。
 
-8.  Did you add an entry to the table of supported formats or codecs in `doc/general_contents.texi`?
+8.  是否已向 `doc/general_contents.texi` 的受支持格式或编解码器表添加条目？
 
-9.  Did you add an entry in the Changelog?
+9.  是否已在 Changelog 中添加条目？
 
-10. If it depends on a parser or a library, did you add that dependency in configure?
+10. 若它依赖某个解析器或库，是否已在 configure 中添加该依赖？
 
-11. Did you `git add` the appropriate files before committing?
+11. 提交前是否已 `git add` 相应文件？
 
-12. Did you make sure it compiles standalone, i.e. with `configure --disable-everything --enable-decoder=foo` (or `--enable-demuxer` or whatever your component is)?
+12. 是否已确认它能独立编译，即用 `configure --disable-everything --enable-decoder=foo`（或 `--enable-demuxer` 或您的组件对应的选项）验证过？
 
-# Patch submission checklist
+# 补丁提交检查清单
 
-1.  Does `make fate` pass with the patch applied?
+1.  应用补丁后 `make fate` 是否通过？
 
-2.  Was the patch generated with git format-patch or send-email?
+2.  补丁是否用 git format-patch 或 send-email 生成？
 
-3.  Did you sign-off your patch? (`git commit -s`) See [Sign your work](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/Documentation/process/submitting-patches.rst) for the meaning of sign-off.
+3.  是否已为补丁签署（sign-off）？（`git commit -s`）签署的含义见 [Sign your work](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/Documentation/process/submitting-patches.rst)。
 
-4.  Did you provide a clear git commit log message?
+4.  是否提供了清晰的 git 提交日志信息？
 
-5.  Is the patch against latest FFmpeg git master branch?
+5.  补丁是否基于最新的 FFmpeg git master 分支？
 
-6.  Are you subscribed to ffmpeg-devel? (the list is subscribers only due to spam)
+6.  您是否订阅了 ffmpeg-devel？（因垃圾邮件问题，该列表仅限订阅者发帖）
 
-7.  Have you checked that the changes are minimal, so that the same cannot be achieved with a smaller patch and/or simpler final code?
+7.  是否已确认修改足够精简，同样的效果无法用更小的补丁和/或更简单的最终代码实现？
 
-8.  If the change is to speed critical code, did you benchmark it?
+8.  若改动涉及速度关键代码，是否做过基准测试？
 
-9.  If you did any benchmarks, did you provide them in the mail?
+9.  若做过基准测试，是否已在邮件中提供结果？
 
-10. Have you checked that the patch does not introduce buffer overflows or other security issues?
+10. 是否已确认补丁不引入缓冲区溢出或其他安全问题？
 
-11. Did you test your decoder or demuxer against damaged data? If no, see tools/trasher, the noise bitstream filter, and [zzuf](http://caca.zoy.org/wiki/zzuf). Your decoder or demuxer should not crash, end in a (near) infinite loop, or allocate ridiculous amounts of memory when fed damaged data.
+11. 是否用损坏数据测试过您的解码器或解复用器？若没有，请参见 tools/trasher、noise 比特流滤镜以及 [zzuf](http://caca.zoy.org/wiki/zzuf)。喂入损坏数据时，解码器或解复用器不应崩溃、陷入（近乎）无限循环或分配荒谬数量的内存。
 
-12. Did you test your decoder or demuxer against sample files? Samples may be obtained at <https://samples.ffmpeg.org>.
+12. 是否用样本文件测试过您的解码器或解复用器？样本可从 <https://samples.ffmpeg.org> 获取。
 
-13. Does the patch not mix functional and cosmetic changes?
+13. 补丁是否没有把功能性与外观性修改混在一起？
 
-14. Did you add tabs or trailing whitespace to the code? Both are forbidden.
+14. 是否向代码中添加了制表符或行尾空白？两者都在禁止之列。
 
-15. Is the patch attached to the email you send?
+15. 补丁是否随您发送的邮件附上？
 
-16. Is the mime type of the patch correct? It should be text/x-diff or text/x-patch or at least text/plain and not application/octet-stream.
+16. 补丁的 MIME 类型是否正确？应为 text/x-diff 或 text/x-patch，至少是 text/plain，而不能是 application/octet-stream。
 
-17. If the patch fixes a bug, did you provide a verbose analysis of the bug?
+17. 若补丁修复缺陷，是否提供了对该缺陷的详尽分析？
 
-18. If the patch fixes a bug, did you provide enough information, including a sample, so the bug can be reproduced and the fix can be verified? Note please do not attach samples \>100k to mails but rather provide a URL, you can upload to <https://streams.videolan.org/upload/>.
+18. 若补丁修复缺陷，是否提供了包括样本在内的足够信息，使缺陷可复现、修复可验证？注意请勿向邮件附加大于 \>100k 的样本，而应提供 URL，可上传至 <https://streams.videolan.org/upload/>。
 
-19. Did you provide a verbose summary about what the patch does change?
+19. 是否提供了关于补丁所做修改的详尽摘要？
 
-20. Did you provide a verbose explanation why it changes things like it does?
+20. 是否提供了为什么这样修改的详尽解释？
 
-21. Did you provide a verbose summary of the user visible advantages and disadvantages if the patch is applied?
+21. 若应用补丁，是否提供了对用户可见的优缺点的详尽总结？
 
-22. Did you provide an example so we can verify the new feature added by the patch easily?
+22. 是否提供了便于我们验证补丁新增功能的示例？
 
-23. If you added a new file, did you insert a license header? It should be taken from FFmpeg, not randomly copied and pasted from somewhere else.
+23. 若新增了文件，是否插入了许可证头？应取自 FFmpeg，而不是随意从别处复制粘贴。
 
-24. You should maintain alphabetical order in alphabetically ordered lists as long as doing so does not break API/ABI compatibility.
+24. 在按字母序排列的列表中，只要不破坏 API/ABI 兼容，就应保持字母序。
 
-25. Lines with similar content should be aligned vertically when doing so improves readability.
+25. 内容相近的行若纵向对齐能提升可读性，就应纵向对齐。
 
-26. Consider adding a regression test for your code. All new modules should be covered by tests. That includes demuxers, muxers, decoders, encoders filters, bitstream filters, parsers. If its not possible to do that, add an explanation why to your patchset, its ok to not test if there's a reason.
+26. 考虑为您的代码添加回归测试。所有新模块都应有测试覆盖，包括解复用器、复用器、解码器、编码器、滤镜、比特流滤镜、解析器。若确实无法覆盖，请在补丁集中说明原因；有理由不做测试是可以接受的。
 
-27. If you added NASM code please check that things still work with –disable-x86asm.
+27. 若添加了 NASM 代码，请检查在 –disable-x86asm 下一切仍正常工作。
 
-28. Test your code with valgrind and or Address Sanitizer to ensure it's free of leaks, out of array accesses, etc.
+28. 用 valgrind 和/或 Address Sanitizer 测试您的代码，确保其不存在内存泄漏、越界访问等问题。
 
-# Patch review process
+# 补丁评审流程
 
-All patches posted to ffmpeg-devel will be reviewed, unless they contain a clear note that the patch is not for the git master branch. Reviews and comments will be posted as replies to the patch on the mailing list. The patch submitter then has to take care of every comment, that can be by resubmitting a changed patch or by discussion. Resubmitted patches will themselves be reviewed like any other patch. If at some point a patch passes review with no comments then it is approved, that can for simple and small patches happen immediately while large patches will generally have to be changed and reviewed many times before they are approved. After a patch is approved it will be committed to the repository.
+发布到 ffmpeg-devel 的所有补丁都会被评审，除非补丁中明确注明不适用于 git master 分支。评审与意见将作为对补丁的回复张贴在邮件列表上。补丁提交者必须处理每一条意见，方式可以是重新提交修改后的补丁，也可以是讨论。重新提交的补丁将像其他补丁一样再次评审。若某补丁在评审中未收到任何意见而通过，即为获批；简单的小补丁可能立即通过，而大补丁通常要经过多轮修改与评审方能获批。补丁获批后将被提交进仓库。
 
-We will review all submitted patches, but sometimes we are quite busy so especially for large patches this can take several weeks.
+我们会评审所有提交的补丁，但有时相当繁忙，因此对大补丁而言这可能耗费数周。
 
-If you feel that the review process is too slow and you are willing to try to take over maintainership of the area of code you change then just clone git master and maintain the area of code there. We will merge each area from where its best maintained.
+如果您觉得评审流程太慢，并愿意尝试接手您所改代码区域的维护工作，那么直接克隆 git master 并在该处维护该代码区域即可。我们会从维护得最好的地方合并每个区域。
 
-When resubmitting patches, please do not make any significant changes not related to the comments received during review. Such patches will be rejected. Instead, submit significant changes or new features as separate patches.
+重新提交补丁时，请不要夹带与评审意见无关的重大改动。此类补丁将被拒绝。重大改动或新功能应作为单独的补丁提交。
 
-Everyone is welcome to review patches. Also if you are waiting for your patch to be reviewed, please consider helping to review other patches, that is a great way to get everyone's patches reviewed sooner.
+欢迎所有人评审补丁。如果您正在等待自己的补丁被评审，也请考虑帮忙评审其他人的补丁——这是让大家的补丁都更快得到评审的好办法。
 
-# Regression tests
+# 回归测试
 
-Before submitting a patch (or committing to the repository), you should at least test that you did not break anything.
+在提交补丁（或向仓库提交代码）之前，您至少应测试确认没有破坏任何东西。
 
-Running 'make fate' accomplishes this, please see [fate.html](fate.md) for details.
+运行 'make fate' 即可完成此项检查，详情请参见 [FATE](fate.md)。
 
-\[Of course, some patches may change the results of the regression tests. In this case, the reference results of the regression tests shall be modified accordingly\].
+\[当然，某些补丁可能会改变回归测试的结果。这种情况下，应相应修改回归测试的参考结果\]。
 
-## Adding files to the fate-suite dataset
+## 向 fate-suite 数据集添加文件
 
-If you need a sample uploaded send a mail to samples-request.
+如果需要上传样本，请发邮件至 samples-request。
 
-When there is no muxer or encoder available to generate test media for a specific test then the media has to be included in the fate-suite. First please make sure that the sample file is as small as possible to test the respective decoder or demuxer sufficiently. Large files increase network bandwidth and disk space requirements. Once you have a working fate test and fate sample, provide in the commit message or introductory message for the patch series that you post to the ffmpeg-devel mailing list, a direct link to download the sample media.
+当没有可用来生成某个测试所需测试媒体的复用器或编码器时，该媒体就必须纳入 fate-suite。首先请确保样本文件在足以充分测试相应解码器或解复用器的前提下尽量小。大文件会增加网络带宽和磁盘空间开销。当您有了可用的 fate 测试和 fate 样本后，请在提交信息中，或在其发布到 ffmpeg-devel 邮件列表的补丁系列的说明信中，给出样本媒体的直接下载链接。
 
-## Visualizing Test Coverage
+## 可视化测试覆盖率
 
-The FFmpeg build system allows visualizing the test coverage in an easy manner with the coverage tools `gcov`/`lcov`. This involves the following steps:
+FFmpeg 构建系统支持用覆盖率工具 `gcov`/`lcov` 以简便方式可视化测试覆盖率，包含以下步骤：
 
-1.  Configure to compile with instrumentation enabled: `configure --toolchain=gcov`.
+1.  以启用插桩的方式配置编译：`configure --toolchain=gcov`。
 
-2.  Run your test case, either manually or via FATE. This can be either the full FATE regression suite, or any arbitrary invocation of any front-end tool provided by FFmpeg, in any combination.
+2.  手动或经 FATE 运行您的测试用例。可以是完整的 FATE 回归测试套件，也可以是对 FFmpeg 提供的任何前端工具的任意调用的任意组合。
 
-3.  Run `make lcov` to generate coverage data in HTML format.
+3.  运行 `make lcov` 生成 HTML 格式的覆盖率数据。
 
-4.  View `lcov/index.html` in your preferred HTML viewer.
+4.  在您惯用的 HTML 查看器中查看 `lcov/index.html`。
 
-You can use the command `make lcov-reset` to reset the coverage measurements. You will need to rerun `make lcov` after running a new test.
+可用命令 `make lcov-reset` 重置覆盖率测量结果。运行新测试后需重新执行 `make lcov`。
 
-## Using Valgrind
+## 使用 Valgrind
 
-The configure script provides a shortcut for using valgrind to spot bugs related to memory handling. Just add the option `--toolchain=valgrind-memcheck` or `--toolchain=valgrind-massif` to your configure line, and reasonable defaults will be set for running FATE under the supervision of either the **memcheck** or the **massif** tool of the valgrind suite.
+configure 脚本为用 valgrind 发现内存处理相关缺陷提供了快捷方式：只需在 configure 命令行加上选项 `--toolchain=valgrind-memcheck` 或 `--toolchain=valgrind-massif`，即可为在 valgrind 套件的 **memcheck** 或 **massif** 工具监督下运行 FATE 设置合理的默认值。
 
-In case you need finer control over how valgrind is invoked, use the `--target-exec='valgrind <your_custom_valgrind_options>` option in your configure line instead.
+如需对 valgrind 的调用方式做更细的控制，请改用 configure 命令行中的 `--target-exec='valgrind <your_custom_valgrind_options>` 选项。
 
-# Maintenance process
+# 维护流程
 
 ## MAINTAINERS
 
-The developers maintaining each part of the codebase are listed in `MAINTAINERS`. Being listed in `MAINTAINERS`, gives one the right to have git write access to the specific repository.
+维护代码库各部分的开发者名单收录于 `MAINTAINERS`。被列入 `MAINTAINERS` 即意味着获得相应仓库的 git 写权限。
 
-## Becoming a maintainer
+## 成为维护者
 
-People add themselves to `MAINTAINERS` by sending a patch like any other code change. These get reviewed by the community like any other patch. It is expected that, if someone has an objection to a new maintainer, she is willing to object in public with her full name and is willing to take over maintainership for the area.
+人们像提交其他代码修改一样，通过发送补丁把自己加入 `MAINTAINERS`。这类补丁会像其他补丁一样接受社区评审。如果有人反对新增维护者，我们期望其愿意公开以真名提出反对，并愿意接手该区域的维护工作。
 
-# Release process
+# 发布流程
 
-FFmpeg maintains a set of **release branches**, which are the recommended deliverable for system integrators and distributors (such as Linux distributions, etc.). At regular times, a **release manager** prepares, tests and publishes tarballs on the <https://ffmpeg.org> website.
+FFmpeg 维护一组**发布分支**，它们是面向系统集成方与发行方（如各 Linux 发行版等）推荐的交付物。**发布负责人**会定期准备、测试并在 <https://ffmpeg.org> 网站上发布 tarball。
 
-There are two kinds of releases:
+发布分为两类：
 
-1.  **Major releases** always include the latest and greatest features and functionality.
+1.  **主版本发布**总是包含最新最强的特性与功能。
 
-2.  **Point releases** are cut from **release** branches, which are named `release/X`, with `X` being the release version number.
+2.  **点版本发布**从**发布**分支切出，分支命名为 `release/X`，其中 `X` 为发布版本号。
 
-Note that we promise to our users that shared libraries from any FFmpeg release never break programs that have been **compiled** against previous versions of **the same release series** in any case!
+请注意，我们向用户承诺：任何 FFmpeg 发布中的共享库在任何情况下都不会破坏**针对同一发布系列**先前版本**编译**的程序！
 
-However, from time to time, we do make API changes that require adaptations in applications. Such changes are only allowed in (new) major releases and require further steps such as bumping library version numbers and/or adjustments to the symbol versioning file. Please discuss such changes on the **ffmpeg-devel** mailing list in time to allow forward planning.
+不过，我们不时会做出需要应用程序适配的 API 变更。此类变更只允许出现在（新的）主版本发布中，并需要进一步的操作，如提升库版本号和/或调整符号版本文件。请及时在 **ffmpeg-devel** 长列表上讨论此类变更，以便提前规划。
 
-## Criteria for Point Releases
+## 点版本发布的标准
 
-Changes that match the following criteria are valid candidates for inclusion into a point release:
+符合以下标准的修改可以作为纳入点版本发布的候选：
 
-1.  Fixes a security issue, preferably identified by a **CVE number** issued by <http://cve.mitre.org/>.
+1.  修复安全问题，最好是 <http://cve.mitre.org/> 颁发的 **CVE 编号**所标识的问题。
 
-2.  Fixes a documented bug in <https://trac.ffmpeg.org>.
+2.  修复 <https://trac.ffmpeg.org> 上有记载的缺陷。
 
-3.  Improves the included documentation.
+3.  改进随附文档。
 
-4.  Retains both source code and binary compatibility with previous point releases of the same release branch.
+4.  与同一发布分支先前点版本发布保持源码与二进制两方面的兼容。
 
-The order for checking the rules is (1 OR 2 OR 3) AND 4.
+规则的判定顺序为（1 或 2 或 3）且 4。
 
-## Release Checklist
+## 发布检查清单
 
-The release process involves the following steps:
+发布流程包含以下步骤：
 
-1.  Ensure that the `RELEASE` file contains the version number for the upcoming release.
+1.  确保 `RELEASE` 文件包含即将发布版本的版本号。
 
-2.  Add the release at <https://trac.ffmpeg.org/admin/ticket/versions>.
+2.  在 <https://trac.ffmpeg.org/admin/ticket/versions> 添加该发布。
 
-3.  Announce the intent to do a release to the mailing list.
+3.  向邮件列表宣布发布意向。
 
-4.  Make sure all relevant security fixes have been backported. See <https://ffmpeg.org/security.html>.
+4.  确保所有相关的安全修复都已回迁。参见 <https://ffmpeg.org/security.html>。
 
-5.  Ensure that the FATE regression suite still passes in the release branch on at least **i386** and **amd64** (cf. [Regression tests](#regression-tests)).
+5.  确保 FATE 回归测试套件在发布分支上至少于 **i386** 和 **amd64** 上通过（参见[回归测试](#回归测试)）。
 
-6.  Prepare the release tarballs in `bz2` and `gz` formats, and supplementing files that contain `gpg` signatures
+6.  准备 `bz2` 与 `gz` 两种格式的发布 tarball，以及包含 `gpg` 签名的补充文件
 
-7.  Publish the tarballs at <https://ffmpeg.org/releases>. Create and push an annotated tag in the form `nX`, with `X` containing the version number.
+7.  在 <https://ffmpeg.org/releases> 发布 tarball。创建并推送形如 `nX` 的附注标签，`X` 为版本号。
 
-8.  Propose and send a patch to the **ffmpeg-devel** mailing list with a news entry for the website.
+8.  向 **ffmpeg-devel** 邮件列表提交并发送一份带有网站新闻条目的补丁。
 
-9.  Publish the news entry.
+9.  发布该新闻条目。
 
-10. Send an announcement to the mailing list.
+10. 向邮件列表发送公告。

@@ -213233,7 +213233,7 @@
             "level": 1,
             "title": "Introduction"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -213245,7 +213245,7 @@
           "metadata": {
             "section": "Introduction"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -213257,7 +213257,7 @@
           "metadata": {
             "section": "Introduction"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -213269,7 +213269,7 @@
           "metadata": {
             "section": "Introduction"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -213281,7 +213281,7 @@
           "metadata": {
             "section": "Introduction"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p4",
@@ -213293,7 +213293,7 @@
           "metadata": {
             "section": "Introduction"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p5",
@@ -213305,7 +213305,7 @@
           "metadata": {
             "section": "Introduction"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p6",
@@ -213317,7 +213317,7 @@
           "metadata": {
             "section": "Introduction"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p7",
@@ -213329,7 +213329,7 @@
           "metadata": {
             "section": "Introduction"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p8",
@@ -213341,7 +213341,7 @@
           "metadata": {
             "section": "Introduction"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p9",
@@ -213353,7 +213353,7 @@
           "metadata": {
             "section": "Introduction"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p10",
@@ -213367,7 +213367,7 @@
             "level": 1,
             "title": "Coding Rules"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -213381,7 +213381,7 @@
             "level": 2,
             "title": "Language"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -213393,7 +213393,7 @@
           "metadata": {
             "section": "Language"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -213405,7 +213405,7 @@
           "metadata": {
             "section": "Language"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -213417,7 +213417,7 @@
           "metadata": {
             "section": "Language"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -213429,7 +213429,7 @@
           "metadata": {
             "section": "Language"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p4",
@@ -213441,7 +213441,7 @@
           "metadata": {
             "section": "Language"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p5",
@@ -213455,7 +213455,7 @@
             "level": 3,
             "title": "SIMD/DSP"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -213467,7 +213467,7 @@
           "metadata": {
             "section": "SIMD/DSP"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -213479,7 +213479,7 @@
           "metadata": {
             "section": "SIMD/DSP"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -213491,7 +213491,7 @@
           "metadata": {
             "section": "SIMD/DSP"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -213503,7 +213503,7 @@
           "metadata": {
             "section": "SIMD/DSP"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p4",
@@ -213515,7 +213515,7 @@
           "metadata": {
             "section": "SIMD/DSP"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p5",
@@ -213529,7 +213529,7 @@
             "level": 3,
             "title": "Other languages"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -213541,7 +213541,7 @@
           "metadata": {
             "section": "Other languages"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -213553,7 +213553,7 @@
           "metadata": {
             "section": "Other languages"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -213565,7 +213565,7 @@
           "metadata": {
             "section": "Other languages"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -213579,7 +213579,7 @@
             "level": 2,
             "title": "Code formatting conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -213591,7 +213591,7 @@
           "metadata": {
             "section": "Code formatting conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -213603,7 +213603,7 @@
           "metadata": {
             "section": "Code formatting conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -213615,7 +213615,7 @@
           "metadata": {
             "section": "Code formatting conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -213627,7 +213627,7 @@
           "metadata": {
             "section": "Code formatting conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p4",
@@ -213639,7 +213639,7 @@
           "metadata": {
             "section": "Code formatting conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p5",
@@ -213651,7 +213651,7 @@
           "metadata": {
             "section": "Code formatting conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p6",
@@ -213665,7 +213665,7 @@
             "level": 3,
             "title": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -213677,7 +213677,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -213689,7 +213689,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -213701,7 +213701,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -213713,7 +213713,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p4",
@@ -213725,7 +213725,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p5",
@@ -213737,7 +213737,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p6",
@@ -213749,7 +213749,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p7",
@@ -213761,7 +213761,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p8",
@@ -213773,7 +213773,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p9",
@@ -213785,7 +213785,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p10",
@@ -213797,7 +213797,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p11",
@@ -213809,7 +213809,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p12",
@@ -213821,7 +213821,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p13",
@@ -213833,7 +213833,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p14",
@@ -213845,7 +213845,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p15",
@@ -213857,7 +213857,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p16",
@@ -213869,7 +213869,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p17",
@@ -213881,7 +213881,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p18",
@@ -213893,7 +213893,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p19",
@@ -213905,7 +213905,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p20",
@@ -213917,7 +213917,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p21",
@@ -213929,7 +213929,7 @@
           "metadata": {
             "section": "Examples"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p22",
@@ -213943,7 +213943,7 @@
             "level": 3,
             "title": "Vim configuration"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -213955,7 +213955,7 @@
           "metadata": {
             "section": "Vim configuration"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -213967,7 +213967,7 @@
           "metadata": {
             "section": "Vim configuration"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -213981,7 +213981,7 @@
             "level": 3,
             "title": "Emacs configuration"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -213993,7 +213993,7 @@
           "metadata": {
             "section": "Emacs configuration"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -214005,7 +214005,7 @@
           "metadata": {
             "section": "Emacs configuration"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -214019,7 +214019,7 @@
             "level": 2,
             "title": "Comments"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -214031,7 +214031,7 @@
           "metadata": {
             "section": "Comments"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -214043,7 +214043,7 @@
           "metadata": {
             "section": "Comments"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -214055,7 +214055,7 @@
           "metadata": {
             "section": "Comments"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -214069,7 +214069,7 @@
             "level": 2,
             "title": "Naming conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -214081,7 +214081,7 @@
           "metadata": {
             "section": "Naming conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -214093,7 +214093,7 @@
           "metadata": {
             "section": "Naming conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -214105,7 +214105,7 @@
           "metadata": {
             "section": "Naming conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -214117,7 +214117,7 @@
           "metadata": {
             "section": "Naming conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p4",
@@ -214129,7 +214129,7 @@
           "metadata": {
             "section": "Naming conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p5",
@@ -214141,7 +214141,7 @@
           "metadata": {
             "section": "Naming conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p6",
@@ -214153,7 +214153,7 @@
           "metadata": {
             "section": "Naming conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p7",
@@ -214165,7 +214165,7 @@
           "metadata": {
             "section": "Naming conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p8",
@@ -214177,7 +214177,7 @@
           "metadata": {
             "section": "Naming conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p9",
@@ -214189,7 +214189,7 @@
           "metadata": {
             "section": "Naming conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p10",
@@ -214201,7 +214201,7 @@
           "metadata": {
             "section": "Naming conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p11",
@@ -214215,7 +214215,7 @@
             "level": 2,
             "title": "Miscellaneous conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -214227,7 +214227,7 @@
           "metadata": {
             "section": "Miscellaneous conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -214239,7 +214239,7 @@
           "metadata": {
             "section": "Miscellaneous conventions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -214253,7 +214253,7 @@
             "level": 1,
             "title": "Development Policy"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -214267,7 +214267,7 @@
             "level": 2,
             "title": "Code behaviour"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -214279,7 +214279,7 @@
           "metadata": {
             "section": "Code behaviour"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -214291,7 +214291,7 @@
           "metadata": {
             "section": "Code behaviour"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -214303,7 +214303,7 @@
           "metadata": {
             "section": "Code behaviour"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -214315,7 +214315,7 @@
           "metadata": {
             "section": "Code behaviour"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p4",
@@ -214327,7 +214327,7 @@
           "metadata": {
             "section": "Code behaviour"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p5",
@@ -214339,7 +214339,7 @@
           "metadata": {
             "section": "Code behaviour"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p6",
@@ -214351,7 +214351,7 @@
           "metadata": {
             "section": "Code behaviour"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p7",
@@ -214363,7 +214363,7 @@
           "metadata": {
             "section": "Code behaviour"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p8",
@@ -214375,7 +214375,7 @@
           "metadata": {
             "section": "Code behaviour"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p9",
@@ -214387,7 +214387,7 @@
           "metadata": {
             "section": "Code behaviour"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p10",
@@ -214399,7 +214399,7 @@
           "metadata": {
             "section": "Code behaviour"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p11",
@@ -214413,7 +214413,7 @@
             "level": 2,
             "title": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -214425,7 +214425,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -214437,7 +214437,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -214449,7 +214449,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -214461,7 +214461,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p4",
@@ -214473,7 +214473,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p5",
@@ -214485,7 +214485,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p6",
@@ -214497,7 +214497,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p7",
@@ -214509,7 +214509,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p8",
@@ -214521,7 +214521,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p9",
@@ -214533,7 +214533,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p10",
@@ -214545,7 +214545,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p11",
@@ -214557,7 +214557,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p12",
@@ -214569,7 +214569,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p13",
@@ -214581,7 +214581,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p14",
@@ -214593,7 +214593,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p15",
@@ -214605,7 +214605,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p16",
@@ -214617,7 +214617,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p17",
@@ -214629,7 +214629,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p18",
@@ -214641,7 +214641,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p19",
@@ -214653,7 +214653,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p20",
@@ -214665,7 +214665,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p21",
@@ -214677,7 +214677,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p22",
@@ -214689,7 +214689,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p23",
@@ -214701,7 +214701,7 @@
           "metadata": {
             "section": "Patches/Committing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p24",
@@ -214715,7 +214715,7 @@
             "level": 2,
             "title": "Code"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -214727,7 +214727,7 @@
           "metadata": {
             "section": "Code"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -214739,7 +214739,7 @@
           "metadata": {
             "section": "Code"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -214753,7 +214753,7 @@
             "level": 2,
             "title": "Library public interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -214765,7 +214765,7 @@
           "metadata": {
             "section": "Library public interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -214777,7 +214777,7 @@
           "metadata": {
             "section": "Library public interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -214789,7 +214789,7 @@
           "metadata": {
             "section": "Library public interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -214803,7 +214803,7 @@
             "level": 3,
             "title": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -214815,7 +214815,7 @@
           "metadata": {
             "section": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -214827,7 +214827,7 @@
           "metadata": {
             "section": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -214839,7 +214839,7 @@
           "metadata": {
             "section": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -214851,7 +214851,7 @@
           "metadata": {
             "section": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p4",
@@ -214863,7 +214863,7 @@
           "metadata": {
             "section": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p5",
@@ -214875,7 +214875,7 @@
           "metadata": {
             "section": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p6",
@@ -214887,7 +214887,7 @@
           "metadata": {
             "section": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p7",
@@ -214899,7 +214899,7 @@
           "metadata": {
             "section": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p8",
@@ -214911,7 +214911,7 @@
           "metadata": {
             "section": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p9",
@@ -214923,7 +214923,7 @@
           "metadata": {
             "section": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p10",
@@ -214935,7 +214935,7 @@
           "metadata": {
             "section": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p11",
@@ -214947,7 +214947,7 @@
           "metadata": {
             "section": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p12",
@@ -214959,7 +214959,7 @@
           "metadata": {
             "section": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p13",
@@ -214971,7 +214971,7 @@
           "metadata": {
             "section": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p14",
@@ -214983,7 +214983,7 @@
           "metadata": {
             "section": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p15",
@@ -214995,7 +214995,7 @@
           "metadata": {
             "section": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p16",
@@ -215007,7 +215007,7 @@
           "metadata": {
             "section": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p17",
@@ -215019,7 +215019,7 @@
           "metadata": {
             "section": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p18",
@@ -215031,7 +215031,7 @@
           "metadata": {
             "section": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p19",
@@ -215043,7 +215043,7 @@
           "metadata": {
             "section": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p20",
@@ -215055,7 +215055,7 @@
           "metadata": {
             "section": "Adding new interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p21",
@@ -215069,7 +215069,7 @@
             "level": 3,
             "title": "Removing interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -215081,7 +215081,7 @@
           "metadata": {
             "section": "Removing interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -215093,7 +215093,7 @@
           "metadata": {
             "section": "Removing interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -215105,7 +215105,7 @@
           "metadata": {
             "section": "Removing interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -215117,7 +215117,7 @@
           "metadata": {
             "section": "Removing interfaces"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p4",
@@ -215131,7 +215131,7 @@
             "level": 3,
             "title": "Major version bumps"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -215143,7 +215143,7 @@
           "metadata": {
             "section": "Major version bumps"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -215155,7 +215155,7 @@
           "metadata": {
             "section": "Major version bumps"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -215167,7 +215167,7 @@
           "metadata": {
             "section": "Major version bumps"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -215181,7 +215181,7 @@
             "level": 2,
             "title": "Documentation/Other"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -215193,7 +215193,7 @@
           "metadata": {
             "section": "Documentation/Other"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -215205,7 +215205,7 @@
           "metadata": {
             "section": "Documentation/Other"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -215217,7 +215217,7 @@
           "metadata": {
             "section": "Documentation/Other"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -215229,7 +215229,7 @@
           "metadata": {
             "section": "Documentation/Other"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p4",
@@ -215241,7 +215241,7 @@
           "metadata": {
             "section": "Documentation/Other"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p5",
@@ -215253,7 +215253,7 @@
           "metadata": {
             "section": "Documentation/Other"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p6",
@@ -215265,7 +215265,7 @@
           "metadata": {
             "section": "Documentation/Other"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p7",
@@ -215277,7 +215277,7 @@
           "metadata": {
             "section": "Documentation/Other"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p8",
@@ -215289,7 +215289,7 @@
           "metadata": {
             "section": "Documentation/Other"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p9",
@@ -215301,7 +215301,7 @@
           "metadata": {
             "section": "Documentation/Other"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p10",
@@ -215313,7 +215313,7 @@
           "metadata": {
             "section": "Documentation/Other"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p11",
@@ -215325,7 +215325,7 @@
           "metadata": {
             "section": "Documentation/Other"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p12",
@@ -215339,7 +215339,7 @@
             "level": 1,
             "title": "Submitting patches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -215351,7 +215351,7 @@
           "metadata": {
             "section": "Submitting patches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -215363,7 +215363,7 @@
           "metadata": {
             "section": "Submitting patches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -215375,7 +215375,7 @@
           "metadata": {
             "section": "Submitting patches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -215387,7 +215387,7 @@
           "metadata": {
             "section": "Submitting patches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p4",
@@ -215399,7 +215399,7 @@
           "metadata": {
             "section": "Submitting patches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p5",
@@ -215411,7 +215411,7 @@
           "metadata": {
             "section": "Submitting patches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p6",
@@ -215423,7 +215423,7 @@
           "metadata": {
             "section": "Submitting patches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p7",
@@ -215435,7 +215435,7 @@
           "metadata": {
             "section": "Submitting patches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p8",
@@ -215447,7 +215447,7 @@
           "metadata": {
             "section": "Submitting patches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p9",
@@ -215459,7 +215459,7 @@
           "metadata": {
             "section": "Submitting patches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p10",
@@ -215471,7 +215471,7 @@
           "metadata": {
             "section": "Submitting patches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p11",
@@ -215483,7 +215483,7 @@
           "metadata": {
             "section": "Submitting patches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p12",
@@ -215495,7 +215495,7 @@
           "metadata": {
             "section": "Submitting patches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p13",
@@ -215507,7 +215507,7 @@
           "metadata": {
             "section": "Submitting patches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p14",
@@ -215519,7 +215519,7 @@
           "metadata": {
             "section": "Submitting patches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p15",
@@ -215531,7 +215531,7 @@
           "metadata": {
             "section": "Submitting patches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p16",
@@ -215543,7 +215543,7 @@
           "metadata": {
             "section": "Submitting patches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p17",
@@ -215555,7 +215555,7 @@
           "metadata": {
             "section": "Submitting patches"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p18",
@@ -215569,7 +215569,7 @@
             "level": 1,
             "title": "New codecs or formats checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -215581,7 +215581,7 @@
           "metadata": {
             "section": "New codecs or formats checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -215593,7 +215593,7 @@
           "metadata": {
             "section": "New codecs or formats checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -215605,7 +215605,7 @@
           "metadata": {
             "section": "New codecs or formats checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -215617,7 +215617,7 @@
           "metadata": {
             "section": "New codecs or formats checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p4",
@@ -215629,7 +215629,7 @@
           "metadata": {
             "section": "New codecs or formats checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p5",
@@ -215641,7 +215641,7 @@
           "metadata": {
             "section": "New codecs or formats checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p6",
@@ -215653,7 +215653,7 @@
           "metadata": {
             "section": "New codecs or formats checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p7",
@@ -215665,7 +215665,7 @@
           "metadata": {
             "section": "New codecs or formats checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p8",
@@ -215677,7 +215677,7 @@
           "metadata": {
             "section": "New codecs or formats checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p9",
@@ -215689,7 +215689,7 @@
           "metadata": {
             "section": "New codecs or formats checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p10",
@@ -215701,7 +215701,7 @@
           "metadata": {
             "section": "New codecs or formats checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p11",
@@ -215713,7 +215713,7 @@
           "metadata": {
             "section": "New codecs or formats checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p12",
@@ -215727,7 +215727,7 @@
             "level": 1,
             "title": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -215739,7 +215739,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -215751,7 +215751,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -215763,7 +215763,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -215775,7 +215775,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p4",
@@ -215787,7 +215787,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p5",
@@ -215799,7 +215799,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p6",
@@ -215811,7 +215811,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p7",
@@ -215823,7 +215823,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p8",
@@ -215835,7 +215835,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p9",
@@ -215847,7 +215847,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p10",
@@ -215859,7 +215859,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p11",
@@ -215871,7 +215871,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p12",
@@ -215883,7 +215883,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p13",
@@ -215895,7 +215895,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p14",
@@ -215907,7 +215907,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p15",
@@ -215919,7 +215919,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p16",
@@ -215931,7 +215931,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p17",
@@ -215943,7 +215943,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p18",
@@ -215955,7 +215955,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p19",
@@ -215967,7 +215967,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p20",
@@ -215979,7 +215979,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p21",
@@ -215991,7 +215991,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p22",
@@ -216003,7 +216003,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p23",
@@ -216015,7 +216015,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p24",
@@ -216027,7 +216027,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p25",
@@ -216039,7 +216039,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p26",
@@ -216051,7 +216051,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p27",
@@ -216063,7 +216063,7 @@
           "metadata": {
             "section": "Patch submission checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p28",
@@ -216077,7 +216077,7 @@
             "level": 1,
             "title": "Patch review process"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -216089,7 +216089,7 @@
           "metadata": {
             "section": "Patch review process"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -216101,7 +216101,7 @@
           "metadata": {
             "section": "Patch review process"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -216113,7 +216113,7 @@
           "metadata": {
             "section": "Patch review process"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -216125,7 +216125,7 @@
           "metadata": {
             "section": "Patch review process"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p4",
@@ -216137,7 +216137,7 @@
           "metadata": {
             "section": "Patch review process"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p5",
@@ -216151,7 +216151,7 @@
             "level": 1,
             "title": "Regression tests"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -216163,7 +216163,7 @@
           "metadata": {
             "section": "Regression tests"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -216175,7 +216175,7 @@
           "metadata": {
             "section": "Regression tests"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -216187,7 +216187,7 @@
           "metadata": {
             "section": "Regression tests"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -216201,7 +216201,7 @@
             "level": 2,
             "title": "Adding files to the fate-suite dataset"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -216213,7 +216213,7 @@
           "metadata": {
             "section": "Adding files to the fate-suite dataset"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -216225,7 +216225,7 @@
           "metadata": {
             "section": "Adding files to the fate-suite dataset"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -216239,7 +216239,7 @@
             "level": 2,
             "title": "Visualizing Test Coverage"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -216251,7 +216251,7 @@
           "metadata": {
             "section": "Visualizing Test Coverage"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -216263,7 +216263,7 @@
           "metadata": {
             "section": "Visualizing Test Coverage"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -216275,7 +216275,7 @@
           "metadata": {
             "section": "Visualizing Test Coverage"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -216287,7 +216287,7 @@
           "metadata": {
             "section": "Visualizing Test Coverage"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p4",
@@ -216299,7 +216299,7 @@
           "metadata": {
             "section": "Visualizing Test Coverage"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p5",
@@ -216311,7 +216311,7 @@
           "metadata": {
             "section": "Visualizing Test Coverage"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p6",
@@ -216325,7 +216325,7 @@
             "level": 2,
             "title": "Using Valgrind"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -216337,7 +216337,7 @@
           "metadata": {
             "section": "Using Valgrind"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -216349,7 +216349,7 @@
           "metadata": {
             "section": "Using Valgrind"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -216363,7 +216363,7 @@
             "level": 1,
             "title": "Maintenance process"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -216377,7 +216377,7 @@
             "level": 2,
             "title": "MAINTAINERS"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -216389,7 +216389,7 @@
           "metadata": {
             "section": "MAINTAINERS"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -216403,7 +216403,7 @@
             "level": 2,
             "title": "Becoming a maintainer"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -216415,7 +216415,7 @@
           "metadata": {
             "section": "Becoming a maintainer"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -216429,7 +216429,7 @@
             "level": 1,
             "title": "Release process"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -216441,7 +216441,7 @@
           "metadata": {
             "section": "Release process"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -216453,7 +216453,7 @@
           "metadata": {
             "section": "Release process"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -216465,7 +216465,7 @@
           "metadata": {
             "section": "Release process"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -216477,7 +216477,7 @@
           "metadata": {
             "section": "Release process"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p4",
@@ -216489,7 +216489,7 @@
           "metadata": {
             "section": "Release process"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p5",
@@ -216501,7 +216501,7 @@
           "metadata": {
             "section": "Release process"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p6",
@@ -216515,7 +216515,7 @@
             "level": 2,
             "title": "Criteria for Point Releases"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -216527,7 +216527,7 @@
           "metadata": {
             "section": "Criteria for Point Releases"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -216539,7 +216539,7 @@
           "metadata": {
             "section": "Criteria for Point Releases"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -216551,7 +216551,7 @@
           "metadata": {
             "section": "Criteria for Point Releases"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -216563,7 +216563,7 @@
           "metadata": {
             "section": "Criteria for Point Releases"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p4",
@@ -216575,7 +216575,7 @@
           "metadata": {
             "section": "Criteria for Point Releases"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p5",
@@ -216587,7 +216587,7 @@
           "metadata": {
             "section": "Criteria for Point Releases"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p6",
@@ -216601,7 +216601,7 @@
             "level": 2,
             "title": "Release Checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p0",
@@ -216613,7 +216613,7 @@
           "metadata": {
             "section": "Release Checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p1",
@@ -216625,7 +216625,7 @@
           "metadata": {
             "section": "Release Checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p2",
@@ -216637,7 +216637,7 @@
           "metadata": {
             "section": "Release Checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p3",
@@ -216649,7 +216649,7 @@
           "metadata": {
             "section": "Release Checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p4",
@@ -216661,7 +216661,7 @@
           "metadata": {
             "section": "Release Checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p5",
@@ -216673,7 +216673,7 @@
           "metadata": {
             "section": "Release Checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p6",
@@ -216685,7 +216685,7 @@
           "metadata": {
             "section": "Release Checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p7",
@@ -216697,7 +216697,7 @@
           "metadata": {
             "section": "Release Checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p8",
@@ -216709,7 +216709,7 @@
           "metadata": {
             "section": "Release Checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p9",
@@ -216721,7 +216721,7 @@
           "metadata": {
             "section": "Release Checklist"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "developer.md-p10",
@@ -216733,7 +216733,7 @@
           "metadata": {
             "section": "Release Checklist"
           },
-          "status": "pending"
+          "status": "done"
         }
       ]
     },
