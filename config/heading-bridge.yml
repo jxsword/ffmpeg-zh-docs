@@ -12,3 +12,6 @@ entries:
   Stream-specifiers:
     page: manual/common-options.md
     slug: 流说明符
+  codec_002doptions:
+    page: components/codecs.md
+    slug: 编解码器选项
