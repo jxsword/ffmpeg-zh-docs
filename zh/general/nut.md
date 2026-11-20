@@ -43,8 +43,8 @@ PIPE 变体假定 NUT 被用作不可定位的中间容器，通过不使用同�
 |-----------------------------------|--------|
 | ALAW                              | A-LAW  |
 | ULAW                              | MU-LAW |
-| P\<type\>\<interleaving\>\<bits\> | 小端 PCM |
-| \<bits\>\<interleaving\>\<type\>P | 大端 PCM |
+| P\<type\>\<interleaving\>\<bits\> | 小端序 PCM |
+| \<bits\>\<interleaving\>\<type\>P | 大端序 PCM |
 
 \<type\> 为 S 表示有符号整数，U 表示无符号整数，F 表示 IEEE 浮点数。\<interleaving\> 为 D 表示默认，P 表示平面。\<bits\> 为 8/16/24/32
 
