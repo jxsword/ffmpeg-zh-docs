@@ -1,149 +1,145 @@
-!!! warning "翻译占位页"
-    本页为英文原文占位（翻译进行中，进度见[翻译看板](https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md)）。
-    术语与示例以英文原文为准。
+# 组织
 
-# Organisation
+FFmpeg 项目通过一个致力于达成全局共识的社区来组织运作。
 
-The FFmpeg project is organized through a community working on global consensus.
+决定由全体活跃成员通过表决作出，并由两个委员会协助。
 
-Decisions are taken by the ensemble of active members, through voting and are aided by two committees.
+# 全体大会
 
-# General Assembly
+全体活跃成员的集合称为全体大会（General Assembly，GA）。
 
-The ensemble of active members is called the General Assembly (GA).
+全体大会就有关 FFmpeg 项目的所有决定拥有最高决定权与正当性。
 
-The General Assembly is sovereign and legitimate for all its decisions regarding the FFmpeg project.
+全体大会由活跃贡献者组成。
 
-The General Assembly is made up of active contributors.
+贡献者在最近 36 个月内在 FFmpeg 主仓库中提交了超过 20 个补丁，或经 GA 表决加入，即被视为"活跃贡献者"。
 
-Contributors are considered "active contributors" if they have authored more than 20 patches in the last 36 months in the main FFmpeg repository, or if they have been voted in by the GA.
+活跃贡献者名单每年更新两次，时间为 1 月 1 日和 7 月 1 日的 0:00 UTC。
 
-The list of active contributors is updated twice each year, on 1st January and 1st July, 0:00 UTC.
+更多成员经全体大会成员提议后通过表决加入全体大会。他们加入 GA 后任期两年，期满后需要 GA 的确认方可留任。
 
-Additional members are added to the General Assembly through a vote after proposal by a member of the General Assembly. They are part of the GA for two years, after which they need a confirmation by the GA.
+生成全体大会当前成员（不含经投票加入的成员）的脚本位于 'tools/general_assembly.pl'。
 
-A script to generate the current members of the general assembly (minus members voted in) can be found in 'tools/general_assembly.pl'.
+# 表决
 
-# Voting
+表决采用排序投票制（ranked voting），目前运行于 https://vote.ffmpeg.org/ 。
 
-Voting is done using a ranked voting system, currently running on https://vote.ffmpeg.org/ .
+多数表决意味着超过 50% 的已投有效票。
 
-Majority vote means more than 50% of the expressed ballots.
+# 技术委员会
 
-# Technical Committee
+技术委员会（Technical Committee，TC）负责在项目内发生技术冲突时进行仲裁并作出决定。它会考量各方立场的合理性，加以评判并作出决定。
 
-The Technical Committee (TC) is here to arbitrate and make decisions when technical conflicts occur in the project. They will consider the merits of all the positions, judge them and make a decision.
+TC 解决技术冲突，但不是一个技术指导委员会。
 
-The TC resolves technical conflicts but is not a technical steering committee.
+TC 的决定对所有贡献者具有约束力。
 
-Decisions by the TC are binding for all the contributors.
+TC 作出的决定可以在一年后重新提起，或经全体大会多数表决重新提起，该表决可由 GA 任一成员请求发起。
 
-Decisions made by the TC can be re-opened after 1 year or by a majority vote of the General Assembly, requested by one of the member of the GA.
+TC 由全体大会选出，任期一年，由 5 名成员组成。成员如愿意可以连任。全体大会的多数表决可以触发 TC 的重新选举。
 
-The TC is elected by the General Assembly for a duration of 1 year, and is composed of 5 members. Members can be re-elected if they wish. A majority vote in the General Assembly can trigger a new election of the TC.
+TC 的成员可以从 GA 之外选出。候选人可以由他人提名，也可以自荐。
 
-The members of the TC can be elected from outside of the GA. Candidates for election can either be suggested or self-nominated.
+冲突解决流程详见解决流程文档。
 
-The conflict resolution process is detailed in the resolution process document.
+可以通过 \<tc@ffmpeg\> 联系 TC。
 
-The TC can be contacted at \<tc@ffmpeg\>.
+## 解决流程
 
-## Resolution Process
+技术委员会（TC）负责在项目内发生技术冲突时进行仲裁并作出决定。
 
-The Technical Committee (TC) is here to arbitrate and make decisions when technical conflicts occur in the project.
+TC 的主要职责是解决技术冲突。因此它并非技术指导委员会，但可以理解，某些决定可能影响项目的未来走向。
 
-The TC main role is to resolve technical conflicts. It is therefore not a technical steering committee, but it is understood that some decisions might impact the future of the project.
+### 受理
 
-### Seizing
+TC 可以主动接管其认为合适的任何技术事项。
 
-The TC can take possession of any technical matter that it sees fit.
+若要让 TC 介入某项事务，可向 tc 发送邮件，或在正在进行的讨论中抄送（CC）他们。
 
-To involve the TC in a matter, email tc or CC them on an ongoing discussion.
+由于 TC 成员本身是开发者，他们也可以向 tc 发邮件提出问题。
 
-As members of TC are developers, they also can email tc to raise an issue.
+### 公告
 
-### Announcement
+TC 一经受理，必须在主邮件列表上以 \[TC\] 标签公告自身。
 
-The TC, once seized, must announce itself on the main mailing list, with a \[TC\] tag.
+TC 有两种运作模式：RFC 模式和内部模式。
 
-The TC has 2 modes of operation: a RFC one and an internal one.
+如果 TC 认为需要更大范围社区的意见，可以发起 RFC 征集；否则可以自行决定。
 
-If the TC thinks it needs the input from the larger community, the TC can call for a RFC. Else, it can decide by itself.
+是否采用 RFC 流程还是内部讨论，由 TC 自行裁量决定。
 
-The decision to use a RFC process or an internal discussion is a discretionary decision of the TC.
+TC 也可以基于若干理由拒绝受理，例如：此前对该事项的讨论尚不充分；TC 缺乏就该事项作出有益决定所需的专业能力；或该事项过于琐碎。
 
-The TC can also reject a seizure for a few reasons such as: the matter was not discussed enough previously; it lacks expertise to reach a beneficial decision on the matter; or the matter is too trivial.
+### RFC 征集
 
-### RFC call
+在 RFC 模式下，由 TC 中的一名成员在邮件列表上发布该技术问题，并向社区征求意见。
 
-In the RFC mode, one person from the TC posts on the mailing list the technical question and will request input from the community.
+该邮件须符合以下规范：
 
-The mail will have the following specification:
+一个精确的标题 一个特定的 \[TC RFC\] 标签 一封顶层邮件包含一个不超过 100 词、且开发者能够回答的精确问题 如有必要可附一段额外说明或指向先前讨论的链接 包含一个精确的回答截止日期。
 
-a precise title a specific tag \[TC RFC\] a top-level email contain a precise question that does not exceed 100 words and that is answerable by developers may have an extra description, or a link to a previous discussion, if deemed necessary, contain a precise end date for the answers.
+来自社区的回答必须发布在主邮件列表上，并须符合以下规范：
 
-The answers from the community must be on the main mailing list and must have the following specification:
+保持标签与标题不变 长度限于 400 词以内 一级回复，直接回答主邮件所提出的问题。
 
-keep the tag and the title unchanged limited to 400 words a first-level, answering directly to the main email answering to the question.
+对回答的进一步回复允许存在，只要它们符合社区礼貌规范、长度限于 100 词以内、且嵌套不得超过一层。(max-depth=2)
 
-Further replies to answers are permitted, as long as they conform to the community standards of politeness, they are limited to 100 words, and are not nested more than once. (max-depth=2)
+截止日期过后，该讨论串上的邮件将被忽略。
 
-After the end-date, mails on the thread will be ignored.
+违反上述规则的行为将经由社区委员会逐级处理。
 
-Violations of those rules will be escalated through the Community Committee.
+邮件收齐后，TC 有 96 小时作出最终决定。特殊情况下，TC 可以请求额外延期，并将在邮件列表上通知。
 
-After all the emails are in, the TC has 96 hours to give its final decision. Exceptionally, the TC can request an extra delay, that will be notified on the mailing list.
+### 委员会内部
 
-### Within TC
+在内部模式下，TC 有 96 小时作出最终决定。特殊情况下，TC 可以请求额外延期。
 
-In the internal case, the TC has 96 hours to give its final decision. Exceptionally, the TC can request an extra delay.
+### 决定
 
-### Decisions
+TC 的决定将以 \[TC\] 标签发布在邮件列表上。
 
-The decisions from the TC will be sent on the mailing list, with the \[TC\] tag.
+在内部，TC 应以多数决或排序选择投票（ranked-choice voting）制作出决定。
 
-Internally, the TC should take decisions with a majority, or using ranked-choice voting.
+每位 TC 成员必须就此类决定投票，依据是其在自身看来什么最有利于项目。
 
-Each TC member must vote on such decision according to what is, in their view, best for the project.
+如果 TC 成员认为其在本案中受到利益冲突的影响，应当予以声明，并回避 TC 的讨论与表决。
 
-If a TC member feels they are affected by a conflict of interest with regards to the case, they should announce it and recuse themselves from the TC discussion and vote.
+当 TC 成员对案件的特定结果存在个人利益（例如经济利益）时，即推定存在利益冲突。
 
-A conflict of interest is presumed to occur when a TC member has a personal interest (e.g. financial) in a specific outcome of the case.
+TC 的决定在发布时应附上导致该决定的理由摘要。
 
-The decision from the TC should be published with a summary of the reasons that lead to this decision.
+TC 的决定是最终决定，直至相关事项在不少于一年之后被重新提起。
 
-The decisions from the TC are final, until the matters are reopened after no less than one year.
+# 社区委员会
 
-# Community Committee
+社区委员会（Community Committee，CC）负责在项目内发生人际冲突时进行仲裁并作出决定。为项目着想，它会迅速作出决定并采取行动。
 
-The Community Committee (CC) is here to arbitrage and make decisions when inter-personal conflicts occur in the project. It will decide quickly and take actions, for the sake of the project.
+CC 可以剥夺违规成员的权限，包括撤销提交权限与暂时封禁其参与社区。
 
-The CC can remove privileges of offending members, including removal of commit access and temporary ban from the community.
+CC 作出的决定可以在一年后重新提起，或经全体大会多数表决重新提起。无限期封禁必须经全体大会多数表决确认。
 
-Decisions made by the CC can be re-opened after 1 year or by a majority vote of the General Assembly. Indefinite bans from the community must be confirmed by the General Assembly, in a majority vote.
+CC 由全体大会选出，任期一年，由 5 名成员组成。成员如愿意可以连任。全体大会的多数表决可以触发 CC 的重新选举。
 
-The CC is elected by the General Assembly for a duration of 1 year, and is composed of 5 members. Members can be re-elected if they wish. A majority vote in the General Assembly can trigger a new election of the CC.
+CC 的成员可以从 GA 之外选出。候选人可以由他人提名，也可以自荐。
 
-The members of the CC can be elected from outside of the GA. Candidates for election can either be suggested or self-nominated.
+CC 受行为准则约束，并负责执行行为准则。
 
-The CC is governed by and responsible for enforcing the Code of Conduct.
+可以通过 \<cc@ffmpeg\> 联系 CC。
 
-The CC can be contacted at \<cc@ffmpeg\>.
+# 行为准则
 
-# Code of Conduct
+友善且尊重地对待他人与第三方。您希望别人如何对待您，就请如此对待他人。
 
-Be friendly and respectful towards others and third parties. Treat others the way you yourself want to be treated.
+请保持体贴。并非所有人都与您持有相同的观点和优先级。不同的意见和解读有助于项目。从不同视角看待问题有助于开发。
 
-Be considerate. Not everyone shares the same viewpoint and priorities as you do. Different opinions and interpretations help the project. Looking at issues from a different perspective assists development.
+不要把可以归因于无能的事情归结为恶意。即便确实是恶意，以恶意作为初始假设也很少是好的做法。
 
-Do not assume malice for things that can be attributed to incompetence. Even if it is malice, it's rarely good to start with that as initial assumption.
+即使有人唱反调，也请保持友善。每个人都有状态不佳的日子。如果您自己状态不佳或正在生气，请尝试休息一下，待冷静下来、心平气和后再作回复。
 
-Stay friendly even if someone acts contrarily. Everyone has a bad day once in a while. If you yourself have a bad day or are angry then try to take a break and reply once you are calm and without anger if you have to.
+如果可以，请尽力帮助其他团队成员并与他们合作。
 
-Try to help other team members and cooperate if you can.
+软件开发的目标是创造技术上的卓越，而非让任何个人变得更强、去"胜过"他人。大型软件项目唯有通过团队合作才可能实现并取得成功。
 
-The goal of software development is to create technical excellence, not for any individual to be better and "win" against the others. Large software projects are only possible and successful through teamwork.
+如果有人遇到困难，不要贬低他们，而应伸出援手，为他们指明正确的方向。
 
-If someone struggles do not put them down. Give them a helping hand instead and point them in the right direction.
-
-Finally, keep in mind the immortal words of Bill and Ted, "Be excellent to each other."
+最后，请铭记 Bill 和 Ted 的不朽名言："Be excellent to each other."（彼此友善相待）

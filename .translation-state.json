@@ -221295,7 +221295,7 @@
             "level": 1,
             "title": "Organisation"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p0",
@@ -221307,7 +221307,7 @@
           "metadata": {
             "section": "Organisation"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p1",
@@ -221319,7 +221319,7 @@
           "metadata": {
             "section": "Organisation"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p2",
@@ -221333,7 +221333,7 @@
             "level": 1,
             "title": "General Assembly"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p0",
@@ -221345,7 +221345,7 @@
           "metadata": {
             "section": "General Assembly"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p1",
@@ -221357,7 +221357,7 @@
           "metadata": {
             "section": "General Assembly"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p2",
@@ -221369,7 +221369,7 @@
           "metadata": {
             "section": "General Assembly"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p3",
@@ -221381,7 +221381,7 @@
           "metadata": {
             "section": "General Assembly"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p4",
@@ -221393,7 +221393,7 @@
           "metadata": {
             "section": "General Assembly"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p5",
@@ -221405,7 +221405,7 @@
           "metadata": {
             "section": "General Assembly"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p6",
@@ -221417,7 +221417,7 @@
           "metadata": {
             "section": "General Assembly"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p7",
@@ -221431,7 +221431,7 @@
             "level": 1,
             "title": "Voting"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p0",
@@ -221443,7 +221443,7 @@
           "metadata": {
             "section": "Voting"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p1",
@@ -221455,7 +221455,7 @@
           "metadata": {
             "section": "Voting"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p2",
@@ -221469,7 +221469,7 @@
             "level": 1,
             "title": "Technical Committee"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p0",
@@ -221481,7 +221481,7 @@
           "metadata": {
             "section": "Technical Committee"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p1",
@@ -221493,7 +221493,7 @@
           "metadata": {
             "section": "Technical Committee"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p2",
@@ -221505,7 +221505,7 @@
           "metadata": {
             "section": "Technical Committee"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p3",
@@ -221517,7 +221517,7 @@
           "metadata": {
             "section": "Technical Committee"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p4",
@@ -221529,7 +221529,7 @@
           "metadata": {
             "section": "Technical Committee"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p5",
@@ -221541,7 +221541,7 @@
           "metadata": {
             "section": "Technical Committee"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p6",
@@ -221553,7 +221553,7 @@
           "metadata": {
             "section": "Technical Committee"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p7",
@@ -221565,7 +221565,7 @@
           "metadata": {
             "section": "Technical Committee"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p8",
@@ -221579,7 +221579,7 @@
             "level": 2,
             "title": "Resolution Process"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p0",
@@ -221591,7 +221591,7 @@
           "metadata": {
             "section": "Resolution Process"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p1",
@@ -221603,7 +221603,7 @@
           "metadata": {
             "section": "Resolution Process"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p2",
@@ -221617,7 +221617,7 @@
             "level": 3,
             "title": "Seizing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p0",
@@ -221629,7 +221629,7 @@
           "metadata": {
             "section": "Seizing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p1",
@@ -221641,7 +221641,7 @@
           "metadata": {
             "section": "Seizing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p2",
@@ -221653,7 +221653,7 @@
           "metadata": {
             "section": "Seizing"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p3",
@@ -221667,7 +221667,7 @@
             "level": 3,
             "title": "Announcement"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p0",
@@ -221679,7 +221679,7 @@
           "metadata": {
             "section": "Announcement"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p1",
@@ -221691,7 +221691,7 @@
           "metadata": {
             "section": "Announcement"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p2",
@@ -221703,7 +221703,7 @@
           "metadata": {
             "section": "Announcement"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p3",
@@ -221715,7 +221715,7 @@
           "metadata": {
             "section": "Announcement"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p4",
@@ -221727,7 +221727,7 @@
           "metadata": {
             "section": "Announcement"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p5",
@@ -221741,7 +221741,7 @@
             "level": 3,
             "title": "RFC call"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p0",
@@ -221753,7 +221753,7 @@
           "metadata": {
             "section": "RFC call"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p1",
@@ -221765,7 +221765,7 @@
           "metadata": {
             "section": "RFC call"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p2",
@@ -221777,7 +221777,7 @@
           "metadata": {
             "section": "RFC call"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p3",
@@ -221789,7 +221789,7 @@
           "metadata": {
             "section": "RFC call"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p4",
@@ -221801,7 +221801,7 @@
           "metadata": {
             "section": "RFC call"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p5",
@@ -221813,7 +221813,7 @@
           "metadata": {
             "section": "RFC call"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p6",
@@ -221825,7 +221825,7 @@
           "metadata": {
             "section": "RFC call"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p7",
@@ -221837,7 +221837,7 @@
           "metadata": {
             "section": "RFC call"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p8",
@@ -221849,7 +221849,7 @@
           "metadata": {
             "section": "RFC call"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p9",
@@ -221863,7 +221863,7 @@
             "level": 3,
             "title": "Within TC"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p0",
@@ -221875,7 +221875,7 @@
           "metadata": {
             "section": "Within TC"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p1",
@@ -221889,7 +221889,7 @@
             "level": 3,
             "title": "Decisions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p0",
@@ -221901,7 +221901,7 @@
           "metadata": {
             "section": "Decisions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p1",
@@ -221913,7 +221913,7 @@
           "metadata": {
             "section": "Decisions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p2",
@@ -221925,7 +221925,7 @@
           "metadata": {
             "section": "Decisions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p3",
@@ -221937,7 +221937,7 @@
           "metadata": {
             "section": "Decisions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p4",
@@ -221949,7 +221949,7 @@
           "metadata": {
             "section": "Decisions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p5",
@@ -221961,7 +221961,7 @@
           "metadata": {
             "section": "Decisions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p6",
@@ -221973,7 +221973,7 @@
           "metadata": {
             "section": "Decisions"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p7",
@@ -221987,7 +221987,7 @@
             "level": 1,
             "title": "Community Committee"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p0",
@@ -221999,7 +221999,7 @@
           "metadata": {
             "section": "Community Committee"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p1",
@@ -222011,7 +222011,7 @@
           "metadata": {
             "section": "Community Committee"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p2",
@@ -222023,7 +222023,7 @@
           "metadata": {
             "section": "Community Committee"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p3",
@@ -222035,7 +222035,7 @@
           "metadata": {
             "section": "Community Committee"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p4",
@@ -222047,7 +222047,7 @@
           "metadata": {
             "section": "Community Committee"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p5",
@@ -222059,7 +222059,7 @@
           "metadata": {
             "section": "Community Committee"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p6",
@@ -222071,7 +222071,7 @@
           "metadata": {
             "section": "Community Committee"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p7",
@@ -222085,7 +222085,7 @@
             "level": 1,
             "title": "Code of Conduct"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p0",
@@ -222097,7 +222097,7 @@
           "metadata": {
             "section": "Code of Conduct"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p1",
@@ -222109,7 +222109,7 @@
           "metadata": {
             "section": "Code of Conduct"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p2",
@@ -222121,7 +222121,7 @@
           "metadata": {
             "section": "Code of Conduct"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p3",
@@ -222133,7 +222133,7 @@
           "metadata": {
             "section": "Code of Conduct"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p4",
@@ -222145,7 +222145,7 @@
           "metadata": {
             "section": "Code of Conduct"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p5",
@@ -222157,7 +222157,7 @@
           "metadata": {
             "section": "Code of Conduct"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p6",
@@ -222169,7 +222169,7 @@
           "metadata": {
             "section": "Code of Conduct"
           },
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "community.md-p7",
@@ -222181,7 +222181,7 @@
           "metadata": {
             "section": "Code of Conduct"
           },
-          "status": "pending"
+          "status": "done"
         }
       ]
     },
