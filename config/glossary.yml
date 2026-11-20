@@ -11,6 +11,11 @@
 # 熵编码/小片/去块，2026-11-21 随批评审 approved）
 # B4 批随批补录 12 条（适配集/分片/分段器/入点/出点/变体流/隐藏式字幕/
 # 轨道/chunk/一致性窗口/节目流/传输流，2026-11-21 随批评审 approved）
+# B5 批随批补录 16 条（套接字/协议处理器/监听/组播/广播/隧道/前向纠错/
+# 重传/挂载点/网关/循环缓冲区/百分号编码/交换机/路由键/对等端/延迟，
+# 2026-11-21 随批评审 approved）
+# B6 批随批补录 11 条（抓取/帧缓冲/设备节点/交叉开关/引脚/双工模式/
+# 图文电视/墙钟/预卷/抗锯齿/配置档，2026-11-21 随批评审 approved）
 # 原则：muxer=复用器 / demuxer=解复用器（社区主流技术译法，R3 明确）
 
 terms:
@@ -1091,3 +1096,169 @@ terms:
     status: "approved"
     context: "components/formats.md（MOV 编辑列表，与 atom/box 同口径不译）"
     aliases: []
+
+  # ===== B5 批（components/protocols.md，网络/传输语境） =====
+  - en: "socket"
+    zh: "套接字"
+    status: "approved"
+    context: "components/protocols.md"
+    aliases: []
+
+  - en: "protocol handler"
+    zh: "协议处理器"
+    status: "approved"
+    context: "components/protocols.md"
+    aliases: []
+
+  - en: "listen"
+    zh: "监听"
+    status: "approved"
+    context: "components/protocols.md（listen mode=监听模式）"
+    aliases: ["listening"]
+
+  - en: "multicast"
+    zh: "组播"
+    status: "approved"
+    context: "全局（网络传输）"
+    aliases: []
+
+  - en: "broadcast"
+    zh: "广播"
+    status: "approved"
+    context: "全局（网络传输）"
+    aliases: []
+
+  - en: "tunneling"
+    zh: "隧道"
+    status: "approved"
+    context: "components/protocols.md（tunnel through HTTP=经 HTTP 隧道）"
+    aliases: ["tunnel"]
+
+  - en: "forward error correction"
+    zh: "前向纠错"
+    status: "approved"
+    context: "全局（FEC）"
+    aliases: ["FEC"]
+
+  - en: "retransmission"
+    zh: "重传"
+    status: "approved"
+    context: "全局（网络传输）"
+    aliases: ["retransmit"]
+
+  - en: "mountpoint"
+    zh: "挂载点"
+    status: "approved"
+    context: "components/protocols.md（Icecast）"
+    aliases: []
+
+  - en: "gateway"
+    zh: "网关"
+    status: "approved"
+    context: "components/protocols.md（IPFS）"
+    aliases: []
+
+  - en: "circular buffer"
+    zh: "循环缓冲区"
+    status: "approved"
+    context: "components/protocols.md（UDP 接收）"
+    aliases: []
+
+  - en: "percent-encoding"
+    zh: "百分号编码"
+    status: "approved"
+    context: "components/protocols.md（URL 转义）"
+    aliases: []
+
+  - en: "exchange"
+    zh: "交换机"
+    status: "approved"
+    context: "components/protocols.md（RabbitMQ exchange）"
+    aliases: []
+
+  - en: "routing key"
+    zh: "路由键"
+    status: "approved"
+    context: "components/protocols.md（RabbitMQ）"
+    aliases: []
+
+  - en: "peer"
+    zh: "对等端"
+    status: "approved"
+    context: "全局（网络连接对端）"
+    aliases: []
+
+  - en: "latency"
+    zh: "延迟"
+    status: "approved"
+    context: "全局（网络/缓冲延迟）"
+    aliases: []
+
+  # ===== B6 批（components/devices.md，采集/硬件语境） =====
+  - en: "grab"
+    zh: "抓取"
+    status: "approved"
+    context: "components/devices.md（屏幕/设备抓取）"
+    aliases: ["grabbing"]
+
+  - en: "framebuffer"
+    zh: "帧缓冲"
+    status: "approved"
+    context: "components/devices.md"
+    aliases: ["frame buffer"]
+
+  - en: "device node"
+    zh: "设备节点"
+    status: "approved"
+    context: "components/devices.md"
+    aliases: []
+
+  - en: "crossbar"
+    zh: "交叉开关"
+    status: "approved"
+    context: "components/devices.md（DirectShow）"
+    aliases: []
+
+  - en: "pin"
+    zh: "引脚"
+    status: "approved"
+    context: "components/devices.md（DirectShow/crossbar）"
+    aliases: []
+
+  - en: "duplex mode"
+    zh: "双工模式"
+    status: "approved"
+    context: "components/devices.md（DeckLink）"
+    aliases: []
+
+  - en: "teletext"
+    zh: "图文电视"
+    status: "approved"
+    context: "components/devices.md（DeckLink VBI）"
+    aliases: []
+
+  - en: "wallclock"
+    zh: "墙钟"
+    status: "approved"
+    context: "components/devices.md（PTS 源）"
+    aliases: []
+
+  - en: "preroll"
+    zh: "预卷"
+    status: "approved"
+    context: "components/devices.md（DeckLink）"
+    aliases: []
+
+  - en: "antialiasing"
+    zh: "抗锯齿"
+    status: "approved"
+    context: "全局（渲染）"
+    aliases: ["antialias"]
+
+  - en: "profile"
+    zh: "配置档"
+    status: "approved"
+    context: "components/devices.md（DeckLink 子设备配置档）"
+    aliases: []
+
+
