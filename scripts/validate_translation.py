@@ -164,6 +164,8 @@ def validate_file(source_path: Path, target_path: Path, glossary: dict) -> dict:
         stack = []
         balanced = True
         for tag in tgt_tags:
+            if re.match(r'^<https?://', tag):
+                continue  # markdown 自动链接 <URL>（如 <http://www.json.org/>），非 HTML 标签
             m = re.match(r'^</?\s*([a-zA-Z][a-zA-Z0-9-]*)', tag)
             if not m:
                 continue  # \<...\> 转义占位符等非标签 token
