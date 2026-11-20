@@ -1,12 +1,8 @@
-!!! warning "翻译占位页"
-    本页为英文原文占位（翻译进行中，进度见[翻译看板](https://github.com/jxsword/ffmpeg-zh-docs/blob/main/docs/translation-board.md)）。
-    术语与示例以英文原文为准。
+# 引言
 
-# Introduction
+drawvg（draw vector graphics，绘制矢量图形）是一种在视频帧之上绘制二维图形的语言。它并非作为通用语言而设计。由于其作用范围有限，它优先追求简洁与易用。
 
-drawvg (*draw vector graphics*) is a language to draw two-dimensional graphics on top of video frames. It is not intended to be used as a general-purpose language. Since its scope is limited, it prioritizes being concise and easy to use.
-
-For example, using the [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) we can render a triangle running this code in a Web browser:
+例如，使用 [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)，我们可以在 Web 浏览器中运行以下代码来渲染一个三角形：
 
 ``` c
 const canvas = document.getElementById("canvas");
@@ -20,7 +16,7 @@ ctx.closePath();
 ctx.stroke();
 ```
 
-The same triangle can be written with this drawvg script:
+同样的三角形也可以用下面这个 drawvg 脚本来绘制：
 
 ``` text
 moveto 125 50
@@ -29,7 +25,7 @@ closepath
 stroke
 ```
 
-It can be shortened using the aliases for [`moveto`](drawvg-reference.md#section), [`lineto`](drawvg-reference.md#section), and [`closepath`](drawvg-reference.md#section):
+可以利用 [`moveto`](#m-moveto)、[`lineto`](#l-lineto) 和 [`closepath`](#z-z-closepath) 的别名将其缩短：
 
 ``` text
 M 125 50
@@ -38,55 +34,55 @@ Z
 stroke
 ```
 
-Both newlines (`U+000A`) and spaces (`U+0020`) can be used interchangeably as delimiters, so multiple commands can appear on the same line:
+换行符（`U+000A`）和空格（`U+0020`）可以互换使用作为分隔符，因此多条命令可以出现在同一行上：
 
 ``` text
 M 125 50 L 100 100 150 100 Z
 stroke
 ```
 
-Finally, drawvg can use section "FFmpeg expressions" in `ffmpeg-utils` and frame metadata in command arguments. In this example, we are using the variables \<w\> (frame width) and \<h\> (frame height) to create a circle in the middle of the frame.
+最后，drawvg 可以使用 `ffmpeg-utils` 中"FFmpeg 表达式"小节的内容，以及在命令参数中使用帧元数据。在本例中，我们使用变量 \<w\>（帧宽度）和 \<h\>（帧高度）在帧中央创建一个圆。
 
 ``` text
 circle (w / 2) (h / 2) (w / 3)
 stroke
 ```
 
-Many commands are a direct equivalent to a function in the [Cairo graphics library](https://www.cairographics.org/). For such commands, the reference below provides a link to the related Cairo documentation.
+许多命令与 [Cairo 图形库](https://www.cairographics.org/)中的函数直接等价。对于这类命令，下方的参考提供了指向相关 Cairo 文档的链接。
 
-# Syntax
+# 语法
 
-The syntax is heavily inspired by languages like [Magick Vector Graphics](https://imagemagick.org/script/magick-vector-graphics.php), or [SVG's `<path>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path). Many command names are taken from [PostScript](https://en.wikipedia.org/wiki/PostScript).
+该语法的灵感大量来自 [Magick Vector Graphics](https://imagemagick.org/script/magick-vector-graphics.php) 和 [SVG 的 `<path>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path) 等语言。许多命令名取自 [PostScript](https://en.wikipedia.org/wiki/PostScript)。
 
-## Structure
+## 结构
 
-A drawvg script consists of a series of commands to describe 2D graphics.
+drawvg 脚本由一系列描述 2D 图形的命令组成。
 
-A command is an identifier (like [`setcolor`](drawvg-reference.md#section) or [`lineto`](drawvg-reference.md#section)) followed by its arguments. Each item in the code (command name, arguments, etc.) is separated by any of the following characters:
+命令是一个标识符（如 [`setcolor`](#setcolor) 或 [`lineto`](#l-lineto)），后跟其参数。代码中的每个项（命令名、参数等）由以下任一字符分隔：
 
-- Space (`' '`)
+- 空格（`' '`）
 
-- Comma (`','`)
+- 逗号（`','`）
 
-- Newline (`'\n'`)
+- 换行符（`'\n'`）
 
-- Tabs (`'\t'`)
+- 制表符（`'\t'`）
 
-- Return (`'\r'`)
+- 回车符（`'\r'`）
 
-The beginning of the item indicates how it will be interpreted:
+项的开头字符决定它将如何被解释：
 
-| Term                  | Description                      |
-|-----------------------|----------------------------------|
-| `//`                  | Comment                          |
-| `0`, …, `9`, `+`, `-` | Number literal                   |
-| `(`                   | Expression                       |
-| `{`, `}`              | Block delimiters                 |
-| Anything else         | Name of a command, a color, etc. |
+| 项   | 描述                             |
+|------|----------------------------------|
+| `//` | 注释                             |
+| `0`, …, `9`, `+`, `-` | 数字字面量       |
+| `(`  | 表达式                           |
+| `{`, `}` | 块分隔符                      |
+| 其他 | 命令名、颜色名等                 |
 
-## Comments
+## 注释
 
-Comments start with two slashes (`//`), and stop at the end of the line (either a `\n`, or the end of the script).
+注释以两个斜杠（`//`）开始，并在行尾结束（`\n` 或脚本结尾）。
 
 ``` text
 circle 100 100 50 // this is ignored
@@ -95,109 +91,109 @@ fill
 // this is also ignored
 ```
 
-`//` must appear after a space, or at the beginning of the line. If `//` is preceded by any non-blank character, the parser will consider `//` as part of the previous item.
+`//` 必须出现在空格之后或行首。如果 `//` 前面有任何非空白字符，解析器会把 `//` 视为前一项的一部分。
 
-For example, in this script:
+例如，在这个脚本中：
 
 ``` text
 circle 10 10 50// something
 ```
 
-The parser throws an error because it tries to parse `50//` as a number literal.
+解析器抛出错误，因为它试图把 `50//` 解析为数字字面量。
 
-## Commands
+## 命令
 
-The way commands are parsed is inspired by [SVG's `<path>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path):
+命令的解析方式灵感来自 [SVG 的 `<path>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path)：
 
-- Every command in the script starts with its name, and it is followed by zero or more arguments.
+- 脚本中的每条命令都以其名称开始，后跟零个或多个参数。
 
-- There are no explicit delimiters between commands or arguments.
+- 命令之间或参数之间没有显式分隔符。
 
-  Most programming languages expect characters like parenthesis, commas, or semicolons, to separate items. For example:
+  大多数编程语言期望用括号、逗号或分号等字符来分隔各项。例如：
 
   ``` c
   moveto(10, 10); lineto(20, 30);
   ```
 
-  The equivalent in drawvg is:
+  drawvg 中的等价写法是：
 
   ``` text
   moveto 10 10 lineto 20 30
   ```
 
-- If the command has no arguments (like [`closepath`](drawvg-reference.md#section) or [`stroke`](drawvg-reference.md#section)), the next command starts at the next item.
+- 如果命令没有参数（如 [`closepath`](#z-z-closepath) 或 [`stroke`](#stroke)），下一条命令将从下一项开始。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In the next script there are 4 different commands:
+在下一个脚本中有 4 条不同的命令：
 
 ``` text
 newpath rect 10 20 30 40 setcolor teal fill
 ```
 
-1.  [`newpath`](drawvg-reference.md#section) requires no arguments.
+1.  [`newpath`](#newpath) 不需要参数。
 
-2.  [`rect`](drawvg-reference.md#section) requires 4 arguments, so it takes the next 4 numbers.
+2.  [`rect`](#rect) 需要 4 个参数，因此它取接下来的 4 个数字。
 
-3.  [`setcolor`](drawvg-reference.md#section) requires 1 argument, so it takes the word `teal`.
+3.  [`setcolor`](#setcolor) 需要 1 个参数，因此它取单词 `teal`。
 
-4.  [`fill`](drawvg-reference.md#section) requires no arguments.
+4.  [`fill`](#fill-eofill) 不需要参数。
 
 </div>
 
-### Single-Letter Aliases
+### 单字母别名
 
-Most commands in [SVG's `<path>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path) are also present in drawvg. For some of them, there is an alias to a longer name:
+[SVG 的 `<path>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path) 中的大多数命令在 drawvg 中也存在。对于其中一部分命令，存在指向更长名称的别名：
 
-- [`curveto`](drawvg-reference.md#section) for [`C`](drawvg-reference.md#section).
+- [`curveto`](#c-curveto) 对应 [`C`](#c-curveto)。
 
-- [`rcurveto`](drawvg-reference.md#section) for [`c`](drawvg-reference.md#section).
+- [`rcurveto`](#c-rcurveto) 对应 [`c`](#c-rcurveto)。
 
-- [`lineto`](drawvg-reference.md#section) for [`L`](drawvg-reference.md#section).
+- [`lineto`](#l-lineto) 对应 [`L`](#l-lineto)。
 
-- [`rlineto`](drawvg-reference.md#section) for [`l`](drawvg-reference.md#section).
+- [`rlineto`](#l-rlineto) 对应 [`l`](#l-rlineto)。
 
-- [`moveto`](drawvg-reference.md#section) for [`M`](drawvg-reference.md#section).
+- [`moveto`](#m-moveto) 对应 [`M`](#m-moveto)。
 
-- [`rmoveto`](drawvg-reference.md#section) for [`m`](drawvg-reference.md#section).
+- [`rmoveto`](#m-rmoveto) 对应 [`m`](#m-rmoveto)。
 
-- [`closepath`](drawvg-reference.md#section) for [`Z`](drawvg-reference.md#section), [`z`](drawvg-reference.md#section).
+- [`closepath`](#z-z-closepath) 对应 [`Z`](#z-z-closepath)、[`z`](#z-z-closepath)。
 
-Other commands only exist in a single-letter form:
+其他命令只以单字母形式存在：
 
-- [`H`](drawvg-reference.md#section), [`h`](drawvg-reference.md#section)
+- [`H`](#h-h), [`h`](#h-h)
 
-- [`Q`](drawvg-reference.md#section), [`q`](drawvg-reference.md#section)
+- [`Q`](#q), [`q`](#q)
 
-- [`S`](drawvg-reference.md#section), [`s`](drawvg-reference.md#section)
+- [`S`](#s-s), [`s`](#s-s)
 
-- [`V`](drawvg-reference.md#section), [`v`](drawvg-reference.md#section)
+- [`V`](#v-v), [`v`](#v-v)
 
-- [`T`](drawvg-reference.md#section), [`t`](drawvg-reference.md#section)
+- [`T`](#t-t), [`t`](#t-t)
 
-This makes it possible to use a path in SVG to create the same shape in a drawvg script.
+这使得可以用 SVG 的路径在 drawvg 脚本中创建相同的形状。
 
-### Implicit Commands
+### 隐式命令
 
-For many commands, the name can be omitted when it is used multiple times in successive calls.
+对于许多命令，在连续调用中多次使用时可以省略其名称。
 
-In the reference below, these commands has a *Can be Implicit* note in their signature.
+在下文的命令参考中，这类命令的签名处标有 *可为隐式* 注记。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-For example, in this script:
+例如，在这个脚本中：
 
 ``` text
 M 50 50
@@ -209,7 +205,7 @@ l 10 10
 stroke
 ```
 
-After the first call to [`l`](drawvg-reference.md#section) (alias to [`rlineto`](drawvg-reference.md#section)), the command can be executed without the name, so it can be written as:
+在第一次调用 [`l`](#l-rlineto)（[`rlineto`](#l-rlineto) 的别名）之后，该命令可以不带名称执行，因此可以写作：
 
 ``` text
 M 50 50
@@ -219,49 +215,49 @@ stroke
 
 </div>
 
-To reuse the same command ([`l`](drawvg-reference.md#section), in the previous example), the parser checks if the item after the last argument is a numeric value, like a number literal or a FFmpeg expression.
+要复用同一条命令（上例中的 [`l`](#l-rlineto)），解析器会检查最后一个参数之后的项是否为数值，比如数字字面量或 FFmpeg 表达式。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example:
+在这个例子中：
 
 ``` text
 l 10 20 30 40 stroke
 ```
 
-[`l`](drawvg-reference.md#section) requires 2 arguments, and can be implicit, so the parser performs this operation:
+[`l`](#l-rlineto) 需要 2 个参数，并且可为隐式，因此解析器执行以下操作：
 
-1.  Takes the two next items (`10` and `20`) and emits the first instruction.
+1.  取接下来的两项（`10` 和 `20`）并发出第一条指令。
 
-2.  Checks if the item after `20` is a numeric value. Since it is `30`, it takes `30` and `40` and emits the second instruction (`l 30 40`).
+2.  检查 `20` 之后的项是否为数值。由于它是 `30`，于是取 `30` 和 `40` 并发出第二条指令（`l 30 40`）。
 
-3.  Checks if the next item after `40` is a numeric value, but it is a command ([`stroke`](drawvg-reference.md#section)), so it stops reusing [`l`](drawvg-reference.md#section).
+3.  检查 `40` 之后的下一项是否为数值，但它是一条命令（[`stroke`](#stroke)），因此停止复用 [`l`](#l-rlineto)。
 
 </div>
 
-This is another feature taken from [SVG's `<path>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path). An important difference with SVG is that the separator between items is always required. In SVG, it can be omitted in some cases. For example, the expression `m1-2` is equivalent to `m 1 -2` in SVG, but a syntax error in drawvg.
+这是另一个取自 [SVG 的 `<path>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path) 的特性。与 SVG 的一个重要区别是：各项之间的分隔符始终是必需的。在 SVG 中，某些情况下可以省略它。例如，表达式 `m1-2` 在 SVG 中等价于 `m 1 -2`，但在 drawvg 中是语法错误。
 
-## Arguments
+## 参数
 
-Most commands expect numeric arguments, like number literals, variable names, or expressions.
+大多数命令接受数字参数，比如数字字面量、变量名或表达式。
 
-[`setcolor`](drawvg-reference.md#section) and [`colorstop`](drawvg-reference.md#section) expect a color.
+[`setcolor`](#setcolor) 和 [`colorstop`](#colorstop) 接受一个颜色。
 
-[`setlinecap`](drawvg-reference.md#section) and [`setlinejoin`](drawvg-reference.md#section) expect a constant value.
+[`setlinecap`](#setlinecap) 和 [`setlinejoin`](#setlinejoin) 接受一个常量值。
 
-### Number Literals
+### 数字字面量
 
-A number literal is an item in the script that represents a constant value. Any item that starts with a decimal digit (between `0` and `9`), a `-` or a `+`, is interpreted as a number literal.
+数字字面量是脚本中表示常量值的项。任何以十进制数字（`0` 到 `9` 之间）、`-` 或 `+` 开头的项都会被解释为数字字面量。
 
-The value is parsed with [`av_strtod`](https://ffmpeg.org/doxygen/trunk/eval_8c.html#a7d21905c92ee5af0bb529d2daf8cb7c3). It supports the prefix `0x` to write a value with hexadecimal digits, and [many units](https://ffmpeg.org/ffmpeg-utils.html#:~:text=The%20evaluator%20also%20recognizes%20the%20International%20System%20unit%20prefixes) (like `K` or `GiB`).
+该值用 [`av_strtod`](https://ffmpeg.org/doxygen/trunk/eval_8c.html#a7d21905c92ee5af0bb529d2daf8cb7c3) 解析。它支持 `0x` 前缀来书写十六进制值，并支持[许多单位](https://ffmpeg.org/ffmpeg-utils.html#:~:text=The%20evaluator%20also%20recognizes%20the%20International%20System%20unit%20prefixes)（如 `K` 或 `GiB`）。
 
-In the next example, all literals represent the same value:
+在下一个例子中，所有字面量都表示同一个值：
 
 ``` text
 10000
@@ -270,25 +266,25 @@ In the next example, all literals represent the same value:
 0x2710
 ```
 
-### Expressions
+### 表达式
 
-section "FFmpeg expressions" in `ffmpeg-utils` can be used as arguments for any command that expects a numeric argument. The expression must be enclosed in parenthesis.
+`ffmpeg-utils` 中"FFmpeg 表达式"小节的内容可用作任何接受数字参数的命令的参数。表达式必须用括号括起。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-The variables \<w\> and \<h\> represent the width and height of the frame. We can compute the center of the frame by dividing them by `2`:
+变量 \<w\> 和 \<h\> 表示帧的宽度和高度。我们可以把它们除以 `2` 来计算帧的中心：
 
 ``` text
 M (w / 2) (h / 2)
 ```
 
-They can also contain parenthesis (to group operations, to call functions, etc):
+它们还可以包含括号（用于分组运算、调用函数等）：
 
 ``` text
 moveto
@@ -298,17 +294,17 @@ moveto
 
 </div>
 
-The variables \<n\> and \<t\> can be used to compute a value that changes over time.
+变量 \<n\> 和 \<t\> 可用于计算随时间变化的值。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-To draw a circle oscillating from left to right, we can use an expression based on `sin(t)` for the `x` coordinate:
+要绘制一个从左向右振荡的圆，我们可以对 `x` 坐标使用基于 `sin(t)` 的表达式：
 
 ``` text
 circle
@@ -321,7 +317,7 @@ stroke
 
 </div>
 
-Expressions can be split in multiple lines, but they can't contain comments within them.
+表达式可以分写成多行，但其内部不能包含注释。
 
 ``` text
 moveto   // This is a comment.
@@ -329,19 +325,19 @@ moveto   // This is a comment.
      + h)
 ```
 
-### Variable Names
+### 变量名
 
-When an expression is only a reference to a variable, the parenthesis can be omitted, and the item is just the variable name.
+当表达式只是对变量的引用时，括号可以省略，此时该项就是变量名。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-The next 3 expressions are equivalent: in all cases, they create a rectangle covering the whole frame.
+接下来的 3 个表达式是等价的：在所有情况下，它们都会创建一个覆盖整帧的矩形。
 
 ``` text
 rect (0) (0) (w) (h)
@@ -353,26 +349,26 @@ rect (0) 0 (w) h
 
 </div>
 
-It is possible to create a variable with the same name of a command, and then use it as an argument. In the previous example, the item \<h\> is a reference to a variable (frame height), but in other contexts it may be a command ([`h`](drawvg-reference.md#section)).
+可以创建与命令同名的变量，然后将其用作参数。在上一个例子中，项 \<h\> 是对变量（帧高度）的引用，但在其他上下文中它可能是一条命令（[`h`](#h-h)）。
 
-For [implicit commands](#implicit-commands), the parser prioritizes commands over variable names when it has to determine if the command is reused.
+对于[隐式命令](#隐式命令)，当解析器需要判断命令是否被复用时，命令优先于变量名。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, the variable \<c\> is used as the first argument in two calls to [`l`](drawvg-reference.md#section). However, only the first one is valid, because in the second call the parser recognizes [`c`](drawvg-reference.md#section) as a command.
+在这个例子中，变量 \<c\> 在两次调用 [`l`](#l-rlineto) 时被用作第一个参数。然而只有第一次是有效的，因为在第二次调用中解析器将 [`c`](#c-rcurveto) 识别为命令。
 
 ``` text
 setvar c 5
 l c 10 c 15
 ```
 
-This issue can be fixed by surrounding the start of the second call with parenthesis:
+这个问题可以通过给第二次调用的开头加上括号来解决：
 
 ``` text
 setvar c 5
@@ -381,15 +377,15 @@ l c 10 (c) 15
 
 </div>
 
-### Colors
+### 颜色
 
-The color to stroke and to fill paths can be set with [`setcolor`](drawvg-reference.md#section). Its argument has the same syntax for colors in FFmpeg:
+描边和填充路径所用的颜色可以用 [`setcolor`](#setcolor) 设置。其参数与 FFmpeg 中的颜色语法相同：
 
-- A section "predefined color name" in `ffmpeg-utils`.
+- `ffmpeg-utils` 中"预定义颜色名"小节中的名称。
 
-- In `#RRGGBB` format.
+- `#RRGGBB` 格式。
 
-- Optionally, an `@a` suffix can be added to set the alpha value, where `a` is a number between `0` and `1`.
+- 可以添加 `@a` 后缀来设置 alpha 值（可选），其中 `a` 是 `0` 到 `1` 之间的数字。
 
 ``` text
 circle 70 70 60
@@ -401,7 +397,7 @@ setcolor blue@0.5
 fill
 ```
 
-The color can be a variable name. In that case, it must be assigned with [`defrgba`](drawvg-reference.md#section), [`defhsla`](drawvg-reference.md#section), or [`setvar`](drawvg-reference.md#section) and a color.
+颜色可以是变量名。在这种情况下，必须先用 [`defrgba`](#defrgba)、[`defhsla`](#defhsla) 或 [`setvar`](#setvar) 配合一个颜色为其赋值。
 
 ``` text
 circle 70 70 60
@@ -415,43 +411,43 @@ setcolor CustomBlue
 fill
 ```
 
-The commands [`setrgba`](drawvg-reference.md#section) and [`sethsla`](drawvg-reference.md#section) allow setting colors using expressions. Similar to [`defrgba`](drawvg-reference.md#section) and [`defhsla`](drawvg-reference.md#section), but with no intermediate variable.
+命令 [`setrgba`](#setrgba) 和 [`sethsla`](#sethsla) 允许用表达式设置颜色。它们类似于 [`defrgba`](#defrgba) 和 [`defhsla`](#defhsla)，但没有中间变量。
 
-### Constants
+### 常量
 
-The argument for [`setlinecap`](drawvg-reference.md#section) and [`setlinejoin`](drawvg-reference.md#section) is an identifier referring to a constant value.
+[`setlinecap`](#setlinecap) 和 [`setlinejoin`](#setlinejoin) 的参数是引用常量值的标识符。
 
 ``` text
 setlinecap round
 ```
 
-# Guide
+# 指南
 
-## Paths
+## 路径
 
-A path is a complex shape, composed by lines and curves, that can be used to fill a region, to stroke an outline, or to establish a clip region.
+路径是一种复杂形状，由直线和曲线组成，可用于填充区域、描边轮廓或建立裁剪区域。
 
-In order to draw anything on top of a video frame, first we have to define a path, and then use [`stroke`](drawvg-reference.md#section) or [`fill`](drawvg-reference.md#section).
+要在视频帧之上绘制任何内容，首先必须定义一个路径，然后使用 [`stroke`](#stroke) 或 [`fill`](#fill-eofill)。
 
-The [tutorial on paths in MDN](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths) is a good introduction to the topic. It is focused on [SVG's `<path>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path), but the same concepts can be applied in drawvg.
+[MDN 上的路径教程](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths)是该主题很好的入门材料。它聚焦于 [SVG 的 `<path>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path)，但相同的概念也适用于 drawvg。
 
-### Current Point
+### 当前点
 
-Some commands require a *current point*. Initially, the *current point* is set to [`NaN`](https://en.wikipedia.org/wiki/NaN). It is initialized with [`M`](drawvg-reference.md#section) or [`moveto`](drawvg-reference.md#section). Other commands, like [`lineto`](drawvg-reference.md#section) or [`curveto`](drawvg-reference.md#section), updates the *current point* to the new end of the shape.
+一些命令需要*当前点*。初始时，*当前点*被设为 [`NaN`](https://en.wikipedia.org/wiki/NaN)。它由 [`M`](#m-moveto) 或 [`moveto`](#m-moveto) 初始化。其他命令（如 [`lineto`](#l-lineto) 或 [`curveto`](#c-curveto)）会把*当前点*更新为形状的新终点。
 
-The *current point* can be cleared with [`newpath`](drawvg-reference.md#section). Commands that clear the path, like [`stroke`](drawvg-reference.md#section) or [`fill`](drawvg-reference.md#section), also clear the *current point*.
+*当前点*可以用 [`newpath`](#newpath) 清除。清除路径的命令（如 [`stroke`](#stroke) 或 [`fill`](#fill-eofill)）也会清除*当前点*。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-[`rlineto`](drawvg-reference.md#section) uses coordinates relative to the *current point*.
+[`rlineto`](#l-rlineto) 使用相对于*当前点*的坐标。
 
-Given this script:
+给定这个脚本：
 
 ``` text
 moveto 20 100
@@ -461,16 +457,16 @@ closepath
 stroke
 ```
 
-These are the coordinates of the *current point* after executing each command:
+这些是执行每条命令后*当前点*的坐标：
 
-| Command           | Current Point |
+| 命令              | 当前点        |
 |-------------------|---------------|
 | `moveto 20 100`   | `20, 100`     |
 | `rlineto 150 -90` | `170, 10`     |
 | `rlineto -10 50`  | `140, 210`    |
 | `closepath`       | `20, 100`     |
 
-The same script can be written with single-letter aliases:
+同一脚本也可以用单字母别名书写：
 
 ``` text
 M 20 100 l 150 -90 -50 200 z stroke
@@ -478,69 +474,69 @@ M 20 100 l 150 -90 -50 200 z stroke
 
 </div>
 
-### Defining a Shape
+### 定义形状
 
-A path is defined by adding lines, curves, or basic shapes.
+路径通过添加直线、曲线或基本形状来定义。
 
-- Basic shapes
+- 基本形状
 
-  - [`circle`](drawvg-reference.md#section)
+  - [`circle`](#circle)
 
-  - [`ellipse`](drawvg-reference.md#section)
+  - [`ellipse`](#ellipse)
 
-  - [`rect`](drawvg-reference.md#section)
+  - [`rect`](#rect)
 
-  - [`roundedrect`](drawvg-reference.md#section)
+  - [`roundedrect`](#roundedrect)
 
-- Lines
+- 直线
 
-  - [`M`](drawvg-reference.md#section), [`moveto`](drawvg-reference.md#section)
+  - [`M`](#m-moveto), [`moveto`](#m-moveto)
 
-  - [`m`](drawvg-reference.md#section), [`rmoveto`](drawvg-reference.md#section)
+  - [`m`](#m-rmoveto), [`rmoveto`](#m-rmoveto)
 
-  - [`H`](drawvg-reference.md#section), [`h`](drawvg-reference.md#section)
+  - [`H`](#h-h), [`h`](#h-h)
 
-  - [`V`](drawvg-reference.md#section), [`v`](drawvg-reference.md#section)
+  - [`V`](#v-v), [`v`](#v-v)
 
-  - [`L`](drawvg-reference.md#section), [`lineto`](drawvg-reference.md#section)
+  - [`L`](#l-lineto), [`lineto`](#l-lineto)
 
-  - [`l`](drawvg-reference.md#section), [`rlineto`](drawvg-reference.md#section)
+  - [`l`](#l-rlineto), [`rlineto`](#l-rlineto)
 
-  - [`Z`](drawvg-reference.md#section), [`z`](drawvg-reference.md#section), [`closepath`](drawvg-reference.md#section)
+  - [`Z`](#z-z-closepath), [`z`](#z-z-closepath), [`closepath`](#z-z-closepath)
 
-- Curves
+- 曲线
 
-  - [`arc`](drawvg-reference.md#commands), [`arcn`](drawvg-reference.md#section)
+  - [`arc`](#arc), [`arcn`](#arcn)
 
-  - [`C`](drawvg-reference.md#section), [`curveto`](drawvg-reference.md#section),
+  - [`C`](#c-curveto), [`curveto`](#c-curveto),
 
-  - [`c`](drawvg-reference.md#section), [`rcurveto`](drawvg-reference.md#section)
+  - [`c`](#c-rcurveto), [`rcurveto`](#c-rcurveto)
 
-  - [`Q`](drawvg-reference.md#section), [`q`](drawvg-reference.md#section)
+  - [`Q`](#q), [`q`](#q)
 
-  - [`S`](drawvg-reference.md#section), [`s`](drawvg-reference.md#section)
+  - [`S`](#s-s), [`s`](#s-s)
 
-  - [`T`](drawvg-reference.md#section), [`t`](drawvg-reference.md#section)
+  - [`T`](#t-t), [`t`](#t-t)
 
-Single-letter commands are taken from [SVG's `<path>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path).
+单字母命令取自 [SVG 的 `<path>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path)。
 
-### Fill
+### 填充
 
-The region within the shape defined by a path can be filled with [`fill`](drawvg-reference.md#section) or [`eofill`](drawvg-reference.md#section). Each command uses a different [fill rule](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-fill-rule-t):
+由路径定义的形状内部区域可以用 [`fill`](#fill-eofill) 或 [`eofill`](#fill-eofill) 填充。每条命令使用不同的[填充规则](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-fill-rule-t)：
 
-- [`fill`](drawvg-reference.md#section) uses the [winding rule](https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-WINDING:CAPS), also known as [nonzero rule](https://en.wikipedia.org/wiki/Nonzero-rule).
+- [`fill`](#fill-eofill) 使用[环绕规则](https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-WINDING:CAPS)（亦称[非零规则](https://en.wikipedia.org/wiki/Nonzero-rule)）。
 
-- [`eofill`](drawvg-reference.md#section) uses the [even–odd rule](https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-EVEN-ODD:CAPS).
+- [`eofill`](#fill-eofill) 使用[奇偶规则](https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-EVEN-ODD:CAPS)。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-This script shows the difference between the [winding](https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-WINDING:CAPS) and [even–odd](https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-EVEN-ODD:CAPS) rules:
+这个脚本展示了[环绕规则](https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-WINDING:CAPS)与[奇偶规则](https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-EVEN-ODD:CAPS)之间的区别：
 
 ``` text
 rect 50 10 100 60
@@ -556,31 +552,31 @@ eofill
 
 </div>
 
-### Stroke
+### 描边
 
-[`stroke`](drawvg-reference.md#section) draws a line around the shape defined by the path. The stroke can be configured with different commands:
+[`stroke`](#stroke) 沿路径定义的形状周围绘制线条。描边可以用以下命令配置：
 
-- [`setdash`](drawvg-reference.md#section)
+- [`setdash`](#setdash)
 
-- [`setdashoffset`](drawvg-reference.md#section)
+- [`setdashoffset`](#setdashoffset)
 
-- [`setlinecap`](drawvg-reference.md#section)
+- [`setlinecap`](#setlinecap)
 
-- [`setlinejoin`](drawvg-reference.md#section)
+- [`setlinejoin`](#setlinejoin)
 
-- [`setlinewidth`](drawvg-reference.md#section)
+- [`setlinewidth`](#setlinewidth)
 
-- [`resetdash`](drawvg-reference.md#section)
+- [`resetdash`](#resetdash)
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-This example use [`setdashoffset`](drawvg-reference.md#section) to animate the stroke:
+这个例子使用 [`setdashoffset`](#setdashoffset) 来制作描边动画：
 
 ``` text
 moveto 0 0
@@ -597,19 +593,19 @@ stroke
 
 </div>
 
-### Clip
+### 裁剪
 
-A [clip region](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)) can be established with [`clip`](drawvg-reference.md#section) and [`eoclip`](drawvg-reference.md#section).
+可以用 [`clip`](#clip-eoclip) 和 [`eoclip`](#clip-eoclip) 建立[裁剪区域](https://en.wikipedia.org/wiki/Clipping_(computer_graphics))。
 
-If there is an active clip region, the new clip region will be the intersection between the existing one and the path. [`resetclip`](drawvg-reference.md#section) reset the clip region to the whole frame.
+如果已存在活动的裁剪区域，新的裁剪区域将是现有区域与路径的交集。[`resetclip`](#resetclip) 将裁剪区域重置为整帧。
 
-[`eoclip`](drawvg-reference.md#section) uses the [even–odd rule](https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-EVEN-ODD:CAPS) to compute the clip region.
+[`eoclip`](#clip-eoclip) 使用[奇偶规则](https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-EVEN-ODD:CAPS)来计算裁剪区域。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -631,19 +627,19 @@ stroke
 
 </div>
 
-### Preserving Paths
+### 保留路径
 
-The path is cleared after any operation on it, like [`fill`](drawvg-reference.md#section) or [`stroke`](drawvg-reference.md#section). To reuse the same path in multiple operations, [`preserve`](drawvg-reference.md#section) must be called before them.
+路径在任何作用于它的操作（如 [`fill`](#fill-eofill) 或 [`stroke`](#stroke)）之后都会被清除。要在多个操作中复用同一路径，必须在这些操作之前调用 [`preserve`](#preserve)。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, each path is used twice.
+在这个例子中，每个路径被使用了两次。
 
 ``` text
 circle 120 120 50
@@ -660,51 +656,51 @@ stroke
 
 </div>
 
-## Variables
+## 变量
 
-A drawvg can use some variables, provided by the interpreter, to compute values in section "FFmpeg expressions" in `ffmpeg-utils`:
+drawvg 可以使用解释器提供的一些变量，在 `ffmpeg-utils` 中"FFmpeg 表达式"小节的语法中计算值：
 
-- **\<cx\>** X coordinate of the [current point](#current-point).
+- **\<cx\>** [当前点](#当前点) 的 X 坐标。
 
-- **\<cy\>** Y coordinate of the [current point](#current-point).
+- **\<cy\>** [当前点](#当前点) 的 Y 坐标。
 
-- **\<w\>** Width, in pixels, of the frame.
+- **\<w\>** 帧的宽度（像素）。
 
-- **\<h\>** Height, in pixels, of the frame.
+- **\<h\>** 帧的高度（像素）。
 
-- **\<i\>** The loop counter in repeat blocks.
+- **\<i\>** repeat 块中的循环计数器。
 
-- **\<n\>** Frame number.
+- **\<n\>** 帧序号。
 
-- **\<t\>** Timestamp, in seconds.
+- **\<t\>** 时间戳（秒）。
 
-- **\<ts\>** Timestamp, in seconds, of the first frame.
+- **\<ts\>** 第一帧的时间戳（秒）。
 
-- **\<duration\>** Duration, in seconds, of the frame.
+- **\<duration\>** 帧的时长（秒）。
 
-### User Variables
+### 用户变量
 
-New variables can be created with the [`setvar`](drawvg-reference.md#section) command. It associates a name with a numeric value.
+可以用 [`setvar`](#setvar) 命令创建新变量。它将一个名称与一个数值关联起来。
 
-The name must follow these rules:
+名称必须遵循以下规则：
 
-- It must start with an ASCII letter or an underscore (`_`).
+- 必须以 ASCII 字母或下划线（`_`）开头。
 
-- It can contain only ASCII letters, underscores, and digits.
+- 只能包含 ASCII 字母、下划线和数字。
 
-- It must not match the name of a variable provided by the interpreter (like \<w\> or \<t\>).
+- 不得与解释器提供的变量名（如 \<w\> 或 \<t\>）同名。
 
-The same variable can be assigned multiple times.
+同一个变量可以被多次赋值。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, the result of an expression is stored in a variable with the name \<progress\>. Then, it is used for the \<x\> and \<width\> arguments of [`rect`](drawvg-reference.md#section).
+在这个例子中，一个表达式的结果被存储在名为 \<progress\> 的变量中。然后它被用作 [`rect`](#rect) 的 \<x\> 和 \<width\> 参数。
 
 ``` text
 setvar progress (w * (pow(mod(t / 2 + 0.5, 1), 2.5)))
@@ -717,41 +713,41 @@ fill
 
 </div>
 
-Currently, a script can contain only 20 different variable names, but this limit can be modified in the future.
+目前，一个脚本最多只能包含 20 个不同的变量名，但这一限制将来可能会修改。
 
-## Patterns
+## 图案
 
-The pattern for fill and stroke operations can be either a solid color, or a gradient.
+填充和描边操作所用的图案可以是纯色，也可以是渐变。
 
-- Solid colors.
+- 纯色。
 
-  - [`setcolor`](drawvg-reference.md#section)
+  - [`setcolor`](#setcolor)
 
-  - [`sethsla`](drawvg-reference.md#section)
+  - [`sethsla`](#sethsla)
 
-  - [`setrgba`](drawvg-reference.md#section)
+  - [`setrgba`](#setrgba)
 
-- Gradients.
+- 渐变。
 
-  - [`lineargrad`](drawvg-reference.md#section)
+  - [`lineargrad`](#lineargrad)
 
-  - [`radialgrad`](drawvg-reference.md#section)
+  - [`radialgrad`](#radialgrad)
 
-The pattern is not cleared after being used in a fill or stroke operation, but it is replaced by any command that sets a new pattern.
+图案在填充或描边操作中使用后不会被清除，但会被任何设置新图案的命令替换。
 
-### Gradients
+### 渐变
 
-To configure a gradient, first call to [`lineargrad`](drawvg-reference.md#section) or [`radialgrad`](drawvg-reference.md#section), and then add color stops by calling [`colorstop`](drawvg-reference.md#section) for each stop.
+要配置渐变，首先调用 [`lineargrad`](#lineargrad) 或 [`radialgrad`](#radialgrad)，然后为每个停靠点调用 [`colorstop`](#colorstop) 添加色标（color stop）。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, the whole frame is filled with a linear gradient:
+在这个例子中，整个帧被一个线性渐变填充：
 
 ``` text
 lineargrad 0 0 w h
@@ -762,7 +758,7 @@ rect 0 0 w h
 fill
 ```
 
-In this example, a radial gradient is used to simulate a sphere:
+在这个例子中，一个径向渐变被用来模拟一个球体：
 
 ``` text
 radialgrad 90 90 5 120 120 100
@@ -776,15 +772,15 @@ fill
 
 </div>
 
-### Variables
+### 变量
 
-[`setcolor`](drawvg-reference.md#section) and [`colorstop`](drawvg-reference.md#section) accept a variable name as the argument. The variable must be assigned with [`defrgba`](drawvg-reference.md#section), [`defhsla`](drawvg-reference.md#section), or [`setvar`](drawvg-reference.md#section) and a color.
+[`setcolor`](#setcolor) 和 [`colorstop`](#colorstop) 接受变量名作为参数。该变量必须先用 [`defrgba`](#defrgba)、[`defhsla`](#defhsla) 或 [`setvar`](#setvar) 配合一个颜色赋值。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -803,13 +799,13 @@ fill
 
 </div>
 
-If a variable has the same name of a section "known color" in `ffmpeg-utils`, the variable has preference, and will be used instead of the predefined color.
+如果变量与 `ffmpeg-utils` 中"已知颜色"小节中的名称相同，则变量优先，将使用该变量而非预定义颜色。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -826,19 +822,19 @@ fill
 
 </div>
 
-[`defrgba`](drawvg-reference.md#section) and [`defhsla`](drawvg-reference.md#section) assign a color to a variable, by providing an expression for each color component:
+[`defrgba`](#defrgba) 和 [`defhsla`](#defhsla) 通过为每个颜色分量提供一个表达式，将颜色赋给变量：
 
-- For [`defrgba`](drawvg-reference.md#section): *red*, *green*, *blue*, and *alpha*.
+- 对于 [`defrgba`](#defrgba)：*红*、*绿*、*蓝*和 *alpha*。
 
-- For [`defhsla`](drawvg-reference.md#section): *hue*, *saturation*, *lightness*, and *alpha*.
+- 对于 [`defhsla`](#defhsla)：*色相*、*饱和度*、*亮度*和 *alpha*。
 
-Each color component must be in range `0` to `1`, except *hue*, which is `0` to `360`.
+每个颜色分量必须在 `0` 到 `1` 之间，*色相*除外，它为 `0` 到 `360`。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -857,29 +853,29 @@ fill
 
 </div>
 
-## Transformations
+## 变换
 
-The coordinates for each command can be scaled, rotated, and translated, by using the following commands:
+每条命令的坐标可以通过以下命令进行缩放、旋转和平移：
 
-- [`rotate`](drawvg-reference.md#section)
+- [`rotate`](#rotate)
 
-- [`scale`](drawvg-reference.md#section)
+- [`scale`](#scale)
 
-- [`scalexy`](drawvg-reference.md#section)
+- [`scalexy`](#scalexy)
 
-- [`translate`](drawvg-reference.md#section)
+- [`translate`](#translate)
 
-The transformations are applied when the command is executed. They have no effect on the existing path, only on the new segments added to it.
+变换在命令执行时生效。它们对现有路径没有影响，只影响添加到其中的新线段。
 
-They are done by updating the [current transformation matrix](https://www.cairographics.org/manual/cairo-Transformations.html) in the Cairo context. To reset the matrix to its original state, before any transformation, use [`resetmatrix`](drawvg-reference.md#section).
+它们通过更新 Cairo 上下文中的[当前变换矩阵](https://www.cairographics.org/manual/cairo-Transformations.html)来完成。要将矩阵重置为进行任何变换之前的原始状态，请使用 [`resetmatrix`](#resetmatrix)。
 
-The transform origin for scale and rotation is initially at `0, 0`, but it can be adjusted with [`translate`](drawvg-reference.md#section).
+缩放和旋转的变换原点初始位于 `0, 0`，但可以用 [`translate`](#translate) 调整。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -907,69 +903,69 @@ stroke
 
 </div>
 
-## State Stack
+## 状态栈
 
-The state of a drawvg script contains all parameters used for drawing operations, like the current color, the transformation matrix, the stroke configuration, etc.
+drawvg 脚本的状态包含绘制操作所用的所有参数，如当前颜色、变换矩阵、描边配置等。
 
-The [`save`](drawvg-reference.md#section) command pushes a snapshot of the state to an internal stack. Later, [`restore`](drawvg-reference.md#section) pops the latest snapshot from the stack, and uses it as the new state.
+[`save`](#save) 命令将状态快照压入内部栈。之后，[`restore`](#restore) 从栈中弹出最近的快照，并将其用作新的状态。
 
-The parameters that can be saved and restored are:
+可以保存和恢复的参数有：
 
-- Pattern for stroke and fill operations.
+- 描边和填充操作的图案。
 
-  - [`lineargrad`](drawvg-reference.md#section)
+  - [`lineargrad`](#lineargrad)
 
-  - [`radialgrad`](drawvg-reference.md#section)
+  - [`radialgrad`](#radialgrad)
 
-  - [`setrgba`](drawvg-reference.md#section)
+  - [`setrgba`](#setrgba)
 
-  - [`setcolor`](drawvg-reference.md#section)
+  - [`setcolor`](#setcolor)
 
-  - [`sethsla`](drawvg-reference.md#section)
+  - [`sethsla`](#sethsla)
 
-- Transformation matrix.
+- 变换矩阵。
 
-  - [`resetmatrix`](drawvg-reference.md#section)
+  - [`resetmatrix`](#resetmatrix)
 
-  - [`rotate`](drawvg-reference.md#section)
+  - [`rotate`](#rotate)
 
-  - [`scale`](drawvg-reference.md#section)
+  - [`scale`](#scale)
 
-  - [`scalexy`](drawvg-reference.md#section)
+  - [`scalexy`](#scalexy)
 
-  - [`translate`](drawvg-reference.md#section)
+  - [`translate`](#translate)
 
-- Stroke configuration.
+- 描边配置。
 
-  - [`setdash`](drawvg-reference.md#section)
+  - [`setdash`](#setdash)
 
-  - [`setdashoffset`](drawvg-reference.md#section)
+  - [`setdashoffset`](#setdashoffset)
 
-  - [`setlinecap`](drawvg-reference.md#section)
+  - [`setlinecap`](#setlinecap)
 
-  - [`setlinejoin`](drawvg-reference.md#section)
+  - [`setlinejoin`](#setlinejoin)
 
-  - [`setlinewidth`](drawvg-reference.md#section)
+  - [`setlinewidth`](#setlinewidth)
 
-- Clip region
+- 裁剪区域
 
-  - [`clip`](drawvg-reference.md#section)
+  - [`clip`](#clip-eoclip)
 
-  - [`resetclip`](drawvg-reference.md#section)
+  - [`resetclip`](#resetclip)
 
-## Frame Metadata
+## 帧元数据
 
-Some FFmpeg filters add metadata to frames. The command [`getmetadata`](drawvg-reference.md#section) can read metadata items containing a numeric value, and store it in a variable that can be used for command arguments.
+一些 FFmpeg 滤镜会向帧添加元数据。命令 [`getmetadata`](#getmetadata) 可以读取包含数值的元数据项，并将其存储到可用于命令参数的变量中。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-The `cropdetect` filter computes the parameters to remove empty regions around the video. These parameters are accessible in the `lavfi.cropdetect` keys of the frame metadata.
+`cropdetect` 滤镜计算用于去除视频四周空白区域的参数。这些参数可以通过帧元数据的 `lavfi.cropdetect` 键访问。
 
 ``` text
 // Get metadata from cropdetect filter and store it
@@ -985,7 +981,7 @@ setlinewidth 10
 stroke
 ```
 
-To test the script, copy it to a `drawcropdetect.vgs` file, and then execute a command like this:
+要测试该脚本，请将其复制到一个 `drawcropdetect.vgs` 文件，然后执行如下命令：
 
 ``` text
 ffplay -i example-video.webm -vf 'cropdetect, drawvg=file=drawcropdetect.vgs'
@@ -993,11 +989,11 @@ ffplay -i example-video.webm -vf 'cropdetect, drawvg=file=drawcropdetect.vgs'
 
 </div>
 
-## `if` / `repeat` Statements
+## `if` / `repeat` 语句
 
-There is limited support for control flow statements: only [`if`](drawvg-reference.md#section) and [`repeat`](drawvg-reference.md#section).
+对控制流语句的支持有限：只有 [`if`](#if) 和 [`repeat`](#repeat)。
 
-Both commands receive two arguments: an expression and a block.
+两条命令都接受两个参数：一个表达式和一个块。
 
 ``` text
 if (condition) {
@@ -1009,17 +1005,17 @@ repeat (count) {
 }
 ```
 
-[`if`](drawvg-reference.md#section) executes its block if the result of `(condition)` is not zero.
+[`if`](#if) 在 `(condition)` 的结果非零时执行其块。
 
-[`repeat`](drawvg-reference.md#section) executes its block the number of times specified by `(count)`. In each iteration, the variable \<i\> is used as a [loop counter](https://en.wikipedia.org/wiki/For_loop#Loop_counters).
+[`repeat`](#repeat) 按 `(count)` 指定的次数执行其块。在每次迭代中，变量 \<i\> 被用作[循环计数器](https://en.wikipedia.org/wiki/For_loop#Loop_counters)。
 
-If the result of the expression is not a finite number (like [`NaN`](https://en.wikipedia.org/wiki/NaN)) the block is not executed.
+如果表达式的结果不是有限数（如 [`NaN`](https://en.wikipedia.org/wiki/NaN)），则不会执行该块。
 
-### Comparison and Logical Operators
+### 比较与逻辑运算符
 
-section "FFmpeg expressions" in `ffmpeg-utils` only supports arithmetic operators (like `+` for addition). Comparison operators (like `!=`) are supported via functions, while logical operators (like `&&` for `AND`) can be emulated with arithmetic operations.
+`ffmpeg-utils` 中"FFmpeg 表达式"小节只支持算术运算符（如表示加法的 `+`）。比较运算符（如 `!=`）通过函数支持，而逻辑运算符（如表示 `AND` 的 `&&`）可以用算术运算模拟。
 
-| Expression  | FFmpeg Equivalent  |
+| 表达式      | FFmpeg 等价写法    |
 |-------------|--------------------|
 | `x = y`     | `eq(x, y)`         |
 | `x < y`     | `lt(x, y)`         |
@@ -1028,9 +1024,9 @@ section "FFmpeg expressions" in `ffmpeg-utils` only supports arithmetic operator
 | `x ≥ y`     | `gte(x, y)`        |
 | `a ≤ x ≤ b` | `between(x, a, b)` |
 
-Logical operators can be emulated with multiplication (for `AND`), or addition (for `OR`):
+逻辑运算符可以用乘法（对应 `AND`）或加法（对应 `OR`）来模拟：
 
-| Expression | FFmpeg Equivalent |
+| 表达式     | FFmpeg 等价写法   |
 |------------|-------------------|
 | `x OR y`   | `x + y`           |
 | `x AND y`  | `x * y`           |
@@ -1039,11 +1035,11 @@ Logical operators can be emulated with multiplication (for `AND`), or addition (
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In other programming languages, a code like this:
+在其他编程语言中，如下代码：
 
 ``` text
 if (x > y && z != 1) {
@@ -1051,7 +1047,7 @@ if (x > y && z != 1) {
 }
 ```
 
-Can be written for drawvg like this:
+在 drawvg 中可以这样写：
 
 ``` text
 if (gt(x, y) * not(eq(z, 1))) {
@@ -1061,23 +1057,23 @@ if (gt(x, y) * not(eq(z, 1))) {
 
 </div>
 
-### Early Exit
+### 提前退出
 
-[`break`](drawvg-reference.md#section) causes a [`repeat`](drawvg-reference.md#section) loop to be terminated immediately.
+[`break`](#break) 会使 [`repeat`](#repeat) 循环立即终止。
 
-If it is executed outside a [`repeat`](drawvg-reference.md#section) block, it terminates the whole script, or the current procedure.
+如果在 [`repeat`](#repeat) 块之外执行，它会终止整个脚本或当前过程。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, we are using the [`randomg`](drawvg-reference.md#function) function to draw a line with random segments.
+在这个例子中，我们使用 [`randomg`](#函数-randomg) 函数绘制一条由随机线段组成的线。
 
-The loop can be executed `500` times, but it is interrupted if the X coordinate of the [current point](#current-point) (\<cx\>) exceeds the frame width (\<w\>). The [current point](#current-point) is updated after each call to [`rlineto`](drawvg-reference.md#section).
+循环可以执行 `500` 次，但如果[当前点](#当前点)（\<cx\>）的 X 坐标超过帧宽度（\<w\>）就会中断。每次调用 [`rlineto`](#l-rlineto) 之后都会更新[当前点](#当前点)。
 
 ``` text
 moveto 0 0
@@ -1097,11 +1093,11 @@ stroke
 
 </div>
 
-## Procedures
+## 过程
 
-A procedure is a name associated with a block that can be executed multiple times. It can take between 0 and 6 parameters.
+过程是与一个块关联的名称，可以多次执行。它可以接受 0 到 6 个参数。
 
-[`proc`](drawvg-reference.md#section) is used to set the parameter names and the block for a procedure:
+[`proc`](#proc) 用于设置过程的参数名和块：
 
 ``` text
 proc p0 {
@@ -1113,7 +1109,7 @@ proc p1 param1 param2 {
 }
 ```
 
-Inside the block, the arguments can be accessed as regular variables:
+在块内，参数可以作为普通变量访问：
 
 ``` text
 proc square center_x center_y side {
@@ -1123,7 +1119,7 @@ proc square center_x center_y side {
 }
 ```
 
-[`call`](drawvg-reference.md#section) executes the block assigned to the procedure name. It requires the name of the procedure, and the value for each parameter defined in the call to [`proc`](drawvg-reference.md#section).
+[`call`](#call) 执行分配给过程名的块。它要求提供过程名，以及 [`proc`](#proc) 调用中定义的每个参数的值。
 
 ``` text
 call p0
@@ -1137,11 +1133,11 @@ call square (w / 2) (h / 2) (w / t)
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, the procedure `zigzag` draws multiple lines from the [current point](#current-point).
+在这个例子中，过程 `zigzag` 从[当前点](#当前点)绘制多条线。
 
 ``` text
 setvar len (w / 10)
@@ -1168,7 +1164,7 @@ M 0 180
 call zigzag
 ```
 
-The color and the Y coordinate of the starting point can be sent as procedure arguments:
+起点的颜色和 Y 坐标可以作为过程参数传入：
 
 ``` text
 setvar len (w / 10)
@@ -1192,17 +1188,17 @@ call zigzag #20F0B7 180
 
 </div>
 
-When the procedure returns, the value of the variable for each argument is restored to the value it had before calling the procedure. Changes in other variables (with [`setvar`](drawvg-reference.md#section), [`getmetadata`](drawvg-reference.md#section), [`defhsla`](drawvg-reference.md#section), and [`defrgba`](drawvg-reference.md#section)) are preserved.
+当过程返回时，每个参数对应的变量值会恢复为调用过程之前的值。对其他变量的修改（通过 [`setvar`](#setvar)、[`getmetadata`](#getmetadata)、[`defhsla`](#defhsla) 和 [`defrgba`](#defrgba)）会被保留。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In the next example, the variable \<A\> has the value `0` before calling the procedure \<P\>. During the execution of \<P\>, `A` is `1`, but after it, \<A\> is `0` again.
+在下一个例子中，变量 \<A\> 在调用过程 \<P\> 之前的值为 `0`。在 \<P\> 执行期间，`A` 为 `1`；执行结束后，\<A\> 又变回 `0`。
 
 ``` text
 setvar A 0
@@ -1216,7 +1212,7 @@ call P 1
 print A
 ```
 
-It writes the following messages:
+它会写出以下消息：
 
 ``` text
 [7:7] A = 0.000
@@ -1226,19 +1222,19 @@ It writes the following messages:
 
 </div>
 
-[`break`](drawvg-reference.md#section) causes the script to leave the current procedure, similar to the [`return` statement](https://en.wikipedia.org/wiki/Return_statement) in other programming languages, unless it is called within a [`repeat`](drawvg-reference.md#section) loop.
+[`break`](#break) 会使脚本退出当前过程，类似于其他编程语言中的 [`return` 语句](https://en.wikipedia.org/wiki/Return_statement)，除非它是在 [`repeat`](#repeat) 循环内被调用。
 
-The body of the procedure must be defined with [`proc`](drawvg-reference.md#section) *before* using [`call`](drawvg-reference.md#section).
+过程体必须在使用 [`call`](#call) *之前*用 [`proc`](#proc) 定义。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, when the procedure `notyet` is called, its body has not yet defined, so the execution fails with the error `Missing body for procedure 'notyet'`.
+在这个例子中，当过程 `notyet` 被调用时，其过程体尚未定义，因此执行失败并报错 `Missing body for procedure 'notyet'`。
 
 ``` text
 call notyet
@@ -1250,17 +1246,17 @@ proc notyet {
 
 </div>
 
-A procedure can be redefined by other calls to [`proc`](drawvg-reference.md#section) with the same name. In such case, [`call`](drawvg-reference.md#section) invokes the last assigned block.
+过程可以通过其他使用同名 [`proc`](#proc) 的调用重新定义。在这种情况下，[`call`](#call) 会调用最后分配的块。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, the procedure `example` has two different blocks.
+在这个例子中，过程 `example` 有两个不同的块。
 
 ``` text
 proc example {
@@ -1278,37 +1274,37 @@ call example    // executes block2
 
 </div>
 
-## Functions in Expressions
+## 表达式中的函数
 
-There are some functions specific to drawvg available in section "FFmpeg expressions" in `ffmpeg-utils`.
+`ffmpeg-utils` 中"FFmpeg 表达式"小节中有一些 drawvg 特有的函数可用。
 
-### Function `p`
+### 函数 `p`
 
-`p(x, y)` returns the color of the pixel at coordinates `x, y`, as a `0xRRGGBBAA` value. It can be assigned to a variable, so the color can be available for [`setcolor`](drawvg-reference.md#section) and [`colorstop`](drawvg-reference.md#section) commands.
+`p(x, y)` 返回坐标 `x, y` 处像素的颜色，表示为 `0xRRGGBBAA` 值。它可以赋给一个变量，使该颜色可供 [`setcolor`](#setcolor) 和 [`colorstop`](#colorstop) 命令使用。
 
-If a single expression contains multiple calls to the function, it must return the value of the last call in order to use it as a color.
+如果单个表达式包含多次对该函数的调用，则必须返回最后一次调用的值，才能将其用作颜色。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, the first call to `p(0, 0)` is stored in the variable \<0\> of the expression. Then, the same expression makes a second call to `p(1, 1)`, and finally it returns the value in the variable \<0\>.
+在这个例子中，第一次调用 `p(0, 0)` 的结果存储在表达式的变量 \<0\> 中。然后同一表达式进行第二次调用 `p(1, 1)`，最后返回变量 \<0\> 中的值。
 
 ``` c
 setvar pixel (st(0, p(0, 0)); p(1, 1); ld(0))
 ```
 
-Since the result of the expression is not the last call to `p`, the variable \<pixel\> can not be used as a color, but it still can be used as a numeric `0xRRGGBBAA` value.
+由于表达式的结果不是最后一次对 `p` 的调用，变量 \<pixel\> 不能用作颜色，但仍可用作数值型的 `0xRRGGBBAA` 值。
 
 </div>
 
-If the coordinates are outside the frame, or any of the arguments is not a finite number (like [`NaN`](https://en.wikipedia.org/wiki/NaN)), the function returns `NaN`.
+如果坐标在帧之外，或任一参数不是有限数（如 [`NaN`](https://en.wikipedia.org/wiki/NaN)），该函数返回 `NaN`。
 
-The [transformation matrix](drawvg-reference.md#variables) is applied to the arguments. To use the original frame coordinates, call [`resetmatrix`](drawvg-reference.md#section) between [`save`](drawvg-reference.md#section) and [`restore`](drawvg-reference.md#section):
+[变换矩阵](#变换)会作用于这些参数。要使用原始帧坐标，请在 [`save`](#save) 和 [`restore`](#restore) 之间调用 [`resetmatrix`](#resetmatrix)：
 
 ``` text
 save
@@ -1319,7 +1315,7 @@ restore
 setcolor pixel
 ```
 
-Bitwise operations can be used to extract individual color components:
+可以使用按位运算来提取各个颜色分量：
 
 ``` text
 setvar pixel (p(x, y))
@@ -1332,21 +1328,21 @@ if (not(isnan(pixel))) {
 }
 ```
 
-### Function `pathlen`
+### 函数 `pathlen`
 
-`pathlen(n)` computes the length of the current path, by adding the length of each line segment returned by [`cairo_copy_path_flat`](https://www.cairographics.org/manual/cairo-Paths.html#cairo-copy-path-flat).
+`pathlen(n)` 通过累加 [`cairo_copy_path_flat`](https://www.cairographics.org/manual/cairo-Paths.html#cairo-copy-path-flat) 返回的每条线段的长度来计算当前路径的长度。
 
-The function expects an argument \<n\>, as the maximum number of line segments to add to the length, or `0` to add all segments.
+该函数接受一个参数 \<n\>，作为要累加到长度中的线段数上限，或 `0` 表示累加所有线段。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, `pathlen` is used to animate the stroke of a spiral, in a 5 seconds loop.
+在这个例子中，`pathlen` 被用于在 5 秒循环中制作螺旋线描边的动画。
 
 ``` text
 M (w / 2) (h / 2)
@@ -1372,25 +1368,25 @@ stroke
 
 </div>
 
-### Function `randomg`
+### 函数 `randomg`
 
-`randomg(idx)` is similar to the `random(idx)` function, available in section "FFmpeg expressions" in `ffmpeg-utils`, but its state is global to the frame, instead of specific to each expression.
+`randomg(idx)` 类似于 `ffmpeg-utils` 中"FFmpeg 表达式"小节提供的 `random(idx)` 函数，但它的状态对整帧是全局的，而不是每个表达式各自持有。
 
-To understand the difference, we need to dive into how `random(idx)` works inside a drawvg script.
+要理解它们的区别，我们需要深入了解 `random(idx)` 在 drawvg 脚本中的工作方式。
 
-First, each expression in FFmpeg has a set of 10 internal variables, which can be written with `st(idx, value)`, and can be read with `ld(idx)`. \<idx\> is a value between `0` and `9`. These variables are initialized to `0`.
+首先，FFmpeg 中的每个表达式都有一组 10 个内部变量，可用 `st(idx, value)` 写入，用 `ld(idx)` 读取。\<idx\> 是 `0` 到 `9` 之间的值。这些变量被初始化为 `0`。
 
-When a drawvg script is parsed, each expression is compiled with [`av_expr_parse`](https://ffmpeg.org/doxygen/8.0/eval_8h.html#ad3bf8f3330d1fd139de2ca156c313f34), from [libavutil](https://ffmpeg.org/libavutil.html), and these compiled expressions are reused for every frame. The changes in the internal variables (with `st(idx, value)`) are visible between frames, but they are not shared between expressions.
+当 drawvg 脚本被解析时，每个表达式都会用 [`av_expr_parse`](https://ffmpeg.org/doxygen/8.0/eval_8h.html#ad3bf8f3330d1fd139de2ca156c313f34)（来自 [libavutil](https://ffmpeg.org/libavutil.html)）编译，并且这些编译后的表达式会在每一帧中复用。内部变量的变化（通过 `st(idx, value)`）在各帧之间可见，但不会在表达式之间共享。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, the expression for the X coordinate updates its internal variable `0` in every frame:
+在这个例子中，X 坐标的表达式在每一帧都更新其内部变量 `0`：
 
 ``` text
 circle
@@ -1401,11 +1397,11 @@ circle
 fill
 ```
 
-`st(idx, value)` returns the updated value, so it can be used as the result of the expression.
+`st(idx, value)` 返回更新后的值，因此可以用作表达式的结果。
 
-The radius is not affected because its internal variable (from `ld(0)`) is not updated by the other expression.
+半径不受影响，因为它的内部变量（来自 `ld(0)`）没有被另一个表达式更新。
 
-Also, note that this example is just to show how internal variables are kept between frames. A better approach to create this animation is to use the variables n or t:
+另请注意，这个例子只是为了展示内部变量如何在各帧之间保留。创建这种动画的更好方法是使用变量 n 或 t：
 
 ``` text
 circle (mod(n * 15, w)) 120 20
@@ -1414,17 +1410,17 @@ fill
 
 </div>
 
-The function `random(idx)` returns a [pseudorandom](https://en.wikipedia.org/wiki/Pseudorandom_number_generator) value between `0` and `1`. \<idx\> is the internal variable that is used both as the seed and to keep the state of the number generator.
+函数 `random(idx)` 返回一个介于 `0` 和 `1` 之间的[伪随机](https://en.wikipedia.org/wiki/Pseudorandom_number_generator)值。\<idx\> 是内部变量，既用作种子，也用于保存数字生成器的状态。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-The next example uses `random(0)` to generate a random value for the center of a circle:
+下一个例子使用 `random(0)` 为圆心生成一个随机值：
 
 ``` text
 circle
@@ -1435,9 +1431,9 @@ circle
 fill
 ```
 
-The circle in every frame is at a different position, but always on the diagonal line of the frame. This happens because the values for the coordinates X and Y are identical, since both number generators use the same seed.
+每一帧的圆都位于不同的位置，但总是在帧的对角线上。这是因为 X 和 Y 坐标的值相同——两个数字生成器使用了相同的种子。
 
-To distribute the circles over the whole frame we need different seeds for each expression. This can be achieved by writing a non-zero value (like `0xF0F0`) to the internal variable of one of expressions, but only when its value is `0`:
+要让圆分布到整个帧上，我们需要为每个表达式使用不同的种子。这可以通过向其中一个表达式的内部变量写入一个非零值（如 `0xF0F0`）来实现，但仅在其值为 `0` 时写入：
 
 ``` c
 circle
@@ -1448,7 +1444,7 @@ circle
 fill
 ```
 
-This approach is only useful if we need completely different positions in each frame. In the next example, random values are used to distribute many circles over the frame, but the position is fixed. The only change over time is the fill color:
+这种方法只在需要每帧完全不同的位置时才有用。在下一个例子中，随机值用于将许多圆分布到帧上，但位置是固定的。唯一随时间变化的是填充颜色：
 
 ``` c
 repeat 20 {
@@ -1466,50 +1462,50 @@ setlinewidth 1
 stroke
 ```
 
-This is achieved by using a precomputed state before calling `random(0)`. The variable \<i\>, updated by [`repeat`](drawvg-reference.md#section), is needed to compute different states in each iteration.
+这是通过在调用 `random(0)` 之前使用一个预计算的状态实现的。变量 \<i\>（由 [`repeat`](#repeat) 更新）用于在每次迭代中计算不同的状态。
 
 </div>
 
-The `randomg(idx)` function, which is specific to drawvg scripts, is similar to `random(idx)`, but intended to solve the previous problems:
+`randomg(idx)` 函数是 drawvg 脚本特有的，类似于 `random(idx)`，但旨在解决前面的问题：
 
-- All frames have the same seed.
+- 所有帧都使用相同的种子。
 
-- The state is shared between expressions.
+- 状态在表达式之间共享。
 
-The parameter \<idx\> has two uses:
+参数 \<idx\> 有两个用途：
 
-- The last two bits are the index of an internal state, so it is possible to have 4 different number generators.
+- 最后两个比特是内部状态的索引，因此可以有 4 个不同的数字生成器。
 
-- The first call to `randomg` with a specific index will use the argument as the seed for the number generator in that index.
+- 对特定索引首次调用 `randomg` 时，参数将用作该索引处数字生成器的种子。
 
-In a script like this:
+在这样的脚本中：
 
 ``` text
 M (randomg(0xFF1)) (randomg(0xFF0))
 l (randomg(0xAA1)) (randomg(0xFF0))
 ```
 
-There are 4 calls to `randomg`:
+有 4 次对 `randomg` 的调用：
 
-1.  The first call, with the argument `0xFF1`, uses the internal state at index `1` (because `0xFF1` modulo `4` is `1`).
+1.  第一次调用的参数为 `0xFF1`，使用索引 `1` 处的内部状态（因为 `0xFF1` 对 `4` 取模为 `1`）。
 
-    Since this is the first use of that index, the number generator is initialized with the seed `0xFF1`.
+    由于这是该索引的首次使用，数字生成器以种子 `0xFF1` 初始化。
 
-2.  The second call has the same behaviour: it initializes the state at index `0` with the value `0xFF0`.
+2.  第二次调用行为相同：它用值 `0xFF0` 初始化索引 `0` 处的状态。
 
-3.  The third call has the argument `0xAA1`, and it uses index `1`. Since that state is already initialized (with the seed `0xFF1`), the value `0xAA1` is ignored, and it returns the next number.
+3.  第三次调用的参数为 `0xAA1`，使用索引 `1`。由于该状态已经初始化（种子为 `0xFF1`），值 `0xAA1` 被忽略，它返回下一个数字。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-This example renders a simple rain animation, moving lines from top to bottom.
+这个例子渲染了一个简单的下雨动画，让线条从上到下移动。
 
-`randomg` is used to distribute the lines over the frame, and to apply different speeds to each one.
+`randomg` 用于将线条分布到帧上，并为每条线赋予不同的速度。
 
 ``` text
 rect 0 0 w h
@@ -1534,39 +1530,39 @@ repeat 50 {
 
 </div>
 
-## Tracing with `print`
+## 使用 `print` 跟踪
 
-It is possible to trace the execution of a drawvg script by printing the value of an expression, either with the [`print`](drawvg-reference.md#section) command, or with the print function.
+可以通过 [`print`](#print) 命令或 print 函数打印表达式的值，来跟踪 drawvg 脚本的执行。
 
-In both cases, the values are written to the FFmpeg log.
+在这两种情况下，值都会写入 FFmpeg 日志。
 
-Printing expressions may have a noticeable impact on the performance, so it is preferable to use it only when necessary.
+打印表达式可能会对性能产生明显影响，因此最好只在必要时使用。
 
-### Function print
+### 函数 print
 
-The function `print(t)` writes the value of t, and returns its argument.
+函数 `print(t)` 写出 t 的值，并返回其参数。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-Given a line line this:
+给定这样一行：
 
 ``` text
 M (sin(2 * PI * t) * w) 0
 ```
 
-We can see the values of `sin(2 * PI * t)` by surrounding it with a call to `print()`:
+我们可以通过用 `print()` 调用将 `sin(2 * PI * t)` 包起来，观察它的值：
 
 ``` text
 M (print(sin(2 * PI * t)) * w) 0
 ```
 
-Executing this script with a 1 second / 8 FPS video shows the expected values for the sine function.
+以 1 秒 / 8 FPS 的视频执行此脚本，会显示正弦函数的预期值。
 
 ``` text
 $ ffmpeg \
@@ -1587,27 +1583,27 @@ $ ffmpeg \
 
 </div>
 
-### Command `print`
+### 命令 `print`
 
-The command [`print`](drawvg-reference.md#section) accepts an arbitrary number of arguments, and for each one it writes:
+命令 [`print`](#print) 接受任意数量的参数，并对每个参数写出：
 
-- The source location (line and column).
+- 源码位置（行和列）。
 
-- The source code of the expression.
+- 表达式的源代码。
 
-- The result of evaluating the expression.
+- 表达式求值的结果。
 
-When there are multiple expressions, they are separated by the `|` character.
+当有多个表达式时，它们用 `|` 字符分隔。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-The next script prints the position of the [current point](#current-point) after the [`l`](drawvg-reference.md#section) command:
+下一个脚本在 [`l`](#l-rlineto) 命令之后打印[当前点](#当前点)的位置：
 
 ``` text
 M 10 20
@@ -1616,13 +1612,13 @@ print cx cy
 stroke
 ```
 
-For each frame, it produces this output:
+对于每一帧，它产生如下输出：
 
 ``` text
 [3:7] cx = 110.000000 | [3:10] cy = 120.000000
 ```
 
-The next example prints the values of `random(0)`:
+下一个例子打印 `random(0)` 的值：
 
 ``` text
 $ ffmpeg \
@@ -1643,23 +1639,23 @@ $ ffmpeg \
 
 </div>
 
-# Commands
+# 命令
 
 ## `arc`
 
-**`arc xc yc radius angle1 angle2`**    — [*Can be implicit*](#implicit-commands)
+**`arc xc yc radius angle1 angle2`**    — [*可为隐式*](#隐式命令)
 
-Adds a circular arc of the given \<radius\> to the current path. The arc is centered at \<xc, yc\>, begins at \<angle1\> and proceeds in the direction of increasing angles to end at \<angle2\>.
+向当前路径添加一段给定 \<radius\> 的圆弧。圆弧以 \<xc, yc\> 为圆心，从 \<angle1\> 开始，沿角度增大的方向行进，到 \<angle2\> 结束。
 
-If there is a [current point](#current-point), a line is added from it to the beginning of the arc. If this is not desired, use [`newpath`](drawvg-reference.md#section) before [`arc`](drawvg-reference.md#commands) to clear the [current point](#current-point).
+如果存在[当前点](#当前点)，会从它向圆弧起点添加一条线。如果不希望如此，请在 [`arc`](#arc) 之前使用 [`newpath`](#newpath) 来清除[当前点](#当前点)。
 
-See the documentation of the [`cairo_arc`](https://www.cairographics.org/manual/cairo-Paths.html#cairo-arc) function for more details.
+详见 [`cairo_arc`](https://www.cairographics.org/manual/cairo-Paths.html#cairo-arc) 函数的文档，了解更多细节。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -1672,21 +1668,21 @@ stroke
 
 ## `arcn`
 
-**`arcn xc yc radius angle1 angle2`**    — [*Can be implicit*](#implicit-commands)
+**`arcn xc yc radius angle1 angle2`**    — [*可为隐式*](#隐式命令)
 
-Similar to [`arc`](drawvg-reference.md#commands), but it differs in the direction of the arc between the two angles.
+与 [`arc`](#arc) 类似，但两条角度之间的圆弧方向不同。
 
-See the documentation of the [`cairo_arc_negative`](https://www.cairographics.org/manual/cairo-Paths.html#cairo-arc-negative) function for more details.
+详见 [`cairo_arc_negative`](https://www.cairographics.org/manual/cairo-Paths.html#cairo-arc-negative) 函数的文档，了解更多细节。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, both [`arc`](drawvg-reference.md#commands) and [`arcn`](drawvg-reference.md#section) have the same angles, but they render different arcs:
+在这个例子中，[`arc`](#arc) 与 [`arcn`](#arcn) 使用相同的角度，但渲染出不同的弧：
 
 ``` text
 arc  120  90 60 (PI / 2) 0
@@ -1699,31 +1695,31 @@ stroke
 
 </div>
 
-[`newpath`](drawvg-reference.md#section) is needed to prevent a line between the two arcs.
+需要用 [`newpath`](#newpath) 来避免在两条弧之间连线。
 
 ## `break`
 
 **`break`**
 
-[`break`](drawvg-reference.md#section) terminates the execution of the innermost block, either a [`repeat`](drawvg-reference.md#section) loop or a procedure.
+[`break`](#break) 终止最内层块的执行，可以是 [`repeat`](#repeat) 循环或过程。
 
-If it is used outside of a [`repeat`](drawvg-reference.md#section) / [`proc`](drawvg-reference.md#section) block, it terminates the script for the current frame.
+如果在 [`repeat`](#repeat) / [`proc`](#proc) 块之外使用，它会终止当前帧的脚本。
 
 ## `call`
 
 **`call name args*`**
 
-Invokes a procedure defined by [`proc`](drawvg-reference.md#section).
+调用由 [`proc`](#proc) 定义的过程。
 
-See the [Procedures](#procedures) section above for more details.
+详见上文的 [过程](#过程) 小节，了解更多细节。
 
 ## `circle`
 
-**`circle xc yc radius`**    — [*Can be implicit*](#implicit-commands)
+**`circle xc yc radius`**    — [*可为隐式*](#隐式命令)
 
-Adds a circle of the given \<radius\> to the current path. The circle is centered at \<xc, yc\>. The [current point](#current-point) is cleared before and after adding the circle.
+向当前路径添加一个给定 \<radius\> 的圆。圆以 \<xc, yc\> 为圆心。添加圆之前和之后，[当前点](#当前点)都会被清除。
 
-This is a convenience wrapper for [`arc`](drawvg-reference.md#commands). A call to [`circle`](drawvg-reference.md#section) is equivalent to:
+这是 [`arc`](#arc) 的便捷封装。调用 [`circle`](#circle) 等价于：
 
 ``` text
 newpath
@@ -1735,33 +1731,33 @@ newpath
 
 **`clip, eoclip`**
 
-Establishes a new clip region by intersecting the current clip region with the current path as it would be filled by [`fill`](drawvg-reference.md#section) or [`eofill`](drawvg-reference.md#section).
+将当前裁剪区域与当前路径（按 [`fill`](#fill-eofill) 或 [`eofill`](#fill-eofill) 填充它的方式）求交集，建立新的裁剪区域。
 
-[`eoclip`](drawvg-reference.md#section) uses the [even–odd rule](https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-EVEN-ODD:CAPS). See [fill rules](drawvg-reference.md#defining-a-shape) for more details.
+[`eoclip`](#clip-eoclip) 使用[奇偶规则](https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-EVEN-ODD:CAPS)。详见[填充规则](#填充)。
 
-The path is cleared after updating the clip region, unless the [`preserve`](drawvg-reference.md#section) command is used before [`clip`](drawvg-reference.md#section) or [`eoclip`](drawvg-reference.md#section).
+在更新裁剪区域后路径会被清除，除非在 [`clip`](#clip-eoclip) 或 [`eoclip`](#clip-eoclip) 之前使用了 [`preserve`](#preserve) 命令。
 
-See the documentation of the [`cairo_clip`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-clip) function for more details.
+详见 [`cairo_clip`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-clip) 函数的文档，了解更多细节。
 
 ## `Z`, `z`, `closepath`
 
 **`Z, z, closepath`**
 
-Adds a line segment to the path from the [current point](#current-point) to the beginning of the current sub-path, and closes this sub-path. The beginning is set by any of the *move* commands ([`M`](drawvg-reference.md#section), [`m`](drawvg-reference.md#section), [`moveto`](drawvg-reference.md#section), [`rmoveto`](drawvg-reference.md#section)).
+向路径添加一条从[当前点](#当前点)到当前子路径起点的线段，并闭合该子路径。起点由任何*移动*命令设置（[`M`](#m-moveto)、[`m`](#m-rmoveto)、[`moveto`](#m-moveto)、[`rmoveto`](#m-rmoveto)）。
 
-See the documentation of the [`cairo_close_path`](https://www.cairographics.org/manual/cairo-Paths.html#cairo-close-path) function for more details.
+详见 [`cairo_close_path`](https://www.cairographics.org/manual/cairo-Paths.html#cairo-close-path) 函数的文档，了解更多细节。
 
 ## `colorstop`
 
-**`colorstop offset color`**    — [*Can be implicit*](#implicit-commands)
+**`colorstop offset color`**    — [*可为隐式*](#隐式命令)
 
-Adds a color stop to a gradient pattern.
+向渐变图案添加一个色标。
 
-\<offset\> is a value between `0` and `1`, and it specifies the location along the gradient's control vector.
+\<offset\> 是 `0` 到 `1` 之间的值，它指定沿渐变控制向量的位置。
 
-This command must be executed after [`lineargrad`](drawvg-reference.md#section) or [`radialgrad`](drawvg-reference.md#section).
+此命令必须在 [`lineargrad`](#lineargrad) 或 [`radialgrad`](#radialgrad) 之后执行。
 
-Color stops can be added in any number of calls to [`colorstop`](drawvg-reference.md#section). In the next example, the 3 blocks define the same gradient:
+色标可以在多次调用 [`colorstop`](#colorstop) 中添加。在下一个例子中，3 个块定义了相同的渐变：
 
 ``` text
 // 1
@@ -1777,17 +1773,17 @@ colorstop 1 blue
 colorstop 0 red 0.5 green 1 blue
 ```
 
-See the documentation of the [`cairo_pattern_add_color_stop_rgba`](https://www.cairographics.org/manual/cairo-cairo-pattern-t.html#cairo-pattern-add-color-stop-rgba) function for more details.
+详见 [`cairo_pattern_add_color_stop_rgba`](https://www.cairographics.org/manual/cairo-cairo-pattern-t.html#cairo-pattern-add-color-stop-rgba) 函数的文档，了解更多细节。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, color stops are added in a [`repeat`](drawvg-reference.md#section) loop.
+在这个例子中，色标在一个 [`repeat`](#repeat) 循环中添加。
 
 ``` text
 lineargrad 0 0 w h
@@ -1801,7 +1797,7 @@ rect 0 0 w h
 fill
 ```
 
-It is possible to avoid transitions between color stops by repeating the same color in two stops:
+可以通过在两个色标中重复使用相同颜色来避免色标之间的过渡：
 
 ``` text
 lineargrad 0 0 w h
@@ -1820,17 +1816,17 @@ fill
 
 ## `C`, `curveto`
 
-**`C, curveto x1 y1 x2 y2 x y`**    — [*Can be implicit*](#implicit-commands)
+**`C, curveto x1 y1 x2 y2 x y`**    — [*可为隐式*](#隐式命令)
 
-Draw a cubic Bézier curve from the [current point](#current-point) to the *end point* specified by \<x, y\>. The *start control point* is specified by \<x1, y1\> and the *end control point* is specified by \<x2, y2\>.
+从[当前点](#当前点)向 \<x, y\> 指定的*终点*绘制三次贝塞尔曲线。*起始控制点*由 \<x1, y1\> 指定，*终止控制点*由 \<x2, y2\> 指定。
 
-The behaviour is identical to the [`C`](drawvg-reference.md#section) command in [SVG's `<path>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path). For more details, see [Cubic Bézier Curve on MDN](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d#cubic_b%C3%A9zier_curve), and the [Curve Commands section of the Paths tutorial on MDN](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#curve_commands).
+其行为与 [SVG 的 `<path>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path) 中的 [`C`](#c-curveto) 命令完全相同。更多细节请参阅 [MDN 上的三次贝塞尔曲线](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d#cubic_b%C3%A9zier_curve)以及 [MDN 路径教程的曲线命令小节](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#curve_commands)。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -1849,39 +1845,39 @@ stroke
 
 ## `c`, `rcurveto`
 
-**`c, rcurveto dx1 dy1 dx2 dy2 dx dy`**    — [*Can be implicit*](#implicit-commands)
+**`c, rcurveto dx1 dy1 dx2 dy2 dx dy`**    — [*可为隐式*](#隐式命令)
 
-Like [`curveto`](drawvg-reference.md#section), but the coordinates are relative to the [current point](#current-point).
+与 [`curveto`](#c-curveto) 类似，但坐标相对于[当前点](#当前点)。
 
 ## `defhsla`
 
 **`defhsla varname h s l a`**
 
-Similar to [`sethsla`](drawvg-reference.md#section), but instead of establishing the color for stroke and fill operations, the computed color is assigned to the variable \<varname\>.
+与 [`sethsla`](#sethsla) 类似，但它不设置描边和填充操作所用的颜色，而是将计算出的颜色赋给变量 \<varname\>。
 
-\<varname\> can then be used as a color for [`setcolor`](drawvg-reference.md#section) and [`colorstop`](drawvg-reference.md#section).
+\<varname\> 之后可以用作 [`setcolor`](#setcolor) 和 [`colorstop`](#colorstop) 的颜色。
 
-See [`sethsla`](drawvg-reference.md#section) for more details on how the color is computed.
+有关颜色如何计算的更多细节，请参见 [`sethsla`](#sethsla)。
 
 ## `defrgba`
 
 **`defrgba varname r g b a`**
 
-Computes a color from the *red*, *green*, *blue*, and *alpha* components, and assigns it to the variable \<varname\>.
+根据*红*、*绿*、*蓝*和 *alpha* 分量计算出一个颜色，并将其赋给变量 \<varname\>。
 
-All components are values between `0` and `1`. Values outside that range are clamped to it.
+所有分量都是 `0` 到 `1` 之间的值。超出该范围的值会被钳制到该范围内。
 
 ## `ellipse`
 
-**`ellipse cx cy rx ry`**    — [*Can be implicit*](#implicit-commands)
+**`ellipse cx cy rx ry`**    — [*可为隐式*](#隐式命令)
 
-Adds an ellipse to the current path. Similar to [`circle`](drawvg-reference.md#section), but it is possible to use different radius for both axes.
+向当前路径添加一个椭圆。与 [`circle`](#circle) 类似，但两个轴可以使用不同的半径。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -1896,91 +1892,91 @@ stroke
 
 **`fill, eofill`**
 
-Fill the current path, using the [current pattern](drawvg-reference.md#user-variables) (either a solid color or a gradient).
+使用[当前图案](#图案)（纯色或渐变）填充当前路径。
 
-[`eofill`](drawvg-reference.md#section) uses the [even–odd rule](https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-EVEN-ODD:CAPS). See [fill rules](drawvg-reference.md#defining-a-shape) for more details.
+[`eofill`](#fill-eofill) 使用[奇偶规则](https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-EVEN-ODD:CAPS)。详见[填充规则](#填充)。
 
-The path is cleared after the operation, unless the [`preserve`](drawvg-reference.md#section) command is used before [`fill`](drawvg-reference.md#section) or [`eofill`](drawvg-reference.md#section).
+操作完成后路径会被清除，除非在 [`fill`](#fill-eofill) 或 [`eofill`](#fill-eofill) 之前使用了 [`preserve`](#preserve) 命令。
 
-See the documentation of the [`cairo_fill`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-fill) function for more details.
+详见 [`cairo_fill`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-fill) 函数的文档，了解更多细节。
 
 ## `getmetadata`
 
 **`getmetadata varname key`**
 
-Get the value of a metadata entry created by another filter, and assign it to the variable \<varname\>.
+获取由其他滤镜创建的元数据项的值，并将其赋给变量 \<varname\>。
 
-If there is no metadata entry for \<key\>, or its value is not a number, \<varname\> is set to [`NaN`](https://en.wikipedia.org/wiki/NaN).
+如果不存在 \<key\> 对应的元数据项，或其值不是数字，则 \<varname\> 被设为 [`NaN`](https://en.wikipedia.org/wiki/NaN)。
 
-See the [Frame Metadata](#frame-metadata) section above for an example.
+例子见上文的[帧元数据](#帧元数据)小节。
 
 ## `H`, `h`
 
-**`H, h x`**    — [*Can be implicit*](#implicit-commands)
+**`H, h x`**    — [*可为隐式*](#隐式命令)
 
-Draw a horizontal line from the [current point](#current-point) to x.
+从[当前点](#当前点)向 x 绘制一条水平线。
 
-The coordinate for [`H`](drawvg-reference.md#section) is absolute, and for [`h`](drawvg-reference.md#section) it is relative to the [current point](#current-point).
+[`H`](#h-h) 的坐标是绝对的，而 [`h`](#h-h) 的坐标相对于[当前点](#当前点)。
 
 ## `if`
 
 **`if condition { block }`**
 
-Executes a block if the value of \<condition\> is not zero, and a finite number (unlike [`NaN`](https://en.wikipedia.org/wiki/NaN)).
+当 \<condition\> 的值非零且为有限数（与 [`NaN`](https://en.wikipedia.org/wiki/NaN) 不同）时，执行一个块。
 
-See the [Comparison and Logical Operators](drawvg-reference.md#section) section above for more details on how to write conditional expressions.
+如何书写条件表达式的更多细节，请参见上文的[比较与逻辑运算符](#比较与逻辑运算符)小节。
 
 ## `lineargrad`
 
 **`lineargrad x0 y0 x1 y1`**
 
-Set the [current pattern](drawvg-reference.md#user-variables) to a new linear gradient, along the line from the coordinates \<x0, y0\> to \<x1, y1\>.
+将[当前图案](#图案)设为一个新的线性渐变，沿从坐标 \<x0, y0\> 到 \<x1, y1\> 的直线。
 
-This gradient can be used for stroke and fill operations.
+此渐变可用于描边和填充操作。
 
-Use [`colorstop`](drawvg-reference.md#section) to set the color for each position in the gradient.
+使用 [`colorstop`](#colorstop) 为渐变中的每个位置设置颜色。
 
 ## `L`, `lineto`
 
-**`L, lineto x y`**    — [*Can be implicit*](#implicit-commands)
+**`L, lineto x y`**    — [*可为隐式*](#隐式命令)
 
-Draw a line from the [current point](#current-point) to the coordinates at \<x, y\>.
+从[当前点](#当前点)向 \<x, y\> 坐标绘制一条直线。
 
-See the documentation of the [`cairo_line_to`](https://www.cairographics.org/manual/cairo-Paths.html#cairo-line-to) function for more details.
+详见 [`cairo_line_to`](https://www.cairographics.org/manual/cairo-Paths.html#cairo-line-to) 函数的文档，了解更多细节。
 
 ## `l`, `rlineto`
 
-**`l, rlineto dx dy`**    — [*Can be implicit*](#implicit-commands)
+**`l, rlineto dx dy`**    — [*可为隐式*](#隐式命令)
 
-Like [`lineto`](drawvg-reference.md#section), but the coordinates are relative to the [current point](#current-point).
+与 [`lineto`](#l-lineto) 类似，但坐标相对于[当前点](#当前点)。
 
 ## `M`, `moveto`
 
-**`M, moveto x y`**    — [*Can be implicit*](#implicit-commands)
+**`M, moveto x y`**    — [*可为隐式*](#隐式命令)
 
-Begin a new sub-path, and set the [current point](#current-point) to \<x, y\>.
+开始一个新的子路径，并将[当前点](#当前点)设为 \<x, y\>。
 
 ## `m`, `rmoveto`
 
-**`m, rmoveto dx dy`**    — [*Can be implicit*](#implicit-commands)
+**`m, rmoveto dx dy`**    — [*可为隐式*](#隐式命令)
 
-Like [`moveto`](drawvg-reference.md#section), but the coordinates are relative to the [current point](#current-point).
+与 [`moveto`](#m-moveto) 类似，但坐标相对于[当前点](#当前点)。
 
 ## `newpath`
 
 **`newpath`**
 
-Begin a new sub-path. Like [`moveto`](drawvg-reference.md#section), but there is no [current point](#current-point) after it.
+开始一个新的子路径。与 [`moveto`](#m-moveto) 类似，但之后没有[当前点](#当前点)。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In the next example, [`newpath`](drawvg-reference.md#section) is used in the path on the right to prevent the line connecting both arcs.
+在下一个例子中，右侧的路径使用了 [`newpath`](#newpath)，以避免连接两条弧的线段。
 
 ``` text
 setlinewidth 3
@@ -2003,31 +1999,31 @@ stroke
 
 **`preserve`**
 
-Indicates that the next operation to fill, stroke, or clip, must preserve the path, so the same path can be used in multiple operations.
+指示接下来的填充、描边或裁剪操作必须保留路径，以便同一路径可用于多个操作。
 
-It has effect on these commands:
+它对以下命令有效：
 
-- [`clip`](drawvg-reference.md#section)
+- [`clip`](#clip-eoclip)
 
-- [`eoclip`](drawvg-reference.md#section)
+- [`eoclip`](#clip-eoclip)
 
-- [`eofill`](drawvg-reference.md#section)
+- [`eofill`](#fill-eofill)
 
-- [`fill`](drawvg-reference.md#section)
+- [`fill`](#fill-eofill)
 
-- [`stroke`](drawvg-reference.md#section)
+- [`stroke`](#stroke)
 
-The script can contain any command between [`preserve`](drawvg-reference.md#section) and the associated operation. This allows modifying other properties, like the current color.
+脚本可以在 [`preserve`](#preserve) 与相关操作之间包含任意命令。这允许修改其他属性，如当前颜色。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, the same path is used for both [`fill`](drawvg-reference.md#section) and [`stroke`](drawvg-reference.md#section), but with different colors.
+在这个例子中，同一路径既用于 [`fill`](#fill-eofill) 又用于 [`stroke`](#stroke)，但颜色不同。
 
 ``` text
 circle (w / 2) (h / 2) (w / 3)
@@ -2042,17 +2038,17 @@ stroke
 
 </div>
 
-[`preserve`](drawvg-reference.md#section) can be called multiple times, if the same path has to be used in 3 or more operations.
+如果同一路径要在 3 个或更多操作中使用，[`preserve`](#preserve) 可以调用多次。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example, the path created by [`circle`](drawvg-reference.md#section) is used by [`fill`](drawvg-reference.md#section), [`stroke`](drawvg-reference.md#section), and [`clip`](drawvg-reference.md#section). After [`clip`](drawvg-reference.md#section), the path is cleared.
+在这个例子中，[`circle`](#circle) 创建的路径被 [`fill`](#fill-eofill)、[`stroke`](#stroke) 和 [`clip`](#clip-eoclip) 使用。在 [`clip`](#clip-eoclip) 之后，路径被清除。
 
 ``` text
 circle 100 100 50
@@ -2066,33 +2062,33 @@ clip
 
 ## `print`
 
-**`print expr`**    — [*Can be implicit*](#implicit-commands)
+**`print expr`**    — [*可为隐式*](#隐式命令)
 
-Print its arguments to the FFmpeg log.
+将其参数打印到 FFmpeg 日志。
 
-See the [Command print](#command-print) section above for more details.
+详见上文的 [命令 print](#命令-print) 小节，了解更多细节。
 
 ## `proc`
 
 **`proc name params* { block }`**
 
-Assign the block and the parameters for the procedure \<name\>. The procedure can be called multiple times with the [`call`](drawvg-reference.md#section) command.
+为过程 \<name\> 分配块和参数。该过程可以用 [`call`](#call) 命令多次调用。
 
-See the [Procedures](#procedures) section above for more details.
+详见上文的 [过程](#过程) 小节，了解更多细节。
 
 ## `Q`
 
 **`Q x1 y1 x y`**
 
-Draw a quadratic Bézier curve from the [current point](#current-point) to the *end point* specified by \<x, y\>. The *control point* is specified by \<x1, y1\>.
+从[当前点](#当前点)向 \<x, y\> 指定的*终点*绘制二次贝塞尔曲线。*控制点*由 \<x1, y1\> 指定。
 
-The behaviour is identical to the `Q` command in [SVG's `<path>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path). For more details, see [Quadratic Bézier curve on MDN](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d#quadratic_b%C3%A9zier_curve), and the [Curve Commands section of the Paths tutorial on MDN](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#curve_commands).
+其行为与 [SVG 的 `<path>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path) 中的 `Q` 命令完全相同。更多细节请参阅 [MDN 上的二次贝塞尔曲线](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d#quadratic_b%C3%A9zier_curve)以及 [MDN 路径教程的曲线命令小节](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#curve_commands)。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -2112,29 +2108,29 @@ stroke
 
 **`q dx1 dy1 dx dy`**
 
-Like [`Q`](drawvg-reference.md#section), but the coordinates are relative to the [current point](#current-point).
+与 [`Q`](#q) 类似，但坐标相对于[当前点](#当前点)。
 
 ## `radialgrad`
 
 **`radialgrad cx0 cy0 radius0 cx1 cy1 radius1`**
 
-Creates a new radial gradient between the two circles defined by \<cx0 cy0 radius0\> and \<cx1 cy1 radius1\>. Each set of arguments is the coordinates of the center and the radius.
+创建一个径向渐变，介于由 \<cx0 cy0 radius0\> 和 \<cx1 cy1 radius1\> 定义的两个圆之间。每组参数分别是圆心坐标和半径。
 
-This gradient can be used for stroke and fill operations.
+此渐变可用于描边和填充操作。
 
-Use [`colorstop`](drawvg-reference.md#section) to set the color for each position in the gradient.
+使用 [`colorstop`](#colorstop) 为渐变中的每个位置设置颜色。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-The animation in the next example shows how the two circles defined in the [`radialgrad`](drawvg-reference.md#section) arguments interact with each other.
+下一个例子中的动画展示了 [`radialgrad`](#radialgrad) 参数定义的两个圆如何相互作用。
 
-The red circle represent the circle for the \<cx0 cy0 radius0\> arguments, and the yellow circle is the one for the \<cx1 cy1 radius1\> arguments.
+红色圆表示 \<cx0 cy0 radius0\> 参数对应的圆，黄色圆是 \<cx1 cy1 radius1\> 参数对应的圆。
 
 ``` text
 setvar cx0 (mod(t * 30, w))
@@ -2174,75 +2170,75 @@ stroke
 
 **`rect x y width height`**
 
-Adds a rectangle of the given size (\<width\> × \<height\>), at position \<x, y\>, to the current path. The [current point](#current-point) is cleared before and after adding the rectangle.
+向当前路径添加一个给定尺寸（\<width\> × \<height\>）、位于 \<x, y\> 位置的矩形。添加矩形之前和之后，[当前点](#当前点)都会被清除。
 
-See the documentation of the [`cairo_rectangle`](https://www.cairographics.org/manual/cairo-Paths.html#cairo-rectangle) function for more details.
+详见 [`cairo_rectangle`](https://www.cairographics.org/manual/cairo-Paths.html#cairo-rectangle) 函数的文档，了解更多细节。
 
 ## `repeat`
 
 **`repeat count { block }`**
 
-Executes a block the number of times indicated by \<count\>.
+按 \<count\> 指示的次数执行一个块。
 
-In each iteration, the variable \<i\> is used as a [loop counter](https://en.wikipedia.org/wiki/For_loop#Loop_counters). It takes the values from `0` to `count - 1`. When the loop is terminated, the variable is restored to the value before starting the loop.
+在每次迭代中，变量 \<i\> 被用作[循环计数器](https://en.wikipedia.org/wiki/For_loop#Loop_counters)。它取 `0` 到 `count - 1` 的值。循环终止后，该变量恢复为循环开始前的值。
 
-If \<count\> is less than `1`, or it is not a finite number (like [`NaN`](https://en.wikipedia.org/wiki/NaN)), the block is not executed.
+如果 \<count\> 小于 `1`，或不是有限数（如 [`NaN`](https://en.wikipedia.org/wiki/NaN)），则不会执行该块。
 
 ## `resetclip`
 
 **`resetclip`**
 
-Reset the current clip region to its original state, covering the whole frame.
+将当前裁剪区域重置为其原始状态，覆盖整帧。
 
-See the documentation of the [`cairo_reset_clip`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-reset-clip) function for more details.
+详见 [`cairo_reset_clip`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-reset-clip) 函数的文档，了解更多细节。
 
 ## `resetdash`
 
 **`resetdash`**
 
-Disable the dash pattern to be used by [`stroke`](drawvg-reference.md#section). This reverts any change made by [`setdash`](drawvg-reference.md#section) and [`setdashoffset`](drawvg-reference.md#section).
+禁用 [`stroke`](#stroke) 将使用的虚线图案。这会撤销 [`setdash`](#setdash) 和 [`setdashoffset`](#setdashoffset) 所做的任何更改。
 
-It calls [`cairo_set_dash`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-dash) with `num_dashes` set to `0`.
+它以 `num_dashes` 设为 `0` 调用 [`cairo_set_dash`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-dash)。
 
 ## `resetmatrix`
 
 **`resetmatrix`**
 
-Resets the current [transformation matrix](drawvg-reference.md#variables).
+重置当前的[变换矩阵](#变换)。
 
 ## `restore`
 
 **`restore`**
 
-Restores the state saved by a preceding call to [`save`](drawvg-reference.md#section).
+恢复之前调用 [`save`](#save) 保存的状态。
 
-For more details, see the [State Stack](#state-stack) section above, and the [`cairo_restore`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-restore) function.
+更多细节请参见上文的[状态栈](#状态栈)小节，以及 [`cairo_restore`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-restore) 函数。
 
 ## `rotate`
 
 **`rotate angle`**
 
-Modifies the current [transformation matrix](drawvg-reference.md#variables) by rotating the user-space axes by \<angle\> radians.
+通过将用户空间轴旋转 \<angle\> 弧度来修改当前的[变换矩阵](#变换)。
 
-See the documentation of the [`cairo_rotate`](https://www.cairographics.org/manual/cairo-Transformations.html#cairo-rotate) function for more details.
+详见 [`cairo_rotate`](https://www.cairographics.org/manual/cairo-Transformations.html#cairo-rotate) 函数的文档，了解更多细节。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-In this example:
+在这个例子中：
 
-- [`scalexy`](drawvg-reference.md#section) maps the coordinates to a 1x1 frame.
+- [`scalexy`](#scalexy) 将坐标映射到 1x1 的帧。
 
-- [`translate`](drawvg-reference.md#section) put `0, 0` at the center of the frame.
+- [`translate`](#translate) 把 `0, 0` 放在帧中心。
 
-- [`rotate`](drawvg-reference.md#section) rotates 45°.
+- [`rotate`](#rotate) 旋转 45°。
 
-- [`resetmatrix`](drawvg-reference.md#section) reverts the transformations before [`stroke`](drawvg-reference.md#section), so the line width is not affected by the scale.
+- [`resetmatrix`](#resetmatrix) 在 [`stroke`](#stroke) 之前撤销变换，使线宽不受缩放影响。
 
 ``` text
 scalexy w h
@@ -2257,21 +2253,21 @@ stroke
 
 ## `roundedrect`
 
-**`roundedrect x y width height radius`**    — [*Can be implicit*](#implicit-commands)
+**`roundedrect x y width height radius`**    — [*可为隐式*](#隐式命令)
 
-Like [`rect`](drawvg-reference.md#section), but a circular arc is used for the corners.
+与 [`rect`](#rect) 类似，但角部使用圆弧。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-The next example shows the same rectangle, with different values for the corner radius.
+下一个例子展示了同一个矩形使用不同圆角半径的效果。
 
-The radius is computed by multiplying \<i\> (the [loop counter](https://en.wikipedia.org/wiki/For_loop#Loop_counters)) by `4.5`. This number is chosen to make the last shape a perfect circle.
+半径通过 \<i\>（[循环计数器](https://en.wikipedia.org/wiki/For_loop#Loop_counters)）乘以 `4.5` 计算。选择这个数字是为了让最后一个形状成为正圆。
 
 ``` text
 repeat 9 {
@@ -2291,15 +2287,15 @@ stroke
 
 **`save`**
 
-Saves a copy of the current state on an internal stack. This copy can be restored later with [`restore`](drawvg-reference.md#section).
+将当前状态的副本保存到内部栈上。之后可以用 [`restore`](#restore) 恢复该副本。
 
-For more details, see the [State Stack](#state-stack) section above, and the [`cairo_save`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-save) function.
+更多细节请参见上文的[状态栈](#状态栈)小节，以及 [`cairo_save`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-save) 函数。
 
 ## `scale`
 
 **`scale sxy`**
 
-Similar to [`scalexy`](drawvg-reference.md#section), but the same value is used for both axes. It is equivalent to:
+与 [`scalexy`](#scalexy) 类似，但两个轴使用相同的值。它等价于：
 
 **`scalexy sxy sxy`**
 
@@ -2307,51 +2303,51 @@ Similar to [`scalexy`](drawvg-reference.md#section), but the same value is used 
 
 **`scalexy sx sy`**
 
-Modifies the current [transformation matrix](drawvg-reference.md#variables) by scaling the X and Y user-space axes by \<sx\> and \<sy\> respectively.
+通过将 X 和 Y 用户空间轴分别缩放 \<sx\> 和 \<sy\> 来修改当前的[变换矩阵](#变换)。
 
-See the documentation of the [`cairo_scale`](https://www.cairographics.org/manual/cairo-Transformations.html#cairo-scale) function for more details.
+详见 [`cairo_scale`](https://www.cairographics.org/manual/cairo-Transformations.html#cairo-scale) 函数的文档，了解更多细节。
 
-See [`rotate`](drawvg-reference.md#section) for an example on combining multiple transformations.
+组合多个变换的示例见 [`rotate`](#rotate)。
 
 ## `setcolor`
 
 **`setcolor color`**
 
-Set a solid color as the [current pattern](drawvg-reference.md#user-variables) for stroke and fill operations
+将纯色设为描边和填充操作的[当前图案](#图案)。
 
-See the [Colors](#colors) section above for more details.
+详见上文的 [颜色](#颜色) 小节，了解更多细节。
 
 ## `setdash`
 
-**`setdash length`**    — [*Can be implicit*](#implicit-commands)
+**`setdash length`**    — [*可为隐式*](#隐式命令)
 
-Sets the dash pattern to be used by [`stroke`](drawvg-reference.md#section).
+设置 [`stroke`](#stroke) 将使用的虚线图案。
 
-Each call to [`setdash`](drawvg-reference.md#section) adds a length to the pattern, alternating between *on* and *off* portions of the stroke.
+每次调用 [`setdash`](#setdash) 都会向图案添加一个长度，在描边的 on 与 off 部分之间交替。
 
-After a call to [`setdash`](drawvg-reference.md#section), [`resetdash`](drawvg-reference.md#section) is needed either to create a new pattern, or to discard the current one.
+调用 [`setdash`](#setdash) 之后，需要 [`resetdash`](#resetdash) 来创建新图案或丢弃当前图案。
 
-See the documentation of the [`cairo_set_dash`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-dash) function for more details.
+详见 [`cairo_set_dash`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-dash) 函数的文档，了解更多细节。
 
 ## `setdashoffset`
 
 **`setdashoffset offset`**
 
-Set the offset into the dash pattern at which the stroke should start.
+设置描边应在虚线图案中开始的位置偏移。
 
-[`setdash`](drawvg-reference.md#section) must be called *before* [`setdashoffset`](drawvg-reference.md#section).
+[`setdash`](#setdash) 必须在 [`setdashoffset`](#setdashoffset) *之前*调用。
 
-See the documentation of the [`cairo_set_dash`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-dash) function for more details.
+详见 [`cairo_set_dash`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-dash) 函数的文档，了解更多细节。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-The next animation shows the effect of [`setdashoffset`](drawvg-reference.md#section) when its argument changes over time.
+下一个动画展示了 [`setdashoffset`](#setdashoffset) 的参数随时间变化时的效果。
 
 ``` text
 scalexy w h
@@ -2372,21 +2368,21 @@ stroke
 
 **`sethsla h s l a`**
 
-Set the [current pattern](drawvg-reference.md#user-variables) to a solid color, given the *hue*, *saturation*, and *lightness*, and *alpha* components.
+根据*色相*、*饱和度*、*亮度*和 *alpha* 分量，将[当前图案](#图案)设为纯色。
 
-h is the *hue*, a value between `0` and `359`. Negative values are clamped to `0`, and values greater than `359` are interpreted as modulo 360.
+h 是*色相*，取值为 `0` 到 `359`。负值被钳制为 `0`，大于 `359` 的值按模 360 解释。
 
-s (*saturation*), l (*lightness*), and a (*alpha*), are values between `0` and `1`.
+s（*饱和度*）、l（*亮度*）和 a（*alpha*）是 `0` 到 `1` 之间的值。
 
-The conversion to RGB is implemented according to the [formulae from Wikipedia](https://en.wikipedia.org/wiki/HSL_and_HSV#HSL_to_RGB).
+到 RGB 的转换按照[维基百科上的公式](https://en.wikipedia.org/wiki/HSL_and_HSV#HSL_to_RGB)实现。
 
 ## `setlinecap`
 
 **`setlinecap cap`**
 
-Set the current line cap style, which determines the shape used to draw the end points of lines.
+设置当前线帽样式，它决定绘制线条端点所用的形状。
 
-\<cap\> must be one of the following names:
+\<cap\> 必须是以下名称之一：
 
 - `butt`
 
@@ -2394,17 +2390,17 @@ Set the current line cap style, which determines the shape used to draw the end 
 
 - `square`
 
-It calls to [`cairo_set_line_cap`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-line-cap) to set the line cap style.
+它调用 [`cairo_set_line_cap`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-line-cap) 来设置线帽样式。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-This example draws 3 lines with the same length, each one with a different line cap style:
+这个例子绘制 3 条等长的线，每条使用不同的线帽样式：
 
 ``` text
 setlinewidth 40
@@ -2433,9 +2429,9 @@ stroke
 
 **`setlinejoin join`**
 
-Sets the current line join style, which determines the shape used to join two line segments.
+设置当前线条连接样式，它决定连接两条线段所用的形状。
 
-\<join\> must be one of the following names:
+\<join\> 必须是以下名称之一：
 
 - `bevel`
 
@@ -2443,17 +2439,17 @@ Sets the current line join style, which determines the shape used to join two li
 
 - `round`
 
-It calls to [`cairo_set_line_join`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-line-join) to set the line join style.
+它调用 [`cairo_set_line_join`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-line-join) 来设置线条连接样式。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
-This example draws 3 lines with the same length, each one with a different line join style:
+这个例子绘制 3 条等长的线，每条使用不同的线条连接样式：
 
 ``` text
 setlinewidth 30
@@ -2477,11 +2473,11 @@ M 70 160 l 50 50 50 -50 stroke
 
 **`setlinewidth width`**
 
-Set the line width for [`stroke`](drawvg-reference.md#section).
+设置 [`stroke`](#stroke) 的线宽。
 
-\<width\> is affected by the [transformation matrix](drawvg-reference.md#variables).
+\<width\> 受[变换矩阵](#变换)影响。
 
-To specify a width that is not affected by other transformations, [`resetmatrix`](drawvg-reference.md#section) can be used between [`save`](drawvg-reference.md#section) / [`restore`](drawvg-reference.md#section):
+要指定不受其他变换影响的线宽，可以在 [`save`](#save) / [`restore`](#restore) 之间使用 [`resetmatrix`](#resetmatrix)：
 
 ``` text
 save
@@ -2494,51 +2490,51 @@ stroke
 restore
 ```
 
-See the documentation of the [`cairo_set_line_width`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-line-width) function for more details.
+详见 [`cairo_set_line_width`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-line-width) 函数的文档，了解更多细节。
 
 ## `setrgba`
 
 **`setrgba r g b a`**
 
-Set the [current pattern](drawvg-reference.md#user-variables) to a solid color, given the *red*, *green*, *blue*, and *alpha* components.
+根据*红*、*绿*、*蓝*和 *alpha* 分量，将[当前图案](#图案)设为纯色。
 
-All components are values between `0` and `1`. Values outside that range are clamped to it.
+所有分量都是 `0` 到 `1` 之间的值。超出该范围的值会被钳制到该范围内。
 
 ## `setvar`
 
 **`setvar varname value`**
 
-Set the variable \<varname\> to \<value\>.
+将变量 \<varname\> 设为 \<value\>。
 
-See the [User Variables](#user-variables) section above for more details.
+详见上文的 [用户变量](#用户变量) 小节，了解更多细节。
 
 ## `stroke`
 
 **`stroke`**
 
-Strokes the current path according to the current line width, line join, line cap, and dash settings.
+按照当前的线宽、线条连接、线帽和虚线设置描边当前路径。
 
-The path is cleared after the operation, unless the [`preserve`](drawvg-reference.md#section) command is used before [`stroke`](drawvg-reference.md#section).
+操作完成后路径会被清除，除非在 [`stroke`](#stroke) 之前使用了 [`preserve`](#preserve) 命令。
 
-See the documentation of the [`cairo_stroke`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-stroke) function for more details.
+详见 [`cairo_stroke`](https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-stroke) 函数的文档，了解更多细节。
 
 ## `S`, `s`
 
-**`S, s x2 y2 x y`**    — [*Can be implicit*](#implicit-commands)
+**`S, s x2 y2 x y`**    — [*可为隐式*](#隐式命令)
 
-Draw a smooth cubic Bézier curve from the [current point](#current-point) to the *end point* specified by \<x, y\>. The *end control point* is specified by \<x2, y2\>.
+从[当前点](#当前点)向 \<x, y\> 指定的*终点*绘制平滑三次贝塞尔曲线。*终止控制点*由 \<x2, y2\> 指定。
 
-The *start control point* is the reflection of the *end control point* of the previous curve command about the *current point*.
+*起始控制点*是前一条曲线命令的*终止控制点*关于*当前点*的镜像。
 
-The behaviour is identical to the `S` command in [SVG's `<path>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path). For more details, see [Cubic Bézier Curve on MDN](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d#cubic_b%C3%A9zier_curve), and the [Curve Commands section of the Paths tutorial on MDN](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#curve_commands).
+其行为与 [SVG 的 `<path>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path) 中的 `S` 命令完全相同。更多细节请参阅 [MDN 上的三次贝塞尔曲线](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d#cubic_b%C3%A9zier_curve)以及 [MDN 路径教程的曲线命令小节](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#curve_commands)。
 
-[`s`](drawvg-reference.md#section) is like [`S`](drawvg-reference.md#section), but the coordinates are relative to the [current point](#current-point).
+[`s`](#s-s) 与 [`S`](#s-s) 类似，但坐标相对于[当前点](#当前点)。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -2560,27 +2556,27 @@ stroke
 
 **`translate tx ty`**
 
-Modifies the current [transformation matrix](drawvg-reference.md#variables) by translating the user-space origin by \<tx, ty\>.
+通过将用户空间原点平移 \<tx, ty\> 来修改当前的[变换矩阵](#变换)。
 
-See the documentation of the [`cairo_translate`](https://www.cairographics.org/manual/cairo-Transformations.html#cairo-translate) function for more details.
+详见 [`cairo_translate`](https://www.cairographics.org/manual/cairo-Transformations.html#cairo-translate) 函数的文档，了解更多细节。
 
 ## `T`, `t`
 
-**`T, t x y`**    — [*Can be implicit*](#implicit-commands)
+**`T, t x y`**    — [*可为隐式*](#隐式命令)
 
-Draw a smooth quadratic Bézier curve from the [current point](#current-point) to the *end point* specified by \<x, y\>.
+从[当前点](#当前点)向 \<x, y\> 指定的*终点*绘制平滑二次贝塞尔曲线。
 
-The *control point* is the reflection of the *control point* of the previous curve command about the *current point*.
+*控制点*是前一条曲线命令的*控制点*关于*当前点*的镜像。
 
-The behaviour is identical to the `T` command in [SVG's `<path>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path). For more details, see [Quadratic Bézier curve on MDN](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d#quadratic_b%C3%A9zier_curve), and the [Curve Commands section of the Paths tutorial on MDN](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#curve_commands).
+其行为与 [SVG 的 `<path>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path) 中的 `T` 命令完全相同。更多细节请参阅 [MDN 上的二次贝塞尔曲线](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d#quadratic_b%C3%A9zier_curve)以及 [MDN 路径教程的曲线命令小节](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#curve_commands)。
 
-[`t`](drawvg-reference.md#section) is like [`T`](drawvg-reference.md#section), but the coordinates are relative to the [current point](#current-point).
+[`t`](#t-t) 与 [`T`](#t-t) 类似，但坐标相对于[当前点](#当前点)。
 
 <div class="sidebar">
 
 <div class="title">
 
-Example
+示例
 
 </div>
 
@@ -2600,8 +2596,8 @@ stroke
 
 ## `V`, `v`
 
-**`V, v y`**    — [*Can be implicit*](#implicit-commands)
+**`V, v y`**    — [*可为隐式*](#隐式命令)
 
-Draw a vertical line from the [current point](#current-point) to y.
+从[当前点](#当前点)向 y 绘制一条垂直线。
 
-The coordinate for [`V`](drawvg-reference.md#section) is absolute, and for [`v`](drawvg-reference.md#section) it is relative to the [current point](#current-point).
+[`V`](#v-v) 的坐标是绝对的，而 [`v`](#v-v) 的坐标相对于[当前点](#当前点)。
